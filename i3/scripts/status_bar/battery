@@ -1,0 +1,24 @@
+#!/bin/bash
+
+battery_time=$(upower -i $(upower -e | command grep battery) | grep "time to empty")
+battery_time=$(echo ${battery_time//"time to empty:"/})
+
+battery=$(acpi)
+battery_percentage=$( echo $battery | sed 's/.*[^0-9]\([0-9][0-9]*\%\).*/\1/g')
+battery_state=$(echo $battery | sed -n -e "s/.*:\ \([a-zA-Z]*\).*/\1/pg")
+
+if [ $battery_state == "Discharging" ]; then
+    if [ ! -z $battery_time ]; then
+        battery_output="$battery_percentage [$battery_time]"
+    else
+        battery_output="▼ $battery_percentage"
+    fi
+elif [ $battery_state == "Full" ]; then
+    battery_output="● ($battery_percentage)"
+elif [ $battery_state == "Unknown" ]; then
+    battery_output="[?] "$battery_percentage
+else
+    battery_output="ϟ $battery_percentage"
+fi
+
+echo $battery_output

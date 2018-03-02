@@ -1,0 +1,104 @@
+##############################
+##### FEH - KEY BINDINGS #####
+##############################
+
+
+#-----------------------------------------------------------------------------
+# UNBINDING
+#-----------------------------------------------------------------------------
+
+save_filelist
+
+# ----------------------------
+# Menu
+# ----------------------------
+
+menu_up k
+menu_down j
+menu_parent h
+menu_child l
+menu_select Return space
+menu_close Escape
+
+
+# ----------------------------
+# Navigation
+# ----------------------------
+
+action_0 Return
+
+reload_image r
+reload_plus
+reload_minus
+
+next_img n space J
+prev_img p BackSpace K
+
+next_dir N
+prev_dir P
+
+jump_first 0
+jump_last dollar
+jump_fwd C-n
+jump_back C-p
+
+quit q
+
+
+# ----------------------------
+# Image management
+# ----------------------------
+
+save_image S
+
+remove d
+delete D
+
+flip underscore
+mirror bar
+
+orient_1 greater
+orient_3 less
+
+size_to_image s
+
+
+# ----------------------------
+# Toggle options
+# ----------------------------
+
+toggle_actions a
+toggle_aliasing A
+toggle_caption c
+toggle_filenames t
+toggle_exif e
+toggle_pause space
+toggle_info i
+toggle_keep_vp v
+toggle_menu m
+toggle_pointer o
+toggle_fullscreen f
+
+
+# ----------------------------
+# Scroll
+# ----------------------------
+
+scroll_left h
+scroll_down j
+scroll_up k
+scroll_right l
+
+scroll_left_page C-h
+scroll_down_page C-j
+scroll_up_page C-k
+scroll_right_page C-l
+
+
+# ----------------------------
+# Zoom
+# ----------------------------
+
+zoom_default equal
+zoom_fit s
+zoom_fill exclam

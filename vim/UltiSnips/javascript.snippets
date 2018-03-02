@@ -1,0 +1,17 @@
+snippet cl "console.log(...)"
+console.log($0);
+endsnippet
+
+snippet uncpack_element
+$('${1:element}').each(function(){
+	let $1_children = $(this).contents();
+	$(this).replaceWith($1_children);
+});
+endsnippet
+
+snippet userscript_header
+// ==UserScript==
+// @name
+// @include
+// ==/UserScript==
+endsnippet

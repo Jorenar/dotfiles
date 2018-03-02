@@ -1,0 +1,11 @@
+#!/bin/bash
+
+ssid=$(iwgetid -r)
+signal=$(awk 'NR==3 {print $4}''' /proc/net/wireless)
+signal=" [${signal:0:-1} dBm]"
+
+if [ "$ssid" == "" ]; then
+    ssid="[X]"
+fi
+
+echo "$ssid$signal"

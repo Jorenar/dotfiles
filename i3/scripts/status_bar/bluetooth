@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [[ "$(hcitool dev)" == "Devices:" ]]; then
+    echo "BT: off"
+else
+    echo "BT: on"
+fi

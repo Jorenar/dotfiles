@@ -1,0 +1,510 @@
+" #############
+" ### VIMRC ###
+" #############
+
+" BASIC {{{
+
+" Use VIM's defaults instad of VI's
+set nocompatible
+
+" Turns on detection, plugin and indent
+filetype plugin indent on
+
+" Enable syntax
+syntax enable
+
+" Dark background
+set background=dark
+
+" Set colorscheme
+colorscheme black_and_white
+
+" }}}
+
+" AUTOCMDS {{{
+
+" Open file at the last known position
+autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exec "normal! g`\"" | endif
+
+" Disable continuation of comments to the next line (it cannot be just '-cro')
+autocmd FileType * set fo-=c fo-=r fo-=o
+
+" Trim trailing whitespace
+autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
+
+" Markdown TAB = 2 SPACES
+autocmd filetype markdown setlocal tabstop=2 softtabstop=2
+
+" Clear all maches after leaving buffer
+autocmd BufWinLeave * call clearmatches()
+
+" Quit QuickFix window along with source file window
+autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix" | q | endif
+
+" QuickFix window below other windows
+autocmd FileType qf wincmd J
+
+" Close Vim, if last window is netrw
+autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&filetype") == "netrw" | q | endif
+
+" Fold markers
+autocmd BufWinEnter * match FoldMarker '.* [{}]\{3}$'
+
+" }}}
+
+" COMMANDS {{{
+
+command -nargs=+ Grep execute "vimgrep /".<f-args>."/j ** | :copen"
+command -nargs=+ Spelling execute 'setlocal spell spelllang=<args>'
+command -range=% Enumerate normal :let i=1 | <line1>,<line2>g/^/s//\=i.'. '/ | let i=i+1 | noh<CR>
+command -range=% Sort normal :<line1>,<line2>sort i<CR>
+command Debug normal :Termdebug<CR><C-w>H
+command SortBlock :normal! vip:sort i<CR>
+command! -nargs=+ FillLine call <SID>FillLine(<f-args>)
+command! -range -nargs=0 -bang Vissort sil! keepj <line1>,<line2>call <SID>VisSort(<bang>0)
+
+" SIMPLE TOGGLE
+command RelativeNumber setlocal relativenumber!
+command Whitespace setlocal list!
+command Wrap setlocal wrap!
+
+" SHELL COMMANDS
+command ExecCurrentLine normal :.w !sh<CR>
+command SudoW :execute ':silent w !sudo tee % > /dev/null' | :edit!
+
+" }}}
+
+" COMPILE AND RUN {{{
+
+" ATTENTION: This is VERY simple and basic "Compile and Run"
+
+let s:languages = {
+            \ "asm"      : "as -o %<.o % && ld -s -o %< %<.o && rm %<.o && ./%<",
+            \ "basic"    : "vintbas %",
+            \ "c"        : "gcc -std=gnu11 -g % -o %< && ./%<",
+            \ "cpp"      : "g++ -std=gnu++11 -g % -o %< && ./%<",
+            \ "haskell"  : "ghc -o %< %; rm %<.hi %<.o && ./%<",
+            \ "html"     : "firefox %",
+            \ "lisp"     : "clisp %",
+            \ "lua"      : "lua %",
+            \ "markdown" : "grip -b % 1> /dev/null<CR>",
+            \ "nasm"     : "yasm -f elf64 % && ld -g -o %< %<.o && rm %<.o && ./%<",
+            \ "perl"     : "perl %",
+            \ "python"   : "python3 %",
+            \ "rust"     : "rustc % && ./%<",
+            \ "sh"       : "%:p",
+            \ "tex"      : "latexmk -pdf % && latexmk -c; zathura %<.pdf",
+            \ "xhtml"     : "firefox %",
+            \}
+
+for [ft, cmd] in items(s:languages)
+    exec "autocmd filetype ".ft." nnoremap <buffer> <F8> :w <bar> !".cmd."<CR>"
+endfor
+
+" }}}
+
+" FUNCTIONS {{{
+
+" Fill rest of line with characters
+function! s:FillLine(str, to_column)
+    .s/[[:space:]]*$//
+    let reps = (a:to_column - col("$")) / len(a:str)
+    if reps > 0
+        .s/$/\=(' '.repeat(a:str, reps))/
+    endif
+endfunction
+
+" Toggle cursor line and column highlight
+function s:CursorHighlightToggle()
+    setlocal cursorcolumn!
+    if (s:CursorHighlight_state == 1)
+        hi CursorLine cterm=none ctermbg=none
+        let s:CursorHighlight_state = 0
+    else
+        hi CursorLine cterm=none ctermbg=235
+        let s:CursorHighlight_state = 1
+    endif
+    echo
+endfunction
+
+" Sorts lines based on visual-block selected portion of the lines
+function! s:VisSort(isnmbr) range
+    if visualmode() != "\<c-v>"
+        execute "silent! ".a:firstline.",".a:lastline."sort i"
+        return
+    endif
+    let firstline = line("'<")
+    let lastline  = line("'>")
+    let keeprega  = @a
+    silent normal! gv"ay
+    '<,'>s/^/@@@/
+    silent! keepjumps normal! '<0"aP
+    if a:isnmbr
+        silent! '<,'>s/^\s\+/\=substitute(submatch(0),' ','0','g')/
+    endif
+    execute "sil! keepj '<,'>sort i"
+    execute "sil! keepj ".firstline.",".lastline.'s/^.\{-}@@@//'
+    let @a = keeprega
+endfun
+
+" System copy function if Vim does not have 'clipboard' support
+function! s:system_copy(type, ...) abort
+    let visual_mode = a:0 != 0
+    if visual_mode
+        let mode = (a:type == '') ?  'blockwise visual' : 'visual'
+    elseif a:type == 'line'
+        let mode = 'linewise'
+    else
+        let mode = 'motion'
+    endif
+    let unnamed = @@
+    if mode == 'linewise'
+        let lines = { 'start': line("'["), 'end': line("']") }
+        silent exe lines.start . "," . lines.end . "y"
+    elseif mode == 'visual' || mode == 'blockwise visual'
+        silent exe "normal! `<" . a:type . "`>y"
+    else
+        silent exe "normal! `[v`]y"
+    endif
+    let command = s:copy_command
+    silent call system(command, getreg('@'))
+    let @@ = unnamed
+endfunction
+
+" System paste function if Vim does not have 'clipboard' support
+function! s:system_paste() abort
+    let lines = system('xsel --clipboard --output | wc -l')
+    if lines == 0
+        execute "normal! a".system(s:paste_command)
+    else
+        put = system(s:paste_command)
+    endif
+endfunction
+
+" Status line - file size
+function! FileSize()
+    let bytes = getfsize(expand(@%))
+    if (bytes >= 1024*1024)
+        return '~' . float2nr(round(bytes/(1024*1024.0))) . ' MiB'
+    elseif (bytes >= 1024)
+        return '~' . float2nr(round(bytes/1024.0)) . ' KiB'
+    elseif (bytes <= 0)
+        return '0 B'
+    else
+        return bytes . ' B'
+    endif
+endfunction
+
+" Status line - file encoding
+function! FileEncoding()
+    return (&fenc == "" ? &enc : &fenc).((exists("+bomb") && &bomb) ? " BOM" : "")
+endfunction
+
+" Preview of Vim 256 colors
+function! Color_demo()
+    30 vnew
+    setlocal nonumber buftype=nofile bufhidden=hide noswapfile
+    setlocal statusline=[%n]
+    setlocal statusline+=\ Color\ demo
+    let num = 255
+    while num >= 0
+        exec 'hi col_'.num.' ctermbg='.num.' ctermfg=white'
+        exec 'syn match col_'.num.' "ctermbg='.num.':...." containedIn=ALL'
+        call append(0, 'ctermbg='.num.':....')
+        let num = num - 1
+    endwhile
+endfunction
+
+" Check highlight group under the cursor
+function! WhatsHighlightIt()
+    echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+                \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+                \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"
+endfunction
+
+" Function to match C/C++ #define macros
+function! s:HighlightC_PreProcDefines()
+    syntax clear C_PreProcDefine
+    for line in getline('1','$')
+        if line =~ '^\s*#\s*define\s\+'
+            execute 'syntax keyword C_PreProcDefine '.substitute(line, '^\s*#\s*define\s\+\(\k\+\).*$', '\1', '')
+        endif
+    endfor
+endfunction
+
+" Delete "expired" cache files
+" TODO
+
+" }}}
+
+" MAPPINGS {{{
+
+" leader + sth
+noremap <leader>= gg=G``
+noremap <leader>q gggqG``
+noremap <leader>h :nohlsearch<CR>
+noremap <Leader>r :%s/\<<C-r><C-w>\>//g<Left><Left>
+noremap <Leader>R :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
+noremap <leader>v ggVG
+
+" Function keys
+inoremap <F1> <ESC>gT
+inoremap <F2> <ESC>gt
+noremap <F1> gT
+noremap <F2> gt
+noremap <F3> :call <SID>CursorHighlightToggle()<CR>
+
+" Ctrl
+inoremap <C-o> <C-x><C-o>
+
+" Normal keys
+noremap ' `
+noremap '' ``
+noremap <Tab> <C-w><C-w>
+noremap gf <C-w>gf
+noremap j gj
+noremap k gk
+noremap N Nzz
+noremap n nzz
+noremap Q gq
+
+" <nop>
+map gh <nop>
+map q: <nop>
+map ZZ <nop>
+
+" }}}
+
+" OPTIONS {{{
+
+" Backup, undo and swap
+set backup
+set backupdir=~/.vim/cache/backup/
+set noswapfile
+set undodir=~/.vim/cache/undo/
+set undofile
+
+" Displaying text/code
+set foldmethod=indent
+set linebreak
+set nofoldenable
+set nowrap
+set t_Co=256
+
+" Indentation
+set autoindent
+set cindent
+set expandtab
+set shiftround
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
+
+" Searching
+set hlsearch
+set ignorecase
+set incsearch
+set smartcase
+
+" UI
+set cursorline
+set laststatus=2
+set mouse=a
+set number
+set scrolloff=5
+set showcmd
+set signcolumn=yes
+set splitbelow
+set splitright
+set wildmenu
+
+" OTHER
+let g:tex_flavor = 'tex'
+set backspace=indent,eol,start
+set history=50
+set lazyredraw
+set modeline
+set nrformats=
+set omnifunc=syntaxcomplete#Complete
+set shortmess+=I
+set title
+set viewoptions-=options
+set viminfo+=n~/.vim/viminfo
+set wrapmargin=0
+
+" }}}
+
+" OTHER {{{
+
+" PACKAGES ---------------------------------------
+packadd matchit
+packadd termdebug
+
+
+" FILETYPE ISSUES --------------------------------
+" Dict structure:   FILE ENDING : FILETYPE
+"   FILE ENDING may or not may be with dot (eg. tags files)
+
+let s:ft_issues = {
+            \ ".asm"   : "nasm",
+            \ ".conf"  : "conf",
+            \ ".js"    : "javascript",
+            \}
+
+for [ending, ft] in items(s:ft_issues)
+    execute "autocmd BufWinEnter *".ending." setlocal filetype=".ft
+endfor
+
+
+" FOLDING METHODS --------------------------------
+
+let s:fdm_for_lang = {
+            \ "c" : "syntax",
+            \ "cpp": "syntax",
+            \ "java" : "syntax",
+            \ "markdown" : "indent",
+            \}
+
+for [ft, method] in items(s:fdm_for_lang)
+    execute "autocmd filetype ".ft." setlocal foldmethod=".method
+endfor
+
+
+" FORMATTING -------------------------------------
+
+let s:fp_for_lang = {
+            \ 'c'          : 'astyle\ --style=kr\ -s4\ -N\ -S\ -xG\ -xU\ -f\ -k3\ -xj\ -p',
+            \ 'cpp'        : 'astyle\ --style=kr\ -s4\ -N\ -S\ -xG\ -xU\ -f\ -k3\ -xj\ -p',
+            \ 'javascript' : 'js-beautify',
+            \}
+
+for [ft, fp] in items(s:fp_for_lang)
+    execute "autocmd filetype ".ft." setlocal formatprg=".fp
+endfor
+
+
+" CLIPBOARD --------------------------------------
+
+if has("clipboard")
+    nnoremap <C-p> "+p
+    nnoremap <C-y> "+y
+    xnoremap <C-y> "+y
+    command AllToClipboard execute "normal! gg\"+yG``"
+else
+
+    " Paste
+    nnoremap <silent> <C-p> :call <SID>system_paste()<CR>
+
+    " Normal copy
+    nnoremap <silent> <C-y>  :set opfunc=<SID>system_copy<CR>g@
+
+    " Copy line
+    nnoremap <silent> <C-y>y :set opfunc=<SID>system_copy<Bar>exe 'norm! 'v:count1.'g@_'<CR>
+
+    " Copy in Visual mode
+    xnoremap <silent> <C-y>  :call <SID>system_copy(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>
+
+    command AllToClipboard execute "normal! gg:set opfunc=<SID>system_copy<CR>g@G``"
+
+endif
+
+" ------------------------------------------------
+
+" tmux - WINDOW TITLE FIX
+
+if &t_ts == "" && ( &term =~ "screen" || &term =~ "xterm" )
+    let &t_ts = "\e]2;"
+endif
+
+" Highlights
+hi FoldMarker cterm=bold,underline
+hi QuickFixLine ctermbg=NONE
+
+" }}}
+
+" PATH {{{
+
+set path+=**
+set path+=./
+set path+=/usr/include
+set path+=/usr/include/c++/7
+
+" }}}
+
+" PLUGINS {{{
+
+" DOWNLOAD VIM-PLUG (if is not installed)
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl --create-dirs -fLo ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+
+" INSTALL PLUGINS (via Plug)
+
+call plug#begin('~/.vim/bundle')
+Plug 'tpope/vim-commentary'            " Commentary
+Plug 'ludovicchabant/vim-gutentags'    " Gutentags
+Plug 'kshenoy/vim-signature'           " Signature
+Plug 'tpope/vim-surround'              " Surround
+Plug 'godlygeek/tabular'               " Tabular
+Plug 'christoomey/vim-tmux-navigator'  " Tmux Navigator
+Plug 'SirVer/ultisnips'                " UltiSnips
+Plug 'mbbill/undotree'                 " UndoTree
+call plug#end()
+
+
+" VARIABLES
+
+let g:gutentags_cache_dir               = $HOME."/.vim/cache/tags"           "  Gutentags
+let g:UltiSnipsEditSplit                = "context"                          "  UltiSnips
+let g:UltiSnipsExpandTrigger            = "<C-j>"                            "  UltiSnips
+let g:UltiSnipsListSnippets             = "<C-k>"                            "  UltiSnips
+let g:UltiSnipsSnippetDirectories       = ['~/.vim/UltiSnips', 'UltiSnips']  "  UltiSnips
+let g:undotree_SetFocusWhenToggle       = 1                                  "  UndoTree
+let g:undotree_ShortIndicators          = 1                                  "  UndoTree
+let g:undotree_SplitWidth               = 28                                 "  UndoTree
+
+
+" OTHER
+
+command -range TabularizeBySpace execute '<line1>,<line2>Tabularize /\S\+/l1'
+nmap s ysiw
+noremap <leader><F1> :UndotreeToggle<CR>
+vmap s S
+
+" }}}
+
+" STATUS LINE {{{
+
+set statusline=
+set statusline+=\ %f                " Relative path to the file
+set statusline+=\ \                 " Separator
+set statusline+=%y                  " Filetype
+set statusline+=[%{&ff}]            " File format
+set statusline+=[%{FileEncoding()}] " File encoding
+set statusline+=\ \                 " Separator
+set statusline+=[%{&fo}]            " Format options
+set statusline+=\ \                 " Separator
+set statusline+=[%{FileSize()}]     " File size
+set statusline+=\ \                 " Separator
+set statusline+=%r                  " Readonly flag
+set statusline+=%w                  " Preview flag
+set statusline+=\ \                 " Separator
+set statusline+=%m                  " Modified flag
+set statusline+=%=                  " Switch to the right side
+set statusline+=%l/                 " Current line
+set statusline+=%L                  " Total lines
+set statusline+=\ \:\ %c\           " Current column
+
+" }}}
+
+" VARIABLES {{{
+
+let s:copy_command  = 'xsel --clipboard --input'
+let s:CursorHighlight_state = 0
+let s:paste_command = 'xsel --clipboard --output'
+
+" }}}
+
+" vim: set fdm=marker foldenable:

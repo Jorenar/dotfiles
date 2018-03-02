@@ -1,0 +1,9 @@
+snippet shebang
+#!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
+endsnippet
+
+snippet read_word_by_word
+with open("${1:file}") as file:
+	${2:words} = [word for line in file for word in line.split()]
+endsnippet

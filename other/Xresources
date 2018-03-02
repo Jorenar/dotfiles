@@ -1,0 +1,32 @@
+! ##################
+! ### Xresources ###
+! ##################
+
+! General settings
+XTerm*termName: xterm-256color
+XTerm*geometry: 220x55+80+30
+XTerm*loginshell: False
+XTerm*cursorBlink: True
+
+! Fonts and Encoding
+XTerm*faceName: Dejavu Sans Mono:style=book
+XTerm.vt100.faceNameDoublesize: WenQuanYi Zen Hei Mono
+XTerm*faceSize: 10
+XTerm*locale: True
+XTerm*preeditType: Root
+XTerm*renderFont: True
+XTerm*utf8: True
+XTerm*utf8Title: True
+XTerm*xftAntialias: true
+
+! Copy and paste with clipboard
+XTerm*translations: #override \
+    Ctrl Shift <KeyPress> C: copy-selection(CLIPBOARD) \n\
+    Ctrl Shift <KeyPress> V: insert-selection(CLIPBOARD)
+
+! Allow selecting email/url by double-click
+XTerm*charClass: 33:48,37-38:48,45-47:48,64:48,58:48,126:48,61:48,63:48,43:48,35:48
+
+! Colors
+XTerm*background: black
+XTerm*foreground: grey

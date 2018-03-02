@@ -1,0 +1,36 @@
+snippet beginend "$1.begin(), $1.end()"
+${1:v}.begin(), $1.end()
+endsnippet
+
+snippet cl "class .."
+class ${1:Class_name}
+{
+public:
+	$1($2);
+	virtual ~$1();
+
+private:
+	${0:/* data */}
+};
+endsnippet
+
+snippet hello_world
+#include <iostream>
+
+int main()
+{
+	std::cout << "Hello World" << std::endl;
+	return 0;
+}
+endsnippet
+
+snippet main
+int main(int argc, char *argv[])
+{
+
+}
+endsnippet
+
+snippet multi_macro
+#define TEST(${1:variables}) do { ${2:code} } while(0) // never add ';' after "while(0)"
+endsnippet

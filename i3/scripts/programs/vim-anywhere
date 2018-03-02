@@ -1,0 +1,10 @@
+#!/bin/bash
+
+mkdir -p /tmp/vim-anywhere
+file=$(mktemp -p /tmp/vim-anywhere)
+
+xsel --clipboard --output > $file
+
+$TERMINAL -e "vim $file"
+
+cat $file | xsel --clipboard --input

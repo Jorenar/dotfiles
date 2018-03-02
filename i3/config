@@ -1,0 +1,213 @@
+###################
+### i3 - config ###
+###################
+
+# GENERAL {{{
+
+# set mod key
+set $mod Mod4
+
+# multi-monitor
+# workspace 1 output primary
+exec --no-startup-id $HOME/.i3/scripts/multi-monitor
+
+# font for window titles
+font pango:DejaVu Sans Mono 8
+
+# use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# set workspace layout
+workspace_layout tabbed
+
+# i3bar
+bar {
+    position top
+    font pango: DejaVu Sans Mono 9
+    status_command i3blocks -c $HOME/.i3/i3blocks
+    tray_output primary
+    tray_padding 1
+    colors {
+        focused_workspace  #333333 #222222 #FFFFFF
+        inactive_workspace #000000 #000000 #AAAAAA
+    }
+}
+
+# border / titlebar
+new_window normal
+hide_edge_borders smart
+bindsym Control+Shift+x [class="^.*"] border toggle
+for_window [class="^.*"] border pixel 3
+client.unfocused #222222 #222222 #888888 #2e9ef4   #222222
+client.focused   #444444 #333333 #FFFFFF #292d2e   #285577
+
+# set background
+exec --no-startup-id xsetroot -solid "#000000"
+
+# start fcitx
+exec --no-startup-id fcitx -d
+
+# disable touchpad on startup
+exec --no-startup-id synclient TouchpadOff=1
+
+# }}}
+
+# SHORTCUTS BINDINGS {{{
+
+# start TERMINAL
+bindsym $mod+Return exec --no-startup-id i3-sensible-terminal
+bindsym $mod+x exec --no-startup-id i3-sensible-terminal
+
+# open Firefox
+bindsym $mod+w exec firefox
+
+# open QuiteRSS
+bindsym $mod+q exec --no-startup-id $HOME/.i3/scripts/programs/quiterss
+
+# open neomutt in xterm
+# bindsym $mod+m exec --no-startup-id imapfilter && i3-sensible-terminal -T Mutt neomutt
+bindsym $mod+m exec --no-startup-id i3-sensible-terminal -T Mutt neomutt
+
+# vim-anywhere
+bindsym $mod+v exec --no-startup-id $HOME/.i3/scripts/programs/vim-anywhere
+
+# passmenu
+bindsym $mod+p exec --no-startup-id $HOME/scripts/dmenu/passmenu --type
+bindsym $mod+shift+p exec --no-startup-id $HOME/scripts/dmenu/passmenu
+
+# }}}
+
+# WINDOWS RULES {{{
+
+# QuiteRSS
+for_window [class="QuiteRss" instance="quiterss" title="QuiteRSS"] floating enable         # 1
+for_window [class="QuiteRss" instance="quiterss" title="QuiteRSS"] move position 80px 50px # 2
+for_window [class="QuiteRss" instance="quiterss" title="QuiteRSS"] resize set 1400 900     # 3
+for_window [class="QuiteRss" instance="quiterss" title="QuiteRSS"] move scratchpad         # 4
+
+# KanjiTomo
+for_window [class="kanjitomo-reader-Launcher" instance="sun-awt-X11-XFramePeer" title="KanjiTomo"] floating enable       # 1
+for_window [class="kanjitomo-reader-Launcher" instance="sun-awt-X11-XFramePeer" title="KanjiTomo"] move position 1370 70 # 2
+for_window [class="kanjitomo-reader-Launcher" instance="sun-awt-X11-XFramePeer" title="KanjiTomo"] resize set 550 880    # 3
+for_window [class="kanjitomo-reader-Launcher" instance="sun-awt-X11-XFramePeer" title="win0"] move scratchpad            # 4
+
+# GIMP
+for_window [class="^Gimp$" title="^GNU Image Manipulation Program$"] floating disabled
+for_window [class="^Gimp$" title=" ? GIMP$"] floating disabled
+for_window [class="^Gimp$" title="Tool Options$"] floating enable
+for_window [class="^Gimp$" title="^Quit GIMP$"] floating enable
+
+# The Binding of Isaac
+for_window [class="Wine" instance="isaac.exe" title="Isaac"] floating disable
+
+# }}}
+
+# BINDINGS {{{
+
+# kill focused window
+bindsym Mod1+F4 kill
+
+# start dmenu
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+
+# desktop screenshot
+bindsym --release Print exec "scrot ~/$(date --iso-8601='seconds').png -m -e 'xclip -selection c -t image/png < $f'"
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# enter fullscreen mode for the focused container
+bindsym $mod+F11 fullscreen toggle
+
+# change container layout to tabbed
+bindsym $mod+t layout tabbed
+
+# change container layout to verticaly[!] splitted
+bindsym $mod+s layout splith
+
+# toggle tiling / floating
+bindsym $mod+space floating toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+bindsym $mod+z focus child
+
+# change focus between tiling / floating windows
+bindsym $mod+g focus mode_toggle
+
+# switch to next workspace
+bindsym $mod+Tab workspace next
+
+# switch to previous workspace
+bindsym $mod+Shift+Tab workspace prev
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# touchpad toggle
+bindsym $mod+F4 exec --no-startup-id $HOME/.i3/scripts/touchpad-toggle
+
+# make the currently focused window a scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# show the first scratchpad window
+bindsym $mod+minus [class="^(?!QuiteRss).*$"] scratchpad show
+
+# audio controls
+bindsym XF86AudioLowerVolume exec $HOME/.i3/scripts/volume_down
+bindsym XF86AudioMute        exec amixer -q set Master toggle
+bindsym XF86AudioRaiseVolume exec amixer -q set Master 3dB+ unmute
+
+## send signal to change i3blocks
+bindsym --release XF86AudioLowerVolume exec pkill -SIGRTMIN+10 i3blocks
+bindsym --release XF86AudioMute        exec pkill -SIGRTMIN+10 i3blocks
+bindsym --release XF86AudioRaiseVolume exec pkill -SIGRTMIN+10 i3blocks
+
+# sreen brightness controls
+# bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight -inc 10 # increase screen brightness
+# bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10 # decrease screen brightness
+bindsym XF86MonBrightnessUp   exec --no-startup-id sudo light -A 5 # increase screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id sudo light -U 5 # decrease screen brightness
+
+# media player controls
+bindsym XF86AudioNext  exec playerctl next
+bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioPlay  exec playerctl play
+bindsym XF86AudioPrev  exec playerctl previous
+
+# }}}
+
+# vim: set fdm=marker foldenable:
