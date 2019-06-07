@@ -50,7 +50,7 @@ bind Space:magic-space
 # }}}
 
 # EXPORTS {{{
-source $HOME/dotfiles/other/export_var
+source $HOME/dotfiles/other/exports
 # }}}
 
 # FUNCTIONS {{{

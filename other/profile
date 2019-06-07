@@ -2,4 +2,4 @@
 ### PROFILE ###
 ###############
 
-source $HOME/dotfiles/other/export_var
+source $HOME/dotfiles/other/exports

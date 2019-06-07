@@ -1,7 +1,6 @@
 #!/bin/bash
 
-if [ "$(command synclient -l | command grep TouchpadOff | command cut -c31-)" = "0" ]
-then
+if [ "$(command synclient -l | command grep TouchpadOff | command cut -c31-)" = "0" ]; then
     synclient TouchpadOff=1
 else
     synclient TouchpadOff=0

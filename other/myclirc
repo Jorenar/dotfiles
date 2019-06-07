@@ -1,4 +1,3 @@
-# vi: ft=dosini
 [main]
 
 export LESS="-SRXF"
@@ -98,3 +97,5 @@ Token.Toolbar.Arg.Text = nobold
 # Favorite queries.
 [favorite_queries]
 showtb = SHOW TABLES;
+
+# vi: ft=dosini

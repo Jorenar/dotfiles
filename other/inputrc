@@ -8,5 +8,6 @@ set editing-mode vi
 # Show which mode is used right now
 set show-mode-in-prompt on
 
+# Mode indicators
 set vi-ins-mode-string ""
 set vi-cmd-mode-string "Vi | "

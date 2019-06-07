@@ -29,4 +29,4 @@ XTerm*charClass: 33:48,37-38:48,45-47:48,64:48,58:48,126:48,61:48,63:48,43:48,35
 
 ! Colors
 XTerm*background: black
-XTerm*foreground: grey
+XTerm*foreground: white
