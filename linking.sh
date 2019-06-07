@@ -30,6 +30,7 @@ linking  $x  other/gpg-agent.conf   $HOME/.gnupg/gpg-agent.conf
 linking  $x  other/inputrc          $HOME/.inputrc
 linking  $x  other/profile          $HOME/.profile
 linking  $x  other/tmux.conf        $HOME/.tmux.conf
+linking  $x  other/vim.tigrc        $HOME/.tigrc
 linking  $x  other/Xresources       $HOME/.Xresources
 linking  $x  other/zathurarc        $HOME/.config/zathura/zathurarc
 linking  $x  vim/colors             $HOME/.vim/colors
