@@ -9,35 +9,28 @@ linking() {
     fi
 }
 
-
-if [[ $1 == "-f" ]]; then
-    x="-f"
-else
-    x="n"
-fi
-
 cd $(dirname $0)
 
-linking  $x  gtk/gtk3_settings.ini  $HOME/.config/gtk-3.0/settings.ini
-linking  $x  gtk/gtkrc-2.0          $HOME/.gtkrc-2.0
-linking  $x  i3/                    $HOME/.i3
-linking  $x  mpv/                   $HOME/.config/mpv
-linking  $x  mutt/muttrc            $HOME/.muttrc
-linking  $x  other/bashrc           $HOME/.bash_profile
-linking  $x  other/bashrc           $HOME/.bashrc
-linking  $x  other/feh_keys         $HOME/.config/feh/keys
-linking  $x  other/gitconfig        $HOME/.gitconfig
-linking  $x  other/gpg-agent.conf   $HOME/.gnupg/gpg-agent.conf
-linking  $x  other/inputrc          $HOME/.inputrc
-linking  $x  other/profile          $HOME/.profile
-linking  $x  other/tmux.conf        $HOME/.tmux.conf
-linking  $x  other/vim.tigrc        $HOME/.tigrc
-linking  $x  other/Xresources       $HOME/.Xresources
-linking  $x  other/zathurarc        $HOME/.config/zathura/zathurarc
-linking  $x  vim/colors             $HOME/.vim/colors
-linking  $x  vim/indent             $HOME/.vim/indent
-linking  $x  vim/UltiSnips          $HOME/.vim/UltiSnips
-linking  $x  vim/vimrc              $HOME/.vimrc
+linking  $1  gtk/gtk3_settings.ini  $HOME/.config/gtk-3.0/settings.ini
+linking  $1  gtk/gtkrc-2.0          $HOME/.gtkrc-2.0
+linking  $1  i3/                    $HOME/.i3
+linking  $1  mpv/                   $HOME/.config/mpv
+linking  $1  mutt/muttrc            $HOME/.muttrc
+linking  $1  other/bashrc           $HOME/.bash_profile
+linking  $1  other/bashrc           $HOME/.bashrc
+linking  $1  other/feh_keys         $HOME/.config/feh/keys
+linking  $1  other/gitconfig        $HOME/.gitconfig
+linking  $1  other/gpg-agent.conf   $HOME/.gnupg/gpg-agent.conf
+linking  $1  other/inputrc          $HOME/.inputrc
+linking  $1  other/profile          $HOME/.profile
+linking  $1  other/tmux.conf        $HOME/.tmux.conf
+linking  $1  other/vim.tigrc        $HOME/.tigrc
+linking  $1  other/Xresources       $HOME/.Xresources
+linking  $1  other/zathurarc        $HOME/.config/zathura/zathurarc
+linking  $1  vim/colors             $HOME/.vim/colors
+linking  $1  vim/indent             $HOME/.vim/indent
+linking  $1  vim/UltiSnips          $HOME/.vim/UltiSnips
+linking  $1  vim/vimrc              $HOME/.vimrc
 
 # linking  $x  other/myclirc          $HOME/.myclirc
 
