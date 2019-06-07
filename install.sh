@@ -1,40 +1,38 @@
+declare dotfiles_dir="$(dirname $(realpath $0))"
+declare force_flag=$1
+
 linking() {
-    if [[ $1 == "-f" ]]; then
-        rm -rf $3
+    if [[ $force_flag == "-f" ]]; then
+        mkdir -p $HOME/dotfiles.old/
+        mv "$2" "$HOME/dotfiles.old/"
+        echo "Moved file $2 to directory $HOME/dotfiles.old/"
     fi
 
-    if [ ! -e $3 ]; then
-        mkdir -p "$(dirname $3)"
-        ln -sf $(pwd)/$2 $3
+    if [ ! -e $2 ]; then
+        mkdir -p "$(dirname $2)"
+        ln -sf $dotfiles_dir/$1 $2
     fi
 }
 
-cd $(dirname $0)
 
-linking  $1  gtk/gtk3_settings.ini  $HOME/.config/gtk-3.0/settings.ini
-linking  $1  gtk/gtkrc-2.0          $HOME/.gtkrc-2.0
-linking  $1  i3/                    $HOME/.i3
-linking  $1  mpv/                   $HOME/.config/mpv
-linking  $1  mutt/muttrc            $HOME/.muttrc
-linking  $1  other/bashrc           $HOME/.bash_profile
-linking  $1  other/bashrc           $HOME/.bashrc
-linking  $1  other/feh_keys         $HOME/.config/feh/keys
-linking  $1  other/gitconfig        $HOME/.gitconfig
-linking  $1  other/gpg-agent.conf   $HOME/.gnupg/gpg-agent.conf
-linking  $1  other/inputrc          $HOME/.inputrc
-linking  $1  other/profile          $HOME/.profile
-linking  $1  other/tmux.conf        $HOME/.tmux.conf
-linking  $1  other/vim.tigrc        $HOME/.tigrc
-linking  $1  other/Xresources       $HOME/.Xresources
-linking  $1  other/zathurarc        $HOME/.config/zathura/zathurarc
-linking  $1  vim/colors             $HOME/.vim/colors
-linking  $1  vim/indent             $HOME/.vim/indent
-linking  $1  vim/UltiSnips          $HOME/.vim/UltiSnips
-linking  $1  vim/vimrc              $HOME/.vimrc
+linking  gtk/gtk3_settings.ini  $HOME/.config/gtk-3.0/settings.ini
+linking  gtk/gtkrc-2.0          $HOME/.gtkrc-2.0
+linking  i3/                    $HOME/.i3
+linking  mpv/                   $HOME/.config/mpv
+linking  mutt/muttrc            $HOME/.muttrc
+linking  other/bashrc           $HOME/.bash_profile
+linking  other/bashrc           $HOME/.bashrc
+linking  other/feh_keys         $HOME/.config/feh/keys
+linking  other/gitconfig        $HOME/.gitconfig
+linking  other/gpg-agent.conf   $HOME/.gnupg/gpg-agent.conf
+linking  other/inputrc          $HOME/.inputrc
+linking  other/profile          $HOME/.profile
+linking  other/tmux.conf        $HOME/.tmux.conf
+linking  other/vim.tigrc        $HOME/.tigrc
+linking  other/Xresources       $HOME/.Xresources
+linking  other/zathurarc        $HOME/.config/zathura/zathurarc
+linking  vim/indent             $HOME/.vim/indent
+linking  vim/UltiSnips          $HOME/.vim/UltiSnips
+linking  vim/vimrc              $HOME/.vimrc
 
-# linking  $x  other/myclirc          $HOME/.myclirc
-
-cd - > /dev/null
-
-mkdir -p $HOME/.vim/cache/backup
-mkdir -p $HOME/.vim/cache/undo
+# linking  other/myclirc          $HOME/.myclirc

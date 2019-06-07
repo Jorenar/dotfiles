@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# DOTFILES dir
+export DOTFILES="$HOME/dotfiles"
+
 # Japanese input
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx

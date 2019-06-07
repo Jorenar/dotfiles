@@ -416,6 +416,10 @@ if &t_ts == "" && ( &term =~ "screen" || &term =~ "xterm" )
     let &t_ts = "\e]2;"
 endif
 
+" Create cache files dirs
+call mkdir($HOME.'/.vim/cache/backup', 'p')
+call mkdir($HOME.'/.vim/cache/undo', 'p')
+
 " Highlights
 hi FoldMarker cterm=bold,underline
 hi QuickFixLine ctermbg=NONE

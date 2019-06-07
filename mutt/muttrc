@@ -60,7 +60,7 @@ set net_inc=5
 set help=no
 
 # Set mailcap path
-set mailcap_path="$HOME/dotfiles/mutt/mailcap"
+set mailcap_path="$DOTFILES/mutt/mailcap"
 
 # View HTML
 alternative_order text/plain text/enriched text/html     # save html for last
@@ -70,7 +70,7 @@ auto_view text/html                                      # view html automatical
 macro index,pager \cW v/text\/html<enter><enter>
 
 # Source private
-source $HOME/dotfiles/mutt/private
+source $DOTFILES/mutt/private
 
 # }}}
 
