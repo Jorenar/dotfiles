@@ -7,7 +7,6 @@
 alias ap1='sudo create_ap wlo1 wlo1 x I_love_BASH' # semi open WiFi network
 alias cal='LC_ALL=en_EN.utf8 ncal -Mb 2> /dev/null'
 alias du='du -h'
-alias git-update='command git add -A && command git commit -m "$(command date "+%F_%T")" && command git push -u origin master'
 alias grep='grep --color'
 alias less='less -R'
 alias ll='ls -alhF | less -R'
