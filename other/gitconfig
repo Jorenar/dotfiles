@@ -1,0 +1,13 @@
+[user]
+	email = <>
+	name = Jorengarenar
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+
+[alias]
+    fast = !sh -c 'git add -A && git commit -m \"$1\" && git push' -
+[core]
+	editor = vim
