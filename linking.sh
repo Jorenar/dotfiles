@@ -26,6 +26,7 @@ linking  $x  mutt/muttrc            $HOME/.muttrc
 linking  $x  other/bashrc           $HOME/.bash_profile
 linking  $x  other/bashrc           $HOME/.bashrc
 linking  $x  other/feh_keys         $HOME/.config/feh/keys
+linking  $x  other/gitconfig        $HOME/.gitconfig
 linking  $x  other/gpg-agent.conf   $HOME/.gnupg/gpg-agent.conf
 linking  $x  other/inputrc          $HOME/.inputrc
 linking  $x  other/profile          $HOME/.profile
