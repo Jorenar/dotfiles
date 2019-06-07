@@ -27,7 +27,6 @@ export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 export GPG_AGENT_INFO
 
 # Update PATH variable
-export PATH="$PATH:$HOME/.bin"
 export PATH="$PATH:$HOME/app/adb-fastboot/platform-tools"
 
 # VITASDK

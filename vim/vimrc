@@ -300,12 +300,12 @@ set nowrap
 set t_Co=256
 
 " Indentation
+let g:html_indent_style1 = "inc"
 set autoindent
 set cindent
 set expandtab
 set shiftround
 set shiftwidth=4
-let g:html_indent_style1 = "inc"
 set softtabstop=4
 set tabstop=4
 
