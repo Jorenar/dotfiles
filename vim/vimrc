@@ -105,6 +105,14 @@ endfor
 
 " FUNCTIONS {{{
 
+" VARIABLES {{{
+
+let s:copy_command  = 'xsel --clipboard --input'
+let s:CursorHighlight_state = 0
+let s:paste_command = 'xsel --clipboard --output'
+
+" }}}
+
 " Fill rest of line with characters
 function! s:FillLine(str, to_column)
     .s/[[:space:]]*$//
@@ -297,6 +305,7 @@ set cindent
 set expandtab
 set shiftround
 set shiftwidth=4
+let g:html_indent_style1 = "inc"
 set softtabstop=4
 set tabstop=4
 
@@ -500,14 +509,6 @@ set statusline+=%=                  " Switch to the right side
 set statusline+=%l/                 " Current line
 set statusline+=%L                  " Total lines
 set statusline+=\ \:\ %c\           " Current column
-
-" }}}
-
-" VARIABLES {{{
-
-let s:copy_command  = 'xsel --clipboard --input'
-let s:CursorHighlight_state = 0
-let s:paste_command = 'xsel --clipboard --output'
 
 " }}}
 

@@ -29,7 +29,6 @@ export GPG_AGENT_INFO
 # Update PATH variable
 export PATH="$PATH:$HOME/.bin"
 export PATH="$PATH:$HOME/app/adb-fastboot/platform-tools"
-export PATH="$PATH:$HOME/scripts/bin"
 
 # VITASDK
 export VITASDK=/usr/local/vitasdk

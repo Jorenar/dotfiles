@@ -50,7 +50,7 @@ bind Space:magic-space
 # }}}
 
 # EXPORTS {{{
-source $HOME/dotfiles/other/exports
+source $HOME/dotfiles/other/export_var
 # }}}
 
 # FUNCTIONS {{{
@@ -119,36 +119,6 @@ offupg()
         vim +PlugUpgrade +PlugUpdate +qa
     fi
     command sudo shutdown -h now
-}
-
-quiterss-backup()
-{
-    case $1 in
-        '')
-            command tar -czf ./quiterss-backup_$(command date '+%F_%R').tar.gz -C $HOME .config/QuiteRss/ .local/share/QuiteRss/
-            ;;
-        "-b")
-            command tar -czf ./quiterss-backup.tar.gz -C $HOME .config/QuiteRss/ .local/share/QuiteRss/
-            ;;
-        "-r")
-            if [ "$2" = "" ]; then
-                if [ -e ./quiterss-backup.tar.gz ]; then
-                    command tar -xzf ./quiterss-backup.tar.gz -C $HOME
-                else
-                    echo "Please provide the path to backup file"
-                fi
-            else
-                if [ -e $2 ]; then
-                    command tar -xzf $2 -C $HOME
-                else
-                    echo " $2  - file doesn't exist"
-                fi
-            fi
-            ;;
-        *)
-            echo " $1 - no such option"
-            ;;
-    esac
 }
 
 rebuild-hosts-file()

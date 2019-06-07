@@ -72,10 +72,10 @@ bindsym $mod+m exec --no-startup-id i3-sensible-terminal -T Mutt neomutt
 bindsym $mod+v exec --no-startup-id $HOME/.i3/scripts/programs/vim-anywhere
 
 # passmenu (type password)
-bindsym $mod+p exec --no-startup-id $HOME/scripts/dmenu/passmenu --type
+bindsym $mod+p exec --no-startup-id $HOME/scripts/passmenu --type
 
 # passmenu (copy to clipboard)
-bindsym $mod+shift+p exec --no-startup-id $HOME/scripts/dmenu/passmenu
+bindsym $mod+shift+p exec --no-startup-id $HOME/scripts/passmenu
 
 # }}}
 
