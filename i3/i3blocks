@@ -4,6 +4,7 @@ color=#BBB
 separator=false
 separator_block_width=7
 
+
 [cpu-temp]
 command=sensors | grep "Package id 0:" | cut -c15-23
 interval=1
