@@ -77,6 +77,10 @@ bindsym $mod+p exec --no-startup-id $HOME/scripts/passmenu --type
 # passmenu (copy to clipboard)
 bindsym $mod+shift+p exec --no-startup-id $HOME/scripts/passmenu
 
+# Game Launcher
+bindsym $mod+g exec --no-startup-id dmenu-game-launcher
+
+
 # }}}
 
 # WINDOWS RULES {{{
@@ -146,7 +150,7 @@ bindsym $mod+a focus parent
 bindsym $mod+z focus child
 
 # change focus between tiling / floating windows
-bindsym $mod+g focus mode_toggle
+bindsym $mod+f focus mode_toggle
 
 # switch to next workspace
 bindsym $mod+Tab workspace next

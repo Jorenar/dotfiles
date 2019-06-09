@@ -261,6 +261,7 @@ inoremap <F2> <ESC>gt
 noremap <F1> gT
 noremap <F2> gt
 noremap <F3> :call <SID>CursorHighlightToggle()<CR>
+noremap <F9> :w <bar> make<CR>
 
 " Ctrl
 inoremap <C-o> <C-x><C-o>
