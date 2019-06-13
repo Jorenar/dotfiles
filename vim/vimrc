@@ -334,6 +334,7 @@ set backspace=indent,eol,start
 set history=50
 set lazyredraw
 set modeline
+"set nomodelineexpr
 set nrformats=
 set omnifunc=syntaxcomplete#Complete
 set shortmess+=I
@@ -457,7 +458,6 @@ endif
 " INSTALL PLUGINS (via Plug)
 
 call plug#begin('~/.vim/bundle')
-Plug 'tpope/vim-commentary'            " Commentary
 Plug 'ludovicchabant/vim-gutentags'    " Gutentags
 Plug 'kshenoy/vim-signature'           " Signature
 Plug 'tpope/vim-surround'              " Surround
@@ -470,20 +470,20 @@ call plug#end()
 
 " VARIABLES
 
-let g:gutentags_cache_dir               = $HOME."/.vim/cache/tags"           "  Gutentags
-let g:UltiSnipsEditSplit                = "context"                          "  UltiSnips
-let g:UltiSnipsExpandTrigger            = "<C-j>"                            "  UltiSnips
-let g:UltiSnipsListSnippets             = "<C-k>"                            "  UltiSnips
-let g:UltiSnipsSnippetDirectories       = ['~/.vim/UltiSnips', 'UltiSnips']  "  UltiSnips
-let g:undotree_SetFocusWhenToggle       = 1                                  "  UndoTree
-let g:undotree_ShortIndicators          = 1                                  "  UndoTree
-let g:undotree_SplitWidth               = 28                                 "  UndoTree
+let g:gutentags_cache_dir         = $HOME."/.vim/cache/tags"           "  Gutentags
+let g:UltiSnipsEditSplit          = "context"                          "  UltiSnips
+let g:UltiSnipsExpandTrigger      = "<C-j>"                            "  UltiSnips
+let g:UltiSnipsListSnippets       = "<C-k>"                            "  UltiSnips
+let g:UltiSnipsSnippetDirectories = ['~/.vim/UltiSnips', 'UltiSnips']  "  UltiSnips
+let g:undotree_SetFocusWhenToggle = 1                                  "  UndoTree
+let g:undotree_ShortIndicators    = 1                                  "  UndoTree
+let g:undotree_SplitWidth         = 28                                 "  UndoTree
 
 
 " OTHER
 
 command -range TabularizeBySpace execute '<line1>,<line2>Tabularize /\S\+/l1'
-nmap s ysiw
+nmap s ys
 noremap <leader><F1> :UndotreeToggle<CR>
 vmap s S
 
