@@ -334,7 +334,7 @@ set backspace=indent,eol,start
 set history=50
 set lazyredraw
 set modeline
-"set nomodelineexpr
+set nomodelineexpr
 set nrformats=
 set omnifunc=syntaxcomplete#Complete
 set shortmess+=I
