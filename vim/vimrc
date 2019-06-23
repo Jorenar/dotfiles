@@ -26,8 +26,8 @@ colorscheme black_and_white
 " Open file at the last known position
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exec "normal! g`\"" | endif
 
-" Disable continuation of comments to the next line (it cannot be just '-cro')
-autocmd FileType * set fo-=c fo-=r fo-=o
+" Disable continuation of comments to the next line
+autocmd filetype * set fo-=c fo-=r fo-=o
 
 " Trim trailing whitespace
 autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
@@ -43,9 +43,6 @@ autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype"
 
 " QuickFix window below other windows
 autocmd FileType qf wincmd J
-
-" Close Vim, if last window is netrw
-autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&filetype") == "netrw" | q | endif
 
 " Fold markers
 autocmd BufWinEnter * match FoldMarker '.* [{}]\{3}$'
@@ -360,6 +357,7 @@ let s:ft_issues = {
             \ ".asm"   : "nasm",
             \ ".conf"  : "conf",
             \ ".js"    : "javascript",
+            \ ".list"  : "debsources",
             \}
 
 for [ending, ft] in items(s:ft_issues)
@@ -477,7 +475,6 @@ let g:UltiSnipsListSnippets       = "<C-k>"                            "  UltiSn
 let g:UltiSnipsSnippetDirectories = ['~/.vim/UltiSnips', 'UltiSnips']  "  UltiSnips
 let g:undotree_SetFocusWhenToggle = 1                                  "  UndoTree
 let g:undotree_ShortIndicators    = 1                                  "  UndoTree
-let g:undotree_SplitWidth         = 28                                 "  UndoTree
 
 
 " OTHER
