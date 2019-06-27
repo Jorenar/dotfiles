@@ -264,6 +264,7 @@ noremap <F9> :w <bar> make<CR>
 inoremap <C-o> <C-x><C-o>
 
 " Normal keys
+inoremap </ </<C-x><C-o>
 noremap ' `
 noremap '' ``
 noremap <Tab> <C-w><C-w>
@@ -336,6 +337,7 @@ set nrformats=
 set omnifunc=syntaxcomplete#Complete
 set shortmess+=I
 set title
+set dictionary=/usr/share/dict/words
 set viewoptions-=options
 set viminfo+=n~/.vim/viminfo
 set wrapmargin=0
