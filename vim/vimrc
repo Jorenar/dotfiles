@@ -338,9 +338,8 @@ packadd termdebug
 " FOLDING METHODS --------------------------------
 
 let s:fdm_for_lang = {
-            \ "c" : "syntax",
-            \ "cpp": "syntax",
-            \ "java" : "syntax",
+            \ "c,cpp"    : "syntax",
+            \ "java"     : "syntax",
             \ "markdown" : "indent",
             \}
 
@@ -352,8 +351,8 @@ endfor
 " FORMATTING -------------------------------------
 
 let s:fp_for_lang = {
-            \ 'c'          : 'astyle\ --style=kr\ -s4\ -N\ -S\ -xG\ -xU\ -f\ -k3\ -xj\ -p',
-            \ 'cpp'        : 'astyle\ --style=kr\ -s4\ -N\ -S\ -xG\ -xU\ -f\ -k3\ -xj\ -p',
+            \ 'c,cpp'      : 'astyle\ --style=kr\ -s4\ -N\ -S\ -xG\ -xU\ -f\ -k3\ -xj\ -p',
+            \ 'css'        : 'css-beautify',
             \ 'javascript' : 'js-beautify',
             \}
 
