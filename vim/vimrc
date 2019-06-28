@@ -75,15 +75,14 @@ let s:languages = {
             \ "perl"     : "perl %",
             \ "python"   : "python3 %",
             \ "rust"     : "rustc % && ./%<",
-            \ "sh"       : "%:p",
-            \ "tex"      : "latexmk -pdf % && latexmk -c; zathura %<.pdf",
+            \ "sh"       : "chmod +x %:p && %:p",
+            \ "tex"      : "latexmk -pdf % && latexmk -c && zathura %<.pdf",
             \ "xhtml"    : "firefox %",
             \}
 
 for [ft, cmd] in items(s:languages)
-    exec "autocmd filetype ".ft." let &l:makeprg=\"if [ -f \\\"Makefile\\\" ];then make;else ".cmd.";fi\""
+    exec "autocmd filetype ".ft." let &l:makeprg=\"if [ -f \\\"Makefile\\\" ]; then make $*; else ".cmd."; fi\""
 endfor
-
 
 " }}}
 
@@ -98,7 +97,7 @@ let s:paste_command = 'xsel --clipboard --output'
 " }}}
 
 " Fill rest of line with characters
-function! s:FillLine(str, to_column)
+function! s:FillLine(str, to_column) abort
     .s/[[:space:]]*$//
     let reps = (a:to_column - col("$")) / len(a:str)
     if reps > 0
@@ -107,7 +106,7 @@ function! s:FillLine(str, to_column)
 endfunction
 
 " Toggle cursor line and column highlight
-function s:CursorHighlightToggle()
+function s:CursorHighlightToggle() abort
     setlocal cursorcolumn!
     if (s:CursorHighlight_state == 1)
         hi CursorLine cterm=none ctermbg=none
@@ -120,7 +119,7 @@ function s:CursorHighlightToggle()
 endfunction
 
 " Sorts lines based on visual-block selected portion of the lines
-function! s:VisSort(isnmbr) range
+function! s:VisSort(isnmbr) range abort
     if visualmode() != "\<c-v>"
         execute "silent! ".a:firstline.",".a:lastline."sort i"
         return
@@ -174,7 +173,7 @@ function! s:system_paste() abort
 endfunction
 
 " Status line - file size
-function! FileSize()
+function! FileSize() abort
     let bytes = getfsize(expand(@%))
     if (bytes >= 1024*1024)
         return '~' . float2nr(round(bytes/(1024*1024.0))) . ' MiB'
@@ -188,12 +187,12 @@ function! FileSize()
 endfunction
 
 " Status line - file encoding
-function! FileEncoding()
+function! FileEncoding() abort
     return (&fenc == "" ? &enc : &fenc).((exists("+bomb") && &bomb) ? " BOM" : "")
 endfunction
 
 " Preview of Vim 256 colors
-function! Color_demo()
+function! Color_demo() abort
     30 vnew
     setlocal nonumber buftype=nofile bufhidden=hide noswapfile
     setlocal statusline=[%n]
@@ -208,14 +207,14 @@ function! Color_demo()
 endfunction
 
 " Check highlight group under the cursor
-function! WhatsHighlightIt()
+function! WhatsHighlightIt() abort
     echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
                 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
                 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"
 endfunction
 
 " Function to match C/C++ #define macros
-function! s:HighlightC_PreProcDefines()
+function! s:HighlightC_PreProcDefines() abort
     syntax clear C_PreProcDefine
     for line in getline('1','$')
         if line =~ '^\s*#\s*define\s\+'
@@ -311,7 +310,7 @@ set splitright
 set wildmenu
 
 " OTHER
-let g:tex_flavor = 'tex'
+let g:tex_flavor = 'latex'
 set backspace=indent,eol,start
 set history=50
 set lazyredraw
@@ -333,22 +332,6 @@ set wrapmargin=0
 " PACKAGES ---------------------------------------
 packadd matchit
 packadd termdebug
-
-
-" FILETYPE ISSUES --------------------------------
-" Dict structure:   FILE ENDING : FILETYPE
-"   FILE ENDING may or not may be with dot (eg. tags files)
-
-let s:ft_issues = {
-            \ ".asm"   : "nasm",
-            \ ".conf"  : "conf",
-            \ ".js"    : "javascript",
-            \ ".list"  : "debsources",
-            \}
-
-for [ending, ft] in items(s:ft_issues)
-    execute "autocmd BufWinEnter *".ending." setlocal filetype=".ft
-endfor
 
 
 " FOLDING METHODS --------------------------------
