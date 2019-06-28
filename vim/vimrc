@@ -13,9 +13,6 @@ filetype plugin indent on
 " Enable syntax
 syntax enable
 
-" Dark background
-set background=dark
-
 " Set colorscheme
 colorscheme black_and_white
 
@@ -51,52 +48,14 @@ autocmd BufWinEnter * match FoldMarker '.* [{}]\{3}$'
 
 " COMMANDS {{{
 
+command -nargs=+ FillLine call <SID>FillLine(<f-args>)
 command -nargs=+ Grep execute "vimgrep /".<f-args>."/j ** | :copen"
 command -nargs=+ Spelling execute 'setlocal spell spelllang=<args>'
-command -range=% Enumerate normal :let i=1 | <line1>,<line2>g/^/s//\=i.'. '/ | let i=i+1 | noh<CR>
+command -range -nargs=0 -bang Vissort sil! keepj <line1>,<line2>call <SID>VisSort(<bang>0)
 command -range=% Sort normal :<line1>,<line2>sort i<CR>
 command Debug normal :Termdebug<CR><C-w>H
-command SortBlock :normal! vip:sort i<CR>
-command! -nargs=+ FillLine call <SID>FillLine(<f-args>)
-command! -range -nargs=0 -bang Vissort sil! keepj <line1>,<line2>call <SID>VisSort(<bang>0)
-
-" SIMPLE TOGGLE
-command RelativeNumber setlocal relativenumber!
-command Whitespace setlocal list!
-command Wrap setlocal wrap!
-
-" SHELL COMMANDS
 command ExecCurrentLine normal :.w !sh<CR>
-command SudoW :execute ':silent w !sudo tee % > /dev/null' | :edit!
-
-" }}}
-
-" COMPILE AND RUN {{{
-
-" ATTENTION: This is VERY simple and basic "Compile and Run"
-
-let s:languages = {
-            \ "asm"      : "as -o %<.o % && ld -s -o %< %<.o && rm %<.o && ./%<",
-            \ "basic"    : "vintbas %",
-            \ "c"        : "gcc -std=gnu11 -g % -o %< && ./%<",
-            \ "cpp"      : "g++ -std=gnu++11 -g % -o %< && ./%<",
-            \ "haskell"  : "ghc -o %< %; rm %<.hi %<.o && ./%<",
-            \ "html"     : "firefox %",
-            \ "lisp"     : "clisp %",
-            \ "lua"      : "lua %",
-            \ "markdown" : "grip -b % 1> /dev/null<CR>",
-            \ "nasm"     : "yasm -f elf64 % && ld -g -o %< %<.o && rm %<.o && ./%<",
-            \ "perl"     : "perl %",
-            \ "python"   : "python3 %",
-            \ "rust"     : "rustc % && ./%<",
-            \ "sh"       : "%:p",
-            \ "tex"      : "latexmk -pdf % && latexmk -c; zathura %<.pdf",
-            \ "xhtml"     : "firefox %",
-            \}
-
-for [ft, cmd] in items(s:languages)
-    exec "autocmd filetype ".ft." nnoremap <buffer> <F8> :w <bar> !".cmd."<CR>"
-endfor
+command SortBlock :normal! vip:sort i<CR>
 
 " }}}
 
@@ -236,9 +195,6 @@ function! s:HighlightC_PreProcDefines()
         endif
     endfor
 endfunction
-
-" Delete "expired" cache files
-" TODO
 
 " }}}
 
@@ -459,12 +415,12 @@ endif
 
 call plug#begin('~/.vim/bundle')
 Plug 'ludovicchabant/vim-gutentags'    " Gutentags
-Plug 'kshenoy/vim-signature'           " Signature
 Plug 'tpope/vim-surround'              " Surround
 Plug 'godlygeek/tabular'               " Tabular
 Plug 'christoomey/vim-tmux-navigator'  " Tmux Navigator
 Plug 'SirVer/ultisnips'                " UltiSnips
 Plug 'mbbill/undotree'                 " UndoTree
+Plug 'xuhdev/SingleCompile'            " SingleCompile
 call plug#end()
 
 
