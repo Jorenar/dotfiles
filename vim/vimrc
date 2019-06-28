@@ -41,6 +41,10 @@ autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype"
 " QuickFix window below other windows
 autocmd FileType qf wincmd J
 
+" Automatically open QuickFix
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
+
 " Fold markers
 autocmd BufWinEnter * match FoldMarker '.* [{}]\{3}$'
 
@@ -48,14 +52,14 @@ autocmd BufWinEnter * match FoldMarker '.* [{}]\{3}$'
 
 " COMMANDS {{{
 
-command -nargs=+ FillLine call <SID>FillLine(<f-args>)
-command -nargs=+ Grep execute "vimgrep /".<f-args>."/j ** | :copen"
-command -nargs=+ Spelling execute 'setlocal spell spelllang=<args>'
-command -range -nargs=0 -bang Vissort sil! keepj <line1>,<line2>call <SID>VisSort(<bang>0)
-command -range=% Sort normal :<line1>,<line2>sort i<CR>
-command Debug normal :Termdebug<CR><C-w>H
-command ExecCurrentLine normal :.w !sh<CR>
-command SortBlock :normal! vip:sort i<CR>
+command! -nargs=+ FillLine call <SID>FillLine(<f-args>)
+command! -nargs=+ Grep execute "vimgrep /".<f-args>."/j ** | :copen"
+command! -nargs=+ Spelling execute 'setlocal spell spelllang=<args>'
+command! -range -nargs=0 -bang Vissort sil! keepj <line1>,<line2>call <SID>VisSort(<bang>0)
+command! -range=% Sort normal :<line1>,<line2>sort i<CR>
+command! Debug normal :Termdebug<CR><C-w>H
+command! ExecCurrentLine normal :.w !sh<CR>
+command! SortBlock :normal! vip:sort i<CR>
 
 " }}}
 
@@ -76,7 +80,7 @@ let s:languages = {
             \ "python"   : "python3 %",
             \ "rust"     : "rustc % && ./%<",
             \ "sh"       : "chmod +x %:p && %:p",
-            \ "tex"      : "latexmk -pdf % && latexmk -c && zathura %<.pdf",
+            \ "tex"      : "latexmk -pdf -pv %; latexmk -c %",
             \ "xhtml"    : "firefox %",
             \}
 
@@ -106,7 +110,7 @@ function! s:FillLine(str, to_column) abort
 endfunction
 
 " Toggle cursor line and column highlight
-function s:CursorHighlightToggle() abort
+function! s:CursorHighlightToggle() abort
     setlocal cursorcolumn!
     if (s:CursorHighlight_state == 1)
         hi CursorLine cterm=none ctermbg=none
@@ -279,7 +283,6 @@ set foldmethod=indent
 set linebreak
 set nofoldenable
 set nowrap
-set t_Co=256
 
 " Indentation
 let g:html_indent_style1 = "inc"
@@ -310,7 +313,6 @@ set splitright
 set wildmenu
 
 " OTHER
-let g:tex_flavor = 'latex'
 set backspace=indent,eol,start
 set history=50
 set lazyredraw
@@ -321,7 +323,6 @@ set omnifunc=syntaxcomplete#Complete
 set shortmess+=I
 set title
 set dictionary=/usr/share/dict/words
-set viewoptions-=options
 set viminfo+=n~/.vim/viminfo
 set wrapmargin=0
 
@@ -367,7 +368,6 @@ if has("clipboard")
     nnoremap <C-p> "+p
     nnoremap <C-y> "+y
     xnoremap <C-y> "+y
-    command AllToClipboard execute "normal! gg\"+yG``"
 else
 
     " Paste
@@ -381,8 +381,6 @@ else
 
     " Copy in Visual mode
     xnoremap <silent> <C-y>  :call <SID>system_copy(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>
-
-    command AllToClipboard execute "normal! gg:set opfunc=<SID>system_copy<CR>g@G``"
 
 endif
 
@@ -447,7 +445,7 @@ let g:undotree_ShortIndicators    = 1                                  "  UndoTr
 
 " OTHER
 
-command -range TabularizeBySpace execute '<line1>,<line2>Tabularize /\S\+/l1'
+command! -range TabularizeBySpace execute '<line1>,<line2>Tabularize /\S\+/l1'
 nmap s ys
 noremap <leader><F1> :UndotreeToggle<CR>
 vmap s S
