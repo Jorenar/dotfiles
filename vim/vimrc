@@ -51,13 +51,34 @@ command! SortBlock :normal! vip:sort i<CR>
 
 " }}}
 
+" CLIPBOARD {{{
+
+if has("clipboard")
+    nnoremap <C-p> "+p
+    nnoremap <C-y> "+y
+    xnoremap <C-y> "+y
+else
+    nnoremap <silent> <C-p> :call <SID>system_paste()<CR>
+    nnoremap <silent> <C-y>  :set opfunc=<SID>system_copy<CR>g@
+    nnoremap <silent> <C-y>y :set opfunc=<SID>system_copy<Bar>exe 'norm! 'v:count1.'g@_'<CR>
+    xnoremap <silent> <C-y>  :call <SID>system_copy(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>
+endif
+
+" }}}
+
 " COMPILE AND RUN {{{
 
-let s:languages = {
+let s:compiler_for_filetype = {
+            \ "python" : "pyunit",
+            \ "tex"    : "tex",
+            \}
+
+let s:makeprg_for_filetype = {
             \ "asm"      : "as -o %<.o % && ld -s -o %< %<.o && rm %<.o && ./%<",
             \ "basic"    : "$HOME/app/vintbas %",
             \ "c"        : "gcc -std=gnu11 -g % -o %< && ./%<",
             \ "cpp"      : "g++ -std=gnu++11 -g % -o %< && ./%<",
+            \ "go"       : "go build && ./%<",
             \ "haskell"  : "ghc -o %< %; rm %<.hi %<.o && ./%<",
             \ "html"     : "firefox %",
             \ "lisp"     : "clisp %",
@@ -69,12 +90,50 @@ let s:languages = {
             \ "python"   : "python3 %",
             \ "rust"     : "rustc % && ./%<",
             \ "sh"       : "chmod +x %:p && %:p",
-            \ "tex"      : "pdflatex -file-line-error -interaction=nonstopmode %; zathura %<.pdf",
+            \ "tex"      : "pdflatex -file-line-error -interaction=nonstopmode % && zathura %<.pdf",
             \ "xhtml"    : "firefox %",
             \}
 
-for [ft, cmd] in items(s:languages)
-    execute "autocmd filetype ".ft." let &l:makeprg=\"if [ -f \\\"Makefile\\\" ]; then make $*; else ".cmd."; fi\""
+" Apply {{{
+for [ft, comp] in items(s:compiler_for_filetype)
+    execute "autocmd filetype ".ft." compiler! ".comp
+endfor
+
+for [ft, mp] in items(s:makeprg_for_filetype)
+    execute "autocmd filetype ".ft." let &l:makeprg=\"if [ -f \\\"Makefile\\\" ]; then make $*; else ".mp."; fi\""
+endfor
+" }}}
+
+" }}}
+
+" FOLDING METHODS {{{
+
+let s:fdm_for_lang = {
+            \ "c,cpp"    : "syntax",
+            \ "java"     : "syntax",
+            \ "markdown" : "indent",
+            \}
+
+for [ft, method] in items(s:fdm_for_lang)
+    execute "autocmd filetype ".ft." setlocal foldmethod=".method
+endfor
+
+" }}}
+
+" FORMATTING {{{
+
+let s:fp_for_lang = {
+            \ 'c,cpp'      : 'astyle\ --style=kr\ -s4\ -N\ -S\ -xG\ -xU\ -f\ -k3\ -xj\ -p',
+            \ 'css'        : 'css-beautify',
+            \ 'go'         : 'gofmt',
+            \ 'java'       : 'astyle\ --style=java\ -s4\ -N\ -S\ -xG\ -xU\ -f\ -k3\ -xj\ -p',
+            \ 'javascript' : 'js-beautify',
+            \ 'json'       : 'js-beautify',
+            \ 'python'     : 'autopep8\ -',
+            \}
+
+for [ft, fp] in items(s:fp_for_lang)
+    execute "autocmd filetype ".ft." setlocal formatprg=".fp
 endfor
 
 " }}}
@@ -267,22 +326,17 @@ vmap s <nop>
 
 " OPTIONS {{{
 
-" Backup, undo and swap {{{
-set backup
-set backupdir=~/.vim/cache/backup/
-set noswapfile
-set undodir=~/.vim/cache/undo/
-set undofile
-" }}}
-
 " Displaying text/code {{{
+
 set foldmethod=indent
 set linebreak
 set nofoldenable
 set nowrap
+
 " }}}
 
 " Indentation {{{
+
 let g:html_indent_style1 = "inc"
 set autoindent
 set cindent
@@ -291,120 +345,61 @@ set shiftround
 set shiftwidth=4
 set softtabstop=4
 set tabstop=4
+
 " }}}
 
 " Searching {{{
+
 set hlsearch
 set ignorecase
 set incsearch
 set smartcase
+
 " }}}
 
 " UI {{{
+
 set cursorline
 set laststatus=2
 set number
 set scrolloff=5
+set shortmess+=I
 set showcmd
 set signcolumn=yes
 set splitbelow
 set splitright
 set wildmenu
+
+" }}}
+
+" Vimfiles {{{
+
+set backup
+set backupdir=~/.vim/cache/backup/
+set noswapfile
+set viminfo+=n~/.vim/viminfo
+set undodir=~/.vim/cache/undo/
+set undofile
+
 " }}}
 
 " OTHER {{{
+
 set backspace=indent,eol,start
 set history=50
 set lazyredraw
 set modeline
 set nomodelineexpr
-set nrformats=
 set omnifunc=syntaxcomplete#Complete
-set shortmess+=I
 set title
 set dictionary=/usr/share/dict/words
-set viminfo+=n~/.vim/viminfo
 set wrapmargin=0
+
 " }}}
 
 " }}}
 
 " OTHER {{{
-
-" CLIPBOARD {{{
-
-if has("clipboard")
-    nnoremap <C-p> "+p
-    nnoremap <C-y> "+y
-    xnoremap <C-y> "+y
-else
-    nnoremap <silent> <C-p> :call <SID>system_paste()<CR>
-    nnoremap <silent> <C-y>  :set opfunc=<SID>system_copy<CR>g@
-    nnoremap <silent> <C-y>y :set opfunc=<SID>system_copy<Bar>exe 'norm! 'v:count1.'g@_'<CR>
-    xnoremap <silent> <C-y>  :call <SID>system_copy(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>
-endif
-
-" }}}
-
-" FOLDING METHODS {{{
-
-let s:fdm_for_lang = {
-            \ "c,cpp"    : "syntax",
-            \ "java"     : "syntax",
-            \ "markdown" : "indent",
-            \}
-
-for [ft, method] in items(s:fdm_for_lang)
-    execute "autocmd filetype ".ft." setlocal foldmethod=".method
-endfor
-
-" }}}
-
-" FORMATTING {{{
-
-let s:fp_for_lang = {
-            \ 'c,cpp'      : 'astyle\ --style=kr\ -s4\ -N\ -S\ -xG\ -xU\ -f\ -k3\ -xj\ -p',
-            \ 'css'        : 'css-beautify',
-            \ 'go'         : 'gofmt',
-            \ 'java'       : 'astyle\ --style=java\ -s4\ -N\ -S\ -xG\ -xU\ -f\ -k3\ -xj\ -p',
-            \ 'javascript' : 'js-beautify',
-            \ 'json'       : 'js-beautify',
-            \ 'python'     : 'autopep8\ -',
-            \}
-
-for [ft, fp] in items(s:fp_for_lang)
-    execute "autocmd filetype ".ft." setlocal formatprg=".fp
-endfor
-
-" }}}
-
-" PACKAGES {{{
-
-packadd matchit
-packadd termdebug
-
-" }}}
-
-" QUICKFIX {{{
-
-" Quit QuickFix window along with source file window
-autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix" | q | endif
-
-" QuickFix window below other windows
-autocmd filetype qf wincmd J
-
-" Automatically open QuickFix
-autocmd QuickFixCmdPost [^l]* nested cwindow
-autocmd QuickFixCmdPost    l* nested lwindow
-
-" Disable cursorline highlight for QuickFix
-autocmd filetype qf setlocal nocursorline
-
-" MAPPINGS
-autocmd filetype qf noremap <buffer> g- :colder<CR>
-autocmd filetype qf noremap <buffer> g+ :cnewer<CR>
-
-" }}}
 
 " tmux - WINDOW TITLE FIX
 if &t_ts == "" && ( &term =~ "screen" || &term =~ "xterm" ) | let &t_ts = "\e]2;" | endif
@@ -412,6 +407,13 @@ if &t_ts == "" && ( &term =~ "screen" || &term =~ "xterm" ) | let &t_ts = "\e]2;
 " Create cache files dirs
 call mkdir($HOME.'/.vim/cache/backup', 'p')
 call mkdir($HOME.'/.vim/cache/undo', 'p')
+
+" }}}
+
+" PACKAGES {{{
+
+packadd matchit
+packadd termdebug
 
 " }}}
 
@@ -454,6 +456,27 @@ let g:undotree_ShortIndicators    = 1                                  "  UndoTr
 " MAPPINGS
 nmap s ys
 noremap <leader><F1> :UndotreeToggle<CR>
+
+" }}}
+
+" QUICKFIX {{{
+
+" Quit QuickFix window along with source file window
+autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix" | q | endif
+
+" QuickFix window below other windows
+autocmd filetype qf wincmd J
+
+" Automatically open QuickFix
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
+
+" Disable cursorline highlight for QuickFix
+autocmd filetype qf setlocal nocursorline
+
+" MAPPINGS
+autocmd filetype qf noremap <buffer> g- :colder<CR>
+autocmd filetype qf noremap <buffer> g+ :cnewer<CR>
 
 " }}}
 
