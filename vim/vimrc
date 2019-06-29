@@ -89,15 +89,16 @@ let s:paste_command = 'xsel --clipboard --output'
 
 " }}}
 
-" Fill rest of line with characters
+" Fill rest of line with characters {{{
 function! s:FillLine(str, to_column) abort
     let reps = (a:to_column - col("$")) / len(a:str)
     if reps > 0
         .s/$/\=(' '.repeat(a:str, reps))/
     endif
 endfunction
+" }}}
 
-" Toggle cursor line and column highlight
+" Toggle cursor line and column highlight {{{
 function! s:CursorHighlightToggle() abort
     set cursorcolumn!
     if (s:CursorHighlight_state == 1)
@@ -109,8 +110,9 @@ function! s:CursorHighlightToggle() abort
     endif
     echo
 endfunction
+" }}}
 
-" Sorts lines based on visual-block selected portion of the lines
+" Sorts lines based on visual-block selected portion of the lines {{{
 function! s:VisSort(isnmbr) range abort
     if visualmode() != "\<c-v>"
         execute "silent! ".a:firstline.",".a:lastline."sort i"
@@ -129,8 +131,9 @@ function! s:VisSort(isnmbr) range abort
     execute "sil! keepj ".firstline.",".lastline.'s/^.\{-}@@@//'
     let @a = keeprega
 endfun
+" }}}
 
-" System copy function if Vim does not have 'clipboard' support
+" System copy function if Vim does not have 'clipboard' support {{{
 function! s:system_copy(type, ...) abort
     let visual_mode = a:0 != 0
     if visual_mode
@@ -153,8 +156,9 @@ function! s:system_copy(type, ...) abort
     silent call system(command, getreg('@'))
     let @@ = unnamed
 endfunction
+" }}}
 
-" System paste function if Vim does not have 'clipboard' support
+" System paste function if Vim does not have 'clipboard' support {{{
 function! s:system_paste() abort
     let lines = system('xsel --clipboard --output | wc -l')
     if lines == 0
@@ -163,8 +167,9 @@ function! s:system_paste() abort
         put = system(s:paste_command)
     endif
 endfunction
+" }}}
 
-" Status line - file size
+" Status line - file size {{{
 function! FileSize() abort
     let bytes = getfsize(expand(@%))
     if (bytes >= 1024*1024)
@@ -177,13 +182,15 @@ function! FileSize() abort
         return bytes . ' B'
     endif
 endfunction
+" }}}
 
-" Status line - file encoding
+" Status line - file encoding {{{
 function! FileEncoding() abort
     return (&fenc == "" ? &enc : &fenc).((exists("+bomb") && &bomb) ? " BOM" : "")
 endfunction
+" }}}
 
-" Preview of Vim 256 colors
+" Preview of Vim 256 colors {{{
 function! Color_demo() abort
     30 vnew
     setlocal nonumber buftype=nofile bufhidden=hide noswapfile
@@ -197,18 +204,21 @@ function! Color_demo() abort
         let num = num - 1
     endwhile
 endfunction
+" }}}
 
-" Check highlight group under the cursor
+" Check highlight group under the cursor {{{
 function! WhatHighlightsIt() abort
     echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
                 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
                 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"
 endfunction
+" }}}
 
-" Refactor
+" Refactor {{{
 function! s:Refactor(expr1, expr2) abort
     execute "vimgrep /\\C\\W".a:expr1."\\W/j ** | cdo s/\\C\\\(\\W\\\)".a:expr1."\\\(\\W\\\)/\\1".a:expr2."\\2/gc | update"
 endfunction
+" }}}
 
 " }}}
 
@@ -257,20 +267,22 @@ vmap s <nop>
 
 " OPTIONS {{{
 
-" Backup, undo and swap
+" Backup, undo and swap {{{
 set backup
 set backupdir=~/.vim/cache/backup/
 set noswapfile
 set undodir=~/.vim/cache/undo/
 set undofile
+" }}}
 
-" Displaying text/code
+" Displaying text/code {{{
 set foldmethod=indent
 set linebreak
 set nofoldenable
 set nowrap
+" }}}
 
-" Indentation
+" Indentation {{{
 let g:html_indent_style1 = "inc"
 set autoindent
 set cindent
@@ -279,14 +291,16 @@ set shiftround
 set shiftwidth=4
 set softtabstop=4
 set tabstop=4
+" }}}
 
-" Searching
+" Searching {{{
 set hlsearch
 set ignorecase
 set incsearch
 set smartcase
+" }}}
 
-" UI
+" UI {{{
 set cursorline
 set laststatus=2
 set number
@@ -296,8 +310,9 @@ set signcolumn=yes
 set splitbelow
 set splitright
 set wildmenu
+" }}}
 
-" OTHER
+" OTHER {{{
 set backspace=indent,eol,start
 set history=50
 set lazyredraw
@@ -310,15 +325,24 @@ set title
 set dictionary=/usr/share/dict/words
 set viminfo+=n~/.vim/viminfo
 set wrapmargin=0
+" }}}
 
 " }}}
 
 " OTHER {{{
 
-" PACKAGES {{{
+" CLIPBOARD {{{
 
-packadd matchit
-packadd termdebug
+if has("clipboard")
+    nnoremap <C-p> "+p
+    nnoremap <C-y> "+y
+    xnoremap <C-y> "+y
+else
+    nnoremap <silent> <C-p> :call <SID>system_paste()<CR>
+    nnoremap <silent> <C-y>  :set opfunc=<SID>system_copy<CR>g@
+    nnoremap <silent> <C-y>y :set opfunc=<SID>system_copy<Bar>exe 'norm! 'v:count1.'g@_'<CR>
+    xnoremap <silent> <C-y>  :call <SID>system_copy(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>
+endif
 
 " }}}
 
@@ -350,18 +374,31 @@ endfor
 
 " }}}
 
-" CLIPBOARD {{{
+" PACKAGES {{{
 
-if has("clipboard")
-    nnoremap <C-p> "+p
-    nnoremap <C-y> "+y
-    xnoremap <C-y> "+y
-else
-    nnoremap <silent> <C-p> :call <SID>system_paste()<CR>
-    nnoremap <silent> <C-y>  :set opfunc=<SID>system_copy<CR>g@
-    nnoremap <silent> <C-y>y :set opfunc=<SID>system_copy<Bar>exe 'norm! 'v:count1.'g@_'<CR>
-    xnoremap <silent> <C-y>  :call <SID>system_copy(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>
-endif
+packadd matchit
+packadd termdebug
+
+" }}}
+
+" QUICKFIX {{{
+
+" Quit QuickFix window along with source file window
+autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix" | q | endif
+
+" QuickFix window below other windows
+autocmd filetype qf wincmd J
+
+" Automatically open QuickFix
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
+
+" Disable cursorline highlight for QuickFix
+autocmd filetype qf setlocal nocursorline
+
+" MAPPINGS
+autocmd filetype qf noremap <buffer> g- :colder<CR>
+autocmd filetype qf noremap <buffer> g+ :cnewer<CR>
 
 " }}}
 
@@ -413,27 +450,6 @@ let g:undotree_ShortIndicators    = 1                                  "  UndoTr
 " MAPPINGS
 nmap s ys
 noremap <leader><F1> :UndotreeToggle<CR>
-
-" }}}
-
-" QUICKFIX {{{
-
-" Quit QuickFix window along with source file window
-autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix" | q | endif
-
-" QuickFix window below other windows
-autocmd filetype qf wincmd J
-
-" Automatically open QuickFix
-autocmd QuickFixCmdPost [^l]* nested cwindow
-autocmd QuickFixCmdPost    l* nested lwindow
-
-" Disable cursorline highlight for QuickFix
-autocmd filetype qf setlocal nocursorline
-
-" MAPPINGS
-autocmd filetype qf noremap <buffer> g- :colder<CR>
-autocmd filetype qf noremap <buffer> g+ :cnewer<CR>
 
 " }}}
 
