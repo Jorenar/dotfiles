@@ -294,4 +294,4 @@ mpv() {
 
 # }}}
 
-# vim: set fdm=marker foldenable:
+# vim: fdm=marker foldenable:

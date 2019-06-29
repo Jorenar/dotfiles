@@ -39,14 +39,14 @@ autocmd BufWinLeave * call clearmatches()
 autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix" | q | endif
 
 " QuickFix window below other windows
-autocmd FileType qf wincmd J
+autocmd filetype qf wincmd J
 
 " Automatically open QuickFix
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 
-" Fold markers
-autocmd BufWinEnter * match FoldMarker '.* [{}]\{3}$'
+" Disable cursorline highlight for QuickFix
+autocmd filetype qf setlocal nocursorline
 
 " }}}
 
@@ -67,7 +67,7 @@ command! SortBlock :normal! vip:sort i<CR>
 
 let s:languages = {
             \ "asm"      : "as -o %<.o % && ld -s -o %< %<.o && rm %<.o && ./%<",
-            \ "basic"    : "vintbas %",
+            \ "basic"    : "$HOME/app/vintbas %",
             \ "c"        : "gcc -std=gnu11 -g % -o %< && ./%<",
             \ "cpp"      : "g++ -std=gnu++11 -g % -o %< && ./%<",
             \ "haskell"  : "ghc -o %< %; rm %<.hi %<.o && ./%<",
@@ -77,10 +77,11 @@ let s:languages = {
             \ "markdown" : "grip -b % 1> /dev/null<CR>",
             \ "nasm"     : "yasm -f elf64 % && ld -g -o %< %<.o && rm %<.o && ./%<",
             \ "perl"     : "perl %",
+            \ "plaintex" : "pdftex -file-line-error -interaction=nonstopmode %; zathura %<.pdf",
             \ "python"   : "python3 %",
             \ "rust"     : "rustc % && ./%<",
             \ "sh"       : "chmod +x %:p && %:p",
-            \ "tex"      : "latexmk -pdf -pv %; latexmk -c %",
+            \ "tex"      : "pdflatex -file-line-error -interaction=nonstopmode %; zathura %<.pdf",
             \ "xhtml"    : "firefox %",
             \}
 
@@ -96,6 +97,7 @@ endfor
 
 let s:copy_command  = 'xsel --clipboard --input'
 let s:CursorHighlight_state = 0
+let s:paste_command = 'xsel --clipboard --output'
 
 " }}}
 
@@ -162,6 +164,16 @@ function! s:system_copy(type, ...) abort
     let command = s:copy_command
     silent call system(command, getreg('@'))
     let @@ = unnamed
+endfunction
+
+" System paste function if Vim does not have 'clipboard' support
+function! s:system_paste() abort
+    let lines = system('xsel --clipboard --output | wc -l')
+    if lines == 0
+        execute "normal! a".system(s:paste_command)
+    else
+        put = system(s:paste_command)
+    endif
 endfunction
 
 " Status line - file size
@@ -310,12 +322,14 @@ set wrapmargin=0
 
 " OTHER {{{
 
-" PACKAGES ---------------------------------------
+" PACKAGES {{{
+
 packadd matchit
 packadd termdebug
 
+" }}}
 
-" FOLDING METHODS --------------------------------
+" FOLDING METHODS {{{
 
 let s:fdm_for_lang = {
             \ "c,cpp"    : "syntax",
@@ -327,8 +341,9 @@ for [ft, method] in items(s:fdm_for_lang)
     execute "autocmd filetype ".ft." setlocal foldmethod=".method
 endfor
 
+" }}}
 
-" FORMATTING -------------------------------------
+" FORMATTING {{{
 
 let s:fp_for_lang = {
             \ 'c,cpp'      : 'astyle\ --style=kr\ -s4\ -N\ -S\ -xG\ -xU\ -f\ -k3\ -xj\ -p',
@@ -340,21 +355,22 @@ for [ft, fp] in items(s:fp_for_lang)
     execute "autocmd filetype ".ft." setlocal formatprg=".fp
 endfor
 
+" }}}
 
-" CLIPBOARD --------------------------------------
+" CLIPBOARD {{{
 
 if has("clipboard")
     nnoremap <C-p> "+p
     nnoremap <C-y> "+y
     xnoremap <C-y> "+y
 else
-    nnoremap <silent> <C-p>  :execute "normal! a".system("xsel --clipboard --output")<CR>
+    nnoremap <silent> <C-p> :call <SID>system_paste()<CR>
     nnoremap <silent> <C-y>  :set opfunc=<SID>system_copy<CR>g@
     nnoremap <silent> <C-y>y :set opfunc=<SID>system_copy<Bar>exe 'norm! 'v:count1.'g@_'<CR>
     xnoremap <silent> <C-y>  :call <SID>system_copy(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>
 endif
 
-" ------------------------------------------------
+" }}}
 
 " tmux - WINDOW TITLE FIX
 if &t_ts == "" && ( &term =~ "screen" || &term =~ "xterm" ) | let &t_ts = "\e]2;" | endif
@@ -362,10 +378,6 @@ if &t_ts == "" && ( &term =~ "screen" || &term =~ "xterm" ) | let &t_ts = "\e]2;
 " Create cache files dirs
 call mkdir($HOME.'/.vim/cache/backup', 'p')
 call mkdir($HOME.'/.vim/cache/undo', 'p')
-
-" Highlights
-hi FoldMarker cterm=bold,underline
-hi QuickFixLine ctermbg=NONE
 
 " }}}
 
@@ -435,4 +447,4 @@ set statusline+=\ \:\ %c\           " Current column
 
 " }}}
 
-" vim: set fdm=marker foldenable:
+" vim: fdm=marker foldenable:

@@ -161,4 +161,4 @@ bind browser,pager,index        N   search-opposite
 
 # }}}
 
-# vim: set ft=neomuttrc fdm=marker foldenable:
+# vim: ft=muttrc fdm=marker foldenable:
