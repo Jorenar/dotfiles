@@ -96,13 +96,11 @@ endfor
 
 let s:copy_command  = 'xsel --clipboard --input'
 let s:CursorHighlight_state = 0
-let s:paste_command = 'xsel --clipboard --output'
 
 " }}}
 
 " Fill rest of line with characters
 function! s:FillLine(str, to_column) abort
-    .s/[[:space:]]*$//
     let reps = (a:to_column - col("$")) / len(a:str)
     if reps > 0
         .s/$/\=(' '.repeat(a:str, reps))/
@@ -111,7 +109,7 @@ endfunction
 
 " Toggle cursor line and column highlight
 function! s:CursorHighlightToggle() abort
-    setlocal cursorcolumn!
+    set cursorcolumn!
     if (s:CursorHighlight_state == 1)
         hi CursorLine cterm=none ctermbg=none
         let s:CursorHighlight_state = 0
@@ -166,16 +164,6 @@ function! s:system_copy(type, ...) abort
     let @@ = unnamed
 endfunction
 
-" System paste function if Vim does not have 'clipboard' support
-function! s:system_paste() abort
-    let lines = system('xsel --clipboard --output | wc -l')
-    if lines == 0
-        execute "normal! a".system(s:paste_command)
-    else
-        put = system(s:paste_command)
-    endif
-endfunction
-
 " Status line - file size
 function! FileSize() abort
     let bytes = getfsize(expand(@%))
@@ -211,27 +199,17 @@ function! Color_demo() abort
 endfunction
 
 " Check highlight group under the cursor
-function! WhatsHighlightIt() abort
+function! WhatHighlightsIt() abort
     echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
                 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
                 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"
-endfunction
-
-" Function to match C/C++ #define macros
-function! s:HighlightC_PreProcDefines() abort
-    syntax clear C_PreProcDefine
-    for line in getline('1','$')
-        if line =~ '^\s*#\s*define\s\+'
-            execute 'syntax keyword C_PreProcDefine '.substitute(line, '^\s*#\s*define\s\+\(\k\+\).*$', '\1', '')
-        endif
-    endfor
 endfunction
 
 " }}}
 
 " MAPPINGS {{{
 
-" leader + sth
+" leader
 noremap <leader>= gg=G``
 noremap <leader>q gggqG``
 noremap <leader>h :nohlsearch<CR>
@@ -247,8 +225,10 @@ noremap <F2> gt
 noremap <F3> :call <SID>CursorHighlightToggle()<CR>
 noremap <F9> :w <bar> make<CR>
 
-" Ctrl
+" Ctrl, shift, tab
 inoremap <C-o> <C-x><C-o>
+inoremap <S-Tab> gt
+noremap <S-Tab> gt
 
 " Normal keys
 inoremap </ </<C-x><C-o>
@@ -266,6 +246,7 @@ noremap Q gq
 map gh <nop>
 map q: <nop>
 map ZZ <nop>
+vmap s <nop>
 
 " }}}
 
@@ -303,7 +284,6 @@ set smartcase
 " UI
 set cursorline
 set laststatus=2
-set mouse=a
 set number
 set scrolloff=5
 set showcmd
@@ -368,28 +348,16 @@ if has("clipboard")
     nnoremap <C-y> "+y
     xnoremap <C-y> "+y
 else
-
-    " Paste
-    nnoremap <silent> <C-p> :call <SID>system_paste()<CR>
-
-    " Normal copy
+    nnoremap <silent> <C-p>  :execute "normal! a".system("xsel --clipboard --output")<CR>
     nnoremap <silent> <C-y>  :set opfunc=<SID>system_copy<CR>g@
-
-    " Copy line
     nnoremap <silent> <C-y>y :set opfunc=<SID>system_copy<Bar>exe 'norm! 'v:count1.'g@_'<CR>
-
-    " Copy in Visual mode
     xnoremap <silent> <C-y>  :call <SID>system_copy(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>
-
 endif
 
 " ------------------------------------------------
 
 " tmux - WINDOW TITLE FIX
-
-if &t_ts == "" && ( &term =~ "screen" || &term =~ "xterm" )
-    let &t_ts = "\e]2;"
-endif
+if &t_ts == "" && ( &term =~ "screen" || &term =~ "xterm" ) | let &t_ts = "\e]2;" | endif
 
 " Create cache files dirs
 call mkdir($HOME.'/.vim/cache/backup', 'p')
@@ -418,9 +386,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-
 " INSTALL PLUGINS (via Plug)
-
 call plug#begin('~/.vim/bundle')
 Plug 'ludovicchabant/vim-gutentags'    " Gutentags
 Plug 'tpope/vim-surround'              " Surround
@@ -430,9 +396,7 @@ Plug 'SirVer/ultisnips'                " UltiSnips
 Plug 'mbbill/undotree'                 " UndoTree
 call plug#end()
 
-
 " VARIABLES
-
 let g:gutentags_cache_dir         = $HOME."/.vim/cache/tags"           "  Gutentags
 let g:UltiSnipsEditSplit          = "context"                          "  UltiSnips
 let g:UltiSnipsExpandTrigger      = "<C-j>"                            "  UltiSnips
@@ -441,13 +405,9 @@ let g:UltiSnipsSnippetDirectories = ['~/.vim/UltiSnips', 'UltiSnips']  "  UltiSn
 let g:undotree_SetFocusWhenToggle = 1                                  "  UndoTree
 let g:undotree_ShortIndicators    = 1                                  "  UndoTree
 
-
-" OTHER
-
-command! -range TabularizeBySpace execute '<line1>,<line2>Tabularize /\S\+/l1'
+" MAPPINGS
 nmap s ys
 noremap <leader><F1> :UndotreeToggle<CR>
-vmap s S
 
 " }}}
 
