@@ -21,7 +21,7 @@ colorscheme black_and_white
 " AUTOCMDS {{{
 
 " Open file at the last known position
-autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exec "normal! g`\"" | endif
+autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | execute "normal! g`\"" | endif
 
 " Disable continuation of comments to the next line
 autocmd filetype * set fo-=c fo-=r fo-=o
@@ -35,23 +35,11 @@ autocmd filetype markdown setlocal tabstop=2 softtabstop=2
 " Clear all maches after leaving buffer
 autocmd BufWinLeave * call clearmatches()
 
-" Quit QuickFix window along with source file window
-autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix" | q | endif
-
-" QuickFix window below other windows
-autocmd filetype qf wincmd J
-
-" Automatically open QuickFix
-autocmd QuickFixCmdPost [^l]* nested cwindow
-autocmd QuickFixCmdPost    l* nested lwindow
-
-" Disable cursorline highlight for QuickFix
-autocmd filetype qf setlocal nocursorline
-
 " }}}
 
 " COMMANDS {{{
 
+command! -nargs=* Refactor call <SID>Refactor(<f-args>)
 command! -nargs=+ FillLine call <SID>FillLine(<f-args>)
 command! -nargs=+ Grep execute "vimgrep /".<f-args>."/j ** | :copen"
 command! -nargs=+ Spelling execute 'setlocal spell spelllang=<args>'
@@ -86,7 +74,7 @@ let s:languages = {
             \}
 
 for [ft, cmd] in items(s:languages)
-    exec "autocmd filetype ".ft." let &l:makeprg=\"if [ -f \\\"Makefile\\\" ]; then make $*; else ".cmd."; fi\""
+    execute "autocmd filetype ".ft." let &l:makeprg=\"if [ -f \\\"Makefile\\\" ]; then make $*; else ".cmd."; fi\""
 endfor
 
 " }}}
@@ -203,8 +191,8 @@ function! Color_demo() abort
     setlocal statusline+=\ Color\ demo
     let num = 255
     while num >= 0
-        exec 'hi col_'.num.' ctermbg='.num.' ctermfg=white'
-        exec 'syn match col_'.num.' "ctermbg='.num.':...." containedIn=ALL'
+        execute 'hi col_'.num.' ctermbg='.num.' ctermfg=white'
+        execute 'syn match col_'.num.' "ctermbg='.num.':...." containedIn=ALL'
         call append(0, 'ctermbg='.num.':....')
         let num = num - 1
     endwhile
@@ -215,6 +203,11 @@ function! WhatHighlightsIt() abort
     echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
                 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
                 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"
+endfunction
+
+" Refactor
+function! s:Refactor(expr1, expr2) abort
+    execute "vimgrep /\\C\\W".a:expr1."\\W/j ** | cdo s/\\C\\\(\\W\\\)".a:expr1."\\\(\\W\\\)/\\1".a:expr2."\\2/gc | update"
 endfunction
 
 " }}}
@@ -420,6 +413,27 @@ let g:undotree_ShortIndicators    = 1                                  "  UndoTr
 " MAPPINGS
 nmap s ys
 noremap <leader><F1> :UndotreeToggle<CR>
+
+" }}}
+
+" QUICKFIX {{{
+
+" Quit QuickFix window along with source file window
+autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix" | q | endif
+
+" QuickFix window below other windows
+autocmd filetype qf wincmd J
+
+" Automatically open QuickFix
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
+
+" Disable cursorline highlight for QuickFix
+autocmd filetype qf setlocal nocursorline
+
+" MAPPINGS
+autocmd filetype qf noremap <buffer> g- :colder<CR>
+autocmd filetype qf noremap <buffer> g+ :cnewer<CR>
 
 " }}}
 

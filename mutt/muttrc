@@ -2,6 +2,34 @@
 ### MUTTRC ###
 ##############
 
+
+# COLORS (NEO) {{{
+
+# Author name, %A %a %F %L %n
+# Give the author column a dark grey background
+color index_author color69 default '.*'
+
+# Message flags, %S %Z
+# Highlight the flags for flagged (~F) emails
+color index_flags default red '~F'
+
+# Number of messages in a collapsed thread, %M
+color index_collapsed default brightblue
+
+# Date field
+color index_date green default
+
+# Message label, %y %Y
+color index_label default brightgreen
+
+# Message number, %C
+color index_number red default
+
+# Message size, %c %l
+color index_size cyan default
+
+# }}}
+
 # OTHER {{{
 
 # activate TLS if available on the server
@@ -13,7 +41,7 @@ set ssl_force_tls=yes
 # Don't wait to enter mailbox manually
 unset imap_passive
 
-# Automatically poll subscribed mailboxes for new mail
+# Automatically poll subscribed mailboxes for new mail (new in 1.5.11)
 set imap_check_subscribed
 
 # Reduce polling frequency to a sane level
@@ -32,7 +60,7 @@ set net_inc=5
 set help=no
 
 # Set mailcap path
-set mailcap_path="$DOTFILES/mutt/mailcap"
+set mailcap_path="$HOME/dotfiles/mutt/mailcap"
 
 # View HTML
 alternative_order text/plain text/enriched text/html     # save html for last
@@ -42,7 +70,7 @@ auto_view text/html                                      # view html automatical
 macro index,pager \cW v/text\/html<enter><enter>
 
 # Source private
-source $DOTFILES/mutt/private
+source $HOME/dotfiles/mutt/private
 
 # }}}
 
@@ -56,6 +84,9 @@ set sidebar_width = 15
 
 # Should the mailbox paths be abbreviated?
 set sidebar_short_path = yes
+
+# Number of top-level mailbox path subdirectories to truncate for display
+set sidebar_component_depth = 0
 
 # When abbreviating mailbox path names, use any of these characters as path
 # separators. Only the part after the last separators will be shown.
@@ -74,6 +105,9 @@ set sidebar_new_mail_only = no
 # When searching for mailboxes containing new mail, should the search wrap
 # around when it reaches the end of the list?
 set sidebar_next_new_wrap = no
+
+# Show the Sidebar on the right-hand side of the screen
+set sidebar_on_right = no
 
 # The character to use as the divider between the Sidebar and the other panels.
 set sidebar_divider_char = '|'
@@ -106,7 +140,7 @@ bind index,pager J sidebar-next
 bind index,pager \t sidebar-open
 
 
-# COLORS ---------------------------------------------------
+# COLORS – some unpleasant examples are given ------------
 
 # Note: All color operations are of the form:
 #       color OBJECT FOREGROUND BACKGROUND
@@ -126,6 +160,9 @@ color sidebar_flagged red black
 
 # Color to give mailboxes containing new mail
 color sidebar_new green black
+
+# Color to give mailboxes containing no new/flagged mail, etc.
+color sidebar_ordinary color245 default
 
 # }}}
 
@@ -154,11 +191,11 @@ bind index                      \Ce next-line
 bind index                      \Cy previous-line
 
 # Deleting
-#macro pager,index               d  <delete-message><sync-mailbox><enter>
+macro pager,index               d  <delete-message><sync-mailbox><enter>
 
 # Threads
 bind browser,pager,index        N   search-opposite
 
 # }}}
 
-# vim: ft=muttrc fdm=marker foldenable:
+# vim: ft=neomuttrc fdm=marker foldenable:

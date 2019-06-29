@@ -215,4 +215,4 @@ bindsym XF86AudioPrev  exec playerctl previous
 
 # }}}
 
-# vim: set fdm=marker foldenable:
+# vim: fdm=marker foldenable:
