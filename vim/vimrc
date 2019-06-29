@@ -365,7 +365,11 @@ endfor
 let s:fp_for_lang = {
             \ 'c,cpp'      : 'astyle\ --style=kr\ -s4\ -N\ -S\ -xG\ -xU\ -f\ -k3\ -xj\ -p',
             \ 'css'        : 'css-beautify',
+            \ 'go'         : 'gofmt',
+            \ 'java'       : 'astyle\ --style=java\ -s4\ -N\ -S\ -xG\ -xU\ -f\ -k3\ -xj\ -p',
             \ 'javascript' : 'js-beautify',
+            \ 'json'       : 'js-beautify',
+            \ 'python'     : 'autopep8\ -',
             \}
 
 for [ft, fp] in items(s:fp_for_lang)
