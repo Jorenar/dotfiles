@@ -1,17 +1,21 @@
 snippet html "HTML basic structure" b
 <!DOCTYPE html>
 <html lang="${1:en}">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="author" content="$2">
-		<meta name="description" content="$3">
-		<meta name="keywords" content="$4">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>${5:`!p snip.rv = snip.basename.replace('-', ' ').capitalize()`}</title>
-	</head>
-	<body>
-		${0:body}
-	</body>
+<head>
+	<meta charset="UTF-8">
+
+	<title>${6:`!p snip.rv = snip.basename.replace('-', ' ').capitalize()`}</title>
+	<meta name="author" content="$3">
+	<meta name="description" content="$4">
+
+	<meta name="keywords" content="$5">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="${2:style.css}">
+</head>
+<body>
+	${0:body}
+</body>
 </html>
 endsnippet
 
