@@ -126,7 +126,7 @@ let s:formatprg_for_filetype = {
             \ "javascript" : "js-beautify",
             \ "json"       : "js-beautify",
             \ "python"     : "autopep8 -",
-            \ "xhtml"      : "tidy -asxhtml -q -m -w -i --show-warnings 0 --show-errors 0 --tidy-mark no",
+            \ "xhtml"      : "tidy -asxhtml -q -m -w -i --show-warnings 0 --show-errors 0 --tidy-mark no --doctype loose",
             \ "xml"        : "tidy -xml -q -m -w -i --show-warnings 0 --show-errors 0 --tidy-mark no",
             \}
 
@@ -142,9 +142,10 @@ let s:paste_command = 'xsel --clipboard --output'
 
 " }}}
 
-" Fill rest of line with characters {{{
-function! s:FillLine(str, to_column) abort
-    let reps = (a:to_column - col("$")) / len(a:str)
+" Fill line with characters to given column {{{
+function! s:FillLine(str, ...) abort
+    let to_column = get(a:, 1, &tw)
+    let reps = (to_column - col("$")) / len(a:str)
     if reps > 0
         .s/$/\=(' '.repeat(a:str, reps))/
     endif
@@ -297,12 +298,12 @@ noremap <F9> :w <bar> make<CR>
 inoremap <C-o> <C-x><C-o>
 inoremap <S-Tab> gt
 noremap <S-Tab> gt
+noremap <Tab> <C-w><C-w>
 
 " Normal keys
 inoremap </ </<C-x><C-o>
 noremap ' `
 noremap '' ``
-noremap <Tab> <C-w><C-w>
 noremap gf <C-w>gf
 noremap j gj
 noremap k gk
@@ -355,6 +356,7 @@ set smartcase
 " UI {{{
 
 let g:netrw_winsize = -28
+set colorcolumn=80
 set cursorline
 set laststatus=2
 set number
@@ -382,14 +384,14 @@ set undofile
 " OTHER {{{
 
 set backspace=indent,eol,start
+set dictionary=/usr/share/dict/words
+set formatoptions-=t
 set history=50
 set lazyredraw
 set modeline
 set nomodelineexpr
-set omnifunc=syntaxcomplete#Complete
+set textwidth=79
 set title
-set dictionary=/usr/share/dict/words
-set wrapmargin=0
 
 " }}}
 
