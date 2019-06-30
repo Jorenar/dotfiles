@@ -67,7 +67,11 @@ endif
 " COMPILE AND RUN {{{
 
 let s:compiler_for_filetype = {
+            \ "c,cpp"    : "gcc",
+            \ "go"       : "go",
+            \ "haskell"  : "ghc",
             \ "html"     : "tidy",
+            \ "perl"     : "perl",
             \ "plaintex" : "tex",
             \ "python"   : "pyunit",
             \ "tex"      : "tex",
@@ -80,7 +84,7 @@ let s:makeprg_for_filetype = {
             \ "cpp"      : "g++ -std=gnu++11 -g % -o %< && ./%<",
             \ "go"       : "go build && ./%<",
             \ "haskell"  : "ghc -o %< %; rm %<.hi %<.o && ./%<",
-            \ "html"     : "tidy\ -quiet\ -errors\ --gnu-emacs\ yes\ %:S; firefox -new-window %",
+            \ "html"     : "tidy -quiet -errors --gnu-emacs yes %:S; firefox -new-window %",
             \ "lisp"     : "clisp %",
             \ "lua"      : "lua %",
             \ "markdown" : "grip -b % 1> /dev/null<CR>",
@@ -91,7 +95,7 @@ let s:makeprg_for_filetype = {
             \ "rust"     : "rustc % && ./%<",
             \ "sh"       : "chmod +x %:p && %:p",
             \ "tex"      : "pdflatex -file-line-error -interaction=nonstopmode % && zathura %<.pdf",
-            \ "xhtml"    : "firefox -new-window %",
+            \ "xhtml"    : "tidy -asxhtml -quiet -errors --gnu-emacs yes %:S; firefox -new-window %",
             \}
 
 " }}}
@@ -109,9 +113,8 @@ let s:foldmethod_for_filetype = {
 " FORMATTING {{{
 
 let s:tab_width_for_filetype = {
-            \ "css"      : 2,
-            \ "html"     : 2,
-            \ "markdown" : 2,
+            \ "html,css,xhtml,xml" : 2,
+            \ "markdown"           : 2,
             \}
 
 let s:formatprg_for_filetype = {
@@ -123,6 +126,8 @@ let s:formatprg_for_filetype = {
             \ "javascript" : "js-beautify",
             \ "json"       : "js-beautify",
             \ "python"     : "autopep8 -",
+            \ "xhtml"      : "tidy -asxhtml -q -m -w -i --show-warnings 0 --show-errors 0 --tidy-mark no",
+            \ "xml"        : "tidy -xml -q -m -w -i --show-warnings 0 --show-errors 0 --tidy-mark no",
             \}
 
 " }}}
@@ -414,7 +419,7 @@ for [ft, method] in items(s:foldmethod_for_filetype)
 endfor
 
 for [ft, fp] in items(s:formatprg_for_filetype)
-    execute "autocmd filetype ".ft." let &l:formatprg=\"".fp."\""
+    execute "autocmd filetype ".ft." let &l:formatprg=\"".fp."\" | setlocal formatexpr="
 endfor
 
 for [ft, width] in items(s:tab_width_for_filetype)
