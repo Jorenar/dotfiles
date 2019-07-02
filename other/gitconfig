@@ -1,6 +1,9 @@
 [user]
-    email = <>
+    email = jorengarenar@protonmail.com
     name = Jorengarenar
+
+[github]
+    user = Jorengarenar
 
 [filter "lfs"]
     clean = git-lfs clean -- %f
