@@ -24,13 +24,16 @@ colorscheme black_and_white
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | execute "normal! g`\"" | endif
 
 " Disable continuation of comments to the next line
-autocmd filetype * set fo-=c fo-=r fo-=o
+autocmd VimEnter * set fo-=c fo-=r fo-=o
 
 " Trim trailing whitespace
 autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
 
 " Clear all maches after leaving buffer
 autocmd BufWinLeave * call clearmatches()
+
+" Set tags file for C/C++
+autocmd filetype c,cpp setlocal tags+=$HOME/.vim/tags/include.tags
 
 " }}}
 
@@ -87,7 +90,7 @@ let s:makeprg_for_filetype = {
             \ "html"     : "tidy -quiet -errors --gnu-emacs yes %:S; firefox -new-window %",
             \ "lisp"     : "clisp %",
             \ "lua"      : "lua %",
-            \ "markdown" : "grip -b % 1> /dev/null<CR>",
+            \ "markdown" : "grip -b % 1> /dev/null",
             \ "nasm"     : "yasm -f elf64 % && ld -g -o %< %<.o && rm %<.o && ./%<",
             \ "perl"     : "perl %",
             \ "plaintex" : "pdftex -file-line-error -interaction=nonstopmode % && zathura %<.pdf",
@@ -114,6 +117,7 @@ let s:foldmethod_for_filetype = {
 
 let s:tab_width_for_filetype = {
             \ "html,css,xhtml,xml" : 2,
+            \ "javascript"         : 2,
             \ "markdown"           : 2,
             \}
 
@@ -296,8 +300,7 @@ noremap <F9> :w <bar> make<CR>
 
 " Ctrl, shift, tab
 inoremap <C-o> <C-x><C-o>
-inoremap <S-Tab> gt
-noremap <S-Tab> gt
+noremap <S-Tab> <C-w>W
 noremap <Tab> <C-w><C-w>
 
 " Normal keys
@@ -356,7 +359,8 @@ set smartcase
 " UI {{{
 
 let g:netrw_winsize = -28
-set colorcolumn=80
+set colorcolumn=+1
+set completeopt=longest,menuone
 set cursorline
 set laststatus=2
 set number
@@ -366,6 +370,8 @@ set showcmd
 set signcolumn=yes
 set splitbelow
 set splitright
+set textwidth=79
+set title
 set wildmenu
 
 " }}}
@@ -374,24 +380,24 @@ set wildmenu
 
 set backup
 set backupdir=~/.vim/cache/backup/
+set dictionary+=/usr/share/dict/polish
+set dictionary+=/usr/share/dict/words
 set noswapfile
-set viminfo+=n~/.vim/viminfo
 set undodir=~/.vim/cache/undo/
 set undofile
+set viminfo+=n~/.vim/viminfo
 
 " }}}
 
 " OTHER {{{
 
 set backspace=indent,eol,start
-set dictionary=/usr/share/dict/words
+set omnifunc=syntaxcomplete#Complete
 set formatoptions-=t
 set history=50
 set lazyredraw
 set modeline
 set nomodelineexpr
-set textwidth=79
-set title
 
 " }}}
 
