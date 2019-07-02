@@ -1,2 +1,3 @@
 text/html;  /usr/bin/firefox --new-window %s >/dev/null 2>&1; needsterminal
 text/html;  elinks -dump %s; nametemplate=%s.html; copiousoutput
+image; feh %s

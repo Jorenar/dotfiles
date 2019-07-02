@@ -3,33 +3,6 @@
 ##############
 
 
-# COLORS (NEO) {{{
-
-# Author name, %A %a %F %L %n
-# Give the author column a dark grey background
-color index_author color69 default '.*'
-
-# Message flags, %S %Z
-# Highlight the flags for flagged (~F) emails
-color index_flags default red '~F'
-
-# Number of messages in a collapsed thread, %M
-color index_collapsed default brightblue
-
-# Date field
-color index_date green default
-
-# Message label, %y %Y
-color index_label default brightgreen
-
-# Message number, %C
-color index_number red default
-
-# Message size, %c %l
-color index_size cyan default
-
-# }}}
-
 # OTHER {{{
 
 # activate TLS if available on the server
@@ -85,9 +58,6 @@ set sidebar_width = 15
 # Should the mailbox paths be abbreviated?
 set sidebar_short_path = yes
 
-# Number of top-level mailbox path subdirectories to truncate for display
-set sidebar_component_depth = 0
-
 # When abbreviating mailbox path names, use any of these characters as path
 # separators. Only the part after the last separators will be shown.
 # For file folders '/' is good. For IMAP folders, often '.' is useful.
@@ -105,9 +75,6 @@ set sidebar_new_mail_only = no
 # When searching for mailboxes containing new mail, should the search wrap
 # around when it reaches the end of the list?
 set sidebar_next_new_wrap = no
-
-# Show the Sidebar on the right-hand side of the screen
-set sidebar_on_right = no
 
 # The character to use as the divider between the Sidebar and the other panels.
 set sidebar_divider_char = '|'
@@ -149,21 +116,6 @@ bind index,pager \t sidebar-open
 # Note: This is a general NeoMutt option which colors all selected items.
 color indicator cyan black
 
-# Color of the highlighted, but not open, mailbox.
-color sidebar_highlight black color8
-
-# Color of the divider separating the Sidebar from NeoMutt panels
-color sidebar_divider color8 black
-
-# Color to give mailboxes containing flagged mail
-color sidebar_flagged red black
-
-# Color to give mailboxes containing new mail
-color sidebar_new green black
-
-# Color to give mailboxes containing no new/flagged mail, etc.
-color sidebar_ordinary color245 default
-
 # }}}
 
 # VI KEYS {{{
@@ -198,4 +150,4 @@ bind browser,pager,index        N   search-opposite
 
 # }}}
 
-# vim: ft=neomuttrc fdm=marker foldenable:
+# vim: fdm=marker foldenable:
