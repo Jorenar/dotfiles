@@ -131,6 +131,7 @@ let s:formatprg_for_filetype = {
             \ "javascript" : "js-beautify -s 2",
             \ "json"       : "js-beautify",
             \ "python"     : "autopep8 -",
+            \ "sql"        : "sqlformat -k upper -r -",
             \ "xhtml"      : "tidy -asxhtml -q -m -w -i --show-warnings 0 --show-errors 0 --tidy-mark no --doctype loose",
             \ "xml"        : "tidy -xml -q -m -w -i --show-warnings 0 --show-errors 0 --tidy-mark no",
             \}
@@ -142,7 +143,7 @@ let s:formatprg_for_filetype = {
 " VARIABLES {{{
 
 let s:copy_command  = 'xsel --clipboard --input'
-let s:CursorHighlight_state = 0
+let g:CursorHighlight_state = 0
 let s:paste_command = 'xsel --clipboard --output'
 
 " }}}
@@ -157,15 +158,14 @@ function! s:FillLine(str, ...) abort
 endfunction
 " }}}
 
-" Toggle cursor line and column highlight {{{
+" Toggle cursorline highlight {{{
 function! s:CursorHighlightToggle() abort
-    set cursorcolumn!
-    if (s:CursorHighlight_state == 1)
+    if (g:CursorHighlight_state == 1)
         hi CursorLine cterm=none ctermbg=none
-        let s:CursorHighlight_state = 0
+        let g:CursorHighlight_state = 0
     else
         hi CursorLine cterm=none ctermbg=235
-        let s:CursorHighlight_state = 1
+        let g:CursorHighlight_state = 1
     endif
     echo
 endfunction
@@ -359,6 +359,7 @@ set smartcase
 
 " UI {{{
 
+let &t_ts = "\e]2;" " tmux - WINDOW TITLE FIX
 let g:netrw_winsize = -28
 set colorcolumn=+1
 set completeopt=longest,menuone
@@ -405,9 +406,6 @@ set nomodelineexpr
 " }}}
 
 " OTHER {{{
-
-" tmux - WINDOW TITLE FIX
-if &t_ts == "" && ( &term =~ "screen" || &term =~ "xterm" ) | let &t_ts = "\e]2;" | endif
 
 " Create cache files dirs
 call mkdir($HOME.'/.vim/cache/backup', 'p')
