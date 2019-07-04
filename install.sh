@@ -54,4 +54,4 @@ linking  tig/tigrc              $HOME/.tigrc
 linking  vim/indent             $HOME/.vim/indent
 linking  vim/UltiSnips          $HOME/.vim/UltiSnips
 linking  vim/vimrc              $HOME/.vimrc
-linking  vim/init.vim           $HOME/.config/nvim/init.vim
+linking  vim/vimrc              $HOME/.config/nvim/init.vim

@@ -1,14 +1,11 @@
-" #############
-" ### VIMRC ###
-" #############
+" ################
+" ### NEOVIMRC ###
+" ################
 
 " BASIC {{{
 
-" Use VIM's defaults instad of VI's
-set nocompatible
-
-" Turns on detection, plugin and indent
-filetype plugin indent on
+set runtimepath^=~/.vim runtimepath+=~/.vim/after
+let &packpath = &runtimepath
 
 " Enable syntax
 syntax enable
@@ -49,21 +46,6 @@ command! Debug normal :Termdebug<CR><C-w>H
 command! ExecCurrentLine normal :.w !sh<CR>
 command! FileSize echo getfsize(expand(@%))
 command! SortBlock :normal! vip:sort i<CR>
-
-" }}}
-
-" CLIPBOARD {{{
-
-if has("clipboard")
-    nnoremap <C-p> "+p
-    nnoremap <C-y> "+y
-    xnoremap <C-y> "+y
-else
-    nnoremap <silent> <C-p> :call <SID>system_paste()<CR>
-    nnoremap <silent> <C-y>  :set opfunc=<SID>system_copy<CR>g@
-    nnoremap <silent> <C-y>y :set opfunc=<SID>system_copy<Bar>exe 'norm! 'v:count1.'g@_'<CR>
-    xnoremap <silent> <C-y>  :call <SID>system_copy(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>
-endif
 
 " }}}
 
@@ -301,8 +283,11 @@ noremap <F9> :w <bar> make<CR>
 
 " Ctrl, shift, tab
 inoremap <C-o> <C-x><C-o>
+nnoremap <C-p> "+p
+nnoremap <C-y> "+y
 noremap <S-Tab> <C-w>W
 noremap <Tab> <C-w><C-w>
+xnoremap <C-y> "+y
 
 " Normal keys
 inoremap </ </<C-x><C-o>
@@ -313,7 +298,6 @@ noremap j gj
 noremap k gk
 noremap N Nzz
 noremap n nzz
-noremap Q gq
 
 " <nop>
 map gh <nop>
@@ -359,11 +343,11 @@ set smartcase
 
 " UI {{{
 
-let &t_ts = "\e]2;" " tmux - WINDOW TITLE FIX
 let g:netrw_winsize = -28
 set colorcolumn=+1
 set completeopt=longest,menuone
 set cursorline
+set guicursor=
 set laststatus=2
 set number
 set scrolloff=5
@@ -375,6 +359,7 @@ set splitright
 set textwidth=79
 set title
 set wildmenu
+set wildoptions-=pum
 
 " }}}
 
@@ -399,7 +384,6 @@ set formatoptions-=t
 set history=50
 set lazyredraw
 set modeline
-" set nomodelineexpr
 
 " }}}
 
@@ -413,6 +397,18 @@ packadd termdebug
 " Create cache files dirs
 call mkdir($HOME.'/.vim/cache/backup', 'p')
 call mkdir($HOME.'/.vim/cache/undo', 'p')
+
+" TERMINAL BUFFER {{{
+
+autocmd TermOpen * startinsert | setlocal nonumber
+
+tnoremap <Esc> <C-\><C-n>
+tnoremap <C-h> <C-\><C-N><C-w>h
+tnoremap <C-j> <C-\><C-N><C-w>j
+tnoremap <C-k> <C-\><C-N><C-w>k
+tnoremap <C-l> <C-\><C-N><C-w>l
+
+" }}}
 
 " Applying dictionaries loops {{{
 
