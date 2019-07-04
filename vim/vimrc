@@ -399,13 +399,16 @@ set formatoptions-=t
 set history=50
 set lazyredraw
 set modeline
-set nomodelineexpr
+" set nomodelineexpr
 
 " }}}
 
 " }}}
 
 " OTHER {{{
+
+" Add TermDebug
+packadd termdebug
 
 " Create cache files dirs
 call mkdir($HOME.'/.vim/cache/backup', 'p')
@@ -434,13 +437,6 @@ for [ft, width] in items(s:tab_width_for_filetype)
 endfor
 
 " }}}
-
-" }}}
-
-" PACKAGES {{{
-
-packadd matchit
-packadd termdebug
 
 " }}}
 
