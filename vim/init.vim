@@ -4,9 +4,6 @@
 
 " BASIC {{{
 
-set runtimepath^=~/.vim runtimepath+=~/.vim/after
-let &packpath = &runtimepath
-
 " Enable syntax
 syntax enable
 
@@ -366,13 +363,13 @@ set wildoptions-=pum
 " Vimfiles {{{
 
 set backup
-set backupdir=~/.vim/cache/backup/
+set backupdir=$HOME/.config/nvim/cache/backup/
 set dictionary+=/usr/share/dict/polish
 set dictionary+=/usr/share/dict/words
 set noswapfile
-set undodir=~/.vim/cache/undo/
+set undodir=$HOME/.config/nvim/cache/undo/
 set undofile
-set viminfo+=n~/.vim/viminfo
+set viminfo+=n$HOME/.config/nvim/viminfo
 
 " }}}
 
@@ -395,8 +392,8 @@ set modeline
 packadd termdebug
 
 " Create cache files dirs
-call mkdir($HOME.'/.vim/cache/backup', 'p')
-call mkdir($HOME.'/.vim/cache/undo', 'p')
+call mkdir($HOME.'/.config/nvim/cache/backup', 'p')
+call mkdir($HOME.'/.config/nvim/cache/undo', 'p')
 
 " TERMINAL BUFFER {{{
 
@@ -448,13 +445,13 @@ set path+=/usr/include/c++/7
 " PLUGINS {{{
 
 " DOWNLOAD VIM-PLUG (if is not installed)
-if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl --create-dirs -fLo ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+if empty(glob('~/.config/nvim/autoload/plug.vim'))
+    silent !curl --create-dirs -fLo ~/.config/nvim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 " INSTALL PLUGINS (via Plug)
-call plug#begin('~/.vim/bundle')
+call plug#begin()
 Plug 'ludovicchabant/vim-gutentags'    " Gutentags
 Plug 'tpope/vim-surround'              " Surround
 Plug 'godlygeek/tabular'               " Tabular
@@ -464,7 +461,7 @@ Plug 'mbbill/undotree'                 " UndoTree
 call plug#end()
 
 " VARIABLES
-let g:gutentags_cache_dir         = $HOME."/.vim/cache/tags"           "  Gutentags
+let g:gutentags_cache_dir         = $HOME."/.config/nvim/cache/tags"   "  Gutentags
 let g:UltiSnipsEditSplit          = "context"                          "  UltiSnips
 let g:UltiSnipsExpandTrigger      = "<C-j>"                            "  UltiSnips
 let g:UltiSnipsListSnippets       = "<C-k>"                            "  UltiSnips

@@ -14,8 +14,13 @@ declare force_flag=$1
 # ------------------------------------------------
 
 linking() {
+    if [[ $3 == "D" || $4 == "D" ]]; then
+        dotfiles_dir_temp=""
+    else
+        dotfiles_dir_temp=$dotfiles_dir
+    fi
     if [[ $3 == "X" ]]; then
-        if [[ -L $2 && "$(readlink -f $2)" == "$dotfiles_dir/$1" ]]; then
+        if [[ -L $2 && "$(readlink -f $2)" == "$dotfiles_dir_temp/$1" ]]; then
             rm $2
         fi
     else
@@ -27,7 +32,7 @@ linking() {
 
         if [ ! -e $2 ]; then
             mkdir -p "$(dirname $2)"
-            ln -sf $dotfiles_dir/$1 $2
+            ln -sf $dotfiles_dir_temp/$1 $2
         fi
     fi
 }
@@ -51,7 +56,8 @@ linking  other/tmux.conf        $HOME/.tmux.conf
 linking  other/Xresources       $HOME/.Xresources
 linking  other/zathurarc        $HOME/.config/zathura/zathurarc
 linking  tig/tigrc              $HOME/.tigrc
-linking  vim/indent             $HOME/.vim/indent
-linking  vim/UltiSnips          $HOME/.vim/UltiSnips
-linking  vim/vimrc              $HOME/.vimrc
-linking  vim/vimrc              $HOME/.config/nvim/init.vim
+linking  vim/init.vim           $HOME/.config/nvim/init.vim
+linking  vim/init.vim           $HOME/.vimrc
+linking  vim/UltiSnips          $HOME/.config/nvim/UltiSnips
+
+linking  $HOME/.config/nvim     $HOME/.vim                          "D"
