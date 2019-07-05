@@ -1,15 +1,5 @@
 " # Neovim #
 
-" BASIC {{{
-
-" Enable syntax
-syntax enable
-
-" Set colorscheme
-colorscheme black_and_white
-
-" }}}
-
 " AUTOCMDS {{{
 
 " Open file at the last known position
@@ -21,11 +11,18 @@ autocmd VimEnter * set fo-=c fo-=r fo-=o
 " Trim trailing whitespace
 autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
 
-" Clear all maches after leaving buffer
-autocmd BufWinLeave * call clearmatches()
-
 " Set tags file for C/C++
 autocmd filetype c,cpp setlocal tags+=$HOME/.vim/tags/include.tags
+
+" }}}
+
+" COLORS {{{
+
+" Enable syntax
+syntax enable
+
+" Set colorscheme
+colorscheme black_and_white
 
 " }}}
 
@@ -318,7 +315,6 @@ set number
 set scrolloff=5
 set shortmess+=I
 set showcmd
-set signcolumn=yes
 set splitbelow
 set splitright
 set textwidth=79
@@ -363,12 +359,11 @@ let g:plugins = [
             \]
 
 " VARIABLES
-let g:UltiSnipsEditSplit          = "context"                         " UltiSnips
-let g:UltiSnipsExpandTrigger      = "<C-j>"                           " UltiSnips
-let g:UltiSnipsListSnippets       = "<C-k>"                           " UltiSnips
-let g:UltiSnipsSnippetDirectories = ['~/.vim/UltiSnips', 'UltiSnips'] " UltiSnips
-let g:undotree_SetFocusWhenToggle = 1                                 " UndoTree
-let g:undotree_ShortIndicators    = 1                                 " UndoTree
+let g:UltiSnipsEditSplit          = "context"
+let g:UltiSnipsExpandTrigger      = "<C-j>"
+let g:UltiSnipsListSnippets       = "<C-k>"
+let g:undotree_SetFocusWhenToggle = 1
+let g:undotree_ShortIndicators    = 1
 
 " MAPPINGS
 nmap s ys
@@ -387,9 +382,6 @@ autocmd filetype qf wincmd J
 " Automatically open QuickFix
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
-
-" Disable cursorline highlight for QuickFix
-autocmd filetype qf setlocal nocursorline
 
 " MAPPINGS
 autocmd filetype qf noremap <buffer> g- :colder<CR>
@@ -429,8 +421,9 @@ packadd termdebug
 " Create cache files dirs
 call mkdir($HOME.'/.config/nvim/cache/backup', 'p')
 call mkdir($HOME.'/.config/nvim/cache/undo', 'p')
-call mkdir($HOME.'/.config/nvim/pack/plugins/opt', 'p')
 
+" Create plugins dir
+call mkdir($HOME.'/.config/nvim/pack/plugins/opt', 'p')
 call system('ln -sfn $HOME/.config/nvim/pack/plugins/opt $HOME/.config/nvim/plugins')
 
 " TERMINAL BUFFER {{{

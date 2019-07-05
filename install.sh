@@ -10,6 +10,7 @@
 
 declare dotfiles_dir="$(dirname $(realpath $0))"
 declare force_flag=$1
+declare vim_dir=$HOME/.config/nvim
 
 # ------------------------------------------------
 
@@ -56,8 +57,8 @@ linking  other/tmux.conf        $HOME/.tmux.conf
 linking  other/Xresources       $HOME/.Xresources
 linking  other/zathurarc        $HOME/.config/zathura/zathurarc
 linking  tig/tigrc              $HOME/.tigrc
-linking  vim/init.vim           $HOME/.config/nvim/init.vim
 linking  vim/init.vim           $HOME/.vimrc
-linking  vim/UltiSnips          $HOME/.config/nvim/UltiSnips
+linking  vim/init.vim           $vim_dir/init.vim
+linking  vim/UltiSnips          $vim_dir/UltiSnips
 
-linking  $HOME/.config/nvim     $HOME/.vim                          "D"
+linking  $vim_dir               $HOME/.vim                          "D"
