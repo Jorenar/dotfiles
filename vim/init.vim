@@ -121,14 +121,6 @@ let s:formatprg_for_filetype = {
 
 " FUNCTIONS {{{
 
-" VARIABLES {{{
-
-let s:copy_command  = 'xsel --clipboard --input'
-let g:CursorHighlight_state = 0
-let s:paste_command = 'xsel --clipboard --output'
-
-" }}}
-
 " Fill line with characters to given column {{{
 function! s:FillLine(str, ...) abort
     let to_column = get(a:, 1, &tw)
@@ -136,19 +128,6 @@ function! s:FillLine(str, ...) abort
     if reps > 0
         .s/$/\=(' '.repeat(a:str, reps))/
     endif
-endfunction
-" }}}
-
-" Toggle cursorline highlight {{{
-function! s:CursorHighlightToggle() abort
-    if (g:CursorHighlight_state == 1)
-        hi CursorLine cterm=none ctermbg=none
-        let g:CursorHighlight_state = 0
-    else
-        hi CursorLine cterm=none ctermbg=235
-        let g:CursorHighlight_state = 1
-    endif
-    echo
 endfunction
 " }}}
 
@@ -171,42 +150,6 @@ function! s:VisSort(isnmbr) range abort
     execute "sil! keepj ".firstline.",".lastline.'s/^.\{-}@@@//'
     let @a = keeprega
 endfun
-" }}}
-
-" System copy function if Vim does not have 'clipboard' support {{{
-function! s:system_copy(type, ...) abort
-    let visual_mode = a:0 != 0
-    if visual_mode
-        let mode = (a:type == '') ?  'blockwise visual' : 'visual'
-    elseif a:type == 'line'
-        let mode = 'linewise'
-    else
-        let mode = 'motion'
-    endif
-    let unnamed = @@
-    if mode == 'linewise'
-        let lines = { 'start': line("'["), 'end': line("']") }
-        silent exe lines.start . "," . lines.end . "y"
-    elseif mode == 'visual' || mode == 'blockwise visual'
-        silent exe "normal! `<" . a:type . "`>y"
-    else
-        silent exe "normal! `[v`]y"
-    endif
-    let command = s:copy_command
-    silent call system(command, getreg('@'))
-    let @@ = unnamed
-endfunction
-" }}}
-
-" System paste function if Vim does not have 'clipboard' support {{{
-function! s:system_paste() abort
-    let lines = system('xsel --clipboard --output | wc -l')
-    if lines == 0
-        execute "normal! a".system(s:paste_command)
-    else
-        put = system(s:paste_command)
-    endif
-endfunction
 " }}}
 
 " Status line - file size {{{
@@ -417,10 +360,10 @@ set path+=/usr/include/c++/7
 " PLUGINS {{{
 
 let g:plugins = [
-            \ "tpope/vim-surround",
             \ "christoomey/vim-tmux-navigator",
-            \ "sirver/ultisnips",
             \ "mbbill/undotree",
+            \ "sirver/ultisnips",
+            \ "tpope/vim-surround",
             \]
 
 " VARIABLES
@@ -482,7 +425,7 @@ set statusline+=\ \:\ %c\           " Current column
 
 " }}}
 
-" OTHER {{{
+" ### OTHER {{{
 
 " Add TermDebug
 packadd termdebug
