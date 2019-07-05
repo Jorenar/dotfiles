@@ -37,7 +37,7 @@ command! -nargs=* Refactor call <SID>Refactor(<f-args>)
 command! -nargs=+ FillLine call <SID>FillLine(<f-args>)
 command! -nargs=+ Grep execute "vimgrep /".<f-args>."/j ** | :copen"
 command! -nargs=+ Spelling execute 'setlocal spell spelllang=<args>'
-command! -range -nargs=+ Algin  <line1>,<line2>!column -ts'<args>' -o'<args>'
+command! -range -nargs=+ Algin <line1>,<line2>!column -ts'<args>' -o'<args>'
 command! -range -nargs=0 -bang Vissort sil! keepj <line1>,<line2>call <SID>VisSort(<bang>0)
 command! -range=% Sort normal :<line1>,<line2>sort i<CR>
 command! Debug normal :Termdebug<CR><C-w>H
@@ -355,6 +355,7 @@ set smartcase
 let g:netrw_winsize = -28
 set colorcolumn=+1
 set completeopt=longest,menuone
+set cursorcolumn
 set cursorline
 set guicursor=
 set laststatus=2
@@ -379,6 +380,7 @@ set backupdir=$HOME/.config/nvim/cache/backup/
 set dictionary+=/usr/share/dict/polish
 set dictionary+=/usr/share/dict/words
 set noswapfile
+set tags+=.git/tags
 set undodir=$HOME/.config/nvim/cache/undo/
 set undofile
 set viminfo+=n$HOME/.config/nvim/viminfo
@@ -405,16 +407,6 @@ tnoremap <C-h> <C-\><C-N><C-w>h
 tnoremap <C-j> <C-\><C-N><C-w>j
 tnoremap <C-k> <C-\><C-N><C-w>k
 tnoremap <C-l> <C-\><C-N><C-w>l
-
-" }}}
-
-" Intelligently navigating tmux panes and Vim splits {{{
-
-" Intelligently navigate tmux panes and Vim splits using the same keys.
-" See https://sunaku.github.io/tmux-select-pane.html for documentation.
-let progname = substitute($VIM, '.*[/\\]', '', '')
-set title titlestring=%{progname}\ %f\ +%l\ #%{tabpagenr()}.%{winnr()}
-if &term =~ '^screen' && !has('nvim') | exe "set t_ts=\e]2; t_fs=\7" | endif
 
 " }}}
 
@@ -463,20 +455,18 @@ endif
 
 " INSTALL PLUGINS (via Plug)
 call plug#begin()
-Plug 'ludovicchabant/vim-gutentags'    " Gutentags
-Plug 'tpope/vim-surround'              " Surround
-Plug 'SirVer/ultisnips'                " UltiSnips
-Plug 'mbbill/undotree'                 " UndoTree
+Plug 'tpope/vim-surround'             " Surround
+Plug 'SirVer/ultisnips'               " UltiSnips
+Plug 'mbbill/undotree'                " UndoTree
 call plug#end()
 
 " VARIABLES
-let g:gutentags_cache_dir         = $HOME."/.config/nvim/cache/tags"   "  Gutentags
-let g:UltiSnipsEditSplit          = "context"                          "  UltiSnips
-let g:UltiSnipsExpandTrigger      = "<C-j>"                            "  UltiSnips
-let g:UltiSnipsListSnippets       = "<C-k>"                            "  UltiSnips
-let g:UltiSnipsSnippetDirectories = ['~/.vim/UltiSnips', 'UltiSnips']  "  UltiSnips
-let g:undotree_SetFocusWhenToggle = 1                                  "  UndoTree
-let g:undotree_ShortIndicators    = 1                                  "  UndoTree
+let g:UltiSnipsEditSplit          = "context"                         " UltiSnips
+let g:UltiSnipsExpandTrigger      = "<C-j>"                           " UltiSnips
+let g:UltiSnipsListSnippets       = "<C-k>"                           " UltiSnips
+let g:UltiSnipsSnippetDirectories = ['~/.vim/UltiSnips', 'UltiSnips'] " UltiSnips
+let g:undotree_SetFocusWhenToggle = 1                                 " UndoTree
+let g:undotree_ShortIndicators    = 1                                 " UndoTree
 
 " MAPPINGS
 nmap s ys

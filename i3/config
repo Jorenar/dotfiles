@@ -124,6 +124,9 @@ bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
+# switch focus to next window to right
+bindsym $mod+Tab focus right
+
 # move focused window
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
@@ -150,12 +153,6 @@ bindsym $mod+z focus child
 
 # change focus between tiling / floating windows
 bindsym $mod+f focus mode_toggle
-
-# switch to next workspace
-bindsym $mod+Tab workspace next
-
-# switch to previous workspace
-bindsym $mod+Shift+Tab workspace prev
 
 # switch to workspace
 bindsym $mod+1 workspace 1
