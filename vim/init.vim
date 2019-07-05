@@ -43,6 +43,7 @@ command! -range=% Sort normal :<line1>,<line2>sort i<CR>
 command! Debug normal :Termdebug<CR><C-w>H
 command! ExecCurrentLine normal :.w !sh<CR>
 command! FileSize echo getfsize(expand(@%))
+command! GetPlugins call GetPlugins()
 command! SortBlock :normal! vip:sort i<CR>
 
 " }}}
@@ -259,6 +260,21 @@ function! s:Refactor(expr1, expr2) abort
 endfunction
 " }}}
 
+" Install and update plugins {{{
+
+function! GetPlugins()
+    for plugin in g:plugins
+        let localrepo = $HOME.'/.config/nvim/pack/plugins/opt/'.substitute(plugin, ".*\/", "", "")
+        let reposrc = "https://github.com/".plugin
+        let cmd = "git clone ".reposrc." ".localrepo." 2> /dev/null || (cd ".localrepo." ; git pull)"
+        call system(cmd)
+        packadd plugin_name
+    endfor
+    echo "DONE"
+endfunction
+
+" }}}
+
 " }}}
 
 " MAPPINGS {{{
@@ -389,53 +405,6 @@ set viminfo+=n$HOME/.config/nvim/viminfo
 
 " }}}
 
-" OTHER {{{
-
-" Add TermDebug
-packadd termdebug
-
-" Create cache files dirs
-call mkdir($HOME.'/.config/nvim/cache/backup', 'p')
-call mkdir($HOME.'/.config/nvim/cache/undo', 'p')
-
-" TERMINAL BUFFER {{{
-
-autocmd TermOpen * startinsert | setlocal nonumber
-
-tnoremap <Esc> <C-\><C-n>
-tnoremap <C-h> <C-\><C-N><C-w>h
-tnoremap <C-j> <C-\><C-N><C-w>j
-tnoremap <C-k> <C-\><C-N><C-w>k
-tnoremap <C-l> <C-\><C-N><C-w>l
-
-" }}}
-
-" Applying dictionaries loops {{{
-
-for [ft, comp] in items(s:compiler_for_filetype)
-    execute "autocmd filetype ".ft." compiler! ".comp
-endfor
-
-for [ft, mp] in items(s:makeprg_for_filetype)
-    execute "autocmd filetype ".ft." let &l:makeprg=\"if [ -f \\\"Makefile\\\" ]; then make $*; else ".mp."; fi\""
-endfor
-
-for [ft, method] in items(s:foldmethod_for_filetype)
-    execute "autocmd filetype ".ft." setlocal foldmethod=".method
-endfor
-
-for [ft, fp] in items(s:formatprg_for_filetype)
-    execute "autocmd filetype ".ft." let &l:formatprg=\"".fp."\" | setlocal formatexpr="
-endfor
-
-for [ft, width] in items(s:tab_width_for_filetype)
-    execute "autocmd filetype ".ft." setlocal tabstop=".width." shiftwidth=".width." softtabstop=".width
-endfor
-
-" }}}
-
-" }}}
-
 " PATH {{{
 
 set path+=**
@@ -447,18 +416,12 @@ set path+=/usr/include/c++/7
 
 " PLUGINS {{{
 
-" DOWNLOAD VIM-PLUG (if is not installed)
-if empty(glob('~/.config/nvim/autoload/plug.vim'))
-    silent !curl --create-dirs -fLo ~/.config/nvim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
-" INSTALL PLUGINS (via Plug)
-call plug#begin()
-Plug 'tpope/vim-surround'             " Surround
-Plug 'SirVer/ultisnips'               " UltiSnips
-Plug 'mbbill/undotree'                " UndoTree
-call plug#end()
+let g:plugins = [
+            \ "tpope/vim-surround",
+            \ "christoomey/vim-tmux-navigator",
+            \ "sirver/ultisnips",
+            \ "mbbill/undotree",
+            \]
 
 " VARIABLES
 let g:UltiSnipsEditSplit          = "context"                         " UltiSnips
@@ -516,6 +479,60 @@ set statusline+=%=                  " Switch to the right side
 set statusline+=%l/                 " Current line
 set statusline+=%L                  " Total lines
 set statusline+=\ \:\ %c\           " Current column
+
+" }}}
+
+" OTHER {{{
+
+" Add TermDebug
+packadd termdebug
+
+" Create cache files dirs
+call mkdir($HOME.'/.config/nvim/cache/backup', 'p')
+call mkdir($HOME.'/.config/nvim/cache/undo', 'p')
+call mkdir($HOME.'/.config/nvim/pack/plugins/opt', 'p')
+
+call system('ln -sfn $HOME/.config/nvim/pack/plugins/opt $HOME/.config/nvim/plugins')
+
+" TERMINAL BUFFER {{{
+
+autocmd TermOpen * startinsert | setlocal nonumber
+
+tnoremap <Esc> <C-\><C-n>
+tnoremap <C-h> <C-\><C-N><C-w>h
+tnoremap <C-j> <C-\><C-N><C-w>j
+tnoremap <C-k> <C-\><C-N><C-w>k
+tnoremap <C-l> <C-\><C-N><C-w>l
+
+" }}}
+
+" Applying dictionaries loops {{{
+
+for [ft, comp] in items(s:compiler_for_filetype)
+    execute "autocmd filetype ".ft." compiler! ".comp
+endfor
+
+for [ft, mp] in items(s:makeprg_for_filetype)
+    execute "autocmd filetype ".ft." let &l:makeprg=\"if [ -f \\\"Makefile\\\" ]; then make $*; else ".mp."; fi\""
+endfor
+
+for [ft, method] in items(s:foldmethod_for_filetype)
+    execute "autocmd filetype ".ft." setlocal foldmethod=".method
+endfor
+
+for [ft, fp] in items(s:formatprg_for_filetype)
+    execute "autocmd filetype ".ft." let &l:formatprg=\"".fp."\" | setlocal formatexpr="
+endfor
+
+for [ft, width] in items(s:tab_width_for_filetype)
+    execute "autocmd filetype ".ft." setlocal tabstop=".width." shiftwidth=".width." softtabstop=".width
+endfor
+
+for plugin in g:plugins
+    execute "packadd ".substitute(plugin, ".*\/", "", "")
+endfor
+
+" }}}
 
 " }}}
 
