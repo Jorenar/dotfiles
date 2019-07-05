@@ -1,6 +1,4 @@
-" ################
-" ### NEOVIMRC ###
-" ################
+" # Neovim #
 
 " BASIC {{{
 
@@ -37,12 +35,11 @@ command! -nargs=* Refactor call <SID>Refactor(<f-args>)
 command! -nargs=+ FillLine call <SID>FillLine(<f-args>)
 command! -nargs=+ Grep execute "vimgrep /".<f-args>."/j ** | :copen"
 command! -nargs=+ Spelling execute 'setlocal spell spelllang=<args>'
-command! -range -nargs=+ Algin <line1>,<line2>!column -ts'<args>' -o'<args>'
-command! -range -nargs=0 -bang Vissort sil! keepj <line1>,<line2>call <SID>VisSort(<bang>0)
+command! -range -nargs=+ Align <line1>,<line2>!column -ts'<args>' -o'<args>'
+command! -range -nargs=0 -bang VisSort sil! keepj <line1>,<line2>call <SID>VisSort(<bang>0)
 command! -range=% Sort normal :<line1>,<line2>sort i<CR>
 command! Debug normal :Termdebug<CR><C-w>H
 command! ExecCurrentLine normal :.w !sh<CR>
-command! FileSize echo getfsize(expand(@%))
 command! GetPlugins call GetPlugins()
 command! SortBlock :normal! vip:sort i<CR>
 
@@ -197,9 +194,9 @@ function! WhatHighlightsIt() abort
 endfunction
 " }}}
 
-" Refactor {{{
+" Replace through whole project {{{
 function! s:Refactor(expr1, expr2) abort
-    execute "vimgrep /\\C\\W".a:expr1."\\W/j ** | cdo s/\\C\\\(\\W\\\)".a:expr1."\\\(\\W\\\)/\\1".a:expr2."\\2/gc | update"
+    execute "vimgrep /\\C\\W".a:expr1."\\W/j ** | cdo s/\\C\\\(\\W\\)".a:expr1."\\\(\\W\\)/\\1".a:expr2."\\2/gc | update"
 endfunction
 " }}}
 
@@ -235,7 +232,6 @@ inoremap <F1> <ESC>gT
 inoremap <F2> <ESC>gt
 noremap <F1> gT
 noremap <F2> gt
-noremap <F3> :call <SID>CursorHighlightToggle()<CR>
 noremap <F9> :w <bar> make<CR>
 
 " Ctrl, shift, tab

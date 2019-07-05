@@ -1,6 +1,4 @@
-##############
-### MUTTRC ###
-##############
+# MUTTRC #
 
 
 # OTHER {{{
@@ -43,7 +41,7 @@ auto_view text/html                                      # view html automatical
 macro index,pager \cW v/text\/html<enter><enter>
 
 # Source private
-source $HOME/dotfiles/mutt/private
+source $HOME/.mutt_private
 
 # }}}
 

@@ -1,6 +1,4 @@
-###############
-### PROFILE ###
-###############
+# PROFILE #
 
 # DOTFILES dir
 export DOTFILES="$HOME/dotfiles"

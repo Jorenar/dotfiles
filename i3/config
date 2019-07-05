@@ -1,6 +1,4 @@
-###################
-### i3 - config ###
-###################
+# i3 - config #
 
 # GENERAL {{{
 
@@ -64,8 +62,8 @@ bindsym $mod+w exec firefox
 # open QuiteRSS
 bindsym $mod+q exec --no-startup-id $HOME/.i3/scripts/programs/quiterss
 
-# open mutt in xterm
-bindsym $mod+m exec --no-startup-id imapfilter && i3-sensible-terminal -T Mutt mutt
+# open neomutt in xterm
+bindsym $mod+m exec --no-startup-id imapfilter && i3-sensible-terminal -T Mutt neomutt
 
 # vim-anywhere
 bindsym $mod+v exec --no-startup-id $HOME/.i3/scripts/programs/vim-anywhere

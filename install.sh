@@ -47,7 +47,6 @@ linking  mpv/                   $HOME/.config/mpv
 linking  mutt/muttrc            $HOME/.muttrc
 linking  other/bashrc           $HOME/.bash_profile
 linking  other/bashrc           $HOME/.bashrc
-linking  other/ctags            $HOME/.ctags
 linking  other/feh_keys         $HOME/.config/feh/keys
 linking  other/gpg-agent.conf   $HOME/.gnupg/gpg-agent.conf
 linking  other/inputrc          $HOME/.inputrc
