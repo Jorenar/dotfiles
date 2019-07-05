@@ -14,6 +14,27 @@ autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
 " Set tags file for C/C++
 autocmd filetype c,cpp setlocal tags+=$HOME/.vim/tags/include.tags
 
+" Terminal buffer options
+autocmd TermOpen * startinsert | setlocal nonumber nocursorcolumn nocursorline
+
+" QUICKFIX {{{
+
+" Quit QuickFix window along with source file window
+autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix" | q | endif
+
+" QuickFix window below other windows
+autocmd filetype qf wincmd J
+
+" Automatically open QuickFix
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
+
+" MAPPINGS
+autocmd filetype qf noremap <buffer> g- :colder<CR>
+autocmd filetype qf noremap <buffer> g+ :cnewer<CR>
+
+" }}}
+
 " }}}
 
 " COLORS {{{
@@ -28,7 +49,7 @@ colorscheme black_and_white
 
 " COMMANDS {{{
 
-command! -nargs=* Refactor call <SID>Refactor(<f-args>)
+command! -nargs=* GrepRename call <SID>GrepRename(<f-args>)
 command! -nargs=+ FillLine call <SID>FillLine(<f-args>)
 command! -nargs=+ Grep execute "vimgrep /".<f-args>."/j ** | :copen"
 command! -nargs=+ Spelling execute 'setlocal spell spelllang=<args>'
@@ -192,13 +213,12 @@ endfunction
 " }}}
 
 " Replace through whole project {{{
-function! s:Refactor(expr1, expr2) abort
+function! s:GrepRename(expr1, expr2) abort
     execute "vimgrep /\\C\\W".a:expr1."\\W/j ** | cdo s/\\C\\\(\\W\\)".a:expr1."\\\(\\W\\)/\\1".a:expr2."\\2/gc | update"
 endfunction
 " }}}
 
 " Install and update plugins {{{
-
 function! GetPlugins()
     for plugin in g:plugins
         let localrepo = $HOME.'/.config/nvim/pack/plugins/opt/'.substitute(plugin, ".*\/", "", "")
@@ -209,7 +229,6 @@ function! GetPlugins()
     endfor
     echo "DONE"
 endfunction
-
 " }}}
 
 " }}}
@@ -225,18 +244,17 @@ noremap <Leader>R :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
 noremap <leader>v ggVG
 
 " Function keys
-inoremap <F1> <ESC>gT
-inoremap <F2> <ESC>gt
 noremap <F1> gT
 noremap <F2> gt
 noremap <F9> :w <bar> make<CR>
 
-" Ctrl, shift, tab
+" Ctrl, shift, tab, esc
 inoremap <C-o> <C-x><C-o>
 nnoremap <C-p> "+p
 nnoremap <C-y> "+y
 noremap <S-Tab> <C-w>W
 noremap <Tab> <C-w><C-w>
+tnoremap <Esc> <C-\><C-n>
 xnoremap <C-y> "+y
 
 " Normal keys
@@ -246,8 +264,6 @@ noremap '' ``
 noremap gf <C-w>gf
 noremap j gj
 noremap k gk
-noremap N Nzz
-noremap n nzz
 
 " <nop>
 map gh <nop>
@@ -268,7 +284,7 @@ set nowrap
 
 " }}}
 
-" Indentation {{{
+" Indentation and Tab {{{
 
 let g:html_indent_style1 = "inc"
 let g:html_indent_autotags = "html"
@@ -284,10 +300,8 @@ set tabstop=4
 
 " OTHER {{{
 
-set backspace=indent,eol,start
 set omnifunc=syntaxcomplete#Complete
 set formatoptions-=t
-set history=50
 set lazyredraw
 set modeline
 
@@ -351,8 +365,8 @@ set path+=/usr/include/c++/7
 
 " PLUGINS {{{
 
+" Run :GetPlugins to install/update
 let g:plugins = [
-            \ "christoomey/vim-tmux-navigator",
             \ "mbbill/undotree",
             \ "sirver/ultisnips",
             \ "tpope/vim-surround",
@@ -368,24 +382,6 @@ let g:undotree_ShortIndicators    = 1
 " MAPPINGS
 nmap s ys
 noremap <leader><F1> :UndotreeToggle<CR>
-
-" }}}
-
-" QUICKFIX {{{
-
-" Quit QuickFix window along with source file window
-autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix" | q | endif
-
-" QuickFix window below other windows
-autocmd filetype qf wincmd J
-
-" Automatically open QuickFix
-autocmd QuickFixCmdPost [^l]* nested cwindow
-autocmd QuickFixCmdPost    l* nested lwindow
-
-" MAPPINGS
-autocmd filetype qf noremap <buffer> g- :colder<CR>
-autocmd filetype qf noremap <buffer> g+ :cnewer<CR>
 
 " }}}
 
@@ -426,19 +422,7 @@ call mkdir($HOME.'/.config/nvim/cache/undo', 'p')
 call mkdir($HOME.'/.config/nvim/pack/plugins/opt', 'p')
 call system('ln -sfn $HOME/.config/nvim/pack/plugins/opt $HOME/.config/nvim/plugins')
 
-" TERMINAL BUFFER {{{
-
-autocmd TermOpen * startinsert | setlocal nonumber
-
-tnoremap <Esc> <C-\><C-n>
-tnoremap <C-h> <C-\><C-N><C-w>h
-tnoremap <C-j> <C-\><C-N><C-w>j
-tnoremap <C-k> <C-\><C-N><C-w>k
-tnoremap <C-l> <C-\><C-N><C-w>l
-
-" }}}
-
-" Applying dictionaries loops {{{
+" Applying rules form arrays/dictionaries {{{
 
 for [ft, comp] in items(s:compiler_for_filetype)
     execute "autocmd filetype ".ft." compiler! ".comp
