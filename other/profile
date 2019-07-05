@@ -14,7 +14,7 @@ export GTK_IM_MODULE=fcitx
 export EDITOR=vi
 
 # Default manpager
-export MANPAGER="vim -M +MANPAGER -"
+export MANPAGER="nvim +Man!"
 
 # Set Qt to use GTK theme
 export QT_QPA_PLATFORMTHEME="gtk2"

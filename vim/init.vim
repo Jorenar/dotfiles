@@ -37,6 +37,7 @@ command! -nargs=* Refactor call <SID>Refactor(<f-args>)
 command! -nargs=+ FillLine call <SID>FillLine(<f-args>)
 command! -nargs=+ Grep execute "vimgrep /".<f-args>."/j ** | :copen"
 command! -nargs=+ Spelling execute 'setlocal spell spelllang=<args>'
+command! -range -nargs=+ Algin  <line1>,<line2>!column -ts'<args>' -o'<args>'
 command! -range -nargs=0 -bang Vissort sil! keepj <line1>,<line2>call <SID>VisSort(<bang>0)
 command! -range=% Sort normal :<line1>,<line2>sort i<CR>
 command! Debug normal :Termdebug<CR><C-w>H
@@ -329,6 +330,17 @@ set tabstop=4
 
 " }}}
 
+" OTHER {{{
+
+set backspace=indent,eol,start
+set omnifunc=syntaxcomplete#Complete
+set formatoptions-=t
+set history=50
+set lazyredraw
+set modeline
+
+" }}}
+
 " Searching {{{
 
 set hlsearch
@@ -373,17 +385,6 @@ set viminfo+=n$HOME/.config/nvim/viminfo
 
 " }}}
 
-" OTHER {{{
-
-set backspace=indent,eol,start
-set omnifunc=syntaxcomplete#Complete
-set formatoptions-=t
-set history=50
-set lazyredraw
-set modeline
-
-" }}}
-
 " }}}
 
 " OTHER {{{
@@ -404,6 +405,16 @@ tnoremap <C-h> <C-\><C-N><C-w>h
 tnoremap <C-j> <C-\><C-N><C-w>j
 tnoremap <C-k> <C-\><C-N><C-w>k
 tnoremap <C-l> <C-\><C-N><C-w>l
+
+" }}}
+
+" Intelligently navigating tmux panes and Vim splits {{{
+
+" Intelligently navigate tmux panes and Vim splits using the same keys.
+" See https://sunaku.github.io/tmux-select-pane.html for documentation.
+let progname = substitute($VIM, '.*[/\\]', '', '')
+set title titlestring=%{progname}\ %f\ +%l\ #%{tabpagenr()}.%{winnr()}
+if &term =~ '^screen' && !has('nvim') | exe "set t_ts=\e]2; t_fs=\7" | endif
 
 " }}}
 
@@ -454,8 +465,6 @@ endif
 call plug#begin()
 Plug 'ludovicchabant/vim-gutentags'    " Gutentags
 Plug 'tpope/vim-surround'              " Surround
-Plug 'godlygeek/tabular'               " Tabular
-Plug 'christoomey/vim-tmux-navigator'  " Tmux Navigator
 Plug 'SirVer/ultisnips'                " UltiSnips
 Plug 'mbbill/undotree'                 " UndoTree
 call plug#end()
