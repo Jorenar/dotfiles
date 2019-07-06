@@ -326,7 +326,7 @@ set smartcase
 
 let g:netrw_winsize = -28
 set colorcolumn=+1
-set completeopt=longest,menuone
+set completeopt=menuone,noinsert,noselect
 set cursorcolumn
 set cursorline
 set guicursor=
@@ -351,10 +351,9 @@ set backupdir=$HOME/.config/nvim/cache/backup/
 set dictionary+=/usr/share/dict/polish
 set dictionary+=/usr/share/dict/words
 set noswapfile
-set tags+=.git/tags
+set tags+=.git/tags;/
 set undodir=$HOME/.config/nvim/cache/undo/
 set undofile
-set viminfo+=n$HOME/.config/nvim/viminfo
 
 " }}}
 
@@ -373,6 +372,7 @@ set path+=/usr/include/c++/7
 
 " Run :GetPlugins to install/update
 let g:plugins = [
+            \ "christoomey/vim-tmux-navigator",
             \ "mbbill/undotree",
             \ "sirver/ultisnips",
             \ "tpope/vim-surround",
@@ -427,10 +427,6 @@ call mkdir($HOME.'/.config/nvim/cache/undo', 'p')
 " Create plugins dir
 call mkdir($HOME.'/.config/nvim/pack/plugins/opt', 'p')
 call system('ln -sfn $HOME/.config/nvim/pack/plugins/opt $HOME/.config/nvim/plugins')
-
-" Intelligently navigating tmux panes and Vim splits
-let progname = substitute($VIM, '.*[/\\]', '', '')
-set title titlestring=%{progname}\ %f\ +%l\ #%{tabpagenr()}.%{winnr()}
 
 " Applying rules form arrays/dictionaries {{{
 
