@@ -3,7 +3,7 @@
 " AUTOCMDS {{{
 
 " Open file at the last known position
-autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | execute "normal! g`\"" | endif
+autocmd BufReadPost * normal! `"
 
 " Disable continuation of comments to the next line
 autocmd VimEnter * set fo-=c fo-=r fo-=o
@@ -15,7 +15,7 @@ autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
 autocmd filetype c,cpp setlocal tags+=$HOME/.vim/tags/include.tags
 
 " Terminal buffer options
-autocmd TermOpen * startinsert | setlocal nonumber nocursorcolumn nocursorline
+autocmd TermOpen * startinsert | setlocal nonumber nocursorcolumn nocursorline matchpairs=
 
 " QUICKFIX {{{
 
@@ -184,7 +184,7 @@ endfunction
 
 " Status line - file encoding {{{
 function! FileEncoding() abort
-    return (&fenc == "" ? &enc : &fenc).((exists("+bomb") && &bomb) ? " BOM" : "")
+	return (&fenc == "" ? &enc : &fenc).((exists("+bomb") && &bomb) ? " BOM" : "")
 endfunction
 " }}}
 
@@ -235,41 +235,47 @@ endfunction
 
 " MAPPINGS {{{
 
-" leader
-noremap <leader>= gg=G``
-noremap <leader>q gggqG``
-noremap <leader>h :nohlsearch<CR>
-noremap <Leader>r :%s/\<<C-r><C-w>\>//g<Left><Left>
-noremap <Leader>R :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
-noremap <leader>v ggVG
-
-" Function keys
+" All modes
+noremap ' `
+noremap '' ``
 noremap <F1> gT
 noremap <F2> gt
 noremap <F9> :w <bar> make<CR>
-
-" Ctrl, shift, tab, esc
-inoremap <C-o> <C-x><C-o>
-nnoremap <C-p> "+p
-nnoremap <C-y> "+y
+noremap <leader>h :nohlsearch<CR>
+noremap <leader>v ggVG
 noremap <S-Tab> <C-w>W
 noremap <Tab> <C-w><C-w>
-tnoremap <Esc> <C-\><C-n>
-xnoremap <C-y> "+y
-
-" Normal keys
-inoremap </ </<C-x><C-o>
-noremap ' `
-noremap '' ``
 noremap gf <C-w>gf
 noremap j gj
 noremap k gk
 
-" <nop>
+" Normal mode
+nnoremap <C-p> "+p
+nnoremap <C-y> "+y
+nnoremap <leader>= gg=G``
+nnoremap <leader>q gggqG``
+nnoremap <Leader>r :%s/\<<C-r><C-w>\>//g<Left><Left>
+nnoremap <Leader>R :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
+
+" Insert mode
+inoremap </ </<C-x><C-o>
+inoremap <C-o> <C-x><C-o>
+
+" Visual mode
+xnoremap <C-y> "+y
+
+" Terminal mode
+tnoremap <C-h> <C-\><C-N><C-w>h
+tnoremap <C-j> <C-\><C-N><C-w>j
+tnoremap <C-k> <C-\><C-N><C-w>k
+tnoremap <C-l> <C-\><C-N><C-w>l
+tnoremap <Esc> <C-\><C-n>
+
+" ### DISABLE
 map gh <nop>
 map q: <nop>
-map ZZ <nop>
 vmap s <nop>
+map ZZ <nop>
 
 " }}}
 
@@ -422,6 +428,10 @@ call mkdir($HOME.'/.config/nvim/cache/undo', 'p')
 call mkdir($HOME.'/.config/nvim/pack/plugins/opt', 'p')
 call system('ln -sfn $HOME/.config/nvim/pack/plugins/opt $HOME/.config/nvim/plugins')
 
+" Intelligently navigating tmux panes and Vim splits
+let progname = substitute($VIM, '.*[/\\]', '', '')
+set title titlestring=%{progname}\ %f\ +%l\ #%{tabpagenr()}.%{winnr()}
+
 " Applying rules form arrays/dictionaries {{{
 
 for [ft, comp] in items(s:compiler_for_filetype)
@@ -445,7 +455,7 @@ for [ft, width] in items(s:tab_width_for_filetype)
 endfor
 
 for plugin in g:plugins
-    execute "packadd ".substitute(plugin, ".*\/", "", "")
+    execute "silent! packadd ".substitute(plugin, ".*\/", "", "")
 endfor
 
 " }}}
