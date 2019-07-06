@@ -184,7 +184,7 @@ endfunction
 
 " Status line - file encoding {{{
 function! FileEncoding() abort
-	return (&fenc == "" ? &enc : &fenc).((exists("+bomb") && &bomb) ? " BOM" : "")
+    return (&fenc == "" ? &enc : &fenc).((exists("+bomb") && &bomb) ? " BOM" : "")
 endfunction
 " }}}
 
@@ -230,6 +230,35 @@ function! GetPlugins()
     echo "DONE"
 endfunction
 " }}}
+
+" Tmux Navigator {{{
+
+nnoremap <silent> <c-h> :call TmuxAwareNavigate('h')<CR>
+nnoremap <silent> <c-j> :call TmuxAwareNavigate('j')<CR>
+nnoremap <silent> <c-k> :call TmuxAwareNavigate('k')<CR>
+nnoremap <silent> <c-l> :call TmuxAwareNavigate('l')<CR>
+
+augroup TmuxAwareNavigate
+    au!
+    autocmd WinEnter * let s:tmux_is_last_pane = 0
+augroup END
+
+function! TmuxAwareNavigate(direction)
+    let nr = winnr()
+    let tmux_last_pane = (a:direction == 'p' && s:tmux_is_last_pane)
+    if !tmux_last_pane
+        execute 'wincmd ' . a:direction
+    endif
+    if tmux_last_pane || (nr == winnr())
+        let args = 'select-pane -t ' . shellescape($TMUX_PANE) . ' -' . tr(a:direction, 'phjkl', 'lLDUR')
+        silent call system('tmux' . ' -S ' . split($TMUX, ',')[0] . ' ' . args)
+        let s:tmux_is_last_pane = 1
+    else
+        let s:tmux_is_last_pane = 0
+    endif
+endfunction
+
+"}}}
 
 " }}}
 
@@ -372,7 +401,6 @@ set path+=/usr/include/c++/7
 
 " Run :GetPlugins to install/update
 let g:plugins = [
-            \ "christoomey/vim-tmux-navigator",
             \ "mbbill/undotree",
             \ "sirver/ultisnips",
             \ "tpope/vim-surround",
