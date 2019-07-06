@@ -231,33 +231,16 @@ function! GetPlugins()
 endfunction
 " }}}
 
-" Tmux Navigator {{{
-
-nnoremap <silent> <c-h> :call TmuxAwareNavigate('h')<CR>
-nnoremap <silent> <c-j> :call TmuxAwareNavigate('j')<CR>
-nnoremap <silent> <c-k> :call TmuxAwareNavigate('k')<CR>
-nnoremap <silent> <c-l> :call TmuxAwareNavigate('l')<CR>
-
-augroup TmuxAwareNavigate
-    au!
-    autocmd WinEnter * let s:tmux_is_last_pane = 0
-augroup END
-
+" Tmux Aware Navigate {{{
 function! TmuxAwareNavigate(direction)
     let nr = winnr()
-    let tmux_last_pane = (a:direction == 'p' && s:tmux_is_last_pane)
-    if !tmux_last_pane
-        execute 'wincmd ' . a:direction
-    endif
-    if tmux_last_pane || (nr == winnr())
+    execute 'wincmd ' . a:direction
+    if (nr == winnr())
         let args = 'select-pane -t ' . shellescape($TMUX_PANE) . ' -' . tr(a:direction, 'phjkl', 'lLDUR')
         silent call system('tmux' . ' -S ' . split($TMUX, ',')[0] . ' ' . args)
-        let s:tmux_is_last_pane = 1
     else
-        let s:tmux_is_last_pane = 0
     endif
 endfunction
-
 "}}}
 
 " }}}
@@ -285,6 +268,11 @@ nnoremap <leader>= gg=G``
 nnoremap <leader>q gggqG``
 nnoremap <Leader>r :%s/\<<C-r><C-w>\>//g<Left><Left>
 nnoremap <Leader>R :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
+nnoremap <silent> <C-h> :call TmuxAwareNavigate('h')<CR>
+nnoremap <silent> <C-j> :call TmuxAwareNavigate('j')<CR>
+nnoremap <silent> <C-k> :call TmuxAwareNavigate('k')<CR>
+nnoremap <silent> <C-l> :call TmuxAwareNavigate('l')<CR>
+
 
 " Insert mode
 inoremap </ </<C-x><C-o>
