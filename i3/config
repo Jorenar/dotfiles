@@ -201,6 +201,6 @@ bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioPlay  exec playerctl play
 bindsym XF86AudioPrev  exec playerctl previous
 
-" }}}
+# }}}
 
 # vim: fdm=marker foldenable:
