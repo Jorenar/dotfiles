@@ -33,7 +33,7 @@ autocmd filetype qf wincmd J
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 
-" MAPPINGS
+" QuckFix's mappings
 autocmd filetype qf noremap <buffer> g- :colder<CR>
 autocmd filetype qf noremap <buffer> g+ :cnewer<CR>
 
@@ -87,6 +87,18 @@ let s:makeprg_for_filetype = {
             \}
 
 " FORMATTING {{{1
+
+let g:html_indent_autotags = "html"
+let g:html_indent_style1 = "inc"
+set autoindent
+set cindent
+set expandtab
+set formatoptions-=t
+set shiftround
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
+set textwidth=79
 
 let s:tab_width_for_filetype = {
             \ "html,css,xhtml,xml" : 2,
@@ -263,72 +275,42 @@ map ZZ <nop>
 
 " OPTIONS {{{1
 
-" Displaying text/code {{{2
-
-set foldmethod=indent
-set linebreak
-set nofoldenable
-set nowrap
-
-" Indentation and Tab {{{2
-
-let g:html_indent_style1 = "inc"
-let g:html_indent_autotags = "html"
-set autoindent
-set cindent
-set expandtab
-set shiftround
-set shiftwidth=4
-set softtabstop=4
-set tabstop=4
-
-" Searching {{{2
-
-set hlsearch
-set ignorecase
-set incsearch
-set smartcase
-
-" UI {{{2
-
 let g:netrw_winsize = -28
+set backup
 set colorcolumn=+1
 set completeopt=menuone,noinsert,noselect
 set cursorcolumn
 set cursorline
+set foldmethod=indent
 set guicursor=
-set laststatus=2
+set ignorecase
+set incsearch
+set lazyredraw
+set linebreak
+set modeline
+set nofoldenable
+set noswapfile
+set nowrap
 set number
+set omnifunc=syntaxcomplete#Complete
 set scrolloff=5
 set shortmess+=I
 set showcmd
+set smartcase
 set splitbelow
 set splitright
-set textwidth=79
 set title
+set undofile
 set wildmenu
 set wildoptions-=pum
 
-" Vimfiles {{{2
-
-set backup
+" Dirs, tags, path
 set backupdir=$HOME/.config/nvim/cache/backup/
 set dictionary+=/usr/share/dict/polish
 set dictionary+=/usr/share/dict/words
-set noswapfile
 set path=**,./
 set tags+=.git/tags;/
 set undodir=$HOME/.config/nvim/cache/undo/
-set undofile
-
-" ### OTHER {{{2
-
-set omnifunc=syntaxcomplete#Complete
-set formatoptions-=t
-set lazyredraw
-set modeline
-
-" }}}
 
 " PLUGINS {{{1
 
@@ -349,7 +331,6 @@ let g:undotree_ShortIndicators    = 1
 " MAPPINGS
 nmap s ys
 noremap <leader><F1> :UndotreeToggle<CR>
-vmap s S
 
 " STATUS LINE {{{1
 
