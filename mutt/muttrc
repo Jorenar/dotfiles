@@ -1,6 +1,6 @@
 # MUTTRC #
 
-# OTHER {{{
+# GENERAL {{{1
 
 # activate TLS if available on the server
 set ssl_starttls=yes
@@ -42,9 +42,7 @@ macro index,pager \cW v/text\/html<enter><enter>
 # Source private
 source $HOME/.mutt_private
 
-# }}}
-
-# SIDEBAR {{{
+# SIDEBAR {{{1
 
 # Should the Sidebar be shown?
 set sidebar_visible = yes
@@ -113,9 +111,7 @@ bind index,pager \t sidebar-open
 # Note: This is a general NeoMutt option which colors all selected items.
 color indicator cyan black
 
-# }}}
-
-# VI KEYS {{{
+# VI KEYS {{{1
 
 # Moving around
 bind attach,browser,index       G   last-entry

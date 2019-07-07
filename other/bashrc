@@ -1,6 +1,6 @@
 # BASHRC #
 
-# ALIASES {{{
+# ALIASES {{{1
 
 alias ap1='sudo create_ap wlo1 wlo1 x I_love_BASH' # semi open WiFi network
 alias cal='LC_ALL=en_EN.utf8 ncal -Mb 2> /dev/null'
@@ -22,9 +22,7 @@ alias vi='vi -p'
 alias wicd='wicd-curses'
 alias wine-lnk='env WINEPREFIX="$HOME/.wine" wine C:\\windows\\command\\start.exe /Unix'
 
-# }}}
-
-# COMPLETION {{{
+# COMPLETION {{{1
 
 # Enable programmable completion features
 if ! shopt -oq posix; then
@@ -44,9 +42,7 @@ shopt -s extglob
 # Magic space
 bind Space:magic-space
 
-# }}}
-
-# FUNCTIONS {{{
+# FUNCTIONS {{{1
 
 i3-get-window-criteria()
 {
@@ -160,9 +156,7 @@ windows()
     command sudo reboot
 }
 
-# }}}
-
-# HISTORY {{{
+# HISTORY {{{1
 
 # Don't put duplicate lines or lines starting with space in the history
 HISTCONTROL=ignoreboth
@@ -174,36 +168,7 @@ shopt -s histappend
 HISTSIZE=1000
 HISTFILESIZE=2000
 
-# }}}
-
-# OTHER {{{
-
-# Use Vi mode
-set -o vi
-
-# Make 'less' more friendly for non-text input files
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-# Update Xresources
-if [ -f $HOME/.Xresources ]; then
-    xrdb -remove $HOME/.Xresources
-    xrdb -merge $HOME/.Xresources
-fi
-
-# Update .tmux.conf on start
-if [ -n $TMUX ]; then
-    tmux source $HOME/.tmux.conf
-fi
-
-# Exports
-source $HOME/.profile
-
-# PROMPT
-PS1='\[\e[1m\]\u@\h:\[\033[90m\]\w\[\033[0m\]\[\033[1m\]\$\[\e[0m\] '
-
-# }}}
-
-# WINDOW {{{
+# WINDOW {{{1
 
 # Check the window size after each command and update the values of LINES and COLUMNS.
 shopt -s checkwinsize
@@ -217,9 +182,7 @@ case "$TERM" in
         ;;
 esac
 
-# }}}
-
-# WRAPPERS {{{
+# WRAPPERS {{{1
 
 apt() {
     case "$1" in
@@ -288,6 +251,29 @@ mpv() {
     fi
 }
 
-# }}}
+# OTHER {{{1
+
+# Use Vi mode
+set -o vi
+
+# Make 'less' more friendly for non-text input files
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# Update Xresources
+if [ -f $HOME/.Xresources ]; then
+    xrdb -remove $HOME/.Xresources
+    xrdb -merge $HOME/.Xresources
+fi
+
+# Update .tmux.conf on start
+if [ -n $TMUX ]; then
+    tmux source $HOME/.tmux.conf
+fi
+
+# Exports
+source $HOME/.profile
+
+# PROMPT
+PS1='\[\e[1m\]\u@\h:\[\033[90m\]\w\[\033[0m\]\[\033[1m\]\$\[\e[0m\] '
 
 # vim: fdm=marker foldenable:

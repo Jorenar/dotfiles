@@ -1,6 +1,6 @@
 " # Neovim #
 
-" AUTOCMDS {{{
+" AUTOCMDS {{{1
 
 " Open file at the last known position
 autocmd BufReadPost * normal! `"
@@ -35,9 +35,7 @@ autocmd filetype qf noremap <buffer> g+ :cnewer<CR>
 
 " }}}
 
-" }}}
-
-" COLORS {{{
+" COLORS {{{1
 
 " Enable syntax
 syntax enable
@@ -45,9 +43,7 @@ syntax enable
 " Set colorscheme
 colorscheme black_and_white
 
-" }}}
-
-" COMMANDS {{{
+" COMMANDS {{{1
 
 command! -nargs=* GrepRename call <SID>GrepRename(<f-args>)
 command! -nargs=+ FillLine call <SID>FillLine(<f-args>)
@@ -61,9 +57,7 @@ command! ExecCurrentLine normal :.w !sh<CR>
 command! GetPlugins call GetPlugins()
 command! SortBlock :normal! vip:sort i<CR>
 
-" }}}
-
-" COMPILE AND RUN {{{
+" COMPILE AND RUN {{{1
 
 let s:compiler_for_filetype = {
             \ "c,cpp"    : "gcc",
@@ -98,9 +92,7 @@ let s:makeprg_for_filetype = {
             \ "xhtml"    : "tidy -asxhtml -quiet -errors --gnu-emacs yes %:S; firefox -new-window %",
             \}
 
-" }}}
-
-" FOLDING METHODS {{{
+" FOLDING METHODS {{{1
 
 let s:foldmethod_for_filetype = {
             \ "c,cpp"    : "syntax",
@@ -108,9 +100,7 @@ let s:foldmethod_for_filetype = {
             \ "markdown" : "indent",
             \}
 
-" }}}
-
-" FORMATTING {{{
+" FORMATTING {{{1
 
 let s:tab_width_for_filetype = {
             \ "html,css,xhtml,xml" : 2,
@@ -132,11 +122,9 @@ let s:formatprg_for_filetype = {
             \ "xml"        : "tidy -xml -q -m -w -i --show-warnings 0 --show-errors 0 --tidy-mark no",
             \}
 
-" }}}
+" FUNCTIONS {{{1
 
-" FUNCTIONS {{{
-
-" Fill line with characters to given column {{{
+" Fill line with characters to given column {{{2
 function! s:FillLine(str, ...) abort
     let to_column = get(a:, 1, &tw)
     let reps = (to_column - col("$")) / len(a:str)
@@ -144,9 +132,8 @@ function! s:FillLine(str, ...) abort
         .s/$/\=(' '.repeat(a:str, reps))/
     endif
 endfunction
-" }}}
 
-" Sorts lines based on visual-block selected portion of the lines {{{
+" Sorts lines based on visual-block selected portion of the lines {{{2
 function! s:VisSort(isnmbr) range abort
     if visualmode() != "\<c-v>"
         execute "silent! ".a:firstline.",".a:lastline."sort i"
@@ -165,9 +152,8 @@ function! s:VisSort(isnmbr) range abort
     execute "sil! keepj ".firstline.",".lastline.'s/^.\{-}@@@//'
     let @a = keeprega
 endfun
-" }}}
 
-" Status line - file size {{{
+" Status line - file size {{{2
 function! FileSize() abort
     let bytes = getfsize(expand(@%))
     if (bytes >= 1024*1024)
@@ -180,15 +166,13 @@ function! FileSize() abort
         return bytes . ' B'
     endif
 endfunction
-" }}}
 
-" Status line - file encoding {{{
+" Status line - file encoding {{{2
 function! FileEncoding() abort
     return (&fenc == "" ? &enc : &fenc).((exists("+bomb") && &bomb) ? " BOM" : "")
 endfunction
-" }}}
 
-" Preview of Vim 256 colors {{{
+" Preview of Vim 256 colors {{{2
 function! Color_demo() abort
     30 vnew
     setlocal nonumber buftype=nofile bufhidden=hide noswapfile
@@ -202,23 +186,20 @@ function! Color_demo() abort
         let num = num - 1
     endwhile
 endfunction
-" }}}
 
-" Check highlight group under the cursor {{{
+" Check highlight group under the cursor {{{2
 function! WhatHighlightsIt() abort
     echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
                 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
                 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"
 endfunction
-" }}}
 
-" Replace through whole project {{{
+" Replace through whole project {{{2
 function! s:GrepRename(expr1, expr2) abort
     execute "vimgrep /\\C\\W".a:expr1."\\W/j ** | cdo s/\\C\\\(\\W\\)".a:expr1."\\\(\\W\\)/\\1".a:expr2."\\2/gc | update"
 endfunction
-" }}}
 
-" Install and update plugins {{{
+" Install and update plugins {{{2
 function! GetPlugins()
     for plugin in g:plugins
         let plugin_name = substitute(plugin, ".*\/", "", "")
@@ -231,9 +212,8 @@ function! GetPlugins()
     endfor
     echo "DONE"
 endfunction
-" }}}
 
-" Tmux Aware Navigate {{{
+" Tmux Aware Navigate {{{2
 function! TmuxAwareNavigate(direction)
     let nr = winnr()
     execute 'wincmd ' . a:direction
@@ -243,11 +223,9 @@ function! TmuxAwareNavigate(direction)
     else
     endif
 endfunction
-"}}}
-
 " }}}
 
-" MAPPINGS {{{
+" MAPPINGS {{{1
 
 " All modes
 noremap ' `
@@ -296,20 +274,16 @@ map q: <nop>
 vmap s <nop>
 map ZZ <nop>
 
-" }}}
+" OPTIONS {{{1
 
-" OPTIONS {{{
-
-" Displaying text/code {{{
+" Displaying text/code {{{2
 
 set foldmethod=indent
 set linebreak
 set nofoldenable
 set nowrap
 
-" }}}
-
-" Indentation and Tab {{{
+" Indentation and Tab {{{2
 
 let g:html_indent_style1 = "inc"
 let g:html_indent_autotags = "html"
@@ -321,27 +295,21 @@ set shiftwidth=4
 set softtabstop=4
 set tabstop=4
 
-" }}}
-
-" OTHER {{{
+" OTHER {{{2
 
 set omnifunc=syntaxcomplete#Complete
 set formatoptions-=t
 set lazyredraw
 set modeline
 
-" }}}
-
-" Searching {{{
+" Searching {{{2
 
 set hlsearch
 set ignorecase
 set incsearch
 set smartcase
 
-" }}}
-
-" UI {{{
+" UI {{{2
 
 let g:netrw_winsize = -28
 set colorcolumn=+1
@@ -361,9 +329,7 @@ set title
 set wildmenu
 set wildoptions-=pum
 
-" }}}
-
-" Vimfiles {{{
+" Vimfiles {{{2
 
 set backup
 set backupdir=$HOME/.config/nvim/cache/backup/
@@ -376,18 +342,14 @@ set undofile
 
 " }}}
 
-" }}}
-
-" PATH {{{
+" PATH {{{1
 
 set path+=**
 set path+=./
 set path+=/usr/include
 set path+=/usr/include/c++/7
 
-" }}}
-
-" PLUGINS {{{
+" PLUGINS {{{1
 
 " Run :GetPlugins to install/update
 let g:plugins = [
@@ -407,9 +369,7 @@ let g:undotree_ShortIndicators    = 1
 nmap s ys
 noremap <leader><F1> :UndotreeToggle<CR>
 
-" }}}
-
-" STATUS LINE {{{
+" STATUS LINE {{{1
 
 set statusline=
 set statusline+=\ %f                " Relative path to the file
@@ -431,9 +391,7 @@ set statusline+=%l/                 " Current line
 set statusline+=%L                  " Total lines
 set statusline+=\ \:\ %c\           " Current column
 
-" }}}
-
-" ### OTHER {{{
+" ### OTHER {{{1
 
 " Add TermDebug
 packadd termdebug
@@ -474,6 +432,4 @@ endfor
 
 " }}}
 
-" }}}
-
-" vim: fdm=marker foldenable:
+" vim: fdm=marker foldenable fillchars=fold\:\ :
