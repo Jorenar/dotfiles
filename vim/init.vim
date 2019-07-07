@@ -11,13 +11,17 @@ autocmd VimEnter * set fo-=c fo-=r fo-=o
 " Trim trailing whitespace
 autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
 
-" Set tags file for C/C++
-autocmd filetype c,cpp setlocal tags+=$HOME/.vim/tags/include.tags
-
 " Terminal buffer options
 autocmd TermOpen * startinsert | setlocal nonumber nocursorcolumn nocursorline matchpairs=
 
-" QUICKFIX {{{
+" Set PATH for C/C++
+autocmd filetype c,cpp setlocal path+=/usr/include/**
+
+" Set tags file for C/C++
+autocmd filetype c,cpp setlocal tags+=$HOME/.vim/tags/include.tags
+
+" Set 'foldmethod' to 'syntax' for C/C++/Java
+autocmd filetype c,cpp,java setlocal foldmethod=syntax
 
 " Quit QuickFix window along with source file window
 autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix" | q | endif
@@ -32,16 +36,6 @@ autocmd QuickFixCmdPost    l* nested lwindow
 " MAPPINGS
 autocmd filetype qf noremap <buffer> g- :colder<CR>
 autocmd filetype qf noremap <buffer> g+ :cnewer<CR>
-
-" }}}
-
-" COLORS {{{1
-
-" Enable syntax
-syntax enable
-
-" Set colorscheme
-colorscheme black_and_white
 
 " COMMANDS {{{1
 
@@ -92,14 +86,6 @@ let s:makeprg_for_filetype = {
             \ "xhtml"    : "tidy -asxhtml -quiet -errors --gnu-emacs yes %:S; firefox -new-window %",
             \}
 
-" FOLDING METHODS {{{1
-
-let s:foldmethod_for_filetype = {
-            \ "c,cpp"    : "syntax",
-            \ "java"     : "syntax",
-            \ "markdown" : "indent",
-            \}
-
 " FORMATTING {{{1
 
 let s:tab_width_for_filetype = {
@@ -124,7 +110,60 @@ let s:formatprg_for_filetype = {
 
 " FUNCTIONS {{{1
 
-" Fill line with characters to given column {{{2
+" Color_demo - preview of Vim 256 colors {{{2
+function! Color_demo() abort
+    30 vnew
+    setlocal nonumber buftype=nofile bufhidden=hide noswapfile
+    setlocal statusline=[%n]
+    setlocal statusline+=\ Color\ demo
+    let num = 255
+    while num >= 0
+        execute 'hi col_'.num.' ctermbg='.num.' ctermfg=white'
+        execute 'syn match col_'.num.' "ctermbg='.num.':...." containedIn=ALL'
+        call append(0, 'ctermbg='.num.':....')
+        let num = num - 1
+    endwhile
+endfunction
+
+" GetPlugins - install and update plugins {{{2
+function! GetPlugins()
+    for plugin in g:plugins
+        let plugin_name = substitute(plugin, ".*\/", "", "")
+        let plugin_dir = $HOME.'/.config/nvim/pack/plugins/opt/'.plugin_name
+        let github_url = "https://github.com/".plugin
+        let cmd = "git clone ".github_url." ".plugin_dir." 2> /dev/null || (cd ".plugin_dir." ; git pull)"
+        call system(cmd)
+        execute "packadd ".plugin_name
+        execute "helptags ".plugin_dir."/doc"
+    endfor
+    echo "DONE"
+endfunction
+
+" GrepRename - replace through whole project {{{2
+function! s:GrepRename(expr1, expr2) abort
+    execute "vimgrep /\\C\\W".a:expr1."\\W/j ** | cdo s/\\C\\\(\\W\\)".a:expr1."\\\(\\W\\)/\\1".a:expr2."\\2/gc | update"
+endfunction
+
+" FileEncoding ~ for Status line {{{2
+function! FileEncoding() abort
+    return (&fenc == "" ? &enc : &fenc).((exists("+bomb") && &bomb) ? " BOM" : "")
+endfunction
+
+" FileSize     ~ for Status Line{{{2
+function! FileSize() abort
+    let bytes = getfsize(expand(@%))
+    if (bytes >= 1024*1024)
+        return '~' . float2nr(round(bytes/(1024*1024.0))) . ' MiB'
+    elseif (bytes >= 1024)
+        return '~' . float2nr(round(bytes/1024.0)) . ' KiB'
+    elseif (bytes <= 0)
+        return '0 B'
+    else
+        return bytes . ' B'
+    endif
+endfunction
+
+" FillLine - fill line with characters to given column {{{2
 function! s:FillLine(str, ...) abort
     let to_column = get(a:, 1, &tw)
     let reps = (to_column - col("$")) / len(a:str)
@@ -133,7 +172,18 @@ function! s:FillLine(str, ...) abort
     endif
 endfunction
 
-" Sorts lines based on visual-block selected portion of the lines {{{2
+" TmuxAwareNavigate {{{2
+function! TmuxAwareNavigate(direction)
+    let nr = winnr()
+    execute 'wincmd ' . a:direction
+    if (nr == winnr())
+        let args = 'select-pane -t ' . shellescape($TMUX_PANE) . ' -' . tr(a:direction, 'phjkl', 'lLDUR')
+        silent call system('tmux' . ' -S ' . split($TMUX, ',')[0] . ' ' . args)
+    else
+    endif
+endfunction
+
+" VisSort - sorts based on visual-block selected portion of the lines {{{2
 function! s:VisSort(isnmbr) range abort
     if visualmode() != "\<c-v>"
         execute "silent! ".a:firstline.",".a:lastline."sort i"
@@ -153,81 +203,17 @@ function! s:VisSort(isnmbr) range abort
     let @a = keeprega
 endfun
 
-" Status line - file size {{{2
-function! FileSize() abort
-    let bytes = getfsize(expand(@%))
-    if (bytes >= 1024*1024)
-        return '~' . float2nr(round(bytes/(1024*1024.0))) . ' MiB'
-    elseif (bytes >= 1024)
-        return '~' . float2nr(round(bytes/1024.0)) . ' KiB'
-    elseif (bytes <= 0)
-        return '0 B'
-    else
-        return bytes . ' B'
-    endif
-endfunction
-
-" Status line - file encoding {{{2
-function! FileEncoding() abort
-    return (&fenc == "" ? &enc : &fenc).((exists("+bomb") && &bomb) ? " BOM" : "")
-endfunction
-
-" Preview of Vim 256 colors {{{2
-function! Color_demo() abort
-    30 vnew
-    setlocal nonumber buftype=nofile bufhidden=hide noswapfile
-    setlocal statusline=[%n]
-    setlocal statusline+=\ Color\ demo
-    let num = 255
-    while num >= 0
-        execute 'hi col_'.num.' ctermbg='.num.' ctermfg=white'
-        execute 'syn match col_'.num.' "ctermbg='.num.':...." containedIn=ALL'
-        call append(0, 'ctermbg='.num.':....')
-        let num = num - 1
-    endwhile
-endfunction
-
-" Check highlight group under the cursor {{{2
+" WhatHighlightsIt - check highlight group under the cursor {{{2
 function! WhatHighlightsIt() abort
     echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
                 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
                 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"
 endfunction
-
-" Replace through whole project {{{2
-function! s:GrepRename(expr1, expr2) abort
-    execute "vimgrep /\\C\\W".a:expr1."\\W/j ** | cdo s/\\C\\\(\\W\\)".a:expr1."\\\(\\W\\)/\\1".a:expr2."\\2/gc | update"
-endfunction
-
-" Install and update plugins {{{2
-function! GetPlugins()
-    for plugin in g:plugins
-        let plugin_name = substitute(plugin, ".*\/", "", "")
-        let plugin_dir = $HOME.'/.config/nvim/pack/plugins/opt/'.plugin_name
-        let github_url = "https://github.com/".plugin
-        let cmd = "git clone ".github_url." ".plugin_dir." 2> /dev/null || (cd ".plugin_dir." ; git pull)"
-        call system(cmd)
-        execute "packadd ".plugin_name
-        execute "helptags ".plugin_dir."/doc"
-    endfor
-    echo "DONE"
-endfunction
-
-" Tmux Aware Navigate {{{2
-function! TmuxAwareNavigate(direction)
-    let nr = winnr()
-    execute 'wincmd ' . a:direction
-    if (nr == winnr())
-        let args = 'select-pane -t ' . shellescape($TMUX_PANE) . ' -' . tr(a:direction, 'phjkl', 'lLDUR')
-        silent call system('tmux' . ' -S ' . split($TMUX, ',')[0] . ' ' . args)
-    else
-    endif
-endfunction
 " }}}
 
 " MAPPINGS {{{1
 
-" All modes
+" All modes {{{2
 noremap ' `
 noremap '' ``
 noremap <F1> gT
@@ -241,7 +227,7 @@ noremap gf <C-w>gf
 noremap j gj
 noremap k gk
 
-" Normal mode
+" Normal mode {{{2
 nnoremap <C-p> "+p
 nnoremap <C-y> "+y
 nnoremap <leader>= gg=G``
@@ -253,26 +239,27 @@ nnoremap <silent> <C-j> :call TmuxAwareNavigate('j')<CR>
 nnoremap <silent> <C-k> :call TmuxAwareNavigate('k')<CR>
 nnoremap <silent> <C-l> :call TmuxAwareNavigate('l')<CR>
 
-
-" Insert mode
+" Insert mode {{{2
 inoremap </ </<C-x><C-o>
 inoremap <C-o> <C-x><C-o>
 
-" Visual mode
-xnoremap <C-y> "+y
-
-" Terminal mode
+" Terminal mode {{{2
 tnoremap <C-h> <C-\><C-N><C-w>h
 tnoremap <C-j> <C-\><C-N><C-w>j
 tnoremap <C-k> <C-\><C-N><C-w>k
 tnoremap <C-l> <C-\><C-N><C-w>l
 tnoremap <Esc> <C-\><C-n>
 
-" ### DISABLE
+" Visual mode {{{2
+xnoremap <C-y> "+y
+
+" ### DISABLE {{{2
 map gh <nop>
 map q: <nop>
 vmap s <nop>
 map ZZ <nop>
+
+"}}}
 
 " OPTIONS {{{1
 
@@ -294,13 +281,6 @@ set shiftround
 set shiftwidth=4
 set softtabstop=4
 set tabstop=4
-
-" OTHER {{{2
-
-set omnifunc=syntaxcomplete#Complete
-set formatoptions-=t
-set lazyredraw
-set modeline
 
 " Searching {{{2
 
@@ -336,18 +316,19 @@ set backupdir=$HOME/.config/nvim/cache/backup/
 set dictionary+=/usr/share/dict/polish
 set dictionary+=/usr/share/dict/words
 set noswapfile
+set path=**,./
 set tags+=.git/tags;/
 set undodir=$HOME/.config/nvim/cache/undo/
 set undofile
 
+" ### OTHER {{{2
+
+set omnifunc=syntaxcomplete#Complete
+set formatoptions-=t
+set lazyredraw
+set modeline
+
 " }}}
-
-" PATH {{{1
-
-set path+=**
-set path+=./
-set path+=/usr/include
-set path+=/usr/include/c++/7
 
 " PLUGINS {{{1
 
@@ -368,6 +349,7 @@ let g:undotree_ShortIndicators    = 1
 " MAPPINGS
 nmap s ys
 noremap <leader><F1> :UndotreeToggle<CR>
+vmap s S
 
 " STATUS LINE {{{1
 
@@ -393,6 +375,12 @@ set statusline+=\ \:\ %c\           " Current column
 
 " ### OTHER {{{1
 
+" Enable syntax
+syntax enable
+
+" Set colorscheme
+colorscheme black_and_white
+
 " Add TermDebug
 packadd termdebug
 
@@ -414,10 +402,6 @@ for [ft, mp] in items(s:makeprg_for_filetype)
     execute "autocmd filetype ".ft." let &l:makeprg=\"if [ -f \\\"Makefile\\\" ]; then make $*; else ".mp."; fi\""
 endfor
 
-for [ft, method] in items(s:foldmethod_for_filetype)
-    execute "autocmd filetype ".ft." setlocal foldmethod=".method
-endfor
-
 for [ft, fp] in items(s:formatprg_for_filetype)
     execute "autocmd filetype ".ft." let &l:formatprg=\"".fp."\" | setlocal formatexpr="
 endfor
@@ -432,4 +416,4 @@ endfor
 
 " }}}
 
-" vim: fdm=marker foldenable fillchars=fold\:\ :
+" vim: fdm=marker foldenable:
