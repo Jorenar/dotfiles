@@ -21,4 +21,4 @@
 	ctags = !.git/hooks/ctags
 
 [init]
-	templatedir = ~/dotfiles/git/git_template/
+	templatedir = ~/dotfiles/git/template/

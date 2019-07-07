@@ -221,11 +221,13 @@ endfunction
 " Install and update plugins {{{
 function! GetPlugins()
     for plugin in g:plugins
-        let localrepo = $HOME.'/.config/nvim/pack/plugins/opt/'.substitute(plugin, ".*\/", "", "")
-        let reposrc = "https://github.com/".plugin
-        let cmd = "git clone ".reposrc." ".localrepo." 2> /dev/null || (cd ".localrepo." ; git pull)"
+        let plugin_name = substitute(plugin, ".*\/", "", "")
+        let plugin_dir = $HOME.'/.config/nvim/pack/plugins/opt/'.plugin_name
+        let github_url = "https://github.com/".plugin
+        let cmd = "git clone ".github_url." ".plugin_dir." 2> /dev/null || (cd ".plugin_dir." ; git pull)"
         call system(cmd)
-        packadd plugin_name
+        execute "packadd ".plugin_name
+        execute "helptags ".plugin_dir."/doc"
     endfor
     echo "DONE"
 endfunction
