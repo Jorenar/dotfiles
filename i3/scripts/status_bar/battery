@@ -1,6 +1,6 @@
 #!/bin/bash
 
-battery_time=$(upower -i $(upower -e | command grep battery) | grep "time to empty")
+battery_time=$(upower -i $(upower -e | grep battery) | grep "time to empty")
 battery_time=$(echo ${battery_time//"time to empty:"/})
 
 battery=$(acpi)

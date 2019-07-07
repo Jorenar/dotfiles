@@ -1,4 +1,4 @@
-gtk-cursor-theme-name = "DMZ-White"
-gtk-font-name         = "DejaVu Sans 10"
-gtk-icon-theme-name   = "elementary-xfce-darker"
-gtk-theme-name        = "numix-gtk-theme-dark"
+gtk-cursor-theme-name  = "DMZ-White"
+gtk-font-name          = "DejaVu Sans 10"
+gtk-icon-theme-name    = "elementary-xfce-darker"
+gtk-theme-name         = "numix-gtk-theme-dark"

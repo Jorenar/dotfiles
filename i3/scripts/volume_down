@@ -1,5 +1,5 @@
 #!/bin/bash
 
-if [[ ! $(amixer get Master | command grep % | command awk '{print $5}'|sed -e 's/\[//' -e 's/\]//') == "-63.00dB" ]]; then
+if [[ ! $(amixer get Master | grep % | awk '{print $5}'|sed -e 's/\[//' -e 's/\]//') == "-63.00dB" ]]; then
     amixer -- set Master 3dB- unmute
 fi

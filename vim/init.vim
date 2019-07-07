@@ -282,7 +282,6 @@ set completeopt=menuone,noinsert,noselect
 set cursorcolumn
 set cursorline
 set foldmethod=indent
-set guicursor=
 set ignorecase
 set incsearch
 set lazyredraw
@@ -331,6 +330,7 @@ let g:undotree_ShortIndicators    = 1
 " MAPPINGS
 nmap s ys
 noremap <leader><F1> :UndotreeToggle<CR>
+vmap s S
 
 " STATUS LINE {{{1
 

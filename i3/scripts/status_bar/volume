@@ -1,12 +1,12 @@
 #!/bin/bash
 
-if [[ $(amixer get Master | command grep % | command awk '{print $3}') == 0 ]]; then
+if [[ $(amixer get Master | grep % | awk '{print $3}') == 0 ]]; then
     volume="[X]"
 else
-    volume=$(amixer get Master | command grep % | command awk '{print $5}'| sed -e 's/\[//' -e 's/\]//')
+    volume=$(amixer get Master | grep % | awk '{print $5}'| sed -e 's/\[//' -e 's/\]//')
 fi
 
-if [ $(amixer get Master | command grep % | command awk '{print $6}') == "[off]" ]; then
+if [ $(amixer get Master | grep % | awk '{print $6}') == "[off]" ]; then
     volume="$volume (muted)"
 fi
 

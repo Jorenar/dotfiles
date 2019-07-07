@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -z "$(xlsclients | grep -i QuiteRSS)" ];then
+if [ -z "$(xlsclients | grep -i QuiteRSS)" ]; then
     quiterss
 else
     i3-msg [class="QuiteRss"] scratchpad show
