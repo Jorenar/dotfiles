@@ -54,6 +54,7 @@ linking  other/inputrc          $HOME/.inputrc
 linking  other/myclirc          $HOME/.myclirc                      "X"
 linking  other/profile          $HOME/.profile
 linking  other/tmux.conf        $HOME/.tmux.conf
+linking  other/xinitrc          $HOME/.xinitrc
 linking  other/Xresources       $HOME/.Xresources
 linking  other/zathurarc        $HOME/.config/zathura/zathurarc
 linking  tig/tigrc              $HOME/.tigrc

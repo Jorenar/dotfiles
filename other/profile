@@ -1,11 +1,5 @@
 # ~/.PROFILE #
 
-# Update Xresources
-if [ -f $HOME/.Xresources ]; then
-    xrdb -merge $HOME/.Xresources
-    xrdb -load $HOME/.Xresources
-fi
-
 # DOTFILES dir
 export DOTFILES="$HOME/dotfiles"
 

@@ -1,0 +1,6 @@
+xrandr --setprovideroutputsource modesetting NVIDIA-0
+xrandr --auto
+xrandr --dpi 96
+setxbmap pl
+xrdb -load ~/.Xresources
+exec i3
