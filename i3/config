@@ -52,7 +52,9 @@ exec --no-startup-id synclient TouchpadOff=1
 
 # start TERMINAL
 bindsym $mod+Return exec --no-startup-id i3-sensible-terminal
-bindsym $mod+x exec --no-startup-id i3-sensible-terminal
+
+# start tmux in terminal
+bindsym $mod+x exec --no-startup-id i3-sensible-terminal tmux
 
 # open Firefox
 bindsym $mod+w exec firefox

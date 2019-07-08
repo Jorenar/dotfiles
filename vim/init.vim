@@ -267,7 +267,6 @@ xnoremap <C-y> "+y
 
 " ### DISABLE {{{2
 map gh <nop>
-map q: <nop>
 vmap s <nop>
 map ZZ <nop>
 

@@ -8,7 +8,7 @@ alias du='du -h'
 alias grep='grep --color'
 alias less='less -R'
 alias ll='ls -alhF | less -R'
-alias logout="i3-msg exit"
+alias i3-logout="i3-msg exit"
 alias ls='ls -F'
 alias mkdir='mkdir -p'
 alias mnt='udisksctl mount -b'
@@ -18,7 +18,7 @@ alias qmv='command qmv -v -f "do"'
 alias sudo='sudo '
 alias suspend='systemctl suspend'
 alias umnt='udisksctl unmount -b'
-alias vi='vi -p'
+alias vi='nvim -p'
 alias wicd='wicd-curses'
 alias wine-lnk='env WINEPREFIX="$HOME/.wine" wine C:\\windows\\command\\start.exe /Unix'
 
@@ -184,28 +184,6 @@ esac
 
 # WRAPPERS {{{1
 
-apt() {
-    case "$1" in
-        purge)
-            shift 1
-            command sudo apt purge --auto-remove $@
-            ;;
-        upgrade)
-            shift 1
-            command sudo apt update
-            command sudo apt full-upgrade
-            command sudo apt autoremove -y
-            command sudo apt autoclean
-            ;;
-        list|search|show)
-            command apt $@
-            ;;
-        *)
-            command sudo apt $@
-            ;;
-    esac
-}
-
 feh() {
     if [[ $1 == "-r" ]]; then
         R="-r"
@@ -261,8 +239,8 @@ set -o vi
 
 # Update Xresources
 if [ -f $HOME/.Xresources ]; then
-    xrdb -remove $HOME/.Xresources
     xrdb -merge $HOME/.Xresources
+    xrdb -load $HOME/.Xresources
 fi
 
 # Update .tmux.conf on start
@@ -275,5 +253,10 @@ source $HOME/.profile
 
 # PROMPT
 PS1='\[\e[1m\]\u@\h:\[\033[90m\]\w\[\033[0m\]\[\033[1m\]\$\[\e[0m\] '
+
+# If there is display then on tty1 startx
+if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
+    exec startx
+fi
 
 # vim: fdm=marker foldenable:
