@@ -5,12 +5,18 @@
 # set mod key
 set $mod Mod4
 
+# optimus-manager
+exec --no-startup-id /usr/bin/prime-offload
+
 # multi-monitor
 # workspace 1 output primary
 exec --no-startup-id $HOME/.i3/scripts/multi-monitor
 
 # font for window titles
 font pango:DejaVu Sans Mono 8
+
+# set volume
+exec --no-startup-id amixer -- set Master -60dB
 
 # use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -195,8 +201,8 @@ bindsym --release XF86AudioRaiseVolume exec pkill -SIGRTMIN+10 i3blocks
 # sreen brightness controls
 # bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight -inc 10 # increase screen brightness
 # bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10 # decrease screen brightness
-bindsym XF86MonBrightnessUp   exec --no-startup-id sudo light -A 5 # increase screen brightness
-bindsym XF86MonBrightnessDown exec --no-startup-id sudo light -U 5 # decrease screen brightness
+bindsym XF86MonBrightnessUp   exec --no-startup-id light -A 5 # increase screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id light -U 5 # decrease screen brightness
 
 # media player controls
 bindsym XF86AudioNext  exec playerctl next

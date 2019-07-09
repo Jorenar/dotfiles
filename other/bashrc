@@ -6,9 +6,9 @@ alias ap1='sudo create_ap wlo1 wlo1 x I_love_BASH' # semi open WiFi network
 alias cal='LC_ALL=en_EN.utf8 ncal -Mb 2> /dev/null'
 alias du='du -h'
 alias grep='grep --color'
+alias i3-logout="i3-msg exit"
 alias less='less -R'
 alias ll='ls -alhF | less -R'
-alias i3-logout="i3-msg exit"
 alias ls='ls -F'
 alias mkdir='mkdir -p'
 alias mnt='udisksctl mount -b'
@@ -63,15 +63,21 @@ i3-get-window-criteria()
 
 gpu-switch()
 {
-    if [ ! -z $(command -v prime-select) ]; then
-        read -p "Are you sure? System will reboot! [Y/n] " -r
-        if [[ ! $REPLY =~ ^[Nn]$ ]]; then
-            if [ "$(command prime-select query)" == "intel" ]; then
-                sudo prime-select nvidia
+    if [ ! -z $(command -v optimus-manager) ]; then
+        if [[ "$(glxinfo | grep "OpenGL vendor")" =~ .*Intel.* ]]; then
+            if [[ "$(cat '/sys/bus/pci/devices/0000:01:00.0/power/control')" == "on" ]]; then
+                optimus-manager --switch nvidia
+                i3-msg exit
             else
-                sudo prime-select intel
+                read -p "Are you sure? System will reboot! [Y/n] " -r
+                if [[ ! $REPLY =~ ^[Nn]$ ]]; then
+                    optimus-manager --set-startup nvidia_once
+                    reboot
+                fi
             fi
-            reboot
+        else
+            optimus-manager --switch intel
+            i3-msg exit
         fi
     fi
 }
@@ -96,15 +102,6 @@ install-from-list()
     $installation_command $list
 
     unset list
-}
-
-offupg()
-{
-    command sudo apt update
-    command sudo apt autoremove -y
-    command sudo apt autoclean
-    command sudo apt full-upgrade -y
-    command sudo shutdown -h now
 }
 
 rebuild-hosts-file()
@@ -137,17 +134,6 @@ umount-ios()
     done
     rmdir $HOME/.mount/* &> /dev/null
     cd - &> /dev/null
-}
-
-upgrade()
-{
-    command sudo apt update
-    command sudo apt full-upgrade
-    command sudo apt autoremove -y
-    command sudo apt autoclean
-    if hash vim 2> /dev/null; then
-        vim +PlugUpgrade +PlugUpdate +qa
-    fi
 }
 
 windows()
@@ -213,10 +199,6 @@ find()
 mpv() {
     if [[ -z "$1" ]]; then
         command mpv ./
-    elif [[ "$1" == "-s" ]]; then
-        sub="$2"
-        shift 2
-        command mpv --sub-files="$sub" "$@"
     elif [[ "$1" == "-l" ]]; then
         if [ -z "$2" ]; then
             command mpv --loop-playlist ./
@@ -255,6 +237,7 @@ PS1='\[\e[1m\]\u@\h:\[\033[90m\]\w\[\033[0m\]\[\033[1m\]\$\[\e[0m\] '
 
 # If there is display then on tty1 startx
 if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
+    sudo /usr/bin/prime-switch
     exec startx
 fi
 
