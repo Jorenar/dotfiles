@@ -10,6 +10,7 @@ if [ -z "$(xrandr --listactivemonitors | grep 'Monitors: 1')" ]; then
     xrandr --output $SECONDARY --auto --right-of "$PRIMARY"
     i3-msg "workspace 1, move workspace to output $PRIMARY"
 
+    touch $HOME/dziala2
     # set Wacom tablet to left monitor
-    xsetwacom set "$WACOM_ID" MapToOutput 1920x1080+0+0
+    # xsetwacom set "$WACOM_ID" MapToOutput 1920x1080+0+0
 fi

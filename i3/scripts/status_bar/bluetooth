@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if ["$(hcitool dev)" == "Devices:"]; then
+if [[ "$(rfkill list bluetooth | grep Soft)" =~ "Soft blocked: yes" ]]; then
     echo "BT: off"
 else
     echo "BT: on"

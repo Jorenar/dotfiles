@@ -8,15 +8,14 @@ set $mod Mod4
 # optimus-manager
 exec --no-startup-id /usr/bin/prime-offload
 
-# multi-monitor
-# workspace 1 output primary
-exec --no-startup-id $HOME/.i3/scripts/multi-monitor
-
 # font for window titles
 font pango:DejaVu Sans Mono 8
 
 # set volume
 exec --no-startup-id amixer -- set Master -60dB
+
+# multi-monitor
+exec --no-startup-id $HOME/.i3/scripts/multi-monitor
 
 # use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod

@@ -1,4 +1,4 @@
+xrandr --auto
 setxbmap pl
 xrdb -load ~/.Xresources
 exec i3
-exec ~/.i3/scripts/multi-monitor
