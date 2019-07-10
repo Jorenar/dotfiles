@@ -4,6 +4,7 @@
 
 alias ap1='sudo create_ap wlo1 wlo1 x I_love_BASH' # semi open WiFi network
 alias cal='LC_ALL=en_EN.utf8 ncal -Mb 2> /dev/null'
+alias calm-fans='sudo sh -c "echo 'auto' > '/sys/bus/pci/devices/0000:01:00.0/power/control'"'
 alias du='du -h'
 alias grep='grep --color'
 alias i3-logout="i3-msg exit"
@@ -14,6 +15,7 @@ alias mkdir='mkdir -p'
 alias mnt='udisksctl mount -b'
 alias off='shutdown -h now'
 alias op='xdg-open'
+alias pacman-purge='pacman -Rns $(pacman -Qtdq)'
 alias qmv='command qmv -v -f "do"'
 alias sudo='sudo '
 alias suspend='systemctl suspend'

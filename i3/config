@@ -29,7 +29,6 @@ bar {
     font pango: DejaVu Sans Mono 9
     status_command i3blocks -c $HOME/.i3/i3blocks
     tray_output primary
-    tray_padding 1
     colors {
         focused_workspace  #333333 #222222 #FFFFFF
         inactive_workspace #000000 #000000 #AAAAAA

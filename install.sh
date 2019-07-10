@@ -57,7 +57,6 @@ linking  other/tmux.conf        $HOME/.tmux.conf
 linking  other/xinitrc          $HOME/.xinitrc
 linking  other/Xresources       $HOME/.Xresources
 linking  other/zathurarc        $HOME/.config/zathura/zathurarc
-linking  tig/tigrc              $HOME/.tigrc
 linking  vim/init.vim           $HOME/.vimrc
 linking  vim/init.vim           $vim_dir/init.vim
 linking  vim/UltiSnips          $vim_dir/UltiSnips
