@@ -56,31 +56,28 @@ i3-get-window-criteria()
 
     {
         xprop |
-            sed -nr \
+        sed -nr \
             -e "s/^WM_CLASS\(STRING\) = ($match_qstring), ($match_qstring)$/instance=\1\nclass=\3/p" \
             -e "s/^WM_WINDOW_ROLE\(STRING\) = ($match_qstring)$/window_role=\1/p" \
             -e "/^WM_NAME\(STRING\) = ($match_string)$/{s//title=\1/; h}" \
             -e "/^_NET_WM_NAME\(UTF8_STRING\) = ($match_qstring)$/{s//title=\1/; h}" \
             -e '${g; p}'
-        } | sort | tr "\n" " " | sed -r 's/^(.*) $/[\1]\n/'
+    } | sort | tr "\n" " " | sed -r 's/^(.*) $/[\1]\n/'
 }
 
 gpu-switch()
 {
     if [ ! -z $(command -v optimus-manager) ]; then
-        if [[ "$(glxinfo | grep "OpenGL vendor")" =~ .*Intel.* ]]; then
-            if [[ "$(cat '/sys/bus/pci/devices/0000:01:00.0/power/control')" == "on" ]]; then
-                optimus-manager --switch nvidia
-                i3-msg exit
-            else
-                read -p "Are you sure? System will reboot! [Y/n] " -r
-                if [[ ! $REPLY =~ ^[Nn]$ ]]; then
-                    optimus-manager --set-startup nvidia_once
-                    reboot
-                fi
+        if [[ "$(glxinfo | grep "OpenGL vendor")" =~ .*Intel.* ]] && \
+                [[ "$(cat '/sys/bus/pci/devices/0000:01:00.0/power/control')" == "auto" ]]
+        then
+            read -p "Are you sure? System will reboot! [Y/n] " -r
+            if [[ ! $REPLY =~ ^[Nn]$ ]]; then
+                optimus-manager --set-startup nvidia_once
+                reboot
             fi
         else
-            optimus-manager --switch intel
+            optimus-manager --switch auto
             i3-msg exit
         fi
     fi
