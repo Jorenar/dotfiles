@@ -6,6 +6,6 @@ file=$(mktemp -p /tmp/vim-anywhere)
 
 xsel --clipboard --output > $file
 
-$TERMINAL -e "vim $file"
+$TERMINAL -e "nvim $file"
 
 cat $file | xsel --clipboard --input

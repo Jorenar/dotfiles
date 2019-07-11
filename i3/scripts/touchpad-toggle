@@ -1,7 +1,9 @@
 #!/bin/bash
 
-if [ "$(command synclient -l | command grep TouchpadOff | command cut -c31-)" = "0" ]; then
-    synclient TouchpadOff=1
+ID="$(xinput list | grep -io 'touchpad.*id=[0-9]*' | sed 's/^.*id=//')"
+
+if [ -z "$(xinput list $ID | grep 'This device is disabled')" ]; then
+    xinput disable $ID
 else
-    synclient TouchpadOff=0
+    xinput enable $ID
 fi

@@ -103,6 +103,7 @@ set textwidth=79
 let s:tab_width_for_filetype = {
             \ "html,css,xhtml,xml" : 2,
             \ "javascript"         : 2,
+            \ "lua"                : 2,
             \ "markdown"           : 2,
             \}
 
