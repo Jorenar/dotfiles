@@ -4,7 +4,8 @@
 
 # 1st argument - file in dotfiles dir
 # 2nd argument - location of link
-# 3rd argument - deactivation flag
+# 3rd argument - deactivation flag "X"
+#                (will delete link if exist)
 
 # ------------------------------------------------
 
@@ -52,11 +53,8 @@ linking  other/tmux.conf        $HOME/.tmux.conf
 linking  other/xinitrc          $HOME/.xinitrc
 linking  other/Xresources       $HOME/.Xresources
 linking  other/zathurarc        $HOME/.config/zathura/zathurarc
-
-# --------
-
-linking  vim/ftplugin           $vim_dir/ftplugin
-linking  vim/indent             $vim_dir/indent
 linking  vim/init.vim           $HOME/.vimrc
-linking  vim/init.vim           $vim_dir/init.vim
-linking  vim/UltiSnips          $vim_dir/UltiSnips
+
+for V in vim/*; do
+    linking $V $vim_dir/"$(basename $V)"
+done

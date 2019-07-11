@@ -23,6 +23,9 @@ autocmd filetype c,cpp setlocal tags+=$HOME/.vim/tags/include.tags
 " Set 'foldmethod' to 'syntax' for C/C++/Java
 autocmd filetype c,cpp,java setlocal foldmethod=syntax
 
+" Set bash folding
+autocmd filetype sh setlocal foldmethod=syntax  | let g:sh_fold_enabled=5
+
 " Quit QuickFix window along with source file window
 autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix" | q | endif
 
