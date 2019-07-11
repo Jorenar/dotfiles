@@ -50,7 +50,7 @@ exec --no-startup-id xsetroot -solid "#000000"
 exec --no-startup-id fcitx -d
 
 # disable touchpad on startup
-exec --no-startup-id synclient TouchpadOff=1
+exec --no-startup-id $HOME/.i3/scripts/touchpad-toggle
 
 # SHORTCUTS BINDINGS {{{1
 
