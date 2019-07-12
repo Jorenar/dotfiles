@@ -17,6 +17,11 @@ XTerm*utf8: True
 XTerm*utf8Title: True
 XTerm*xftAntialias: true
 
+! Solve Backspace problem
+XTerm*ttyModes:         erase ^?
+XTerm*VT100.Translations: \
+        #override <Key>BackSpace: string(0x7f) \n\
+
 ! Copy and paste with clipboard
 XTerm*translations: #override \
     Ctrl Shift <KeyPress> C: copy-selection(CLIPBOARD) \n\

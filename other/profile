@@ -26,12 +26,6 @@ export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 # Enable GPG agent
 export GPG_AGENT_INFO
 
-# Add ADB Tools to PATH
-export PATH="$PATH:$HOME/app/adb-fastboot/platform-tools"
-
 # VITASDK
 export VITASDK=/usr/local/vitasdk
 export PATH=$VITASDK/bin:$PATH
-
-# Add Go to PATH
-# export PATH=$PATH:/usr/local/go/bin

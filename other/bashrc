@@ -3,8 +3,7 @@
 # ALIASES {{{1
 
 alias ap1='sudo create_ap wlo1 wlo1 x I_love_BASH' # semi open WiFi network
-alias cal='LC_ALL=en_EN.utf8 ncal -Mb 2> /dev/null'
-alias calm-fans='sudo sh -c "echo 'auto' > '/sys/bus/pci/devices/0000:01:00.0/power/control'"'
+alias cal='cal -m'
 alias du='du -h'
 alias grep='grep --color'
 alias i3-logout="i3-msg exit"
@@ -48,8 +47,7 @@ bind Space:magic-space
 
 # FUNCTIONS {{{1
 
-i3-get-window-criteria()
-{
+i3-get-window-criteria() {
     match_int='[0-9][0-9]*'
     match_string='".*"'
     match_qstring='"[^"\\]*(\\.[^"\\]*)*"' # NOTE: Adds 1 backreference
@@ -65,8 +63,7 @@ i3-get-window-criteria()
     } | sort | tr "\n" " " | sed -r 's/^(.*) $/[\1]\n/'
 }
 
-gpu-switch()
-{
+gpu-switch() {
     if [ ! -z $(command -v optimus-manager) ]; then
         if [[ "$(glxinfo | grep "OpenGL vendor")" =~ .*Intel.* ]] && \
                 [[ "$(cat '/sys/bus/pci/devices/0000:01:00.0/power/control')" == "auto" ]]
@@ -83,8 +80,7 @@ gpu-switch()
     fi
 }
 
-install-from-list()
-{
+install-from-list() {
     for file in $@; do
         if [ -e $file ]; then
             if [[ ${file: -5} == ".list" ]]; then
@@ -105,8 +101,15 @@ install-from-list()
     unset list
 }
 
-rebuild-hosts-file()
-{
+offupg() {
+    sudo pacman -Syu --noconfirm
+    yay -Syu --noconfirm
+    pacman -Rns $(pacman -Qtdq)--noconfirm
+    yay -Yc
+    shutdown -h now
+}
+
+rebuild-hosts-file() {
     set -e
 
     sudo echo "# Created $(command date '+%F %T') by $USER" > /tmp/hosts
@@ -127,8 +130,7 @@ rebuild-hosts-file()
     sudo mv /tmp/hosts /etc/hosts
 }
 
-umount-ios()
-{
+umount-ios() {
     cd
     for i in $@; do
         fusermount -u $HOME/.mount/ios$i
@@ -137,8 +139,7 @@ umount-ios()
     cd - &> /dev/null
 }
 
-windows()
-{
+windows() {
     command sudo grub-reboot 2
     command sudo reboot
 }
@@ -172,28 +173,10 @@ esac
 # WRAPPERS {{{1
 
 feh() {
-    if [[ $1 == "-r" ]]; then
-        R="-r"
-        shift 1
-    fi
-
-    if [[ -z $1 ]]; then
-        command feh -B black -. $R 2> /dev/null & disown
-    elif [[ ! -z $2 ]]; then
-        command feh -B black -. $R "$@" & disown
-    else
-        file="$(readlink -f $1)"
-        if [ -d "$file" ]; then
-            command feh -B black -. $R "$file" 2> /dev/null & disown
-        else
-            dir="$(dirname "$file")"
-            command feh -B black -. $R --start-at "$file" "$dir" 2> /dev/null & disown
-        fi
-    fi
+    nohup feh -B black -. --start-at "$@" > /dev/null 2>&1
 }
 
-find()
-{
+find() {
     command find $@ 2> /dev/null
 }
 

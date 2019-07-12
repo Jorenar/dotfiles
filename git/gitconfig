@@ -12,7 +12,7 @@
     smudge = git-lfs smudge -- %f
 
 [core]
-    editor = vim
+    editor = nvim
     pager = less -FRX
 
 [alias]

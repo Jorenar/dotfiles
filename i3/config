@@ -113,8 +113,11 @@ bindsym Mod1+F4 kill
 # start dmenu
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
-# desktop screenshot
-bindsym --release Print exec "scrot ~/$(date --iso-8601='seconds').png -m -e 'xclip -selection c -t image/png < $f'"
+# Multi-screen screenshots with scrot
+bindsym --release Print exec scrot 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/pictures/screenshots && mv $f ~/pictures/screenshots && xclip -selection clipboard -t image/png -i ~/pictures/screenshots/`ls -1 -t ~/pictures/screenshots | head -1`' # All screens
+
+# OSX-like area selection screenshots
+bindsym --release Shift+Print exec scrot -s 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/pictures/screenshots && mv $f ~/pictures/screenshots && xclip -selection clipboard -t image/png -i ~/pictures/screenshots/`ls -1 -t ~/pictures/screenshots | head -1`' # Area selection
 
 # change focus
 bindsym $mod+h focus left
