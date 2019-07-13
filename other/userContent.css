@@ -1,10 +1,10 @@
 /* Dark scrollbar */
 
 :root{
-    scrollbar-color: #0079D3 #2E3645 !important;
-    scrollbar-width: thin !important;
+    scrollbar-color: #0079D3 #2E3645;
+    scrollbar-width: thin;
 }
 
 * {
-    scrollbar-width: thin !important;
+    scrollbar-width: thin;
 }
