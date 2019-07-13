@@ -376,9 +376,6 @@ call mkdir($HOME.'/.config/nvim/cache/undo', 'p')
 call mkdir($HOME.'/.config/nvim/pack/plugins/opt', 'p')
 call system('ln -sfn $HOME/.config/nvim/pack/plugins/opt $HOME/.config/nvim/plugins')
 
-" Create link to Neovim folder
-call system('ln -sn $HOME/.config/nvim $HOME/.vim')
-
 " Applying rules form arrays/dictionaries {{{
 
 for [ft, comp] in items(s:compiler_for_filetype)

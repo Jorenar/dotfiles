@@ -29,3 +29,12 @@ export GPG_AGENT_INFO
 # VITASDK
 export VITASDK=/usr/local/vitasdk
 export PATH=$VITASDK/bin:$PATH
+
+
+# HISTORY FILES ----------------------------------
+
+export HISTORY_DIR=$HOME/.history_files
+
+export HISTFILE=$HISTORY_DIR/bash
+export SQLITE_HISTORY=$HISTORY_DIR/sqlite
+export LESSHISTFILE=-
