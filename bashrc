@@ -14,7 +14,7 @@ alias mkdir='mkdir -p'
 alias mnt='udisksctl mount -b'
 alias off='shutdown -h now'
 alias op='xdg-open'
-alias pacman-purge='pacman -Rns $(pacman -Qtdq)'
+alias pacman-autoremove='pacman -Rns $(pacman -Qtdq)'
 alias qmv='command qmv -v -f "do"'
 alias su='sudo su'
 alias sudo='sudo '
@@ -129,6 +129,13 @@ umount-ios() {
     done
     rmdir $HOME/.mount/* &> /dev/null
     cd - &> /dev/null
+}
+
+upgrade() {
+    sudo pacman -Syu
+    yay -Syu
+    pacman -Rns $(pacman -Qtdq)
+    yay -Yc
 }
 
 windows() {
