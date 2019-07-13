@@ -134,7 +134,7 @@ umount-ios() {
 upgrade() {
     sudo pacman -Syu
     yay -Syu
-    pacman -Rns $(pacman -Qtdq)
+    sudo pacman -Rns $(pacman -Qtdq)
     yay -Yc
 }
 
