@@ -9,9 +9,13 @@
 
 # ------------------------------------------------
 
+if [ -z $XDG_CONFIG_HOME ]; then
+    declare XDG_CONFIG_HOME="$HOME/.config"
+fi
+
 declare dotfiles_dir="$(dirname $(realpath $0))"
 declare force_flag=$1
-declare vim_dir=$HOME/.config/nvim
+declare vim_dir=$XDG_CONFIG_HOME/nvim
 
 # ------------------------------------------------
 
@@ -47,17 +51,17 @@ linking  tmux.conf              $HOME/.tmux.conf
 linking  xinitrc                $HOME/.xinitrc
 linking  Xresources             $HOME/.Xresources
 
-linking  git/gitconfig          $HOME/.gitconfig
-linking  gtk/gtk3_settings.ini  $HOME/.config/gtk-3.0/settings.ini
+linking  git/gitconfig          $XDG_CONFIG_HOME/.gitconfig
+linking  gtk/gtk3_settings.ini  $XDG_CONFIG_HOME/gtk-3.0/settings.ini
 linking  gtk/gtkrc-2.0          $HOME/.gtkrc-2.0
 linking  i3/                    $HOME/.i3
-linking  mpv/                   $HOME/.config/mpv
+linking  mpv/                   $XDG_CONFIG_HOME/mpv
 linking  vim/init.vim           $HOME/.vimrc
 
-linking  other/feh_keys         $HOME/.config/feh/keys
+linking  other/feh_keys         $XDG_CONFIG_HOME/feh/keys
 linking  other/gpg-agent.conf   $HOME/.gnupg/gpg-agent.conf
-linking  other/xdg-user.dirs    $HOME/.config/xdg-user.dirs
-linking  other/zathurarc        $HOME/.config/zathura/zathurarc
+linking  other/xdg-user.dirs    $XDG_CONFIG_HOME/xdg-user.dirs
+linking  other/zathurarc        $XDG_CONFIG_HOME/zathura/zathurarc
 
 for V in vim/*; do
     linking $V $vim_dir/"$(basename $V)"

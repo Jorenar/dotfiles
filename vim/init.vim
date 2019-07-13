@@ -307,12 +307,12 @@ set wildmenu
 set wildoptions-=pum
 
 " Dirs, tags, path
-set backupdir=$HOME/.config/nvim/cache/backup/
+set backupdir=$HOME/.config/nvim/backup/
 set dictionary+=/usr/share/dict/polish
 set dictionary+=/usr/share/dict/words
 set path=**,./
 set tags+=.git/tags;/
-set undodir=$HOME/.config/nvim/cache/undo/
+set undodir=$HOME/.config/nvim/undo/
 
 " PLUGINS {{{1
 
@@ -369,12 +369,11 @@ colorscheme black_and_white
 packadd termdebug
 
 " Create cache files dirs
-call mkdir($HOME.'/.config/nvim/cache/backup', 'p')
-call mkdir($HOME.'/.config/nvim/cache/undo', 'p')
+call mkdir(&backupdir, 'p')
+call mkdir(&undodir, 'p')
 
 " Create plugins dir
 call mkdir($HOME.'/.config/nvim/pack/plugins/opt', 'p')
-call system('ln -sfn $HOME/.config/nvim/pack/plugins/opt $HOME/.config/nvim/plugins')
 
 " Applying rules form arrays/dictionaries {{{
 
@@ -395,7 +394,7 @@ for [ft, width] in items(s:tab_width_for_filetype)
 endfor
 
 for plugin in g:plugins
-    execute "silent! packadd ".substitute(plugin, ".*\/", "", "")
+    execute "silent! packadd! ".substitute(plugin, ".*\/", "", "")
 endfor
 
 " }}}

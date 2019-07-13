@@ -31,6 +31,15 @@ export VITASDK=/usr/local/vitasdk
 export PATH=$VITASDK/bin:$PATH
 
 
+# XDG --------------------------------------------
+
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+
+export ELINKS_CONFDIR="$XDG_CONFIG_HOME/elinks"
+
+
 # HISTORY FILES ----------------------------------
 
 export HISTORY_DIR=$HOME/.history_files
