@@ -19,7 +19,7 @@ XTerm*utf8Title: True
 XTerm*xftAntialias: true
 
 ! Fix the backspace key
-XTerm*VT100.backarrowKey: false
+XTerm*backarrowKey: false
 XTerm*ttyModes: erase ^?
 
 ! Copy and paste with clipboard

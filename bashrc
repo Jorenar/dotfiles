@@ -101,14 +101,6 @@ install-from-list() {
     unset list
 }
 
-offupg() {
-    sudo pacman -Syu --noconfirm
-    yay -Syu --noconfirm
-    pacman -Rns $(pacman -Qtdq)--noconfirm
-    yay -Yc
-    shutdown -h now
-}
-
 rebuild-hosts-file() {
     set -e
 
