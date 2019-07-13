@@ -36,24 +36,28 @@ linking() {
 
 # ------------------------------------------------
 
+linking  bashrc                 $HOME/.bash_profile
+linking  bashrc                 $HOME/.bashrc
+linking  inputrc                $HOME/.inputrc
+linking  mailcap                $HOME/.mailcap
+linking  muttrc                 $HOME/.muttrc
+linking  myclirc                $HOME/.myclirc                      "X"
+linking  profile                $HOME/.profile
+linking  tmux.conf              $HOME/.tmux.conf
+linking  xinitrc                $HOME/.xinitrc
+linking  Xresources             $HOME/.Xresources
+
 linking  git/gitconfig          $HOME/.gitconfig
 linking  gtk/gtk3_settings.ini  $HOME/.config/gtk-3.0/settings.ini
 linking  gtk/gtkrc-2.0          $HOME/.gtkrc-2.0
 linking  i3/                    $HOME/.i3
 linking  mpv/                   $HOME/.config/mpv
-linking  mutt/muttrc            $HOME/.muttrc
-linking  other/bashrc           $HOME/.bash_profile
-linking  other/bashrc           $HOME/.bashrc
+linking  vim/init.vim           $HOME/.vimrc
+
 linking  other/feh_keys         $HOME/.config/feh/keys
 linking  other/gpg-agent.conf   $HOME/.gnupg/gpg-agent.conf
-linking  other/inputrc          $HOME/.inputrc
-linking  other/myclirc          $HOME/.myclirc                      "X"
-linking  other/profile          $HOME/.profile
-linking  other/tmux.conf        $HOME/.tmux.conf
-linking  other/xinitrc          $HOME/.xinitrc
-linking  other/Xresources       $HOME/.Xresources
+linking  other/xdg-user.dirs    $HOME/.config/xdg-user.dirs
 linking  other/zathurarc        $HOME/.config/zathura/zathurarc
-linking  vim/init.vim           $HOME/.vimrc
 
 for V in vim/*; do
     linking $V $vim_dir/"$(basename $V)"

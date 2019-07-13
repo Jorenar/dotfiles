@@ -46,7 +46,7 @@ command! -nargs=* GrepRename call <SID>GrepRename(<f-args>)
 command! -nargs=+ FillLine call <SID>FillLine(<f-args>)
 command! -nargs=+ Grep execute "vimgrep /".<f-args>."/j ** | :copen"
 command! -nargs=+ Spelling execute 'setlocal spell spelllang=<args>'
-command! -range -nargs=+ Align <line1>,<line2>!column -ts'<args>' -o'<args>'
+command! -range -nargs=+ Align <line1>,<line2>!column -Lts'<args>' -o'<args>'
 command! -range -nargs=0 -bang VisSort sil! keepj <line1>,<line2>call <SID>VisSort(<bang>0)
 command! -range=% Sort normal :<line1>,<line2>sort i<CR>
 command! Debug normal :Termdebug<CR><C-w>H
@@ -377,7 +377,7 @@ call mkdir($HOME.'/.config/nvim/pack/plugins/opt', 'p')
 call system('ln -sfn $HOME/.config/nvim/pack/plugins/opt $HOME/.config/nvim/plugins')
 
 " Create link to Neovim folder
-call system('ln -sfn $HOME/.config/nvim $HOME/.vim')
+call system('ln -sn $HOME/.config/nvim $HOME/.vim')
 
 " Applying rules form arrays/dictionaries {{{
 
