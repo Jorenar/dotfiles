@@ -218,7 +218,7 @@ function! s:VisSort(isnmbr) range abort
     let @a = keeprega
 endfun
 
-" Search for selected text, forwards or backwards. {{{2
+" VSetSearch - Search for selected text, forwards or backwards. {{{2
 function! s:VSetSearch(cmdtype)
   let temp = @s
   norm! gv"sy
