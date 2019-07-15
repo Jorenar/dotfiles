@@ -9,7 +9,7 @@ export XMODIFIERS=@im=fcitx
 export GTK_IM_MODULE=fcitx
 
 # Default editor
-export EDITOR=vi
+export EDITOR=nvim
 
 # Default manpager
 export MANPAGER="nvim +Man!"
@@ -33,12 +33,12 @@ export PATH=$VITASDK/bin:$PATH
 
 # XDG --------------------------------------------
 
-export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 
 export ELINKS_CONFDIR="$XDG_CONFIG_HOME/elinks"
-
+export IMAPFILTER_HOME="$XDG_CONFIG_HOME/imapfilter"
 
 # HISTORY FILES ----------------------------------
 

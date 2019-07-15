@@ -136,6 +136,7 @@ upgrade() {
     yay -Syu
     sudo pacman -Rns $(pacman -Qtdq)
     yay -Yc
+    sudo pacman -Sc
 }
 
 windows() {

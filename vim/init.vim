@@ -125,7 +125,6 @@ let s:formatprg_for_filetype = {
             \}
 
 " FUNCTIONS {{{1
-
 " Color_demo - preview of Vim 256 colors {{{2
 function! Color_demo() abort
     30 vnew
@@ -219,16 +218,22 @@ function! s:VisSort(isnmbr) range abort
     let @a = keeprega
 endfun
 
+" Search for selected text, forwards or backwards. {{{2
+function! s:VSetSearch(cmdtype)
+  let temp = @s
+  norm! gv"sy
+  let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
+  let @s = temp
+endfunction
+
 " WhatHighlightsIt - check highlight group under the cursor {{{2
 function! WhatHighlightsIt() abort
     echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
                 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
                 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"
 endfunction
-" }}}
 
 " MAPPINGS {{{1
-
 " All modes {{{2
 noremap ' `
 noremap '' ``
@@ -267,14 +272,14 @@ tnoremap <C-l> <C-\><C-N><C-w>l
 tnoremap <Esc> <C-\><C-n>
 
 " Visual mode {{{2
+xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
+xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
 xnoremap <C-y> "+y
 
 " ### DISABLE {{{2
 map gh <nop>
 vmap s <nop>
 map ZZ <nop>
-
-"}}}
 
 " OPTIONS {{{1
 
