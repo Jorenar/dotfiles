@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Numix-Dark
+Comment=A flat theme
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Numix-Dark
+MetacityTheme=Numix
+ButtonLayout=menu:minimize,maximize,close
+IconTheme=Plataro-Numix
+GtkColorScheme=bg_color:#333333,fg_color:#dcdcdc,base_color:#333333,text_color:#dcdcdc,selected_bg_color:#f0544c,selected_fg_color:#ffffff,tooltip_bg_color:#444444,tooltip_fg_color:#eeeeee,titlebar_bg_color:#444444,titlebar_fg_color:#dddddd,menubar_bg_color:#444444,menubar_fg_color:#dddddd,toolbar_bg_color:#eeeeee,toolbar_fg_color:#555555,menu_bg_color:#444444,menu_fg_color:#dddddd,panel_bg_color:#444444,panel_fg_color:#dddddd,link_color:#f06860
+CursorTheme=DMZ-Black
+CursorSize=24

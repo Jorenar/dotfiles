@@ -42,11 +42,13 @@ linking() {
 
 linking  bashrc                 $HOME/.bash_profile
 linking  bashrc                 $HOME/.bashrc
+linking  fonts                  $HOME/.fonts
 linking  inputrc                $HOME/.inputrc
 linking  mailcap                $HOME/.mailcap
 linking  muttrc                 $HOME/.muttrc
 linking  myclirc                $HOME/.myclirc                      "X"
 linking  profile                $HOME/.profile
+linking  themes                 $HOME/.themes
 linking  tmux.conf              $HOME/.tmux.conf
 linking  xinitrc                $HOME/.xinitrc
 linking  Xresources             $HOME/.Xresources
