@@ -56,7 +56,7 @@ linking  Xresources             $HOME/.Xresources
 linking  git/gitconfig          $XDG_CONFIG_HOME/.gitconfig
 linking  gtk/gtk3_settings.ini  $XDG_CONFIG_HOME/gtk-3.0/settings.ini
 linking  gtk/gtkrc-2.0          $HOME/.gtkrc-2.0
-linking  i3/                    $HOME/.i3
+linking  i3/                    $XDG_CONFIG_HOME/i3
 linking  mpv/                   $XDG_CONFIG_HOME/mpv
 linking  vim/init.vim           $HOME/.vimrc
 

@@ -15,7 +15,7 @@ font pango:DejaVu Sans Mono 8
 exec --no-startup-id amixer -- set Master -60dB
 
 # multi-monitor
-exec --no-startup-id $HOME/.i3/scripts/multi-monitor
+exec --no-startup-id $XDG_CONFIG_HOME/i3/scripts/multi-monitor
 
 # use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -27,7 +27,7 @@ workspace_layout tabbed
 bar {
     position top
     font pango: DejaVu Sans Mono 9
-    status_command i3blocks -c $HOME/.i3/i3blocks
+    status_command i3blocks -c $XDG_CONFIG_HOME/i3/i3blocks
     tray_output primary
     colors {
         focused_workspace  #333333 #222222 #FFFFFF
@@ -50,7 +50,7 @@ exec --no-startup-id xsetroot -solid "#000000"
 exec --no-startup-id fcitx -d
 
 # disable touchpad on startup
-exec --no-startup-id $HOME/.i3/scripts/touchpad-toggle
+exec --no-startup-id $XDG_CONFIG_HOME/i3/scripts/touchpad-toggle
 
 # SHORTCUTS BINDINGS {{{1
 
@@ -64,14 +64,14 @@ bindsym $mod+x exec --no-startup-id i3-sensible-terminal tmux
 bindsym $mod+w exec firefox
 
 # open QuiteRSS
-bindsym $mod+q exec --no-startup-id $HOME/.i3/scripts/programs/quiterss
+bindsym $mod+q exec --no-startup-id $XDG_CONFIG_HOME/i3/scripts/quiterss
 
 # open neomutt
 #bindsym $mod+m exec --no-startup-id i3-sensible-terminal -T Mutt neomutt
 bindsym $mod+m exec --no-startup-id imapfilter && i3-sensible-terminal -T Mutt neomutt
 
 # vim-anywhere
-bindsym $mod+v exec --no-startup-id $HOME/.i3/scripts/programs/vim-anywhere
+bindsym $mod+v exec --no-startup-id $HOME/scripts/vim-anywhere
 
 # passmenu (type password)
 bindsym $mod+p exec --no-startup-id passmenu --type
@@ -181,7 +181,7 @@ bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+r restart
 
 # touchpad toggle
-bindsym $mod+F4 exec --no-startup-id $HOME/.i3/scripts/touchpad-toggle
+bindsym $mod+F4 exec --no-startup-id $XDG_CONFIG_HOME/i3/scripts/touchpad-toggle
 
 # make the currently focused window a scratchpad
 bindsym $mod+Shift+minus move scratchpad
@@ -190,7 +190,7 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus [class="^(?!QuiteRss).*$"] scratchpad show
 
 # audio controls
-bindsym XF86AudioLowerVolume exec $HOME/.i3/scripts/volume_down
+bindsym XF86AudioLowerVolume exec $XDG_CONFIG_HOME/i3/scripts/volume_down
 bindsym XF86AudioMute        exec amixer -q set Master toggle
 bindsym XF86AudioRaiseVolume exec amixer -q set Master 3dB+ unmute
 

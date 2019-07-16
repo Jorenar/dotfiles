@@ -12,37 +12,37 @@ interval=1
 [separator]
 
 [cpu-freq]
-command=$HOME/.i3/scripts/status_bar/cpu_freq
+command=$XDG_CONFIG_HOME/i3/scripts/status_bar/cpu_freq
 interval=1
 
 [separator]
 
 [wifi]
-command=$HOME/.i3/scripts/status_bar/wifi
+command=$XDG_CONFIG_HOME/i3/scripts/status_bar/wifi
 interval=5
 
 [separator]
 
 [bluetooth]
-command=$HOME/.i3/scripts/status_bar/bluetooth
+command=$XDG_CONFIG_HOME/i3/scripts/status_bar/bluetooth
 interval=15
 
 [separator]
 
 [gpu]
-command=$HOME/.i3/scripts/status_bar/gpu
+command=$XDG_CONFIG_HOME/i3/scripts/status_bar/gpu
 interval=once
 
 [separator]
 
 [battery]
-command=$HOME/.i3/scripts/status_bar/battery
+command=$XDG_CONFIG_HOME/i3/scripts/status_bar/battery
 interval=15
 
 [separator]
 
 [volume]
-command=$HOME/.i3/scripts/status_bar/volume
+command=$XDG_CONFIG_HOME/i3/scripts/status_bar/volume
 interval=once
 signal=10
 
