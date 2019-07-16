@@ -30,6 +30,8 @@ export GPG_AGENT_INFO
 export VITASDK=/usr/local/vitasdk
 export PATH=$VITASDK/bin:$PATH
 
+# Python startup config file
+export PYTHONSTARTUP="$DOTFILES/other/python_config.py"
 
 # XDG --------------------------------------------
 
