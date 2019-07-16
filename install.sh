@@ -60,8 +60,6 @@ for V in vim/*; do
     linking $V $vim_dir/"$(basename $V)"
 done
 
-linking  vim/init.vim           $HOME/.vimrc
-
 # ------------------------------------------------
 
 # linking  myclirc                $HOME/.myclirc
