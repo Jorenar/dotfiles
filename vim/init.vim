@@ -220,10 +220,10 @@ endfun
 
 " VSetSearch - Search for selected text, forwards or backwards. {{{2
 function! s:VSetSearch(cmdtype)
-  let temp = @s
-  norm! gv"sy
-  let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
-  let @s = temp
+    let temp = @s
+    norm! gv"sy
+    let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
+    let @s = temp
 endfunction
 
 " WhatHighlightsIt - check highlight group under the cursor {{{2
@@ -373,11 +373,8 @@ colorscheme black_and_white
 " Add TermDebug
 packadd termdebug
 
-" Create cache files dirs
+" Create backup and plugin dirs
 call mkdir(&backupdir, 'p')
-call mkdir(&undodir, 'p')
-
-" Create plugins dir
 call mkdir($HOME.'/.config/nvim/pack/plugins/opt', 'p')
 
 " Applying rules form arrays/dictionaries {{{
