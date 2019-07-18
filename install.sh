@@ -53,12 +53,9 @@ linking  zathurarc              $XDG_CONFIG_HOME/zathura/zathurarc
 
 linking  i3/                    $XDG_CONFIG_HOME/i3
 linking  mpv/                   $XDG_CONFIG_HOME/mpv
+linking  vim/                   $XDG_CONFIG_HOME/vim
 
 linking  other/gpg-agent.conf   $HOME/.gnupg/gpg-agent.conf
-
-for V in vim/*; do
-    linking $V $vim_dir/"$(basename $V)"
-done
 
 # ------------------------------------------------
 

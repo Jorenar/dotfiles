@@ -9,10 +9,10 @@ export XMODIFIERS=@im=fcitx
 export GTK_IM_MODULE=fcitx
 
 # Default editor
-export EDITOR=nvim
+export EDITOR=vim
 
 # Default manpager
-export MANPAGER="nvim +Man!"
+export MANPAGER="vim -M +MANPAGER -"
 
 # Set Qt to use GTK theme
 export QT_QPA_PLATFORMTHEME="gtk2"
@@ -41,6 +41,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 
 export ELINKS_CONFDIR="$XDG_CONFIG_HOME/elinks"
 export IMAPFILTER_HOME="$XDG_CONFIG_HOME/imapfilter"
+export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
 
 # HISTORY FILES ----------------------------------
 
