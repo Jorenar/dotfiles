@@ -22,7 +22,7 @@ alias sudo='sudo '
 alias suspend='systemctl suspend'
 alias umnt='udisksctl unmount -b'
 alias update-grub='grub-mkconfig -o /boot/grub/grub.cfg'
-alias vi='nvim -p'
+alias vi='vim -p'
 alias wicd='wicd-curses'
 alias wine-lnk='env WINEPREFIX="$HOME/.wine" wine C:\\windows\\command\\start.exe /Unix'
 

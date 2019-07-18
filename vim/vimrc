@@ -1,4 +1,13 @@
-" # Neovim #
+" # VIMRC #
+
+" BASICS {{{1
+
+set nocompatible
+filetype plugin indent on
+syntax enable
+
+" Set colorscheme
+colorscheme black_and_white
 
 " AUTOCMDS {{{1
 
@@ -10,9 +19,6 @@ autocmd VimEnter * set fo-=c fo-=r fo-=o
 
 " Trim trailing whitespace
 autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
-
-" Terminal buffer options
-autocmd TermOpen * startinsert | setlocal nonumber nocursorcolumn nocursorline matchpairs=
 
 " Set PATH for C/C++
 autocmd filetype c,cpp setlocal path+=/usr/include/**
@@ -68,6 +74,7 @@ let s:compiler_for_filetype = {
             \ "tex"      : "tex",
             \}
 
+            " \ "basic"    : "fbc -lang fblite % && ./%<",
 let s:makeprg_for_filetype = {
             \ "asm"      : "as -o %<.o % && ld -s -o %< %<.o && rm %<.o && ./%<",
             \ "basic"    : "$HOME/app/vintbas %",
@@ -283,6 +290,7 @@ map ZZ <nop>
 
 " OPTIONS {{{1
 
+let &t_ts = "\e]2;" " tmux - WINDOW TITLE FIX
 let g:netrw_winsize = -28
 set backup
 set colorcolumn=+1
@@ -290,12 +298,15 @@ set completeopt=menuone,noinsert,noselect
 set cursorcolumn
 set cursorline
 set foldmethod=indent
+set hlsearch
 set ignorecase
 set incsearch
+set laststatus=2
 set lazyredraw
 set linebreak
 set modeline
 set nofoldenable
+set nomodelineexpr
 set noswapfile
 set nowrap
 set number
@@ -309,15 +320,15 @@ set splitright
 set title
 set undofile
 set wildmenu
-set wildoptions-=pum
 
 " Dirs, tags, path
-set backupdir=$HOME/.config/nvim/backup/
+set backupdir=$HOME/.vim/backup/
 set dictionary+=/usr/share/dict/polish
+set viminfofile=~/.vim/viminfo
 set dictionary+=/usr/share/dict/words
 set path=**,./
 set tags+=.git/tags;/
-set undodir=$HOME/.config/nvim/undo/
+set undodir=$HOME/.vim/undo/
 
 " PLUGINS {{{1
 
@@ -364,14 +375,9 @@ set statusline+=\ \:\ %c\           " Current column
 
 " ### OTHER {{{1
 
-" Enable syntax
-syntax enable
-
-" Set colorscheme
-colorscheme black_and_white
-
 " Add TermDebug
 packadd termdebug
+packadd matchit
 
 " Create backup and plugin dirs
 call mkdir(&backupdir, 'p')
