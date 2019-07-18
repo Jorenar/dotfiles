@@ -45,7 +45,7 @@ export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
 
 # HISTORY FILES ----------------------------------
 
-export HISTORY_DIR=$HOME/.history_files
+export HISTORY_DIR=$XDG_CACHE_HOME/history_files
 
 export HISTFILE=$HISTORY_DIR/bash
 export SQLITE_HISTORY=$HISTORY_DIR/sqlite

@@ -7,10 +7,10 @@ filetype plugin indent on
 syntax enable
 
 " XDG support
+set backupdir=$XDG_DATA_HOME/vim/backup
 set packpath+=$XDG_DATA_HOME/vim
 set runtimepath+=$XDG_CONFIG_HOME/vim,$XDG_CONFIG_HOME/vim/after
 set viminfo+='1000,n$XDG_CACHE_HOME/vim/viminfo
-set backupdir=$XDG_DATA_HOME/vim/backup
 
 " Set colorscheme
 colorscheme black_and_white
@@ -30,7 +30,7 @@ autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
 autocmd filetype c,cpp setlocal path+=/usr/include/**
 
 " Set tags file for C/C++
-autocmd filetype c,cpp setlocal tags+=$HOME/.vim/tags/include.tags
+autocmd filetype c,cpp setlocal tags+=$XDG_DATA_HOME/vim/tags/include.tags
 
 " Set 'foldmethod' to 'syntax' for C/C++/Java
 autocmd filetype c,cpp,java setlocal foldmethod=syntax
@@ -83,7 +83,7 @@ let s:compiler_for_filetype = {
 
 let s:makeprg_for_filetype = {
             \ "asm"      : "as -o %<.o % && ld -s -o %< %<.o && rm %<.o && ./%<",
-            \ "basic"    : "$HOME/app/vintbas %",
+            \ "basic"    : "vintbas %",
             \ "c"        : "gcc -std=gnu11 -g % -o %< && ./%<",
             \ "cpp"      : "g++ -std=gnu++11 -g % -o %< && ./%<",
             \ "go"       : "go build && ./%<",
