@@ -48,8 +48,9 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export ELINKS_CONFDIR="$XDG_CONFIG_HOME/elinks"
 export IMAPFILTER_HOME="$XDG_CONFIG_HOME/imapfilter"
 export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
+export WINEPREFIX="$XDG_CONFIG_HOME/wine"
 
-# HISTORY FILES ----------------------------------
+# HISTORY FILES --------------
 
 export HISTORY_DIR=$XDG_CACHE_HOME/history_files
 

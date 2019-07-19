@@ -8,9 +8,11 @@ syntax enable
 
 " XDG support
 set backupdir=$XDG_DATA_HOME/vim/backup
+set directory=$XDG_CACHE_HOME/vim/swap
 set packpath+=$XDG_DATA_HOME/vim
 set runtimepath+=$XDG_CONFIG_HOME/vim,$XDG_CONFIG_HOME/vim/after
-set viminfo+='1000,n$XDG_CACHE_HOME/vim/viminfo
+set undodir=$XDG_CACHE_HOME/vim/undo
+set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
 
 " Set colorscheme
 colorscheme black_and_white
@@ -256,10 +258,10 @@ endfunction
 
 " MAPPINGS {{{1
 " Normal mode {{{2
-nmap <C-p> "+p
-nmap <C-y> "+y
 nnoremap ' `
 nnoremap '' ``
+nnoremap <C-p> "+p
+nnoremap <C-y> "+y
 nnoremap <F1> gT
 nnoremap <F2> gt
 nnoremap <F3> :set cursorline! cursorcolumn!<CR>
@@ -292,9 +294,9 @@ tnoremap <C-l> <C-\><C-N><C-w>l
 tnoremap <Esc> <C-\><C-n>
 
 " Visual mode {{{2
-xmap <C-y> "+y
 xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
 xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
+xnoremap <C-y> "+y
 
 " ### DISABLE {{{2
 map gh <nop>
@@ -318,7 +320,6 @@ set linebreak
 set modeline
 set nofoldenable
 set nomodelineexpr
-set noswapfile
 set nowrap
 set number
 set omnifunc=syntaxcomplete#Complete
@@ -341,8 +342,6 @@ set tags+=.git/tags;/
 
 " Run :GetPlugins to install/update
 let g:plugins = [
-            \ "kana/vim-fakeclip",
-            \ "janlazo/vim-bang-terminal",
             \ "mbbill/undotree",
             \ "sirver/ultisnips",
             \ "tpope/vim-surround",

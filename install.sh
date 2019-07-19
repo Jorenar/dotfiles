@@ -11,6 +11,10 @@ if [ -z $XDG_CONFIG_HOME ]; then
     declare XDG_CONFIG_HOME="$HOME/.config"
 fi
 
+if [ -z $XDG_DATA_HOME ]; then
+    declare XDG_DATA_HOME="$HOME/.local/share"
+fi
+
 declare dotfiles_dir="$(dirname $(realpath $0))"
 declare force_flag=$1
 declare vim_dir=$HOME/.vim
