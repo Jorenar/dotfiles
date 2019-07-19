@@ -65,6 +65,7 @@ command! -range=% Sort normal :<line1>,<line2>sort i<CR>
 command! Debug normal :Termdebug<CR><C-w>H
 command! ExecCurrentLine normal :.w !sh<CR>
 command! GetPlugins call GetPlugins()
+command! Make call Make()
 command! SortBlock :normal! vip:sort i<CR>
 
 " COMPILE AND RUN {{{1
@@ -200,6 +201,13 @@ function! s:FillLine(str, ...) abort
     endif
 endfunction
 
+" Make {{{2
+function! Make() abort
+    let l:makeprg_temp = &makeprg
+    let &l:makeprg = "make $*"
+    make
+    let &l:makeprg = l:makeprg_temp
+endfunction
 " TmuxAwareNavigate {{{2
 function! TmuxAwareNavigate(direction)
     let nr = winnr()
@@ -232,7 +240,7 @@ function! s:VisSort(isnmbr) range abort
 endfun
 
 " VSetSearch - Search for selected text, forwards or backwards. {{{2
-function! s:VSetSearch(cmdtype)
+function! s:VSetSearch(cmdtype) abort
     let temp = @s
     norm! gv"sy
     let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
@@ -384,7 +392,6 @@ packadd matchit
 call mkdir($XDG_DATA_HOME.'/vim/pack/plugins/opt', 'p')
 call mkdir(&backupdir, 'p')
 
-
 " Applying rules form arrays/dictionaries {{{
 
 for [ft, comp] in items(s:compiler_for_filetype)
@@ -392,7 +399,7 @@ for [ft, comp] in items(s:compiler_for_filetype)
 endfor
 
 for [ft, mp] in items(s:makeprg_for_filetype)
-    execute "autocmd filetype ".ft." let &l:makeprg=\"if [ -f \\\"Makefile\\\" ]; then make $*; else ".mp."; fi\""
+    execute 'autocmd filetype '.ft.' let &l:makeprg="'.mp.'"'
 endfor
 
 for [ft, fp] in items(s:formatprg_for_filetype)
