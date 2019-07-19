@@ -34,7 +34,7 @@ linking() {
 
 linking  bashrc                 $HOME/.bash_profile
 linking  bashrc                 $HOME/.bashrc
-linking  fonts                  $HOME/.fonts
+linking  gpg-agent.conf         $HOME/.gnupg/gpg-agent.conf
 linking  inputrc                $HOME/.inputrc
 linking  mailcap                $HOME/.mailcap
 linking  profile                $HOME/.profile
@@ -42,11 +42,11 @@ linking  themes                 $HOME/.themes
 linking  tmux.conf              $HOME/.tmux.conf
 linking  xinitrc                $HOME/.xinitrc
 linking  Xresources             $HOME/.Xresources
-linking  gtk/gtkrc-2.0          $HOME/.gtkrc-2.0
+
+linking  fonts                  $XDG_DATA_HOME/fonts
 
 linking  feh_keys               $XDG_CONFIG_HOME/feh/keys
-linking  git/gitconfig          $XDG_CONFIG_HOME/git/config
-linking  gtk/gtk3_settings.ini  $XDG_CONFIG_HOME/gtk-3.0/settings.ini
+linking  git/config             $XDG_CONFIG_HOME/git/config
 linking  muttrc                 $XDG_CONFIG_HOME/mutt/muttrc
 linking  xdg-user.dirs          $XDG_CONFIG_HOME/xdg-user.dirs
 linking  zathurarc              $XDG_CONFIG_HOME/zathura/zathurarc
@@ -54,8 +54,6 @@ linking  zathurarc              $XDG_CONFIG_HOME/zathura/zathurarc
 linking  i3/                    $XDG_CONFIG_HOME/i3
 linking  mpv/                   $XDG_CONFIG_HOME/mpv
 linking  vim/                   $XDG_CONFIG_HOME/vim
-
-linking  other/gpg-agent.conf   $HOME/.gnupg/gpg-agent.conf
 
 # ------------------------------------------------
 
