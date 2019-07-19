@@ -33,9 +33,11 @@ export PATH=$VITASDK/bin:$PATH
 # Python startup config file
 export PYTHONSTARTUP="$DOTFILES/other/python_config.py"
 
-# GTK
-export GTK2_RC_FILES="$DOTFILES/other/gtkrc-2.0"
+# GTK3 theme
 export GTK_THEME="Numix-Dark"
+
+# RND file location
+export RANDFILE="$XDG_CACHE_HOME/rnd"
 
 # XDG --------------------------------------------
 
