@@ -17,7 +17,6 @@ fi
 
 declare dotfiles_dir="$(dirname $(realpath $0))"
 declare force_flag=$1
-declare vim_dir=$HOME/.vim
 
 # ------------------------------------------------
 

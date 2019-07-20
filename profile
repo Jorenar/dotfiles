@@ -39,6 +39,8 @@ export GTK_THEME="Numix-Dark"
 # RND file location
 export RANDFILE="$XDG_CACHE_HOME/rnd"
 
+export TMPDIR=/tmp/
+
 # XDG --------------------------------------------
 
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -46,6 +48,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 
 export ELINKS_CONFDIR="$XDG_CONFIG_HOME/elinks"
+export GRIPHOME="$XDG_CONFIG_HOME/grip"
 export IMAPFILTER_HOME="$XDG_CONFIG_HOME/imapfilter"
 export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
 export WINEPREFIX="$XDG_CONFIG_HOME/wine"

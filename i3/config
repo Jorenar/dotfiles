@@ -80,7 +80,7 @@ bindsym $mod+p exec --no-startup-id passmenu --type
 bindsym $mod+shift+p exec --no-startup-id passmenu
 
 # Game Launcher
-bindsym $mod+g exec --no-startup-id dmenu-game-launcher
+bindsym $mod+g exec --no-startup-id dgl
 
 # WINDOWS RULES {{{1
 

@@ -16,9 +16,11 @@
     pager = less -FRX
 
 [alias]
+	ctags = !.git/hooks/ctags
+    aur = !sh -c 'git clone ssh://aur@aur.archlinux.org/\"$1\".git' -
+    change-url = !sh -c 'git remote set-url \"$1\"' -
     fast = !sh -c 'git add -A && git commit -m \"$1\" && git push' -
     initial = !sh -c 'git init && git add -A && git commit -m \"Initial commit\" && git remote add origin \"$1\" && git push -u origin master' -
-	ctags = !.git/hooks/ctags
 
 [init]
 	templatedir = ~/dotfiles/git/template/
