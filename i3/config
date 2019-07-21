@@ -106,18 +106,10 @@ for_window [class="^Gimp$" title="^Quit GIMP$"] floating enable
 for_window [class="Wine" instance="isaac.exe" title="Isaac"] floating disable
 
 # BINDINGS {{{1
+# Windows {{{2
 
 # kill focused window
 bindsym Mod1+F4 kill
-
-# start dmenu
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
-
-# Multi-screen screenshots with scrot
-bindsym --release Print exec scrot 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/pictures/screenshots && mv $f ~/pictures/screenshots && xclip -selection clipboard -t image/png -i ~/pictures/screenshots/`ls -1 -t ~/pictures/screenshots | head -1`' # All screens
-
-# OSX-like area selection screenshots
-bindsym --release Shift+Print exec scrot -s 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/pictures/screenshots && mv $f ~/pictures/screenshots && xclip -selection clipboard -t image/png -i ~/pictures/screenshots/`ls -1 -t ~/pictures/screenshots | head -1`' # Area selection
 
 # change focus
 bindsym $mod+h focus left
@@ -137,11 +129,8 @@ bindsym $mod+Shift+l move right
 # enter fullscreen mode for the focused container
 bindsym $mod+F11 fullscreen toggle
 
-# change container layout to tabbed
-bindsym $mod+t layout tabbed
-
-# change container layout to verticaly[!] splitted
-bindsym $mod+s layout splith
+# Toggle layout between tabbed/splith
+bindsym $mod+t layout toggle tabbed splith
 
 # toggle tiling / floating
 bindsym $mod+space floating toggle
@@ -155,39 +144,43 @@ bindsym $mod+z focus child
 # change focus between tiling / floating windows
 bindsym $mod+f focus mode_toggle
 
-# switch to workspace
-bindsym $mod+1 workspace 1
-bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace 3
-bindsym $mod+4 workspace 4
-bindsym $mod+5 workspace 5
-bindsym $mod+6 workspace 6
-bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
-
-# move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1
-bindsym $mod+Shift+2 move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
-bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+6 move container to workspace 6
-bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8
-bindsym $mod+Shift+9 move container to workspace 9
-
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-
-# touchpad toggle
-bindsym $mod+F4 exec --no-startup-id $XDG_CONFIG_HOME/i3/scripts/touchpad-toggle
-
 # make the currently focused window a scratchpad
 bindsym $mod+Shift+minus move scratchpad
 
 # show the first scratchpad window
 bindsym $mod+minus [class="^(?!QuiteRss).*$"] scratchpad show
+
+# Workspaces {{{2
+
+# rename workspace
+bindsym $mod+r exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
+
+# switch to next workspace
+bindsym $mod+grave workspace next
+
+# switch to workspace
+bindsym $mod+1 workspace number "1"
+bindsym $mod+2 workspace number "2"
+bindsym $mod+3 workspace number "3"
+bindsym $mod+4 workspace number "4"
+bindsym $mod+5 workspace number "5"
+bindsym $mod+6 workspace number "6"
+bindsym $mod+7 workspace number "7"
+bindsym $mod+8 workspace number "8"
+bindsym $mod+9 workspace number "9"
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+
+# XF86 keyboard symbols {{{2
 
 # audio controls
 bindsym XF86AudioLowerVolume exec $XDG_CONFIG_HOME/i3/scripts/volume_down
@@ -212,5 +205,21 @@ bindsym XF86AudioPlay  exec playerctl play
 bindsym XF86AudioPrev  exec playerctl previous
 
 # }}}
-bindsym $mod+n exec i3-input -F 'Rename workspace to "%s"' -P 'New name for this workspace: '
+# OTHER {{{2
+
+# start dmenu
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# touchpad toggle
+bindsym $mod+F4 exec --no-startup-id $XDG_CONFIG_HOME/i3/scripts/touchpad-toggle
+
+# Multi-screen screenshots with scrot
+bindsym --release Print exec scrot 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/pictures/screenshots && mv $f ~/pictures/screenshots && xclip -selection clipboard -t image/png -i ~/pictures/screenshots/`ls -1 -t ~/pictures/screenshots | head -1`' # All screens
+
+# OSX-like area selection screenshots
+bindsym --release Shift+Print exec scrot -s 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/pictures/screenshots && mv $f ~/pictures/screenshots && xclip -selection clipboard -t image/png -i ~/pictures/screenshots/`ls -1 -t ~/pictures/screenshots | head -1`' # Area selection
+
 # vim: fdm=marker foldenable:
