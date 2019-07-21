@@ -212,5 +212,5 @@ bindsym XF86AudioPlay  exec playerctl play
 bindsym XF86AudioPrev  exec playerctl previous
 
 # }}}
-
+bindsym $mod+n exec i3-input -F 'Rename workspace to "%s"' -P 'New name for this workspace: '
 # vim: fdm=marker foldenable:

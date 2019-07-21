@@ -48,40 +48,43 @@ bind Space:magic-space
 
 # FUNCTIONS {{{1
 
-i3-get-window-criteria() {
+i3-get-window-criteria()
+{
     match_int='[0-9][0-9]*'
     match_string='".*"'
     match_qstring='"[^"\\]*(\\.[^"\\]*)*"' # NOTE: Adds 1 backreference
 
     {
         xprop |
-        sed -nr \
+            sed -nr \
             -e "s/^WM_CLASS\(STRING\) = ($match_qstring), ($match_qstring)$/instance=\1\nclass=\3/p" \
             -e "s/^WM_WINDOW_ROLE\(STRING\) = ($match_qstring)$/window_role=\1/p" \
             -e "/^WM_NAME\(STRING\) = ($match_string)$/{s//title=\1/; h}" \
             -e "/^_NET_WM_NAME\(UTF8_STRING\) = ($match_qstring)$/{s//title=\1/; h}" \
             -e '${g; p}'
-    } | sort | tr "\n" " " | sed -r 's/^(.*) $/[\1]\n/'
+        } | sort | tr "\n" " " | sed -r 's/^(.*) $/[\1]\n/'
 }
 
-gpu-switch() {
+gpu-switch()
+{
     if [ ! -z $(command -v optimus-manager) ]; then
         if [[ "$(glxinfo | grep "OpenGL vendor")" =~ .*Intel.* ]] && \
-                [[ "$(cat '/sys/bus/pci/devices/0000:01:00.0/power/control')" == "auto" ]]
-        then
-            read -p "Are you sure? System will reboot! [Y/n] " -r
-            if [[ ! $REPLY =~ ^[Nn]$ ]]; then
-                optimus-manager --set-startup nvidia_once
-                reboot
-            fi
-        else
-            optimus-manager --switch auto
-            i3-msg exit
+            [[ "$(cat '/sys/bus/pci/devices/0000:01:00.0/power/control')" == "auto" ]]
+                then
+                    read -p "Are you sure? System will reboot! [Y/n] " -r
+                    if [[ ! $REPLY =~ ^[Nn]$ ]]; then
+                        optimus-manager --set-startup nvidia_once
+                        reboot
+                    fi
+                else
+                    optimus-manager --switch auto
+                    i3-msg exit
         fi
     fi
 }
 
-install-from-list() {
+install-from-list()
+{
     for file in $@; do
         if [ -e $file ]; then
             if [[ ${file: -5} == ".list" ]]; then
@@ -102,7 +105,17 @@ install-from-list() {
     unset list
 }
 
-rebuild-hosts-file() {
+install-yay()
+{
+    git clone https://aur.archlinux.org/yay.git
+    cd yay
+    makepkg -si
+    cd ..
+    rm -rf yay
+}
+
+rebuild-hosts-file()
+{
     set -e
 
     sudo echo "# Created $(command date '+%F %T') by $USER" > /tmp/hosts
@@ -123,7 +136,8 @@ rebuild-hosts-file() {
     sudo mv /tmp/hosts /etc/hosts
 }
 
-umount-ios() {
+umount-ios()
+{
     cd
     for i in $@; do
         fusermount -u $HOME/.mount/ios$i
@@ -132,15 +146,15 @@ umount-ios() {
     cd - &> /dev/null
 }
 
-upgrade() {
-    sudo pacman -Syu
+upgrade()
+{
     yay -Syu
-    sudo pacman -Rns $(pacman -Qtdq)
     yay -Yc
-    sudo pacman -Sc
+    yay -Sc
 }
 
-windows() {
+windows()
+{
     command sudo grub-reboot 2
     command sudo reboot
 }
