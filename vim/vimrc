@@ -215,11 +215,12 @@ endfunction
 
 " Make {{{2
 function! Make() abort
-    let l:makeprg_temp = &makeprg
+    let b:makeprg_temp = &makeprg
     let &l:makeprg = "make $*"
     make
-    let &l:makeprg = l:makeprg_temp
+    let &l:makeprg = b:makeprg_temp
 endfunction
+
 " TmuxAwareNavigate {{{2
 function! TmuxAwareNavigate(direction)
     let nr = winnr()
@@ -267,6 +268,8 @@ function! WhatHighlightsIt() abort
 endfunction
 
 " MAPPINGS {{{1
+" All modes {{{2
+noremap Q gq
 " Normal mode {{{2
 nnoremap ' `
 nnoremap '' ``
@@ -323,7 +326,6 @@ set hlsearch
 set ignorecase
 set incsearch
 set laststatus=2
-set lazyredraw
 set linebreak
 set modeline
 set nofoldenable
@@ -359,6 +361,7 @@ let g:plugins = [
 let g:UltiSnipsEditSplit          = "context"
 let g:UltiSnipsExpandTrigger      = "<C-j>"
 let g:UltiSnipsListSnippets       = "<C-k>"
+let g:UltiSnipsSnippetDirectories = [$XDG_CONFIG_HOME.'/vim/UltiSnips']
 let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_ShortIndicators    = 1
 

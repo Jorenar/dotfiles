@@ -150,7 +150,7 @@ upgrade()
 {
     yay -Syu
     yay -Yc
-    yay -Sc
+    yay -Sc --noconfirm
 }
 
 windows()
