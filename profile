@@ -30,14 +30,8 @@ export GPG_AGENT_INFO
 export VITASDK=/usr/local/vitasdk
 export PATH=$VITASDK/bin:$PATH
 
-# Python startup config file
-export PYTHONSTARTUP="$DOTFILES/other/python_config.py"
-
 # GTK3 theme
 export GTK_THEME="Numix-Dark"
-
-# RND file location
-export RANDFILE="$XDG_CACHE_HOME/rnd"
 
 export TMPDIR=/tmp/
 
@@ -50,6 +44,8 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export ELINKS_CONFDIR="$XDG_CONFIG_HOME/elinks"
 export GRIPHOME="$XDG_CONFIG_HOME/grip"
 export IMAPFILTER_HOME="$XDG_CONFIG_HOME/imapfilter"
+export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/config.py"
+export RANDFILE="$XDG_CACHE_HOME/rnd"
 export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
 export WINEPREFIX="$XDG_CONFIG_HOME/wine"
 

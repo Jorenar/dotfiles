@@ -146,13 +146,6 @@ umount-ios()
     cd - &> /dev/null
 }
 
-upgrade()
-{
-    yay -Syu
-    yay -Yc
-    yay -Sc --noconfirm
-}
-
 windows()
 {
     command sudo grub-reboot 2
