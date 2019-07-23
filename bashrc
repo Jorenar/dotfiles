@@ -5,6 +5,7 @@
 alias ap1='sudo create_ap wlo1 wlo1 x I_love_BASH' # semi open WiFi network
 alias cal='cal -m'
 alias du='du -h'
+alias gpu-switch='optimus-manager --switch auto && i3-msg exit'
 alias grep='grep --color'
 alias i3-logout="i3-msg exit"
 alias less='less -R'
@@ -63,24 +64,6 @@ i3-get-window-criteria()
             -e "/^_NET_WM_NAME\(UTF8_STRING\) = ($match_qstring)$/{s//title=\1/; h}" \
             -e '${g; p}'
         } | sort | tr "\n" " " | sed -r 's/^(.*) $/[\1]\n/'
-}
-
-gpu-switch()
-{
-    if [ ! -z $(command -v optimus-manager) ]; then
-        if [[ "$(glxinfo | grep "OpenGL vendor")" =~ .*Intel.* ]] && \
-            [[ "$(cat '/sys/bus/pci/devices/0000:01:00.0/power/control')" == "auto" ]]
-                then
-                    read -p "Are you sure? System will reboot! [Y/n] " -r
-                    if [[ ! $REPLY =~ ^[Nn]$ ]]; then
-                        optimus-manager --set-startup nvidia_once
-                        reboot
-                    fi
-                else
-                    optimus-manager --switch auto
-                    i3-msg exit
-        fi
-    fi
 }
 
 install-from-list()

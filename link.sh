@@ -50,7 +50,7 @@ linking  Xresources             $HOME/.Xresources
 linking  fonts                  $XDG_DATA_HOME/fonts
 
 linking  feh_keys               $XDG_CONFIG_HOME/feh/keys
-linking  git/config             $XDG_CONFIG_HOME/git/config
+linking  git                    $XDG_CONFIG_HOME/git
 linking  muttrc                 $XDG_CONFIG_HOME/mutt/muttrc
 linking  python_config.py       $XDG_CONFIG_HOME/python/config.py
 linking  xdg-user.dirs          $XDG_CONFIG_HOME/xdg-user.dirs
