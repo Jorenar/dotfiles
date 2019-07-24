@@ -8,6 +8,7 @@ set nocompatible
 syntax enable
 
 " XDG support
+let s:pack_opt_path=$XDG_DATA_HOME.'/vim/pack/plugins/opt/'
 set backupdir=$XDG_DATA_HOME/vim/backup
 set directory=$XDG_CACHE_HOME/vim/swap
 set packpath+=$XDG_DATA_HOME/vim
@@ -165,13 +166,16 @@ endfunction
 function! GetPlugins()
     for plugin in g:plugins
         let plugin_name = substitute(plugin, ".*\/", "", "")
-        let plugin_dir = $XDG_DATA_HOME.'/vim/pack/plugins/opt/'.plugin_name
+        let plugin_dir = s:pack_opt_path.plugin_name
         let github_url = "https://github.com/".plugin
         let cmd = "git clone ".github_url." ".plugin_dir." 2> /dev/null || (cd ".plugin_dir." ; git pull)"
         call system(cmd)
         execute "packadd ".plugin_name
-        execute "helptags ".plugin_dir."/doc"
+        if !empty(glob(plugin_dir."/doc"))
+            execute "helptags ".plugin_dir."/doc"
+        endif
     endfor
+    redraw!
     echo "DONE"
 endfunction
 
@@ -185,6 +189,7 @@ function! GripSession() abort
     execute 'silent! !grip -b % &>/dev/null &' | redraw!
     autocmd vimleave * execute '!pkill grip'
 endfunction
+
 " FileEncoding ~ for Status line {{{2
 function! FileEncoding() abort
     return (&fenc == "" ? &enc : &fenc).((exists("+bomb") && &bomb) ? " BOM" : "")
@@ -352,6 +357,8 @@ set tags+=.git/tags;/
 
 " Run :GetPlugins to install/update
 let g:plugins = [
+            \ "Jorengarenar/vim-colors-B_W",
+            \ "Jorengarenar/vim-fakeClipboard",
             \ "mbbill/undotree",
             \ "sirver/ultisnips",
             \ "tpope/vim-surround",
@@ -399,7 +406,7 @@ packadd termdebug
 packadd matchit
 
 " Create backup and plugin dirs
-call mkdir($XDG_DATA_HOME.'/vim/pack/plugins/opt', 'p')
+call mkdir(s:pack_opt_path, 'p')
 call mkdir(&backupdir, 'p')
 
 " Applying rules form arrays/dictionaries {{{

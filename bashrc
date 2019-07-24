@@ -197,16 +197,6 @@ set -o vi
 # Make 'less' more friendly for non-text input files
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# Update Xresources
-if [ -f $HOME/.Xresources ]; then
-    xrdb -load $HOME/.Xresources
-fi
-
-# Update .tmux.conf on start
-if [ -n $TMUX ]; then
-    tmux source $HOME/.tmux.conf
-fi
-
 # Exports
 source $HOME/.profile
 
