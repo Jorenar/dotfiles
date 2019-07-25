@@ -8,7 +8,7 @@ set nocompatible
 syntax enable
 
 " XDG support
-let s:pack_opt_path=$XDG_DATA_HOME.'/vim/pack/plugins/opt/'
+let g:pack_path=$XDG_DATA_HOME.'/vim/pack/plugins/'
 set backupdir=$XDG_DATA_HOME/vim/backup
 set directory=$XDG_CACHE_HOME/vim/swap
 set packpath+=$XDG_DATA_HOME/vim
@@ -166,7 +166,7 @@ endfunction
 function! GetPlugins()
     for plugin in g:plugins
         let plugin_name = substitute(plugin, ".*\/", "", "")
-        let plugin_dir = s:pack_opt_path.plugin_name
+        let plugin_dir = g:pack_path."/opt/".plugin_name
         let github_url = "https://github.com/".plugin
         let cmd = "git clone ".github_url." ".plugin_dir." 2> /dev/null || (cd ".plugin_dir." ; git pull)"
         call system(cmd)
@@ -357,11 +357,15 @@ set tags+=.git/tags;/
 
 " Run :GetPlugins to install/update
 let g:plugins = [
-            \ "Jorengarenar/vim-colors-B_W",
-            \ "Jorengarenar/vim-fakeClipboard",
             \ "mbbill/undotree",
             \ "sirver/ultisnips",
             \ "tpope/vim-surround",
+            \]
+
+let g:my_plugins = [
+            \ "Jorengarenar/ViewPort",
+            \ "Jorengarenar/vim-colors-B_W",
+            \ "Jorengarenar/vim-fakeClipboard",
             \]
 
 " VARIABLES
@@ -371,6 +375,7 @@ let g:UltiSnipsListSnippets       = "<C-k>"
 let g:UltiSnipsSnippetDirectories = [$XDG_CONFIG_HOME.'/vim/UltiSnips']
 let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_ShortIndicators    = 1
+let g:viewport_split_vertical     = 1
 
 " MAPPINGS
 nmap s ys
@@ -406,7 +411,7 @@ packadd termdebug
 packadd matchit
 
 " Create backup and plugin dirs
-call mkdir(s:pack_opt_path, 'p')
+call mkdir(g:pack_path."/opt", 'p')
 call mkdir(&backupdir, 'p')
 
 " Applying rules form arrays/dictionaries {{{
@@ -425,6 +430,12 @@ endfor
 
 for [ft, width] in items(s:tab_width_for_filetype)
     execute "autocmd filetype ".ft." setlocal tabstop=".width." shiftwidth=".width." softtabstop=".width
+endfor
+
+for plugin in g:my_plugins
+    if empty(glob(g:pack_path."/start/"..substitute(plugin, ".*\/", "", "")))
+        call add(g:plugins, plugin)
+    endif
 endfor
 
 for plugin in g:plugins

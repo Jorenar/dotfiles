@@ -203,7 +203,7 @@ source $HOME/.profile
 # PROMPT
 PS1='\[\e[1m\]\u@\h:\[\033[90m\]\w\[\033[0m\]\[\033[1m\]\$\[\e[0m\] '
 
-# If there is display then on tty1 startx
+# If there is display then on tty1 then `startx`
 if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
     sudo /usr/bin/prime-switch
     exec startx
