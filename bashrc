@@ -173,9 +173,9 @@ feh() {
     fi
 
     if [[ -d $1 ]]; then
-        nohup feh $R -B black -. "$@" > /dev/null 2>&1
+        nohup feh $R "$@" > /dev/null 2>&1
     else
-        nohup feh $R -B black -. --start-at "$@" > /dev/null 2>&1
+        nohup feh $R --start-at "$@" > /dev/null 2>&1
     fi
 }
 
