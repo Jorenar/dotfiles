@@ -66,9 +66,8 @@ bindsym $mod+w exec firefox
 # open QuiteRSS
 bindsym $mod+q exec --no-startup-id $XDG_CONFIG_HOME/i3/scripts/quiterss
 
-# open neomutt
-#bindsym $mod+m exec --no-startup-id i3-sensible-terminal -T Mutt neomutt
-bindsym $mod+m exec --no-startup-id imapfilter && i3-sensible-terminal -T Mutt neomutt
+# open aerc
+bindsym $mod+m exec --no-startup-id i3-sensible-terminal aerc && rm -f /tmp/aerc.html
 
 # vim-anywhere
 bindsym $mod+v exec --no-startup-id $HOME/scripts/vim-anywhere

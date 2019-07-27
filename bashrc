@@ -167,7 +167,16 @@ esac
 # WRAPPERS {{{1
 
 feh() {
-    nohup feh -B black -. --start-at "$@" > /dev/null 2>&1
+    if [[ $1 == "-r" ]]; then
+        R="-r"
+        shift 1
+    fi
+
+    if [[ -d $1 ]]; then
+        nohup feh $R -B black -. "$@" > /dev/null 2>&1
+    else
+        nohup feh $R -B black -. --start-at "$@" > /dev/null 2>&1
+    fi
 }
 
 find() {

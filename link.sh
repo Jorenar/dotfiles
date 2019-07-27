@@ -40,7 +40,6 @@ linking  bashrc                 $HOME/.bashrc
 linking  gpg-agent.conf         $HOME/.gnupg/gpg-agent.conf
 linking  gtkrc-2.0              $HOME/.gtkrc-2.0
 linking  inputrc                $HOME/.inputrc
-linking  mailcap                $HOME/.mailcap
 linking  profile                $HOME/.profile
 linking  themes                 $HOME/.themes
 linking  tmux.conf              $HOME/.tmux.conf
@@ -51,7 +50,6 @@ linking  fonts                  $XDG_DATA_HOME/fonts
 
 linking  feh_keys               $XDG_CONFIG_HOME/feh/keys
 linking  git                    $XDG_CONFIG_HOME/git
-linking  muttrc                 $XDG_CONFIG_HOME/mutt/muttrc
 linking  python_config.py       $XDG_CONFIG_HOME/python/config.py
 linking  xdg-user.dirs          $XDG_CONFIG_HOME/xdg-user.dirs
 linking  zathurarc              $XDG_CONFIG_HOME/zathura/zathurarc
@@ -62,4 +60,6 @@ linking  vim/                   $XDG_CONFIG_HOME/vim
 
 # ------------------------------------------------
 
+# linking  mailcap                $HOME/.mailcap
+# linking  muttrc                 $XDG_CONFIG_HOME/mutt/muttrc
 # linking  myclirc                $HOME/.myclirc

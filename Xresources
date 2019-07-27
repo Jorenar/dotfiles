@@ -5,7 +5,6 @@ XTerm*termName: xterm-256color
 XTerm*geometry: 220x55+80+30
 XTerm*loginshell: False
 XTerm*cursorBlink: True
-XTerm.vt100.reverseVideo: true
 
 ! Fonts and Encoding
 XTerm*faceName: Dejavu Sans Mono:style=book
@@ -29,3 +28,7 @@ XTerm*translations: #override \
 
 ! Allow selecting email/url by double-click
 XTerm*charClass: 33:48,37-38:48,45-47:48,64:48,58:48,126:48,61:48,63:48,43:48,35:48
+
+! Colors
+XTerm*background: black
+XTerm*foreground: grey

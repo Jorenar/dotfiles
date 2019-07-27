@@ -360,9 +360,6 @@ let g:plugins = [
             \ "mbbill/undotree",
             \ "sirver/ultisnips",
             \ "tpope/vim-surround",
-            \]
-
-let g:my_plugins = [
             \ "Jorengarenar/ViewPort",
             \ "Jorengarenar/vim-colors-B_W",
             \ "Jorengarenar/vim-fakeClipboard",
@@ -430,12 +427,6 @@ endfor
 
 for [ft, width] in items(s:tab_width_for_filetype)
     execute "autocmd filetype ".ft." setlocal tabstop=".width." shiftwidth=".width." softtabstop=".width
-endfor
-
-for plugin in g:my_plugins
-    if empty(glob(g:pack_path."/start/"..substitute(plugin, ".*\/", "", "")))
-        call add(g:plugins, plugin)
-    endif
 endfor
 
 for plugin in g:plugins
