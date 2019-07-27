@@ -31,7 +31,7 @@ export VITASDK=/usr/local/vitasdk
 export PATH=$VITASDK/bin:$PATH
 
 # GTK3 theme
-export GTK_THEME="Numix-Dark"
+export GTK_THEME="$(grep gtk-theme-name $HOME/.gtkrc-2.0 | cut -d'"' -f 2)"
 
 export TMPDIR=/tmp/
 

@@ -58,6 +58,10 @@ linking  i3/                    $XDG_CONFIG_HOME/i3
 linking  mpv/                   $XDG_CONFIG_HOME/mpv
 linking  vim/                   $XDG_CONFIG_HOME/vim
 
+for cfg in aerc/*; do
+    linking "$cfg" $XDG_CONFIG_HOME/aerc/"$(basename $cfg)"
+done
+
 # ------------------------------------------------
 
 # linking  mailcap                $HOME/.mailcap

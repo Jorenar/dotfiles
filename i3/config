@@ -67,7 +67,7 @@ bindsym $mod+w exec firefox
 bindsym $mod+q exec --no-startup-id $XDG_CONFIG_HOME/i3/scripts/quiterss
 
 # open aerc
-bindsym $mod+m exec --no-startup-id i3-sensible-terminal aerc && rm -f /tmp/aerc.html
+bindsym $mod+m exec --no-startup-id i3-sensible-terminal -T aerc aerc && rm -f /tmp/aerc.html
 
 # vim-anywhere
 bindsym $mod+v exec --no-startup-id $HOME/scripts/vim-anywhere
