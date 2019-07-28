@@ -64,7 +64,7 @@ bindsym $mod+x exec --no-startup-id i3-sensible-terminal tmux
 bindsym $mod+w exec firefox
 
 # open QuiteRSS
-bindsym $mod+q exec --no-startup-id $XDG_CONFIG_HOME/i3/scripts/quiterss
+bindsym $mod+q exec --no-startup-id $XDG_CONFIG_HOME/i3/wrappers/quiterss
 
 # open aerc
 bindsym $mod+m exec --no-startup-id i3-sensible-terminal -T aerc aerc && rm -f /tmp/aerc.html

@@ -46,6 +46,7 @@ export GRIPHOME="$XDG_CONFIG_HOME/grip"
 export IMAPFILTER_HOME="$XDG_CONFIG_HOME/imapfilter"
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/config.py"
 export RANDFILE="$XDG_CACHE_HOME/rnd"
+export VIMDOTDIR="$XDG_CONFIG_HOME/vim"
 export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
 export WINEPREFIX="$XDG_CONFIG_HOME/wine"
 
