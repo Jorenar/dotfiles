@@ -1,0 +1,6 @@
+#############
+### TIGRC ###
+#############
+
+source ~/dotfiles/tig/vim.tigrc
+source ~/dotfiles/tig/chocolate.theme.tigrc

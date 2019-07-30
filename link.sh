@@ -66,4 +66,5 @@ done
 # linking  mailcap                $HOME/.mailcap
 # linking  muttrc                 $XDG_CONFIG_HOME/mutt/muttrc
 # linking  myclirc                $HOME/.myclirc
+# linking  tig                    $XDG_CONFIG_HOME/tig
 # linking  user-dirs.dirs         $XDG_CONFIG_HOME/user-dirs.dirs
