@@ -279,8 +279,6 @@ noremap Q gq
 " Normal mode {{{2
 nnoremap ' `
 nnoremap '' ``
-nnoremap <F1> gT
-nnoremap <F2> gt
 nnoremap <F3> :set cursorline! cursorcolumn!<CR>
 nnoremap <F4> :set virtualedit=all<CR>
 nnoremap <F9> :w <bar> make<CR>

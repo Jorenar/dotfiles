@@ -67,7 +67,7 @@ bindsym $mod+w exec firefox
 bindsym $mod+q exec --no-startup-id $XDG_CONFIG_HOME/i3/wrappers/quiterss
 
 # open aerc
-bindsym $mod+m exec --no-startup-id i3-sensible-terminal -T aerc aerc && rm -f /tmp/aerc.html
+bindsym $mod+m exec --no-startup-id imapfilter && i3-sensible-terminal -T aerc aerc && rm -f /tmp/aerc.html
 
 # vim-anywhere
 bindsym $mod+v exec --no-startup-id $HOME/scripts/vim-anywhere
@@ -216,9 +216,9 @@ bindsym $mod+Shift+r restart
 bindsym $mod+F4 exec --no-startup-id $XDG_CONFIG_HOME/i3/scripts/touchpad-toggle
 
 # Multi-screen screenshots with scrot
-bindsym --release Print exec scrot 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/pictures/screenshots && mv $f ~/pictures/screenshots && xclip -selection clipboard -t image/png -i ~/pictures/screenshots/`ls -1 -t ~/pictures/screenshots | head -1`' # All screens
+bindsym --release Print exec scrot 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/images/screenshots && mv $f ~/images/screenshots && xclip -selection clipboard -t image/png -i ~/images/screenshots/`ls -1 -t ~/images/screenshots | head -1`' # All screens
 
 # OSX-like area selection screenshots
-bindsym --release Shift+Print exec scrot -s 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/pictures/screenshots && mv $f ~/pictures/screenshots && xclip -selection clipboard -t image/png -i ~/pictures/screenshots/`ls -1 -t ~/pictures/screenshots | head -1`' # Area selection
+bindsym --release Shift+Print exec scrot -s 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/images/screenshots && mv $f ~/images/screenshots && xclip -selection clipboard -t image/png -i ~/images/screenshots/`ls -1 -t ~/images/screenshots | head -1`' # Area selection
 
 # vim: fdm=marker foldenable:

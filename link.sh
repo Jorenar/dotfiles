@@ -51,7 +51,6 @@ linking  fonts                  $XDG_DATA_HOME/fonts
 linking  feh                    $XDG_CONFIG_HOME/feh
 linking  git                    $XDG_CONFIG_HOME/git
 linking  python_config.py       $XDG_CONFIG_HOME/python/config.py
-linking  xdg-user.dirs          $XDG_CONFIG_HOME/xdg-user.dirs
 linking  zathurarc              $XDG_CONFIG_HOME/zathura/zathurarc
 
 linking  i3/                    $XDG_CONFIG_HOME/i3
@@ -67,3 +66,4 @@ done
 # linking  mailcap                $HOME/.mailcap
 # linking  muttrc                 $XDG_CONFIG_HOME/mutt/muttrc
 # linking  myclirc                $HOME/.myclirc
+# linking  user-dirs.dirs         $XDG_CONFIG_HOME/user-dirs.dirs
