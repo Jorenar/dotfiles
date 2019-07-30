@@ -72,7 +72,6 @@ command! -range=% Sort normal :<line1>,<line2>sort i<CR>
 command! Debug normal :Termdebug<CR><C-w>H
 command! ExecCurrentLine normal :.w !sh<CR>
 command! GetPlugins call GetPlugins()
-command! GripSession call GripSession()
 command! Make call Make()
 command! SortBlock :normal! vip:sort i<CR>
 
@@ -184,11 +183,6 @@ function! s:GrepRename(expr1, expr2) abort
     execute "vimgrep /\\C\\W".a:expr1."\\W/j ** | cdo s/\\C\\\(\\W\\)".a:expr1."\\\(\\W\\)/\\1".a:expr2."\\2/gc | update"
 endfunction
 
-" GripSession {{{2
-function! GripSession() abort
-    execute 'silent! !grip -b % &>/dev/null &' | redraw!
-    autocmd vimleave * execute '!pkill grip'
-endfunction
 
 " FileEncoding ~ for Status line {{{2
 function! FileEncoding() abort
