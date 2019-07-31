@@ -1,14 +1,3 @@
-/* Dark scrollbar */
-
-:root{
-    scrollbar-color: #0079D3 #2E3645;
-    scrollbar-width: thin;
-}
-
-* {
-    scrollbar-width: thin;
-}
-
 input:not(.urlbar-input):not(.textbox-input):not(.form-control):not([type='checkbox']) {
     -moz-appearance: none !important;
     background-color: white;
