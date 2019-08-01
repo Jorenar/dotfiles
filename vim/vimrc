@@ -30,9 +30,6 @@ autocmd VimEnter * set fo-=c fo-=r fo-=o
 " Trim trailing whitespace
 autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
 
-" Terminal options
-autocmd TerminalOpen * if &buftype == 'terminal' | setlocal nonumber | endif
-
 " Set PATH for C/C++
 autocmd filetype c,cpp setlocal path+=/usr/include/**
 
