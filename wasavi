@@ -1,0 +1,7 @@
+set theme=matrix
+set expandtab
+set smartcase
+set number
+set tabstop=4
+
+" vim: ft=vim
