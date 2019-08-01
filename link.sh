@@ -42,7 +42,6 @@ linking  gtkrc-2.0              $HOME/.gtkrc-2.0
 linking  inputrc                $HOME/.inputrc
 linking  profile                $HOME/.profile
 linking  themes                 $HOME/.themes
-linking  tmux.conf              $HOME/.tmux.conf
 linking  xinitrc                $HOME/.xinitrc
 linking  Xresources             $HOME/.Xresources
 
@@ -51,6 +50,7 @@ linking  fonts                  $XDG_DATA_HOME/fonts
 linking  feh                    $XDG_CONFIG_HOME/feh
 linking  git                    $XDG_CONFIG_HOME/git
 linking  python_config.py       $XDG_CONFIG_HOME/python/config.py
+linking  user-dirs.dirs         $XDG_CONFIG_HOME/user-dirs.dirs
 linking  zathurarc              $XDG_CONFIG_HOME/zathura/zathurarc
 
 linking  i3/                    $XDG_CONFIG_HOME/i3
@@ -67,4 +67,4 @@ done
 # linking  muttrc                 $XDG_CONFIG_HOME/mutt/muttrc
 # linking  myclirc                $HOME/.myclirc
 # linking  tig                    $XDG_CONFIG_HOME/tig
-# linking  user-dirs.dirs         $XDG_CONFIG_HOME/user-dirs.dirs
+# linking  tmux.conf              $HOME/.tmux.conf

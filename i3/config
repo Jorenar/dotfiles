@@ -57,9 +57,6 @@ exec --no-startup-id $XDG_CONFIG_HOME/i3/scripts/touchpad-toggle
 # start TERMINAL
 bindsym $mod+Return exec --no-startup-id i3-sensible-terminal
 
-# start tmux in terminal
-bindsym $mod+x exec --no-startup-id i3-sensible-terminal tmux
-
 # open Firefox
 bindsym $mod+w exec firefox
 

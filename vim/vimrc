@@ -220,17 +220,6 @@ function! Make() abort
     let &l:makeprg = b:makeprg_temp
 endfunction
 
-" TmuxAwareNavigate {{{2
-function! TmuxAwareNavigate(direction)
-    let nr = winnr()
-    execute 'wincmd ' . a:direction
-    if (nr == winnr())
-        let args = 'select-pane -t ' . shellescape($TMUX_PANE) . ' -' . tr(a:direction, 'phjkl', 'lLDUR')
-        silent call system('tmux' . ' -S ' . split($TMUX, ',')[0] . ' ' . args)
-    else
-    endif
-endfunction
-
 " VisSort - sorts based on visual-block selected portion of the lines {{{2
 function! s:VisSort(isnmbr) range abort
     if visualmode() != "\<c-v>"
@@ -284,10 +273,10 @@ nnoremap <Leader>r :%s/\<<C-r><C-w>\>//g<Left><Left>
 nnoremap <Leader>R :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
 nnoremap <leader>v ggVG
 nnoremap <S-Tab> <C-w>W
-nnoremap <silent> <C-h> :call TmuxAwareNavigate('h')<CR>
-nnoremap <silent> <C-j> :call TmuxAwareNavigate('j')<CR>
-nnoremap <silent> <C-k> :call TmuxAwareNavigate('k')<CR>
-nnoremap <silent> <C-l> :call TmuxAwareNavigate('l')<CR>
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 nnoremap <Tab> <C-w><C-w>
 nnoremap gf <C-w>gf
 nnoremap j gj
