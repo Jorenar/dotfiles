@@ -30,10 +30,11 @@ export GPG_AGENT_INFO
 export VITASDK=/usr/local/vitasdk
 export PATH=$VITASDK/bin:$PATH
 
+# Add dotfiles/bin to path
+export PATH=$DOTFILES/bin:$PATH
+
 # GTK3 theme
 export GTK_THEME="$(grep gtk-theme-name $HOME/.gtkrc-2.0 | cut -d'"' -f 2)"
-
-export TMPDIR=/tmp/
 
 # XDG --------------------------------------------
 

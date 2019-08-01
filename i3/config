@@ -50,7 +50,7 @@ exec --no-startup-id xsetroot -solid "#000000"
 exec --no-startup-id fcitx -d
 
 # disable touchpad on startup
-exec --no-startup-id $XDG_CONFIG_HOME/i3/scripts/touchpad-toggle
+exec --no-startup-id touchpad-toggle
 
 # SHORTCUTS BINDINGS {{{1
 
@@ -70,7 +70,7 @@ bindsym $mod+q exec --no-startup-id $XDG_CONFIG_HOME/i3/wrappers/quiterss
 bindsym $mod+m exec --no-startup-id imapfilter && i3-sensible-terminal -T aerc aerc && rm -f /tmp/aerc.html
 
 # vim-anywhere
-bindsym $mod+v exec --no-startup-id $HOME/scripts/vim-anywhere
+bindsym $mod+v exec --no-startup-id vim-anywhere
 
 # passmenu (type password)
 bindsym $mod+p exec --no-startup-id passmenu --type
@@ -213,7 +213,7 @@ bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 bindsym $mod+Shift+r restart
 
 # touchpad toggle
-bindsym $mod+F4 exec --no-startup-id $XDG_CONFIG_HOME/i3/scripts/touchpad-toggle
+bindsym $mod+F4 exec --no-startup-id touchpad-toggle
 
 # Multi-screen screenshots with scrot
 bindsym --release Print exec scrot 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/images/screenshots && mv $f ~/images/screenshots && xclip -selection clipboard -t image/png -i ~/images/screenshots/`ls -1 -t ~/images/screenshots | head -1`' # All screens

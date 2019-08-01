@@ -1,0 +1,11 @@
+#!/bin/sh
+
+mkdir -p /tmp/vim-anywhere
+
+file="$(mktemp -p /tmp/vim-anywhere)"
+
+xclip -o -selection clipboard > $file
+
+$TERMINAL -e "vim $file"
+
+cat $file | xclip -i -selection clipboard
