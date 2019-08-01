@@ -47,12 +47,12 @@ linking  Xresources             $HOME/.Xresources
 
 linking  fonts                  $XDG_DATA_HOME/fonts
 
-linking  feh                    $XDG_CONFIG_HOME/feh
-linking  git                    $XDG_CONFIG_HOME/git
 linking  python_config.py       $XDG_CONFIG_HOME/python/config.py
 linking  user-dirs.dirs         $XDG_CONFIG_HOME/user-dirs.dirs
 linking  zathurarc              $XDG_CONFIG_HOME/zathura/zathurarc
 
+linking  feh                    $XDG_CONFIG_HOME/feh
+linking  git                    $XDG_CONFIG_HOME/git
 linking  i3/                    $XDG_CONFIG_HOME/i3
 linking  mpv/                   $XDG_CONFIG_HOME/mpv
 linking  vim/                   $XDG_CONFIG_HOME/vim
