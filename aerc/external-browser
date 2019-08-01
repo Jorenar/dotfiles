@@ -5,4 +5,4 @@ while IFS= read -r line; do
   printf '%s\n' "$line"
 done
 
-firefox --new-window /tmp/aerc.html
+firefox --new-window /tmp/aerc.html & disown
