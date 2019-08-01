@@ -47,98 +47,10 @@ shopt -s extglob
 # Magic space
 bind Space:magic-space
 
-# FUNCTIONS {{{1
-
-i3-get-window-criteria()
-{
-    match_int='[0-9][0-9]*'
-    match_string='".*"'
-    match_qstring='"[^"\\]*(\\.[^"\\]*)*"' # NOTE: Adds 1 backreference
-
-    {
-        xprop |
-            sed -nr \
-            -e "s/^WM_CLASS\(STRING\) = ($match_qstring), ($match_qstring)$/instance=\1\nclass=\3/p" \
-            -e "s/^WM_WINDOW_ROLE\(STRING\) = ($match_qstring)$/window_role=\1/p" \
-            -e "/^WM_NAME\(STRING\) = ($match_string)$/{s//title=\1/; h}" \
-            -e "/^_NET_WM_NAME\(UTF8_STRING\) = ($match_qstring)$/{s//title=\1/; h}" \
-            -e '${g; p}'
-        } | sort | tr "\n" " " | sed -r 's/^(.*) $/[\1]\n/'
-}
-
-install-from-list()
-{
-    for file in $@; do
-        if [ -e $file ]; then
-            if [[ ${file: -5} == ".list" ]]; then
-                while IFS= read -r pkg; do
-                    list=$list' '$(echo $pkg | cut -f1 -d"#")
-                done < "$file"
-            else
-                echo "$file - file in not a list"
-            fi
-        else
-            echo "$file - file does not exist"
-        fi
-    done
-
-    read -r -p 'Installation command: ' installation_command
-    $installation_command $list
-
-    unset list
-}
-
-install-yay()
-{
-    git clone https://aur.archlinux.org/yay.git
-    cd yay
-    makepkg -si
-    cd ..
-    rm -rf yay
-}
-
-rebuild-hosts-file()
-{
-    set -e
-
-    sudo echo "# Created $(command date '+%F %T') by $USER" > /tmp/hosts
-    sudo echo >> /tmp/hosts
-
-    cat $HOME/.hosts/* \
-        | tr A-Z a-z \
-        | tr -d '\r' \
-        | awk '{gsub("#.*$", ""); gsub(" *$",""); if (NF==2) {print $1 " " $2;}}' \
-        | grep -v '^localhost$' \
-        | sed 's/\.$//' \
-        | sort -k 2\
-        | uniq  \
-        | sed 's/\.$//' \
-        | awk '{printf("%-20s %s\n", $1, $2);}' \
-        >> /tmp/hosts
-
-    sudo mv /tmp/hosts /etc/hosts
-}
-
-umount-ios()
-{
-    cd
-    for i in $@; do
-        fusermount -u $HOME/.mount/ios$i
-    done
-    rmdir $HOME/.mount/* &> /dev/null
-    cd - &> /dev/null
-}
-
-windows()
-{
-    command sudo grub-reboot 2
-    command sudo reboot
-}
-
 # HISTORY {{{1
 
 # Set history file location
-export HISTFILE=$HOME/.history_files/bash
+# Look in ~/.profile for 'export HISTFILE'
 
 # Don't put duplicate lines or lines starting with space in the history
 HISTCONTROL=ignoreboth
