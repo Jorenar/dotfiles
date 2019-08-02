@@ -10,4 +10,4 @@ set show-mode-in-prompt on
 
 # Mode indicators
 set vi-ins-mode-string ""
-set vi-cmd-mode-string "Vi | "
+set vi-cmd-mode-string "(vi)"
