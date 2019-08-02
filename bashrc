@@ -50,17 +50,20 @@ bind Space:magic-space
 # HISTORY {{{1
 
 # Set history file location
-# Look in ~/.profile for 'export HISTFILE'
-
-# Don't put duplicate lines or lines starting with space in the history
-HISTCONTROL=ignoreboth
-
-# Append to the history file, don't overwrite it
-shopt -s histappend
+# Look for 'export HISTFILE' in ~/.profile
 
 # For setting history length see HISTSIZE and HISTFILESIZE
 HISTSIZE=1000
 HISTFILESIZE=2000
+
+# Avoid duplicates
+export HISTCONTROL=ignoredups:erasedups
+
+# When the shell exits, append to the history file instead of overwriting it
+shopt -s histappend
+
+# After each command, append to the history file and reread it
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 # WINDOW {{{1
 
@@ -109,9 +112,6 @@ mpv() {
 
 # Use Vi mode
 set -o vi
-
-# Make 'less' more friendly for non-text input files
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # Exports
 source $HOME/.profile
