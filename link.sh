@@ -35,7 +35,7 @@ linking() {
 
 # ------------------------------------------------
 
-linking  bashrc                 $HOME/.bash_profile
+linking  bash_profile           $HOME/.bash_profile
 linking  bashrc                 $HOME/.bashrc
 linking  gpg-agent.conf         $HOME/.gnupg/gpg-agent.conf
 linking  gtkrc-2.0              $HOME/.gtkrc-2.0

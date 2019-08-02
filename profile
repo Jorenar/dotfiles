@@ -60,5 +60,5 @@ export WINEPREFIX="$XDG_CONFIG_HOME/wine"
 export HISTORY_DIR=$XDG_CACHE_HOME/history_files
 
 export HISTFILE=$HISTORY_DIR/bash
-export SQLITE_HISTORY=$HISTORY_DIR/sqlite
 export LESSHISTFILE=-
+export SQLITE_HISTORY=$HISTORY_DIR/sqlite

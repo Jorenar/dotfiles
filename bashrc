@@ -63,7 +63,7 @@ export HISTCONTROL=ignoredups:erasedups
 shopt -s histappend
 
 # After each command, append to the history file and reread it
-export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
 
 # WINDOW {{{1
 
@@ -118,11 +118,5 @@ source $HOME/.profile
 
 # PROMPT
 PS1='\[\e[1m\]\u@\h:\[\033[90m\]\w\[\033[0m\]\[\033[1m\]\$\[\e[0m\] '
-
-# If there is display then on tty1 then `startx`
-if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
-    sudo /usr/bin/prime-switch
-    exec startx
-fi
 
 # vim: fdm=marker foldenable:
