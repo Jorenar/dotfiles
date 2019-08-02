@@ -20,6 +20,9 @@ export QT_QPA_PLATFORMTHEME="gtk2"
 # Set default terminal for i3
 export TERMINAL=xterm
 
+# Activate 'lesspipe'
+export LESSOPEN
+
 # Enable extensions for pass
 export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 
@@ -35,6 +38,7 @@ export PATH="$HOME/scripts:$PATH"
 
 # GTK3 theme
 export GTK_THEME="$(grep gtk-theme-name $HOME/.gtkrc-2.0 | cut -d'"' -f 2)"
+
 
 # XDG --------------------------------------------
 
