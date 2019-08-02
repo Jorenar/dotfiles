@@ -48,6 +48,7 @@ linking  Xresources             $HOME/.Xresources
 linking  fonts                  $XDG_DATA_HOME/fonts
 
 linking  python_config.py       $XDG_CONFIG_HOME/python/config.py
+linking  QuiteRss.ini           $XDG_CONFIG_HOME/QuiteRss/QuiteRss.ini
 linking  user-dirs.dirs         $XDG_CONFIG_HOME/user-dirs.dirs
 linking  zathurarc              $XDG_CONFIG_HOME/zathura/zathurarc
 
