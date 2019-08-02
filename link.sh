@@ -43,7 +43,6 @@ linking  inputrc                $HOME/.inputrc
 linking  profile                $HOME/.profile
 linking  themes                 $HOME/.themes
 linking  xinitrc                $HOME/.xinitrc
-linking  Xresources             $HOME/.Xresources
 
 linking  fonts                  $XDG_DATA_HOME/fonts
 
