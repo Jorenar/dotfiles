@@ -46,11 +46,14 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 
+export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME/java"
 export ELINKS_CONFDIR="$XDG_CONFIG_HOME/elinks"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export GRIPHOME="$XDG_CONFIG_HOME/grip"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 export IMAPFILTER_HOME="$XDG_CONFIG_HOME/imapfilter"
+export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
+export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/config.py"
 export RANDFILE="$XDG_CACHE_HOME/rnd"
 export VIMDOTDIR="$XDG_CONFIG_HOME/vim"
@@ -64,4 +67,5 @@ export HISTORY_DIR=$XDG_CACHE_HOME/history_files
 
 export HISTFILE=$HISTORY_DIR/bash
 export LESSHISTFILE=-
+export MYSQL_HISTFILE=$HISTORY_DIR/mysql
 export SQLITE_HISTORY=$HISTORY_DIR/sqlite
