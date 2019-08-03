@@ -61,6 +61,7 @@ bindsym $mod+x exec --no-startup-id i3-sensible-terminal
 bindsym $mod+shift+apostrophe exec i3-msg split h && i3-sensible-terminal
 
 # open Firefox
+# bindsym $mod+w exec GTK_THEME="$(grep gtk-theme-name $XDG_CONFIG_HOME/gtk-2.0/gtkrc | cut -d'"' -f 2)" firefox
 bindsym $mod+w exec firefox
 
 # open QuiteRSS

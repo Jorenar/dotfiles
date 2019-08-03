@@ -37,7 +37,6 @@ linking() {
 
 linking  bash_profile           $HOME/.bash_profile
 linking  bashrc                 $HOME/.bashrc
-linking  gtkrc-2.0              $HOME/.gtkrc-2.0
 linking  inputrc                $HOME/.inputrc
 linking  profile                $HOME/.profile
 linking  themes                 $HOME/.themes
@@ -47,6 +46,7 @@ linking  fonts                  $XDG_DATA_HOME/fonts
 
 linking  gpg-agent.conf         $XDG_DATA_HOME/gnupg/gpg-agent.conf
 
+linking  gtkrc-2.0              $XDG_CONFIG_HOME/gtk-2.0/gtkrc
 linking  python_config.py       $XDG_CONFIG_HOME/python/config.py
 linking  QuiteRss.ini           $XDG_CONFIG_HOME/QuiteRss/QuiteRss.ini
 linking  user-dirs.dirs         $XDG_CONFIG_HOME/user-dirs.dirs

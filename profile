@@ -37,7 +37,7 @@ export PATH=$VITASDK/bin:$PATH
 export PATH="$HOME/scripts:$PATH"
 
 # GTK3 theme
-export GTK_THEME="$(grep gtk-theme-name $HOME/.gtkrc-2.0 | cut -d'"' -f 2)"
+export GTK_THEME=Numix-Dark
 
 
 # XDG --------------------------------------------
@@ -49,12 +49,14 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export ELINKS_CONFDIR="$XDG_CONFIG_HOME/elinks"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export GRIPHOME="$XDG_CONFIG_HOME/grip"
+export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 export IMAPFILTER_HOME="$XDG_CONFIG_HOME/imapfilter"
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/config.py"
 export RANDFILE="$XDG_CACHE_HOME/rnd"
 export VIMDOTDIR="$XDG_CONFIG_HOME/vim"
 export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
 export WINEPREFIX="$XDG_CONFIG_HOME/wine"
+export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 
 # HISTORY FILES --------------
 
