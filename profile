@@ -47,6 +47,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 
 export ELINKS_CONFDIR="$XDG_CONFIG_HOME/elinks"
+export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export GRIPHOME="$XDG_CONFIG_HOME/grip"
 export IMAPFILTER_HOME="$XDG_CONFIG_HOME/imapfilter"
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/config.py"
