@@ -1,6 +1,4 @@
-###############
-### INPUTRC ###
-###############
+# INPUTRC #
 
 # Use Vi mode
 set editing-mode vi
