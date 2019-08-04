@@ -50,7 +50,7 @@ bind Space:magic-space
 # HISTORY {{{1
 
 # Set history file location
-# Look for 'export HISTFILE' in ~/.profile
+# Look for 'export HISTFILE' in $DOTFILES/xdg
 
 # For setting history length see HISTSIZE and HISTFILESIZE
 HISTSIZE=1000

@@ -3,8 +3,14 @@
 
 source $HOME/.bashrc
 
-# If there is display then on tty1 then `startx`
-if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
+# If there is display and variable AUTO_STARTX is set then on tty1 `startx`
+if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]] && [[ ! -z ${AUTO_STARTX+x} ]]; then
+
     sudo /usr/bin/prime-switch
-    exec startx
+
+    if [[ -z $XINITRC ]]; then
+        exec startx
+    else
+        exec startx -x $XINITRC
+    fi
 fi
