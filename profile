@@ -34,4 +34,4 @@ export VITASDK=/usr/local/vitasdk
 export PATH=$VITASDK/bin:$PATH
 
 # GTK3 theme
-export GTK_THEME=Numix-Dark
+export GTK_THEME=Numix-DarkBlue
