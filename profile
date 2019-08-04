@@ -34,4 +34,4 @@ export VITASDK=/usr/local/vitasdk
 export PATH=$VITASDK/bin:$PATH
 
 # GTK3 theme
-export GTK_THEME=Numix-DarkBlue
+export GTK_THEME="$(grep gtk-theme-name $GTK2_RC_FILES | cut -d'"' -f 2)"
