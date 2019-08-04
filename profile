@@ -33,20 +33,20 @@ export GPG_AGENT_INFO
 export VITASDK=/usr/local/vitasdk
 export PATH=$VITASDK/bin:$PATH
 
-# Add ~/scripts to PATH
-export PATH="$HOME/scripts:$PATH"
-
 # GTK3 theme
 export GTK_THEME=Numix-Dark
 
 
 # XDG --------------------------------------------
 
+export XDG_LOCAL_HOME="$HOME/.local"
+
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_DATA_HOME="$XDG_LOCAL_HOME/share"
 
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME/java"
+export ELECTRUMDIR="$XDG_DATA_HOME/electrum"
 export ELINKS_CONFDIR="$XDG_CONFIG_HOME/elinks"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export GRIPHOME="$XDG_CONFIG_HOME/grip"
@@ -58,8 +58,12 @@ export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/config.py"
 export RANDFILE="$XDG_CACHE_HOME/rnd"
 export VIMDOTDIR="$XDG_CONFIG_HOME/vim"
 export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
-export WINEPREFIX="$XDG_CONFIG_HOME/wine"
+export WINEPREFIX="$XDG_DATA_HOME/wine"
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+
+# Append PATH
+export PATH="$XDG_LOCAL_HOME/bin:$PATH"
+export PATH="$XDG_LOCAL_HOME/scripts:$PATH"
 
 # HISTORY FILES --------------
 
