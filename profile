@@ -17,11 +17,11 @@ export MANPAGER="vim -M +MANPAGER -"
 # Set Qt to use GTK theme
 export QT_QPA_PLATFORMTHEME="gtk2"
 
+# GTK3 theme
+export GTK_THEME="$(grep gtk-theme-name $GTK2_RC_FILES | cut -d'"' -f 2)"
+
 # Set default terminal for i3
 export TERMINAL=xterm
-
-# Enable extensions for pass
-export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 
 # Enable automatic `startx`
 export AUTO_STARTX
@@ -32,6 +32,3 @@ export GPG_AGENT_INFO
 # VITASDK
 export VITASDK=/usr/local/vitasdk
 export PATH=$VITASDK/bin:$PATH
-
-# GTK3 theme
-export GTK_THEME="$(grep gtk-theme-name $GTK2_RC_FILES | cut -d'"' -f 2)"

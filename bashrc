@@ -50,7 +50,7 @@ bind Space:magic-space
 # HISTORY {{{1
 
 # Set history file location
-# Look for 'export HISTFILE' in $DOTFILES/xdg
+# Look for 'export HISTFILE' in $XDG_DOTFILES_DIR/_XDG
 
 # For setting history length see HISTSIZE and HISTFILESIZE
 HISTSIZE=1000
