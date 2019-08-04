@@ -33,13 +33,13 @@ linking() {
 linking  bash_profile      $HOME/.bash_profile
 linking  bashrc            $HOME/.bashrc
 linking  profile           $HOME/.profile
-linking  themes            $HOME/.themes
+linking  themes/           $HOME/.themes
 
 linking  user-dirs.dirs    $XDG_CONFIG_HOME/user-dirs.dirs
 linking  zathurarc         $XDG_CONFIG_HOME/zathura/zathurarc
 
-linking  feh               $XDG_CONFIG_HOME/feh
-linking  git               $XDG_CONFIG_HOME/git
+linking  feh/              $XDG_CONFIG_HOME/feh
+linking  git/              $XDG_CONFIG_HOME/git
 linking  i3/               $XDG_CONFIG_HOME/i3
 linking  mpv/              $XDG_CONFIG_HOME/mpv
 
@@ -61,5 +61,5 @@ done
 # linking  mailcap           $HOME/.mailcap
 # linking  muttrc            $XDG_CONFIG_HOME/mutt/muttrc
 # linking  myclirc           $HOME/.myclirc
-# linking  tig               $XDG_CONFIG_HOME/tig
+# linking  tig/              $XDG_CONFIG_HOME/tig
 # linking  tmux.conf         $HOME/.tmux.conf
