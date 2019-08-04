@@ -1,10 +1,7 @@
 # ~/.PROFILE #
 
-# DOTFILES dir
-export DOTFILES="$HOME/dotfiles"
-
-# XDG
-source $DOTFILES/xdg
+# --- XDG ---
+source $HOME/dotfiles/xdg
 
 # Japanese input
 export QT_IM_MODULE=fcitx
@@ -22,9 +19,6 @@ export QT_QPA_PLATFORMTHEME="gtk2"
 
 # Set default terminal for i3
 export TERMINAL=xterm
-
-# Activate 'lesspipe'
-export LESSOPEN
 
 # Enable extensions for pass
 export PASSWORD_STORE_ENABLE_EXTENSIONS=true
