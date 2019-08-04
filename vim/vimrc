@@ -252,9 +252,6 @@ function! WhatHighlightsIt() abort
 endfunction
 
 " MAPPINGS {{{1
-" All modes {{{2
-noremap Q gq
-
 " Normal mode {{{2
 nnoremap ' `
 nnoremap '' ``
