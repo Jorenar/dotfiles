@@ -9,7 +9,7 @@
 
 declare dotfiles_dir="$(dirname $(realpath $0))"
 
-source $dotfiles_dir/xdg
+source $dotfiles_dir/_XDG
 
 declare force_flag=$1
 

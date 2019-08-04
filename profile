@@ -1,7 +1,7 @@
 # ~/.PROFILE #
 
 # --- XDG ---
-source $HOME/dotfiles/xdg
+source $HOME/dotfiles/_XDG
 
 # Japanese input
 export QT_IM_MODULE=fcitx
