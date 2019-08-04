@@ -57,6 +57,10 @@ for cfg in aerc/*; do
     linking "$cfg" $XDG_CONFIG_HOME/aerc/"$(basename $cfg)"
 done
 
+for firefox_profile in $HOME/.mozilla/firefox/*.default-release; do
+    linking userContent.css "$firefox_profile/chrome/userContent.css"
+done
+
 # ------------------------------------------------
 
 # linking  mailcap           $HOME/.mailcap
