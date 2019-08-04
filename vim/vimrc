@@ -25,7 +25,7 @@ colorscheme black_and_white
 autocmd BufReadPost * normal! `"
 
 " Disable continuation of comments to the next line
-autocmd VimEnter * set fo-=c fo-=r fo-=o
+autocmd BufWinEnter * set fo-=c fo-=r fo-=o
 
 " Trim trailing whitespace
 autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
