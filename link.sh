@@ -33,6 +33,7 @@ linking() {
 linking  bash_profile      $HOME/.bash_profile
 linking  bashrc            $HOME/.bashrc
 linking  profile           $HOME/.profile
+linking  ssh_config        $HOME/.ssh/config
 linking  themes/           $HOME/.themes
 
 linking  user-dirs.dirs    $XDG_CONFIG_HOME/user-dirs.dirs
