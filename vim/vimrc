@@ -25,7 +25,7 @@ colorscheme black_and_white
 autocmd BufReadPost * normal! `"
 
 " Disable continuation of comments to the next line
-autocmd BufWinEnter * set fo-=c fo-=r fo-=o
+autocmd BufReadPost * set fo-=c fo-=r fo-=o
 
 " Trim trailing whitespace
 autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
@@ -273,6 +273,7 @@ nnoremap <leader>v ggVG
 nnoremap <S-Tab> <C-w>W
 nnoremap <Tab> <C-w><C-w>
 nnoremap gf <C-w>gf
+nnoremap gx :execute 'silent! !xdg-open "<cfile>" &> /dev/null &' <bar> redraw! <CR>
 nnoremap j gj
 nnoremap k gk
 
