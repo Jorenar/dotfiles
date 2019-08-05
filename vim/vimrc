@@ -277,7 +277,6 @@ nnoremap j gj
 nnoremap k gk
 
 " Insert mode {{{2
-inoremap </ </<C-x><C-o>
 inoremap <C-o> <C-x><C-o>
 
 " Terminal mode {{{2
