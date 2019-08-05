@@ -15,6 +15,17 @@
     editor = vim
     pager = less -FRX
 
+[merge]
+    tool = vimdiff
+    conflictstyle = diff3
+
+[mergetool]
+    prompt = false
+    trustExitCode = true
+
+[init]
+	templatedir = ~/.config/git/template/
+
 [alias]
     aur = !sh -c 'git clone ssh://aur@aur.archlinux.org/\"$1\".git' -
     change-url = !sh -c 'git remote set-url \"$1\"' -
@@ -22,6 +33,3 @@
     del = !sh -c 'git reset HEAD \"$@\"' -
     fast = !sh -c 'git add -A && git commit -m \"$1\" && git push' -
     initial = !sh -c 'git init && git add -A && git commit -m \"Initial commit\" && git remote add origin \"$1\" && git push -u origin master' -
-
-[init]
-	templatedir = ~/.config/git/template/
