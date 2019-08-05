@@ -2,9 +2,8 @@ gtk-cursor-theme-name           = "DMZ-White"
 gtk-font-name                   = "DejaVu Sans 10"
 
 gtk-theme-name                  = "Numix-DarkBlue"
-# remember to change also GTK_THEME variable in ~/.profile
 
-# Numix-Dark needs `gtk-engine-murrine` package
+# Numix-DarkBlue needs `gtk-engine-murrine` package
 
 gtk-button-images               = 0
 gtk-enable-event-sounds         = 0
