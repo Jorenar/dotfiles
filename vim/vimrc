@@ -371,6 +371,7 @@ set statusline+=%w                  " Preview flag
 set statusline+=\ \                 " Separator
 set statusline+=%m                  " Modified flag
 set statusline+=%=                  " Switch to the right side
+set statusline+=[0x%B]\             " Current char hex code
 set statusline+=%l/                 " Current line
 set statusline+=%L                  " Total lines
 set statusline+=\ \:\ %c\           " Current column
