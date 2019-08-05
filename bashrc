@@ -53,8 +53,8 @@ bind Space:magic-space
 # Look for 'export HISTFILE' in $XDG_DOTFILES_DIR/_XDG
 
 # For setting history length see HISTSIZE and HISTFILESIZE
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=500
+HISTFILESIZE=500
 
 # Avoid duplicates
 export HISTCONTROL=ignoredups:erasedups
