@@ -298,6 +298,7 @@ vmap s <nop>
 
 let g:netrw_dirhistmax = 0
 let g:netrw_winsize = -28
+let g:vimsyn_folding="af"
 set backup
 set colorcolumn=+1
 set completeopt=menuone,noinsert,noselect
