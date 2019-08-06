@@ -83,9 +83,9 @@ esac
 
 feh() {
     if [[ -d $1 ]] || [[ -d $2 ]]; then
-        nohup feh $R "$@" > /dev/null 2>&1 &
+        command feh "$@" > /dev/null 2>&1 & disown
     else
-        nohup feh --start-at "$@" > /dev/null 2>&1 &
+        command feh --start-at "$@" > /dev/null 2>&1 & disown
     fi
 }
 
