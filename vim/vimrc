@@ -68,8 +68,8 @@ command! -range -nargs=0 -bang VisSort sil! keepj <line1>,<line2>call <SID>VisSo
 command! -range=% Sort normal :<line1>,<line2>sort i<CR>
 command! Debug normal :Termdebug<CR><C-w>H
 command! ExecCurrentLine normal :.w !sh<CR>
-command! GetPlugins call GetPlugins()
-command! Make call Make()
+command! GetPlugins call s:GetPlugins()
+command! Make call s:Make()
 command! SortBlock :normal! vip:sort i<CR>
 
 " COMPILE AND RUN {{{1
@@ -159,7 +159,7 @@ function! Color_demo() abort
 endfunction
 
 " GetPlugins - install and update plugins {{{2
-function! GetPlugins()
+function! s:GetPlugins()
     for plugin in g:plugins
         let plugin_name = substitute(plugin, ".*\/", "", "")
         let plugin_dir = g:pack_path."/opt/".plugin_name
@@ -209,7 +209,7 @@ function! s:FillLine(str, ...) abort
 endfunction
 
 " Make {{{2
-function! Make() abort
+function! s:Make() abort
     let b:makeprg_temp = &makeprg
     let &l:makeprg = "make $*"
     make
