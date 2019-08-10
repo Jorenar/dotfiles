@@ -93,18 +93,18 @@ let s:makeprg_for_filetype = {
             \ "cpp"      : "g++ -std=gnu++11 -g % -o %< && ./%<",
             \ "go"       : "go build && ./%<",
             \ "haskell"  : "ghc -o %< %; rm %<.hi %<.o && ./%<",
-            \ "html"     : "tidy -quiet -errors --gnu-emacs yes %:S; firefox -new-window %",
+            \ "html"     : "tidy -quiet -errors --gnu-emacs yes %:S; firefox -new-window % &",
             \ "lisp"     : "clisp %",
             \ "lua"      : "lua %",
             \ "markdown" : "grip --quiet -b %",
             \ "nasm"     : "yasm -f elf64 % && ld -g -o %< %<.o && rm %<.o && ./%<",
             \ "perl"     : "perl %",
             \ "plaintex" : "pdftex -file-line-error -interaction=nonstopmode % && zathura %<.pdf",
-            \ "python"   : "python3 %",
+            \ "python"   : "python %",
             \ "rust"     : "rustc % && ./%<",
             \ "sh"       : "chmod +x %:p && %:p",
             \ "tex"      : "pdflatex -file-line-error -interaction=nonstopmode % && zathura %<.pdf",
-            \ "xhtml"    : "tidy -asxhtml -quiet -errors --gnu-emacs yes %:S; firefox -new-window %",
+            \ "xhtml"    : "tidy -asxhtml -quiet -errors --gnu-emacs yes %:S; firefox -new-window % &",
             \}
 
 " FORMATTING {{{1
