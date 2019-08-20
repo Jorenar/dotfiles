@@ -36,8 +36,8 @@ autocmd filetype c,cpp setlocal path+=/usr/include/**
 " Set tags file for C/C++
 autocmd filetype c,cpp setlocal tags+=$XDG_DATA_HOME/vim/tags/include.tags
 
-" Set 'foldmethod' to 'syntax' for C/C++/Java
-autocmd filetype c,cpp,java setlocal foldmethod=syntax
+" Set 'foldmethod' to 'syntax' for C/C++/Java/HTML
+autocmd filetype c,cpp,java,html setlocal foldmethod=syntax
 
 " shell script folding
 autocmd filetype sh setlocal foldmethod=syntax | let g:sh_fold_enabled=5
