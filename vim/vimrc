@@ -36,11 +36,8 @@ autocmd filetype c,cpp setlocal path+=/usr/include/**
 " Set tags file for C/C++
 autocmd filetype c,cpp setlocal tags+=$XDG_DATA_HOME/vim/tags/include.tags
 
-" Set 'foldmethod' to 'syntax' for C/C++/Java/HTML
-autocmd filetype c,cpp,java,html setlocal foldmethod=syntax
-
-" shell script folding
-autocmd filetype sh setlocal foldmethod=syntax | let g:sh_fold_enabled=5
+" Set 'foldmethod' to 'syntax' for C/C++/Java/HTML/sh
+autocmd filetype c,cpp,java,html,sh setlocal foldmethod=syntax
 
 " Quit QuickFix window along with source file window
 autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix" | q | endif
@@ -308,18 +305,15 @@ vmap s <nop>
 
 let g:netrw_dirhistmax = 0
 let g:netrw_winsize = -28
-let g:vimsyn_folding="af"
 set backup
 set colorcolumn=+1
 set completeopt=menuone,noinsert,noselect
-set foldmethod=indent
 set hlsearch
 set ignorecase
 set incsearch
 set laststatus=2
 set linebreak
 set modeline
-set nofoldenable
 set nomodelineexpr
 set nowrap
 set number
@@ -333,6 +327,12 @@ set splitright
 set title
 set undofile
 set wildmenu
+
+let g:javaScript_fold=1
+let g:sh_fold_enabled=5
+let g:vimsyn_folding="af"
+set foldmethod=indent
+set nofoldenable
 
 set dictionary+=/usr/share/dict/polish
 set dictionary+=/usr/share/dict/words
