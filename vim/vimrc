@@ -65,6 +65,7 @@ command! -range -nargs=0 -bang VisSort sil! keepj <line1>,<line2>call <SID>VisSo
 command! -range=% Sort normal :<line1>,<line2>sort i<CR>
 command! Debug normal :Termdebug<CR><C-w>H
 command! ExecCurrentLine normal :.w !sh<CR>
+command! FileSize echo getfsize(expand(@%))
 command! GetPlugins call s:GetPlugins()
 command! Make call s:Make()
 command! SortBlock :normal! vip:sort i<CR>
