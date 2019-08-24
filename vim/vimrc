@@ -22,7 +22,7 @@ colorscheme black_and_white
 " AUTOCMDS {{{1
 
 " Open file at the last known position
-autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | execute "normal! g`\"" | endif
+autocmd BufReadPost * if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit' | exe "normal! g`\"" | endif
 
 " Disable continuation of comments to the next line
 autocmd BufReadPost * set fo-=c fo-=r fo-=o
@@ -320,6 +320,7 @@ set nowrap
 set number
 set omnifunc=syntaxcomplete#Complete
 set scrolloff=5
+set sessionoptions=blank,buffers,folds,tabpages,winsize,terminal
 set shortmess+=I
 set showcmd
 set smartcase
