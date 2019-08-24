@@ -187,9 +187,9 @@ endfunction
 function! FileSize() abort
     let bytes = getfsize(expand(@%))
     if (bytes >= 1024*1024)
-        return '~' . float2nr(round(bytes/(1024*1024.0))) . ' MiB'
+        return printf('~%.1f MiB', bytes/(1024*1024.0))
     elseif (bytes >= 1024)
-        return '~' . float2nr(round(bytes/1024.0)) . ' KiB'
+        return printf('~%.1f KiB', bytes/1024.0)
     elseif (bytes <= 0)
         return '0 B'
     else
