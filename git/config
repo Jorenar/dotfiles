@@ -14,6 +14,7 @@
 [core]
     editor = vim
     pager = less -FRX
+    excludesfile = ~/.config/git/ignore
 
 [merge]
     tool = vimdiff
@@ -24,7 +25,7 @@
     trustExitCode = true
 
 [init]
-	templatedir = ~/.config/git/template/
+    templatedir = ~/.config/git/template/
 
 [alias]
     aur = !sh -c 'git clone ssh://aur@aur.archlinux.org/\"$1\".git' -
