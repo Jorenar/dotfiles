@@ -22,7 +22,7 @@ colorscheme black_and_white
 " AUTOCMDS {{{1
 
 " Open file at the last known position
-autocmd BufReadPost * normal! `"
+autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | execute "normal! g`\"" | endif
 
 " Disable continuation of comments to the next line
 autocmd BufReadPost * set fo-=c fo-=r fo-=o
