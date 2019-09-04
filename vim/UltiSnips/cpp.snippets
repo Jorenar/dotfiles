@@ -1,3 +1,5 @@
+extends c, obj-c
+
 snippet beginend "$1.begin(), $1.end()"
 ${1:v}.begin(), $1.end()
 endsnippet
@@ -22,15 +24,4 @@ int main()
 	std::cout << "Hello World" << std::endl;
 	return 0;
 }
-endsnippet
-
-snippet main
-int main(int argc, char *argv[])
-{
-
-}
-endsnippet
-
-snippet multi_macro
-#define TEST(${1:variables}) do { ${2:code} } while(0) // never add ';' after "while(0)"
 endsnippet
