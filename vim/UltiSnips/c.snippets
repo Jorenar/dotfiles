@@ -28,3 +28,16 @@ endsnippet
 snippet char_for
 for (char *${1:x} = ${2:str}; *$1; ++$1)
 endsnippet
+
+snippet str_count_unique
+int count_unique(char *str)
+{
+    int count = 0;
+    while (*str != '\0') {
+        if (!strchr(str + 1, *str))
+            count++;
+        str++;
+    }
+    return count;
+}
+endsnippet
