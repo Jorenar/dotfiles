@@ -309,6 +309,7 @@ let g:netrw_winsize = -28
 set backup
 set colorcolumn=+1
 set completeopt=menuone,noinsert,noselect
+set cursorlineopt=screenline
 set hlsearch
 set ignorecase
 set incsearch
