@@ -1,7 +1,7 @@
 #!/bin/bash
 
-battery_time=$(upower -i $(upower -e | grep battery) | grep "time to empty")
-battery_time=$(echo ${battery_time//"time to empty:"/})
+#battery_time=$(upower -i $(upower -e | grep battery) | grep "time to empty")
+#battery_time=$(echo ${battery_time//"time to empty:"/})
 
 battery=$(acpi)
 battery_percentage=$( echo $battery | sed 's/.*[^0-9]\([0-9][0-9]*\%\).*/\1/g')

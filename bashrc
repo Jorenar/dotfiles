@@ -117,4 +117,5 @@ source $HOME/.profile
 # PROMPT
 PS1='\[\e[1m\]\u@\h:\[\033[90m\]\w\[\033[0m\]\[\033[1m\]\$\[\e[0m\] '
 
+
 # vim: fdm=marker foldenable:

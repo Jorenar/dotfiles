@@ -3,5 +3,5 @@
 if [[ "$(glxinfo | grep "OpenGL vendor")" =~ .*Intel.* ]]; then
     echo "INTEL"
 else
-    echo "NVIDIA ($(nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader)°C)"
+    echo "NVIDIA"
 fi
