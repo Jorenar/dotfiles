@@ -1,15 +1,10 @@
 # FEH - KEY BINDINGS #
 
-
-# UNBINDING --------------------------------------
+# UNBINDING {{{1
 
 save_filelist
 
---------------------------------------------------------------------------------
-
-# ----------------------------
-# Menu
-# ----------------------------
+# Menu {{{1
 
 menu_up k
 menu_down j
@@ -18,10 +13,7 @@ menu_child l
 menu_select Return space
 menu_close Escape
 
-
-# ----------------------------
-# Navigation
-# ----------------------------
+# Navigation {{{1
 
 action_0 Return
 
@@ -42,10 +34,7 @@ jump_back C-p
 
 quit q
 
-
-# ----------------------------
-# Image management
-# ----------------------------
+# Image management {{{1
 
 save_image S
 
@@ -60,10 +49,7 @@ orient_3 less
 
 size_to_image s
 
-
-# ----------------------------
-# Toggle options
-# ----------------------------
+# Toggle options {{{1
 
 toggle_actions a
 toggle_aliasing A
@@ -77,10 +63,7 @@ toggle_menu m
 toggle_pointer o
 toggle_fullscreen f
 
-
-# ----------------------------
-# Scroll
-# ----------------------------
+# Scroll {{{1
 
 scroll_left h
 scroll_down j
@@ -92,11 +75,10 @@ scroll_down_page C-j
 scroll_up_page C-k
 scroll_right_page C-l
 
-
-# ----------------------------
-# Zoom
-# ----------------------------
+# Zoom {{{1
 
 zoom_default equal
 zoom_fit s
 zoom_fill exclam
+
+# vim: fen fdm=marker
