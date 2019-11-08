@@ -11,13 +11,13 @@ syntax enable
 let g:pack_path=$XDG_DATA_HOME.'/vim/pack/plugins/'
 set backupdir=$XDG_DATA_HOME/vim/backup
 set directory=$XDG_CACHE_HOME/vim/swap
-set packpath+=$XDG_DATA_HOME/vim
+set packpath^=$XDG_DATA_HOME/vim
 set runtimepath+=$XDG_CONFIG_HOME/vim,$XDG_CONFIG_HOME/vim/after
 set undodir=$XDG_CACHE_HOME/vim/undo
 set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
 
 " Set colorscheme
-colorscheme black_and_white
+colorscheme darkness
 
 " AUTOCMDS {{{1
 
@@ -127,7 +127,7 @@ let s:tab_width_for_filetype = {
             \}
 
 let s:formatprg_for_filetype = {
-            \ "c,cpp"      : "astyle --style=kr -s4 -N -S -xG -xU -f -k3 -xj -p",
+            \ "c,cpp"      : "astyle --style=kr -s4 -N -S -xG -xU -k3 -p",
             \ "css"        : "css-beautify -s 2 --space-around-combinator",
             \ "go"         : "gofmt",
             \ "html"       : "tidy -q -w -i --show-warnings 0 --show-errors 0 --tidy-mark no",
@@ -165,10 +165,8 @@ function! s:GetPlugins()
         let cmd = "git clone ".github_url." ".plugin_dir." 2> /dev/null || (cd ".plugin_dir." ; git pull)"
         call system(cmd)
         execute "packadd ".plugin_name
-        if !empty(glob(plugin_dir."/doc"))
-            execute "helptags ".plugin_dir."/doc"
-        endif
     endfor
+    silent! helptags ALL
     redraw!
     echo "DONE"
 endfunction
@@ -216,10 +214,10 @@ endfunction
 
 " ToggleColorscheme {{{2
 function! ToggleColorscheme() abort
-    if (g:colors_name == "black_and_white")
+    if (g:colors_name == "darkness")
         colorscheme vim-monokai-tasty
     else
-        colorscheme black_and_white
+        colorscheme darkness
     endif
 endfunction
 " VisSort - sorts based on visual-block selected portion of the lines {{{2
@@ -345,11 +343,12 @@ set tags+=.git/tags;/
 
 " Run :GetPlugins to install/update
 let g:plugins = [
+            \ "Jorengarenar/pseudoClip",
+            \ "Jorengarenar/ViewPort",
+            \ "Jorengarenar/vim-darkness",
             \ "mbbill/undotree",
             \ "sirver/ultisnips",
             \ "tpope/vim-surround",
-            \ "Jorengarenar/ViewPort",
-            \ "Jorengarenar/vim-colors-B_W",
             \]
 
 " VARIABLES
