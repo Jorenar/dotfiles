@@ -212,14 +212,6 @@ function! s:Make() abort
     let &l:makeprg = b:makeprg_temp
 endfunction
 
-" ToggleColorscheme {{{2
-function! ToggleColorscheme() abort
-    if (g:colors_name == "darkness")
-        colorscheme vim-monokai-tasty
-    else
-        colorscheme darkness
-    endif
-endfunction
 " VisSort - sorts based on visual-block selected portion of the lines {{{2
 function! s:VisSort(isnmbr) range abort
     if visualmode() != "\<c-v>"
@@ -263,9 +255,9 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+nnoremap <expr> <F5> g:colors_name == "darkness" ? ":colo vim-monokai-tasty\<CR>" : ":colo darkness\<CR>"
 nnoremap <F3> :set cursorline! cursorcolumn!<CR>
 nnoremap <F4> :set virtualedit=all<CR>
-nnoremap <F5> :call ToggleColorscheme()<CR>
 nnoremap <F9> :w <bar> make<CR>
 nnoremap <leader>" :vert term<CR>
 nnoremap <leader>= gg=G``
