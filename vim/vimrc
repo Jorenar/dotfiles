@@ -258,9 +258,9 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+nnoremap <expr> <F4> &virtualedit == "all" ? ":set virtualedit=\<CR>" : ":set virtualedit=all\<CR>"
 nnoremap <expr> <F5> g:colors_name == "darkness" ? ":colo vim-monokai-tasty\<CR>" : ":colo darkness\<CR>"
 nnoremap <F3> :set cursorline! cursorcolumn!<CR>
-nnoremap <F4> :set virtualedit=all<CR>
 nnoremap <F9> :w <bar> make<CR>
 nnoremap <leader>" :vert term<CR>
 nnoremap <leader>= gg=G``
@@ -277,8 +277,6 @@ nnoremap gx :execute 'silent! !xdg-open "<cfile>" &> /dev/null &' <bar> redraw! 
 nnoremap j gj
 nnoremap k gk
 
-" Insert mode {{{2
-inoremap <C-o> <C-x><C-o>
 
 " Terminal mode {{{2
 tnoremap <C-h> <C-\><C-N><C-w>h
