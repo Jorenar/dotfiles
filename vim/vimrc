@@ -36,6 +36,9 @@ autocmd filetype c,cpp setlocal path+=/usr/include/**
 " Set tags file for C/C++
 autocmd filetype c,cpp setlocal tags+=$XDG_DATA_HOME/vim/tags/include.tags
 
+" Set .h to be of C filetype
+autocmd BufRead,BufNewFile *.h set filetype=c
+
 " Set 'foldmethod' to 'syntax'
 autocmd filetype c,cpp,css,html,java,javascript,sh setlocal foldmethod=syntax
 
