@@ -337,7 +337,9 @@ set nofoldenable
 set dictionary+=/usr/share/dict/polish
 set dictionary+=/usr/share/dict/words
 set path=**,./
+
 set tags+=.git/tags;/
+set tags+=$XDG_DATA_HOME/vim/tags/systags
 
 " PLUGINS {{{1
 
