@@ -58,7 +58,7 @@ autocmd filetype qf noremap <buffer> g- :colder<CR>
 autocmd filetype qf noremap <buffer> g+ :cnewer<CR>
 
 " Terminal options
-autocmd TerminalOpen * call <SID>TerminalOptions()
+autocmd TerminalOpen * setlocal nonumber | autocmd BufEnter <buffer> silent! normal i
 
 " COMMANDS {{{1
 
@@ -218,11 +218,6 @@ function! s:Make() abort
     let &l:makeprg = b:makeprg_temp
 endfunction
 
-" TerminalOptions {{{2
-function! s:TerminalOptions()
-    setlocal nonumber
-    autocmd BufEnter <buffer> silent! normal i
-endfunction
 
 " VisSort - sorts based on visual-block selected portion of the lines {{{2
 function! s:VisSort(isnmbr) range abort
