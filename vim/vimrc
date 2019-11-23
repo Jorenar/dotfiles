@@ -302,6 +302,7 @@ vmap s <nop>
 
 " OPTIONS {{{1
 
+let &t_TI="" | let &t_TE="" " Disable modifyOtherKeys
 let g:netrw_dirhistmax = 0
 let g:netrw_winsize = -28
 set backup
