@@ -57,6 +57,9 @@ autocmd QuickFixCmdPost    l* nested lwindow
 autocmd filetype qf noremap <buffer> g- :colder<CR>
 autocmd filetype qf noremap <buffer> g+ :cnewer<CR>
 
+" Terminal options
+autocmd TerminalOpen * call <SID>TerminalOptions()
+
 " COMMANDS {{{1
 
 command! -nargs=* GrepRename call <SID>GrepRename(<f-args>)
@@ -66,12 +69,12 @@ command! -nargs=+ Spelling execute 'setlocal spell spelllang=<args>'
 command! -range -nargs=+ Align <line1>,<line2>!column -Lts'<args>' -o'<args>'
 command! -range -nargs=0 -bang VisSort sil! keepj <line1>,<line2>call <SID>VisSort(<bang>0)
 command! -range=% Sort normal :<line1>,<line2>sort i<CR>
-command! Debug normal :Termdebug<CR><C-w>H
 command! ExecCurrentLine normal :.w !sh<CR>
 command! FileSize echo getfsize(expand(@%))
 command! GetPlugins call s:GetPlugins()
 command! Make call s:Make()
 command! SortBlock :normal! vip:sort i<CR>
+command! -nargs=* TermDebug normal :Termdebug <args><CR><C-w>K<C-w>j<C-w>L
 
 " COMPILE AND RUN {{{1
 
@@ -215,6 +218,12 @@ function! s:Make() abort
     let &l:makeprg = b:makeprg_temp
 endfunction
 
+" TerminalOptions {{{2
+function! s:TerminalOptions()
+    setlocal nonumber
+    autocmd BufEnter <buffer> silent! normal i
+endfunction
+
 " VisSort - sorts based on visual-block selected portion of the lines {{{2
 function! s:VisSort(isnmbr) range abort
     if visualmode() != "\<c-v>"
@@ -277,13 +286,11 @@ nnoremap gx :execute 'silent! !xdg-open "<cfile>" &> /dev/null &' <bar> redraw! 
 nnoremap j gj
 nnoremap k gk
 
-
 " Terminal mode {{{2
-tnoremap <C-h> <C-\><C-N><C-w>h
-tnoremap <C-j> <C-\><C-N><C-w>j
-tnoremap <C-k> <C-\><C-N><C-w>k
-tnoremap <C-l> <C-\><C-N><C-w>l
-tnoremap <Esc> <C-\><C-n>
+tnoremap <C-h> <C-\><C-n><C-w>h
+tnoremap <C-j> <C-\><C-n><C-w>j
+tnoremap <C-k> <C-\><C-n><C-w>k
+tnoremap <C-l> <C-\><C-n><C-w>l
 
 " Visual mode {{{2
 xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
