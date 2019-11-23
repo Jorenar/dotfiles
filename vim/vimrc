@@ -30,17 +30,11 @@ autocmd BufReadPost * set fo-=c fo-=r fo-=o
 " Trim trailing whitespace
 autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
 
-" Set PATH for C/C++
-autocmd filetype c,cpp setlocal path+=/usr/include/**
-
-" Set tags file for C/C++
-autocmd filetype c,cpp setlocal tags+=$XDG_DATA_HOME/vim/tags/include.tags
-
 " Set .h to be of C filetype
 autocmd BufRead,BufNewFile *.h set filetype=c
 
 " Set 'foldmethod' to 'syntax'
-autocmd filetype c,cpp,css,html,java,javascript,sh setlocal foldmethod=syntax
+autocmd filetype css,html,java,javascript,sh setlocal foldmethod=syntax
 
 " Quit QuickFix window along with source file window
 autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix" | q | endif
@@ -333,9 +327,7 @@ set nofoldenable
 set dictionary+=/usr/share/dict/polish
 set dictionary+=/usr/share/dict/words
 set path=**,./
-
 set tags+=.git/tags;/
-set tags+=$XDG_DATA_HOME/vim/tags/systags
 
 " PLUGINS {{{1
 
