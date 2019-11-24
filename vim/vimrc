@@ -289,7 +289,6 @@ vmap s <nop>
 
 " OPTIONS {{{1
 
-let &t_TI="" | let &t_TE="" " Disable modifyOtherKeys
 let g:netrw_dirhistmax = 0
 let g:netrw_winsize = -28
 set backup
@@ -313,6 +312,7 @@ set showcmd
 set smartcase
 set splitbelow
 set splitright
+set t_TE= t_TI= " Disable modifyOtherKeys
 set title
 set undofile
 set wildmenu
