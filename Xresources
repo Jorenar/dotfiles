@@ -8,7 +8,7 @@ XTerm*cursorBlink: True
 
 ! Fonts and Encoding
 XTerm*faceName: Dejavu Sans Mono:style=book
-XTerm.vt100.faceNameDoublesize: WenQuanYi Zen Hei Mono
+XTerm*faceNameDoublesize: WenQuanYi Zen Hei Mono
 XTerm*faceSize: 10
 XTerm*locale: True
 XTerm*preeditType: Root
