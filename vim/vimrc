@@ -63,6 +63,7 @@ command! -nargs=+ Spelling execute 'setlocal spell spelllang=<args>'
 command! -range -nargs=+ Align <line1>,<line2>!column -Lts'<args>' -o'<args>'
 command! -range -nargs=0 -bang VisSort sil! keepj <line1>,<line2>call <SID>VisSort(<bang>0)
 command! -range=% Sort normal :<line1>,<line2>sort i<CR>
+command! UndoList call UndoList()
 command! ExecCurrentLine normal :.w !sh<CR>
 command! FileSize echo getfsize(expand(@%))
 command! GetPlugins call s:GetPlugins()
@@ -142,7 +143,7 @@ let s:formatprg_for_filetype = {
 
 " FUNCTIONS {{{1
 " Color_demo - preview of Vim 256 colors {{{2
-function! Color_demo() abort
+function! ColorDemo() abort
     30 vnew
     setlocal nonumber buftype=nofile bufhidden=hide noswapfile
     setlocal statusline=[%n]
@@ -212,6 +213,27 @@ function! s:Make() abort
     let &l:makeprg = b:makeprg_temp
 endfunction
 
+" UndoList {{{2
+function! UndoList() abort
+    let name = " ".expand('%')."\n\n"
+    let parent0 = bufnr()
+    let list = execute('undolist')
+    silent! bdelete! UndoList
+    silent! topleft 30 vnew UndoList
+    let b:parent = parent0
+    setlocal nonumber buftype=nofile bufhidden=hide noswapfile
+    setlocal statusline=\ UndoList
+    put=list
+    g/^/m3 | noh
+    3,$norm elde
+    silent! 3,$s/\(.*\ \ \)\@!\s\d*$//g | 3s/saved
+    silent! %s/\s\+$//e
+    normal ggdj
+    put! =name
+    setlocal nomodifiable
+    autocmd WinEnter <buffer> if winnr('$') == 1 | q | endif
+    nnoremap <buffer> <CR> :exec winbufnr(b:parent)."wincmd w <bar> undo ".expand('<cword>')<CR>
+endfunction
 
 " VisSort - sorts based on visual-block selected portion of the lines {{{2
 function! s:VisSort(isnmbr) range abort
@@ -334,7 +356,6 @@ let g:plugins = [
             \ "Jorengarenar/pseudoClip",
             \ "Jorengarenar/ViewPort",
             \ "Jorengarenar/vim-darkness",
-            \ "mbbill/undotree",
             \ "sirver/ultisnips",
             \ "tpope/vim-surround",
             \]
@@ -344,13 +365,10 @@ let g:UltiSnipsEditSplit          = "context"
 let g:UltiSnipsExpandTrigger      = "<C-j>"
 let g:UltiSnipsListSnippets       = "<C-k>"
 let g:UltiSnipsSnippetDirectories = [$VIMDOTDIR.'/UltiSnips']
-let g:undotree_SetFocusWhenToggle = 1
-let g:undotree_ShortIndicators    = 1
 let g:viewport_split_vertical     = 1
 
 " MAPPINGS
 nmap s ys
-noremap <leader><F1> :UndotreeToggle<CR>
 vmap s S
 
 " STATUS LINE {{{1
