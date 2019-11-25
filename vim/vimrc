@@ -57,19 +57,19 @@ autocmd TerminalOpen * setlocal nonumber | autocmd BufEnter <buffer> silent! nor
 " COMMANDS {{{1
 
 command! -nargs=* GrepRename call <SID>GrepRename(<f-args>)
+command! -nargs=* TermDebug normal :Termdebug <args><CR><C-w>K<C-w>j<C-w>L
 command! -nargs=+ FillLine call <SID>FillLine(<f-args>)
 command! -nargs=+ Grep execute "vimgrep /<args>/j ** | :copen"
 command! -nargs=+ Spelling execute 'setlocal spell spelllang=<args>'
 command! -range -nargs=+ Align <line1>,<line2>!column -Lts'<args>' -o'<args>'
 command! -range -nargs=0 -bang VisSort sil! keepj <line1>,<line2>call <SID>VisSort(<bang>0)
 command! -range=% Sort normal :<line1>,<line2>sort i<CR>
-command! UndoList call UndoList()
 command! ExecCurrentLine normal :.w !sh<CR>
 command! FileSize echo getfsize(expand(@%))
 command! GetPlugins call s:GetPlugins()
 command! Make call s:Make()
 command! SortBlock :normal! vip:sort i<CR>
-command! -nargs=* TermDebug normal :Termdebug <args><CR><C-w>K<C-w>j<C-w>L
+command! UndoList call s:UndoList()
 
 " COMPILE AND RUN {{{1
 
@@ -142,7 +142,7 @@ let s:formatprg_for_filetype = {
             \}
 
 " FUNCTIONS {{{1
-" Color_demo - preview of Vim 256 colors {{{2
+" ColorDemo - preview of Vim 256 colors {{{2
 function! ColorDemo() abort
     30 vnew
     setlocal nonumber buftype=nofile bufhidden=hide noswapfile
@@ -214,7 +214,7 @@ function! s:Make() abort
 endfunction
 
 " UndoList {{{2
-function! UndoList() abort
+function! s:UndoList() abort
     let name = " ".expand('%')."\n\n"
     let parent0 = bufnr()
     let list = execute('undolist')
@@ -314,7 +314,7 @@ vmap s <nop>
 let g:netrw_dirhistmax = 0
 let g:netrw_winsize = -28
 set backup
-set colorcolumn=+1
+set colorcolumn=+1,+21
 set completeopt=menuone,noinsert,noselect
 set cursorlineopt=screenline
 set hlsearch
