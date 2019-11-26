@@ -31,6 +31,7 @@ export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/config.py"
 export RANDFILE="$XDG_CACHE_HOME/rnd"
 export VIMDOTDIR="$XDG_CONFIG_HOME/vim"
 export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
+export WEECHAT_HOME="$XDG_CONFIG_HOME/weechat"
 export WINEPREFIX="$XDG_DATA_HOME/wine"
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
