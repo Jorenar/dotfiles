@@ -221,6 +221,7 @@ function! s:UndoList() abort
     silent! bdelete! UndoList
     silent! topleft 30 vnew UndoList
     let b:parent = parent0
+    let b:pattern = '^\s*\(\d*\)\s'
     setlocal nonumber buftype=nofile bufhidden=hide noswapfile
     setlocal statusline=\ UndoList
     put=list
@@ -232,7 +233,7 @@ function! s:UndoList() abort
     put! =name
     setlocal nomodifiable
     autocmd WinEnter <buffer> if winnr('$') == 1 | q | endif
-    nnoremap <buffer> <CR> :exec winbufnr(b:parent)."wincmd w <bar> undo ".expand('<cword>')<CR>
+    nnoremap <buffer> <CR> :exec winbufnr(b:parent)."wincmd w <bar> undo ".matchstr(getline('.'), b:pattern)<CR>
 endfunction
 
 " VisSort - sorts based on visual-block selected portion of the lines {{{2
