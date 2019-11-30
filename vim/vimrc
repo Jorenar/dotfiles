@@ -8,7 +8,6 @@ set nocompatible
 syntax enable
 
 " XDG support
-let g:pack_path=$XDG_DATA_HOME.'/vim/pack/plugins/'
 set backupdir=$XDG_DATA_HOME/vim/backup
 set directory=$XDG_CACHE_HOME/vim/swap
 set packpath^=$XDG_DATA_HOME/vim
@@ -52,7 +51,7 @@ autocmd filetype qf noremap <buffer> g- :colder<CR>
 autocmd filetype qf noremap <buffer> g+ :cnewer<CR>
 
 " Terminal options
-autocmd TerminalOpen * setlocal nonumber | autocmd BufEnter <buffer> silent! normal i
+autocmd TerminalWinOpen * setlocal nonumber | autocmd WinEnter <buffer> silent! normal i
 
 " COMMANDS {{{1
 
@@ -66,7 +65,6 @@ command! -range -nargs=0 -bang VisSort sil! keepj <line1>,<line2>call <SID>VisSo
 command! -range=% Sort normal :<line1>,<line2>sort i<CR>
 command! ExecCurrentLine normal :.w !sh<CR>
 command! FileSize echo getfsize(expand(@%))
-command! GetPlugins call s:GetPlugins()
 command! Make call s:Make()
 command! SortBlock :normal! vip:sort i<CR>
 command! UndoList call s:UndoList()
@@ -155,21 +153,6 @@ function! ColorDemo() abort
         call append(0, 'ctermbg='.num.':....')
         let num = num - 1
     endwhile
-endfunction
-
-" GetPlugins - install and update plugins {{{2
-function! s:GetPlugins()
-    for plugin in g:plugins
-        let plugin_name = substitute(plugin, ".*\/", "", "")
-        let plugin_dir = g:pack_path."/opt/".plugin_name
-        let github_url = "https://github.com/".plugin
-        let cmd = "git clone ".github_url." ".plugin_dir." 2> /dev/null || (cd ".plugin_dir." ; git pull)"
-        call system(cmd)
-        execute "packadd ".plugin_name
-    endfor
-    silent! helptags ALL
-    redraw!
-    echo "DONE"
 endfunction
 
 " GrepRename - replace through whole project {{{2
@@ -352,14 +335,13 @@ set tags+=.git/tags;/
 
 " PLUGINS {{{1
 
-" Run :GetPlugins to install/update
-let g:plugins = [
-            \ "Jorengarenar/pseudoClip",
-            \ "Jorengarenar/ViewPort",
-            \ "Jorengarenar/vim-darkness",
-            \ "sirver/ultisnips",
-            \ "tpope/vim-surround",
-            \]
+packadd minPlug
+
+MinPlug Jorengarenar/pseudoClip
+MinPlug Jorengarenar/ViewPort
+MinPlug Jorengarenar/vim-darkness
+MinPlug sirver/ultisnips
+MinPlug tpope/vim-surround
 
 " VARIABLES
 let g:UltiSnipsEditSplit          = "context"
@@ -401,8 +383,7 @@ set statusline+=\ \:\ %c\           " Current column
 packadd termdebug
 packadd matchit
 
-" Create backup and plugin dirs
-call mkdir(g:pack_path."/opt", 'p')
+" Create backup
 call mkdir(&backupdir, 'p')
 
 " Applying rules from arrays/dictionaries {{{
@@ -418,7 +399,6 @@ for [ft, mp] in items(s:makeprg_for_filetype)
                     \ <bar> if empty(filter(getqflist(), 'v:val.valid'))
                     \ <bar> execute 'vertical terminal ./%<' <bar> endif<CR>
     endif
-
 endfor
 
 for [ft, fp] in items(s:formatprg_for_filetype)
@@ -427,10 +407,6 @@ endfor
 
 for [ft, width] in items(s:tab_width_for_filetype)
     execute "autocmd filetype ".ft." setlocal tabstop=".width." shiftwidth=".width." softtabstop=".width
-endfor
-
-for plugin in g:plugins
-    execute "silent! packadd! ".substitute(plugin, ".*\/", "", "")
 endfor
 
 " }}}
