@@ -341,18 +341,15 @@ endif
 packadd minPlug
 
 MinPlug Jorengarenar/fauxClip
-MinPlug Jorengarenar/ViewPort
 MinPlug Jorengarenar/vim-darkness
 MinPlug sirver/ultisnips
 MinPlug tpope/vim-surround
 
 " VARIABLES
-let g:fauxClip_enable_aliases     = 1
 let g:UltiSnipsEditSplit          = "context"
 let g:UltiSnipsExpandTrigger      = "<C-j>"
 let g:UltiSnipsListSnippets       = "<C-k>"
 let g:UltiSnipsSnippetDirectories = [$VIMDOTDIR.'/UltiSnips']
-let g:viewport_split_vertical     = 1
 
 " MAPPINGS
 nmap s ys
