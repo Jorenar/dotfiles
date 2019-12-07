@@ -86,7 +86,7 @@ let s:compiler_for_filetype = {
 let s:makeprg_for_filetype = {
             \ "asm"      : [ 1, "as -o %<.o % && ld -s -o %< %<.o && rm %<.o" ],
             \ "basic"    : [ 0, "vintbas %" ],
-            \ "c"        : [ 1, "gcc -std=gnu18 -g % -o %<" ],
+            \ "c"        : [ 1, "gcc -std=gnu11 -g % -o %<" ],
             \ "cpp"      : [ 1, "g++ -std=gnu++11 -g % -o %<" ],
             \ "go"       : [ 1, "go build" ],
             \ "haskell"  : [ 1, "ghc -o %< %; rm %<.hi %<.o" ],
