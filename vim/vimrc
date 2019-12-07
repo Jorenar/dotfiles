@@ -333,6 +333,11 @@ set tags+=.git/tags;/
 
 " PLUGINS {{{1
 
+if empty(glob(substitute(&packpath, ",.*", "/pack/plugins/opt/minPlug", "")))
+    call system("git clone --depth=1 https://github.com/Jorengarenar/minPlug ".substitute(&packpath, ",.*", "/pack/plugins/opt/minPlug", ""))
+    autocmd VimEnter * silent! MinPlugInstall | echo "minPlug: INSTALLED"
+endif
+
 packadd minPlug
 
 MinPlug Jorengarenar/pseudoClip
