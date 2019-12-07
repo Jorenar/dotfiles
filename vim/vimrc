@@ -142,16 +142,14 @@ let s:formatprg_for_filetype = {
 " FUNCTIONS {{{1
 " ColorDemo - preview of Vim 256 colors {{{2
 function! ColorDemo() abort
-    30 vnew
-    setlocal nonumber buftype=nofile bufhidden=hide noswapfile
-    setlocal statusline=[%n]
-    setlocal statusline+=\ Color\ demo
+    0 vnew
+    setlocal nonumber buftype=nofile bufhidden=hide noswapfile statusline=\ Color\ demo
     let num = 255
     while num >= 0
-        execute 'hi col_'.num.' ctermbg='.num.' ctermfg=white'
-        execute 'syn match col_'.num.' "ctermbg='.num.':...." containedIn=ALL'
-        call append(0, 'ctermbg='.num.':....')
-        let num = num - 1
+        execute 'hi col_'.num.' ctermbg='.num.' ctermfg='.num
+        execute 'syn match col_'.num.' "='.printf("%7d", num).'" containedIn=ALL'
+        call append(0, ' '.printf("%3d", num).'  ='.printf("%7d", num))
+        let num -= 1
     endwhile
 endfunction
 
