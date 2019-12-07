@@ -340,13 +340,14 @@ endif
 
 packadd minPlug
 
-MinPlug Jorengarenar/pseudoClip
+MinPlug Jorengarenar/fauxClip
 MinPlug Jorengarenar/ViewPort
 MinPlug Jorengarenar/vim-darkness
 MinPlug sirver/ultisnips
 MinPlug tpope/vim-surround
 
 " VARIABLES
+let g:fauxClip_enable_aliases     = 1
 let g:UltiSnipsEditSplit          = "context"
 let g:UltiSnipsExpandTrigger      = "<C-j>"
 let g:UltiSnipsListSnippets       = "<C-k>"
