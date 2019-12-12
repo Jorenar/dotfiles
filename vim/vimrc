@@ -395,10 +395,10 @@ endfor
 
 for [ft, mp] in items(s:makeprg_for_filetype)
     execute 'autocmd filetype '.ft.' let &l:makeprg="('.mp[1].')"'
-    if (mp[0])
-        nnoremap <buffer> <F9> :w <bar> silent! make <bar> redraw!
+    if mp[0]
+        exec "autocmd filetype ".ft." nnoremap <buffer> <F9> :w <bar> silent! make <bar> redraw!
                     \ <bar> if empty(filter(getqflist(), 'v:val.valid'))
-                    \ <bar> execute 'vertical terminal ./%<' <bar> endif<CR>
+                    \ <bar> execute 'vertical terminal ./%<' <bar> endif<CR>"
     endif
 endfor
 
