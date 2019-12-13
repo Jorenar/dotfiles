@@ -140,19 +140,6 @@ let s:formatprg_for_filetype = {
             \}
 
 " FUNCTIONS {{{1
-" ColorDemo - preview of Vim 256 colors {{{2
-function! ColorDemo() abort
-    0 vnew
-    setlocal nonumber buftype=nofile bufhidden=hide noswapfile statusline=\ Color\ demo
-    let num = 255
-    while num >= 0
-        execute 'hi col_'.num.' ctermbg='.num.' ctermfg='.num
-        execute 'syn match col_'.num.' "='.printf("%7d", num).'" containedIn=ALL'
-        call append(0, ' '.printf("%3d", num).'  ='.printf("%7d", num))
-        let num -= 1
-    endwhile
-endfunction
-
 " GrepRename - replace through whole project {{{2
 function! s:GrepRename(expr1, expr2) abort
     execute "tabe | vimgrep /\\C\\W".a:expr1."\\W/j ** | cdo s/\\C\\\(\\W\\)".a:expr1."\\\(\\W\\)/\\1".a:expr2."\\2/gc | update" | q
@@ -254,7 +241,6 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <expr> <F4> &virtualedit == "all" ? ":set virtualedit=\<CR>" : ":set virtualedit=all\<CR>"
-nnoremap <silent> <expr> <F5> g:colors_name == "darkness" ? ":syntax reset <bar> let g:colors_name=''\<CR>" : ":colo darkness\<CR>"
 nnoremap <F3> :set cursorline! cursorcolumn!<CR>
 nnoremap <F9> :w <bar> make<CR>
 nnoremap <leader>" :vert term<CR>
@@ -265,6 +251,7 @@ nnoremap <leader>q gggqG``
 nnoremap <leader>r :%s/\<<C-r><C-w>\>//g<Left><Left>
 nnoremap <leader>R :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
 nnoremap <leader>v ggVG
+nnoremap <silent> <expr> <F5> g:colors_name == "darkness" ? ":syntax reset <bar> let g:colors_name=''\<CR>" : ":colo darkness\<CR>"
 nnoremap gf <C-w>gf
 nnoremap gx :execute 'silent! !xdg-open "<cfile>" &> /dev/null &' <bar> redraw! <CR>
 nnoremap j gj
@@ -315,7 +302,6 @@ set undofile
 set wildmenu
 
 let g:sh_fold_enabled=5
-let g:vimsyn_folding="af"
 set foldmethod=indent
 set nofoldenable
 
