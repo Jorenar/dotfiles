@@ -1,0 +1,11 @@
+snippet plugin
+" ${1:`!v expand('%<')`} -
+" Maintainer:  Jorengarenar <https://joren.ga>
+
+if exists('g:loaded_$1') | finish | endif
+
+$0
+
+let g:loaded_$1 = 1
+let &cpo = s:cpo_save | unlet s:cpo_save
+endsnippet
