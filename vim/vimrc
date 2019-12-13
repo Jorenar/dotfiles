@@ -245,13 +245,6 @@ function! s:VSetSearch(cmdtype) abort
     let @s = temp
 endfunction
 
-" WhatHighlightsIt - check highlight group under the cursor {{{2
-function! WhatHighlightsIt() abort
-    echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-                \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-                \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"
-endfunction
-
 " MAPPINGS {{{1
 " Normal mode {{{2
 nnoremap ' `
