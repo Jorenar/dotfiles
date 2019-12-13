@@ -126,7 +126,7 @@ let s:tab_width_for_filetype = {
             \}
 
 let s:formatprg_for_filetype = {
-            \ "c,cpp"      : "astyle --style=kr -s4 -N -S -xG -xU -k3 -p",
+            \ "c,cpp"      : "astyle --style=kr -s4 -N -S -xG -xU -k3 -p -O -c",
             \ "css"        : "css-beautify -s 2 --space-around-combinator",
             \ "go"         : "gofmt",
             \ "html"       : "tidy -q -w -i --show-warnings 0 --show-errors 0 --tidy-mark no",
@@ -261,7 +261,7 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <expr> <F4> &virtualedit == "all" ? ":set virtualedit=\<CR>" : ":set virtualedit=all\<CR>"
-nnoremap <expr> <F5> g:colors_name == "darkness" ? ":colo vim-monokai-tasty\<CR>" : ":colo darkness\<CR>"
+nnoremap <silent> <expr> <F5> g:colors_name == "darkness" ? ":syntax reset <bar> let g:colors_name=''\<CR>" : ":colo darkness\<CR>"
 nnoremap <F3> :set cursorline! cursorcolumn!<CR>
 nnoremap <F9> :w <bar> make<CR>
 nnoremap <leader>" :vert term<CR>
