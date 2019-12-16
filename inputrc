@@ -9,3 +9,9 @@ set show-mode-in-prompt on
 # Mode indicators
 set vi-ins-mode-string ""
 set vi-cmd-mode-string "(vi)"
+
+# INSERT mode bindings --------------------------------------------------------------------
+set keymap vi-insert
+
+# Ctrl-L clears screen
+Control-l: clear-screen
