@@ -39,20 +39,9 @@ autocmd filetype css,html,java,javascript,sh setlocal foldmethod=syntax
 autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
 autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
 
-" Quit QuickFix window along with source file window
-autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix" | q | endif
-
-" QuickFix window below other windows
-autocmd filetype qf wincmd J
-autocmd filetype qf setlocal nocursorline nocursorcolumn
-
 " Automatically open QuickFix
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
-
-" QuckFix's mappings
-autocmd filetype qf noremap <buffer> g- :colder<CR>
-autocmd filetype qf noremap <buffer> g+ :cnewer<CR>
 
 " Terminal options
 autocmd TerminalWinOpen * setlocal nonumber | autocmd WinEnter <buffer> silent! normal i
@@ -112,6 +101,14 @@ let s:makeprg_for_filetype = {
 
 let &shellpipe="2> >(tee %s)"
 
+for [ft, comp] in items(s:compiler_for_filetype)
+    execute "autocmd filetype ".ft." compiler! ".comp
+endfor
+
+for [ft, mp] in items(s:makeprg_for_filetype)
+    execute 'autocmd filetype '.ft.' let &l:makeprg="('.mp.')"'
+endfor
+
 " FORMATTING {{{1
 
 let g:html_indent_autotags = "html"
@@ -146,6 +143,14 @@ let s:formatprg_for_filetype = {
             \ "xhtml"      : "tidy -asxhtml -q -m -w -i --show-warnings 0 --show-errors 0 --tidy-mark no --doctype loose",
             \ "xml"        : "tidy -xml -q -m -w -i --show-warnings 0 --show-errors 0 --tidy-mark no",
             \}
+
+for [ft, fp] in items(s:formatprg_for_filetype)
+    execute "autocmd filetype ".ft." let &l:formatprg=\"".fp."\" | setlocal formatexpr="
+endfor
+
+for [ft, width] in items(s:tab_width_for_filetype)
+    execute "autocmd filetype ".ft." setlocal tabstop=".width." shiftwidth=".width." softtabstop=".width
+endfor
 
 " FUNCTIONS {{{1
 " GrepRename - replace through whole project {{{2
@@ -183,10 +188,10 @@ endfunction
 
 " Make {{{2
 function! s:Make() abort
-    let b:makeprg_temp = &makeprg
+    let l:makeprg_temp = &makeprg
     let &l:makeprg = "make $*"
     make
-    let &l:makeprg = b:makeprg_temp
+    let &l:makeprg = l:makeprg_temp
 endfunction
 
 " UndoList {{{2
@@ -320,10 +325,10 @@ set tags+=.git/tags;/
 
 " PLUGINS {{{1
 
-if empty(glob(substitute(&packpath, ",.*", "/pack/plugins/opt/minPlug", "")))
+if empty(glob(substitute(&packpath, ",.*", "/pack/plugins/opt/minPlug", ""))) " {{{2
     call system("git clone --depth=1 https://github.com/Jorengarenar/minPlug ".substitute(&packpath, ",.*", "/pack/plugins/opt/minPlug", ""))
     autocmd VimEnter * silent! MinPlugInstall | echo "minPlug: INSTALLED"
-endif
+endif " }}}
 
 packadd minPlug
 
@@ -368,28 +373,6 @@ set statusline+=\ \:\ %c\           " Current column
 " ### OTHER {{{1
 
 packadd matchit
-
-" Create backup
 call mkdir(&backupdir, 'p')
-
-" Applying rules from arrays/dictionaries {{{
-
-for [ft, comp] in items(s:compiler_for_filetype)
-    execute "autocmd filetype ".ft." compiler! ".comp
-endfor
-
-for [ft, mp] in items(s:makeprg_for_filetype)
-    execute 'autocmd filetype '.ft.' let &l:makeprg="('.mp[1].')"'
-endfor
-
-for [ft, fp] in items(s:formatprg_for_filetype)
-    execute "autocmd filetype ".ft." let &l:formatprg=\"".fp."\" | setlocal formatexpr="
-endfor
-
-for [ft, width] in items(s:tab_width_for_filetype)
-    execute "autocmd filetype ".ft." setlocal tabstop=".width." shiftwidth=".width." softtabstop=".width
-endfor
-
-" }}}
 
 " vim: fdm=marker foldenable:
