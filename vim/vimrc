@@ -68,7 +68,6 @@ command! -range -nargs=0 -bang VisSort sil! keepj <line1>,<line2>call <SID>VisSo
 command! -range=% Sort normal :<line1>,<line2>sort i<CR>
 command! ExecCurrentLine normal :.w !sh<CR>
 command! FileSize echo getfsize(expand(@%))
-command! Make call s:Make()
 command! SortBlock :normal! vip:sort i<CR>
 command! UndoList call s:UndoList()
 
@@ -113,9 +112,15 @@ for [ft, comp] in items(s:compiler_for_filetype)
     execute "autocmd filetype ".ft." compiler! ".comp
 endfor
 
-for [ft, mp] in items(s:makeprg_for_filetype)
-    execute 'autocmd filetype '.ft.' let &l:makeprg="('.mp.')"'
-endfor
+function! CompileAndRun() abort
+    w
+    let l:makeprg_temp = &makeprg
+    let &l:makeprg = s:makeprg_for_filetype[&ft]
+    make
+    let &l:makeprg = l:makeprg_temp
+endfunction
+
+nnoremap <F9> :call CompileAndRun()<CR>
 
 " FORMATTING {{{1
 
@@ -194,14 +199,6 @@ function! s:FillLine(str, ...) abort
     endif
 endfunction
 
-" Make {{{2
-function! s:Make() abort
-    let l:makeprg_temp = &makeprg
-    let &l:makeprg = "make $*"
-    make
-    let &l:makeprg = l:makeprg_temp
-endfunction
-
 " UndoList {{{2
 function! s:UndoList() abort
     let name = " ".expand('%')."\n\n"
@@ -263,7 +260,6 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <expr> <F4> &virtualedit == "all" ? ":set virtualedit=\<CR>" : ":set virtualedit=all\<CR>"
 nnoremap <F3> :set cursorline! cursorcolumn!<CR>
-nnoremap <F9> :w <bar> make<CR>
 nnoremap <leader>= gg=G``
 nnoremap <leader>` :redraw!<CR>
 nnoremap <leader>h :nohlsearch<CR>
