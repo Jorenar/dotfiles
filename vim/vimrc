@@ -57,6 +57,9 @@ autocmd filetype qf noremap <buffer> g+ :cnewer<CR>
 " Terminal options
 autocmd TerminalWinOpen * setlocal nonumber | autocmd WinEnter <buffer> silent! normal i
 
+" Local vimrc
+autocmd BufReadPost * if filereadable("./.vimrc.local") | source ./.vimrc.local | endif
+
 " COMMANDS {{{1
 
 command! -nargs=* GrepRename call <SID>GrepRename(<f-args>)
