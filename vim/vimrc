@@ -60,7 +60,6 @@ autocmd TerminalWinOpen * setlocal nonumber | autocmd WinEnter <buffer> silent! 
 " COMMANDS {{{1
 
 command! -nargs=* GrepRename call <SID>GrepRename(<f-args>)
-command! -nargs=* TermDebug normal :Termdebug <args><CR><C-w>K<C-w>j<C-w>L
 command! -nargs=+ FillLine call <SID>FillLine(<f-args>)
 command! -nargs=+ Grep execute "vimgrep /<args>/j ** | :copen"
 command! -nargs=+ Spelling execute 'setlocal spell spelllang=<args>'
@@ -363,8 +362,6 @@ set statusline+=\ \:\ %c\           " Current column
 
 " ### OTHER {{{1
 
-" Add TermDebug
-packadd termdebug
 packadd matchit
 
 " Create backup
