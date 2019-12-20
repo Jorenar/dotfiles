@@ -256,11 +256,10 @@ nnoremap <C-l> <C-w>l
 nnoremap <expr> <F4> &virtualedit == "all" ? ":set virtualedit=\<CR>" : ":set virtualedit=all\<CR>"
 nnoremap <F3> :set cursorline! cursorcolumn!<CR>
 nnoremap <F9> :w <bar> make<CR>
-nnoremap <leader>" :vert term<CR>
 nnoremap <leader>= gg=G``
 nnoremap <leader>` :redraw!<CR>
 nnoremap <leader>h :nohlsearch<CR>
-nnoremap <leader>q gggqG``
+nnoremap <leader>q gggqG
 nnoremap <leader>r :%s/\<<C-r><C-w>\>//g<Left><Left>
 nnoremap <leader>R :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
 nnoremap <leader>v ggVG
