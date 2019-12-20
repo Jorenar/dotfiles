@@ -15,9 +15,6 @@ set runtimepath+=$XDG_CONFIG_HOME/vim,$XDG_CONFIG_HOME/vim/after
 set undodir=$XDG_CACHE_HOME/vim/undo
 set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
 
-" Set colorscheme
-colorscheme darkness
-
 " AUTOCMDS {{{1
 
 " Open file at the last known position
@@ -48,6 +45,17 @@ autocmd TerminalWinOpen * setlocal nonumber | autocmd WinEnter <buffer> silent! 
 
 " Local vimrc
 autocmd BufReadPost * if filereadable("./.vimrc.local") | source ./.vimrc.local | endif
+
+" COLORSCHEME {{{1
+try
+    colorscheme darkness
+catch
+    set bg=dark
+    hi! ColorColumn ctermbg=233
+    hi! Comment     ctermfg=240
+    hi! link Folded Comment
+    hi! link LineNr Comment
+endtry
 
 " COMMANDS {{{1
 
