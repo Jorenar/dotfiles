@@ -269,7 +269,6 @@ set wildmenu
 
 let g:sh_fold_enabled=5
 set foldmethod=indent
-set nofoldenable
 
 set dictionary+=/usr/share/dict/polish
 set dictionary+=/usr/share/dict/words
@@ -328,4 +327,4 @@ set statusline+=\ \:\ %c\           " Current column
 packadd matchit
 call mkdir(&backupdir, 'p')
 
-" vim: fdm=marker foldenable:
+" vim: fdm=marker:
