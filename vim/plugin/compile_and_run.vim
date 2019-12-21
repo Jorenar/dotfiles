@@ -43,7 +43,7 @@ endfor
 function! CompileAndRun() abort
     write
     let l:makeprg_temp = &makeprg
-    let &l:makeprg = s:makeprg_for_filetype[&ft]
+    let &l:makeprg = "(".s:makeprg_for_filetype[&ft].")"
     make
     let &l:makeprg = l:makeprg_temp
 endfunction
