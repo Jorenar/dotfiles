@@ -50,6 +50,7 @@ linking  inputrc           $INPUTRC
 linking  python_config.py  $PYTHONSTARTUP
 linking  vim/              $VIMDOTDIR
 linking  xinitrc           $XINITRC
+linking  npmrc             $NPM_CONFIG_USERCONFIG
 
 linking  fonts             $XDG_DATA_HOME/fonts
 
