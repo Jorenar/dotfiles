@@ -3,6 +3,7 @@ snippet plugin
 " Maintainer:  Jorengarenar <https://joren.ga>
 
 if exists('g:loaded_$1') | finish | endif
+let s:cpo_save = &cpo | set cpo&vim
 
 $0
 
