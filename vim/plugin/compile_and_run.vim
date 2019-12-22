@@ -1,6 +1,3 @@
-if exists('g:loaded_') | finish | endif
-let s:cpo_save = &cpo | set cpo&vim
-
 let s:compiler_for_filetype = {
             \ "c,cpp"    : "gcc",
             \ "go"       : "go",
@@ -49,6 +46,3 @@ function! CompileAndRun() abort
 endfunction
 
 nnoremap <F9> :call CompileAndRun()<CR>
-
-let g:loaded_ = 1
-let &cpo = s:cpo_save | unlet s:cpo_save
