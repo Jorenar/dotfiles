@@ -60,6 +60,7 @@ endtry
 " COMMANDS {{{1
 
 command! -nargs=* GrepRename call <SID>GrepRename(<f-args>)
+command! -nargs=* TermDebug normal :Termdebug <args><CR><C-w>K<C-w>j<C-w>L
 command! -nargs=+ FillLine call <SID>FillLine(<f-args>)
 command! -nargs=+ Grep execute "vimgrep /<args>/j ** | :copen"
 command! -nargs=+ Spelling execute 'setlocal spell spelllang=<args>'
@@ -269,6 +270,7 @@ set wildmenu
 
 let g:sh_fold_enabled=5
 set foldmethod=indent
+set nofoldenable
 
 set dictionary+=/usr/share/dict/polish
 set dictionary+=/usr/share/dict/words
@@ -325,6 +327,7 @@ set statusline+=\ \:\ %c\           " Current column
 " ### OTHER {{{1
 
 packadd matchit
+packadd termdebug
 call mkdir(&backupdir, 'p')
 
-" vim: fdm=marker:
+" vim: fdm=marker fen:
