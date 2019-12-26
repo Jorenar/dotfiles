@@ -87,7 +87,7 @@ function! s:HasSurroundingFencemarks(lnum)
 endfunction
 
 " Set {{{2
-setlocal foldmethod=expr
+set foldmethod=expr
 let &l:foldexpr = 'MarkdownFold()'
 
 " END {{{1
