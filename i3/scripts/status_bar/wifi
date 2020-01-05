@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ssid="$(iwgetid -r)"
+ssid="$(iw dev wlo1 info | grep "ssid" | awk '{print $2}')"
 signal="$(awk 'NR==3 {print $4}''' /proc/net/wireless)"
 signal=" [${signal:0:-1} dBm]"
 
