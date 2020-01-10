@@ -149,6 +149,22 @@ function! s:FillLine(str, ...) abort
     endif
 endfunction
 
+" UltiSnips Completion {{{2
+function! UltiSnipsCompletion(findstart, base) abort
+    if a:findstart
+        let l = getline('.')
+        let startcol = match(l[0:col('.')-1], '\v\S+$')
+        if startcol == -1
+            let startcol = col('.')-1
+        endif
+        return startcol
+    else
+        let words = keys(UltiSnips#SnippetsInCurrentScope())
+        call filter(words, 'v:val =~ a:base')
+        return { 'words' : words, 'refresh' : 'always'}
+    endif
+endfunction
+
 " UndoList {{{2
 function! s:UndoList() abort
     let name = " ".expand('%')."\n\n"
@@ -243,6 +259,7 @@ let g:netrw_dirhistmax = 0
 let g:netrw_winsize = -28
 set backup
 set colorcolumn=+1,+21
+set completefunc=UltiSnipsCompletion
 set completeopt=menuone,noinsert,noselect
 set cursorlineopt=screenline
 set hlsearch
@@ -294,7 +311,6 @@ MinPlug tpope/vim-surround
 " VARIABLES
 let g:UltiSnipsEditSplit          = "context"
 let g:UltiSnipsExpandTrigger      = "<C-j>"
-let g:UltiSnipsListSnippets       = "<C-k>"
 let g:UltiSnipsSnippetDirectories = [$VIMDOTDIR.'/UltiSnips']
 
 " MAPPINGS
