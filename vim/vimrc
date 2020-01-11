@@ -11,7 +11,7 @@ syntax enable
 set backupdir=$XDG_DATA_HOME/vim/backup
 set directory=$XDG_CACHE_HOME/vim/swap
 set packpath^=$XDG_DATA_HOME/vim
-set runtimepath+=$XDG_CONFIG_HOME/vim,$XDG_CONFIG_HOME/vim/after
+set runtimepath+=$VIMDOTDIR,$VIMDOTDIR/after
 set undodir=$XDG_CACHE_HOME/vim/undo
 set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
 
@@ -238,8 +238,6 @@ nnoremap gx :execute 'silent! !xdg-open "<cfile>" &> /dev/null &' <bar> redraw! 
 nnoremap j gj
 nnoremap k gk
 
-" Insert mode {{{2
-inoremap <expr> <c-x><tab> "\<c-r>=UltiSnips_complete()\<cr>"
 " Terminal mode {{{2
 tnoremap <C-h> <C-\><C-n><C-w>h
 tnoremap <C-j> <C-\><C-n><C-w>j
@@ -308,11 +306,8 @@ MinPlug Jorengarenar/vim-darkness
 MinPlug sirver/ultisnips
 MinPlug tpope/vim-surround
 
-" VARIABLES
-let g:UltiSnipsEditSplit          = "context"
-let g:UltiSnipsSnippetDirectories = [$VIMDOTDIR.'/UltiSnips']
-
 " MAPPINGS
+inoremap <expr> <silent> <c-x><tab> "\<c-r>=UltiSnips_complete()\<cr>"
 nmap s ys
 vmap s S
 
