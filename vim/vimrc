@@ -150,19 +150,18 @@ function! s:FillLine(str, ...) abort
 endfunction
 
 " UltiSnips Completion {{{2
-function! UltiSnipsCompletion(findstart, base) abort
-    if a:findstart
-        let l = getline('.')
-        let startcol = match(l[0:col('.')-1], '\v\S+$')
-        if startcol == -1
-            let startcol = col('.')-1
-        endif
-        return startcol
-    else
-        let words = keys(UltiSnips#SnippetsInCurrentScope())
-        call filter(words, 'v:val =~ a:base')
-        return { 'words' : words, 'refresh' : 'always'}
+function! UltiSnips_complete() abort
+    let l:word = matchstr(getline('.'), '\S\+\%'.col('.').'c')
+    if !empty(UltiSnips#SnippetsInCurrentScope(1))
+        let l:suggestions = map(filter(keys(g:current_ulti_dict_info), 'stridx(v:val, l:word) == 0'),
+                    \  '{
+                    \      "word": v:val,
+                    \      "menu": get(g:current_ulti_dict_info[v:val], "description", ""),
+                    \      "dup" : 1
+                    \   }')
+        call complete(col('.') - len(l:word), l:suggestions)
     endif
+    return ''
 endfunction
 
 " UndoList {{{2
@@ -239,6 +238,8 @@ nnoremap gx :execute 'silent! !xdg-open "<cfile>" &> /dev/null &' <bar> redraw! 
 nnoremap j gj
 nnoremap k gk
 
+" Insert mode {{{2
+inoremap <expr> <c-x><tab> "\<c-r>=UltiSnips_complete()\<cr>"
 " Terminal mode {{{2
 tnoremap <C-h> <C-\><C-n><C-w>h
 tnoremap <C-j> <C-\><C-n><C-w>j
@@ -259,7 +260,6 @@ let g:netrw_dirhistmax = 0
 let g:netrw_winsize = -28
 set backup
 set colorcolumn=+1,+21
-set completefunc=UltiSnipsCompletion
 set completeopt=menuone,noinsert,noselect
 set cursorlineopt=screenline
 set hlsearch
@@ -310,7 +310,6 @@ MinPlug tpope/vim-surround
 
 " VARIABLES
 let g:UltiSnipsEditSplit          = "context"
-let g:UltiSnipsExpandTrigger      = "<C-j>"
 let g:UltiSnipsSnippetDirectories = [$VIMDOTDIR.'/UltiSnips']
 
 " MAPPINGS
