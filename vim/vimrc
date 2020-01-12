@@ -150,7 +150,7 @@ function! s:FillLine(str, ...) abort
 endfunction
 
 " UltiSnips Completion {{{2
-function! UltiSnips_complete() abort
+function! UltiSnips_complete(...) abort
     let l:word = matchstr(getline('.'), '\S\+\%'.col('.').'c')
     if !empty(UltiSnips#SnippetsInCurrentScope(1))
         let l:suggestions = map(filter(keys(g:current_ulti_dict_info), 'stridx(v:val, l:word) == 0'),
@@ -307,7 +307,7 @@ MinPlug sirver/ultisnips
 MinPlug tpope/vim-surround
 
 " MAPPINGS
-inoremap <expr> <silent> <c-x><tab> "\<c-r>=UltiSnips_complete()\<cr>"
+inoremap <silent> <C-x><Tab> <C-r>=UltiSnips_complete()<CR>
 nmap s ys
 vmap s S
 
