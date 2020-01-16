@@ -34,3 +34,10 @@ int count_unique(char *str)
     return count;
 }
 endsnippet
+
+snippet include_guard
+#ifndef ${1:HEADER}_H_
+#define $1_H_
+
+#endif
+endsnippet
