@@ -26,8 +26,9 @@ autocmd BufReadPost * set fo-=c fo-=r fo-=o
 " Trim trailing whitespace
 autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
 
-" Set .h to be of C filetype
-autocmd BufRead,BufNewFile *.h set filetype=c
+" Set proper filetypes
+autocmd BufRead,BufNewFile *.asm set filetype=nasm
+autocmd BufRead,BufNewFile *.h   set filetype=c
 
 " Set 'foldmethod' to 'syntax'
 autocmd filetype css,html,java,javascript,sh setlocal foldmethod=syntax
