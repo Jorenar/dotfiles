@@ -21,7 +21,7 @@ let s:makeprg_for_filetype = {
             \ "lisp"     : "clisp %",
             \ "lua"      : "lua %",
             \ "markdown" : "grip --quiet -b %",
-            \ "nasm"     : "yasm -f elf64 % && ld -g -o %< %<.o && rm %<.o && ./%<",
+            \ "nasm"     : "nasm -f elf64 -g % && ld -g -o %< %<.o && rm %<.o && ./%<",
             \ "perl"     : "perl %",
             \ "plaintex" : "pdftex -file-line-error -interaction=nonstopmode % && zathura %<.pdf",
             \ "python"   : "python %",
