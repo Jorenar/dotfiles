@@ -49,13 +49,13 @@ autocmd BufReadPost * if filereadable("./.vimrc.local") | source ./.vimrc.local 
 
 " COLORSCHEME {{{1
 try
-    colorscheme darkness
+  colorscheme darkness
 catch
-    set bg=dark
-    hi! ColorColumn ctermbg=233
-    hi! Comment     ctermfg=240
-    hi! link Folded Comment
-    hi! link LineNr Comment
+  set bg=dark
+  hi! ColorColumn ctermbg=233
+  hi! Comment     ctermfg=240
+  hi! link Folded Comment
+  hi! link LineNr Comment
 endtry
 
 " COMMANDS {{{1
@@ -86,134 +86,132 @@ set softtabstop=4
 set tabstop=4
 set textwidth=79
 
-let s:tab_width_for_filetype = {
-            \ "html,css,xhtml,xml" : 2,
-            \ "javascript"         : 2,
-            \ "lua"                : 2,
-            \ "markdown"           : 2,
-            \}
+let s:tab_width_for_filetype =
+      \ "html,css,xhtml,xml" . "," .
+      \ "javascript"         . "," .
+      \ "lua"                . "," .
+      \ "markdown"           . "," .
+      \ "vim"
+
+execute "autocmd filetype ".s:tab_width_for_filetype." setlocal tabstop=2 shiftwidth=2 softtabstop=2"
 
 let s:formatprg_for_filetype = {
-            \ "c"          : "astyle --style=kr -s4 -S -xU -k1 -O -c -H -xW -j",
-            \ "cpp"        : "astyle --style=stroustrup -s4 -S -xU -k1 -O -c -H -xW -j -xG -xV",
-            \ "css"        : "css-beautify -s 2 --space-around-combinator",
-            \ "go"         : "gofmt",
-            \ "html"       : "tidy -q -w -i --show-warnings 0 --show-errors 0 --tidy-mark no",
-            \ "java"       : "astyle --style=java -s4 -N -S -xG -xU -f -k3 -xj -p",
-            \ "javascript" : "js-beautify -s 2",
-            \ "json"       : "js-beautify",
-            \ "python"     : "autopep8 -",
-            \ "sql"        : "sqlformat -k upper -r -",
-            \ "xhtml"      : "tidy -asxhtml -q -m -w -i --show-warnings 0 --show-errors 0 --tidy-mark no --doctype loose",
-            \ "xml"        : "tidy -xml -q -m -w -i --show-warnings 0 --show-errors 0 --tidy-mark no",
-            \}
+      \ "c"          : "astyle --style=kr -s4 -S -xU -k1 -O -c -H -xW -j",
+      \ "cpp"        : "astyle --style=stroustrup -s4 -S -xU -k1 -O -c -H -xW -j -xG -xV",
+      \ "css"        : "css-beautify -s 2 --space-around-combinator",
+      \ "go"         : "gofmt",
+      \ "html"       : "tidy -q -w -i --show-warnings 0 --show-errors 0 --tidy-mark no",
+      \ "java"       : "astyle --style=java -s4 -N -S -xG -xU -f -k3 -xj -p",
+      \ "javascript" : "js-beautify -s 2",
+      \ "json"       : "js-beautify",
+      \ "python"     : "autopep8 -",
+      \ "sql"        : "sqlformat -k upper -r -",
+      \ "xhtml"      : "tidy -asxhtml -q -m -w -i --show-warnings 0 --show-errors 0 --tidy-mark no --doctype loose",
+      \ "xml"        : "tidy -xml -q -m -w -i --show-warnings 0 --show-errors 0 --tidy-mark no",
+      \}
 
 for [ft, fp] in items(s:formatprg_for_filetype)
-    execute "autocmd filetype ".ft." let &l:formatprg=\"".fp."\" | setlocal formatexpr="
-endfor
-
-for [ft, width] in items(s:tab_width_for_filetype)
-    execute "autocmd filetype ".ft." setlocal tabstop=".width." shiftwidth=".width." softtabstop=".width
+  execute "autocmd filetype ".ft." let &l:formatprg=\"".fp."\" | setlocal formatexpr="
 endfor
 
 " FUNCTIONS {{{1
 " GrepRename - replace through whole project {{{2
 function! s:GrepRename(expr1, expr2) abort
-    execute "tabe | vimgrep /\\C\\W".a:expr1."\\W/j ** | cdo s/\\C\\\(\\W\\)".a:expr1."\\\(\\W\\)/\\1".a:expr2."\\2/gc | update" | q
+  execute "tabe | vimgrep /\\C\\W".a:expr1."\\W/j ** | cdo s/\\C\\\(\\W\\)".a:expr1."\\\(\\W\\)/\\1".a:expr2."\\2/gc | update" | q
 endfunction
 
 " FileEncoding ~ for Status line {{{2
 function! FileEncoding() abort
-    return (&fenc == "" ? &enc : &fenc).((exists("+bomb") && &bomb) ? " BOM" : "")
+  return (&fenc == "" ? &enc : &fenc).((exists("+bomb") && &bomb) ? " BOM" : "")
 endfunction
 
 " FileSize     ~ for Status Line{{{2
 function! FileSize() abort
-    let bytes = getfsize(expand(@%))
-    if (bytes >= 1024*1024)
-        return printf('~%.1f MiB', bytes/(1024*1024.0))
-    elseif (bytes >= 1024)
-        return printf('~%.1f KiB', bytes/1024.0)
-    elseif (bytes <= 0)
-        return '0 B'
-    else
-        return bytes . ' B'
-    endif
+  let bytes = getfsize(expand(@%))
+  if (bytes >= 1024*1024)
+    return printf('~%.1f MiB', bytes/(1024*1024.0))
+  elseif (bytes >= 1024)
+    return printf('~%.1f KiB', bytes/1024.0)
+  elseif (bytes <= 0)
+    return '0 B'
+  else
+    return bytes . ' B'
+  endif
 endfunction
 
 " FillLine - fill line with characters to given column {{{2
 function! s:FillLine(str, ...) abort
-    let to_column = get(a:, 1, &tw)
-    let reps = (to_column - col("$")) / len(a:str)
-    if reps > 0
-        .s/$/\=(' '.repeat(a:str, reps))/
-    endif
+  let to_column = get(a:, 1, &tw)
+  let reps = (to_column - col("$")) / len(a:str)
+  if reps > 0
+    .s/$/\=(' '.repeat(a:str, reps))/
+  endif
 endfunction
 
 " UltiSnips Completion {{{2
 function! UltiSnips_complete(...) abort
-    let l:word = matchstr(getline('.'), '\S\+\%'.col('.').'c')
-    if !empty(UltiSnips#SnippetsInCurrentScope(1))
-        let l:suggestions = map(filter(keys(g:current_ulti_dict_info), 'stridx(v:val, l:word) == 0'),
-                    \  '{
-                    \      "word": v:val,
-                    \      "menu": get(g:current_ulti_dict_info[v:val], "description", ""),
-                    \      "dup" : 1
-                    \   }')
-        call complete(col('.') - len(l:word), l:suggestions)
-    endif
-    return ''
+  let l:word = matchstr(getline('.'), '\S\+\%'.col('.').'c')
+  if !empty(UltiSnips#SnippetsInCurrentScope(1))
+    let l:suggestions = map(filter(keys(g:current_ulti_dict_info), 'stridx(v:val, l:word) == 0'),
+          \  '{
+          \      "word": v:val,
+          \      "menu": get(g:current_ulti_dict_info[v:val], "description", ""),
+          \      "dup" : 1
+          \   }')
+    call complete(col('.') - len(l:word), l:suggestions)
+  endif
+  return ''
 endfunction
 
 " UndoList {{{2
 function! s:UndoList() abort
-    let name = " ".expand('%')."\n\n"
-    let parent0 = bufnr()
-    let list = execute('undolist')
-    silent! bdelete! UndoList
-    silent! topleft 30 vnew UndoList
-    let b:parent = parent0
-    let b:pattern = '^\s*\(\d*\)\s'
-    setlocal nonumber buftype=nofile bufhidden=hide noswapfile
-    setlocal statusline=\ UndoList
-    put=list
-    g/^/m3 | noh
-    3,$norm elde
-    silent! 3,$s/\(.*\ \ \)\@!\s\d*$//g | 3s/saved
-    silent! %s/\s\+$//e
-    normal ggdj
-    put! =name
-    setlocal nomodifiable
-    autocmd WinEnter <buffer> if winnr('$') == 1 | q | endif
-    nnoremap <buffer> <CR> :exec winbufnr(b:parent)."wincmd w <bar> undo ".matchstr(getline('.'), b:pattern)<CR>
+  let name = " ".expand('%')."\n\n"
+  let parent0 = bufnr()
+  let list = execute('undolist')
+  silent! bdelete! UndoList
+  silent! topleft 30 vnew UndoList
+  let b:parent = parent0
+  let b:pattern = '^\s*\(\d*\)\s'
+  setlocal nonumber buftype=nofile bufhidden=hide noswapfile
+  setlocal statusline=\ UndoList
+  put=list
+  g/^/m3 | noh
+  3,$norm elde
+  silent! 3,$s/\(.*\ \ \)\@!\s\d*$//g | 3s/saved
+  silent! %s/\s\+$//e
+  normal ggdj
+  put! =name
+  setlocal nomodifiable
+  autocmd WinEnter <buffer> if winnr('$') == 1 | q | endif
+  nnoremap <buffer> <CR> :exec winbufnr(b:parent)."wincmd w <bar> undo ".matchstr(getline('.'), b:pattern)<CR>
 endfunction
 
 " VisSort - sorts based on visual-block selected portion of the lines {{{2
 function! s:VisSort(isnmbr) range abort
-    if visualmode() != "\<c-v>"
-        execute "silent! ".a:firstline.",".a:lastline."sort i"
-        return
-    endif
-    let firstline = line("'<")
-    let lastline  = line("'>")
-    let keeprega  = @a
-    silent normal! gv"ay
-    '<,'>s/^/@@@/
-    silent! keepjumps normal! '<0"aP
-    if a:isnmbr
-        silent! '<,'>s/^\s\+/\=substitute(submatch(0),' ','0','g')/
-    endif
-    execute "sil! keepj '<,'>sort i"
-    execute "sil! keepj ".firstline.",".lastline.'s/^.\{-}@@@//'
-    let @a = keeprega
+  if visualmode() != "\<c-v>"
+    execute "silent! ".a:firstline.",".a:lastline."sort i"
+    return
+  endif
+  let firstline = line("'<")
+  let lastline  = line("'>")
+  let keeprega  = @a
+  silent normal! gv"ay
+  '<,'>s/^/@@@/
+  silent! keepjumps normal! '<0"aP
+  if a:isnmbr
+    silent! '<,'>s/^\s\+/\=substitute(submatch(0),' ','0','g')/
+  endif
+  execute "sil! keepj '<,'>sort i"
+  execute "sil! keepj ".firstline.",".lastline.'s/^.\{-}@@@//'
+  let @a = keeprega
 endfun
 
 " VSetSearch - Search for selected text, forwards or backwards. {{{2
 function! s:VSetSearch(cmdtype) abort
-    let temp = @s
-    norm! gv"sy
-    let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
-    let @s = temp
+  let temp = @s
+  norm! gv"sy
+  let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
+  let @s = temp
 endfunction
 
 " MAPPINGS {{{1
@@ -295,8 +293,8 @@ set tags+=.git/tags;/
 " PLUGINS {{{1
 
 if empty(glob(substitute(&packpath, ",.*", "/pack/plugins/opt/minPlug", ""))) " {{{2
-    call system("git clone --depth=1 https://github.com/Jorengarenar/minPlug ".substitute(&packpath, ",.*", "/pack/plugins/opt/minPlug", ""))
-    autocmd VimEnter * silent! MinPlugInstall | echo "minPlug: INSTALLED"
+  call system("git clone --depth=1 https://github.com/Jorengarenar/minPlug ".substitute(&packpath, ",.*", "/pack/plugins/opt/minPlug", ""))
+  autocmd VimEnter * silent! MinPlugInstall | echo "minPlug: INSTALLED"
 endif " }}}
 
 packadd minPlug
