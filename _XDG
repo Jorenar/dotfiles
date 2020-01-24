@@ -1,5 +1,7 @@
 # XDG #
 
+# XDG_DOTFILES_DIR is declared in 'profile' file
+
 # BASIC {{{1
 
 export XDG_LOCAL_HOME="$HOME/.local" # This sould be one of defaults
@@ -9,7 +11,6 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$XDG_LOCAL_HOME/share"
 
 # CUSTOM {{{1
-export XDG_DOTFILES_DIR="$XDG_LOCAL_HOME/dotfiles"
 export XDG_GAMES_DIR="$XDG_LOCAL_HOME/games"
 export XDG_HISTORY_DIR="$XDG_CACHE_HOME/history"
 export XDG_VM_DIR="$XDG_LOCAL_HOME/vm"

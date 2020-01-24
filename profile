@@ -1,7 +1,8 @@
 # ~/.PROFILE #
 
 # --- XDG ---
-source $HOME/.local/dotfiles/_XDG
+export XDG_DOTFILES_DIR="$(dirname $(readlink -f $HOME/.profile))"
+source $XDG_DOTFILES_DIR/_XDG
 
 # Japanese input
 export QT_IM_MODULE=fcitx

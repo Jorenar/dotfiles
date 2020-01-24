@@ -1,4 +1,4 @@
 xrandr --auto
 setxbmap pl
-xrdb -load ~/.local/dotfiles/Xresources
+xrdb -load $XDG_DOTFILES_DIR/Xresources
 exec i3
