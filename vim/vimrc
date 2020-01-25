@@ -337,8 +337,10 @@ set statusline+=\ \:\ %c\           " Current column
 
 " ### OTHER {{{1
 
+call mkdir(&backupdir, 'p')
+call mkdir($VIMDOTDIR."/spell", 'p')
+
 packadd matchit
 packadd termdebug
-call mkdir(&backupdir, 'p')
 
 " vim: fdm=marker fen:
