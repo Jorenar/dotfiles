@@ -71,7 +71,6 @@ command! -range=% Sort normal :<line1>,<line2>sort i<CR>
 command! ExecCurrentLine normal :.w !sh<CR>
 command! FileSize echo getfsize(expand(@%))
 command! SortBlock :normal! vip:sort i<CR>
-command! UndoList call s:UndoList()
 
 " FORMATTING {{{1
 
@@ -169,29 +168,6 @@ function! UltiSnips_complete(...) abort
     call complete(col('.') - len(l:word), l:suggestions)
   endif
   return ''
-endfunction
-
-" UndoList {{{2
-function! s:UndoList() abort
-  let name = " ".expand('%')."\n\n"
-  let parent0 = bufnr()
-  let list = execute('undolist')
-  silent! bdelete! UndoList
-  silent! topleft 30 vnew UndoList
-  let b:parent = parent0
-  let b:pattern = '^\s*\(\d*\)\s'
-  setlocal nonumber buftype=nofile bufhidden=hide noswapfile
-  setlocal statusline=\ UndoList
-  put=list
-  g/^/m3 | noh
-  3,$norm elde
-  silent! 3,$s/\(.*\ \ \)\@!\s\d*$//g | 3s/saved
-  silent! %s/\s\+$//e
-  normal ggdj
-  put! =name
-  setlocal nomodifiable
-  autocmd WinEnter <buffer> if winnr('$') == 1 | q | endif
-  nnoremap <buffer> <CR> :exec winbufnr(b:parent)."wincmd w <bar> undo ".matchstr(getline('.'), b:pattern)<CR>
 endfunction
 
 " VisSort - sorts based on visual-block selected portion of the lines {{{2
