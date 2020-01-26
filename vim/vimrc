@@ -75,24 +75,23 @@ command! SortBlock :normal! vip:sort i<CR>
 " FORMATTING {{{1
 
 let g:html_indent_autotags = "html"
-let g:html_indent_style1 = "inc"
+let g:html_indent_style1   = "inc"
 set cindent
 set expandtab
 set formatoptions-=t
 set shiftround
 set shiftwidth=4
-set softtabstop=4
 set tabstop=4
 set textwidth=79
 
-let s:tab_width_for_filetype =
+let s:ft_indent_2_space =
       \ "html,css,xhtml,xml" . "," .
       \ "javascript"         . "," .
       \ "lua"                . "," .
       \ "markdown"           . "," .
       \ "vim"
 
-execute "autocmd filetype ".s:tab_width_for_filetype." setlocal tabstop=2 shiftwidth=2 softtabstop=2"
+execute "autocmd filetype ".s:ft_indent_2_space." setlocal tabstop=2 shiftwidth=2"
 
 let s:formatprg_for_filetype = {
       \ "c"          : "astyle --style=kr -s4 -S -xU -k1 -O -c -H -xW -j",
@@ -112,7 +111,6 @@ let s:formatprg_for_filetype = {
 for [ft, fp] in items(s:formatprg_for_filetype)
   execute "autocmd filetype ".ft." let &l:formatprg=\"".fp."\" | setlocal formatexpr="
 endfor
-
 
 " FUNCTIONS {{{1
 " GrepRename - replace through whole project {{{2
