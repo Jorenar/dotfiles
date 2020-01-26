@@ -114,6 +114,7 @@ for [ft, fp] in items(s:formatprg_for_filetype)
   execute "autocmd filetype ".ft." let &l:formatprg=\"".fp."\" | setlocal formatexpr="
 endfor
 
+
 " FUNCTIONS {{{1
 " GrepRename - replace through whole project {{{2
 function! s:GrepRename(expr1, expr2) abort
@@ -146,6 +147,13 @@ function! s:FillLine(str, ...) abort
   if reps > 0
     .s/$/\=(' '.repeat(a:str, reps))/
   endif
+endfunction
+
+" ModifBufs    ~ for Status Line{{{2
+function! ModifBufs() abort
+  let cnt = len(filter(getbufinfo(), 'v:val.changed'))
+  let cnt = cnt == 0 ? "" : ( &modified ? "[+". (cnt>1?cnt:"") ."]" : "[".cnt."]" )
+  return cnt.(&ma ? '' : "[-]")
 endfunction
 
 " UltiSnips Completion {{{2
@@ -225,13 +233,12 @@ nnoremap <C-l> <C-w>l
 nnoremap <expr> <F4> &virtualedit == "all" ? ":set virtualedit=\<CR>" : ":set virtualedit=all\<CR>"
 nnoremap <F3> :set cursorline! cursorcolumn!<CR>
 nnoremap <leader>= gg=G``
-nnoremap <leader>` :redraw!<CR>
+nnoremap <leader>b :bnext<CR>
 nnoremap <leader>h :nohlsearch<CR>
 nnoremap <leader>q gggqG
 nnoremap <leader>r :%s/\<<C-r><C-w>\>//g<Left><Left>
 nnoremap <leader>R :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
 nnoremap <silent> <expr> <F5> g:colors_name == "darkness" ? ":syntax reset <bar> let g:colors_name=''\<CR>" : ":colo darkness\<CR>"
-nnoremap gf <C-w>gf
 nnoremap gx :execute 'silent! !xdg-open "<cfile>" &> /dev/null &' <bar> redraw! <CR>
 nnoremap j gj
 nnoremap k gk
@@ -261,6 +268,7 @@ set backup
 set colorcolumn=+1,+21
 set completeopt=menuone,noinsert,noselect
 set cursorlineopt=screenline
+set hidden
 set hlsearch
 set ignorecase
 set incsearch
@@ -283,6 +291,7 @@ set t_TE= t_TI= " Disable modifyOtherKeys
 set title
 set undofile
 set wildmenu
+set wildmode=full
 
 let g:sh_fold_enabled=5
 set foldmethod=indent
@@ -328,9 +337,8 @@ set statusline+=\ \                 " Separator
 set statusline+=%r                  " Readonly flag
 set statusline+=%w                  " Preview flag
 set statusline+=\ \                 " Separator
-set statusline+=%m                  " Modified flag
+set statusline+=%{ModifBufs()}      " Modified flag (extended)
 set statusline+=%=                  " Switch to the right side
-set statusline+=[0x%B]\             " Current char hex code
 set statusline+=%l/                 " Current line
 set statusline+=%L                  " Total lines
 set statusline+=\ \:\ %c\           " Current column
