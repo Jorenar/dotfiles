@@ -118,25 +118,6 @@ function! s:GrepRename(expr1, expr2) abort
   execute "tabe | vimgrep /\\C\\W".a:expr1."\\W/j ** | cdo s/\\C\\\(\\W\\)".a:expr1."\\\(\\W\\)/\\1".a:expr2."\\2/gc | update" | q
 endfunction
 
-" FileEncoding ~ for Status line {{{2
-function! FileEncoding() abort
-  return (&fenc == "" ? &enc : &fenc).((exists("+bomb") && &bomb) ? " BOM" : "")
-endfunction
-
-" FileSize     ~ for Status Line{{{2
-function! FileSize() abort
-  let bytes = getfsize(expand(@%))
-  if (bytes >= 1024*1024)
-    return printf('~%.1f MiB', bytes/(1024*1024.0))
-  elseif (bytes >= 1024)
-    return printf('~%.1f KiB', bytes/1024.0)
-  elseif (bytes <= 0)
-    return '0 B'
-  else
-    return bytes . ' B'
-  endif
-endfunction
-
 " FillLine - fill line with characters to given column {{{2
 function! s:FillLine(str, ...) abort
   let to_column = get(a:, 1, &tw)
@@ -144,13 +125,6 @@ function! s:FillLine(str, ...) abort
   if reps > 0
     .s/$/\=(' '.repeat(a:str, reps))/
   endif
-endfunction
-
-" ModifBufs    ~ for Status Line{{{2
-function! ModifBufs() abort
-  let cnt = len(filter(getbufinfo(), 'v:val.changed'))
-  let cnt = cnt == 0 ? "" : ( &modified ? "[+". (cnt>1?cnt:"") ."]" : "[".cnt."]" )
-  return cnt.(&ma ? '' : "[-]")
 endfunction
 
 " UltiSnips Completion {{{2
@@ -194,6 +168,39 @@ function! s:VSetSearch(cmdtype) abort
   norm! gv"sy
   let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
   let @s = temp
+endfunction
+
+" FOR STATUS LINE {{{2
+" FileEncoding {{{3
+function! FileEncoding() abort
+  return (&fenc == "" ? &enc : &fenc).((exists("+bomb") && &bomb) ? " BOM" : "")
+endfunction
+
+" FileSize {{{3
+function! FileSize() abort
+  let bytes = getfsize(expand(@%))
+  if (bytes >= 1024*1024)
+    return printf('~%.1f MiB', bytes/(1024*1024.0))
+  elseif (bytes >= 1024)
+    return printf('~%.1f KiB', bytes/1024.0)
+  elseif (bytes <= 0)
+    return '0 B'
+  else
+    return bytes . ' B'
+  endif
+endfunction
+
+" ModifBufs {{{3
+function! ModifBufs() abort
+  let cnt = len(filter(getbufinfo(), 'v:val.changed'))
+  return cnt == 0 ? "" : ( &mod ? "[+". (cnt>1?cnt:"") ."]" : "[".cnt."]" )
+endfunction
+
+" Number of buffers {{{3
+function! NumOfBufs() abort
+  let num = len(getbufinfo({'buflisted':1}))
+  let hid = len(filter(getbufinfo({'buflisted':1}), 'empty(v:val.windows)'))
+  return hid ? num."+".hid : num
 endfunction
 
 " MAPPINGS {{{1
@@ -295,24 +302,27 @@ vmap s S
 " STATUS LINE {{{1
 
 set statusline=
-set statusline+=\ %f                " Relative path to the file
-set statusline+=\ \                 " Separator
-set statusline+=%y                  " Filetype
-set statusline+=[%{&ff}]            " File format
-set statusline+=[%{FileEncoding()}] " File encoding
-set statusline+=\ \                 " Separator
-set statusline+=[%{&fo}]            " Format options
-set statusline+=\ \                 " Separator
-set statusline+=[%{FileSize()}]     " File size
-set statusline+=\ \                 " Separator
-set statusline+=%r                  " Readonly flag
-set statusline+=%w                  " Preview flag
-set statusline+=\ \                 " Separator
-set statusline+=%{ModifBufs()}      " Modified flag (extended)
-set statusline+=%=                  " Switch to the right side
-set statusline+=%l/                 " Current line
-set statusline+=%L                  " Total lines
-set statusline+=\ \:\ %c\           " Current column
+set statusline+=\ %f                   " Relative path to the file
+set statusline+=\ \                    " Separator
+set statusline+=%y                     " Filetype
+set statusline+=[%{&ff}]               " File format
+set statusline+=[%{FileEncoding()}]    " File encoding
+set statusline+=\ \                    " Separator
+set statusline+=[%{&fo}]               " Format options
+set statusline+=\ \                    " Separator
+set statusline+=[%{FileSize()}]        " File size
+set statusline+=\ \                    " Separator
+set statusline+=%r                     " Readonly flag
+set statusline+=%{&ma\|\|&ro?'':'[-]'} " No modifiable flag
+set statusline+=%w                     " Preview flag
+set statusline+=\ \                    " Separator
+set statusline+=%{ModifBufs()}         " Modified flag (extended)
+set statusline+=%=                     " Switch to the right side
+set statusline+={%{NumOfBufs()}}       " Number of hidden buffers
+set statusline+=\ \                    " Separator
+set statusline+=%l/                    " Current line
+set statusline+=%L                     " Total lines
+set statusline+=\ \:\ %c\              " Current column
 
 " ### OTHER {{{1
 
