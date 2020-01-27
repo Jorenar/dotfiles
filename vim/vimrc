@@ -217,9 +217,6 @@ nnoremap gx :execute 'silent! !xdg-open "<cfile>" &> /dev/null &' <bar> redraw! 
 nnoremap j gj
 nnoremap k gk
 
-" Insert mode {{{2
-inoremap {<CR> {<CR>}<Esc>O
-
 " Terminal mode {{{2
 tnoremap <C-h> <C-\><C-n><C-w>h
 tnoremap <C-j> <C-\><C-n><C-w>j
