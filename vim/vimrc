@@ -11,7 +11,8 @@ syntax enable
 set backupdir=$XDG_DATA_HOME/vim/backup
 set directory=$XDG_CACHE_HOME/vim/swap
 set packpath^=$XDG_DATA_HOME/vim
-set runtimepath+=$VIMDOTDIR,$VIMDOTDIR/after
+set runtimepath+=$VIMDOTDIR/after
+set runtimepath^=$VIMDOTDIR
 set undodir=$XDG_CACHE_HOME/vim/undo
 set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
 
