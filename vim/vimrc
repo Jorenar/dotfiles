@@ -45,9 +45,6 @@ autocmd QuickFixCmdPost    l* nested lwindow
 " Terminal options
 autocmd TerminalWinOpen * setlocal nonumber | autocmd WinEnter <buffer> silent! normal i
 
-" Local vimrc
-autocmd BufReadPost * if filereadable("./.vimrc.local") | source ./.vimrc.local | endif
-
 " COLORSCHEME {{{1
 try
   colorscheme darkness
@@ -70,7 +67,6 @@ command! -range -nargs=+ Align <line1>,<line2>!column -Lts'<args>' -o'<args>'
 command! -range -nargs=0 -bang VisSort sil! keepj <line1>,<line2>call <SID>VisSort(<bang>0)
 command! -range=% Sort normal :<line1>,<line2>sort i<CR>
 command! ExecCurrentLine normal :.w !sh<CR>
-command! FileSize echo getfsize(expand(@%))
 command! SortBlock :normal! vip:sort i<CR>
 
 " FORMATTING {{{1
@@ -79,20 +75,21 @@ let g:html_indent_autotags = "html"
 let g:html_indent_style1   = "inc"
 set cindent
 set expandtab
-set formatoptions-=t
+set formatoptions-=t  " Don't autowrap text using 'textwidth'
 set shiftround
-set shiftwidth=4
+set shiftwidth=0   " If 0, then uses value of 'tabstop'
+set softtabstop=-1 " If negative, then uses 'shiftwidth' (which can use 'tabstop')
 set tabstop=4
 set textwidth=79
 
-let s:ft_indent_2_space =
-      \ "html,css,xhtml,xml" . "," .
-      \ "javascript"         . "," .
-      \ "lua"                . "," .
-      \ "markdown"           . "," .
-      \ "vim"
-
-execute "autocmd filetype ".s:ft_indent_2_space." setlocal tabstop=2 shiftwidth=2"
+" For thise filetypes set 'tabstop' to 2
+execute "autocmd filetype ".
+      \   "html,css,xhtml,xml" .",".
+      \   "javascript"         .",".
+      \   "lua"                .",".
+      \   "markdown"           .",".
+      \   "vim"                .",".
+      \ " setlocal tabstop=2"
 
 let s:formatprg_for_filetype = {
       \ "c"          : "astyle --style=kr -s4 -S -xU -k1 -O -c -H -xW -j",
