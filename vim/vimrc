@@ -16,7 +16,9 @@ set runtimepath^=$VIMDOTDIR
 set undodir=$XDG_CACHE_HOME/vim/undo
 set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
 
-" AUTOCMDS {{{1
+
+augroup AUTOCMDS " {{{1
+  au!
 
 " Open file at the last known position
 autocmd BufReadPost * if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit' | exe "normal! g`\"" | endif
@@ -32,7 +34,7 @@ autocmd BufRead,BufNewFile *.asm set filetype=nasm
 autocmd BufRead,BufNewFile *.h   set filetype=c
 
 " Set 'foldmethod' to 'syntax'
-autocmd filetype css,html,java,javascript,sh setlocal foldmethod=syntax
+autocmd filetype css,html,java,javascript,sh,typescript setlocal foldmethod=syntax
 
 " Protect folds when toggling insert mode / switching windows
 autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
@@ -44,6 +46,8 @@ autocmd QuickFixCmdPost    l* nested lwindow
 
 " Terminal options
 autocmd TerminalWinOpen * setlocal nonumber | autocmd WinEnter <buffer> silent! normal i
+
+augroup END
 
 " COLORSCHEME {{{1
 try
