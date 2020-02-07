@@ -26,6 +26,10 @@ linking() {
         mkdir -p "$(dirname $2)"
         ln -sf $dotfiles_dir/$1 $2
     fi
+
+    if [ ! -z "$3" ]; then
+        chmod "$3" "$2"
+    fi
 }
 
 # ------------------------------------------------
@@ -36,7 +40,7 @@ linking  profile           $HOME/.profile
 linking  ssh_config        $HOME/.ssh/config
 linking  themes/           $HOME/.themes
 
-linking  htoprc            $XDG_CONFIG_HOME/htop/htoprc
+linking  htoprc            $XDG_CONFIG_HOME/htop/htoprc        -w
 linking  user-dirs.dirs    $XDG_CONFIG_HOME/user-dirs.dirs
 linking  zathurarc         $XDG_CONFIG_HOME/zathura/zathurarc
 
