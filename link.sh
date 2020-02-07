@@ -36,6 +36,7 @@ linking  profile           $HOME/.profile
 linking  ssh_config        $HOME/.ssh/config
 linking  themes/           $HOME/.themes
 
+linking  htoprc            $XDG_CONFIG_HOME/htop/htoprc
 linking  user-dirs.dirs    $XDG_CONFIG_HOME/user-dirs.dirs
 linking  zathurarc         $XDG_CONFIG_HOME/zathura/zathurarc
 
