@@ -1,7 +1,0 @@
-#!/bin/bash
-
-if [[ "$(rfkill list bluetooth | grep Soft)" =~ "Soft blocked: yes" ]]; then
-    echo "BT: off"
-else
-    echo "BT: on"
-fi

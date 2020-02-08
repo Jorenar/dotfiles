@@ -1,57 +1,38 @@
 full_text=|
 align=center
 color=#BBB
-separator=false
-separator_block_width=7
+separator_block_width=20
 
 
 [cpu-temp]
-command=sensors | grep "Package id 0:" | cut -c15-23
+command=sensors | awk '/Package id 0:/ {print $4}'
 interval=1
-
-[separator]
 
 [cpu-freq]
-command=$XDG_CONFIG_HOME/i3/scripts/status_bar/cpu_freq
+command=printf "%4s MHz\n" "$(lscpu | awk '/CPU MHz/ {print int($3)}')"
 interval=1
 
-[separator]
-
 [wifi]
-command=$XDG_CONFIG_HOME/i3/scripts/status_bar/wifi
+command=ssid="$(iw dev wlo1 info | awk '/ssid/ {print $2}')"; if [ -z "$ssid" ]; then echo "[X]"; else echo "$ssid [$(awk 'NR==3 {print int($4)}' /proc/net/wireless) dBm]"; fi
 interval=5
 
-[separator]
-
 [bluetooth]
-command=$XDG_CONFIG_HOME/i3/scripts/status_bar/bluetooth
+command=echo "BT: $(rfkill list bluetooth | awk '/Soft/ {print $3}' | sed -e 's/yes/off/g' -e 's/no/on/g')"
 interval=15
-
-[separator]
 
 [gpu]
-command=$XDG_CONFIG_HOME/i3/scripts/status_bar/gpu
+command=if [[ "$(glxinfo | grep "OpenGL vendor")" =~ .*Intel.* ]]; then echo "INTEL"; else echo "NVIDIA"; fi
 interval=once
 
-[separator]
-
 [battery]
-command=$XDG_CONFIG_HOME/i3/scripts/status_bar/battery
+command=$XDG_CONFIG_HOME/i3/scripts/battery_stat
 interval=15
 
-[separator]
-
 [volume]
-command=$XDG_CONFIG_HOME/i3/scripts/status_bar/volume
+command=echo $(amixer sget Master | awk -F"[][]" '/dB/ { print $4 " " $6 }' | sed -e 's/on//g' -e 's/off/(muted)/g')
 interval=once
 signal=10
 
-[separator]
-
 [date]
-command=LC_ALL=C date "+%a, %F %T"
+command=LC_ALL=C date "+%a, %F %T "
 interval=1
-
-[separator-transparent]
-command=echo " "
-interval=once

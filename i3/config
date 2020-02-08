@@ -65,7 +65,7 @@ bindsym $mod+shift+apostrophe exec i3-msg split h && i3-sensible-terminal
 bindsym $mod+w exec firefox
 
 # open QuiteRSS
-bindsym $mod+q exec --no-startup-id $XDG_CONFIG_HOME/i3/wrappers/quiterss
+bindsym $mod+q exec --no-startup-id $XDG_CONFIG_HOME/i3/scripts/quiterss_wrapper
 
 # open aerc
 bindsym $mod+m exec --no-startup-id imapfilter && i3-sensible-terminal -T aerc aerc && rm -f /tmp/aerc.html
