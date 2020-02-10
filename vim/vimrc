@@ -17,38 +17,6 @@ set undodir=$XDG_CACHE_HOME/vim/undo
 set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
 
 
-augroup AUTOCMDS " {{{1
-  au!
-
-" Open file at the last known position
-autocmd BufReadPost * if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit' | exe "normal! g`\"" | endif
-
-" Disable continuation of comments to the next line
-autocmd BufReadPost * set fo-=c fo-=r fo-=o
-
-" Trim trailing whitespace
-autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
-
-" Set proper filetypes
-autocmd BufRead,BufNewFile *.asm set filetype=nasm
-autocmd BufRead,BufNewFile *.h   set filetype=c
-
-" Set 'foldmethod' to 'syntax'
-autocmd filetype css,html,java,javascript,sh,typescript setlocal foldmethod=syntax
-
-" Protect folds when toggling insert mode / switching windows
-autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
-autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
-
-" Automatically open QuickFix
-autocmd QuickFixCmdPost [^l]* nested cwindow
-autocmd QuickFixCmdPost    l* nested lwindow
-
-" Terminal options
-autocmd TerminalWinOpen * setlocal nonumber | autocmd WinEnter <buffer> silent! normal i
-
-augroup END
-
 " COLORSCHEME {{{1
 try
   colorscheme darkness
@@ -337,6 +305,35 @@ set statusline+=%L                     " Total lines
 set statusline+=\ \:\ %c\              " Current column
 
 " ### OTHER {{{1
+
+augroup OTHER " {{{
+  autocmd!
+
+  " Open file at the last known position
+  autocmd BufReadPost * if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit' | exe "normal! g`\"" | endif
+
+  " Trim trailing whitespace
+  autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
+
+  " Set proper filetypes
+  autocmd BufRead,BufNewFile *.asm set filetype=nasm
+  autocmd BufRead,BufNewFile *.h   set filetype=c
+
+  " Set 'foldmethod' to 'syntax'
+  autocmd filetype css,html,java,javascript,sh,typescript setlocal foldmethod=syntax
+
+  " Protect folds when toggling insert mode / switching windows
+  autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
+  autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
+
+  " Automatically open QuickFix
+  autocmd QuickFixCmdPost [^l]* nested cwindow
+  autocmd QuickFixCmdPost    l* nested lwindow
+
+  " Terminal options
+  autocmd TerminalWinOpen * setlocal nonumber | autocmd WinEnter <buffer> silent! normal i
+
+augroup END " }}}
 
 call mkdir(&backupdir, 'p')
 call mkdir($VIMDOTDIR."/spell", 'p')
