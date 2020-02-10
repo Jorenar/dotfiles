@@ -75,11 +75,20 @@ command! SortBlock :normal! vip:sort i<CR>
 
 " FORMATTING {{{1
 
+augroup FORMATOPTIONS
+  autocmd!
+  autocmd BufWinEnter * set fo-=c fo-=r fo-=o " Disable continuation of comments to the next line
+  autocmd BufWinEnter * set formatoptions+=j  " Remove a comment leader when joining lines
+  autocmd BufWinEnter * set formatoptions+=l  " Don't break a line after a one-letter word
+  autocmd BufWinEnter * set formatoptions+=n  " Recognize numbered lists
+  autocmd BufWinEnter * set formatoptions-=q  " Don't format comments
+  autocmd BufWinEnter * set formatoptions-=t  " Don't autowrap text using 'textwidth'
+augroup END
+
 let g:html_indent_autotags = "html"
 let g:html_indent_style1   = "inc"
 set cindent
 set expandtab
-set formatoptions-=t  " Don't autowrap text using 'textwidth'
 set shiftround
 set shiftwidth=0   " If 0, then uses value of 'tabstop'
 set softtabstop=-1 " If negative, then uses 'shiftwidth' (which can use 'tabstop')
