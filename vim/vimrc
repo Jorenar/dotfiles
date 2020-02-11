@@ -12,10 +12,10 @@ set backupdir=$XDG_DATA_HOME/vim/backup
 set directory=$XDG_CACHE_HOME/vim/swap
 set packpath^=$XDG_DATA_HOME/vim
 set runtimepath+=$VIMDOTDIR/after
+set runtimepath+=$XDG_DATA_HOME/vim
 set runtimepath^=$VIMDOTDIR
 set undodir=$XDG_CACHE_HOME/vim/undo
 set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
-
 
 " COLORSCHEME {{{1
 try
@@ -262,7 +262,7 @@ set tags+=.git/tags;/
 
 " PLUGINS {{{1
 
-if empty(glob(substitute(&packpath, ",.*", "/pack/plugins/opt/minPlug", ""))) " {{{2
+if empty(glob(substitute(&packpath, ",.*", "/pack/plugins/opt/minPlug", ""))) " {{{
   call system("git clone --depth=1 https://github.com/Jorengarenar/minPlug ".substitute(&packpath, ",.*", "/pack/plugins/opt/minPlug", ""))
   autocmd VimEnter * silent! MinPlugInstall | echo "minPlug: INSTALLED"
 endif " }}}
@@ -336,7 +336,7 @@ augroup OTHER " {{{
 augroup END " }}}
 
 call mkdir(&backupdir, 'p')
-call mkdir($VIMDOTDIR."/spell", 'p')
+call mkdir($XDG_DATA_HOME."/vim/spell", 'p')
 
 packadd matchit
 packadd termdebug
