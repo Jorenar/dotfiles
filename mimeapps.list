@@ -1,0 +1,10 @@
+[Added Associations]
+application/zip=vim.desktop;
+
+[Default Applications]
+application/pdf=org.pwmt.zathura-pdf-mupdf.desktop;
+image/gif=feh.desktop;
+image/jpeg=feh.desktop;
+image/jpg=feh.desktop;
+image/png=feh.desktop;
+text/plain=vim.desktop;

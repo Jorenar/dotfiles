@@ -41,6 +41,7 @@ linking  ssh_config        $HOME/.ssh/config
 linking  themes/           $HOME/.themes
 
 linking  htoprc            $XDG_CONFIG_HOME/htop/htoprc        -w
+linking  mimeapps.list     $XDG_CONFIG_HOME/mimeapps.list
 linking  user-dirs.dirs    $XDG_CONFIG_HOME/user-dirs.dirs
 linking  zathurarc         $XDG_CONFIG_HOME/zathura/zathurarc
 
