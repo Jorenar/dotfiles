@@ -12,8 +12,9 @@ export GTK_IM_MODULE=fcitx
 # Default editor
 export EDITOR=vim
 
-# Default manpager
-export MANPAGER="vim -M +MANPAGER -"
+# man
+export MANPAGER="vim -M +MANPAGER - +'set colorcolumn= nonumber laststatus=0'"
+export MANWIDTH=80
 
 # Set Qt to use GTK theme
 export QT_QPA_PLATFORMTHEME="gtk2"
