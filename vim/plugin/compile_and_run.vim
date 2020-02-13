@@ -46,3 +46,4 @@ function! CompileAndRun() abort
 endfunction
 
 nnoremap <F9> :call CompileAndRun()<CR>
+nnoremap <F10> :w <bar> make<CR>
