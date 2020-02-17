@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+set -e
+dir="`git rev-parse --git-dir`"
+trap 'rm -f "$dir/$$.tags"' EXIT
+git ls-files > cscope.files
+cscope -b -i cscope.files
+rm cscope.files
+mv "cscope.out" "$dir/cscope.out"

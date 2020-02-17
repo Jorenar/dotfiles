@@ -32,6 +32,7 @@
     change-url = !sh -c 'git remote set-url origin \"$1\"' -
     clean-branch = !sh -c 'git checkout --orphan \"$1\" && git rm -rf .' -
     ctags = !.git/hooks/ctags
+    cscope = !.git/hooks/cscope
     del = !sh -c 'git reset HEAD \"$@\"' -
     fast = !sh -c 'git add -A && git commit -m \"$1\" && git push' -
     initial = !sh -c 'git init && git add -A && git commit -m \"Initial commit\" && git remote add origin \"$1\" && git push -u origin master' -
