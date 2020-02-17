@@ -25,13 +25,14 @@ endsnippet
 snippet str_count_unique
 int count_unique(char *str)
 {
-    int count = 0;
-    while (*str != '\0') {
-        if (!strchr(str + 1, *str))
-            count++;
-        str++;
-    }
-    return count;
+	int count = 0;
+	while (*str != '\0') {
+		if (!strchr(str + 1, *str)) {
+			count++;
+		}
+		str++;
+	}
+	return count;
 }
 endsnippet
 
@@ -40,4 +41,12 @@ snippet include_guard
 #define $1_H_
 
 #endif
+endsnippet
+
+snippet icl "Include header file"
+#include "${1:`!v substitute(expand('%'), '\.c', '\.h', '')`}"
+endsnippet
+
+snippet once
+#pragma once
 endsnippet
