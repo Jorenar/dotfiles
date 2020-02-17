@@ -33,7 +33,7 @@ endtry
 command! -nargs=* GrepRename call <SID>GrepRename(<f-args>)
 command! -nargs=* TermDebug normal :Termdebug <args><CR><C-w>K<C-w>j<C-w>L
 command! -nargs=+ FillLine call <SID>FillLine(<f-args>)
-command! -nargs=+ Grep execute "lvimgrep /".<q-args>."/j **"
+command! -nargs=+ Grep execute "silent lgrep! ".<q-args>." **"
 command! -nargs=? -bang Spelling setlocal spell<bang> spelllang=<args>
 command! -range -nargs=+ Align <line1>,<line2>!column -Lts'<args>' -o'<args>'
 command! -range -nargs=0 -bang VisSort sil! keepj <line1>,<line2>call <SID>VisSort(<bang>0)
@@ -104,20 +104,6 @@ function! s:FillLine(str, ...) abort
   let reps = (to_column - col("$")) / len(a:str)
   if reps > 0
     .s/$/\=(' '.repeat(a:str, reps))/
-  endif
-endfunction
-
-" LoadCscope {{{2
-function! LoadCscope()
-  let db = findfile("cscope.out", ".git;")
-  if (!empty(db))
-    let path = strpart(db, 0, match(db, "/cscope.out$"))
-    set nocscopeverbose " suppress 'duplicate connection' error
-    exe "cs add " . db . " " . path
-    set cscopeverbose
-    " else add the database pointed to by environment variable
-  elseif $CSCOPE_DB != ""
-    cs add $CSCOPE_DB
   endif
 endfunction
 
@@ -239,7 +225,6 @@ let g:netrw_winsize = -28
 set backup
 set colorcolumn=+1,+21
 set completeopt=menuone,noinsert,noselect
-set cscopetag
 set cursorlineopt=screenline
 set hidden
 set hlsearch
@@ -351,9 +336,6 @@ augroup OTHER " {{{
 
   " Terminal options
   autocmd TerminalWinOpen * setlocal nonumber | autocmd WinEnter <buffer> silent! normal i
-
-  " Load cskope.out
-  autocmd BufEnter * call LoadCscope()
 
 augroup END " }}}
 
