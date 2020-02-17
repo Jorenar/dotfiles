@@ -1,7 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-set -e
-dir="$(git rev-parse --git-dir)"
-trap 'rm -f "$dir/$$.tags"' EXIT
-git ls-files | "${CTAGS:-ctags}" --tag-relative -L - -f"$dir/$$.tags"
-mv "$dir/$$.tags" "$dir/tags"
+comm -23 --nocheck-order <(git ls-files) <(git ls-files -d) |
+    "${CTAGS:-ctags}" --tag-relative -L - -f "$(git rev-parse --git-dir)/tags"
