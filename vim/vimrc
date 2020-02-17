@@ -353,7 +353,7 @@ augroup OTHER " {{{
   autocmd TerminalWinOpen * setlocal nonumber | autocmd WinEnter <buffer> silent! normal i
 
   " Load cskope.out
-  autocmd BufEnter /* call LoadCscope()
+  autocmd BufEnter * call LoadCscope()
 
 augroup END " }}}
 
