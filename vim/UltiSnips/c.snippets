@@ -43,8 +43,8 @@ snippet include_guard
 #endif
 endsnippet
 
-snippet icl "Include header file"
-#include "${1:`!v substitute(expand('%'), '\.c', '\.h', '')`}"
+snippet incl "Include header file"
+#include "${1:`!v substitute(expand('%:t'), '\.c', '\.h', '')`}"
 endsnippet
 
 snippet once
