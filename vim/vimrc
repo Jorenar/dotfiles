@@ -40,6 +40,7 @@ command! -range -nargs=0 -bang VisSort sil! keepj <line1>,<line2>call <SID>VisSo
 command! -range=% Sort normal :<line1>,<line2>sort i<CR>
 command! ExecCurrentLine normal :.w !sh<CR>
 command! SortBlock :normal! vip:sort i<CR>
+command! Term vertical terminal
 
 " FORMATTING {{{1
 
@@ -270,7 +271,9 @@ endif " }}}
 packadd minPlug
 
 MinPlug Jorengarenar/fauxClip
+MinPlug Jorengarenar/LICENSES.snippets
 MinPlug Jorengarenar/vim-darkness
+MinPlug mbbill/undotree
 MinPlug sirver/ultisnips
 MinPlug tpope/vim-surround
 
