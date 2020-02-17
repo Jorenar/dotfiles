@@ -319,8 +319,9 @@ augroup OTHER " {{{
   autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
 
   " Set proper filetypes
-  autocmd BufRead,BufNewFile *.asm set filetype=nasm
-  autocmd BufRead,BufNewFile *.h   set filetype=c
+  autocmd BufRead,BufNewFile *.asm      set filetype=nasm
+  autocmd BufRead,BufNewFile *.h        set filetype=c
+  autocmd BufRead,BufNewFile *.snippets set filetype=snippets
 
   " Set 'foldmethod' to 'syntax'
   autocmd filetype css,html,java,javascript,sh,typescript setlocal foldmethod=syntax
