@@ -217,9 +217,9 @@ bindsym $mod+Shift+r restart
 bindsym $mod+F4 exec --no-startup-id touchpad-toggle
 
 # Multi-screen screenshots with scrot
-bindsym --release Print exec "mkdir -p ~/images/screenshots && scrot ~/images/screenshots/screenshot-%Y%m%d_%H%M%S.png -e 'xclip -selection c -t image/png < $f'"
+bindsym --release Print exec --no-startup-id "mkdir -p ~/images/screenshots && scrot ~/images/screenshots/screenshot-%Y%m%d_%H%M%S.png"
 
 # OSX-like area selection screenshots
-bindsym --release Shift+Print exec "mkdir -p ~/images/screenshots && scrot -s ~/images/screenshots/screenshot-%Y%m%d_%H%M%S.png -e 'xclip -selection c -t image/png < $f'"
+bindsym --release Shift+Print exec --no-startup-id "mkdir -p ~/images/screenshots && scrot -s ~/images/screenshots/screenshot-%Y%m%d_%H%M%S.png"
 
 # vim: fdm=marker foldenable:
