@@ -114,7 +114,7 @@ function! UltiSnips_complete(...) abort
     let l:suggestions = map(filter(keys(g:current_ulti_dict_info), 'stridx(v:val, l:word) == 0'),
           \  '{
           \      "word": v:val,
-          \      "menu": get(g:current_ulti_dict_info[v:val], "description", ""),
+          \      "menu": "  ".get(g:current_ulti_dict_info[v:val], "description", ""),
           \      "dup" : 1
           \   }')
     call complete(col('.') - len(l:word), l:suggestions)
