@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
-comm -23 --nocheck-order <(git ls-files) <(git ls-files -d) | cscope -b -i -
-mv cscope.out "$(git rev-parse --git-dir)/"
+{ comm -23 --nocheck-order <(git ls-files) <(git ls-files -d);
+    git ls-files --o --exclude-standard; } |
+        cscope -b -f "$(git rev-parse --git-dir)/cscope.out" -i -
