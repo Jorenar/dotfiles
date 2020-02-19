@@ -13,7 +13,7 @@ let s:compiler_for_filetype = {
 let s:makeprg_for_filetype = {
       \ "asm"      : "as -o %<.o % && ld -s -o %< %<.o && rm %<.o && ./%<",
       \ "basic"    : "vintbas %",
-      \ "c"        : "gcc -std=gnu11 -g % -o %< && ./%<",
+      \ "c"        : "gcc -std=gnu99 -g % -o %< && ./%<",
       \ "cpp"      : "g++ -std=gnu++11 -g % -o %< && ./%<",
       \ "go"       : "go build && ./%<",
       \ "haskell"  : "ghc -o %< %; rm %<.hi %<.o && ./%<",
