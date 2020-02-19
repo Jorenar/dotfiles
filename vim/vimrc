@@ -259,7 +259,7 @@ set nofoldenable
 set dictionary+=/usr/share/dict/polish
 set dictionary+=/usr/share/dict/words
 set path=**,./
-set tags+=.git/tags;/
+set tags+=.git/tags;
 
 " PLUGINS {{{1
 
