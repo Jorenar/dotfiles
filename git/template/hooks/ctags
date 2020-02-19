@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-comm -23 --nocheck-order <(git ls-files) <(git ls-files -d) |
-    "${CTAGS:-ctags}" --tag-relative -L - -f "$(git rev-parse --git-dir)/tags"
+ctags -R --tag-relative -f "$(git rev-parse --git-dir)/tags"
