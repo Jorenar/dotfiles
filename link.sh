@@ -38,7 +38,7 @@ linking  bash_profile      $HOME/.bash_profile
 linking  bashrc            $HOME/.bashrc
 linking  profile           $HOME/.profile
 linking  ssh_config        $HOME/.ssh/config
-linking  themes/           $HOME/.themes
+linking  themes            $HOME/.themes
 
 linking  htoprc            $XDG_CONFIG_HOME/htop/htoprc        -w
 linking  mimeapps.list     $XDG_CONFIG_HOME/mimeapps.list
@@ -73,5 +73,4 @@ done
 # linking  mailcap           $HOME/.mailcap
 # linking  muttrc            $XDG_CONFIG_HOME/mutt/muttrc
 # linking  myclirc           $HOME/.myclirc
-# linking  tig/              $XDG_CONFIG_HOME/tig
 # linking  tmux.conf         $HOME/.tmux.conf
