@@ -237,7 +237,6 @@ set nomodelineexpr
 set nowrap
 set number
 set omnifunc=syntaxcomplete#Complete
-set regexpengine=1 " Real boost for syntax
 set scrolloff=5
 set sessionoptions=blank,buffers,folds,tabpages,winsize,terminal
 set shortmess+=I
