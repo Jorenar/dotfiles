@@ -270,7 +270,6 @@ endif " }}}
 packadd minPlug
 
 MinPlug Jorengarenar/fauxClip
-MinPlug Jorengarenar/LICENSES.snippets
 MinPlug Jorengarenar/vim-darkness
 MinPlug mbbill/undotree
 MinPlug sirver/ultisnips
