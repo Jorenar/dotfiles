@@ -245,7 +245,6 @@ set smartcase
 set splitbelow
 set splitright
 set switchbuf=useopen
-set t_TE= t_TI= " Disable modifyOtherKeys
 set title
 set undofile
 set wildmenu
