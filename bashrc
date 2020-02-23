@@ -18,11 +18,9 @@ alias off='shutdown -h now'
 alias pacman-autoremove='pacman -Rns $(pacman -Qtdq)'
 alias pass='EDITOR="vim -u NONE" pass'
 alias python-server='python -m http.server 8000'
-alias qmv='command qmv -v -f "do"'
 alias suspend='systemctl suspend'
 alias umnt='udisksctl unmount -b'
 alias update-grub='grub-mkconfig -o /boot/grub/grub.cfg'
-alias vi='vim'
 alias wine-lnk='env WINEPREFIX="$HOME/.wine" wine C:\\windows\\command\\start.exe /Unix'
 
 # COMPLETION {{{1
