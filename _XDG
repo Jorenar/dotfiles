@@ -13,6 +13,7 @@ export XDG_DATA_HOME="$XDG_LOCAL_HOME/share"
 # CUSTOM {{{1
 export XDG_GAMES_DIR="$XDG_LOCAL_HOME/games"
 export XDG_HISTORY_DIR="$XDG_CACHE_HOME/history"
+export XDG_SUPPDOTS_DIR="$XDG_LOCAL_HOME/supp_dotfiles"
 export XDG_VM_DIR="$XDG_LOCAL_HOME/vm"
 
 # PATH {{{2
