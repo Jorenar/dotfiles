@@ -88,21 +88,6 @@ find() {
     command find $@ 2> /dev/null
 }
 
-mpv() {
-    if [[ -z "$1" ]]; then
-        command mpv ./
-    elif [[ "$1" == "-l" ]]; then
-        if [ -z "$2" ]; then
-            command mpv --loop-playlist ./
-        else
-            shift 1
-            command mpv --loop-playlist "$@"
-        fi
-    else
-        command mpv "$@"
-    fi
-}
-
 # OTHER {{{1
 
 # Use Vi mode
