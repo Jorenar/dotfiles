@@ -37,7 +37,7 @@ auto_view text/html                                      # view html automatical
 macro index,pager \cW v/text\/html<enter><enter>
 
 # Source accounts configurations
-source $XDG_SUPPDOTS_DIR/mutt/ACCOUNTS
+source $XDG_CONFIG_HOME/mutt/accounts
 
 # SIDEBAR {{{1
 
