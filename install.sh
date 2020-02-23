@@ -34,15 +34,13 @@ linking() {
 
 # ------------------------------------------------
 
-linking  bash_profile      $HOME/.bash_profile
-linking  bashrc            $HOME/.bashrc
+
 linking  profile           $HOME/.profile
 linking  ssh_config        $HOME/.ssh/config
-linking  themes            $HOME/.themes
+linking  themes/           $HOME/.themes
 
 linking  htoprc            $XDG_CONFIG_HOME/htop/htoprc        -w
 linking  mimeapps.list     $XDG_CONFIG_HOME/mimeapps.list
-linking  newsboat/config   $XDG_CONFIG_HOME/newsboat/config
 linking  user-dirs.dirs    $XDG_CONFIG_HOME/user-dirs.dirs
 linking  zathurarc         $XDG_CONFIG_HOME/zathura/zathurarc
 
@@ -51,15 +49,16 @@ linking  git/              $XDG_CONFIG_HOME/git
 linking  i3/               $XDG_CONFIG_HOME/i3
 linking  mpv/              $XDG_CONFIG_HOME/mpv
 
+linking  bash/             $BASH_HOME
 linking  gpg-agent.conf    $GNUPGHOME/gpg-agent.conf
 linking  gtkrc-2.0         $GTK2_RC_FILES
 linking  inputrc           $INPUTRC
+linking  npmrc             $NPM_CONFIG_USERCONFIG
 linking  python_config.py  $PYTHONSTARTUP
 linking  vim/              $VIMDOTDIR
 linking  xinitrc           $XINITRC
-linking  npmrc             $NPM_CONFIG_USERCONFIG
 
-linking  fonts             $XDG_DATA_HOME/fonts
+linking  fonts/            $XDG_DATA_HOME/fonts
 
 for cfg in aerc/*; do
     linking "$cfg" $XDG_CONFIG_HOME/aerc/"$(basename $cfg)"
@@ -71,7 +70,9 @@ done
 
 # ------------------------------------------------
 
+# linking  bash/bashrc       $HOME/.bashrc
 # linking  mailcap           $HOME/.mailcap
 # linking  muttrc            $XDG_CONFIG_HOME/mutt/muttrc
 # linking  myclirc           $HOME/.myclirc
-# linking  tmux.conf         $HOME/.tmux.conf
+# linking  newsboat/config   $XDG_CONFIG_HOME/newsboat/config
+# linking  tmux.conf         $XDG_CONFIG_HOME/tmux/tmux.conf

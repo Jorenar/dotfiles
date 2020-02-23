@@ -16,12 +16,16 @@ export XDG_HISTORY_DIR="$XDG_CACHE_HOME/history"
 export XDG_SUPPDOTS_DIR="$XDG_LOCAL_HOME/supp_dotfiles"
 export XDG_VM_DIR="$XDG_LOCAL_HOME/vm"
 
+# FOR PROGRAMS {{{2
+export BASH_HOME=$XDG_CONFIG_HOME/bash
+
 # PATH {{{2
 export PATH="$XDG_LOCAL_HOME/bin:$PATH"
 export PATH="$XDG_LOCAL_HOME/scripts:$PATH"
 
 # PROGRAMS' dots RELOCATING VARIABLES {{{1
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME/java"
+export BASH_COMPLETION_USER_FILE="$BASH_HOME/bash_completion"
 export ELECTRUMDIR="$XDG_DATA_HOME/electrum"
 export ELINKS_CONFDIR="$XDG_CONFIG_HOME/elinks"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"

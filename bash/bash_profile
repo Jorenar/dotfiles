@@ -1,6 +1,10 @@
 # BASH_PROFILE #
 
-source $HOME/.bashrc
+if [ -d "$BASH_HOME" ]; then
+    source $BASH_HOME/bashrc
+else
+    source $HOME/.bashrc
+fi
 
 # If there is display and variable AUTO_STARTX is set then on tty1 `startx`
 if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]] && [[ "$(export -p | grep AUTO_STARTX)" ]] && [[ ! -f /tmp/disable_auto_startx ]]; then
@@ -16,3 +20,5 @@ if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]] && [[ "$(export -p | grep AUTO_
 elif [[ -f /tmp/disable_auto_startx ]]; then
     rm /tmp/disable_auto_startx
 fi
+
+# vim: ft=sh

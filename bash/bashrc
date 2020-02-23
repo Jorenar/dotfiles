@@ -92,7 +92,9 @@ find() {
 set -o vi
 
 # Exports
-source $HOME/.profile
+if [ $DISPLAY ] && [ -z $TMUX ]; then # prevents "source looping"
+    source $HOME/.profile
+fi
 
 # PROMPT
 PS1='\[\e[1m\]\u@\h:\[\033[90m\]\w\[\033[0m\]\[\033[1m\]\$\[\e[0m\] '

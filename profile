@@ -37,3 +37,6 @@ export GPG_AGENT_INFO
 # VITASDK
 export VITASDK=/usr/local/vitasdk
 export PATH=$VITASDK/bin:$PATH
+
+# Source shells environment configs
+source $XDG_DOTFILES_DIR/sh.env
