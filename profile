@@ -12,6 +12,12 @@ export GTK_IM_MODULE=fcitx
 # Default editor
 export EDITOR=vim
 
+# Default browser
+export BROWSER=firefox
+
+# Default terminal
+export TERMINAL=xterm
+
 # man
 export MANPAGER="vim -M +MANPAGER - +'set colorcolumn= nonumber laststatus=0'"
 export MANWIDTH=80
@@ -21,9 +27,6 @@ export QT_QPA_PLATFORMTHEME="gtk2"
 
 # GTK3 theme
 export GTK_THEME="$(grep gtk-theme-name $GTK2_RC_FILES | cut -d'"' -f 2)"
-
-# Set default terminal for i3
-export TERMINAL=xterm
 
 # Enable automatic `startx`
 export AUTO_STARTX
