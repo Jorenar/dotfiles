@@ -34,6 +34,18 @@ linking() {
 
 # ------------------------------------------------
 
+A='[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc" ] && . "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc"'
+if ! grep -Fxq "$A" /etc/bash.bashrc; then
+    prompt=$(sudo -nv 2>&1)
+    if [ $? -eq 0 ] || grep -q '^sudo:' <<< "$prompt"; then
+        read -p 'Do you wish to add rule to /etc/bash.bashrc for reading $XDG_CONFIG_HOME/bash/bashrc? [Y/n]' -n 1 -r; echo
+        if [[ ! $REPLY =~ ^[Nn]$ ]]; then
+            sudo sh -c "printf '\n# Source bashrc from XDG location\n$A' >> /etc/bash.bashrc"
+        fi
+    else
+        linking  bash/bashrc  $HOME/.bashrc
+    fi
+fi
 
 linking  profile           $HOME/.profile
 linking  ssh_config        $HOME/.ssh/config
@@ -70,7 +82,6 @@ done
 
 # ------------------------------------------------
 
-# linking  bash/bashrc       $HOME/.bashrc
 # linking  mailcap           $HOME/.mailcap
 # linking  muttrc            $XDG_CONFIG_HOME/mutt/muttrc
 # linking  myclirc           $HOME/.myclirc
