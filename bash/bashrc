@@ -93,7 +93,7 @@ set -o vi
 
 # Exports
 if [ $DISPLAY ] && [ -z $TMUX ]; then # prevents "source looping"
-    source $HOME/.profile
+    source $XDG_DOTFILES_DIR/profile
 fi
 
 # PROMPT

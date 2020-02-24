@@ -35,19 +35,20 @@ linking() {
 # ------------------------------------------------
 
 A='[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc" ] && . "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc"'
-if ! grep -Fxq "$A" /etc/bash.bashrc; then
+if ! grep -Fxq "$A" /etc/bash.bashrc || [ ! -f /etc/profile.d/profile_xdg.sh ]; then
     prompt=$(sudo -nv 2>&1)
     if [ $? -eq 0 ] || grep -q '^sudo:' <<< "$prompt"; then
-        read -p 'Do you wish to add rule to /etc/bash.bashrc for reading $XDG_CONFIG_HOME/bash/bashrc? [Y/n]' -n 1 -r; echo
-        if [[ ! $REPLY =~ ^[Nn]$ ]]; then
+        read -p 'Do you wish to install root patches? [y/N]' -n 1 -r; echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
             sudo sh -c "printf '\n# Source bashrc from XDG location\n$A' >> /etc/bash.bashrc"
+            sudo ln -sf $dotfiles_dir/patch/profile_xdg.sh /etc/profile.d/profile_xdg.sh
         fi
     else
+        linking  profile      $HOME/.profile
         linking  bash/bashrc  $HOME/.bashrc
     fi
 fi
 
-linking  profile           $HOME/.profile
 linking  ssh_config        $HOME/.ssh/config
 linking  themes/           $HOME/.themes
 

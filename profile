@@ -1,7 +1,7 @@
 # ~/.PROFILE #
 
 # --- XDG ---
-export XDG_DOTFILES_DIR="$(dirname $(readlink -f $HOME/.profile))"
+export XDG_DOTFILES_DIR="$(dirname $(realpath ${BASH_SOURCE[0]}))"
 source $XDG_DOTFILES_DIR/_XDG
 
 # Japanese input
