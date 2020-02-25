@@ -270,6 +270,7 @@ endif " }}}
 
 packadd minPlug
 
+MinPlug ctrlpvim/ctrlp.vim
 MinPlug Jorengarenar/fauxClip
 MinPlug Jorengarenar/vim-darkness
 MinPlug mbbill/undotree
