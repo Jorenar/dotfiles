@@ -364,6 +364,7 @@ augroup END " }}}
 call mkdir(&backupdir, 'p')
 call mkdir($XDG_DATA_HOME."/vim/spell", 'p')
 
+packadd cfilter
 packadd matchit
 packadd termdebug
 runtime ftplugin/man.vim
