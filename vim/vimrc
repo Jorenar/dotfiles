@@ -271,6 +271,7 @@ endif " }}}
 packadd minPlug
 
 MinPlug ctrlpvim/ctrlp.vim
+MinPlug dense-analysis/ale
 MinPlug Jorengarenar/fauxClip
 MinPlug Jorengarenar/vim-darkness
 MinPlug mbbill/undotree
@@ -279,8 +280,15 @@ MinPlug tpope/vim-surround
 
 " MAPPINGS
 inoremap <silent> <C-x><Tab> <C-r>=UltiSnips_complete()<CR>
+nmap <M-a> <Plug>(ale_detail)
 nmap s ys
 vmap s S
+
+" OPTIONS
+let g:ale_open_list    = 1
+let g:ale_set_loclist  = 0
+let g:ale_set_quickfix = 1
+let g:ale_set_signs    = 0
 
 " STATUS LINE {{{1
 
