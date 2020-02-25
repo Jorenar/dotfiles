@@ -79,7 +79,7 @@ let s:formatprg_for_filetype = {
       \ "css"        : "css-beautify -s 2 --space-around-combinator",
       \ "go"         : "gofmt",
       \ "html"       : "tidy -q -w -i --show-warnings 0 --show-errors 0 --tidy-mark no",
-      \ "java"       : "astyle --style=java -s4 -N -S -xG -xU -f -k3 -xj -p",
+      \ "java"       : "astyle --style=java -s4 -S -xU -k1 -O -c -H -xW -j",
       \ "javascript" : "js-beautify -s 2",
       \ "json"       : "js-beautify",
       \ "python"     : "autopep8 -",
