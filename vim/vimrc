@@ -311,6 +311,8 @@ set statusline+=%w                     " Preview flag
 set statusline+=\ \                    " Separator
 set statusline+=%{ModifBufs()}         " Modified flag (extended)
 set statusline+=%=                     " Switch to the right side
+set statusline+=<0x%B>                 " Current char hex code
+set statusline+=\ \                    " Separator
 set statusline+=%l/                    " Current line
 set statusline+=%L                     " Total lines
 set statusline+=\ \:\ %c\              " Current column
