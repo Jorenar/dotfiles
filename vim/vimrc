@@ -291,6 +291,9 @@ MinPlug mbbill/undotree
 MinPlug sirver/ultisnips
 MinPlug tpope/vim-surround
 
+MinPlug! artur-shaik/vim-javacomplete2
+MinPlug! vim-scripts/dbext.vim
+
 " MAPPINGS
 inoremap <silent> <C-x><Tab> <C-r>=UltiSnips_complete()<CR>
 nmap <M-a> <Plug>(ale_detail)
