@@ -151,6 +151,18 @@ function! s:VSetSearch(cmdtype) abort
 endfunction
 
 " FOR STATUS LINE {{{2
+" ALE_Status {{{3
+function! ALE_Status() abort
+  if exists('g:loaded_ale_dont_use_this_in_other_plugins_please')
+    let l:counts = ale#statusline#Count(bufnr(''))
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_non_errors = l:counts.total - l:all_errors
+    return l:counts.total == 0 ? "" : "*".all_errors."E ".all_non_errors."w*"
+  else
+    return ""
+  endif
+endfunction
+
 " FileEncoding {{{3
 function! FileEncoding() abort
   return (&fenc == "" ? &enc : &fenc).((exists("+bomb") && &bomb) ? " BOM" : "")
@@ -187,10 +199,6 @@ endfunction
 " Normal mode {{{2
 nnoremap ' `
 nnoremap '' ``
-nnoremap <M-h> <C-w>h
-nnoremap <M-j> <C-w>j
-nnoremap <M-k> <C-w>k
-nnoremap <M-l> <C-w>l
 nnoremap <expr> <F4> &virtualedit == "all" ? ":set virtualedit=\<CR>" : ":set virtualedit=all\<CR>"
 nnoremap <F3> :set cursorline! cursorcolumn!<CR>
 nnoremap <leader>= gg=G``
@@ -199,6 +207,11 @@ nnoremap <leader>h :nohlsearch<CR>
 nnoremap <leader>q gggqG
 nnoremap <leader>r :%s/\<<C-r><C-w>\>//g<Left><Left>
 nnoremap <leader>R :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
+nnoremap <M-A> :copen<CR>
+nnoremap <M-h> <C-w>h
+nnoremap <M-j> <C-w>j
+nnoremap <M-k> <C-w>k
+nnoremap <M-l> <C-w>l
 nnoremap <silent> <expr> <F5> g:colors_name == "darkness" ? ":syntax reset <bar> let g:colors_name=''\<CR>" : ":colo darkness\<CR>"
 nnoremap gx :execute 'silent! !xdg-open "<cfile>" &> /dev/null &' <bar> redraw! <CR>
 nnoremap j gj
@@ -285,7 +298,6 @@ nmap s ys
 vmap s S
 
 " OPTIONS
-let g:ale_open_list    = 1
 let g:ale_set_loclist  = 0
 let g:ale_set_quickfix = 1
 let g:ale_set_signs    = 0
@@ -311,6 +323,8 @@ set statusline+=%w                     " Preview flag
 set statusline+=\ \                    " Separator
 set statusline+=%{ModifBufs()}         " Modified flag (extended)
 set statusline+=%=                     " Switch to the right side
+set statusline+=%{ALE_Status()}        " ALE ststus
+set statusline+=\ \                    " Separator
 set statusline+=<0x%B>                 " Current char hex code
 set statusline+=\ \                    " Separator
 set statusline+=%l/                    " Current line
