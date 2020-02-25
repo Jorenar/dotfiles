@@ -157,7 +157,7 @@ function! ALE_Status() abort
     let l:counts = ale#statusline#Count(bufnr(''))
     let l:all_errors = l:counts.error + l:counts.style_error
     let l:all_non_errors = l:counts.total - l:all_errors
-    return l:counts.total == 0 ? "" : "*".all_errors."E ".all_non_errors."w*"
+    return "*".all_errors."E ".all_non_errors."w*"
   else
     return ""
   endif
@@ -328,7 +328,7 @@ set statusline+=%{ModifBufs()}         " Modified flag (extended)
 set statusline+=%=                     " Switch to the right side
 set statusline+=%{ALE_Status()}        " ALE ststus
 set statusline+=\ \                    " Separator
-set statusline+=<0x%B>                 " Current char hex code
+set statusline+=<0x%02B>               " Current char hex code
 set statusline+=\ \                    " Separator
 set statusline+=%l/                    " Current line
 set statusline+=%L                     " Total lines
@@ -346,7 +346,7 @@ augroup OTHER " {{{
   autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
 
   " Set 'foldmethod' to 'syntax'
-  autocmd filetype css,html,java,javascript,sh,typescript setlocal foldmethod=syntax
+  autocmd filetype css,html,javascript,sh,typescript setlocal foldmethod=syntax
 
   " Protect folds when toggling insert mode / switching windows
   autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
