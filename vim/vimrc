@@ -199,6 +199,10 @@ endfunction
 " Normal mode {{{2
 nnoremap ' `
 nnoremap '' ``
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 nnoremap <expr> <F4> &virtualedit == "all" ? ":set virtualedit=\<CR>" : ":set virtualedit=all\<CR>"
 nnoremap <F3> :set cursorline! cursorcolumn!<CR>
 nnoremap <leader>= gg=G``
@@ -208,20 +212,16 @@ nnoremap <leader>q gggqG
 nnoremap <leader>r :%s/\<<C-r><C-w>\>//g<Left><Left>
 nnoremap <leader>R :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
 nnoremap <M-A> :copen<CR>
-nnoremap <M-h> <C-w>h
-nnoremap <M-j> <C-w>j
-nnoremap <M-k> <C-w>k
-nnoremap <M-l> <C-w>l
 nnoremap <silent> <expr> <F5> g:colors_name == "darkness" ? ":syntax reset <bar> let g:colors_name=''\<CR>" : ":colo darkness\<CR>"
 nnoremap gx :execute 'silent! !xdg-open "<cfile>" &> /dev/null &' <bar> redraw! <CR>
 nnoremap j gj
 nnoremap k gk
 
 " Terminal mode {{{2
-tnoremap <M-h> <C-\><C-n><C-w>h
-tnoremap <M-j> <C-\><C-n><C-w>j
-tnoremap <M-k> <C-\><C-n><C-w>k
-tnoremap <M-l> <C-\><C-n><C-w>l
+tnoremap <C-h> <C-\><C-n><C-w>h
+tnoremap <C-j> <C-\><C-n><C-w>j
+tnoremap <C-k> <C-\><C-n><C-w>k
+tnoremap <C-l> <C-\><C-n><C-w>l
 
 " Visual mode {{{2
 xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
