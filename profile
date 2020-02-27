@@ -1,7 +1,10 @@
-# ~/.PROFILE #
+# PROFILE #
 
 # --- XDG ---
-export XDG_DOTFILES_DIR="$(dirname $(realpath ${BASH_SOURCE[0]}))"
+
+[ "$0" = "bash" -o "$0" = "-bash" ] && export XDG_DOTFILES_DIR="$(dirname $(realpath ${BASH_SOURCE[0]}))"
+[ "$0" = "zsh"  -o "$0" = "-zsh"  ] && export XDG_DOTFILES_DIR="$(dirname $(realpath ${(%):-%N}))"
+
 source $XDG_DOTFILES_DIR/_XDG
 
 # Japanese input
@@ -39,4 +42,11 @@ export VITASDK=/usr/local/vitasdk
 export PATH=$VITASDK/bin:$PATH
 
 # Source shells environment configs
-source $XDG_DOTFILES_DIR/sh.env
+source $XDG_DOTFILES_DIR/shrc
+
+if [ ! -f /tmp/executed_autostart ]; then
+    $XDG_DOTFILES_DIR/autostart.sh
+    touch /tmp/executed_autostart
+fi
+
+# vim: ft=sh

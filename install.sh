@@ -34,20 +34,42 @@ linking() {
 
 # ------------------------------------------------
 
-A='[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc" ] && . "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc"'
-if ! grep -Fxq "$A" /etc/bash.bashrc || [ ! -f /etc/profile.d/profile_xdg.sh ]; then
-    prompt=$(sudo -nv 2>&1)
-    if [ $? -eq 0 ] || grep -q '^sudo:' <<< "$prompt"; then
-        read -p 'Do you wish to install root patches? [y/N]' -n 1 -r; echo
+prompt_sudo=$(sudo -nv 2>&1)
+if [ $? -eq 0 ] || grep -q '^sudo:' <<< "$prompt_sudo"; then
+    is_sudo=true
+else
+    is_sudo=false
+fi
+
+if [ ! -f /etc/profile.d/profile_xdg.sh ]; then
+    if [ $is_sudo = true ]; then
+        read -p 'Do you wish to install root patches for XDG support for 'profile' file? [y/N]' -n 1 -r; echo
         if [[ $REPLY =~ ^[Yy]$ ]]; then
-            sudo sh -c "printf '\n# Source bashrc from XDG location\n$A' >> /etc/bash.bashrc"
             sudo ln -sf $dotfiles_dir/patch/profile_xdg.sh /etc/profile.d/profile_xdg.sh
+        else
+            linking  profile  $HOME/.profile
         fi
     else
-        linking  profile      $HOME/.profile
-        linking  bash/bashrc  $HOME/.bashrc
+        linking  profile  $HOME/.profile
     fi
 fi
+
+if which bash; then
+    A='[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc" ] && . "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc"'
+    if ! grep -Fxq "$A" /etc/bash.bashrc || [ ! -f /etc/profile.d/profile_xdg.sh ]; then
+        if [ $is_sudo = true ]; then
+            read -p 'Do you wish to install root patches for XDG support for Bash? [y/N]' -n 1 -r; echo
+            if [[ $REPLY =~ ^[Yy]$ ]]; then
+                sudo sh -c "printf '\n# Source bashrc from XDG location\n$A' >> /etc/bash.bashrc"
+            else
+                linking  bash/bashrc  $HOME/.bashrc
+            fi
+        else
+            linking  bash/bashrc  $HOME/.bashrc
+        fi
+    fi
+fi
+
 
 linking  ssh_config        $HOME/.ssh/config
 linking  themes/           $HOME/.themes
@@ -62,7 +84,7 @@ linking  git/              $XDG_CONFIG_HOME/git
 linking  i3/               $XDG_CONFIG_HOME/i3
 linking  mpv/              $XDG_CONFIG_HOME/mpv
 
-linking  bash/             $BASH_HOME
+linking  bashrc            $BASH_HOME/bashrc
 linking  gpg-agent.conf    $GNUPGHOME/gpg-agent.conf
 linking  gtkrc-2.0         $GTK2_RC_FILES
 linking  inputrc           $INPUTRC
@@ -70,6 +92,7 @@ linking  npmrc             $NPM_CONFIG_USERCONFIG
 linking  python_config.py  $PYTHONSTARTUP
 linking  vim/              $VIMDOTDIR
 linking  xinitrc           $XINITRC
+linking  zshrc             $ZDOTDIR/.zshrc
 
 linking  fonts/            $XDG_DATA_HOME/fonts
 
@@ -81,6 +104,8 @@ for firefox_profile in $HOME/.mozilla/firefox/*.default-release; do
     linking userContent.css "$firefox_profile/chrome/userContent.css"
 done
 
+chmod +x autostart.sh
+
 # ------------------------------------------------
 
 # linking  mailcap           $HOME/.mailcap
@@ -88,3 +113,6 @@ done
 # linking  myclirc           $HOME/.myclirc
 # linking  newsboat/config   $XDG_CONFIG_HOME/newsboat/config
 # linking  tmux.conf         $XDG_CONFIG_HOME/tmux/tmux.conf
+
+# ------------------------------------------------
+# vim: fen

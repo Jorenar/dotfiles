@@ -1,0 +1,54 @@
+#! sh
+
+# ALIASES {{{1
+
+alias ap1='sudo create_ap wlo1 wlo1 x I_love_BASH' # semi open WiFi network
+alias cal='cal -m'
+alias du='du -h'
+alias gpu-switch='optimus-manager --switch auto && i3-msg exit'
+alias grep='grep --color'
+alias i3-logout="touch /tmp/disable_auto_startx && i3-msg exit"
+alias i3-relog="i3-msg exit"
+alias less='less -R'
+alias ll='ls -alhF | less -R'
+alias ls='ls -F'
+alias mkdir='mkdir -p'
+alias mnt='udisksctl mount -b'
+alias off='shutdown -h now'
+alias pacman-autoremove='pacman -Rns $(pacman -Qtdq)'
+alias pass='EDITOR="vim -u NONE" pass'
+alias python-server='python -m http.server 8000'
+alias suspend='systemctl suspend'
+alias umnt='udisksctl unmount -b'
+alias update-grub='grub-mkconfig -o /boot/grub/grub.cfg'
+alias wine-lnk='env WINEPREFIX="$HOME/.wine" wine C:\\windows\\command\\start.exe /Unix'
+
+# WRAPPERS {{{1
+
+feh() {
+    if [[ -d $1 ]] || [[ -d $2 ]]; then
+        command feh "$@" > /dev/null 2>&1 & disown
+    else
+        command feh --start-at "$@" > /dev/null 2>&1 & disown
+    fi
+}
+
+find() {
+    command find $@ 2> /dev/null
+}
+
+### AUTO STARTX ### {{{1
+
+# If there is display and variable AUTO_STARTX is set then on tty1 `startx`
+if [ -z $DISPLAY ] && [ $(tty) = /dev/tty1 ] && [ "$(export -p | grep AUTO_STARTX)" ] && [ ! -f /tmp/disable_auto_startx ]; then
+
+    # This is for optimus-manager
+    sudo /usr/bin/prime-switch
+
+    exec startx $XINITRC
+
+elif [ -f /tmp/disable_auto_startx ]; then
+    rm /tmp/disable_auto_startx
+fi
+
+# vim: fdm=marker fen
