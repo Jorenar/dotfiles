@@ -15,7 +15,7 @@ let s:makeprg_for_filetype = {
       \ "asm"      : "as -o %<.o % && ld -s -o %< %<.o && rm %<.o && ./%<",
       \ "basic"    : "vintbas %",
       \ "c"        : "gcc -std=gnu99 -g % -o %< && ./%<",
-      \ "cpp"      : "g++ -std=gnu++11 -g % -o %< && ./%<",
+      \ "cpp"      : "g++ -std=gnu++14 -g % -o %< && ./%<",
       \ "go"       : "go build && ./%<",
       \ "haskell"  : "ghc -o %< %; rm %<.hi %<.o && ./%<",
       \ "html"     : "tidy -quiet -errors --gnu-emacs yes %:S; firefox -new-window % &",
