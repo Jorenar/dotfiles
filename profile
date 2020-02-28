@@ -25,11 +25,12 @@ export TERMINAL=xterm
 export MANPAGER="vim -M +MANPAGER - +'set colorcolumn= nonumber laststatus=0'"
 export MANWIDTH=80
 
-# Set Qt to use GTK theme
-export QT_QPA_PLATFORMTHEME="gtk2"
-
-# GTK3 theme
+# GTK theme
 export GTK_THEME="$(grep gtk-theme-name $GTK2_RC_FILES | cut -d'"' -f 2)"
+export GTK2_RC_FILES="$GTK2_RC_FILES:$XDG_DATA_HOME/themes/$GTK_THEME/gtk-2.0/gtkrc"
+
+# Set Qt to use GTK theme
+export QT_QPA_PLATFORMTHEME=gtk2
 
 # Enable automatic `startx`
 export AUTO_STARTX
@@ -44,6 +45,7 @@ export PATH=$VITASDK/bin:$PATH
 # Source shells environment configs
 source $XDG_DOTFILES_DIR/shrc
 
+# Autostart script
 if [ ! -f /tmp/executed_autostart ]; then
     $XDG_DOTFILES_DIR/autostart.sh
     touch /tmp/executed_autostart

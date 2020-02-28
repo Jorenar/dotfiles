@@ -54,7 +54,7 @@ if [ ! -f /etc/profile.d/profile_xdg.sh ]; then
     fi
 fi
 
-if which bash; then
+if which bash &> /dev/null; then
     A='[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc" ] && . "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc"'
     if ! grep -Fxq "$A" /etc/bash.bashrc || [ ! -f /etc/profile.d/profile_xdg.sh ]; then
         if [ $is_sudo = true ]; then
@@ -72,7 +72,6 @@ fi
 
 
 linking  ssh_config        $HOME/.ssh/config
-linking  themes/           $HOME/.themes
 
 linking  htoprc            $XDG_CONFIG_HOME/htop/htoprc        -w
 linking  mimeapps.list     $XDG_CONFIG_HOME/mimeapps.list
@@ -86,7 +85,7 @@ linking  mpv/              $XDG_CONFIG_HOME/mpv
 
 linking  bashrc            $BASH_HOME/bashrc
 linking  gpg-agent.conf    $GNUPGHOME/gpg-agent.conf
-linking  gtkrc-2.0         $GTK2_RC_FILES
+linking  gtkrc-2.0         $GTK2_RC_FILES  # works properly, because _XDG is sourced
 linking  inputrc           $INPUTRC
 linking  npmrc             $NPM_CONFIG_USERCONFIG
 linking  python_config.py  $PYTHONSTARTUP
@@ -95,6 +94,7 @@ linking  xinitrc           $XINITRC
 linking  zshrc             $ZDOTDIR/.zshrc
 
 linking  fonts/            $XDG_DATA_HOME/fonts
+linking  themes/           $XDG_DATA_HOME/themes
 
 for cfg in aerc/*; do
     linking "$cfg" $XDG_CONFIG_HOME/aerc/"$(basename $cfg)"
