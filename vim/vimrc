@@ -93,6 +93,17 @@ for [ft, fp] in items(s:formatprg_for_filetype)
 endfor
 
 " FUNCTIONS {{{1
+" ALE toggle highlight {{{2
+function! ALE_toggle_highlight()
+  if matchstr(execute('hi ALEError'), 'cleared') == "cleared"
+    highlight link ALEError   ErrorMsg
+    highlight link ALEWarning WarningMsg
+  else
+    highlight ALEError   cterm=NONE
+    highlight ALEWarning cterm=NONE
+  endif
+endfunction
+
 " GrepRename - replace through whole project {{{2
 function! s:GrepRename(expr1, expr2) abort
   execute "tabe | lvimgrep /\\C\\W".a:expr1."\\W/j ** | ldo s/\\C\\\(\\W\\)".a:expr1."\\\(\\W\\)/\\1".a:expr2."\\2/gc | update" | q
@@ -298,12 +309,17 @@ MinPlug! vim-scripts/dbext.vim
 inoremap <silent> <C-x><Tab> <C-r>=UltiSnips_complete()<CR>
 nmap <M-a> <Plug>(ale_detail)
 nmap s ys
+nnoremap <F1> :UndotreeToggle<cr>
+nnoremap <F2> :call ALE_toggle_highlight()<CR>
 vmap s S
 
 " OPTIONS
 let g:ale_set_loclist  = 0
 let g:ale_set_quickfix = 1
 let g:ale_set_signs    = 0
+
+highlight ALEError   cterm=NONE
+highlight ALEWarning cterm=NONE
 
 " STATUS LINE {{{1
 
