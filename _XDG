@@ -10,6 +10,8 @@ export XDG_CACHE_HOME="$XDG_LOCAL_HOME/cache"
 export XDG_CONFIG_HOME="$XDG_LOCAL_HOME/config"
 export XDG_DATA_HOME="$XDG_LOCAL_HOME/share"
 
+# remember to change in 'ssh_config' too!
+
 # CUSTOM {{{1
 export XDG_FAKE_HOME="$XDG_LOCAL_HOME/home"
 export XDG_GAMES_DIR="$XDG_LOCAL_HOME/games"
