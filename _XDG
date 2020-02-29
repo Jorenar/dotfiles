@@ -21,6 +21,7 @@ export XDG_VM_DIR="$XDG_LOCAL_HOME/vm"
 export BASH_HOME=$XDG_CONFIG_HOME/bash
 
 # PATH {{{2
+export PATH="$XDG_LOCAL_HOME/AppImages:$PATH"
 export PATH="$XDG_LOCAL_HOME/bin:$PATH"
 export PATH="$XDG_LOCAL_HOME/scripts:$PATH"
 
