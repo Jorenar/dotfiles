@@ -67,4 +67,7 @@ while IFS= read -r dir; do
     export $(echo $dir | cut -f1 -d"#")
 done < "$XDG_CONFIG_HOME/user-dirs.dirs"
 
+# {{{1
+export GOPS_CONFIG_DIR="$XDG_CONFIG_HOME/gops" # temporary - until my pull request will be accepted
+
 # vim: ft=sh fdm=marker fen
