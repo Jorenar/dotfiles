@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 # ------------------------------------------------
 
@@ -16,7 +16,7 @@ declare force_flag=$1
 # ------------------------------------------------
 
 linking() {
-    if [[ $force_flag == "-f" ]]; then
+    if [[ $force_flag = "-f" ]]; then
         mkdir -p $HOME/dotfiles.old/
         mv "$2" "$HOME/dotfiles.old/"
         echo "Moved file $2 to directory $HOME/dotfiles.old/"
@@ -34,41 +34,9 @@ linking() {
 
 # ------------------------------------------------
 
-prompt_sudo=$(sudo -nv 2>&1)
-if [ $? -eq 0 ] || grep -q '^sudo:' <<< "$prompt_sudo"; then
-    is_sudo=true
-else
-    is_sudo=false
-fi
+source $dotfiles_dir/patch/install.sh
 
-if [ ! -f /etc/profile.d/profile_xdg.sh ]; then
-    if [ $is_sudo = true ]; then
-        read -p 'Do you wish to install root patches for XDG support for 'profile' file? [y/N]' -n 1 -r; echo
-        if [[ $REPLY =~ ^[Yy]$ ]]; then
-            sudo ln -sf $dotfiles_dir/patch/profile_xdg.sh /etc/profile.d/profile_xdg.sh
-        else
-            linking  profile  $HOME/.profile
-        fi
-    else
-        linking  profile  $HOME/.profile
-    fi
-fi
-
-if which bash &> /dev/null; then
-    A='[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc" ] && . "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc"'
-    if ! grep -Fxq "$A" /etc/bash.bashrc || [ ! -f /etc/profile.d/profile_xdg.sh ]; then
-        if [ $is_sudo = true ]; then
-            read -p 'Do you wish to install root patches for XDG support for Bash? [y/N]' -n 1 -r; echo
-            if [[ $REPLY =~ ^[Yy]$ ]]; then
-                sudo sh -c "printf '\n# Source bashrc from XDG location\n$A' >> /etc/bash.bashrc"
-            else
-                linking  bash/bashrc  $HOME/.bashrc
-            fi
-        else
-            linking  bash/bashrc  $HOME/.bashrc
-        fi
-    fi
-fi
+# ------------------------------------------------
 
 
 linking  ssh_config        $HOME/.ssh/config
