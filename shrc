@@ -23,6 +23,8 @@ alias umnt='udisksctl unmount -b'
 alias update-grub='grub-mkconfig -o /boot/grub/grub.cfg'
 alias wine-lnk='env WINEPREFIX="$HOME/.wine" wine C:\\windows\\command\\start.exe /Unix'
 
+alias electrum='electrum -D $XDG_DATA_HOME/electrum' # temporary - until version 3.3.9
+
 # WRAPPERS {{{1
 
 feh() {
