@@ -8,9 +8,8 @@ chmodX() {
 
 chmodX audacity
 chmodX dosbox
+chmodX firefox
 chmodX itch
 chmodX ssh
 chmodX ssh-copy-id
 chmodX steam
-
-# chmodX firefox

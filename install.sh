@@ -63,6 +63,7 @@ linking  zshrc             $ZDOTDIR/.zshrc
 
 linking  fonts/            $XDG_DATA_HOME/fonts
 linking  themes/           $XDG_DATA_HOME/themes
+linking  themes/           $XDG_FAKE_HOME/.themes # second time for compability with _XDG/wrappers
 
 for cfg in aerc/*; do
     linking "$cfg" $XDG_CONFIG_HOME/aerc/"$(basename $cfg)"
