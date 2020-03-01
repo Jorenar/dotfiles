@@ -1,7 +1,14 @@
 #!/usr/bin/env sh
 
 if [ -z "$(xlsclients | grep -i QuiteRSS)" ]; then
-    exec quiterss
+    exec quiterss &
+
+    # ugly hot-fix
+    if [ "$XDG_CACHE_HOME" != "$HOME/.cache" ]; then
+        sleep 2
+        find $HOME/.cache -type d -delete
+    fi
+
 else
     i3-msg [class="QuiteRss"] scratchpad show
 fi
