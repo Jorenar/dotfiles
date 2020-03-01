@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+if [ -s "${XDG_CONFIG_HOME}/ssh/id_dsa" ]
+then
+    SSH_ID="-i $XDG_DATA_HOME/ssh/id_dsa"
+fi
+
+PATH=$(tr ":" "\n" <<<"$PATH" | grep -Fxv "$(dirname $0)" | paste -sd:)
+
+exec ssh-copy-id $SSH_ID "$@"

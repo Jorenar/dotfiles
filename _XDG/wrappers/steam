@@ -1,0 +1,5 @@
+#!/bin/sh
+
+HOME="${XDG_FAKE_HOME:-$HOME/.local/home}"
+
+exec /usr/lib/steam/steam "$@"

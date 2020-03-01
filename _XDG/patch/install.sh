@@ -25,7 +25,7 @@ else
 fi
 
 if [ $installing == "true" ]; then
-    sudo ln -sf $dotfiles_dir/patch/profile_xdg.sh /etc/profile.d/profile_xdg.sh
+    sudo ln -sf $dotfiles_dir/_XDG/patch/profile_xdg.sh /etc/profile.d/profile_xdg.sh
 elif [ $installing != done ]; then
     linking  profile  $HOME/.profile
 fi

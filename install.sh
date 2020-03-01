@@ -7,9 +7,9 @@
 
 # ------------------------------------------------
 
-declare dotfiles_dir="$(dirname $(realpath $0))"
+declare DIR="$(dirname $(realpath $0))"
 
-source $dotfiles_dir/_XDG
+source $DIR/_XDG/env_variables
 
 declare force_flag=$1
 
@@ -24,7 +24,7 @@ linking() {
 
     if [ ! -e $2 ]; then
         mkdir -p "$(dirname $2)"
-        ln -sf $dotfiles_dir/$1 $2
+        ln -sf $DIR/$1 $2
     fi
 
     if [ ! -z "$3" ]; then
@@ -34,7 +34,8 @@ linking() {
 
 # ------------------------------------------------
 
-source $dotfiles_dir/patch/install.sh
+source $DIR/_XDG/patch/install.sh
+sh $DIR/_XDG/chmod_wrappers.sh
 
 # ------------------------------------------------
 
@@ -71,7 +72,7 @@ for firefox_profile in $HOME/.mozilla/firefox/*.default-release; do
     linking userContent.css "$firefox_profile/chrome/userContent.css"
 done
 
-chmod +x autostart.sh
+chmod +x $DIR/autostart.sh
 
 # ------------------------------------------------
 

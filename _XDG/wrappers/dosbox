@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+PATH=$(tr ":" "\n" <<<"$PATH" | grep -Fxv "$(dirname $0)" | paste -sd:)
+exec dosbox -conf "${XDG_CONFIG_HOME:-$HOME/.config}"/dosbox/dosbox.conf

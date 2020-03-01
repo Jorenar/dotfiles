@@ -5,7 +5,7 @@
 [ "$0" = "bash" -o "$0" = "-bash" ] && export XDG_DOTFILES_DIR="$(dirname $(realpath ${BASH_SOURCE[0]}))"
 [ "$0" = "zsh"  -o "$0" = "-zsh"  ] && export XDG_DOTFILES_DIR="$(dirname $(realpath ${(%):-%N}))"
 
-source $XDG_DOTFILES_DIR/_XDG
+source $XDG_DOTFILES_DIR/_XDG/env_variables
 
 # Japanese input
 export QT_IM_MODULE=fcitx
