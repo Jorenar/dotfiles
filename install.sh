@@ -75,6 +75,8 @@ done
 
 chmod +x $DIR/autostart.sh
 
+touch $DCONF_PROFILE
+
 # ------------------------------------------------
 
 # linking  mailcap           $HOME/.mailcap

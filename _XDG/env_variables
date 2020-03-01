@@ -31,9 +31,9 @@ export PATH="$XDG_LOCAL_HOME/wrappers:$PATH"
 export PATH="$XDG_DOTFILES_DIR/_XDG/wrappers:$PATH"
 
 # PROGRAMS' dots RELOCATING VARIABLES {{{1
-export AUDACITY_PATH="$XDG_DATA_HOME/audacity"
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME/java"
 export BASH_COMPLETION_USER_FILE="$BASH_HOME/bash_completion"
+export DCONF_PROFILE="$XDG_CONFIG_HOME/dconf/user"
 export ELECTRUMDIR="$XDG_DATA_HOME/electrum"
 export ELINKS_CONFDIR="$XDG_CONFIG_HOME/elinks"
 export GIT_TEMPLATE_DIR="$XDG_CONFIG_HOME/git/template"
