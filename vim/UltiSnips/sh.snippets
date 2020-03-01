@@ -1,3 +1,8 @@
 snippet #! "shebang"
 #!/usr/bin/env ${1:sh}
 endsnippet
+
+snippet wrapper
+PATH=\$(tr ":" "\n" <<<"\$PATH" | grep -Fxv "$(dirname \$0)" | paste -sd:)
+exec "\$(basename \$0)" "\$@"
+endsnippet
