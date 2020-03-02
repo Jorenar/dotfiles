@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 if [ -z "$(xlsclients | grep -i QuiteRSS)" ]; then
-    exec quiterss &
+    exec quiterss
 else
     i3-msg [class="QuiteRss"] scratchpad show
 fi

@@ -26,7 +26,6 @@ export BASH_HOME=$XDG_CONFIG_HOME/bash
 export PATH="$XDG_LOCAL_HOME/AppImages:$PATH"
 export PATH="$XDG_LOCAL_HOME/bin:$PATH"
 export PATH="$XDG_LOCAL_HOME/scripts:$PATH"
-export PATH="$XDG_LOCAL_HOME/wrappers:$PATH"
 
 export PATH="$XDG_DOTFILES_DIR/_XDG/wrappers:$PATH"
 
