@@ -1,6 +1,3 @@
-Host *
-    IdentityFile ~/.local/share/ssh/id_rsa
-
 Host aur.archlinux.org
-  IdentityFile ~/.local/share/ssh/aur
-  User aur
+    IdentityFile ~/.local/share/ssh/aur
+    User aur
