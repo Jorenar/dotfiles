@@ -275,7 +275,7 @@ set wildmenu
 set wildmode=full
 
 if has('nvim')
-  set guicursor=
+  set guicursor=n-v-c-sm-i-r-ci-ve-cr-o:block " setting a:block breaks blinking
 else
   set sessionoptions=blank,buffers,folds,tabpages,winsize,terminal
 endif
