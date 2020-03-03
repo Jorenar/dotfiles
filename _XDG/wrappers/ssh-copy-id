@@ -1,8 +1,7 @@
 #!/usr/bin/env sh
 
-if [ -s "${XDG_CONFIG_HOME}/ssh/id_dsa" ]; then
-    SSH_ID="-i $XDG_DATA_HOME/ssh/id_dsa"
-fi
+XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+[ -s "$XDG_DATA_HOME/ssh/id_rsa" ] && SSH_ID="-i $XDG_DATA_HOME/ssh/id_rsa"
 
 PATH=$(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)" | paste -sd:)
 
