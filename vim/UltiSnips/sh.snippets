@@ -3,6 +3,6 @@ snippet #! "shebang"
 endsnippet
 
 snippet wrapper
-PATH=\$(tr ":" "\n" <<<"\$PATH" | grep -Fxv "$(dirname \$0)" | paste -sd:)
+PATH=\$(echo "\$PATH" | tr ":" "\n" | grep -Fxv "$(dirname \$0)" | paste -sd:)
 exec "\$(basename \$0)" "\$@"
 endsnippet

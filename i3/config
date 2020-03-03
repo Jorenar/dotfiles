@@ -1,4 +1,5 @@
 # i3 - config #
+# vim: fdm=marker fen
 
 # GENERAL {{{1
 
@@ -221,5 +222,3 @@ bindsym --release Print exec --no-startup-id "mkdir -p ~/images/screenshots && s
 
 # OSX-like area selection screenshots
 bindsym --release Shift+Print exec --no-startup-id "mkdir -p ~/images/screenshots && scrot -s ~/images/screenshots/screenshot-%Y%m%d_%H%M%S.png"
-
-# vim: fdm=marker foldenable:

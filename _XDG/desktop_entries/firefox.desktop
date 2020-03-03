@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Firefox
+Terminal=false
+Exec=firefox
+Categories=Network;WebBrowser
+MimeType=x-scheme-handler/about;x-scheme-handler/https;x-scheme-handler/http;text/html;

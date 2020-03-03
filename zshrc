@@ -6,12 +6,11 @@ autoload -Uz compinit && compinit
 # "Template" for prompt
 prompt_="%B%n@%m:%F{8}%~%f%#%b "
 
+# History
 HISTSIZE=500
 
-# Source 'profile' file
-if [ $DISPLAY ] && [ -z $TMUX ]; then # prevents "source looping"
-    source $XDG_DOTFILES_DIR/profile
-fi
+# Source shells environment configs
+source $XDG_DOTFILES_DIR/shrc
 
 # Window title
 case $TERM in

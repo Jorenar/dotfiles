@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 
-PATH=$(tr ":" "\n" <<<"$PATH" | grep -Fxv "$(dirname $0)" | paste -sd:)
-HOME="${XDG_FAKE_HOME:-$HOME/.local/home}"
+PATH=$(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)" | paste -sd:)
+HOME="${XDG_FAKEHOME_DIR:-$HOME/.local/home}"
 exec "$(basename $0)" "$@"

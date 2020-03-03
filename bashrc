@@ -22,8 +22,7 @@ bind Space:magic-space
 
 # HISTORY {{{1
 
-# Set history file location
-# Look for 'export HISTFILE' in $XDG_DOTFILES_DIR/_XDG
+# 'HISTFILE' defined in _XDG
 
 # For setting history length see HISTSIZE and HISTFILESIZE
 HISTSIZE=500
@@ -40,13 +39,10 @@ shopt -s histappend
 # Use Vi mode
 set -o vi
 
-# Source 'profile' file
-if [ $DISPLAY ] && [ -z $TMUX ]; then # prevents "source looping"
-    source $XDG_DOTFILES_DIR/profile
-fi
+# Source shells environment configs
+source $XDG_DOTFILES_DIR/shrc
 
 # PROMPT
 PS1='\[\e[1m\]\u@\h:\[\033[90m\]\w\[\033[0m\]\[\033[1m\]\$\[\e[0m\] '
-
 
 # vim: ft=bash fdm=marker fen

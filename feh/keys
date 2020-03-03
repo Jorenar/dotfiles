@@ -1,4 +1,5 @@
 # FEH - KEY BINDINGS #
+# vim: fdm=marker fen
 
 # UNBINDING {{{1
 
@@ -80,5 +81,3 @@ scroll_right_page C-l
 zoom_default equal
 zoom_fit s
 zoom_fill exclam
-
-# vim: fen fdm=marker

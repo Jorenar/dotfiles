@@ -1,4 +1,5 @@
 # MUTTRC #
+# vim: fdm=marker fen
 
 # GENERAL {{{1
 
@@ -29,6 +30,9 @@ set net_inc=5
 # Turn off the help line at the top
 set help=no
 
+# Path to mailcap
+set mailcap_path = "${XDG_CONFIG_HOME:-$HOME/.config}/mailcap"
+
 # View HTML
 alternative_order text/plain text/enriched text/html     # save html for last
 auto_view text/html                                      # view html automatically
@@ -37,7 +41,7 @@ auto_view text/html                                      # view html automatical
 macro index,pager \cW v/text\/html<enter><enter>
 
 # Source accounts configurations
-source $XDG_CONFIG_HOME/mutt/accounts
+source $XDG_CONFIG_HOME/mutt/ACCOUNTS
 
 # SIDEBAR {{{1
 
@@ -137,7 +141,3 @@ macro pager,index               d  <delete-message><sync-mailbox><enter>
 
 # Threads
 bind browser,pager,index        N   search-opposite
-
-# }}}
-
-# vim: fdm=marker foldenable:

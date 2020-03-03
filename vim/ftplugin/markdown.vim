@@ -1,4 +1,5 @@
 " Markdown
+" vim:set fdm=marker fen
 
 " COMMANDS {{{1
 
@@ -89,6 +90,3 @@ endfunction
 " Set {{{2
 set foldmethod=expr
 let &l:foldexpr = 'MarkdownFold()'
-
-" END {{{1
-" vim:set fdm=marker foldenable:

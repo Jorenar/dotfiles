@@ -1,4 +1,10 @@
 #! sh
+# vim: fdm=marker fen
+
+# Source profile file {{{1
+if [ $DISPLAY ] && [ -z $TMUX ]; then # prevents "source looping"
+    . $PROFILE_FILE
+fi
 
 # ALIASES {{{1
 
@@ -25,12 +31,12 @@ alias umnt='udisksctl unmount -b'
 alias update-grub='grub-mkconfig -o /boot/grub/grub.cfg'
 alias wine-lnk='env WINEPREFIX="$HOME/.wine" wine C:\\windows\\command\\start.exe /Unix'
 
-alias electrum='electrum -D $XDG_DATA_HOME/electrum' # temporary - until version 3.3.9
+alias electrum='electrum -D $ELECTRUMDIR' # temporary - until version 3.3.9
 
 # WRAPPERS {{{1
 
 feh() {
-    if [[ -d $1 ]] || [[ -d $2 ]]; then
+    if [ -d "$1" ] || [ -d "$2" ]; then
         command feh "$@" > /dev/null 2>&1 & disown
     else
         command feh --start-at "$@" > /dev/null 2>&1 & disown
@@ -40,19 +46,3 @@ feh() {
 find() {
     command find $@ 2> /dev/null
 }
-
-### AUTO STARTX ### {{{1
-
-# If there is display and variable AUTO_STARTX is set then on tty1 `startx`
-if [ -z $DISPLAY ] && [ $(tty) = /dev/tty1 ] && [ "$(export -p | grep AUTO_STARTX)" ] && [ ! -f /tmp/disable_auto_startx ]; then
-
-    # This is for optimus-manager
-    sudo /usr/bin/prime-switch
-
-    exec startx $XINITRC
-
-elif [ -f /tmp/disable_auto_startx ]; then
-    rm /tmp/disable_auto_startx
-fi
-
-# vim: fdm=marker fen
