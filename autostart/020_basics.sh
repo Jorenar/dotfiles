@@ -2,7 +2,6 @@
 
 if [ -z "$EXECUTED_AUTOSTART" ]; then
 
-
     # turn off Bluetooth
     if sudo -n rfkill &> /dev/null; then
         sudo rfkill block bluetooth

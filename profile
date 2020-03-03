@@ -44,7 +44,7 @@ export QT_QPA_PLATFORMTHEME=gtk2
 # OTHER {{{1
 
 # Enable automatic `startx`
-export AUTO_STARTX=yes
+export AUTO_STARTX="${AUTO_STARTX:-yes}"
 
 # Japanese input
 export QT_IM_MODULE=fcitx
@@ -59,4 +59,6 @@ export VITASDK=/usr/local/vitasdk
 export PATH=$VITASDK/bin:$PATH
 
 # AUTOSTART {{{1
-. $XDG_DOTFILES_DIR/autostart/*.sh
+for script in $XDG_DOTFILES_DIR/autostart/*.sh; do
+    . "$script"
+done
