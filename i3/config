@@ -6,14 +6,8 @@
 # set mod key
 set $mod Mod4
 
-# optimus-manager
-exec --no-startup-id /usr/bin/prime-offload
-
 # font for window titles
 font pango:DejaVu Sans Mono 8
-
-# set volume
-exec --no-startup-id amixer -- set Master -60dB
 
 # multi-monitor
 exec --no-startup-id $XDG_CONFIG_HOME/i3/scripts/multi-monitor
@@ -46,12 +40,6 @@ client.focused   #444444 #333333 #FFFFFF #292d2e   #285577
 
 # set background
 exec --no-startup-id xsetroot -solid "#000000"
-
-# start fcitx
-exec --no-startup-id fcitx -d
-
-# disable touchpad on startup
-exec --no-startup-id touchpad-toggle
 
 # SHORTCUTS BINDINGS {{{1
 

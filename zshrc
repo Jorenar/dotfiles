@@ -30,7 +30,7 @@ bindkey '^w' backward-kill-word
 bindkey '^r' history-incremental-search-backward
 
 function zle-line-init zle-keymap-select {
-    PS1="${${KEYMAP/vicmd/(vi)}/(main|viins)/}$prompt_"
+    PS1="${${KEYMAP/vicmd/:}/(main|viins)/+}$prompt_"
     zle reset-prompt
 }
 

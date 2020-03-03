@@ -70,9 +70,6 @@ for firefox_profile in $XDG_FAKEHOME_DIR/.mozilla/firefox/*.default-release; do
     linking userContent.css "$firefox_profile/chrome/userContent.css"
 done
 
-# ------------------------------------------------
-
-chmod +x $DIR/autostart.sh
 touch $DCONF_PROFILE
 
 # ------------------------------------------------

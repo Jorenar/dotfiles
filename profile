@@ -20,6 +20,9 @@ export XDG_DOTFILES_DIR="$(dirname $(realpath $PROFILE_FILE))"
 
 . $XDG_DOTFILES_DIR/_XDG/env_variables
 
+# Source machine local additional env {{{1
+[ -f $XDG_CONFIG_HOME/env.local ] && . $XDG_CONFIG_HOME/env.local
+
 # Default browser/editor/terminal {{{1
 export EDITOR=vim
 export BROWSER=firefox
@@ -40,6 +43,9 @@ export QT_QPA_PLATFORMTHEME=gtk2
 
 # OTHER {{{1
 
+# Enable automatic `startx`
+export AUTO_STARTX=yes
+
 # Japanese input
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
@@ -52,25 +58,5 @@ export GPG_AGENT_INFO
 export VITASDK=/usr/local/vitasdk
 export PATH=$VITASDK/bin:$PATH
 
-# Autostart script {{{1
-if [ ! -f /tmp/executed_autostart ]; then
-    $XDG_DOTFILES_DIR/autostart.sh
-    touch /tmp/executed_autostart
-fi
-
-### AUTO STARTX ### {{{1
-
-# Enable automatic `startx`
-export AUTO_STARTX
-
-# If there is display and variable AUTO_STARTX is set then on tty1 `startx`
-if [ -z $DISPLAY ] && [ $(tty) = /dev/tty1 ] && [ "$(export -p | grep AUTO_STARTX)" ] && [ ! -f /tmp/disable_auto_startx ]; then
-
-    # This is for optimus-manager
-    sudo /usr/bin/prime-switch
-
-    exec startx $XINITRC
-
-elif [ -f /tmp/disable_auto_startx ]; then
-    rm /tmp/disable_auto_startx
-fi
+# AUTOSTART {{{1
+. $XDG_DOTFILES_DIR/autostart/*.sh

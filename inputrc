@@ -7,8 +7,8 @@ set editing-mode vi
 set show-mode-in-prompt on
 
 # Mode indicators
-set vi-ins-mode-string ""
-set vi-cmd-mode-string "(vi)"
+set vi-ins-mode-string "+"
+set vi-cmd-mode-string ":"
 
 # INSERT mode bindings --------------------------------------------------------------------
 set keymap vi-insert

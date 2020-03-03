@@ -5,9 +5,7 @@
 
 # chmod wrappers {{{1
 
-shopt -s extglob
-chmod +x $DIR/_XDG/wrappers/!(*.disactivated)
-shopt -u extglob
+chmod +x $DIR/_XDG/wrappers/*
 
 # Linking desktop entries {{{1
 
