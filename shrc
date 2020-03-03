@@ -2,9 +2,7 @@
 # vim: fdm=marker fen
 
 # Source profile file {{{1
-if [ $DISPLAY ] && [ -z $TMUX ]; then # prevents "source looping"
-    . $PROFILE_FILE
-fi
+. $PROFILE_FILE
 
 # ALIASES {{{1
 
