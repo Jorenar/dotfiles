@@ -38,6 +38,7 @@ export GOPATH="$XDG_DATA_HOME/go"
 export GOPS_CONFIG_DIR="$XDG_CONFIG_HOME/gops" # temporary
 export GRIPHOME="$XDG_CONFIG_HOME/grip"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
+export ICEAUTHORITY="$XDG_CACHE_HOME/ICEauthority"
 export IMAPFILTER_HOME="$XDG_CONFIG_HOME/imapfilter"
 export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
