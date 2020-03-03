@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+
+[ -s "$XDG_CONFIG_HOME/ssh/config"    ] && SSH_CONFIG="-F $XDG_CONFIG_HOME/ssh/config"
+[ -s "$XDG_DATA_HOME/ssh/id_rsa"      ] && SSH_ID="-i $XDG_DATA_HOME/ssh/id_rsa"
+[ -s "$XDG_DATA_HOME/ssh/known_hosts" ] && SSH_KNOWN_HOSTS="-o UserKnownHostsFile=$XDG_DATA_HOME/ssh/known_hosts"
+
+PATH=$(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)" | paste -sd:)
+
+exec ssh $SSH_CONFIG $SSH_ID $SSH_KNOWN_HOSTS "$@"
