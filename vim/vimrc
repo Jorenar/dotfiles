@@ -250,7 +250,6 @@ let g:netrw_winsize = -28
 set backup
 set colorcolumn=+1,+21
 set completeopt=menuone,noinsert,noselect
-set cursorlineopt=screenline
 set hidden
 set hlsearch
 set ignorecase
@@ -263,7 +262,6 @@ set nowrap
 set number
 set omnifunc=syntaxcomplete#Complete
 set scrolloff=5
-set sessionoptions=blank,buffers,folds,tabpages,winsize,terminal
 set shortmess+=I
 set showcmd
 set smartcase
@@ -275,6 +273,12 @@ set title
 set undofile
 set wildmenu
 set wildmode=full
+
+if has('nvim')
+  set guicursor=
+else
+  set sessionoptions=blank,buffers,folds,tabpages,winsize,terminal
+endif
 
 let g:sh_fold_enabled=5
 set foldmethod=indent
@@ -373,7 +377,9 @@ augroup OTHER " {{{
   autocmd QuickFixCmdPost    l* nested lwindow
 
   " Terminal options
-  autocmd TerminalWinOpen * setlocal nonumber | autocmd WinEnter <buffer> silent! normal i
+  if !has('nvim')
+    autocmd TerminalWinOpen * setlocal nonumber | autocmd WinEnter <buffer> silent! normal i
+  endif
 
 augroup END " }}}
 
