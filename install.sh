@@ -33,8 +33,6 @@ linking() {
 
 # ------------------------------------------------
 
-linking  ssh_config        $HOME/.ssh/config
-
 linking  bashrc            $XDG_CONFIG_HOME/bash/bashrc
 linking  feh/              $XDG_CONFIG_HOME/feh
 linking  git/              $XDG_CONFIG_HOME/git
@@ -46,6 +44,7 @@ linking  mpv/              $XDG_CONFIG_HOME/mpv
 linking  muttrc            $XDG_CONFIG_HOME/mutt/muttrc
 linking  myclirc           $XDG_CONFIG_HOME/mycli/myclirc
 linking  newsboat/config   $XDG_CONFIG_HOME/newsboat/config
+linking  ssh_config        $XDG_CONFIG_HOME/ssh/config
 linking  tmux.conf         $XDG_CONFIG_HOME/tmux/tmux.conf
 linking  user-dirs.dirs    $XDG_CONFIG_HOME/user-dirs.dirs
 linking  zathurarc         $XDG_CONFIG_HOME/zathura/zathurarc

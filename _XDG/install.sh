@@ -13,8 +13,10 @@ chmod +x $DIR/_XDG/wrappers/*
 
 # Link wrappers
 for exe in $DIR/_XDG/wrappers/*; do
-    [ -e $exe ] && which $(basename $exe) &> /dev/null && linking  $exe  $_XDG_WRAPPERS/$(basename $exe)
+    [ -e $exe ] && which $(basename $exe) &> /dev/null && linking  _XDG/wrappers/$(basename $exe)  $_XDG_WRAPPERS/$(basename $exe)
 done
+
+linking  _XDG_/wrappers/ssh  $_XDG_WRAPPERS/scp
 
 # Generate FAKEHOME wrappers
 while IFS= read -r exe; do

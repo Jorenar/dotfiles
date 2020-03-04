@@ -3,5 +3,5 @@ Host *
     ForwardX11Trusted yes
 
 Host aur.archlinux.org
-    IdentityFile ~/.ssh/aur
+    IdentityFile ~/.local/share/ssh/aur
     User aur
