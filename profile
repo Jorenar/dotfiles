@@ -21,7 +21,7 @@ export XDG_DOTFILES_DIR="$(dirname $(realpath $PROFILE_FILE))"
 . $XDG_DOTFILES_DIR/_XDG/env_variables
 
 # Source machine local additional env {{{1
-[ -f $XDG_CONFIG_HOME/env.local ] && . $XDG_CONFIG_HOME/env.local
+[ -f $XDG_LOCAL_HOME/env/profile ] && . $XDG_LOCAL_HOME/env/profile
 
 # Default browser/editor/terminal {{{1
 export EDITOR=vim
