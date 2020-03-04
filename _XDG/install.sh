@@ -1,11 +1,27 @@
 #!/usr/bin/env sh
 # vim: fdm=marker fen
 
-# `linking` function won't work if this file isn't sourced from main install script
+# Warning! {{{1
+if [ -z "$DIR" ]; then
+    echo 'This file must be used as source file in $XDG_DOTFILES/install.sh'
+    exit
+fi
 
-# chmod wrappers {{{1
+# WRAPPERS {{{1
 
 chmod +x $DIR/_XDG/wrappers/*
+
+# Link wrappers
+for exe in $DIR/_XDG/wrappers/*; do
+    [ -e $exe ] && which $(basename $exe) &> /dev/null && linking  $exe  $_XDG_WRAPPERS/$(basename $exe)
+done
+
+# Generate FAKEHOME wrappers
+while IFS= read -r exe; do
+    exe="$(echo $exe | cut -f1 -d'#')"
+    [ -n "$exe" ] && which $exe &> /dev/null && linking  _XDG/wrappers/_xdg_fakehome.sh  $_XDG_WRAPPERS/$exe
+done < "$DIR/_XDG/fakehome.list"
+
 
 # Linking desktop entries {{{1
 

@@ -75,4 +75,4 @@ touch $DCONF_PROFILE
 
 # ------------------------------------------------
 
-.  $DIR/_XDG/install.sh
+. $DIR/_XDG/install.sh

@@ -10,4 +10,4 @@ XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 
 PATH=$(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)" | paste -sd:)
 
-exec ssh $SSH_CONFIG $SSH_ID $SSH_KNOWN_HOSTS "$@"
+exec "$(basename $0)" $SSH_CONFIG $SSH_ID $SSH_KNOWN_HOSTS "$@"
