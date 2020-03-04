@@ -19,15 +19,15 @@ alias ls='ls -F'
 alias mkdir='mkdir -p'
 alias mnt='udisksctl mount -b'
 alias off='shutdown -h now'
-alias yay-autoremove='yay -Rns $(yay -Qtdq)'
+alias org='mkdir ~/.organizer && touch ~/.organizer/0_TODO && vim -p ~/.organizer/* +"cd ~/.organizer"'
 alias pass='EDITOR="vim -u NONE" pass'
 alias python-server='python -m http.server 8000'
 alias qmv='command qmv -v -f "do"'
 alias suspend='systemctl suspend'
-alias todo='$EDITOR ~/TODO'
 alias umnt='udisksctl unmount -b'
 alias update-grub='grub-mkconfig -o /boot/grub/grub.cfg'
 alias wine-lnk='env WINEPREFIX="$HOME/.wine" wine C:\\windows\\command\\start.exe /Unix'
+alias yay-autoremove='yay -Rns $(yay -Qtdq)'
 
 alias electrum='electrum -D $ELECTRUMDIR' # temporary - until version 3.3.9
 
