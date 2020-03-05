@@ -38,7 +38,8 @@ fi
 status=no
 if [ ! -f /etc/profile.d/profile_xdg.sh ]; then
     if [ $is_sudo = true ]; then
-        read -p 'Do you wish to install root patches for XDG support for 'profile' file? [y/N] ' -r REPLY
+        printf 'Do you wish to install root patches for XDG support for 'profile' file? [y/N] '
+        read -r REPLY
         if [ -n "$REPLY" ] && [ $REPLY = "y" -o $REPLY = "Y" ]; then
             status=installing
         fi
@@ -57,9 +58,10 @@ fi
 status=no
 if [ -x "$(command -v bash)" ]; then
     A='[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc" ] && . "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc"'
-    if ! grep -Fxq "$A" /etc/bash.bashrc; then
+    if ! grep -Fxq "$A" /etc/bash.bashrc 2> /dev/null; then
         if [ $is_sudo = true ]; then
-            read -p 'Do you wish to install root patches for XDG support for Bash? [y/N] ' -r REPLY
+            printf 'Do you wish to install root patches for XDG support for Bash? [y/N] '
+            read -r REPLY
             if [ -n "$REPLY" ] && [ $REPLY = "y" -o $REPLY = "Y" ]; then
                 status=installing
             fi
