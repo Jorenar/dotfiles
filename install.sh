@@ -70,6 +70,10 @@ for firefox_profile in $XDG_FAKEHOME_DIR/.mozilla/firefox/*.default-release; do
     linking userContent.css "$firefox_profile/chrome/userContent.css"
 done
 
+for entry in desktop_entries/*; do
+    linking "$entry" $XDG_DATA_HOME/applications/"$(basename $entry)"
+done
+
 touch $DCONF_PROFILE
 
 # ------------------------------------------------
