@@ -14,7 +14,7 @@ if [ -z "$EXECUTED_AUTOSTART" ]; then
     amixer -- set Master -60dB
 
     # start fcitx
-    if which fcitx; then
+    if [ -x "$(command -v fcitx)" ]; then
         fcitx -d
     fi
 

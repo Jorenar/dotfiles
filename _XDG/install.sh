@@ -13,7 +13,7 @@ chmod +x $DIR/_XDG/wrappers/*
 
 # Link wrappers
 for exe in $DIR/_XDG/wrappers/*; do
-    [ -e $exe ] && which $(basename $exe) &> /dev/null && linking  _XDG/wrappers/$(basename $exe)  $_XDG_WRAPPERS/$(basename $exe)
+    [ -e "$exe" ] && [ -x "$(command -v $(basename $exe))" ] && linking  "_XDG/wrappers/$(basename $exe)"  "$_XDG_WRAPPERS/$(basename $exe)"
 done
 
 linking  _XDG/wrappers/ssh  $_XDG_WRAPPERS/scp
@@ -21,15 +21,10 @@ linking  _XDG/wrappers/ssh  $_XDG_WRAPPERS/scp
 # Generate FAKEHOME wrappers
 while IFS= read -r exe; do
     exe="$(echo $exe | cut -f1 -d'#')"
-    [ -n "$exe" ] && which $exe &> /dev/null && linking  _XDG/wrappers/_xdg_fakehome.sh  $_XDG_WRAPPERS/$exe
+    [ -n "$exe" ] && [ -x "$(command -v $exe)" ] && linking  _XDG/wrappers/_xdg_fakehome.sh  $_XDG_WRAPPERS/$exe
 done < "$DIR/_XDG/fakehome.list"
 
 
-# Linking desktop entries {{{1
-
-linking _XDG/desktop_entries/firefox.desktop $XDG_DATA_HOME/applications/firefox.desktop
-
-# }}}
 # Sudo patches {{{1
 # Check if user has sudo privileges {{{2
 prompt_sudo=$(sudo -nv 2>&1)
@@ -60,7 +55,7 @@ fi
 
 # Bash {{{2
 status=no
-if which bash &> /dev/null; then
+if [ -x "$(command -v bash)" ]; then
     A='[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc" ] && . "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc"'
     if ! grep -Fxq "$A" /etc/bash.bashrc; then
         if [ $is_sudo = true ]; then
