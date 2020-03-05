@@ -45,4 +45,13 @@ source $XDG_DOTFILES_DIR/shrc
 # PROMPT
 PS1='\[\e[1m\]\u@\h:\[\033[90m\]\w\[\033[0m\]\[\033[1m\]\$\[\e[0m\] '
 
+# Set window title to "command | user@host:dir"
+case "$TERM" in
+    xterm*|rxvt*|screen*)
+        PS1="\[\e]0;\u@\h:\w\a\]$PS1"
+        ;;
+    *)
+        ;;
+esac
+
 # vim: ft=bash fdm=marker fen
