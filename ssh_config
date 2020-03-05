@@ -1,8 +1,10 @@
 Host *
-    ForwardX11 yes
     ForwardX11Trusted yes
     Include ~/.local/env/ssh_config
 
 Host aur.archlinux.org
     IdentityFile ~/.local/share/ssh/aur
     User aur
+
+Host github.com
+    ForwardX11Trusted no
