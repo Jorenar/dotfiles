@@ -13,6 +13,7 @@ alias gpu-switch='optimus-manager --switch auto && i3-msg exit'
 alias grep='grep --color'
 alias i3-logout="touch /tmp/disable_auto_startx && i3-msg exit"
 alias i3-relog="i3-msg exit"
+alias icanhazip='curl icanhazip.com'
 alias less='less -R'
 alias ll='ls -alhF | less -R'
 alias ls='ls -F'
@@ -30,6 +31,8 @@ alias wine-lnk='env WINEPREFIX="$HOME/.wine" wine C:\\windows\\command\\start.ex
 alias yay-autoremove='yay -Rns $(yay -Qtdq)'
 
 alias electrum='electrum -D $ELECTRUMDIR' # temporary - until version 3.3.9
+
+wttr() { curl wttr.in/$1; }
 
 # WRAPPERS {{{1
 
