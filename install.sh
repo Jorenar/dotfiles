@@ -6,7 +6,6 @@
 force_flag=$1
 DIR="$(dirname $(realpath $0))"
 
-eval "$(cat pam_environment | sed -r 's/\s*DEFAULT//g' | sed -r 's/\@\{/\$\{/')" # parse 'pam_environment' file
 . $DIR/_XDG/variables
 
 # ------------------------------------------------

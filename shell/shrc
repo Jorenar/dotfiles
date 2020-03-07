@@ -4,6 +4,9 @@
 # Source env_variables {{{1
 . $XDG_DOTFILES_DIR/env_variables
 
+# Source additional {{{1
+[ -f $XDG_LOCAL_HOME/supp/profile ] && . $XDG_LOCAL_HOME/supp/profile
+
 # ALIASES {{{1
 
 alias ap1='sudo create_ap wlo1 wlo1 x I_love_BASH' # semi open WiFi network

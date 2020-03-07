@@ -2,8 +2,12 @@
 # vim: ft=sh fdm=marker fen
 
 # XDG_DOTFILES_DIR is declared in 'profile' file
-# XDG_LOCAL_HOME, XDG_CACHE_HOME, XDG_CONFIG_HOME,
-#   XDG_DATA_HOME and ZDOTDIR in 'pam_environment'
+
+# Parse 'pam_environment' {{{1
+
+_dir="${DIR:-$XDG_DOTFILES_DIR}"
+eval "$(cat $_dir/pam_environment | sed -r 's/\s*DEFAULT//g' | sed -r 's/\@\{/\$\{/' | sed -r 's/^([A-Z]i)/export\ \1/g')"
+unset _dir
 
 # CUSTOM {{{1
 export _XDG_WRAPPERS="$XDG_LOCAL_HOME/bin/_xdg_wrappers"
