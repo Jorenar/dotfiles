@@ -1,7 +1,7 @@
 # PROFILE #
 # vim: ft=sh fdm=marker fen
 
-# --- XDG --- {{{1
+# ENV VARIABLES {{{1
 
 if [ -n "$BASH" ]; then
     _THIS=$BASH_SOURCE
@@ -15,50 +15,22 @@ else
     _THIS=$0
 fi
 
-export XDG_DOTFILES_DIR="$(dirname $(realpath $_THIS))"
-unset _THIS
+export XDG_DOTFILES_DIR="$(dirname $(realpath $_THIS))"; unset _THIS
 
-. $XDG_DOTFILES_DIR/_XDG/env_variables
-
-# Default browser/editor/terminal {{{1
-export EDITOR=vim
-export BROWSER=firefox
-export TERMINAL=xterm
-
-# man {{{1
-export MANPAGER="vim -M +MANPAGER - +'set colorcolumn= nonumber laststatus=0'"
-export MANWIDTH=80
-
-# Theme {{{1
-
-# GTK theme
-export GTK_THEME="$(grep gtk-theme-name $GTK2_RC_FILES | cut -d'"' -f 2)"
-export GTK2_RC_FILES="$GTK2_RC_FILES:$XDG_DATA_HOME/themes/$GTK_THEME/gtk-2.0/gtkrc"
-
-# Set Qt to use GTK theme
-export QT_QPA_PLATFORMTHEME=gtk2
-
-# OTHER {{{1
-
-# Enable automatic `startx`
-export AUTO_STARTX="${AUTO_STARTX:-yes}"
-
-# Japanese input
-export QT_IM_MODULE=fcitx
-export XMODIFIERS=@im=fcitx
-export GTK_IM_MODULE=fcitx
-
-# Enable GPG agent
-export GPG_AGENT_INFO
-
-# VITASDK
-export VITASDK=/usr/local/vitasdk
-export PATH=$VITASDK/bin:$PATH
+. $XDG_DOTFILES_DIR/env_variables
 
 # AUTOSTART {{{1
 for script in $XDG_DOTFILES_DIR/autostart/*.sh; do
     . "$script"
 done
 
-# Source local additional env {{{1
-[ -f $XDG_LOCAL_HOME/env/profile ] && . $XDG_LOCAL_HOME/env/profile
+# Source {{{1
+
+# Source local additional env
+[ -f $XDG_LOCAL_HOME/supp/profile ] && . $XDG_LOCAL_HOME/supp/profile
+
+# If Bash, then bashrc
+if [ -n "$BASH" ]; then
+    [ -f "$HOME/.bashrc" ] && . "$HOME/.bashrc"
+    [ -f "$XDG_CONFIG_HOME/bash/bashrc" ] && . "$XDG_CONFIG_HOME/bash/bashrc"
+fi

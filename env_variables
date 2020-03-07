@@ -1,0 +1,39 @@
+# vim: ft=sh fdm=marker fen
+
+# --- XDG --- {{{1
+. $XDG_DOTFILES_DIR/_XDG/variables
+
+# Default browser/editor/terminal {{{1
+export EDITOR=vim
+export BROWSER=firefox
+export TERMINAL=xterm
+
+# man {{{1
+export MANPAGER="vim -M +MANPAGER - +'set colorcolumn= nonumber laststatus=0'"
+export MANWIDTH=80
+
+# Theme {{{1
+
+# GTK theme
+export GTK_THEME="$(grep gtk-theme-name $GTK2_RC_FILES | cut -d'"' -f 2)"
+export GTK2_RC_FILES="$GTK2_RC_FILES:$XDG_DATA_HOME/themes/$GTK_THEME/gtk-2.0/gtkrc"
+
+# Set Qt to use GTK theme
+export QT_QPA_PLATFORMTHEME=gtk2
+
+# OTHER {{{1
+
+# Enable automatic `startx`
+export AUTO_STARTX="${AUTO_STARTX:-yes}"
+
+# Japanese input
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+export GTK_IM_MODULE=fcitx
+
+# Enable GPG agent
+export GPG_AGENT_INFO
+
+# VITASDK
+export VITASDK=/usr/local/vitasdk
+export PATH=$VITASDK/bin:$PATH

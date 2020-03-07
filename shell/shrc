@@ -1,8 +1,8 @@
 #! sh
 # vim: fdm=marker fen
 
-# Source profile file {{{1
-source $HOME/.profile
+# Source env_variables {{{1
+. $XDG_DOTFILES_DIR/env_variables
 
 # ALIASES {{{1
 

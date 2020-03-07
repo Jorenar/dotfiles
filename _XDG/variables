@@ -2,16 +2,8 @@
 # vim: ft=sh fdm=marker fen
 
 # XDG_DOTFILES_DIR is declared in 'profile' file
-
-# BASIC {{{1
-
-export XDG_LOCAL_HOME="$HOME/.local" # This sould be one of defaults
-
-export XDG_CACHE_HOME="$XDG_LOCAL_HOME/cache"
-export XDG_CONFIG_HOME="$XDG_LOCAL_HOME/config"
-export XDG_DATA_HOME="$XDG_LOCAL_HOME/share"
-
-# remember to change in 'ssh_config' too!
+# XDG_LOCAL_HOME, XDG_CACHE_HOME, XDG_CONFIG_HOME,
+#   XDG_DATA_HOME and ZDOTDIR in 'pam_environment'
 
 # CUSTOM {{{1
 export _XDG_WRAPPERS="$XDG_LOCAL_HOME/bin/_xdg_wrappers"
@@ -53,7 +45,6 @@ export WEECHAT_HOME="$XDG_CONFIG_HOME/weechat"
 export WINEPREFIX="$XDG_DATA_HOME/wine"
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
-export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 
 # HISTORY FILES {{{1
 
