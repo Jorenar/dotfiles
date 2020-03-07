@@ -2,7 +2,7 @@
 # vim: fdm=marker fen
 
 # Source profile file {{{1
-. $PROFILE_FILE
+source $HOME/.profile
 
 # ALIASES {{{1
 

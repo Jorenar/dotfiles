@@ -40,7 +40,7 @@ shopt -s histappend
 set -o vi
 
 # Source shells environment configs
-source $XDG_DOTFILES_DIR/shrc
+source $XDG_CONFIG_HOME/shell/shrc
 
 # PROMPT
 PS1='\[\e[1m\]\u@\h:\[\033[90m\]\w\[\033[0m\]\[\033[1m\]\$\[\e[0m\] '

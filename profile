@@ -4,19 +4,19 @@
 # --- XDG --- {{{1
 
 if [ -n "$BASH" ]; then
-    PROFILE_FILE=$BASH_SOURCE
+    _THIS=$BASH_SOURCE
 elif [ -n "$ZSH_NAME" ]; then
-    PROFILE_FILE=${(%):-%x}
+    _THIS=${(%):-%x}
 elif [ -n "$TMOUT" ]; then
-    PROFILE_FILE=${.sh.file}
+    _THIS=${.sh.file}
 elif [ "${0##*/}" = "-dash" -o "${0##*/}" = "dash" ]; then
-    x=$(lsof -p $$ -Fn0 | tail -1); PROFILE_FILE=${x#n}
+    x=$(lsof -p $$ -Fn0 | tail -1); _THIS=${x#n}
 else
-    PROFILE_FILE=$0
+    _THIS=$0
 fi
 
-export PROFILE_FILE
-export XDG_DOTFILES_DIR="$(dirname $(realpath $PROFILE_FILE))"
+export XDG_DOTFILES_DIR="$(dirname $(realpath $_THIS))"
+unset _THIS
 
 . $XDG_DOTFILES_DIR/_XDG/env_variables
 
@@ -59,5 +59,6 @@ export PATH=$VITASDK/bin:$PATH
 for script in $XDG_DOTFILES_DIR/autostart/*.sh; do
     . "$script"
 done
+
 # Source local additional env {{{1
 [ -f $XDG_LOCAL_HOME/env/profile ] && . $XDG_LOCAL_HOME/env/profile

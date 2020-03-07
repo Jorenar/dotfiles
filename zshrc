@@ -10,7 +10,7 @@ prompt_="%B%n@%m:%F{8}%~%f%#%b "
 HISTSIZE=500
 
 # Source shells environment configs
-source $XDG_DOTFILES_DIR/shrc
+source $XDG_CONFIG_HOME/shell/shrc
 
 # Window title
 case $TERM in

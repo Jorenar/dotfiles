@@ -36,26 +36,6 @@ else
     is_sudo=false
 fi
 
-# profile file {{{2
-status=no
-if [ ! -f /etc/profile.d/profile_xdg.sh ]; then
-    if [ $is_sudo = true ]; then
-        printf 'Do you wish to install root patches for XDG support for 'profile' file? [y/N] '
-        read -r REPLY
-        if [ -n "$REPLY" ] && [ $REPLY = "y" -o $REPLY = "Y" ]; then
-            status=installing
-        fi
-    fi
-else
-    status=installed
-fi
-
-if [ "$status" = "installing" ]; then
-    sudo ln -sf $DIR/_XDG/profile_xdg.sh /etc/profile.d/profile_xdg.sh
-elif [ $status != installed ]; then
-    linking  profile  $HOME/.profile
-fi
-
 # Bash {{{2
 status=no
 if [ -x "$(command -v bash)" ]; then
