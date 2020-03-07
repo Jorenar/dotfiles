@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=KanjiTomo
+Comment=identify Japanese characters from images or screen
+Exec=kanjitomo
+Terminal=false
+Type=Application
+Categories=Education
+Icon=kanjitomo
