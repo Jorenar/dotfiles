@@ -45,6 +45,7 @@ export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/config.py"
+export PYTHONUSERBASE="$XDG_LOCAL_HOME"
 export RANDFILE="$XDG_CACHE_HOME/rnd"
 export VIMDOTDIR="$XDG_CONFIG_HOME/vim"
 export VIMINIT='set rtp^=$VIMDOTDIR | let $MYVIMRC="$VIMDOTDIR/vimrc" | so $MYVIMRC'
