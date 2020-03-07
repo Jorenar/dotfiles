@@ -12,6 +12,8 @@ fi
 chmod +x $DIR/_XDG/wrappers/*
 
 # Link wrappers
+[ -d "$_XDG_WRAPPERS" ] && rm $_XDG_WRAPPERS/* # clean directory (from old wrappers)
+
 for exe in $DIR/_XDG/wrappers/*; do
     [ -e "$exe" ] && [ -x "$(command -v $(basename $exe))" ] && linking  "_XDG/wrappers/$(basename $exe)"  "$_XDG_WRAPPERS/$(basename $exe)"
 done
