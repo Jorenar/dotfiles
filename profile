@@ -17,7 +17,7 @@ fi
 
 export XDG_DOTFILES_DIR="$(dirname $(realpath $_THIS))"; unset _THIS
 
-. $XDG_DOTFILES_DIR/env_variables
+. $XDG_DOTFILES_DIR/shell/variables
 
 # AUTOSTART {{{1
 for script in $XDG_DOTFILES_DIR/autostart/*.sh; do
