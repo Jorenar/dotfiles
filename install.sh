@@ -31,9 +31,22 @@ linking() { # {{{
     fi
 } # }}}
 
+pam_env() { # {{{
+    if [ "$force_flag" = "-f" ] && [ -e "$2" ]; then
+        mkdir -p $HOME/dotfiles.old/
+        mv "$2" "$HOME/dotfiles.old/"
+        echo "Moved file $2 to directory $HOME/dotfiles.old/"
+    fi
+
+    if [ ! -e $2 ]; then
+        printf "HOME=$HOME\n\n" > $HOME/.pam_environment
+        cat $DIR/pam_environment >> $HOME/.pam_environment
+    fi
+} # }}}
+
 # ------------------------------------------------
 
-linking  pam_environment   $HOME/.pam_environment
+pam_env  pam_environment   $HOME/.pam_environment
 
 linking  _XDG/variables    $XDG_CONFIG_HOME/env/_XDG_variables
 linking  autostart/        $XDG_CONFIG_HOME/env/autostart

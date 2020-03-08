@@ -26,6 +26,7 @@ export BASH_COMPLETION_USER_FILE="$XDG_CONFIG_HOME/bash/bash_completion"
 export DCONF_PROFILE="$XDG_CONFIG_HOME/dconf/user"
 export ELECTRUMDIR="$XDG_DATA_HOME/electrum"
 export ELINKS_CONFDIR="$XDG_CONFIG_HOME/elinks"
+export ENV="$XDG_CONFIG_HOME/shell/shrc"  # sh, ksh
 export GIT_TEMPLATE_DIR="$XDG_CONFIG_HOME/git/template"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export GOPATH="$XDG_DATA_HOME/go"
@@ -52,7 +53,7 @@ export XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
 
 mkdir -p "$XDG_HISTORY_DIR"
 
-export HISTFILE="$XDG_HISTORY_DIR/bash"
+export HISTFILE="$XDG_HISTORY_DIR/shell"
 export LESSHISTFILE=-
 export MYSQL_HISTFILE="$XDG_HISTORY_DIR/mysql"
 export NODE_REPL_HISTORY="$XDG_HISTORY_HOME/node_repl_history"

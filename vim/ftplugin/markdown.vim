@@ -8,7 +8,7 @@ command! GripSession call GripSession()
 " FUNCTIONS {{{1
 " GripSession {{{2
 function! GripSession() abort
-  execute 'silent! !grip -b % &>/dev/null &' | redraw!
+  execute 'silent! !grip -b % > /dev/null 2>&1 &' | redraw!
   autocmd vimleave * execute '!pkill grip'
 endfunction
 " FOLDING (based on masukomi/vim-markdown-folding){{{1

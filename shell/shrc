@@ -1,15 +1,34 @@
-#! sh
-# vim: fdm=marker fen
+# vim: ft=sh fdm=marker fen
 
 # Init {{{1
 # Source env variables {{{2
 . $XDG_CONFIG_HOME/shell/variables
 
-# Source local additional env {{{1
+# Source local additional env {{{2
 [ -f $XDG_LOCAL_HOME/supp/profile ] && . $XDG_LOCAL_HOME/supp/profile
 
 # Logout {{{2
 trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && sh $XDG_CONFIG_HOME/shell/logout" EXIT
+
+# Enable vi mode
+set -o vi
+
+# PROMPT {{{1
+
+# user@host:dir
+PS1=$'\e[1m$USER@$(hostname -s)\e[90m:${PWD/"$HOME"/"~"}\e[0m'
+
+# Set window title
+case $TERM in
+    xterm*|rxvt*|screen*)
+        if [ "$0" != "sh" ]; then
+            PS1=$(printf "\e]0;${PS1//$'\e'\[*([0-9;])m/}\007$PS1")
+        fi
+        ;;
+esac
+
+# Normal user or root ( $/# )
+PS1=$(printf "$PS1\e[1m$([ $(id -u) -eq 0 ] && echo '#' || echo '$')\e[0m ")
 
 # ALIASES {{{1
 

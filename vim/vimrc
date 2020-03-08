@@ -224,7 +224,7 @@ nnoremap <leader>r :%s/\<<C-r><C-w>\>//g<Left><Left>
 nnoremap <leader>R :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
 nnoremap <M-A> :copen<CR>
 nnoremap <silent> <expr> <F5> g:colors_name == "darkness" ? ":syntax reset <bar> let g:colors_name=''\<CR>" : ":colo darkness\<CR>"
-nnoremap gx :execute 'silent! !xdg-open "<cfile>" &> /dev/null &' <bar> redraw! <CR>
+nnoremap gx :execute 'silent! !xdg-open "<cfile>" > /dev/null 2>&1 &' <bar> redraw! <CR>
 nnoremap j gj
 nnoremap k gk
 
