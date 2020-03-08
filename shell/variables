@@ -3,9 +3,6 @@
 # --- XDG --- {{{1
 . $XDG_CONFIG_HOME/env/_XDG_variables
 
-# Source local additional env {{[1
-[ -f $XDG_LOCAL_HOME/supp/profile ] && . $XDG_LOCAL_HOME/supp/profile
-
 # Default programs {{{1
 
 export EDITOR=vim

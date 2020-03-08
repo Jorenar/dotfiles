@@ -5,6 +5,9 @@
 # Source env variables {{{2
 . $XDG_CONFIG_HOME/shell/variables
 
+# Source local additional env {{{1
+[ -f $XDG_LOCAL_HOME/supp/profile ] && . $XDG_LOCAL_HOME/supp/profile
+
 # Logout {{{2
 trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && sh $XDG_CONFIG_HOME/shell/logout" EXIT
 
