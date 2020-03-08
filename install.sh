@@ -26,7 +26,7 @@ linking() { # {{{
         ln -sf $DIR/$1 $2
     fi
 
-    if [ ! -z "$3" ]; then
+    if [ -n "$3" ]; then
         chmod "$3" "$2"
     fi
 } # }}}
@@ -35,6 +35,8 @@ linking() { # {{{
 
 linking  pam_environment   $HOME/.pam_environment
 
+linking  _XDG/variables    $XDG_CONFIG_HOME/env/_XDG_variables
+linking  autostart/        $XDG_CONFIG_HOME/env/autostart
 linking  bashrc            $XDG_CONFIG_HOME/bash/bashrc
 linking  feh/              $XDG_CONFIG_HOME/feh
 linking  git/              $XDG_CONFIG_HOME/git
@@ -51,6 +53,7 @@ linking  shell/            $XDG_CONFIG_HOME/shell
 linking  ssh_config        $XDG_CONFIG_HOME/ssh/config
 linking  tmux.conf         $XDG_CONFIG_HOME/tmux/tmux.conf
 linking  user-dirs.dirs    $XDG_CONFIG_HOME/user-dirs.dirs
+linking  X11/              $XDG_CONFIG_HOME/X11
 linking  zathurarc         $XDG_CONFIG_HOME/zathura/zathurarc
 
 linking  gpg-agent.conf    $GNUPGHOME/gpg-agent.conf
@@ -60,7 +63,6 @@ linking  npmrc             $NPM_CONFIG_USERCONFIG
 linking  python_config.py  $PYTHONSTARTUP
 linking  themes/           $XDG_FAKEHOME_DIR/.themes # for compatibility with _XDG/wrappers
 linking  vim/              $VIMDOTDIR
-linking  xinitrc           $XINITRC
 linking  zshrc             $ZDOTDIR/.zshrc
 
 linking  fonts/            $XDG_DATA_HOME/fonts

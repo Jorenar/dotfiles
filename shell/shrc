@@ -1,14 +1,15 @@
 #! sh
 # vim: fdm=marker fen
 
-# Source env_variables {{{1
+# Init {{{1
+# Source env_variables {{{2
 . $XDG_CONFIG_HOME/shell/variables
 
-# Source additional {{{1
+# Source additional {{{2
 [ -f $XDG_LOCAL_HOME/supp/profile ] && . $XDG_LOCAL_HOME/supp/profile
 
-# Logout {{{1
-[ -f "$XDG_CONFIG_HOME/shell/logout" ] && trap "sh $XDG_CONFIG_HOME/shell/logout" EXIT
+# Logout {{{2
+trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && sh $XDG_CONFIG_HOME/shell/logout" EXIT
 
 # ALIASES {{{1
 

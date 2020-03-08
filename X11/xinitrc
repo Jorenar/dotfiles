@@ -1,0 +1,4 @@
+xrandr --auto
+setxbmap pl
+xrdb -load $XDG_CONFIG_HOME/X11/Xresources
+exec i3

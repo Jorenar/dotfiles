@@ -1,14 +1,22 @@
 # vim: ft=sh fdm=marker fen
 
 # --- XDG --- {{{1
-. $XDG_DOTFILES_DIR/_XDG/variables
+. $XDG_CONFIG_HOME/env/_XDG_variables
 
-# Default browser/editor/terminal {{{1
+# Default programs {{{1
+
 export EDITOR=vim
-export BROWSER=firefox
+export PAGER=less
 export TERMINAL=xterm
+export VISUAL="$EDITOR"
 
-# man {{{1
+if [ -n "$DISPLAY" ]; then
+    export BROWSER=firefox
+else
+    export BROWSER=links
+fi
+
+# man {{{2
 export MANPAGER="vim -M +MANPAGER - +'set colorcolumn= nonumber laststatus=0'"
 export MANWIDTH=80
 
@@ -23,7 +31,7 @@ export QT_QPA_PLATFORMTHEME=gtk2
 
 # OTHER {{{1
 
-# Enable automatic `startx`
+# Automatic `startx` (if not set, defaults to 'yes')
 export AUTO_STARTX="${AUTO_STARTX:-yes}"
 
 # Japanese input
