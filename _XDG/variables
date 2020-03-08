@@ -1,11 +1,15 @@
 # XDG #
 # vim: ft=sh fdm=marker fen
 
-# Parse 'pam_environment' (when executing install.sh) {{{1
+# Parse 'pam_environment' {{{1
 
-if [ -n "$DIR" ]; then
-    eval "$(cat "$DIR/pam_environment" | sed -r 's/\s*DEFAULT//g' | sed -r 's/\@\{/\$\{/' | sed -r 's/^([A-Z]i)/export\ \1/g')"
+if [ -z "$DIR" ]; then # DIR from install.sh
+    _pam=$HOME/.pam_environment
+else
+    _pam=$DIR/pam_environment
 fi
+eval "$(cat "$_pam" | sed -r 's/\s*DEFAULT//g' | sed -r 's/\@\{/\$\{/' | sed -r 's/^([A-Z]i)/export\ \1/g')"
+unset _pam
 
 # CUSTOM {{{1
 export _XDG_WRAPPERS="$XDG_LOCAL_HOME/bin/_xdg_wrappers"
