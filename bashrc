@@ -1,5 +1,4 @@
 # BASHRC #
-# vim: fdm=marker fen
 
 # Source shells environment configs
 source $XDG_CONFIG_HOME/shell/shrc

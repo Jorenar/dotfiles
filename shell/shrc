@@ -1,13 +1,14 @@
 # vim: ft=sh fdm=marker fen
 
 # Init {{{1
-# Source env variables {{{2
+
+# Source env variables
 . $XDG_CONFIG_HOME/shell/variables
 
-# Source local additional env {{{2
+# Source local additional env
 [ -f $XDG_LOCAL_HOME/supp/profile ] && . $XDG_LOCAL_HOME/supp/profile
 
-# Logout {{{2
+# Logout
 trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && sh $XDG_CONFIG_HOME/shell/logout" EXIT
 
 # Enable vi mode
@@ -16,7 +17,7 @@ set -o vi
 # PROMPT {{{1
 
 # user@host:dir
-PS1=$'\e[1m$USER@$(hostname -s)\e[90m:${PWD/"$HOME"/"~"}\e[0m'
+PS1=$(printf '\e[1m$USER@$(hostname -s)\e[90m:${PWD/"$HOME"/"~"}\e[0m')
 
 # Set window title
 case $TERM in

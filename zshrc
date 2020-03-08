@@ -19,6 +19,8 @@ bindkey '^r' history-incremental-search-backward
 
 # PROMPT
 
+setopt PROMPT_SUBST
+
 # "Template" for prompt
 prompt_="%B%n@%m:%F{8}%~%f%#%b "
 
@@ -31,7 +33,7 @@ esac
 
 # Display Vi mode
 function zle-line-init zle-keymap-select {
-    PS1="${${KEYMAP/vicmd/:}/(main|viins)/+}$prompt_"
+    PS1="${${KEYMAP/vicmd/:}/(main|viins)/+}$prompt_" # there prompt is set
     zle reset-prompt
 }
 

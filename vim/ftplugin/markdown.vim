@@ -1,5 +1,5 @@
 " Markdown
-" vim:set fdm=marker fen
+" vim: fdm=marker fen
 
 " COMMANDS {{{1
 
