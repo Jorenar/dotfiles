@@ -1,6 +1,6 @@
 # ZSHRC #
 
-# Source shells environment configs
+# Source basic shell config
 source $XDG_CONFIG_HOME/shell/shrc
 
 # Enable completion
@@ -17,7 +17,7 @@ bindkey '^w' backward-kill-word
 bindkey '^r' history-incremental-search-backward
 
 
-# PROMPT
+# PROMPT ---------------------
 
 setopt PROMPT_SUBST
 

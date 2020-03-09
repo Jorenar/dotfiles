@@ -3,7 +3,7 @@
 # Init {{{1
 
 # Source env variables
-. $XDG_CONFIG_HOME/shell/variables
+. $XDG_CONFIG_HOME/env/variables
 
 # Source local additional env
 [ -f $XDG_LOCAL_HOME/supp/profile ] && . $XDG_LOCAL_HOME/supp/profile

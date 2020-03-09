@@ -1,6 +1,6 @@
 # BASHRC #
 
-# Source shells environment configs
+# Source basic shell config
 source $XDG_CONFIG_HOME/shell/shrc
 
 # Enable programmable completion features

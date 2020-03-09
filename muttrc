@@ -30,9 +30,6 @@ set net_inc=5
 # Turn off the help line at the top
 set help=no
 
-# Path to mailcap
-set mailcap_path = "${XDG_CONFIG_HOME:-$HOME/.config}/mailcap"
-
 # View HTML
 alternative_order text/plain text/enriched text/html     # save html for last
 auto_view text/html                                      # view html automatically

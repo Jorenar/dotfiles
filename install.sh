@@ -6,7 +6,7 @@
 force_flag=$1
 DIR="$(dirname $(realpath $0))"
 
-. $DIR/_XDG/variables
+. $DIR/env/_XDG_variables
 
 # ------------------------------------------------
 
@@ -46,40 +46,39 @@ pam_env() { # {{{
 
 # ------------------------------------------------
 
-pam_env  pam_environment   $HOME/.pam_environment
+pam_env  pam_environment     $HOME/.pam_environment
 
-linking  _XDG/variables    $XDG_CONFIG_HOME/env/_XDG_variables
-linking  autostart/        $XDG_CONFIG_HOME/env/autostart
-linking  bashrc            $XDG_CONFIG_HOME/bash/bashrc
-linking  feh/              $XDG_CONFIG_HOME/feh
-linking  git/              $XDG_CONFIG_HOME/git
-linking  htoprc            $XDG_CONFIG_HOME/htop/htoprc        -w
-linking  i3/               $XDG_CONFIG_HOME/i3
-linking  mailcap           $XDG_CONFIG_HOME/mailcap
-linking  mimeapps.list     $XDG_CONFIG_HOME/mimeapps.list
-linking  mpv/              $XDG_CONFIG_HOME/mpv
-linking  muttrc            $XDG_CONFIG_HOME/mutt/muttrc
-linking  myclirc           $XDG_CONFIG_HOME/mycli/myclirc
-linking  newsboat/config   $XDG_CONFIG_HOME/newsboat/config
-linking  profile           $XDG_CONFIG_HOME/profile
-linking  shell/            $XDG_CONFIG_HOME/shell
-linking  ssh_config        $XDG_CONFIG_HOME/ssh/config
-linking  tmux.conf         $XDG_CONFIG_HOME/tmux/tmux.conf
-linking  user-dirs.dirs    $XDG_CONFIG_HOME/user-dirs.dirs
-linking  X11/              $XDG_CONFIG_HOME/X11
-linking  zathurarc         $XDG_CONFIG_HOME/zathura/zathurarc
+linking  env/                $XDG_CONFIG_HOME/env
+linking  bashrc              $XDG_CONFIG_HOME/bash/bashrc
+linking  feh/                $XDG_CONFIG_HOME/feh
+linking  git/                $XDG_CONFIG_HOME/git
+linking  htoprc              $XDG_CONFIG_HOME/htop/htoprc        -w
+linking  i3/                 $XDG_CONFIG_HOME/i3
+linking  mimeapps.list       $XDG_CONFIG_HOME/mimeapps.list
+linking  mpv/                $XDG_CONFIG_HOME/mpv
+linking  muttrc              $XDG_CONFIG_HOME/mutt/muttrc
+linking  myclirc             $XDG_CONFIG_HOME/mycli/myclirc
+linking  newsboat/config     $XDG_CONFIG_HOME/newsboat/config
+linking  profile             $XDG_CONFIG_HOME/profile
+linking  shell/              $XDG_CONFIG_HOME/shell
+linking  ssh_config          $XDG_CONFIG_HOME/ssh/config
+linking  tmux.conf           $XDG_CONFIG_HOME/tmux/tmux.conf
+linking  user-dirs.dirs      $XDG_CONFIG_HOME/user-dirs.dirs
+linking  X11/                $XDG_CONFIG_HOME/X11
+linking  zathurarc           $XDG_CONFIG_HOME/zathura/zathurarc
 
-linking  gpg-agent.conf    $GNUPGHOME/gpg-agent.conf
-linking  gtkrc-2.0         $GTK2_RC_FILES  # works properly, because _XDG/variables is sourced
-linking  inputrc           $INPUTRC
-linking  npmrc             $NPM_CONFIG_USERCONFIG
-linking  python_config.py  $PYTHONSTARTUP
-linking  themes/           $XDG_FAKEHOME_DIR/.themes # for compatibility with _XDG/wrappers
-linking  vim/              $VIMDOTDIR
-linking  zshrc             $ZDOTDIR/.zshrc
+linking  gpg-agent.conf      $GNUPGHOME/gpg-agent.conf
+linking  gtkrc-2.0           $GTK2_RC_FILES  # works properly, because _XDG/variables is sourced
+linking  inputrc             $INPUTRC
+linking  mailcap             $MAILCAP
+linking  npmrc               $NPM_CONFIG_USERCONFIG
+linking  python_config.py    $PYTHONSTARTUP
+linking  themes/             $XDG_FAKEHOME_DIR/.themes # for compatibility with _XDG/wrappers
+linking  vim/                $VIMDOTDIR
+linking  zshrc               $ZDOTDIR/.zshrc
 
-linking  fonts/            $XDG_DATA_HOME/fonts
-linking  themes/           $XDG_DATA_HOME/themes
+linking  fonts/              $XDG_DATA_HOME/fonts
+linking  themes/             $XDG_DATA_HOME/themes
 
 for cfg in aerc/*; do
     linking "$cfg" $XDG_CONFIG_HOME/aerc/"$(basename $cfg)"
@@ -97,22 +96,22 @@ touch $DCONF_PROFILE
 
 # WRAPPERS {{{1
 
-chmod +x $DIR/_XDG/wrappers/*
+chmod +x $DIR/_patch/xdg_base_dir/wrappers/*
 
 [ -z "(ls -A $_XDG_WRAPPERS)" ] && rm $_XDG_WRAPPERS/* # clean directory (from old links to wrappers)
 
 # Link wrappers
-for exe in $DIR/_XDG/wrappers/*; do
-    [ -e "$exe" ] && [ -x "$(command -v $(basename $exe))" ] && linking  "_XDG/wrappers/$(basename $exe)"  "$_XDG_WRAPPERS/$(basename $exe)"
+for exe in $DIR/_patch/xdg_base_dir/wrappers/*; do
+    [ -e "$exe" ] && [ -x "$(command -v $(basename $exe))" ] && linking  "_patch/xdg_base_dir/wrappers/$(basename $exe)"  "$_XDG_WRAPPERS/$(basename $exe)"
 done
 
-linking  _XDG/wrappers/ssh  $_XDG_WRAPPERS/scp
+linking  _patch/xdg_base_dir/wrappers/ssh  $_XDG_WRAPPERS/scp
 
 # Generate FAKEHOME wrappers
 while IFS= read -r exe; do
     exe="$(echo $exe | cut -f1 -d'#')"
-    [ -n "$exe" ] && [ -x "$(command -v $exe)" ] && linking  _XDG/wrappers/_xdg_fakehome.sh  $_XDG_WRAPPERS/$exe
-done < "$DIR/_XDG/fakehome.list"
+    [ -n "$exe" ] && [ -x "$(command -v $exe)" ] && linking  _patch/xdg_base_dir/wrappers/_xdg_fakehome.sh  $_XDG_WRAPPERS/$exe
+done < "$DIR/_patch/xdg_base_dir/fakehome.list"
 
 
 # Sudo patches {{{1
@@ -139,7 +138,8 @@ else
 fi
 
 if [ "$status" = "installing" ]; then
-    sudo ln -sf $DIR/_XDG/profile_xdg.sh /etc/profile.d/profile_xdg.sh
+    sudo ln -sf $DIR/_patch/xdg_base_dir/profile_xdg.sh /etc/profile.d/profile_xdg.sh
+    sudo chmod r-w /etc/profile.d/profile_xdg.sh  # just in case
 elif [ $status != installed ]; then
     linking  profile  $HOME/.profile
 fi

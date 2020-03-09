@@ -2,7 +2,7 @@
 # vim: ft=sh
 
 # ENV VARIABLES
-. $XDG_CONFIG_HOME/shell/variables
+. $XDG_CONFIG_HOME/env/variables
 
 # If Bash, then source bashrc
 if [ -n "$BASH_VERSION" ]; then

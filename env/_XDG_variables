@@ -1,9 +1,11 @@
-# XDG #
+# LOCATIONS #
 # vim: ft=sh fdm=marker fen
 
-# Parse 'pam_environment' (when executing install.sh) {{{1
+# Init {{{1
+
+# Parse 'pam_environment' (when executing install.sh)
 if [ -n "$DIR" ]; then
-    eval "$(cat "$DIR/pam_environment" | sed -r 's/\s*DEFAULT//g' | sed -r 's/\@\{/\$\{/' | sed -r 's/^([A-Z]i)/export\ \1/g')"
+    eval "$(cat "$DIR/pam_environment" | sed -r 's/\s*DEFAULT//g' | sed -r 's/\@\{/\$\{/' | sed -r 's/^([A-Z])/export\ \1/g')"
 fi
 
 # CUSTOM {{{1
@@ -13,14 +15,14 @@ export XDG_GAMES_DIR="$XDG_LOCAL_HOME/games"
 export XDG_HISTORY_DIR="$XDG_CACHE_HOME/history"
 export XDG_VM_DIR="$XDG_LOCAL_HOME/vm"
 
-# PATH {{{2
+# PATH {{{1
 export PATH="$XDG_LOCAL_HOME/AppImages:$PATH"
 export PATH="$XDG_LOCAL_HOME/bin:$PATH"
 export PATH="$XDG_LOCAL_HOME/scripts:$PATH"
 
 export PATH="$_XDG_WRAPPERS:$PATH"
 
-# PROGRAMS' dots RELOCATING VARIABLES {{{1
+# RELOCATING VARIABLES {{{1
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME/java"
 export BASH_COMPLETION_USER_FILE="$XDG_CONFIG_HOME/bash/bash_completion"
 export DCONF_PROFILE="$XDG_CONFIG_HOME/dconf/user"
@@ -36,6 +38,8 @@ export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 export ICEAUTHORITY="$XDG_CACHE_HOME/ICEauthority"
 export IMAPFILTER_HOME="$XDG_CONFIG_HOME/imapfilter"
 export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
+export MAILCAP="$XDG_CONFIG_HOME/mailcap" # elinks, w3m
+export MAILCAPS="$MAILCAP"   # Mutt, pine
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/config.py"
@@ -51,8 +55,6 @@ export XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
 
 # HISTORY FILES {{{1
 
-mkdir -p "$XDG_HISTORY_DIR"
-
 export HISTFILE="$XDG_HISTORY_DIR/shell"
 export LESSHISTFILE=-
 export MYSQL_HISTFILE="$XDG_HISTORY_DIR/mysql"
@@ -60,8 +62,16 @@ export NODE_REPL_HISTORY="$XDG_HISTORY_HOME/node_repl_history"
 export SQLITE_HISTORY="$XDG_HISTORY_DIR/sqlite"
 
 # Parse user-dirs.dirs {{{1
+[ -n "$DIR" ] && userDirs_dirs="$DIR/user-dirs.dirs" || userDirs_dirs="$XDG_CONFIG_HOME/user-dirs.dirs"
 
 while IFS= read -r dir; do
     var="$(echo $dir | cut -f1 -d'#')"
     [ -n "$var" ] && eval export $var
-done < "$XDG_CONFIG_HOME/user-dirs.dirs"
+done < "$userDirs_dirs"
+
+unset userDirs_dirs
+
+# End {{{1
+
+# Create history dir
+mkdir -p "$XDG_HISTORY_DIR"
