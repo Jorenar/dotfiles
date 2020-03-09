@@ -1,8 +1,8 @@
 #!/bin/bash
 
-exec > /tmp/aerc.html
+exec > "${TMPDIR:-/tmp}/aerc.html"
 while IFS= read -r line; do
   printf '%s\n' "$line"
 done
 
-firefox --new-window /tmp/aerc.html & disown
+firefox --new-window "${TMPDIR:-/tmp}/aerc.html" & disown

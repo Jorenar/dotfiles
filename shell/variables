@@ -31,6 +31,9 @@ export QT_QPA_PLATFORMTHEME=gtk2
 
 # OTHER {{{1
 
+# Temp dir
+export TMPDIR="${TMPDIR:-/tmp}"
+
 # Automatic `startx` (if not set, defaults to 'yes')
 export AUTO_STARTX="${AUTO_STARTX:-yes}"
 

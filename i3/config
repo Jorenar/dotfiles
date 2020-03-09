@@ -57,7 +57,7 @@ bindsym $mod+w exec firefox
 bindsym $mod+q exec --no-startup-id $XDG_CONFIG_HOME/i3/scripts/quiterss_wrapper
 
 # open aerc
-bindsym $mod+m exec --no-startup-id imapfilter && i3-sensible-terminal -T aerc aerc && rm -f /tmp/aerc.html
+bindsym $mod+m exec --no-startup-id imapfilter && i3-sensible-terminal -T aerc aerc && rm -f "${TMPDIR:-/tmp}/aerc.html"
 
 # vim-anywhere
 bindsym $mod+v exec --no-startup-id vim-anywhere
