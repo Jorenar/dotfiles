@@ -8,6 +8,9 @@
 # Source local additional env
 [ -f $XDG_LOCAL_HOME/supp/profile ] && . $XDG_LOCAL_HOME/supp/profile
 
+# Restore OLDPWD
+[ -f "$TMPDIR/oldpwd" ] && . "$TMPDIR/oldpwd"
+
 # Logout
 trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && sh $XDG_CONFIG_HOME/shell/logout" EXIT
 

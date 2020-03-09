@@ -1,0 +1,1 @@
+echo "OLDPWD=$PWD" > "$TMPDIR/shell_oldpwd"
