@@ -1,0 +1,27 @@
+# vim: ft=sh
+
+alias ap1='sudo create_ap wlo1 wlo1 x I_love_BASH' # semi open WiFi network
+alias cal='cal -m'
+alias du='du -h'
+alias gpu-switch='optimus-manager --switch auto && i3-msg exit'
+alias grep='grep --color'
+alias i3-logout="touch $TMPDIR/disable_auto_startx && i3-msg exit"
+alias i3-relog="i3-msg exit"
+alias icanhazip='curl icanhazip.com'
+alias less='less -R'
+alias ll='ls -alhF | less -R'
+alias ls='ls -F'
+alias mkdir='mkdir -p'
+alias mnt='udisksctl mount -b'
+alias off='shutdown -h now'
+alias org='mkdir ~/.organizer && touch ~/.organizer/0_TODO && vim -p ~/.organizer/* +"cd ~/.organizer"'
+alias pass='EDITOR="vim -u NONE" pass'
+alias python-server='python -m http.server 8000'
+alias qmv='command qmv -v -f "do"'
+alias suspend='systemctl suspend'
+alias umnt='udisksctl unmount -b'
+alias update-grub='grub-mkconfig -o /boot/grub/grub.cfg'
+alias wine-lnk='env WINEPREFIX="$HOME/.wine" wine C:\\windows\\command\\start.exe /Unix'
+alias yay-autoremove='yay -Rns $(yay -Qtdq)'
+
+alias electrum='electrum -D $ELECTRUMDIR' # temporary - until version 3.3.9

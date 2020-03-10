@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+PATH=$(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)" | paste -sd:)
+export REAL_HOME="$HOME"
+HOME="${XDG_CONFIG_HOME:-$HOME/.config}/csh"
+exec "$(basename $0)" "$@"

@@ -1,7 +1,7 @@
 # SHRC #
-# vim: ft=sh fdm=marker fen
+# vim: ft=sh
 
-# Init {{{1
+# Init ------------------------------------------------------------------------
 
 # Source env variables
 . $XDG_CONFIG_HOME/env_variables
@@ -15,7 +15,11 @@
 # Logout
 trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && . $XDG_CONFIG_HOME/shell/logout" EXIT
 
-# PROMPT {{{1
+# Source aliases
+. $XDG_CONFIG_HOME/shell/aliases
+
+
+# PROMPT ----------------------------------------------------------------------
 
 # user@host:dir
 PS1=$'\e[1m$USER@$(hostname -s)\e[90m:${PWD/"$HOME"/"~"}\e[0m'
@@ -23,7 +27,7 @@ PS1=$'\e[1m$USER@$(hostname -s)\e[90m:${PWD/"$HOME"/"~"}\e[0m'
 # Set window title
 case $TERM in
     xterm*|rxvt*|screen*)
-        if [ -z "$ZSH_VERSION" ]; then # zsh has some problems here
+        if [ -z "$ZSH_VERSION" ] && [ "$0" != "dash" ]; then # zsh has some problems here
             PS1="\e]0;$(echo $PS1 | sed 's/\x1B\[[0-9;]*[a-zA-Z]//g')\a$PS1"
             # 'echo', because variable substitution doesn't always work
         fi
@@ -33,37 +37,10 @@ esac
 # Normal user or root ( $/# )
 PS1=$(printf "$PS1\e[1m$([ $(id -u) -eq 0 ] && echo '#' || echo '$')\e[0m ")
 
-# ALIASES {{{1
 
-alias ap1='sudo create_ap wlo1 wlo1 x I_love_BASH' # semi open WiFi network
-alias cal='cal -m'
-alias du='du -h'
-alias gpu-switch='optimus-manager --switch auto && i3-msg exit'
-alias grep='grep --color'
-alias i3-logout="touch $TMPDIR/disable_auto_startx && i3-msg exit"
-alias i3-relog="i3-msg exit"
-alias icanhazip='curl icanhazip.com'
-alias less='less -R'
-alias ll='ls -alhF | less -R'
-alias ls='ls -F'
-alias mkdir='mkdir -p'
-alias mnt='udisksctl mount -b'
-alias off='shutdown -h now'
-alias org='mkdir ~/.organizer && touch ~/.organizer/0_TODO && vim -p ~/.organizer/* +"cd ~/.organizer"'
-alias pass='EDITOR="vim -u NONE" pass'
-alias python-server='python -m http.server 8000'
-alias qmv='command qmv -v -f "do"'
-alias suspend='systemctl suspend'
-alias umnt='udisksctl unmount -b'
-alias update-grub='grub-mkconfig -o /boot/grub/grub.cfg'
-alias wine-lnk='env WINEPREFIX="$HOME/.wine" wine C:\\windows\\command\\start.exe /Unix'
-alias yay-autoremove='yay -Rns $(yay -Qtdq)'
-
-alias electrum='electrum -D $ELECTRUMDIR' # temporary - until version 3.3.9
+# WRAPPERS --------------------------------------------------------------------
 
 wttr() { curl wttr.in/$1; }
-
-# WRAPPERS {{{1
 
 feh() {
     if [ -d "$1" ] || [ -d "$2" ]; then
