@@ -39,6 +39,7 @@ linking  bashrc           $XDG_CONFIG_HOME/bash/bashrc
 linking  cshrc            $XDG_CONFIG_HOME/csh/.cshrc  # thanks to wrapper
 linking  env_variables    $XDG_CONFIG_HOME/env_variables
 linking  feh/             $XDG_CONFIG_HOME/feh
+linking  fish/            $XDG_CONFIG_HOME/fish
 linking  git/             $XDG_CONFIG_HOME/git
 linking  htoprc           $XDG_CONFIG_HOME/htop/htoprc        -w
 linking  i3/              $XDG_CONFIG_HOME/i3
