@@ -78,9 +78,8 @@ done
 
 chmod +x $DIR/_patch/xdg_base_dir/wrappers/*
 
-printf "Do you want to clean old $_XDG_WRAPPERS? [y/N] "
-read -r REPLY
-if [ $REPLY = "y" -o $REPLY = "Y" ]; then
+# clean old symlinks to wrappers
+if [ -d "$_XDG_WRAPPERS" ] && [ "$(find $_XDG_WRAPPERS -type l | wc -l)" -eq "$(ls -1 $_XDG_WRAPPERS | wc -l)" ]; then
     rm -r "$_XDG_WRAPPERS"
 fi
 
