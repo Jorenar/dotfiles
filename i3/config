@@ -44,7 +44,7 @@ exec --no-startup-id xsetroot -solid "#000000"
 # SHORTCUTS BINDINGS {{{1
 
 # start TERMINAL
-bindsym $mod+x exec --no-startup-id $TERMINAL $SHELL
+bindsym $mod+x exec --no-startup-id ${TERMINAL:-xterm}
 
 # open Firefox
 bindsym $mod+w exec firefox
@@ -53,7 +53,7 @@ bindsym $mod+w exec firefox
 bindsym $mod+q exec --no-startup-id $XDG_CONFIG_HOME/i3/scripts/quiterss_wrapper
 
 # open aerc
-bindsym $mod+m exec --no-startup-id imapfilter && $TERMINAL -T aerc aerc && rm -f "${TMPDIR:-/tmp}/aerc.html"
+bindsym $mod+m exec --no-startup-id imapfilter && ${TERMINAL:-xterm} -T aerc aerc && rm -f "${TMPDIR:-/tmp}/aerc.html"
 
 # vim-anywhere
 bindsym $mod+v exec --no-startup-id vim-anywhere
