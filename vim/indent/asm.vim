@@ -7,9 +7,6 @@ if exists("b:did_indent")
 endif
 let b:did_indent = 1
 
-setlocal nolisp
-setlocal autoindent
-
 setlocal indentexpr=GetAsmIndent()
 setlocal indentkeys=<:>,!^F,o,O
 
