@@ -80,8 +80,7 @@ unset userDirs_dirs
 # General {{{1
 # Default programs {{{2
 
-export SHELL=bash
-export execSHELL="exec $SHELL"
+SHELL=bash # true path determined in -End-
 
 export EDITOR=vim
 export PAGER=less
@@ -132,6 +131,8 @@ export VITASDK=/usr/local/vitasdk
 export PATH=$VITASDK/bin:$PATH
 
 # -End- {{{1
+
+export SHELL="$(command -v $SHELL)"
 
 # Create history dir
 mkdir -p "$XDG_HISTORY_DIR"
