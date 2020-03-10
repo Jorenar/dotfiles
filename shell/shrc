@@ -35,7 +35,7 @@ case $TERM in
 esac
 
 # Normal user or root ( $/# )
-PS1=$(printf "$PS1\e[1m$([ $(id -u) -eq 0 ] && echo '#' || echo '$')\e[0m ")
+export PS1=$(printf "($(ps -p "$$" -o 'comm='))$PS1\e[1m$([ $(id -u) -eq 0 ] && echo '#' || echo '$')\e[0m ")
 
 
 # WRAPPERS --------------------------------------------------------------------
