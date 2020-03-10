@@ -9,6 +9,6 @@ set prompt = "%{\e]2;%n@%m:%~\a%}(`ps -p "$$" -o 'comm='`)%{\e[1m%}%n@%m%{\e[90m
 set autolist = ambiguous
 set complete = enhance
 
-foreach line ("`cat $XDG_CONFIG_HOME/shell/aliases | sed -r 's/(alias .*)=/\1 /g' | cut -f1 -d'#'`")
+foreach line ("`cat $XDG_CONFIG_HOME/shell/aliases | cut -f1 -d'#' | sed -r 's/(alias .*)=/\1 /g'`")
     eval $line
 end
