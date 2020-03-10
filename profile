@@ -2,15 +2,24 @@
 # vim: ft=sh
 
 # ENV VARIABLES
-. $XDG_CONFIG_HOME/env/variables
 
-# If Bash, then source bashrc
 if [ -n "$BASH_VERSION" ]; then
-    [ -f "$HOME/.bashrc" ] && . "$HOME/.bashrc"
-    [ -f "$XDG_CONFIG_HOME/bash/bashrc" ] && . "$XDG_CONFIG_HOME/bash/bashrc"
+    t=$BASH_SOURCE
+elif [ -n "$ZSH_VERSION" ]; then
+    t=${(%):-%x}
+elif [ -n "$TMOUT" ]; then
+    t=${.sh.file}
+elif [ "${0##*/}" = "-dash" -o "${0##*/}" = "dash" ]; then
+    x=$(lsof -p $$ -Fn0 | tail -1); t=${x#n}
+else
+    t=$0
 fi
 
+. "$(dirname $(realpath $t))/env_variables"; unset t
+
 # AUTOSTART
-for script in $XDG_CONFIG_HOME/env/autostart/*.sh; do
+for script in $XDG_CONFIG_HOME/autostart/*.sh; do
     . "$script"
 done
+
+exec $SHELL

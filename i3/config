@@ -44,20 +44,16 @@ exec --no-startup-id xsetroot -solid "#000000"
 # SHORTCUTS BINDINGS {{{1
 
 # start TERMINAL
-bindsym $mod+x exec --no-startup-id i3-sensible-terminal
-
-# Open TERMINAL in split
-bindsym $mod+shift+apostrophe exec i3-msg split h && i3-sensible-terminal
+bindsym $mod+x exec --no-startup-id $TERMINAL $SHELL
 
 # open Firefox
-# bindsym $mod+w exec GTK_THEME="$(grep gtk-theme-name $XDG_CONFIG_HOME/gtk-2.0/gtkrc | cut -d'"' -f 2)" firefox
 bindsym $mod+w exec firefox
 
 # open QuiteRSS
 bindsym $mod+q exec --no-startup-id $XDG_CONFIG_HOME/i3/scripts/quiterss_wrapper
 
 # open aerc
-bindsym $mod+m exec --no-startup-id imapfilter && i3-sensible-terminal -T aerc aerc && rm -f "${TMPDIR:-/tmp}/aerc.html"
+bindsym $mod+m exec --no-startup-id imapfilter && $TERMINAL -T aerc aerc && rm -f "${TMPDIR:-/tmp}/aerc.html"
 
 # vim-anywhere
 bindsym $mod+v exec --no-startup-id vim-anywhere

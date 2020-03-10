@@ -1,1 +1,4 @@
-echo "OLDPWD=$PWD" > "$TMPDIR/shell_oldpwd"
+# LOGOUT SCRIPT #
+# vim: ft=sh
+
+echo "OLDPWD=$PWD" > "$XDG_HISTORY_DIR/oldpwd"

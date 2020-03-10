@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=KanjiTomo
-Comment=identify Japanese characters from images or screen
+Comment=Identify Japanese characters from images or screen
 Exec=kanjitomo
 Terminal=false
 Type=Application

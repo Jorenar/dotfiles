@@ -1,30 +1,35 @@
-# LOCATIONS #
 # vim: ft=sh fdm=marker fen
 
-# Init {{{1
+# It is important for this file, to be in the same directory as 'profile' file
+#    (originals, not symlinks)
 
-# Parse 'pam_environment' (when executing install.sh)
-if [ -n "$DIR" ]; then
-    eval "$(cat "$DIR/pam_environment" | sed -r 's/\s*DEFAULT//g' | sed -r 's/\@\{/\$\{/' | sed -r 's/^([A-Z])/export\ \1/g')"
-fi
+# -#- XDG Base Directory -#- {{{1
+# BASIC {{{2
 
-# CUSTOM {{{1
+export XDG_LOCAL_HOME="$HOME/.local" # This sould be one of defaults
+
+export XDG_CACHE_HOME="$XDG_LOCAL_HOME/cache"
+export XDG_CONFIG_HOME="$XDG_LOCAL_HOME/config"
+export XDG_DATA_HOME="$XDG_LOCAL_HOME/share"
+
+# CUSTOM {{{2
 export _XDG_WRAPPERS="$XDG_LOCAL_HOME/bin/_xdg_wrappers"
 export XDG_FAKEHOME_DIR="$XDG_LOCAL_HOME/home"
 export XDG_GAMES_DIR="$XDG_LOCAL_HOME/games"
 export XDG_HISTORY_DIR="$XDG_CACHE_HOME/history"
 export XDG_VM_DIR="$XDG_LOCAL_HOME/vm"
 
-# PATH {{{1
+# PATH {{{2
 export PATH="$XDG_LOCAL_HOME/AppImages:$PATH"
 export PATH="$XDG_LOCAL_HOME/bin:$PATH"
 export PATH="$XDG_LOCAL_HOME/scripts:$PATH"
 
 export PATH="$_XDG_WRAPPERS:$PATH"
 
-# RELOCATING VARIABLES {{{1
+# RELOCATING VARIABLES {{{2
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME/java"
 export BASH_COMPLETION_USER_FILE="$XDG_CONFIG_HOME/bash/bash_completion"
+export BASH_DOTDIR="$XDG_CONFIG_HOME/bash"
 export DCONF_PROFILE="$XDG_CONFIG_HOME/dconf/user"
 export ELECTRUMDIR="$XDG_DATA_HOME/electrum"
 export ELINKS_CONFDIR="$XDG_CONFIG_HOME/elinks"
@@ -52,16 +57,16 @@ export WINEPREFIX="$XDG_DATA_HOME/wine"
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
 export XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 
-# HISTORY FILES {{{1
-
+# HISTORY FILES {{{3
 export HISTFILE="$XDG_HISTORY_DIR/shell"
 export LESSHISTFILE=-
 export MYSQL_HISTFILE="$XDG_HISTORY_DIR/mysql"
 export NODE_REPL_HISTORY="$XDG_HISTORY_HOME/node_repl_history"
 export SQLITE_HISTORY="$XDG_HISTORY_DIR/sqlite"
 
-# Parse user-dirs.dirs {{{1
+# Parse user-dirs.dirs {{{2
 [ -n "$DIR" ] && userDirs_dirs="$DIR/user-dirs.dirs" || userDirs_dirs="$XDG_CONFIG_HOME/user-dirs.dirs"
 
 while IFS= read -r dir; do
@@ -71,7 +76,62 @@ done < "$userDirs_dirs"
 
 unset userDirs_dirs
 
-# End {{{1
+
+# General {{{1
+# Default programs {{{2
+
+export SHELL=bash
+export execSHELL="exec $SHELL"
+
+export EDITOR=vim
+export PAGER=less
+export TERMINAL=xterm
+export VISUAL="$EDITOR"
+
+if [ -n "$DISPLAY" ]; then
+    export BROWSER=firefox
+else
+    export BROWSER=elinks
+fi
+
+# man {{{2
+export MANPAGER="vim -M +MANPAGER - +'set colorcolumn= nonumber laststatus=0'"
+export MANWIDTH=80
+
+# Theme {{{2
+
+# GTK theme
+export GTK_THEME="$(grep gtk-theme-name $GTK2_RC_FILES | cut -d'"' -f 2)"
+gtk_theme_rc="$XDG_DATA_HOME/themes/$GTK_THEME/gtk-2.0/gtkrc"
+[ -f "$gtk_theme_rc" ] && export GTK2_RC_FILES="$GTK2_RC_FILES:$gtk_theme_rc"; unset gtk_theme_rc
+
+# Set Qt to use GTK theme
+export QT_QPA_PLATFORMTHEME=gtk2
+
+# OTHER {{{2
+
+# Name
+export NAME="Jorengarenar"
+
+# Temp dir
+export TMPDIR="${TMPDIR:-/tmp}"
+
+# Automatic `startx` (if not set, defaults to 'yes')
+export AUTO_STARTX="${AUTO_STARTX:-yes}"
+
+# Japanese input
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+export GTK_IM_MODULE=fcitx
+
+# Enable GPG agent
+export GPG_AGENT_INFO
+
+# VITASDK
+export VITASDK=/usr/local/vitasdk
+export PATH=$VITASDK/bin:$PATH
+
+# -End- {{{1
 
 # Create history dir
 mkdir -p "$XDG_HISTORY_DIR"

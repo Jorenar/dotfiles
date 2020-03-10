@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+PATH=$(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)" | paste -sd:)
+exec bash --rcfile "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc" "$@"

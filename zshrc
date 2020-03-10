@@ -3,6 +3,9 @@
 # Source basic shell config
 source $XDG_CONFIG_HOME/shell/shrc
 
+# Set (separate) history file
+HISTFILE=$XDG_HISTORY_DIR/zsh_history
+
 # Enable completion
 autoload -Uz compinit && compinit
 
@@ -21,8 +24,8 @@ bindkey '^r' history-incremental-search-backward
 
 setopt PROMPT_SUBST
 
-# "Template" for prompt
-prompt_="%B%n@%m:%F{8}%~%f%#%b "
+# Fix prompt
+p="$(echo $PS1 | sed -r 's/(\x1B\[[0-9;]*[a-zA-Z])/%{\1%}/g')"
 
 # Window title
 case $TERM in
@@ -33,7 +36,7 @@ esac
 
 # Display Vi mode
 function zle-line-init zle-keymap-select {
-    PS1="${${KEYMAP/vicmd/:}/(main|viins)/+}$prompt_" # there prompt is set
+    PS1="${${KEYMAP/vicmd/:}/(main|viins)/+}$p" # there prompt is set
     zle reset-prompt
 }
 

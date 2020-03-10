@@ -1,32 +1,31 @@
+# SHRC #
 # vim: ft=sh fdm=marker fen
 
 # Init {{{1
 
 # Source env variables
-. $XDG_CONFIG_HOME/env/variables
+. $XDG_CONFIG_HOME/env_variables
 
 # Source local additional env
-[ -f $XDG_LOCAL_HOME/supp/profile ] && . $XDG_LOCAL_HOME/supp/profile
+[ -f $XDG_LOCAL_HOME/supp/env ] && . $XDG_LOCAL_HOME/supp/env
 
 # Restore OLDPWD
-[ -f "$TMPDIR/oldpwd" ] && . "$TMPDIR/oldpwd"
+[ -f "$XDG_HISTORY_DIR/oldpwd" ] && . "$XDG_HISTORY_DIR/oldpwd"
 
 # Logout
-trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && sh $XDG_CONFIG_HOME/shell/logout" EXIT
-
-# Enable vi mode
-set -o vi
+trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && . $XDG_CONFIG_HOME/shell/logout" EXIT
 
 # PROMPT {{{1
 
 # user@host:dir
-PS1=$(printf '\e[1m$USER@$(hostname -s)\e[90m:${PWD/"$HOME"/"~"}\e[0m')
+PS1=$'\e[1m$USER@$(hostname -s)\e[90m:${PWD/"$HOME"/"~"}\e[0m'
 
 # Set window title
 case $TERM in
     xterm*|rxvt*|screen*)
-        if [ "$0" != "sh" ]; then
-            PS1=$(printf "\e]0;${PS1//$'\e'\[*([0-9;])m/}\007$PS1")
+        if [ -z "$ZSH_VERSION" ]; then # zsh has some problems here
+            PS1="\e]0;$(echo $PS1 | sed 's/\x1B\[[0-9;]*[a-zA-Z]//g')\a$PS1"
+            # 'echo', because variable substitution doesn't always work
         fi
         ;;
 esac
