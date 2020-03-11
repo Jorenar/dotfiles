@@ -1,7 +1,7 @@
 # SHRC #
-# vim: ft=sh
+# vim: ft=sh fdm=marker fen
 
-# Init ------------------------------------------------------------------------
+# Init {{{1
 
 # Source env variables
 . $XDG_CONFIG_HOME/env_variables
@@ -19,32 +19,25 @@ trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && . $XDG_CONFIG_HOME/shell/logout"
 . $XDG_CONFIG_HOME/shell/aliases
 
 
-# PROMPT ----------------------------------------------------------------------
-
-_pwd() { # '~/test/ex/foo/bar/aaa/bb' -> '~/.../foo/bar/aaa/bb'
-    n=${PWD/"$HOME"/"~"}
-    f=${n%%/*}
-    while [ ${#n} -gt 35 ]; do n="${n#*/}"; done
-    [ $f = ${n%%/*} ] && echo "$n" || echo "$f/.../${n#$f}"
-}
+# PROMPT {{{1
 
 # user@host:dir
-PS1=$'\e[1m$USER@$HOSTNAME\e[90m:$(_pwd)\e[0m'
+PS1='($0)\033[1m$USER@$HOSTNAME\033[90m:$(echo $PWD | sed -r s,$HOME,~,)\033[0m'
 
 # Set window title
 case $TERM in
     xterm*|rxvt*|screen*)
-        if [ -z "$ZSH_VERSION" ] && [ "$0" != "dash" ]; then # zsh has some problems here
-            PS1=$'\e]0;$USER@$HOSTNAME:${PWD/"$HOME"/"~"}\a'"$PS1"
-        fi
+        PS1='\033]0;$USER@$HOSTNAME:$(echo $PWD | sed -r s,$HOME,~,)\007'"$PS1"
         ;;
 esac
 
 # Normal user or root ( $/# )
-export PS1=$(printf "($(ps -p "$$" -o 'comm='))$PS1\e[1m$([ $(id -u) -eq 0 ] && echo '#' || echo '$')\e[0m ")
+PS1="$PS1\033[1m$\033[0m "
 
+# Print prompt
+PS1="$(printf "$PS1")"
 
-# WRAPPERS --------------------------------------------------------------------
+# WRAPPERS {{{1
 
 wttr() { curl wttr.in/$1; }
 

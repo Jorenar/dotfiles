@@ -22,21 +22,24 @@ bindkey '^r' history-incremental-search-backward
 
 # PROMPT ---------------------
 
-setopt PROMPT_SUBST
+# Variable to hold title part of PS1
+PS1_WIN_TITLE="$(echo $PS1 | sed -r $'s/\007.*//')\007"
 
 # Fix prompt
-p="$(echo $PS1 | sed -r 's/(\x1B\[[0-9;]*[a-zA-Z])/%{\1%}/g')"
+setopt PROMPT_SUBST
+PS1=" $(echo $PS1 | sed -r $'s/.*\007//' | sed -r 's/(\x1B\[[0-9;]*[a-zA-Z])/%{\1%}/g')"
+#    ^ for Vi mode
 
 # Window title
 case $TERM in
     xterm*|rxvt*|screen*)
-        precmd () {print -Pn "\e]0;%n@%m:%~\a"}
+        precmd () {print -Pn "$PS1_WIN_TITLE" }
         ;;
 esac
 
 # Display Vi mode
 function zle-line-init zle-keymap-select {
-    PS1="${${KEYMAP/vicmd/:}/(main|viins)/+}$p" # there prompt is set
+    PS1="${${KEYMAP/vicmd/:}/(main|viins)/+}${PS1:1}"
     zle reset-prompt
 }
 
