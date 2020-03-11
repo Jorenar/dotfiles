@@ -27,7 +27,7 @@ PS1='\033[90m${PROMPT_SHOW_SHELL+($0)}\033[0m' # If variable is set, then '(shel
 PS1="$PS1"'\033[1m$USER@$HOSTNAME:\033[0;90m$(echo $PWD | sed -r s,$HOME,~,)\033[0m'
 
 # :git_branch {{{2
-PS1="$PS1\033[0m\$(git rev-parse --abbrev-ref HEAD 2> /dev/null | sed -r 's/(.*)/:\1/')\033[0m"
+PS1="$PS1\$(git rev-parse --abbrev-ref HEAD 2> /dev/null | sed -r 's/(.*)/:\033[0;1;4;90m\1/')\033[0m"
 
 # - WINDOW TITLE {{{2
 case $TERM in
