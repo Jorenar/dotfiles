@@ -21,15 +21,21 @@ trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && . $XDG_CONFIG_HOME/shell/logout"
 
 # PROMPT ----------------------------------------------------------------------
 
+_pwd() { # '~/test/ex/foo/bar/aaa/bb' -> '~/.../foo/bar/aaa/bb'
+    n=${PWD/"$HOME"/"~"}
+    f=${n%%/*}
+    while [ ${#n} -gt 35 ]; do n="${n#*/}"; done
+    [ $f = ${n%%/*} ] && echo "$n" || echo "$f/.../${n#$f}"
+}
+
 # user@host:dir
-PS1=$'\e[1m$USER@$(hostname -s)\e[90m:${PWD/"$HOME"/"~"}\e[0m'
+PS1=$'\e[1m$USER@$HOSTNAME\e[90m:$(_pwd)\e[0m'
 
 # Set window title
 case $TERM in
     xterm*|rxvt*|screen*)
         if [ -z "$ZSH_VERSION" ] && [ "$0" != "dash" ]; then # zsh has some problems here
-            PS1="\e]0;$(echo $PS1 | sed 's/\x1B\[[0-9;]*[a-zA-Z]//g')\a$PS1"
-            # 'echo', because variable substitution doesn't always work
+            PS1=$'\e]0;$USER@$HOSTNAME:${PWD/"$HOME"/"~"}\a'"$PS1"
         fi
         ;;
 esac
