@@ -112,6 +112,9 @@ export QT_QPA_PLATFORMTHEME=gtk2
 # Name
 export NAME="Jorengarenar"
 
+# HOST
+HOSTNAME="${HOSTNAME:-$(hostname -s)}"
+
 # Temp dir
 export TMPDIR="${TMPDIR:-/tmp}"
 
