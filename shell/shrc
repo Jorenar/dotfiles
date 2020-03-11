@@ -20,22 +20,27 @@ trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && . $XDG_CONFIG_HOME/shell/logout"
 
 
 # PROMPT {{{1
+# (shell) {{{2
+PS1='\033[90m${PROMPT_SHOW_SHELL+($0)}\033[0m' # If variable is set, then '(shell)user@hos...'
 
-# user@host:dir
-PS1='\033[90m($0)\033[0;1m$USER@$HOSTNAME\033[0;90m:$(echo $PWD | sed -r s,$HOME,~,)\033[0m'
+# user@host:pwd {{{2
+PS1="$PS1"'\033[1m$USER@$HOSTNAME:\033[0;90m$(echo $PWD | sed -r s,$HOME,~,)\033[0m'
 
-# Set window title
+# :git_branch {{{2
+PS1="$PS1\033[0m\$(git rev-parse --abbrev-ref HEAD 2> /dev/null | sed -r 's/(.*)/:\1/')\033[0m"
+
+# - WINDOW TITLE {{{2
 case $TERM in
     xterm*|rxvt*|screen*)
         PS1='\033]0;$USER@$HOSTNAME:$(echo $PWD | sed -r s,$HOME,~,)\007'"$PS1"
         ;;
 esac
 
-# Normal user or root ( $/# )
+# $ {{{2
 PS1="$PS1\033[1m$\033[0m "
 
-# Print prompt
-PS1="$(printf "$PS1")"
+# - PRINT PROMPT {{{2
+[ "$0" = "dash" ] && PS1=$(printf "$PS1") || PS1=$(echo -ne "$PS1")
 
 # WRAPPERS {{{1
 
