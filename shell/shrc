@@ -22,7 +22,7 @@ trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && . $XDG_CONFIG_HOME/shell/logout"
 # PROMPT {{{1
 
 # user@host:dir
-PS1='($0)\033[1m$USER@$HOSTNAME\033[90m:$(echo $PWD | sed -r s,$HOME,~,)\033[0m'
+PS1='($0)\033[1m$USER@$HOSTNAME\033[0;90m:$(echo $PWD | sed -r s,$HOME,~,)\033[0m'
 
 # Set window title
 case $TERM in
