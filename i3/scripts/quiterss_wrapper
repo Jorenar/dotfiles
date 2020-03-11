@@ -3,5 +3,5 @@
 if [ -z "$(xlsclients | grep -i QuiteRSS)" ]; then
     exec quiterss
 else
-    i3-msg [class="QuiteRss"] scratchpad show
+    i3-msg \[class="QuiteRss"\] scratchpad show
 fi
