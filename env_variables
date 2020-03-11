@@ -80,7 +80,7 @@ unset userDirs_dirs
 # General {{{1
 # Default programs {{{2
 
-SHELL=bash # true path determined in -End-
+SHELL=bash # path determined in -End-
 
 export EDITOR=vim
 export PAGER=less
