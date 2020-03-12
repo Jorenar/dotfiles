@@ -23,12 +23,12 @@ bindkey '^r' history-incremental-search-backward
 # PROMPT ---------------------
 
 # Variable to hold title part of PS1
-PS1_WIN_TITLE="$(echo $PS1 | sed -r $'s/\007.*//')\007"
+PS1_WIN_TITLE="$(echo $PS1 | sed $'s/\007.*//')\007"
 
 # Fix prompt
 setopt PROMPT_SUBST
-PS1=" $(echo $PS1 | sed -r $'s/.*\007//' | sed -r 's/(\x1B\[[0-9;]*[a-zA-Z])/%{\1%}/g')"
-#    ^ for Vi mode
+PS1=" $(sed -e $'s/.*\007//' -e 's/\x1B\[[0-9;]*[a-zA-Z]/%{&%}/g' <<< $PS1)"
+#    ^ for Vi mode indicator
 
 # Window title
 case $TERM in

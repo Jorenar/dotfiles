@@ -7,7 +7,7 @@ function fish_prompt
         set show_shell ""
     end
 
-    set -l git_branch (git rev-parse --abbrev-ref HEAD 2> /dev/null | sed -r 's/(.*)/\1/')
+    set -l git_branch (git rev-parse --abbrev-ref HEAD 2> /dev/null)
 
     if [ -n "$git_branch" ]
         set git_branch (set_color normal)(set_color --bold)":"(set_color --dim --underline)$git_branch(set_color normal)
