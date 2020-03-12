@@ -66,16 +66,8 @@ export MYSQL_HISTFILE="$XDG_HISTORY_DIR/mysql"
 export NODE_REPL_HISTORY="$XDG_HISTORY_HOME/node_repl_history"
 export SQLITE_HISTORY="$XDG_HISTORY_DIR/sqlite"
 
-# Parse user-dirs.dirs {{{2
-[ -n "$DIR" ] && userDirs_dirs="$DIR/user-dirs.dirs" || userDirs_dirs="$XDG_CONFIG_HOME/user-dirs.dirs"
-
-while IFS= read -r dir; do
-    var="$(echo $dir | cut -f1 -d'#')"
-    [ -n "$var" ] && eval export $var
-done < "$userDirs_dirs"
-
-unset userDirs_dirs
-
+# "Source" $XDG_CONFIG_HOME/user-dirs.dirs {{{2
+eval "$(sed 's/^[^#].*/export &/g;t;d' ${DIR:-$XDG_CONFIG_HOME}/user-dirs.dirs)"
 
 # General {{{1
 # Default programs {{{2
