@@ -10,7 +10,7 @@ elif [ -n "$ZSH_VERSION" ]; then
 elif [ -n "$TMOUT" ]; then
     t=${.sh.file}
 elif [ "${0##*/}" = "-dash" -o "${0##*/}" = "dash" ]; then
-    x=$(lsof -p $$ -Fn0 | tail -1); t=${x#n}
+    t=$(lsof -p $$ -Fn0 | tail -1); t=${t#n}
 else
     t=$0
 fi
