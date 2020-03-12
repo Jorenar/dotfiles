@@ -133,6 +133,9 @@ export GPG_AGENT_INFO
 export VITASDK=/usr/local/vitasdk
 export PATH=$VITASDK/bin:$PATH
 
+# Virtual terminal number (if not set already by PAM)
+export XDG_VTNR=${XDG_VTNR:-$(tty | sed "s/[^0-9]*//g")}
+
 # -End- {{{1
 
 export SHELL="$(command -v $SHELL)"
