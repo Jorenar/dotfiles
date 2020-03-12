@@ -118,9 +118,6 @@ export HOSTNAME="${HOSTNAME:-$(hostname -s)}"
 # Temp dir
 export TMPDIR="${TMPDIR:-/tmp}"
 
-# Automatic `startx` (if not set, defaults to 'yes')
-export AUTO_STARTX="${AUTO_STARTX:-yes}"
-
 # Japanese input
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
