@@ -136,6 +136,9 @@ export PATH=$VITASDK/bin:$PATH
 # Virtual terminal number (if not set already by PAM)
 export XDG_VTNR=${XDG_VTNR:-$(tty | sed "s/[^0-9]*//g")}
 
+# Source additional, local env_variables {{{1
+[ -f $XDG_LOCAL_HOME/supp/env_variables ] && . $XDG_LOCAL_HOME/supp/env_variables
+
 # -End- {{{1
 
 export SHELL="$(command -v $SHELL)"
