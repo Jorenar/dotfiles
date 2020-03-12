@@ -54,7 +54,7 @@ export VIMDOTDIR="$XDG_CONFIG_HOME/vim"
 export VIMINIT='set rtp^=$VIMDOTDIR | let $MYVIMRC="$VIMDOTDIR/vimrc" | so $MYVIMRC'
 export WEECHAT_HOME="$XDG_CONFIG_HOME/weechat"
 export WINEPREFIX="$XDG_DATA_HOME/wine"
-export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+export XAUTHORITY="${XDG_RUNTIME_DIR:-$XDG_LOCAL_HOME}/Xauthority"
 export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
 export XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
@@ -113,7 +113,7 @@ export QT_QPA_PLATFORMTHEME=gtk2
 export NAME="Jorengarenar"
 
 # HOST
-HOSTNAME="${HOSTNAME:-$(hostname -s)}"
+export HOSTNAME="${HOSTNAME:-$(hostname -s)}"
 
 # Temp dir
 export TMPDIR="${TMPDIR:-/tmp}"
