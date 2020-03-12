@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # If there is no display and variable AUTOSTARTX is set then on tty1 start X
-if [ -z "${AUTOSTARTX:+x}" ] && [ -z $DISPLAY ] && [ $XDG_VTNR -eq 1 ] && [ ! -f "${TMPDIR:-/tmp}/disable_autostartx" ]; then
+if [ -z "${AUTOSTARTX+x}" ] && [ -z $DISPLAY ] && [ $XDG_VTNR -eq 1 ] && [ ! -f "${TMPDIR:-/tmp}/disable_autostartx" ]; then
 
     # Optimus manager
     if sudo -n /usr/bin/prime-switch > /dev/null 2>&1; then
