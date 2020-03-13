@@ -1,3 +1,5 @@
-Session.vim
 .vimrc.local
 __pycache__
+a.out
+build/
+Session.vim
