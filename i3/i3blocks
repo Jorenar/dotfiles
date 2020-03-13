@@ -9,7 +9,7 @@ command=sensors | awk '/Package id 0:/ {print $4}'
 interval=1
 
 [cpu-freq]
-command=lscpu | awk '/CPU MHz/ {printf "%4s MHz", int($3)}'
+command=lscpu | awk '/CPU MHz/ {printf "%4s MHz\n", int($3)}'
 interval=1
 
 [wifi]
