@@ -21,13 +21,24 @@ trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && . $XDG_CONFIG_HOME/shell/logout"
 
 # PROMPT {{{1
 # (shell) {{{2
-PS1='\033[90m${PROMPT_SHOW_SHELL+($0)}\033[0m' # If variable is set, then '(shell)user@hos...'
+PS1='\033[90m${PROMPT_SHOW_SHELL:+($0)}\033[0m' # If variable is not empty, then '(shell)user@hos...'
 
-# user@host:pwd {{{2
-PS1="$PS1"'\033[1m$USER@$HOSTNAME:\033[0;90m$(echo $PWD | sed s,^$HOME,~,)\033[0m'
+# user@host {{{2
+PS1="$PS1"'\033[1m$USER@$HOSTNAME\033[0m'
+
+# :pwd {{{2
+#     e.g.:  '~/test/ex/foo/bar/aaa/bb' -> '.../bar/aaa/bb'
+PS1="$PS1"':\033[0;90m$(eval
+    n="$(echo $PWD | sed s,^$HOME,~,)"; m="$n";
+    while [ ${#n} -gt $PROMPT_DIRTRIM_LEN ] && [ "$n" != "${n##*/}" ]; do n="${n#*/}"; done;
+    [ ${#n} -gt $((${#m}-5)) ] && echo "$m" || echo ".../$n";
+)\033[0m'
 
 # :git_branch {{{2
 PS1="$PS1\$(git rev-parse --abbrev-ref HEAD 2> /dev/null | sed 's/.*/:\033[0;1;4;90m&/')\033[0m"
+
+# $ {{{2
+PS1="$PS1\033[1m$\033[0m "
 
 # - WINDOW TITLE | user@host:pwd {{{2
 case $TERM in
@@ -35,9 +46,6 @@ case $TERM in
         PS1='\033]0;$USER@$HOSTNAME:$(echo $PWD | sed s,^$HOME,~,)\007'"$PS1"
         ;;
 esac
-
-# $ {{{2
-PS1="$PS1\033[1m$\033[0m "
 
 # - PRINT PROMPT {{{2
 PS1=$(printf "$PS1")
