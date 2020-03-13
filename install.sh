@@ -114,7 +114,7 @@ if [ ! -f /etc/profile.d/profile_xdg.sh ]; then
     if [ $is_sudo = true ]; then
         printf 'Do you wish to install root patches for XDG support for 'profile' file? [y/N] '
         read -r REPLY
-        if [ $REPLY = "y" -o $REPLY = "Y" ]; then
+        if [ "$REPLY" = "y" -o "$REPLY" = "Y" ]; then
             status=installing
         fi
     fi
