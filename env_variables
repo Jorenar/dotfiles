@@ -86,7 +86,7 @@ else
 fi
 
 # man {{{2
-export MANPAGER="vim -M +MANPAGER - +'set colorcolumn= nonumber laststatus=0'"
+export MANPAGER="vim -M +MANPAGER -"
 export MANWIDTH=80
 
 # Theme {{{2

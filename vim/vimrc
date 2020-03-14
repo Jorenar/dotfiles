@@ -389,6 +389,6 @@ call mkdir($XDG_DATA_HOME."/vim/spell", 'p')
 packadd cfilter
 packadd matchit
 packadd termdebug
-runtime ftplugin/man.vim
+source  $VIMRUNTIME/ftplugin/man.vim
 
 " vim: fdm=marker fen:
