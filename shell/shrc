@@ -51,7 +51,9 @@ esac
 # - PRINT PROMPT {{{2
 PS1=$(printf "$PS1")
 
-# WRAPPERS {{{1
+# FUNCTIONS & WRAPPERS {{{1
+
+cheat() { curl cheat.sh/$1; }
 
 wttr() { curl wttr.in/$1; }
 
