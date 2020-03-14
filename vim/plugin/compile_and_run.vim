@@ -33,7 +33,7 @@ let s:makeprg_for_filetype = {
       \ "xhtml"    : "tidy -asxhtml -quiet -errors --gnu-emacs yes %:S; firefox -new-window % &",
       \}
 
-let &shellpipe="2> >(tee %s)"
+
 
 for [ft, comp] in items(s:compiler_for_filetype)
   execute "autocmd filetype ".ft." compiler! ".comp
@@ -41,10 +41,17 @@ endfor
 
 function! CompileAndRun() abort
   write
-  let l:makeprg_temp = &makeprg
-  let &l:makeprg = "(".s:makeprg_for_filetype[&ft].")"
+
+  let l:shellpipe_old = &shellpipe
+  let &l:shellpipe    = "2>"
+
+  let l:makeprg_temp  = &makeprg
+  let &l:makeprg      = "(".s:makeprg_for_filetype[&ft].")"
+
   make
-  let &l:makeprg = l:makeprg_temp
+
+  let &l:makeprg      = l:makeprg_temp
+  let &l:shellpipe    = l:shellpipe_old
 endfunction
 
 nnoremap <F9> :call CompileAndRun()<CR>
