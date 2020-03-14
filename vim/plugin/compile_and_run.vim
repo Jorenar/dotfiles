@@ -25,11 +25,11 @@ let s:makeprg_for_filetype = {
       \ "markdown" : "grip --quiet -b %",
       \ "nasm"     : "nasm -f elf64 -g % && ld -g -o %< %<.o && rm %<.o && ./%<",
       \ "perl"     : "perl %",
-      \ "plaintex" : "pdftex -file-line-error -interaction=nonstopmode % && zathura %<.pdf &",
+      \ "plaintex" : "pdftex -interaction=nonstopmode % 1>&2 && zathura %<.pdf &",
       \ "python"   : "python %",
       \ "rust"     : "rustc % && ./%<",
       \ "sh"       : "chmod +x %:p && %:p",
-      \ "tex"      : "pdflatex -file-line-error -interaction=nonstopmode % && zathura %<.pdf &",
+      \ "tex"      : "pdflatex -interaction=nonstopmode % 1>&2 && zathura %<.pdf &",
       \ "xhtml"    : "tidy -asxhtml -quiet -errors --gnu-emacs yes %:S; firefox -new-window % &",
       \}
 
