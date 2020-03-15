@@ -80,10 +80,12 @@ export TERMINAL=xterm
 export VISUAL="$EDITOR"
 
 if [ -n "$DISPLAY" ]; then
-    export BROWSER=firefox
+    [ -x "$_XDG_WRAPPERS/firefox" ] && BROWSER="$_XDG_WRAPPERS/firefox" || BROWSER=firefox
 else
-    export BROWSER=elinks
+    BROWSER=elinks
 fi
+
+export BROWSER
 
 # man {{{2
 export MANPAGER="vim -M +MANPAGER -"

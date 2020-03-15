@@ -18,7 +18,7 @@ let s:makeprg_for_filetype = {
       \ "cpp"      : "g++ -std=gnu++14 -g % -o %< && ./%<",
       \ "go"       : "go build && ./%<",
       \ "haskell"  : "ghc -o %< %; rm %<.hi %<.o && ./%<",
-      \ "html"     : "tidy -quiet -errors --gnu-emacs yes %:S; firefox -new-window % &",
+      \ "html"     : "tidy -quiet -errors --gnu-emacs yes %:S; $BROWSER % &",
       \ "java"     : "mkdir -p build && javac -d build/ % && cd build && java %<",
       \ "lisp"     : "clisp %",
       \ "lua"      : "lua %",
@@ -30,7 +30,7 @@ let s:makeprg_for_filetype = {
       \ "rust"     : "rustc % && ./%<",
       \ "sh"       : "chmod +x %:p && %:p",
       \ "tex"      : "pdflatex -interaction=nonstopmode % 1>&2 && zathura %<.pdf &",
-      \ "xhtml"    : "tidy -asxhtml -quiet -errors --gnu-emacs yes %:S; firefox -new-window % &",
+      \ "xhtml"    : "tidy -asxhtml -quiet -errors --gnu-emacs yes %:S; $BROWSER % &",
       \}
 
 
