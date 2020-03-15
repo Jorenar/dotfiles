@@ -22,4 +22,5 @@ for script in $XDG_CONFIG_HOME/autostart/*.sh; do
     . "$script"
 done
 
-exec $SHELL
+# If available, use tmux, otherwise launch $SHELL // for TTY
+[ -x "$(command -v tmux)" ] && exec tmux || exec $SHELL

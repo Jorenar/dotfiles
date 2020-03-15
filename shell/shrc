@@ -39,7 +39,7 @@ PS1="$PS1"':\033[0;90m$(
 PS1="$PS1\$(git rev-parse --abbrev-ref HEAD 2> /dev/null | sed 's/.*/:\033[0;1;4;90m&/')\033[0m"
 
 # $ {{{2
-PS1="$PS1\033[1m$\033[0m "
+PS1="$PS1\033[1m$\033[0m"
 
 # - WINDOW TITLE | user@host:pwd {{{2
 case $TERM in
@@ -49,7 +49,7 @@ case $TERM in
 esac
 
 # - PRINT PROMPT {{{2
-PS1=$(printf "$PS1")
+PS1=$(printf "$PS1 ")
 
 # FUNCTIONS & WRAPPERS {{{1
 

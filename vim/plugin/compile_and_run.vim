@@ -34,7 +34,6 @@ let s:makeprg_for_filetype = {
       \}
 
 
-
 for [ft, comp] in items(s:compiler_for_filetype)
   execute "autocmd filetype ".ft." compiler! ".comp
 endfor

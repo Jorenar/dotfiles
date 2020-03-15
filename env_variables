@@ -73,6 +73,7 @@ eval "$(sed 's/^[^#].*/export &/g;t;d' ${DIR:-$XDG_CONFIG_HOME}/user-dirs.dirs)"
 # Default programs {{{2
 
 SHELL=bash # path determined in -End-
+# Also, dont set `tmux` etc. here or as login shell - can cause problems
 
 export EDITOR=vim
 export PAGER=less
