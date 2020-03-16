@@ -54,7 +54,7 @@ function! Run() abort
       let options = "++close "
     endif
     if s:run_cmds[&ft][0] == 2
-      let options = "++hidden ".cmd
+      let options = "++hidden ".options
     endif
   elseif executable(expand('%:p:r'))
     let cmd = "%:p:r"
