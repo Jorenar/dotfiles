@@ -14,7 +14,10 @@ set packpath^=$XDG_DATA_HOME/vim
 set runtimepath+=$VIMDOTDIR/after
 set runtimepath+=$XDG_DATA_HOME/vim
 set undodir=$XDG_CACHE_HOME/vim/undo
-set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
+
+if !has('nvim')
+  set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
+endif
 
 " COLORSCHEME {{{1
 try
@@ -262,6 +265,7 @@ set nowrap
 set number
 set omnifunc=syntaxcomplete#Complete
 set scrolloff=5
+set sessionoptions=blank,buffers,folds,tabpages,winsize
 set shortmess+=I
 set showcmd
 set smartcase
@@ -276,8 +280,7 @@ set wildmode=full
 
 if has('nvim')
   set guicursor=n-v-c-sm-i-r-ci-ve-cr-o:block " setting a:block breaks blinking
-else
-  set sessionoptions=blank,buffers,folds,tabpages,winsize,terminal
+  set wildoptions-=pum " don't use popupmenu for wildmode completion
 endif
 
 let g:sh_fold_enabled=5
@@ -318,9 +321,10 @@ nnoremap <F2> :call ALE_toggle_highlight()<CR>
 vmap s S
 
 " OPTIONS
-let g:ale_set_loclist  = 0
-let g:ale_set_quickfix = 1
-let g:ale_set_signs    = 0
+let g:ale_set_loclist             = 0
+let g:ale_set_quickfix            = 1
+let g:ale_set_signs               = 0
+let g:undotree_SetFocusWhenToggle = 1
 
 highlight ALEError   cterm=NONE
 highlight ALEWarning cterm=NONE
@@ -377,7 +381,9 @@ augroup OTHER " {{{
   autocmd QuickFixCmdPost    l* nested lwindow
 
   " Terminal options
-  if !has('nvim')
+  if has('nvim')
+    autocmd BufWinEnter,WinEnter term://* startinsert | setlocal nonumber
+  else
     autocmd TerminalWinOpen * setlocal nonumber | autocmd WinEnter <buffer> silent! normal i
   endif
 
