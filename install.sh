@@ -124,7 +124,7 @@ fi
 
 if [ "$status" = "installing" ]; then
     sudo ln -sf $DIR/_patch/xdg_base_dir/profile_xdg.sh /etc/profile.d/profile_xdg.sh
-    sudo chmod r-w /etc/profile.d/profile_xdg.sh  # just in case
+    sudo chmod 644 /etc/profile.d/profile_xdg.sh  # just in case
 elif [ $status != installed ]; then
     linking  profile  $HOME/.profile
 fi
