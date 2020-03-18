@@ -96,17 +96,6 @@ for [ft, fp] in items(s:formatprg_for_filetype)
 endfor
 
 " FUNCTIONS {{{1
-" ALE toggle highlight {{{2
-function! ALE_toggle_highlight()
-  if matchstr(execute('hi ALEError'), 'cleared') == "cleared"
-    highlight link ALEError   ErrorMsg
-    highlight link ALEWarning WarningMsg
-  else
-    highlight ALEError   cterm=NONE
-    highlight ALEWarning cterm=NONE
-  endif
-endfunction
-
 " GrepRename - replace through whole project {{{2
 function! s:GrepRename(expr1, expr2) abort
   execute "tabe | lvimgrep /\\C\\W".a:expr1."\\W/j ** | ldo s/\\C\\\(\\W\\)".a:expr1."\\\(\\W\\)/\\1".a:expr2."\\2/gc | update" | q
@@ -165,18 +154,6 @@ function! s:VSetSearch(cmdtype) abort
 endfunction
 
 " FOR STATUS LINE {{{2
-" ALE_Status {{{3
-function! ALE_Status() abort
-  if exists('g:loaded_ale_dont_use_this_in_other_plugins_please')
-    let l:counts = ale#statusline#Count(bufnr(''))
-    let l:all_errors = l:counts.error + l:counts.style_error
-    let l:all_non_errors = l:counts.total - l:all_errors
-    return "*".all_errors."E ".all_non_errors."w*"
-  else
-    return ""
-  endif
-endfunction
-
 " FileEncoding {{{3
 function! FileEncoding() abort
   return (&fenc == "" ? &enc : &fenc).((exists("+bomb") && &bomb) ? " BOM" : "")
@@ -193,6 +170,18 @@ function! FileSize() abort
     return '0 B'
   else
     return bytes . ' B'
+  endif
+endfunction
+
+" IssuesCount {{{3
+function! IssuesCount() abort
+  if get(g:, 'ale_enabled', 0)
+    let l:counts = ale#statusline#Count(bufnr(''))
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_non_errors = l:counts.total - l:all_errors
+    return "*".all_errors."E ".all_non_errors."w*"
+  else
+    return "*".len(filter(getqflist(), 'v:val.valid'))." issues*"
   endif
 endfunction
 
@@ -317,17 +306,15 @@ inoremap <silent> <C-x><Tab> <C-r>=UltiSnips_complete()<CR>
 nmap <M-a> <Plug>(ale_detail)
 nmap s ys
 nnoremap <F1> :UndotreeToggle<cr>
-nnoremap <F2> :call ALE_toggle_highlight()<CR>
+nnoremap <F2> :ALEToggle<CR>
 vmap s S
 
 " OPTIONS
+let g:ale_enabled                 = 0
 let g:ale_set_loclist             = 0
 let g:ale_set_quickfix            = 1
 let g:ale_set_signs               = 0
 let g:undotree_SetFocusWhenToggle = 1
-
-highlight ALEError   cterm=NONE
-highlight ALEWarning cterm=NONE
 
 " STATUS LINE {{{1
 
@@ -350,7 +337,7 @@ set statusline+=%w                     " Preview flag
 set statusline+=\ \                    " Separator
 set statusline+=%{ModifBufs()}         " Modified flag (extended)
 set statusline+=%=                     " Switch to the right side
-set statusline+=%{ALE_Status()}        " ALE ststus
+set statusline+=%{IssuesCount()}       " Count of errors, warnings
 set statusline+=\ \                    " Separator
 set statusline+=<0x%02B>               " Current char hex code
 set statusline+=\ \                    " Separator
