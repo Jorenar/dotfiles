@@ -12,32 +12,32 @@ let s:compilers = {
       \}
 
 let s:makeprgs = {
-      \ "asm"      : [ 0, "as -o %<.o % && ld -s -o %< %<.o && rm %<.o" ],
+      \ "asm"      : [ 0, "as -o %:t:r.o % && ld -s -o %:t:r %:t:r.o && rm %:t:r.o" ],
       \ "basic"    : [ 1, "vintbas %" ],
-      \ "c"        : [ 0, "gcc -std=gnu99 -g % -o %<" ],
-      \ "cpp"      : [ 0, "g++ -std=gnu++14 -g % -o %<" ],
+      \ "c"        : [ 0, "gcc -std=gnu99 -g % -o %:t:r" ],
+      \ "cpp"      : [ 0, "g++ -std=gnu++14 -g % -o %:t:r" ],
       \ "go"       : [ 0, "go build" ],
-      \ "haskell"  : [ 0, "ghc -o %< %; rm %<.hi %<.o" ],
+      \ "haskell"  : [ 0, "ghc -o %:t:r %; rm %:t:r.hi %:t:r.o" ],
       \ "html"     : [ 0, "tidy -quiet -errors --gnu-emacs yes %" ],
-      \ "java"     : [ 0, "mkdir -p build && javac -d build/ %" ],
+      \ "java"     : [ 0, "mkdir -p %:p:h/build && javac -d %:p:h/build %:p" ],
       \ "lisp"     : [ 1, "clisp %" ],
       \ "lua"      : [ 1, "lua %" ],
       \ "markdown" : [ 0, "grip --quiet -b %" ],
-      \ "nasm"     : [ 0, "nasm -f elf64 -g % && ld -g -o %< %<.o && rm %<.o" ],
+      \ "nasm"     : [ 0, "nasm -f elf64 -g % && ld -g -o %:t:r %:t:r.o && rm %:t:r.o" ],
       \ "perl"     : [ 1, "perl %" ],
-      \ "plaintex" : [ 0, "pdftex -interaction=nonstopmode % 1>&2" ],
+      \ "plaintex" : [ 0, "mkdir -p %:p:h/out && pdftex -output-directory %:p:h/out -interaction=nonstopmode % 1>&2" ],
       \ "python"   : [ 1, "python %" ],
       \ "rust"     : [ 1, "rustc %" ],
       \ "sh"       : [ 1, "chmod +x %:p && %:p" ],
-      \ "tex"      : [ 0, "pdflatex -interaction=nonstopmode % 1>&2" ],
+      \ "tex"      : [ 0, "mkdir -p %:p:h/out && pdflatex -output-directory %:p:h/out -interaction=nonstopmode % 1>&2" ],
       \ "xhtml"    : [ 0, "tidy -asxhtml -quiet -errors --gnu-emacs yes %" ],
       \}
 
 let s:run_cmds = {
       \ "html"     : [ 1, "$BROWSER %:p" ],
-      \ "java"     : [ 0, "java -cp %:p:h/build %<" ],
-      \ "plaintex" : [ 2, "zathura %:p:r.pdf" ],
-      \ "tex"      : [ 2, "zathura %:p:r.pdf" ],
+      \ "java"     : [ 0, "java -cp %:p:h/build %:t:r" ],
+      \ "plaintex" : [ 2, "zathura %:p:h/out/%:t:r.pdf" ],
+      \ "tex"      : [ 2, "zathura %:p:h/out/%:t:r.pdf" ],
       \ "xhtml"    : [ 1, "$BROWSER %:p" ],
       \}
 
@@ -94,7 +94,7 @@ function! Compile() abort
     let &l:makeprg   = l:makeprg_old
     let &l:shellpipe = l:shellpipe_old
   else
-    execute "make %<"
+    execute "make %:t:r"
   endif
 
   return !(v:shell_error || interpreter)
