@@ -106,7 +106,7 @@ function! BuildAndRun() abort
   endif
 endfunction
 
-nnorempa <F7>  :call Build()<CR>
+nnoremap <F7>  :call Build()<CR>
 nnoremap <F8>  :call Run()<CR>
 nnoremap <F9>  :call BuildAndRun()<CR>
 nnoremap <F10> :w <bar> make<CR>
