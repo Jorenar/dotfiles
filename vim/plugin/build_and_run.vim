@@ -72,7 +72,7 @@ function! Run() abort
 
 endfunction
 
-function! Compile() abort
+function! Build() abort
   write
 
   let interpreter = 0
@@ -100,12 +100,13 @@ function! Compile() abort
   return !(v:shell_error || interpreter)
 endfunction
 
-function! CompileAndRun() abort
+function! BuildAndRun() abort
   if Compile()
     call Run()
   endif
 endfunction
 
+nnorempa <F7>  :call Build()<CR>
 nnoremap <F8>  :call Run()<CR>
-nnoremap <F9>  :call CompileAndRun()<CR>
+nnoremap <F9>  :call BuildAndRun()<CR>
 nnoremap <F10> :w <bar> make<CR>
