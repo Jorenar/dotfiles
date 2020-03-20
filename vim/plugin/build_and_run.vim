@@ -101,7 +101,7 @@ function! Build() abort
 endfunction
 
 function! BuildAndRun() abort
-  if Compile()
+  if Build()
     call Run()
   endif
 endfunction
