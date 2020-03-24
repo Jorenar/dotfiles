@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 
 PATH=$(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)" | paste -sd:)
-exec tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf
+exec tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf "$@"
