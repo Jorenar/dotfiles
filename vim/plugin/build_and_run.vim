@@ -48,6 +48,7 @@ endfor
 
 function! Run() abort
   let options = ""
+  let hide = 0
   if has_key(s:run_cmds, &ft)
     let cmd = s:run_cmds[&ft][1]
     if s:run_cmds[&ft][0]
@@ -55,6 +56,7 @@ function! Run() abort
     endif
     if s:run_cmds[&ft][0] == 2
       let options = "++hidden ".options
+      let hide = 1
     endif
   elseif executable(expand('%:p:r'))
     let cmd = "%:p:r"
@@ -66,9 +68,15 @@ function! Run() abort
 
   if has('nvim')
     execute "tabe term://".cmd
+    if hide
+      quit
+      stopinsert
+    endif
   else
-    execute "tab term ++shell ".options.cmd
+    execute "tab term ++kill=15 ++shell ".options.cmd
   endif
+
+  call setbufvar(bufnr("$"), "&buflisted", 0)
 
 endfunction
 
