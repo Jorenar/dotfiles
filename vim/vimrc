@@ -70,7 +70,7 @@ set textwidth=79
 " For thise filetypes set 'tabstop' to 2
 execute "autocmd filetype ".
       \   "html,css,xhtml,xml" .",".
-      \   "javascript"         .",".
+      \   "javascript,json"    .",".
       \   "lua"                .",".
       \   "markdown"           .",".
       \   "vim"                .",".
@@ -357,7 +357,7 @@ augroup OTHER " {{{
   autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
 
   " Set 'foldmethod' to 'syntax'
-  autocmd filetype css,html,javascript,sh,typescript setlocal foldmethod=syntax
+  autocmd filetype css,html,javascript,json,sh,typescript setlocal foldmethod=syntax
 
   " Protect folds when toggling insert mode / switching windows
   autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
