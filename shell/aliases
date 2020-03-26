@@ -20,7 +20,7 @@ alias qmv='command qmv -v -f "do"'
 alias suspend='systemctl suspend'
 alias umnt='udisksctl unmount -b'
 alias update-grub='grub-mkconfig -o /boot/grub/grub.cfg'
-alias wine-lnk='env WINEPREFIX="$HOME/.wine" wine C:\\windows\\command\\start.exe /Unix'
+alias wine-lnk='wine C:\\windows\\command\\start.exe /Unix'
 alias yay-autoremove='yay -Rns $(yay -Qtdq)'
 
 alias electrum='electrum -D $ELECTRUMDIR' # temporary - until version 3.3.9

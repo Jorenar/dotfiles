@@ -7,7 +7,7 @@ XTerm*loginshell: False
 XTerm*cursorBlink: True
 
 ! Fonts and Encoding
-XTerm*faceName: Dejavu Sans Mono:style=book
+XTerm*faceName: DejaVu Sans Mono:style=book
 XTerm*faceNameDoublesize: WenQuanYi Zen Hei Mono
 XTerm*faceSize: 10
 XTerm*locale: True
