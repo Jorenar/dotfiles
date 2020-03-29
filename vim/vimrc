@@ -110,21 +110,6 @@ function! s:FillLine(str, ...) abort
   endif
 endfunction
 
-" UltiSnips Completion {{{2
-function! UltiSnips_complete(...) abort
-  let l:word = matchstr(getline('.'), '\S\+\%'.col('.').'c')
-  if !empty(UltiSnips#SnippetsInCurrentScope(1))
-    let l:suggestions = map(filter(keys(g:current_ulti_dict_info), 'stridx(v:val, l:word) == 0'),
-          \  '{
-          \      "word": v:val,
-          \      "menu": "  ".get(g:current_ulti_dict_info[v:val], "description", ""),
-          \      "dup" : 1
-          \   }')
-    call complete(col('.') - len(l:word), l:suggestions)
-  endif
-  return ''
-endfunction
-
 " VisSort - sorts based on visual-block selected portion of the lines {{{2
 function! s:VisSort(isnmbr) range abort
   if visualmode() != "\<c-v>"
@@ -216,7 +201,7 @@ nnoremap <leader>r :%s/\<<C-r><C-w>\>//g<Left><Left>
 nnoremap <leader>R :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
 nnoremap <M-A> :copen<CR>
 nnoremap <silent> <expr> <F5> g:colors_name == "darkness" ? ":syntax reset <bar> let g:colors_name=''\<CR>" : ":colo darkness\<CR>"
-nnoremap gx :execute 'silent! !xdg-open "<cfile>" > /dev/null 2>&1 &' <bar> redraw! <CR>
+nnoremap gx :call job_start('xdg-open '.expand("<cfile>"))<CR>
 nnoremap j gj
 nnoremap k gk
 
@@ -239,6 +224,7 @@ vmap s <nop>
 let g:netrw_dirhistmax = 0
 let g:netrw_winsize = -28
 
+"set t_TE= t_TI= " Disable modifyOtherKeys
 set backup
 set colorcolumn=+1,+21
 set completeopt=menuone,noinsert,noselect
@@ -261,7 +247,6 @@ set smartcase
 set splitbelow
 set splitright
 set switchbuf=useopen
-set t_TE= t_TI= " Disable modifyOtherKeys
 set title
 set undofile
 set wildmenu
@@ -302,7 +287,6 @@ MinPlug! artur-shaik/vim-javacomplete2
 MinPlug! vim-scripts/dbext.vim
 
 " MAPPINGS
-inoremap <silent> <C-x><Tab> <C-r>=UltiSnips_complete()<CR>
 nmap <M-a> <Plug>(ale_detail)
 nmap s ys
 nnoremap <F1> :UndotreeToggle<cr>
