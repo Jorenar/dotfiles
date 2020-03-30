@@ -6,8 +6,8 @@ source $XDG_CONFIG_HOME/shell/shrc
 # Set (separate) history file
 HISTFILE=$XDG_HISTORY_DIR/zsh_history
 
-# Enable completion
-autoload -Uz compinit && compinit
+# Enable completion (+ separate path for .zcompdump file)
+autoload -Uz compinit && compinit -d "$XDG_CACHE_HOME/zcompdump"
 
 # Vi mode
 bindkey -v
