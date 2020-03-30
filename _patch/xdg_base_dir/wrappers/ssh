@@ -8,6 +8,8 @@ SSH_CONFIG="-F $XDG_CONFIG_HOME/ssh/config"
 SSH_ID="$XDG_DATA_HOME/ssh/id_rsa"
 OPTIONS="-o IdentityFile=$SSH_ID -o UserKnownHostsFile=$XDG_DATA_HOME/ssh/known_hosts"
 
-PATH=$(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)" | paste -sd:)
-
-exec $(basename $0) $SSH_CONFIG $OPTIONS "$@"
+for dir in $(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)"); do
+    if [ -x "$dir/$(basename $0)" ]; then
+        exec "$dir/$(basename $0)" $SSH_CONFIG $OPTIONS "$@"
+    fi
+done

@@ -1,5 +1,10 @@
 #!/usr/bin/env sh
 
-PATH=$(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)" | paste -sd:)
-HOME="$XDG_FAKEHOME_DIR"
-exec gzdoom -config $XDG_CONFIG_HOME/gzdoom/gzdoom.ini -savedir $XDG_CONFIG_HOME/gzdoom "$@"
+HOME="${XDG_FAKEHOME_DIR:-$HOME/.local/home}"
+
+for dir in $(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)"); do
+    if [ -x "$dir/$(basename $0)" ]; then
+        exec "$dir/$(basename $0)" -config $XDG_CONFIG_HOME/gzdoom/gzdoom.ini \
+            -savedir $XDG_CONFIG_HOME/gzdoom "$@"
+    fi
+done
