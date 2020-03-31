@@ -12,6 +12,12 @@ if ! shopt -oq posix; then
     fi
 fi
 
+# Better autocompletion (like in zsh), but use Shift-Tab
+bind '"\e[Z":menu-complete'
+
+# Magic space
+bind space:magic-space
+
 # Enable extended globbing
 shopt -s extglob
 

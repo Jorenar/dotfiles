@@ -13,7 +13,5 @@ set vi-cmd-mode-string ":"
 # INSERT mode bindings --------------------------------------------------------------------
 set keymap vi-insert
 
-"\e[Z": menu-complete
 Control-l: clear-screen
-SPACE magic-space
 TAB: complete
