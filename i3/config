@@ -41,6 +41,9 @@ client.focused   #444444 #333333 #FFFFFF #292d2e   #285577
 # set background
 exec --no-startup-id xsetroot -solid "#000000"
 
+# toggle touchpad
+exec --no-startup-id touchpad-toggle
+
 # SHORTCUTS BINDINGS {{{1
 
 # start TERMINAL
