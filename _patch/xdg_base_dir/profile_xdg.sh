@@ -17,27 +17,29 @@
 #           2. env/profile
 
 if [ -f "$HOME/.profile" ]; then
-    . "$HOME/.profile"
+    profile_xdg="$HOME/.profile"
 elif [ -n "$XDG_CONFIG_HOME" ]; then
     if [ -f "$XDG_CONFIG_HOME/profile" ]; then
-        . "$XDG_CONFIG_HOME/profile"
+        profile_xdg="$XDG_CONFIG_HOME/profile"
     elif [ -f "$XDG_CONFIG_HOME/env/profile" ]; then
-        . "$XDG_CONFIG_HOME/env/profile"
+        profile_xdg="$XDG_CONFIG_HOME/env/profile"
     fi
 else
     if [ -f "$HOME/.config/profile" ]; then
-        . "$HOME/.config/profile"
+        profile_xdg="$HOME/.config/profile"
     elif [ -f "$HOME/.config/env/profile" ]; then
-        . "$HOME/.config/env/profile"
+        profile_xdg="$HOME/.config/env/profile"
 
     elif [ -f "$HOME/.local/config/profile" ]; then
-        . "$HOME/.local/config/profile"
+        profile_xdg="$HOME/.local/config/profile"
     elif [ -f "$HOME/.local/config/env/profile" ]; then
-        . "$HOME/.local/config/env/profile"
+        profile_xdg="$HOME/.local/config/env/profile"
 
     elif [ -f "$HOME/.local/etc/profile" ]; then
-        . $HOME/.local/etc/profile"
+        profile_xdg="$HOME/.local/etc/profile"
     elif [ -f "$HOME/.local/etc/env/profile" ]; then
-        . $HOME/.local/etc/env/profile"
+        profile_xdg="$HOME/.local/etc/env/profile"
     fi
 fi
+
+. "$profile_xdg"; unset profile_xdg

@@ -3,16 +3,18 @@
 
 # ENV VARIABLES
 
-if [ -n "$BASH_VERSION" ]; then
-    t=$BASH_SOURCE
+if [ -n "$profile_xdg" ]; then
+    t="$profile_xdg"
+elif [ -n "$BASH_VERSION" ]; then
+    t="$BASH_SOURCE"
 elif [ -n "$ZSH_VERSION" ]; then
-    t=${(%):-%x}
+    t="${(%):-%x}"
 elif [ -n "$TMOUT" ]; then
-    t=${.sh.file}
-elif [ "${0##*/}" = "-dash" -o "${0##*/}" = "dash" ]; then
-    t=$(lsof -p $$ -Fn0 | tail -1); t=${t#n}
+    t="${.sh.file}"
+elif [ -x "$(command -v lsof)" ]; then
+    t="$(lsof -p $$ -Fn0 | tail -1)"; t="${t#n}"
 else
-    t=$0
+    t="$HOME/.local/config/profile"
 fi
 
 . "$(dirname $(realpath $t))/env_variables"; unset t
