@@ -58,8 +58,8 @@ function! Run() abort
       let options = "++hidden ".options
       let hide = 1
     endif
-  elseif executable(expand('%:p:r'))
-    let cmd = "%:p:r"
+  elseif executable("./".expand('%:t:r'))
+    let cmd = "./%:t:r"
   elseif has_key(s:makeprgs, &ft)
     let cmd = s:makeprgs[&ft][1]
   else
