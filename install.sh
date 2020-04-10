@@ -132,4 +132,4 @@ fi
 
 # OTHER {{{1
 
-touch $DCONF_PROFILE # prevents creating ~/.dconf
+mkdir -p "$(dirname $DCONF_PROFILE)" && touch "$DCONF_PROFILE" # prevents creating ~/.dconf

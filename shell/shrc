@@ -34,7 +34,7 @@ PS1="$PS1"':\033[0;90m$(
     [ -n "$PROMPT_DIRTRIM_LEN" ] && n="$(echo $n | tail -c$PROMPT_DIRTRIM_LEN)"
     [ ${#n} -lt ${#b} ] && n=".../$b" ||
         ( [ ${#n} -lt $((${#m}-5)) ] && n=".../${n#*/}" || n="$m" )
-    m="$n"; n="$(echo $n | tail -c$((COLUMNS/3)))";
+    m="$n"; [ -n "$COLUMNS" ] && n="$(echo $n | tail -c$((COLUMNS/3)))"
     [ ${#n} -lt ${#m} ] && echo ".../...$n" || echo "$m"
 )\033[0m'
 
