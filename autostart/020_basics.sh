@@ -15,4 +15,9 @@ if [ -z "$EXECUTED_AUTOSTART" ]; then
         fcitx -d
     fi
 
+    # start network
+    if sudo -n netctl --help > /dev/null 2>&1; then
+        [ -n "NETCTL_PROFILE" ] && sudo netctl start "$NETCTL_PROFILE"
+    fi
+
 fi
