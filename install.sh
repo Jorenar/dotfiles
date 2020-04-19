@@ -51,7 +51,7 @@ linking  myclirc          $XDG_CONFIG_HOME/mycli/myclirc
 linking  newsboat/config  $XDG_CONFIG_HOME/newsboat/config
 linking  profile          $XDG_CONFIG_HOME/profile
 linking  shell/           $XDG_CONFIG_HOME/shell
-linking  spicy_settings   $XDG_CONFIG_HOME/spicy/settings     -w
+linking  spicy_settings   $XDG_CONFIG_HOME/spicy/settings # linking is nulled after each run
 linking  ssh_config       $XDG_CONFIG_HOME/ssh/config
 linking  tmux.conf        $XDG_CONFIG_HOME/tmux/tmux.conf
 linking  user-dirs.dirs   $XDG_CONFIG_HOME/user-dirs.dirs

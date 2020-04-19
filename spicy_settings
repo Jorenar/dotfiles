@@ -4,7 +4,7 @@ disable-inputs=false
 grab-keyboard=true
 grab-mouse=true
 resize-guest=true
-scaling=false
+scaling=true
 sync-modifiers=false
 
 [ui]

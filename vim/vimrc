@@ -40,6 +40,7 @@ command! -nargs=? -bang Spelling setlocal spell<bang> spelllang=<args>
 command! -range -nargs=+ Align <line1>,<line2>!column -Lts'<args>' -o'<args>'
 command! -range -nargs=0 -bang VisSort sil! keepj <line1>,<line2>call <SID>VisSort(<bang>0)
 command! -range=% Sort normal :<line1>,<line2>sort i<CR>
+command! Book setlocal nonumber wrap columns=90 colorcolumn= laststatus=0
 command! ExecCurrentLine normal :.w !sh<CR>
 command! SortBlock :normal! vip:sort i<CR>
 command! SudoW execute 'silent! write !sudo tee % >/dev/null' | edit!
