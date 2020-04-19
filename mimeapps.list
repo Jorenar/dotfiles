@@ -8,3 +8,4 @@ image/jpeg=feh.desktop;
 image/jpg=feh.desktop;
 image/png=feh.desktop;
 text/plain=vim.desktop;
+x-scheme-handler/spice+unix=custom-spice.desktop;

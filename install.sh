@@ -51,6 +51,7 @@ linking  myclirc          $XDG_CONFIG_HOME/mycli/myclirc
 linking  newsboat/config  $XDG_CONFIG_HOME/newsboat/config
 linking  profile          $XDG_CONFIG_HOME/profile
 linking  shell/           $XDG_CONFIG_HOME/shell
+linking  spicy_settings   $XDG_CONFIG_HOME/spicy/settings     -w
 linking  ssh_config       $XDG_CONFIG_HOME/ssh/config
 linking  tmux.conf        $XDG_CONFIG_HOME/tmux/tmux.conf
 linking  user-dirs.dirs   $XDG_CONFIG_HOME/user-dirs.dirs
@@ -99,6 +100,12 @@ while IFS= read -r exe; do
     [ -n "$exe" ] && [ -x "$(command -v $exe)" ] && linking  _patch/xdg_base_dir/wrappers/_xdg_fakehome.sh  $_XDG_WRAPPERS/$exe
 done < "$DIR/_patch/xdg_base_dir/fakehome.list"
 
+# Link necessary dirs from HOME to FAKEHOME
+[ -d "$HOME/.local" ] && linking "$HOME/.local" "$XDG_FAKEHOME_DIR/.local"
+[ -d "$HOME/images" ] && linking "$HOME/images" "$XDG_FAKEHOME_DIR/images"
+[ -d "$HOME/music"  ] && linking "$HOME/music"  "$XDG_FAKEHOME_DIR/music"
+[ -d "$HOME/temp"   ] && linking "$HOME/temp"   "$XDG_FAKEHOME_DIR/temp"
+[ -d "$HOME/videos" ] && linking "$HOME/videos" "$XDG_FAKEHOME_DIR/videos"
 
 # Install /etc/profile.d/profile_xdg.sh ? {{{1
 
