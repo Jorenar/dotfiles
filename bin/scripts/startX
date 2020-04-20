@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+d=0
+while [ -e "/tmp/.X$d-lock" -o -S "/tmp/.X11-unix/X$d" ]; do
+    d=$(($d + 1))
+done
+
+[ -n "$1" ] && c="$(command -v $1)" && shift 1
+
+exec xinit "$c" $* -- :"$d" vt"$XDG_VTNR"; unset c d

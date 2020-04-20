@@ -1,0 +1,45 @@
+#!/usr/bin/env sh
+
+if [ "$1" = "-i" ]; then
+    install="-cdrom "$XDG_VM_DIR/$2/os.iso""
+    shift 1
+fi
+
+DISK="$XDG_VM_DIR/$1/disk.img"
+[ ! -f "$DISK" ] && exit 1
+
+qemu-system-x86_64 \
+    -enable-kvm \
+    -machine type=q35,accel=kvm \
+    -device intel-iommu \
+    -drive format=raw,file="$DISK",aio=native,cache.direct=on \
+    -cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time \
+    -smp 9,sockets=1,cores=3,threads=3 \
+    -m 4G \
+    -device virtio-balloon \
+    -mem-path /dev/hugepages \
+    -net nic \
+    -net user,smb="$XDG_PUBLICSHARE_DIR" \
+    -usb -device usb-tablet \
+    -soundhw all \
+    -audiodev spice,id=snd0 \
+    -vga std \
+    `# Clipboard sharing` \
+    -device virtio-serial \
+    -chardev spicevmc,id=vdagent,debug=0,name=vdagent \
+    -device virtserialport,chardev=vdagent,name=com.redhat.spice.0 \
+    `# USB redirection ` \
+    -device ich9-usb-ehci1,id=usb \
+    -device ich9-usb-uhci1,masterbus=usb.0,firstport=0,multifunction=on \
+    -device ich9-usb-uhci2,masterbus=usb.0,firstport=2 \
+    -device ich9-usb-uhci3,masterbus=usb.0,firstport=4 \
+    -chardev spicevmc,name=usbredir,id=usbredirchardev1 \
+    -device usb-redir,chardev=usbredirchardev1,id=usbredirdev1 \
+    -chardev spicevmc,name=usbredir,id=usbredirchardev2 \
+    -device usb-redir,chardev=usbredirchardev2,id=usbredirdev2 \
+    -chardev spicevmc,name=usbredir,id=usbredirchardev3 \
+    -device usb-redir,chardev=usbredirchardev3,id=usbredirdev3 \
+    \
+    $install \
+    -daemonize \
+    -display spice-app

@@ -8,6 +8,8 @@ DIR="$(dirname $(realpath $0))"
 
 . $DIR/env_variables
 
+chmod -R +x bin/
+
 # linking FUNCTION {{{
 
 # 1st argument - file in dotfiles dir
@@ -33,44 +35,47 @@ linking() {
 
 # MAIN LINKING {{{1
 
-linking  aerc/            $XDG_CONFIG_HOME/aerc
-linking  autostart/       $XDG_CONFIG_HOME/autostart
-linking  bashrc           $XDG_CONFIG_HOME/bash/bashrc
-linking  cshrc            $XDG_CONFIG_HOME/csh/.cshrc  # thanks to wrapper
-linking  env_variables    $XDG_CONFIG_HOME/env_variables
-linking  feh/             $XDG_CONFIG_HOME/feh
-linking  fish/            $XDG_CONFIG_HOME/fish
-linking  gdbinit          $XDG_CONFIG_HOME/gdb/init
-linking  git/             $XDG_CONFIG_HOME/git
-linking  htoprc           $XDG_CONFIG_HOME/htop/htoprc        -w
-linking  i3/              $XDG_CONFIG_HOME/i3
-linking  mimeapps.list    $XDG_CONFIG_HOME/mimeapps.list
-linking  mpv/             $XDG_CONFIG_HOME/mpv
-linking  muttrc           $XDG_CONFIG_HOME/mutt/muttrc
-linking  myclirc          $XDG_CONFIG_HOME/mycli/myclirc
-linking  newsboat/config  $XDG_CONFIG_HOME/newsboat/config
-linking  profile          $XDG_CONFIG_HOME/profile
-linking  shell/           $XDG_CONFIG_HOME/shell
-linking  spicy_settings   $XDG_CONFIG_HOME/spicy/settings # linking is nulled after each run
-linking  ssh_config       $XDG_CONFIG_HOME/ssh/config
-linking  tmux.conf        $XDG_CONFIG_HOME/tmux/tmux.conf
-linking  user-dirs.dirs   $XDG_CONFIG_HOME/user-dirs.dirs
-linking  X11/             $XDG_CONFIG_HOME/X11
-linking  zathurarc        $XDG_CONFIG_HOME/zathura/zathurarc
+linking  aerc/             $XDG_CONFIG_HOME/aerc
+linking  autostart/        $XDG_CONFIG_HOME/autostart
+linking  bashrc            $XDG_CONFIG_HOME/bash/bashrc
+linking  cshrc             $XDG_CONFIG_HOME/csh/.cshrc  # thanks to wrapper
+linking  env_variables     $XDG_CONFIG_HOME/env_variables
+linking  feh/              $XDG_CONFIG_HOME/feh
+linking  fish/             $XDG_CONFIG_HOME/fish
+linking  gdbinit           $XDG_CONFIG_HOME/gdb/init
+linking  git/              $XDG_CONFIG_HOME/git
+linking  htoprc            $XDG_CONFIG_HOME/htop/htoprc        -w
+linking  i3/               $XDG_CONFIG_HOME/i3
+linking  mimeapps.list     $XDG_CONFIG_HOME/mimeapps.list
+linking  mpv/              $XDG_CONFIG_HOME/mpv
+linking  muttrc            $XDG_CONFIG_HOME/mutt/muttrc
+linking  myclirc           $XDG_CONFIG_HOME/mycli/myclirc
+linking  newsboat/config   $XDG_CONFIG_HOME/newsboat/config
+linking  profile           $XDG_CONFIG_HOME/profile
+linking  shell/            $XDG_CONFIG_HOME/shell
+linking  spicy_settings    $XDG_CONFIG_HOME/spicy/settings # linking is nulled after each run and replcaced with copy
+linking  ssh_config        $XDG_CONFIG_HOME/ssh/config
+linking  tmux.conf         $XDG_CONFIG_HOME/tmux/tmux.conf
+linking  user-dirs.dirs    $XDG_CONFIG_HOME/user-dirs.dirs
+linking  X11/              $XDG_CONFIG_HOME/X11
+linking  zathurarc         $XDG_CONFIG_HOME/zathura/zathurarc
 
-linking  gpg-agent.conf   $GNUPGHOME/gpg-agent.conf
-linking  gtkrc-2.0        ${GTK2_RC_FILES%:*} # link only real gtkrc, omit the one from GTK_THEME
-linking  inputrc          $INPUTRC
-linking  mailcap          $MAILCAP
-linking  npmrc            $NPM_CONFIG_USERCONFIG
-linking  python_config.py $PYTHONSTARTUP
-linking  themes/          $XDG_FAKEHOME_DIR/.themes # for compatibility with _XDG_wrappers
-linking  vim/             $VIMDOTDIR
-linking  zshrc            $ZDOTDIR/.zshrc
+linking  gpg-agent.conf    $GNUPGHOME/gpg-agent.conf
+linking  gtkrc-2.0         ${GTK2_RC_FILES%:*} # link only real gtkrc, omit the one from GTK_THEME
+linking  inputrc           $INPUTRC
+linking  mailcap           $MAILCAP
+linking  npmrc             $NPM_CONFIG_USERCONFIG
+linking  python_config.py  $PYTHONSTARTUP
+linking  themes/           $XDG_FAKEHOME_DIR/.themes # for compatibility with _XDG_wrappers
+linking  vim/              $VIMDOTDIR
+linking  zshrc             $ZDOTDIR/.zshrc
 
-linking  desktop_entries  $XDG_DATA_HOME/applications/custom
-linking  fonts/           $XDG_DATA_HOME/fonts
-linking  themes/          $XDG_DATA_HOME/themes
+linking  desktop_entries/  $XDG_DATA_HOME/applications/custom
+linking  fonts/            $XDG_DATA_HOME/fonts
+linking  themes/           $XDG_DATA_HOME/themes
+
+linking  bin/scripts/      $XDG_LOCAL_HOME/scripts
+linking  bin/wrappers/     $XDG_LOCAL_HOME/wrappers
 
 for firefox_profile in $XDG_FAKEHOME_DIR/.mozilla/firefox/*.default-release; do
     linking userContent.css "$firefox_profile/chrome/userContent.css"

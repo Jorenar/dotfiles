@@ -1,0 +1,48 @@
+#!/bin/bash
+
+mnt_path='$HOME/mnt'
+
+plugged=$(ideviceinstaller -l 2> /dev/null)
+if [[ $plugged == "" ]]; then
+    echo "No iOS device found, is it plugged in?"
+else
+    # echo
+    # echo -e "\e[4m0 | iOS\e[0m"
+    # echo
+
+    i=1
+    while read app
+    do
+        echo $i \| $( echo $app | cut -d "," -f 3 | tr -d '"')
+        appid[$i]=$( echo $app | cut -d "," -f 1 )
+        (( i++ ))
+    done < <(ideviceinstaller -l | sed 1d)
+
+    echo
+    echo "* Type anthing else to abort *"
+    echo
+
+    read -r -p 'Choose index of app: ' option
+
+    j=0
+    while [ true ]
+    do
+        x="ios$j"
+        if [ -d $mnt_path/$x ]; then
+            (( j++ ))
+        else
+            break
+        fi
+    done
+
+    re='^[0-9]+$'
+    if [[ $option == '0' ]]; then
+        mkdir $mnt_path/$x
+        ifuse $mnt_path/$x
+    elif [[ $option =~ $re ]] ; then
+        if ! [ $option -ge $i ]; then
+            mkdir $mnt_path/$x
+            ifuse --documents ${appid[$option]} $mnt_path/$x
+        fi
+    fi
+fi

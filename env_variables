@@ -25,6 +25,7 @@ export XDG_VM_DIR="$XDG_LOCAL_HOME/vm"
 export PATH="$XDG_LOCAL_HOME/AppImages:$PATH"
 export PATH="$XDG_LOCAL_HOME/bin:$PATH"
 export PATH="$XDG_LOCAL_HOME/scripts:$PATH"
+export PATH="$XDG_LOCAL_HOME/wrappers:$PATH"
 
 export PATH="$_XDG_WRAPPERS:$PATH"
 
