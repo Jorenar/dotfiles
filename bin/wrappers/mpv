@@ -14,5 +14,6 @@ elif [[ "$1" == "--yt" ]]; then
     ARGS="--volume=50 --loop-playlist --no-video"
 fi
 
-PATH=$(tr ":" "\n" <<<"$PATH" | grep -Fxv "$(dirname $0)" | paste -sd:)
-exec "$(basename $0)" $ARGS "$@"
+for dir in $(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)"); do
+    [ -x "$dir/$(basename $0)" ] && exec "$dir/$(basename $0)" $ARGS $@
+done
