@@ -1,4 +1,7 @@
 set colorcolumn=
-set laststatus=0
 set nonumber
-set titlestring=MAN
+set noswapfile
+
+if !empty($MAN_PN)
+  silent! file $MAN_PN
+endif
