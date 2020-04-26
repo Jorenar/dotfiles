@@ -2,4 +2,8 @@ set cinoptions+=(1s,g2,h2,N-s,t0
 set complete-=i " Scanning included files when ^n is troublesome
 set foldmethod=syntax
 set path+=/usr/include/**
-set tags+=$XDG_DATA_HOME/vim/tags/systags
+set tags+=$XDG_DATA_HOME/vim/tags/c
+
+let OmniCpp_MayCompleteArrow = 0
+let OmniCpp_MayCompleteDot = 0
+let OmniCpp_ShowPrototypeInAbbr = 1
