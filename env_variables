@@ -30,7 +30,7 @@ export PATH="$XDG_LOCAL_HOME/wrappers:$PATH"
 export PATH="$_XDG_WRAPPERS:$PATH"
 
 # RELOCATING VARIABLES {{{2
-export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME/java"
+#export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME/java"
 export BASH_COMPLETION_USER_FILE="$XDG_CONFIG_HOME/bash/bash_completion"
 export BASH_DOTDIR="$XDG_CONFIG_HOME/bash"
 export DCONF_PROFILE="$XDG_CONFIG_HOME/dconf/user"
@@ -80,6 +80,7 @@ SHELL=bash # path determined in -End-
 # Also, dont set `tmux` etc. here or as login shell - can cause problems
 
 export EDITOR=vim
+export MANPAGER="vim -M +MANPAGER -"
 export PAGER=less
 export TERMINAL=xterm
 export VISUAL="$EDITOR"
@@ -91,10 +92,6 @@ else
 fi
 
 export BROWSER
-
-# man {{{2
-export MANPAGER="vim -M +MANPAGER -"
-export MANWIDTH=80
 
 # Theme {{{2
 
