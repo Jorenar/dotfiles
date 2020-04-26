@@ -19,6 +19,11 @@ if !has('nvim')
   set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
 endif
 
+" "Force" Python3 (helpful for plugins)
+if has('python3')
+  python3 #
+endif
+
 " COLORSCHEME {{{1
 try
   colorscheme darkness
@@ -266,25 +271,31 @@ set dictionary+=/usr/share/dict/words
 set path=**,./
 set tags+=.git/tags;
 
-" PLUGINS {{{1
+" PLUGINS AND PACKAGES {{{1
 
-if empty(glob(substitute(&packpath, ",.*", "/pack/plugins/opt/minPlug", ""))) " {{{
-  call system("git clone --depth=1 https://github.com/Jorengarenar/minPlug ".substitute(&packpath, ",.*", "/pack/plugins/opt/minPlug", ""))
+if empty(glob(substitute(&packpath, ",.*", "", "")."/pack/plugins/opt/minPlug")) " {{{
+  call system("git clone --depth=1 https://github.com/Jorengarenar/minPlug ".
+        \ substitute(&packpath, ",.*", "", "")."/pack/plugins/opt/minPlug")
   autocmd VimEnter * silent! MinPlugInstall | echo "minPlug: INSTALLED"
 endif " }}}
 
 packadd minPlug
 
+MinPlug artur-shaik/vim-javacomplete2
 MinPlug ctrlpvim/ctrlp.vim
+MinPlug davidhalter/jedi-vim
 MinPlug dense-analysis/ale
 MinPlug Jorengarenar/fauxClip
 MinPlug Jorengarenar/vim-darkness
 MinPlug mbbill/undotree
 MinPlug sirver/ultisnips
 MinPlug tpope/vim-surround
+MinPlug vim-scripts/dbext.vim
 
-MinPlug! artur-shaik/vim-javacomplete2
-MinPlug! vim-scripts/dbext.vim
+packadd cfilter
+packadd matchit
+packadd termdebug
+source  $VIMRUNTIME/ftplugin/man.vim
 
 " MAPPINGS
 nmap <M-a> <Plug>(ale_detail)
@@ -363,9 +374,6 @@ augroup END " }}}
 call mkdir(&backupdir, 'p')
 call mkdir($XDG_DATA_HOME."/vim/spell", 'p')
 
-packadd cfilter
-packadd matchit
-packadd termdebug
-source  $VIMRUNTIME/ftplugin/man.vim
+let g:sql_type_default = 'mysql'
 
 " vim: fdm=marker fen:
