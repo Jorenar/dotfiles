@@ -15,7 +15,7 @@ set runtimepath+=$VIMDOTDIR/after
 set runtimepath+=$XDG_DATA_HOME/vim
 set undodir=$XDG_CACHE_HOME/vim/undo
 
-if !has('nvim')
+if !has('nvim') " Neovim has its own special location
   set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
 endif
 
@@ -23,6 +23,8 @@ endif
 if has('python3')
   python3 #
 endif
+
+helptags ALL " genereate help tags
 
 " COLORSCHEME {{{1
 try
