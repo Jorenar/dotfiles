@@ -2,7 +2,7 @@
 *omnicppcomplete*
 
 Author: Vissale NEANG (fromtonrouge AT gmail DOT com)
-Last Change: 26 sept. 2007       
+Last Change: 24 mai 2012       
 
 OmniCppComplete version 0.41
 
@@ -19,6 +19,7 @@ For Vim version 7.0 and above
 7. FAQ & TIPS                                   |omnicpp-faq|
 8. History                                      |omnicpp-history|
 9. Thanks                                       |omnicpp-thanks|
+10. License                                     |omnicpp-license|
 
 ==============================================================================
 1. Overview~
@@ -883,7 +884,7 @@ templates. That's why the script does not handle templates.
 ==============================================================================
 8. History~
                                                              *omnicpp-history*
-Version O.41
+Version 0.41
     -   It's recommended to update ctags to version 5.7 or higher
     -   The plugin is now activated for C files
     -   New value for OmniCpp_SelectFirstItem when the option is equal to
@@ -1072,6 +1073,27 @@ Version 0.1:
         * Bram Moolenaar for Vim
         
         * You for using this script :)
+
+==============================================================================
+
+10. License~
+                                                              *omnicpp-license*
+This file is a part of the omnicppcomplete plugin for vim
+
+Copyright (C) 2006-2012 by Vissale Neang<fromtonrouge at gmail dot com>
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 2 of
+the License or (at your option) version 3 or any later version
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ==============================================================================
 

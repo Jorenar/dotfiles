@@ -1,3 +1,23 @@
+" ============================================================
+"
+" This file is a part of the omnicppcomplete plugin for vim
+"
+" Copyright (C) 2006-2012 by Vissale Neang<fromtonrouge at gmail dot com>
+"
+" This program is free software; you can redistribute it and/or
+" modify it under the terms of the GNU General Public License as
+" published by the Free Software Foundation; either version 2 of
+" the License or (at your option) version 3 or any later version
+"
+" This program is distributed in the hope that it will be useful,
+" but WITHOUT ANY WARRANTY; without even the implied warranty of
+" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+" GNU General Public License for more details.
+"
+" You should have received a copy of the GNU General Public License
+" along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"
+" ============================================================
 " Description: Omni completion script for cpp files
 " Maintainer:  Vissale NEANG
 " Last Change: 26 sept. 2007
@@ -25,10 +45,12 @@ function! s:GetIncludeListFromCurrentBuffer()
 
     call setpos('.', [0, 1, 1, 0])
     let curPos = [1,1]
+    let wrapFlg = 'cW'
     let alreadyInclude = {}
     while curPos != [0,0]
-        let curPos = searchpos('\C\(^'.s:rePreprocIncludeFile.'\)', 'W')
+        let curPos = searchpos('\C\(^'.s:rePreprocIncludeFile.'\)', wrapFlg)
         if curPos != [0,0]
+            let wrapFlg = 'W'
             let szLine = getline('.')
             let startPos = curPos[1]
             let endPos = matchend(szLine, s:reIncludeFilePart, startPos-1)
@@ -38,7 +60,7 @@ function! s:GetIncludeListFromCurrentBuffer()
                 let szResolvedInclude = omni#cpp#utils#ResolveFilePath(szIncludeFile)
 
                 " Protection over self inclusion
-                if szResolvedInclude != '' && szResolvedInclude != omni#cpp#utils#ResolveFilePath(getreg('%'))
+                if szResolvedInclude != '' && szResolvedInclude != fnameescape(expand("%:p"))
                     let includePos = curPos
                     if !has_key(alreadyInclude, szResolvedInclude)
                         call extend(listIncludes, [{'pos' : includePos, 'include' : szResolvedInclude}])

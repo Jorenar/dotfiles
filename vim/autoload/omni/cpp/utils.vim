@@ -1,3 +1,23 @@
+" ============================================================
+"
+" This file is a part of the omnicppcomplete plugin for vim
+"
+" Copyright (C) 2006-2012 by Vissale Neang<fromtonrouge at gmail dot com>
+"
+" This program is free software; you can redistribute it and/or
+" modify it under the terms of the GNU General Public License as
+" published by the Free Software Foundation; either version 2 of
+" the License or (at your option) version 3 or any later version
+"
+" This program is distributed in the hope that it will be useful,
+" but WITHOUT ANY WARRANTY; without even the implied warranty of
+" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+" GNU General Public License for more details.
+"
+" You should have received a copy of the GNU General Public License
+" along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"
+" ============================================================
 " Description: Omni completion script for cpp files
 " Maintainer:  Vissale NEANG
 " Last Change: 26 sept. 2007
@@ -356,6 +376,15 @@ function! omni#cpp#utils#GetResolvedTagItem(namespaces, typeInfo)
     else
         " The type is not resolved
         let tagList = omni#common#utils#TagListNoThrow('^'.szTagQuery.'$')
+        " If nothing was found, try again with leading context namespaces
+        if g:OmniCpp_NamespaceSearch && !len(tagList)
+            for context in keys(g:omni#cpp#namespaces#CacheResolve)
+                let tagList = omni#common#utils#TagListNoThrow('^'.context.'::'.szTagQuery.'$')
+                if len(tagList)
+                    break
+                endif
+            endfor
+        endif
         call filter(tagList, szTagFilter)
 
         if len(tagList)
@@ -367,6 +396,10 @@ function! omni#cpp#utils#GetResolvedTagItem(namespaces, typeInfo)
                 " For each namespace of the namespace list we try to get a tag
                 " that can be in the same scope
                 if g:OmniCpp_NamespaceSearch && &filetype != 'c'
+                    " Consider leading context namespaces here again
+                    for context in keys(g:omni#cpp#namespaces#CacheResolve)
+                        call add(a:namespaces, '::'.context)
+                    endfor
                     for scope in a:namespaces
                         let szTmpScope = omni#cpp#utils#SimplifyScope(scope.'::'.szScopeOfTypeInfo)
                         let result = s:GetTagOfSameScope(tagList, szTmpScope)
@@ -468,7 +501,9 @@ endfunc
 " Extract the cmd of a tag item without regexp
 function! omni#cpp#utils#ExtractCmdFromTagItem(tagItem)
     let line = a:tagItem.cmd
-    let re = '\(\/\^\)\|\(\$\/\)'
+	" The following regexp allows the function to match 
+	" either a / or a ? when searching for the tag command
+	let re = '\([/?]\^\)\|\(\$[/?]\)'
     if match(line, re)!=-1
         let line = substitute(line, re, '', 'g')
         return line

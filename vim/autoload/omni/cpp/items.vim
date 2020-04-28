@@ -1,3 +1,23 @@
+" ============================================================
+"
+" This file is a part of the omnicppcomplete plugin for vim
+"
+" Copyright (C) 2006-2012 by Vissale Neang<fromtonrouge at gmail dot com>
+"
+" This program is free software; you can redistribute it and/or
+" modify it under the terms of the GNU General Public License as
+" published by the Free Software Foundation; either version 2 of
+" the License or (at your option) version 3 or any later version
+"
+" This program is distributed in the hope that it will be useful,
+" but WITHOUT ANY WARRANTY; without even the implied warranty of
+" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+" GNU General Public License for more details.
+"
+" You should have received a copy of the GNU General Public License
+" along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"
+" ============================================================
 " Description: Omni completion script for cpp files
 " Maintainer:  Vissale NEANG
 " Last Change: 26 sept. 2007
@@ -216,6 +236,17 @@ function! omni#cpp#items#ResolveItemsTypeInfo(contextStack, items)
                 let typeInfo = s:GetTypeInfoOfReturnedType(tmpContextStack, szSymbol)
             endif
 
+            " typeinfo could be a type that's a typeref. CTAGS uses typeref for tagging structs. 
+            " Before it gets assigned as context, check if typeref is
+            " struct and use it instead
+            let tagItem = s:ResolveSymbol(tmpContextStack, typeInfo.value, "v:val.kind=='t'")
+            if has_key(tagItem,'typeref')
+                if matchstr(tagItem.typeref,'struct') >= 0
+                    " Hack typeInfo.value
+                    let typeInfo.value = substitute(tagItem.typeref,'struct:','','')
+                endif
+            endif
+
         elseif curItem.kind == 'itemThis'
             if len(a:contextStack)
                 let typeInfo = omni#cpp#utils#CreateTypeInfo(substitute(a:contextStack[0], '^::', '', 'g'))
@@ -349,6 +380,12 @@ function! s:GetTypeInfoOfReturnedType(contextStack, szFunctionName)
 
     if tagItem != {}
         let szCmdWithoutVariable = substitute(omni#cpp#utils#ExtractCmdFromTagItem(tagItem), '\C\<'.a:szFunctionName.'\>.*', '', 'g')
+
+        " If it is a constructor, return the class name as function type
+        if szCmdWithoutVariable == ""
+            return {'type': 1, 'value': a:szFunctionName}
+        endif
+
         let tokens = omni#cpp#tokenizer#Tokenize(omni#cpp#utils#GetCodeFromLine(szCmdWithoutVariable))
         let result = omni#cpp#utils#CreateTypeInfo(omni#cpp#utils#ExtractTypeInfoFromTokens(tokens))
         " TODO: Namespace resolution for result
