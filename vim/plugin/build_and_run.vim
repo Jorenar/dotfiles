@@ -12,6 +12,7 @@ let s:compilers = {
       \}
 
 let s:makeprgs = {
+      \ "ada"      : [ 0, "gnatmake % && gnatclean -c %" ],
       \ "asm"      : [ 0, "as -o %:t:r.o % && ld -s -o %:t:r %:t:r.o && rm %:t:r.o" ],
       \ "basic"    : [ 1, "vintbas %" ],
       \ "c"        : [ 0, "gcc -std=gnu99 -g % -o %:t:r" ],
