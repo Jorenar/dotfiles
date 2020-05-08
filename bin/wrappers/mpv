@@ -15,5 +15,5 @@ elif [[ "$1" == "--yt" ]]; then
 fi
 
 for dir in $(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)"); do
-    [ -x "$dir/$(basename $0)" ] && exec "$dir/$(basename $0)" "$ARGS" "$@"
+    [ -x "$dir/$(basename $0)" ] && exec "$dir/$(basename $0)" $ARGS "$@"
 done
