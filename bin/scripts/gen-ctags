@@ -5,9 +5,10 @@ tagsdir="$XDG_DATA_HOME/tags"
 generate() {
     file=$1
     lang=$2
-    shift 2
-    ctags -f "$tagsdir/$file" -R -B --sort=yes --kinds-$lang=+pxl --fields=+iaSmz --extras=+qf --language-force=$lang "$@"
+    kinds=$3
+    shift 3
+    ctags -f "$tagsdir/$file" -R -B --sort=yes --kinds-"$lang"="$kinds" --fields=+iaSmz --extras=+qf --language-force="$lang" "$@"
 }
 
-generate c   C   /usr/include
-generate cpp C++ /usr/include/c++
+generate c   C   +pxlzLD   /usr/include
+generate cpp C++ +pxlzLDAZ /usr/include/c++

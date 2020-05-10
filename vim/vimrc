@@ -234,7 +234,6 @@ let g:netrw_winsize = -28
 
 set backup
 set colorcolumn=+1,+21
-set completeopt=menuone,noinsert,noselect
 set hidden
 set hlsearch
 set ignorecase
@@ -245,7 +244,6 @@ set modeline
 set nomodelineexpr
 set nowrap
 set number
-set omnifunc=syntaxcomplete#Complete
 set scrolloff=5
 set sessionoptions=blank,buffers,folds,tabpages,winsize
 set shortmess+=I
@@ -259,12 +257,15 @@ set undofile
 set wildmenu
 set wildmode=full
 
+set completeopt=menuone,noinsert,noselect
+set omnifunc=syntaxcomplete#Complete
+set pumheight=20
+
 if has('nvim')
   set guicursor=n-v-c-sm-i-r-ci-ve-cr-o:block " setting a:block breaks blinking
   set wildoptions-=pum " don't use popupmenu for wildmode completion
 endif
 
-let g:sh_fold_enabled=5
 set foldmethod=indent
 set nofoldenable
 
@@ -307,10 +308,15 @@ nnoremap <F2> :ALEToggle<CR>
 vmap s S
 
 " OPTIONS
+let g:ale_echo_msg_format         = '[%linter%]: %s'
 let g:ale_enabled                 = 0
 let g:ale_set_loclist             = 0
 let g:ale_set_quickfix            = 1
 let g:ale_set_signs               = 0
+let g:ctrlp_brief_prompt          = 1
+let g:ctrlp_extensions            = [ 'buffertag' ]
+let g:ctrlp_prompt_mappings       = { 'PrtExit()': [ '<Esc>', '<C-[>', '<C-c>'] }
+let g:ctrlp_types                 = [ 'fil' ]
 let g:undotree_SetFocusWhenToggle = 1
 
 " STATUS LINE {{{1
@@ -354,7 +360,7 @@ augroup OTHER " {{{
   autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
 
   " Set 'foldmethod' to 'syntax'
-  autocmd filetype css,html,javascript,json,sh,typescript setlocal foldmethod=syntax
+  autocmd filetype css,html,javascript,json,typescript setlocal foldmethod=syntax
 
   " Protect folds when toggling insert mode / switching windows
   autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
