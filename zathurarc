@@ -12,7 +12,6 @@ set pages-per-row 1
 set scroll-full-overlap 0.01
 set scroll-page-aware "true"
 set scroll-step 100
-set smooth-scroll "true"
 
 
 # MAPPING ---------------------------------------------------------------------

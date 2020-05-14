@@ -52,6 +52,7 @@ command! ExecCurrentLine normal :.w !sh<CR>
 command! SortBlock :normal! vip:sort i<CR>
 command! SudoW execute 'silent! write !sudo tee % >/dev/null' | edit!
 command! Term vertical terminal
+command! Todo lvimgrep "\<TODO\>" %
 
 " FORMATTING {{{1
 
