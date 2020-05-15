@@ -20,16 +20,16 @@ let s:makeprgs = {
       \ "go"       : [ 0, "go build" ],
       \ "haskell"  : [ 0, "ghc -o %:t:r %; rm %:t:r.hi %:t:r.o" ],
       \ "html"     : [ 0, "tidy -quiet -errors --gnu-emacs yes %" ],
-      \ "java"     : [ 0, "DIR=$(mktemp -u -d -p ${TMPDIR:-/tmp}/java) && mkdir -p $DIR && javac -d $DIR %:p && jar cvfe %:t:r.jar %:t:r -C $DIR ." ],
+      \ "java"     : [ 0, "javac -d $TMPDIR/java %:p && jar cvfe %:t:r.jar %:t:r -C $TMPDIR/java ." ],
       \ "lisp"     : [ 1, "clisp %" ],
       \ "lua"      : [ 1, "lua %" ],
       \ "nasm"     : [ 0, "nasm -f elf64 -g % && ld -g -o %:t:r %:t:r.o && rm %:t:r.o" ],
       \ "perl"     : [ 1, "perl %" ],
-      \ "plaintex" : [ 0, "mkdir -p %:p:h/out && pdftex -output-directory %:p:h/out -interaction=nonstopmode % 1>&2" ],
+      \ "plaintex" : [ 0, "xetex -output-directory=$TMPDIR/TeX -interaction=nonstopmode % 1>&2 && mv $TMPDIR/TeX/%:t:r.pdf ./" ],
       \ "python"   : [ 1, "python %" ],
       \ "rust"     : [ 1, "rustc %" ],
       \ "sh"       : [ 1, "chmod +x %:p && %:p" ],
-      \ "tex"      : [ 0, "mkdir -p %:p:h/out && pdflatex -output-directory %:p:h/out -interaction=nonstopmode % 1>&2" ],
+      \ "tex"      : [ 0, "xelatex -output-directory=$TMPDIR/TeX -interaction=nonstopmode % 1>&2 && mv $TMPDIR/TeX/%:t:r.pdf ./" ],
       \ "xhtml"    : [ 0, "tidy -asxhtml -quiet -errors --gnu-emacs yes %" ],
       \}
 
@@ -37,8 +37,8 @@ let s:run_cmds = {
       \ "html"     : [ 1, "$BROWSER %:p" ],
       \ "java"     : [ 0, "java -jar %:t:r.jar" ],
       \ "markdown" : [ 0, "grip --quiet -b %" ],
-      \ "plaintex" : [ 2, "zathura %:p:h/out/%:t:r.pdf" ],
-      \ "tex"      : [ 2, "zathura %:p:h/out/%:t:r.pdf" ],
+      \ "plaintex" : [ 2, "zathura %:p:h/%:t:r.pdf" ],
+      \ "tex"      : [ 2, "zathura %:p:h/%:t:r.pdf" ],
       \ "xhtml"    : [ 1, "$BROWSER %:p" ],
       \}
 

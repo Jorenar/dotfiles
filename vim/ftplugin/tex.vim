@@ -1,7 +1,8 @@
-let g:tex_fold_enabled = 1
-set foldmethod=syntax
+runtime ftplugin/plaintex.vim
 
 let s:mathzones = [
+      \ "align",
+      \ "gather",
       \ "itemize",
       \ ]
 
