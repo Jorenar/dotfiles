@@ -30,12 +30,9 @@ PS1="$PS1"'\033[1m$USER@$HOSTNAME\033[0m'
 #     e.g.:  '~/test/ex/foo/bar/aaa/bb' -> '.../bar/aaa/bb'
 
 PS1="$PS1"':\033[0;90m$(
-    n="$(echo $PWD | sed s,^$HOME,~,)"; m="$n"; b="${n##*/}";
-    [ -n "$PROMPT_DIRTRIM_LEN" ] && n="$(echo $n | tail -c$PROMPT_DIRTRIM_LEN)";
-    [ ${#n} -lt ${#b} ] && n=".../$b" ||
-        ( [ ${#n} -lt $((${#m}-5)) ] && n=".../${n#*/}" || n="$m" );
-    m="$n"; [ -n "$COLUMNS" ] && n="$(echo $n | tail -c$((COLUMNS/3)))";
-    [ ${#n} -lt ${#m} ] && echo ".../...$n" || echo "$m"
+    n="$(echo $PWD | sed s,^$HOME,~,)"; m="$n";
+    while [ ${#n} -gt $((COLUMNS/3)) ] && [ "$n" != "${n##*/}" ]; do n="${n#*/}"; done;
+    [ ${#n} -gt $((${#m}-5)) ] && echo "$m" || echo ".../$n";
 )\033[0m'
 
 # :git_branch {{{2
