@@ -66,8 +66,6 @@ augroup FORMATOPTIONS
   autocmd BufWinEnter * set formatoptions-=t  " Don't autowrap text using 'textwidth'
 augroup END
 
-let g:html_indent_autotags = "html"
-let g:html_indent_style1   = "inc"
 set cindent
 set expandtab
 set shiftround
@@ -205,7 +203,7 @@ nnoremap <F3> :set cursorline! cursorcolumn!<CR>
 nnoremap <leader>= gg=G``
 nnoremap <leader>b :bnext<CR>
 nnoremap <leader>h :nohlsearch<CR>
-nnoremap <leader>q gggqG
+nnoremap <leader>q m"gggqG`"
 nnoremap <leader>r :%s/\<<C-r><C-w>\>//g<Left><Left>
 nnoremap <leader>R :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
 nnoremap <M-S-a> :copen<CR>
@@ -361,7 +359,7 @@ augroup OTHER " {{{
   autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
 
   " Set 'foldmethod' to 'syntax'
-  autocmd filetype css,html,javascript,json,typescript setlocal foldmethod=syntax
+  autocmd filetype css,javascript,json,typescript setlocal foldmethod=syntax
 
   " Protect folds when toggling insert mode / switching windows
   autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
