@@ -54,6 +54,7 @@ export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/config.py"
 export PYTHONUSERBASE="$XDG_LOCAL_HOME"
 export RANDFILE="$XDG_CACHE_HOME/rnd"
 export TEXMFHOME="$XDG_LOCAL_HOME/texmf"
+export UNCRUSTIFY_CONFIG="$XDG_CONFIG_HOME/uncrustify/default"
 export VIMDOTDIR="$XDG_CONFIG_HOME/vim"
 export VIMINIT='set rtp^=$VIMDOTDIR | let $MYVIMRC="$VIMDOTDIR/vimrc" | so $MYVIMRC'
 export WEECHAT_HOME="$XDG_CONFIG_HOME/weechat"

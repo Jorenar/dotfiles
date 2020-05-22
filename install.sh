@@ -67,6 +67,7 @@ linking  mailcap           $MAILCAP
 linking  npmrc             $NPM_CONFIG_USERCONFIG
 linking  python_config.py  $PYTHONSTARTUP
 linking  themes/           $XDG_FAKEHOME_DIR/.themes # for compatibility with _XDG_wrappers
+linking  uncrustify/       $(dirname $UNCRUSTIFY_CONFIG)
 linking  vim/              $VIMDOTDIR
 linking  zshrc             $ZDOTDIR/.zshrc
 

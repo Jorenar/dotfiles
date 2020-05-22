@@ -1,0 +1,14 @@
+# Mandatory braces
+
+# Add or remove braces on a single-line 'do' statement.
+mod_full_brace_do               = add      # ignore/add/remove/force
+
+# Add or remove braces on a single-line 'for' statement.
+mod_full_brace_for              = add      # ignore/add/remove/force
+
+# Add or remove braces on a single-line 'if' statement. Braces will not be
+# removed if the braced statement contains an 'else'.
+mod_full_brace_if               = add      # ignore/add/remove/force
+
+# Add or remove braces on single-line 'while' statement.
+mod_full_brace_while            = add      # ignore/add/remove/force

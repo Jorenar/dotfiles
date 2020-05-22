@@ -1,0 +1,4 @@
+# Java
+
+# Add or remove newline between function signature and '{'.
+nl_fdef_brace                   = remove   # ignore/add/remove/force
