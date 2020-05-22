@@ -3,10 +3,9 @@
 alias ap1='sudo create_ap wlo1 wlo1 x I_love_BASH' # semi open WiFi network
 alias cal='cal -m'
 alias du='du -h'
-alias gpu-switch='optimus-manager --switch auto && i3-msg exit'
 alias grep='grep --color'
-alias i3-logout="touch $TMPDIR/disable_autostartx && i3-msg exit"
-alias i3-relog="i3-msg exit"
+alias i3-exit="i3-msg exit"
+alias i3-relog="sed -i '/autostartedx/d' '$TMPFLAGS' && [ -n '$DISPLAY' ] && i3-msg exit || exit"
 alias icanhazip='curl icanhazip.com'
 alias less='less -R'
 alias ls='ls -hF'

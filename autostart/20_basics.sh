@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-if [ -z "$EXECUTED_AUTOSTART" ]; then
+if ! grep -Fxq "executed_autostart" "$TMPFLAGS"; then
 
     # turn off Bluetooth
     if sudo -n rfkill > /dev/null 2>&1; then
@@ -11,13 +11,12 @@ if [ -z "$EXECUTED_AUTOSTART" ]; then
     amixer -- set Master -60dB
 
     # start fcitx
-    if [ -x "$(command -v fcitx)" ]; then
-        fcitx -d
-    fi
+    [ -x "$(command -v fcitx)" ] && fcitx -d
 
     # start network
     if sudo -n netctl --help > /dev/null 2>&1; then
         [ -n "NETCTL_PROFILE" ] && sudo netctl start "$NETCTL_PROFILE"
     fi
 
+    echo "executed_autostart" >> "$TMPFLAGS"
 fi

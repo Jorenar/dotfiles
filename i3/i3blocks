@@ -21,7 +21,7 @@ command=echo "BT: $(rfkill list bluetooth | awk '/Soft/ {print $3}' | sed -e 's/
 interval=15
 
 [gpu]
-command=if [[ "$(glxinfo | grep "OpenGL vendor")" =~ .*Intel.* ]]; then echo "INTEL"; else echo "NVIDIA"; fi
+command=grep "GPU *" "$TMPFLAGS" | sed 's/GPU //'
 interval=once
 
 [battery]

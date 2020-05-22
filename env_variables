@@ -114,6 +114,9 @@ export HOSTNAME="${HOSTNAME:-$(hostname -s)}"
 # Temp dir
 export TMPDIR="${TMPDIR:-/tmp}"
 
+# File with temporary flags
+export TMPFLAGS="$TMPDIR/flags_$USER"
+
 # Japanese input
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
