@@ -1,15 +1,15 @@
 #!/usr/bin/env sh
 
-if [[ -z "$1" ]]; then
+if [ -z "$1" ]; then
     ARGS='./'
-elif [[ "$1" == "-l" ]]; then
+elif [ "$1" == "-l" ]; then
     if [ -z "$2" ]; then
         ARGS='--loop-playlist ./'
     else
         shift 1
         ARGS="--loop-playlist"
     fi
-elif [[ "$1" == "--yt" ]]; then
+elif [ "$1" == "--yt" ]; then
     shift 1
     ARGS="--volume=50 --loop-playlist --no-video"
 fi

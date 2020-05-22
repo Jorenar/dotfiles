@@ -1,4 +1,5 @@
 let s:compilers = {
+      \ "ada"      : "gnat",
       \ "c,cpp"    : "gcc",
       \ "go"       : "go",
       \ "haskell"  : "ghc",
@@ -8,6 +9,7 @@ let s:compilers = {
       \ "php"      : "php",
       \ "plaintex" : "tex",
       \ "python"   : "pyunit",
+      \ "rust"     : "rustc",
       \ "tex"      : "tex",
       \}
 

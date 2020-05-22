@@ -2,6 +2,7 @@ runtime ftplugin/plaintex.vim
 
 let s:mathzones = [
       \ "align",
+      \ "axis",
       \ "gather",
       \ "itemize",
       \ ]
