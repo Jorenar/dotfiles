@@ -2,7 +2,9 @@
 
 echo "switched_gpu" >> "$TMPFLAGS"
 
-if grep -Fxq "GPU INTEL" "$TMPFLAGS"; then
+if [ "$1" = "h" ]; then
+    optimus-manager --switch hybrid
+elif grep -Fxq "GPU INTEL" "$TMPFLAGS"; then
     optimus-manager --switch nvidia
 else
     optimus-manager --switch intel

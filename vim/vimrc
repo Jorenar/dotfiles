@@ -83,6 +83,12 @@ execute "autocmd filetype ".
       \   "vim"                .",".
       \ " setlocal tabstop=2"
 
+" For thise filetypes set 'tabstop' to 3
+execute "autocmd filetype ".
+      \   "ada"                .","
+      \   "plaintex,tex"       .","
+      \ " setlocal tabstop=3"
+
 let s:formatprg_for_filetype = {
       \ "c"          : "uncrustify --l C base kr mb",
       \ "cpp"        : "uncrustify --l CPP base kr mb stroustrup",
@@ -382,5 +388,6 @@ call mkdir(&backupdir, 'p')
 call mkdir($XDG_DATA_HOME."/vim/spell", 'p')
 
 let g:sql_type_default = 'mysql'
+let javaScript_fold    = 1
 
 " vim: fdm=marker fen:
