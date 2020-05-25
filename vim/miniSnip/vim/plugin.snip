@@ -1,12 +1,10 @@
-snippet plugin
-" ${1:`!v expand('%<')`} -
+" <{`!expand('%:t:r')}>
 " Maintainer:  Jorengarenar <https://joren.ga>
 
-if exists('g:loaded_$1') | finish | endif
+if exists('g:loaded_<{~1}>') | finish | endif
 let s:cpo_save = &cpo | set cpo&vim
 
-$0
+@{}@
 
-let g:loaded_$1 = 1
+let g:loaded_<{~1}> = 1
 let &cpo = s:cpo_save | unlet s:cpo_save
-endsnippet

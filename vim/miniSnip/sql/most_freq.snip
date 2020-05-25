@@ -1,0 +1,5 @@
+? Select most frequent value in column
+SELECT <{column}>, COUNT(<{~1}>) AS <{value_occurrence}> FROM <{table}>
+GROUP BY <{~1}>
+ORDER BY <{~2}> DESC
+LIMIT <{how_many_to_display}>;

@@ -1,9 +1,0 @@
-snippet #! "shebang"
-#!/usr/bin/env ${1:sh}
-endsnippet
-
-snippet wrapper_exec
-for dir in $(echo "\$PATH" | tr ":" "\n" | grep -Fxv "$(dirname \$0)"); do
-	[ -x "\$dir/\$(basename \$0)" ] && exec "$dir/$(basename \$0)" \$@
-done
-endsnippet
