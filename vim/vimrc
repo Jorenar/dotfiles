@@ -24,7 +24,7 @@ if has('python3')
   python3 #
 endif
 
-helptags ALL " genereate help tags
+silent! helptags ALL " genereate help tags
 
 " COLORSCHEME {{{1
 try
@@ -78,6 +78,7 @@ set textwidth=79
 execute "autocmd filetype ".
       \   "html,css,xhtml,xml" .",".
       \   "javascript,json"    .",".
+      \   "cmake"              .",".
       \   "lua"                .",".
       \   "markdown"           .",".
       \   "vim"                .",".
@@ -85,13 +86,14 @@ execute "autocmd filetype ".
 
 " For thise filetypes set 'tabstop' to 3
 execute "autocmd filetype ".
-      \   "ada"                .","
-      \   "plaintex,tex"       .","
+      \   "ada"                .",".
+      \   "plaintex,tex"       .",".
       \ " setlocal tabstop=3"
 
 let s:formatprg_for_filetype = {
       \ "c"          : "uncrustify --l C base kr mb",
       \ "cpp"        : "uncrustify --l CPP base kr mb stroustrup",
+      \ "cmake"      : "cmake-format --command-case lower -",
       \ "css"        : "css-beautify -s 2 --space-around-combinator",
       \ "go"         : "gofmt",
       \ "html"       : "tidy -q -w -i --show-warnings 0 --show-errors 0 --tidy-mark no",
@@ -206,12 +208,13 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <expr> <F4> &virtualedit == "all" ? ":set virtualedit=\<CR>" : ":set virtualedit=all\<CR>"
 nnoremap <F3> :set cursorline! cursorcolumn!<CR>
-nnoremap <leader>= gg=G``
-nnoremap <leader>b :bnext<CR>
-nnoremap <leader>h :nohlsearch<CR>
-nnoremap <leader>q m"gggqG`"
-nnoremap <leader>r :%s/\<<C-r><C-w>\>//g<Left><Left>
-nnoremap <leader>R :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
+nnoremap <Leader><F5> :syntax off <bar> syntax on<CR>
+nnoremap <Leader>= gg=G``
+nnoremap <Leader>b :bnext<CR>
+nnoremap <Leader>h :nohlsearch<CR>
+nnoremap <Leader>q m"gggqG`"
+nnoremap <Leader>r :%s/\<<C-r><C-w>\>//g<Left><Left>
+nnoremap <Leader>R :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
 nnoremap <M-S-a> :copen<CR>
 nnoremap <silent> <expr> <F5> g:colors_name == "darkness" ? ":syntax reset <bar> let g:colors_name=''\<CR>" : ":colo darkness\<CR>"
 nnoremap gx :call job_start('xdg-open '.expand("<cfile>"))<CR>
@@ -223,10 +226,13 @@ tnoremap <C-h> <C-\><C-n><C-w>h
 tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k
 tnoremap <C-l> <C-\><C-n><C-w>l
+tnoremap <silent> <C-\><C-\> <C-\><C-n>
+tnoremap <silent> <C-\><C-m> <C-\><C-n>:let b:auto_insert = 1 - b:auto_insert<CR>
 
 " Visual mode {{{2
-xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
-xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
+xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-r>=@/<CR><CR>
+xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-r>=@/<CR><CR>
+vnoremap <Leader>s y:%s//g<Left><Left><C-r>"/
 
 " ### DISABLE {{{2
 map gh <nop>
@@ -289,6 +295,7 @@ endif " }}}
 
 packadd minPlug
 
+" MinPlug vim-scripts/dbext.vim
 MinPlug artur-shaik/vim-javacomplete2
 MinPlug ctrlpvim/ctrlp.vim
 MinPlug davidhalter/jedi-vim
@@ -298,7 +305,6 @@ MinPlug Jorengarenar/miniSnip
 MinPlug Jorengarenar/vim-darkness
 MinPlug mbbill/undotree
 MinPlug tpope/vim-surround
-MinPlug vim-scripts/dbext.vim
 
 packadd cfilter
 packadd matchit
@@ -319,8 +325,8 @@ let g:ale_set_loclist             = 0
 let g:ale_set_quickfix            = 1
 let g:ale_set_signs               = 0
 let g:ctrlp_brief_prompt          = 1
-let g:ctrlp_extensions            = [ 'buffertag' ]
-let g:ctrlp_prompt_mappings       = { 'PrtExit()': [ '<Esc>', '<C-[>', '<C-c>'] }
+let g:ctrlp_extensions            = [ 'buffertag', 'quickfix' ]
+let g:ctrlp_prompt_mappings       = { 'PrtExit()': [ '<C-[>', '<Esc>', '<C-c>' ] }
 let g:ctrlp_types                 = [ 'fil' ]
 let g:undotree_SetFocusWhenToggle = 1
 
@@ -382,11 +388,9 @@ augroup OTHER " {{{
   autocmd QuickFixCmdPost    l* nested lwindow
 
   " Terminal options
-  if has('nvim')
-    autocmd BufWinEnter,WinEnter term://* startinsert | setlocal nonumber
-  else
-    autocmd TerminalWinOpen * setlocal nonumber | autocmd WinEnter <buffer> silent! normal i
-  endif
+  execute 'autocmd '.(has("nvim") ? "TermOpen" : "TerminalOpen").' *
+        \ let b:auto_insert = 1 | setlocal nonumber |
+        \ autocmd WinEnter <buffer> if b:auto_insert | silent! execute "normal i" | endif'
 
 augroup END " }}}
 

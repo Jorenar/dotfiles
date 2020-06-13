@@ -230,7 +230,7 @@ indent_with_tabs                = 0        # unsigned number
 indent_align_string             = true     # true/false
 
 # Whether to indent the body of a 'namespace'.
-indent_namespace                = true     # true/false
+indent_namespace                = false    # true/false
 
 # The number of spaces to indent a namespace block.
 # If set to zero, use the value indent_columns

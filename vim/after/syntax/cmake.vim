@@ -1,0 +1,1 @@
+hi cmakeCommand cterm=bold
