@@ -49,7 +49,7 @@ for [ft, comp] in items(s:compilers)
   execute "autocmd filetype ".ft." compiler! ".comp
 endfor
 
-function! Run() abort
+function! Run(file, ...) abort
   let options = ""
   let detach = 0
   if has_key(s:run_cmds, &ft)
@@ -59,14 +59,16 @@ function! Run() abort
     elseif s:run_cmds[&ft][0] == 2
       let detach = 1
     endif
-  elseif executable("./".expand('%:t:r'))
-    let cmd = "./%:t:r"
-  elseif has_key(s:makeprgs, &ft)
+  elseif executable("./" . a:file)
+    let cmd = "./" . a:file
+  elseif has_key(s:makeprgs, &ft) && s:makeprgs[&ft][0]
     let cmd = s:makeprgs[&ft][1]
   else
     echo "I don't know how to execute this file!"
     return
   endif
+
+  let cmd .= " ".get(a:, 1, "")
 
   if detach
     call system(expandcmd(cmd)." &")
@@ -81,7 +83,7 @@ function! Run() abort
 
 endfunction
 
-function! Build() abort
+function! Build(...) abort
   write
 
   let interpreter = 0
@@ -90,7 +92,7 @@ function! Build() abort
     let &l:shellpipe    = "1>&2 2>"
 
     let l:makeprg_old = &makeprg
-    let &l:makeprg    = "(".s:makeprgs[&ft][1].")"
+    let &l:makeprg    = "(".s:makeprgs[&ft][1]." ".get(a:, 1, "").")"
 
     let interpreter = s:makeprgs[&ft][0]
 
@@ -110,12 +112,19 @@ function! Build() abort
 endfunction
 
 function! BuildAndRun() abort
+  let file = expand('%:t:r') " current file - in case of Vim jumping to other
   if Build()
-    call Run()
+    call Run(file)
   endif
 endfunction
 
+command! -nargs=* Run         call Run(expand('%:t:r'), "<args>")
+command! -nargs=* Build       call Build("<args>")
+command! -nargs=* BuildAndRun call BuildAndRun()
+
 nnoremap <F7>  :call Build()<CR>
-nnoremap <F8>  :call Run()<CR>
-nnoremap <F9>  :call BuildAndRun()<CR>
+nnoremap <F8>  :Run<CR>
+nnoremap <F9>  :BuildAndRun<CR>
 nnoremap <F10> :w <bar> make<CR>
+
+" vim: fen
