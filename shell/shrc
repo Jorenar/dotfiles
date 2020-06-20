@@ -70,9 +70,9 @@ find() {
 }
 
 organizer() {
-    mkdir ~/.organizer
+    mkdir "$XDG_DATA_HOME/organizer"
     options="let g:netrw_liststyle=0"
-    options="$options | let netrw_list_hide=\"\\\.\""
     options="$options | let g:netrw_browse_split = 0"
-    vim +"$options"  ~/.organizer
+    options="$options"' | let netrw_list_hide="\\."'
+    vim +"$options" "$XDG_DATA_HOME/organizer"
 }
