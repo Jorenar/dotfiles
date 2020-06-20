@@ -68,3 +68,11 @@ feh() {
 find() {
     command find $@ 2> /dev/null
 }
+
+organizer() {
+    mkdir ~/.organizer
+    options="let g:netrw_liststyle=0"
+    options="$options | let netrw_list_hide=\"\\\.\""
+    options="$options | let g:netrw_browse_split = 0"
+    vim +"$options"  ~/.organizer
+}

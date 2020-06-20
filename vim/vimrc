@@ -240,9 +240,6 @@ vmap s <nop>
 
 " OPTIONS {{{1
 
-let g:netrw_dirhistmax = 0
-let g:netrw_winsize = -28
-
 set backup
 set colorcolumn=+1,+21
 set hidden
