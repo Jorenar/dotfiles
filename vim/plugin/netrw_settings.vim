@@ -11,8 +11,7 @@ augroup netrw_autocmd
   autocmd filetype netrw silent! unmap <buffer> <C-l>
   autocmd filetype netrw setlocal statusline=%f
 
-  autocmd WinEnter * if winnr('$') == 1 &&
-        \ getbufvar(winbufnr(winnr()), "&filetype") == "netrw" || &buftype == 'quickfix' | q | endif
+  autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&filetype") == "netrw" | q | endif
 augroup END
 
 " Toggle Vexplore with Ctrl-O
