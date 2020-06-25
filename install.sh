@@ -60,6 +60,7 @@ linking  user-dirs.dirs    $XDG_CONFIG_HOME/user-dirs.dirs
 linking  X11/              $XDG_CONFIG_HOME/X11
 linking  zathurarc         $XDG_CONFIG_HOME/zathura/zathurarc
 
+linking  ccache.config     $CCACHE_CONFIGPATH
 linking  gpg-agent.conf    $GNUPGHOME/gpg-agent.conf
 linking  gtkrc-2.0         ${GTK2_RC_FILES%:*} # link only real gtkrc, omit the one from GTK_THEME
 linking  inputrc           $INPUTRC
