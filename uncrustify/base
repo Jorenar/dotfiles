@@ -34,8 +34,9 @@ sp_before_ptr_star              = remove   # ignore/add/remove/force
 # Overrides sp_type_func.
 sp_after_ptr_star               = add      # ignore/add/remove/force
 
-# Add or remove space between 'decltype(...)' and word.
-sp_after_decltype               = add      # ignore/add/remove/force
+# Add or remove space after a pointer star '*', if followed by an open
+# parenthesis, as in 'void* (*)().
+sp_ptr_star_paren               = add      # ignore/add/remove/force
 
 # Add or remove space before a reference sign '&'.
 sp_before_byref                 = remove   # ignore/add/remove/force
@@ -44,6 +45,9 @@ sp_before_byref                 = remove   # ignore/add/remove/force
 #
 # Overrides sp_type_func.
 sp_after_byref                  = add      # ignore/add/remove/force
+
+# Add or remove space between 'decltype(...)' and word.
+sp_after_decltype               = add      # ignore/add/remove/force
 
 # Add or remove space between 'template' and '<'.
 # If set to ignore, sp_before_angle is used.
@@ -238,15 +242,6 @@ indent_namespace_level          = 2        # unsigned number
 
 # Whether the 'class' body is indented.
 indent_class                    = true     # true/false
-
-# How to indent access specifiers that are followed by a
-# colon.
-#
-#  >0: Absolute column where 1 is the leftmost column
-# <=0: Subtract from brace indent
-#
-# Default: 1
-indent_access_spec              = -2        # number
 
 # Spaces to indent 'case' from 'switch'. Usually 0 or indent_columns.
 indent_switch_case              = indent_columns        # unsigned number

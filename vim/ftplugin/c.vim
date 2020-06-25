@@ -1,4 +1,4 @@
-set cinoptions=g2,h2,N-s,t0,(0,u0,U0,j1,ws,Ws,J1,#0
+set cinoptions=g0,N-s,t0,(0,u0,U0,j1,ws,Ws,J1,#0
 set complete-=i " Scanning included files when ^n is troublesome
 set foldmethod=syntax
 set path+=/usr/include/**
