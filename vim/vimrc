@@ -292,10 +292,8 @@ endif " }}}
 
 packadd minPlug
 
-" MinPlug vim-scripts/dbext.vim
 MinPlug artur-shaik/vim-javacomplete2
 MinPlug ctrlpvim/ctrlp.vim
-MinPlug davidhalter/jedi-vim
 MinPlug dense-analysis/ale
 MinPlug Jorengarenar/fauxClip
 MinPlug Jorengarenar/miniSnip
