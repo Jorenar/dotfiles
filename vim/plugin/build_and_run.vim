@@ -49,7 +49,7 @@ for [ft, comp] in items(s:compilers)
   execute "autocmd filetype ".ft." compiler! ".comp
 endfor
 
-function! Run(file, ...) abort
+function! s:Run(file, ...) abort
   let options = ""
   let detach = 0
   if has_key(s:run_cmds, &ft)
@@ -83,7 +83,7 @@ function! Run(file, ...) abort
 
 endfunction
 
-function! Build(...) abort
+function! s:Build(...) abort
   write
 
   let interpreter = 0
@@ -111,19 +111,19 @@ function! Build(...) abort
   return !(v:shell_error || interpreter)
 endfunction
 
-function! BuildAndRun() abort
+function! s:BuildAndRun() abort
   let file = expand('%:t:r') " current file - in case of Vim jumping to other
   if Build()
     call Run(file)
   endif
 endfunction
 
-command! -nargs=* Run         call Run(expand('%:t:r'), "<args>")
-command! -nargs=* Build       call Build("<args>")
-command! -nargs=* BuildAndRun call BuildAndRun()
+command! -nargs=* RunIt       call <SID>Run(expand('%:t:r'), "<args>")
+command! -nargs=* Build       call <SID>Build("<args>")
+command! -nargs=* BuildAndRun call <SID>BuildAndRun()
 
-nnoremap <F7>  :call Build()<CR>
-nnoremap <F8>  :Run<CR>
+nnoremap <F7>  :Build<CR>
+nnoremap <F8>  :RunProg<CR>
 nnoremap <F9>  :BuildAndRun<CR>
 nnoremap <F10> :w <bar> make<CR>
 
