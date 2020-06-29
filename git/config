@@ -6,14 +6,10 @@
     user = Jorengarenar
 
 [filter "lfs"]
-    clean = git-lfs clean -- %f
-    process = git-lfs filter-process
+    clean    = git-lfs clean -- %f
+    process  = git-lfs filter-process
     required = true
-    smudge = git-lfs smudge -- %f
-
-[core]
-    editor = vim
-    pager = less -FRX
+    smudge   = git-lfs smudge -- %f
 
 [merge]
     tool = vimdiff
@@ -26,11 +22,12 @@
 [alias]
     b = branch
 
-    aur = !sh -c 'git clone ssh://aur@aur.archlinux.org/\"$1\".git' -
-    change-url = !sh -c 'git remote set-url origin \"$1\"' -
+    aur          = !sh -c 'git clone ssh://aur@aur.archlinux.org/\"$1\".git' -
+    change-url   = !sh -c 'git remote set-url origin \"$1\"' -
     clean-branch = !sh -c 'git checkout --orphan \"$1\" && git rm -rf .' -
-    cscope = !.git/hooks/cscope
-    ctags = !.git/hooks/ctags
-    del = !sh -c 'git reset HEAD \"$@\"' -
-    fast = !sh -c 'git add -A && git commit -m \"$1\" && git push' -
-    initial = !sh -c 'git init && git add -A && git commit -m \"Initial commit\" && git remote add origin \"$1\" && git push -u origin master' -
+    cscope       = !.git/hooks/cscope
+    ctags        = !.git/hooks/ctags
+    del          = !sh -c 'git reset HEAD \"$@\"' -
+    diff-        = !sh -c 'unset GIT_EXTERNAL_DIFF && git diff $@' -
+    fast         = !sh -c 'git add -A && git commit -m \"$1\" && git push' -
+    initial      = !sh -c 'git init && git add -A && git commit -m \"Initial commit\" && git remote add origin \"$1\" && git push -u origin master' -

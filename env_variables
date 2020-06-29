@@ -83,8 +83,9 @@ SHELL=bash # path determined in -End-
 # Also, dont set `tmux` etc. here or as login shell - can cause problems
 
 export EDITOR=vim
+export GIT_EXTERNAL_DIFF="diffy"
 export MANPAGER="vim -M +MANPAGER -"
-export PAGER=less
+export PAGER="less -FRX"
 export TERMINAL=xterm
 export VISUAL="$EDITOR"
 

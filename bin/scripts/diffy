@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+LANG=C
+
+H=$(($COLUMNS / 2))
+CONTEXT=3
+
+echo -e "\n\033[33m$1\033[0m\n"
+
+diff -yt -W "$COLUMNS" --color=always "$2" "$5"        | \
+    grep -E "^.{$H} *[|<>] *" -C $CONTEXT              | \
+    sed -E "s/(^.{$H} *)\|(.*$)/\1\x1b[36m~\2\x1b[0m/" | \
+    ${PAGER:-less -FRX}
+
+printf %"$COLUMNS"s | tr " " "-"
