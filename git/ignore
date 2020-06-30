@@ -1,3 +1,4 @@
+.ccls-cache
 .vimrc.local
 __pycache__
 a.out
