@@ -5,11 +5,14 @@ LANG=C
 H=$(($COLUMNS / 2))
 CONTEXT=3
 
+SEPARATOR="$(printf %"$((H-10))"s | tr ' ' '-')"
+SEPARATOR="$(echo -ne "\033[90m    $SEPARATOR           $SEPARATOR\033[0m")"
+
 echo -e "\n\033[33m$1\033[0m\n"
 
-diff -yt -W "$COLUMNS" --color=always "$2" "$5"        | \
-    grep -E "^.{$H} *[|<>] *" -C $CONTEXT              | \
+diff -yt -W "$COLUMNS" --color=always "$2" "$5" | \
+    grep -E "^.{$H} *[|<>] *" -C $CONTEXT --group-separator="$SEPARATOR" | \
     sed -E "s/(^.{$H} *)\|(.*$)/\1\x1b[36m~\2\x1b[0m/" | \
     ${PAGER:-less -FRX}
 
-printf %"$COLUMNS"s | tr " " "-"
+echo -ne "\033[90m$(printf %"$COLUMNS"s | tr ' ' '-')\033[0m"
