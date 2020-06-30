@@ -2,6 +2,9 @@
 
 alias ap1='sudo create_ap wlo1 wlo1 x I_love_BASH' # semi open WiFi network
 alias cal='cal -m'
+alias cbuild='cmake --build build/'
+alias cbuild_='cmake -B build/ && cmake --build build/'
+alias cmake_='cmake -B build/'
 alias du='du -h'
 alias grep='grep --color'
 alias i3-exit="i3-msg exit"
@@ -11,6 +14,7 @@ alias less='less -R'
 alias ls='ls -hF'
 alias mkdir='mkdir -p'
 alias mnt='udisksctl mount -b'
+alias netctl-start='sudo netctl start $NETCTL_PROFILE'
 alias off='shutdown -h now'
 alias pass='EDITOR="vim -u NONE" pass'
 alias python-server='python -m http.server 8000'
