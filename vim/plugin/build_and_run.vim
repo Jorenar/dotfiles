@@ -118,7 +118,7 @@ function! s:BuildAndRun() abort
   endif
 endfunction
 
-command! -nargs=* RunIt       call <SID>Run(expand('%:t:r'), "<args>")
+command! -nargs=* RunProg     call <SID>Run(expand('%:t:r'), "<args>")
 command! -nargs=* Build       call <SID>Build("<args>")
 command! -nargs=* BuildAndRun call <SID>BuildAndRun()
 
