@@ -113,8 +113,8 @@ endfunction
 
 function! s:BuildAndRun() abort
   let file = expand('%:t:r') " current file - in case of Vim jumping to other
-  if Build()
-    call Run(file)
+  if <SID>Build()
+    call <SID>Run(file)
   endif
 endfunction
 
