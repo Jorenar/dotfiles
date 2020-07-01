@@ -20,7 +20,8 @@
     trustExitCode = true
 
 [alias]
-    b = branch
+    b  = branch
+    bb = checkout
 
     aur          = !sh -c 'git clone ssh://aur@aur.archlinux.org/\"$1\".git' -
     change-url   = !sh -c 'git remote set-url origin \"$1\"' -
