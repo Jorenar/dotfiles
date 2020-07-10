@@ -76,12 +76,13 @@ set textwidth=79
 
 " For thise filetypes set 'tabstop' to 2
 execute "autocmd filetype ".
-      \   "html,css,xhtml,xml" .",".
-      \   "javascript,json"    .",".
-      \   "cmake"              .",".
-      \   "lua"                .",".
-      \   "markdown"           .",".
-      \   "vim"                .",".
+      \   "html,xhtml,xml"    .",".
+      \   "*css"              .",".
+      \   "javascript,json"   .",".
+      \   "cmake"             .",".
+      \   "lua"               .",".
+      \   "markdown"          .",".
+      \   "vim"               .",".
       \ " setlocal tabstop=2"
 
 " For thise filetypes set 'tabstop' to 3
@@ -220,6 +221,9 @@ nnoremap <silent> <expr> <F5> g:colors_name == "darkness" ? ":syntax reset <bar>
 nnoremap gx :call job_start('xdg-open '.expand("<cfile>"))<CR>
 nnoremap j gj
 nnoremap k gk
+
+" Insert mode {{{2
+inoremap <expr> <C-o> pumvisible() ? "\<C-n>" : "\<C-o>"
 
 " Terminal mode {{{2
 tnoremap <C-h> <C-\><C-n><C-w>h
