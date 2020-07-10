@@ -5,3 +5,4 @@ a.out
 build/
 node_modules
 Session.vim
+tags
