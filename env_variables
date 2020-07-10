@@ -33,12 +33,17 @@ export PATH="$_XDG_WRAPPERS:$PATH"
 #export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME/java"
 export BASH_COMPLETION_USER_FILE="$XDG_CONFIG_HOME/bash/bash_completion"
 export BASH_DOTDIR="$XDG_CONFIG_HOME/bash"
+export BUNDLE_USER_CACHE="$XDG_CACHE_HOME/bundle"
+export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME/bundle"
+export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME/bundle"
 export CCACHE_CONFIGPATH="$XDG_CONFIG_HOME/ccache/config"
 export CCACHE_DIR="$XDG_CACHE_HOME/ccache"
 export DCONF_PROFILE="$XDG_CONFIG_HOME/dconf/user"
 export ELECTRUMDIR="$XDG_DATA_HOME/electrum"
 export ELINKS_CONFDIR="$XDG_CONFIG_HOME/elinks"
 export ENV="$XDG_CONFIG_HOME/shell/shrc"  # sh, ksh
+export GEM_HOME="$XDG_DATA_HOME/gem"
+export GEM_SPEC_CACHE="$XDG_CACHE_HOME/gem"
 export GIT_TEMPLATE_DIR="$XDG_CONFIG_HOME/git/template"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export GOPATH="$XDG_DATA_HOME/go"
@@ -138,6 +143,9 @@ export XDG_VTNR="${XDG_VTNR:-$(tty | sed 's/[^0-9]*//g')}"
 
 # Enable ccache by default
 export PATH="/usr/lib/ccache/bin/:$PATH"
+
+# Add gem to PATH
+export PATH="$GEM_HOME/bin:$PATH"
 
 # Source additional, local env_variables {{{1
 [ -f $XDG_LOCAL_HOME/supp/env_variables ] && . $XDG_LOCAL_HOME/supp/env_variables
