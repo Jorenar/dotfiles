@@ -1,4 +1,4 @@
-if !get(g:, "enable_lsp", 1)
+if !g:enable_lsp
   set tags+=$XDG_DATA_HOME/tags/cpp
   set tags+=$XDG_DATA_HOME/tags/boost
 

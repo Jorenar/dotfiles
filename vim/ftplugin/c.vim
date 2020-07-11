@@ -3,7 +3,7 @@ set complete-=i " Scanning included files when ^n is troublesome
 set foldmethod=syntax
 set path+=/usr/include/**
 
-if !get(g:, "enable_lsp", 1)
+if !g:enable_lsp
   set tags+=$XDG_DATA_HOME/tags/c
 
   let OmniCpp_GlobalScopeSearch   = 1

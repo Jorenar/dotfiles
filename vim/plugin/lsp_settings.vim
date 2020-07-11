@@ -1,4 +1,6 @@
-if get(g:, "enable_lsp", 1)
+let g:enable_lsp = 1
+
+if g:enable_lsp
 
   MinPlug prabirshrestha/vim-lsp
 
@@ -19,7 +21,6 @@ if get(g:, "enable_lsp", 1)
       au User lsp_setup call lsp#register_server({
             \ 'name': 'ccls',
             \ 'cmd': {server_info->['ccls']},
-            \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
             \ 'initialization_options': {'cache': {'directory': '/tmp/ccls/cache' }, 'clang': {'extraArgs': ['--gcc-toolchain=/usr'] } },
             \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
             \ })
@@ -36,6 +37,7 @@ if get(g:, "enable_lsp", 1)
   augroup END
 
 else
-  MinPlug vim-scripts/dbext.vim
   MinPlug davidhalter/jedi-vim
+  MinPlug FromtonRouge/OmniCppComplete
+  MinPlug vim-scripts/dbext.vim
 endif
