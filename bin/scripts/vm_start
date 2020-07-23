@@ -22,7 +22,6 @@ qemu-system-x86_64 \
     -net user,smb="$XDG_PUBLICSHARE_DIR" \
     -usb -device usb-tablet \
     -soundhw all \
-    -audiodev spice,id=snd0 \
     -vga std \
     `# Clipboard sharing` \
     -device virtio-serial \

@@ -58,12 +58,12 @@ command! Todo lvimgrep "\<TODO\>" %
 
 augroup FORMATOPTIONS
   autocmd!
-  autocmd BufWinEnter * set fo-=c fo-=r fo-=o " Disable continuation of comments to the next line
-  autocmd BufWinEnter * set formatoptions+=j  " Remove a comment leader when joining lines
-  autocmd BufWinEnter * set formatoptions+=l  " Don't break a line after a one-letter word
-  autocmd BufWinEnter * set formatoptions+=n  " Recognize numbered lists
-  autocmd BufWinEnter * set formatoptions-=q  " Don't format comments
-  autocmd BufWinEnter * set formatoptions-=t  " Don't autowrap text using 'textwidth'
+  autocmd FileType * set fo-=c fo-=r fo-=o " Disable continuation of comments to the next line
+  autocmd FileType * set formatoptions+=j  " Remove a comment leader when joining lines
+  autocmd FileType * set formatoptions+=l  " Don't break a line after a one-letter word
+  autocmd FileType * set formatoptions+=n  " Recognize numbered lists
+  autocmd FileType * set formatoptions-=q  " Don't format comments
+  autocmd FileType * set formatoptions-=t  " Don't autowrap text using 'textwidth'
 augroup END
 
 set cindent
@@ -75,7 +75,7 @@ set tabstop=4
 set textwidth=79
 
 " For thise filetypes set 'tabstop' to 2
-execute "autocmd filetype ".
+execute "autocmd FileType ".
       \   "html,xhtml,xml"    .",".
       \   "*css"              .",".
       \   "javascript,json"   .",".
@@ -86,7 +86,7 @@ execute "autocmd filetype ".
       \ " setlocal tabstop=2"
 
 " For thise filetypes set 'tabstop' to 3
-execute "autocmd filetype ".
+execute "autocmd FileType ".
       \   "ada"                .",".
       \   "plaintex,tex"       .",".
       \ " setlocal tabstop=3"
@@ -108,7 +108,7 @@ let s:formatprg_for_filetype = {
       \}
 
 for [ft, fp] in items(s:formatprg_for_filetype)
-  execute "autocmd filetype ".ft." let &l:formatprg=\"".fp."\" | setlocal formatexpr="
+  execute "autocmd FileType ".ft." let &l:formatprg=\"".fp."\" | setlocal formatexpr="
 endfor
 
 " FUNCTIONS {{{1
@@ -384,7 +384,7 @@ augroup OTHER " {{{
   autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
 
   " Set 'foldmethod' to 'syntax'
-  autocmd filetype css,javascript,json,typescript setlocal foldmethod=syntax
+  autocmd FileType css,javascript,json,typescript setlocal foldmethod=syntax
 
   " Protect folds when toggling insert mode / switching windows
   autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
@@ -398,6 +398,15 @@ augroup OTHER " {{{
   execute 'autocmd '.(has("nvim") ? "TermOpen" : "TerminalOpen").' *
         \ let b:auto_insert = 1 | setlocal nonumber |
         \ autocmd WinEnter <buffer> if b:auto_insert | silent! execute "normal i" | endif'
+
+  " Undo if filter shell command returned an error
+  autocmd ShellFilterPost * if v:shell_error | undo | endif
+
+  " Local vimrc
+  autocmd VimEnter * if filereadable("./.vimrc.local") | so .vimrc.local | endif
+
+  " If file has more lines than window height, then fold it
+  autocmd BufReadPost * if line('$') > winheight(0) | setlocal fen | endif
 
 augroup END " }}}
 

@@ -1,6 +1,6 @@
 " Cscope
 
-if has("cscope")
+if has("cscope") && 0
 
   let db = findfile("cscope.out", ".git;")
   if !empty(db)

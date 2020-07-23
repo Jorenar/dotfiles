@@ -1,8 +1,10 @@
 .ccls-cache
+.clangd
 .vimrc.local
 __pycache__
 a.out
 build/
+compile_commands.json
 node_modules
 Session.vim
 tags
