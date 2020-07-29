@@ -2,6 +2,8 @@
 
 tagsdir="$XDG_DATA_HOME/tags"
 
+mkdir -p "$tagsdir"
+
 generate() {
     file=$1
     lang=$2
