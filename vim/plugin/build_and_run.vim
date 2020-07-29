@@ -52,13 +52,16 @@ endfor
 function! s:Run(file, ...) abort
   let options = ""
   let detach = 0
+
   if has_key(s:run_cmds, &ft)
     let cmd = s:run_cmds[&ft][1]
+
     if s:run_cmds[&ft][0] == 1
       let options = "++close "
     elseif s:run_cmds[&ft][0] == 2
       let detach = 1
     endif
+
   elseif executable("./" . a:file)
     let cmd = "./" . a:file
   elseif has_key(s:makeprgs, &ft) && s:makeprgs[&ft][0]
@@ -76,6 +79,8 @@ function! s:Run(file, ...) abort
     execute "tabe term://".cmd
     if options == "++close "
       autocmd TermClose <buffer> call feedkeys("q")
+    else
+      autocmd TermClose <buffer> call feedkeys("\<C-\>\<C-n>")
     endif
   else
     execute "tab term ++shell ".options.cmd
@@ -83,32 +88,70 @@ function! s:Run(file, ...) abort
 
 endfunction
 
+function! s:RunInterpreter(cmd) abort
+  let errorsfile = tempname()
+
+  let cmd = a:cmd
+  let cmd .= " 2>&1 "
+  let cmd .= has('nvim') ? "\\|" : "\|"
+  let cmd .= " tee ".errorsfile
+
+  if has('nvim')
+    execute "tabe term://".cmd
+    augroup OPEN_ERROR_FILE
+      autocmd!
+      autocmd TermOpen  <buffer> let b:term_job_finished = 0
+      autocmd TermEnter <buffer> if  b:term_job_finished | call feedkeys("\<C-\>\<C-n>") | endif
+      execute "autocmd TermLeave <buffer> if !b:term_job_finished | cfile ".errorsfile." | endif"
+
+      execute 'autocmd TermClose <buffer> let b:term_job_finished = 1 | call feedkeys("\<C-\>\<C-n>") | cfile '. errorsfile .' | copen'
+    augroup END
+
+  else
+
+    function! s:OpenErrorFile_(ef, ...) abort
+      execute "cfile ".a:ef
+      cwindow
+    endfunction
+
+    let OpenErrorFile = function('s:OpenErrorFile_', [ errorsfile ])
+
+    let cmd = expandcmd(cmd)
+    tabe
+    call term_start([ &shell, '-c', cmd ] , { "curwin": 1, 'exit_cb' : OpenErrorFile })
+  endif
+
+  setlocal switchbuf=usetab
+endfunction
+
 function! s:Build(...) abort
   write
 
   let interpreter = 0
+
   if has_key(s:makeprgs, &ft)
-    let l:shellpipe_old = &shellpipe
-    let &l:shellpipe    = "1>&2 2>"
+    let cmd = "(" . s:makeprgs[&ft][1] . get(a:, 1, "") . ")"
 
-    let l:makeprg_old = &makeprg
-    let &l:makeprg    = "(".s:makeprgs[&ft][1]." ".get(a:, 1, "").")"
-
-    let interpreter = s:makeprgs[&ft][0]
-
-    if interpreter
-      make
+    if s:makeprgs[&ft][0]
+      call s:RunInterpreter(cmd)
+      return v:false
     else
-      silent! make | redraw!
-    endif
+      let l:shellpipe_old = &shellpipe
+      let &l:shellpipe    = "1>&2 2>"
 
-    let &l:makeprg   = l:makeprg_old
-    let &l:shellpipe = l:shellpipe_old
+      let l:makeprg_old = &makeprg
+      let &l:makeprg    = cmd
+
+      silent! make | redraw!
+
+      let &l:makeprg   = l:makeprg_old
+      let &l:shellpipe = l:shellpipe_old
+    endif
   else
     execute "make %:t:r"
   endif
 
-  return !(v:shell_error || interpreter)
+  return !v:shell_error
 endfunction
 
 function! s:BuildAndRun() abort
