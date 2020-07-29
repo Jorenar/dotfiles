@@ -2,9 +2,9 @@
 
 alias ap1='sudo create_ap wlo1 wlo1 x I_love_BASH' # semi open WiFi network
 alias cal='cal -m'
-alias cbuild='cmake --build build/'
-alias cbuild_='cmake -B build/ && cmake --build build/'
-alias cmake_='cmake -B build/'
+alias cbuild='cmake --build build/ 2> >(tee build/errors.err >&2)'
+alias cbuild_='cmake -B build/ -DCMAKE_BUILD_TYPE=Debug && cmake --build build/'
+alias cmake_='cmake -B build/ -DCMAKE_BUILD_TYPE=Debug'
 alias du='du -h'
 alias grep='grep --color'
 alias i3-exit="i3-msg exit"
