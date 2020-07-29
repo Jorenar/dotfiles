@@ -246,6 +246,10 @@ indent_class                    = true     # true/false
 # Spaces to indent 'case' from 'switch'. Usually 0 or indent_columns.
 indent_switch_case              = indent_columns        # unsigned number
 
+# Spaces to indent '{' from 'case'. By default, the brace will appear under
+# the 'c' in case. Usually set to 0 or indent_columns. Negative values are OK.
+indent_case_brace               = indent_columns        # number
+
 # Whether to indent the body of a C++11 lambda.
 indent_cpp_lambda_body          = true     # true/false
 
