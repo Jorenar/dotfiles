@@ -51,7 +51,7 @@ command! Book setlocal nonumber wrap columns=90 colorcolumn= laststatus=0
 command! ExecCurrentLine normal :.w !sh<CR>
 command! SortBlock :normal! vip:sort i<CR>
 command! SudoW execute 'silent! write !sudo tee % >/dev/null' | edit!
-command! Term vertical terminal
+command! Term vertical terminal ++noclose
 command! Todo lvimgrep "\<TODO\>" %
 
 " FORMATTING {{{1
@@ -123,6 +123,27 @@ function! s:FillLine(str, ...) abort
   let reps = (to_column - col("$")) / len(a:str)
   if reps > 0
     .s/$/\=(' '.repeat(a:str, reps))/
+  endif
+endfunction
+
+" Make keyword group contained {{{2
+function! KeywordGroupContained(group) abort
+  let x = split(execute("syntax list " . a:group), '\n')
+  let y = index(map(deepcopy(x), 'v:val =~ ".*links to .*"'), 1)
+  if y > 0
+    let y = y-1
+  endif
+  let x = split(join(x[:y]))
+  let x = x[index(x, 'xxx')+1:]
+  execute "syntax clear ".a:group
+  execute "syntax keyword ".a:group." contained ".join(x)
+endfunction
+
+" Rename variable {{{2
+function! RenameVar(old, ...) abort
+  let newName = input( a:old . " -> ", get(a:, 1, a:old))
+  if !empty(newName)
+    execute "%s/\\C\\<" . a:old . "\\>/" . newName . "/g"
   endif
 endfunction
 
@@ -214,8 +235,8 @@ nnoremap <Leader>= gg=G``
 nnoremap <Leader>b :bnext<CR>
 nnoremap <Leader>h :nohlsearch<CR>
 nnoremap <Leader>q m"gggqG`"
-nnoremap <Leader>r :%s/\<<C-r><C-w>\>//g<Left><Left>
-nnoremap <Leader>R :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
+nnoremap <Leader>r :call RenameVar(expand('<cword>'), "")<CR>
+nnoremap <Leader>R :call RenameVar(expand('<cword>'))<CR>
 nnoremap <M-S-a> :copen<CR>
 nnoremap <silent> <expr> <F5> g:colors_name == "darkness" ? ":syntax reset <bar> let g:colors_name=''\<CR>" : ":colo darkness\<CR>"
 nnoremap gx :call job_start('xdg-open '.expand("<cfile>"))<CR>
@@ -263,7 +284,7 @@ set showcmd
 set smartcase
 set splitbelow
 set splitright
-set switchbuf=useopen
+set switchbuf=usetab
 set title
 set undofile
 set wildmenu
@@ -394,19 +415,27 @@ augroup OTHER " {{{
   autocmd QuickFixCmdPost [^l]* nested cwindow
   autocmd QuickFixCmdPost    l* nested lwindow
 
-  " Terminal options
-  execute 'autocmd '.(has("nvim") ? "TermOpen" : "TerminalOpen").' *
-        \ let b:auto_insert = 1 | setlocal nonumber |
-        \ autocmd WinEnter <buffer> if b:auto_insert | silent! execute "normal i" | endif'
-
   " Undo if filter shell command returned an error
   autocmd ShellFilterPost * if v:shell_error | undo | endif
 
-  " Local vimrc
-  autocmd VimEnter * if filereadable("./.vimrc.local") | so .vimrc.local | endif
-
   " If file has more lines than window height, then fold it
   autocmd BufReadPost * if line('$') > winheight(0) | setlocal fen | endif
+
+augroup END " }}}
+
+augroup TERMINAL_OPTIONS " {{{2
+  autocmd!
+
+  execute 'autocmd '.(has("nvim") ? "TermOpen" : "TerminalOpen").' *
+        \ let b:auto_insert = 1 | setlocal nonumber |
+        \ autocmd WinEnter <buffer> if b:auto_insert | silent! normal! i | endif'
+
+  " Sanitize Neovim :terminal
+  if has('nvim')
+    autocmd TermOpen  * let b:term_job_finished = 0
+    autocmd TermEnter * if  b:term_job_finished | call feedkeys("\<C-\>\<C-n>") | endif
+    autocmd TermClose * let b:term_job_finished = 1 | call feedkeys("\<C-\>\<C-n>")
+  endif
 
 augroup END " }}}
 
@@ -415,5 +444,8 @@ call mkdir($XDG_DATA_HOME."/vim/spell", 'p')
 
 let g:sql_type_default = 'mysql'
 let javaScript_fold    = 1
+
+" Local vimrc (must be last, because of secure)
+set secure exrc
 
 " vim: fdm=marker fen:
