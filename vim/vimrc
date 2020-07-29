@@ -323,6 +323,7 @@ MinPlug dense-analysis/ale
 MinPlug Jorengarenar/fauxClip
 MinPlug Jorengarenar/miniSnip
 MinPlug Jorengarenar/vim-darkness
+MinPlug Jorengarenar/vim-sBnR
 MinPlug majutsushi/tagbar
 MinPlug mbbill/undotree
 MinPlug tpope/vim-surround
