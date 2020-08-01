@@ -1,4 +1,5 @@
 # INPUTRC #
+# vim: fen fdm=marker
 
 # Use Vi mode
 set editing-mode vi
@@ -10,8 +11,19 @@ set show-mode-in-prompt on
 set vi-ins-mode-string "+"
 set vi-cmd-mode-string ":"
 
-# INSERT mode bindings --------------------------------------------------------------------
+# NORMAL mode bindings {{{1
+set keymap vi-command
+
+"\ee": emacs-editing-mode
+
+#  INSERT mode  bindings {{{1
 set keymap vi-insert
 
+"\ee": emacs-editing-mode
 Control-l: clear-screen
 TAB: complete
+
+# EMACS "mode" bindings {{{1
+set keymap emacs
+
+"\ee": vi-editing-mode
