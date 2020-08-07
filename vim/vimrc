@@ -235,10 +235,11 @@ nnoremap <Leader>= gg=G``
 nnoremap <Leader>b :bnext<CR>
 nnoremap <Leader>h :nohlsearch<CR>
 nnoremap <Leader>q m"gggqG`"
-nnoremap <Leader>r :call RenameVar(expand('<cword>'), "")<CR>
 nnoremap <Leader>R :call RenameVar(expand('<cword>'))<CR>
+nnoremap <Leader>r :call RenameVar(expand('<cword>'), "")<CR>
 nnoremap <M-S-a> :copen<CR>
 nnoremap <silent> <expr> <F5> g:colors_name == "darkness" ? ":syntax reset <bar> let g:colors_name=''\<CR>" : ":colo darkness\<CR>"
+nnoremap <silent> <Leader>g :call setbufvar(winbufnr(popup_atcursor(split(system("git log -n 1 -L " . line(".") . ",+1:" . expand("%:p")), "\n"), { "padding": [1,1,1,1], "pos": "botleft", "wrap": 0 })), "&filetype", "git")<CR>
 nnoremap gx :call job_start('xdg-open '.expand("<cfile>"))<CR>
 nnoremap j gj
 nnoremap k gk
