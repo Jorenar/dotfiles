@@ -46,6 +46,7 @@ command! -nargs=+ Grep execute "lvimgrep /".<q-args>."/j **"
 command! -nargs=? -bang Spelling setlocal spell<bang> spelllang=<args>
 command! -range -nargs=+ Align <line1>,<line2>!column -Lts'<args>' -o'<args>'
 command! -range -nargs=0 -bang VisSort sil! keepj <line1>,<line2>call <SID>VisSort(<bang>0)
+command! -range GB echo join(systemlist("git -C " . shellescape(expand('%:p:h')) . " blame -L <line1>,<line2> " . expand('%:t')), "\n")
 command! -range=% Sort normal :<line1>,<line2>sort i<CR>
 command! Book setlocal nonumber wrap columns=90 colorcolumn= laststatus=0
 command! ExecCurrentLine normal :.w !sh<CR>
@@ -124,19 +125,6 @@ function! s:FillLine(str, ...) abort
   if reps > 0
     .s/$/\=(' '.repeat(a:str, reps))/
   endif
-endfunction
-
-" Make keyword group contained {{{2
-function! KeywordGroupContained(group) abort
-  let x = split(execute("syntax list " . a:group), '\n')
-  let y = index(map(deepcopy(x), 'v:val =~ ".*links to .*"'), 1)
-  if y > 0
-    let y = y-1
-  endif
-  let x = split(join(x[:y]))
-  let x = x[index(x, 'xxx')+1:]
-  execute "syntax clear ".a:group
-  execute "syntax keyword ".a:group." contained ".join(x)
 endfunction
 
 " Rename variable {{{2
@@ -239,7 +227,7 @@ nnoremap <Leader>R :call RenameVar(expand('<cword>'))<CR>
 nnoremap <Leader>r :call RenameVar(expand('<cword>'), "")<CR>
 nnoremap <M-S-a> :copen<CR>
 nnoremap <silent> <expr> <F5> g:colors_name == "darkness" ? ":syntax reset <bar> let g:colors_name=''\<CR>" : ":colo darkness\<CR>"
-nnoremap <silent> <Leader>g :call setbufvar(winbufnr(popup_atcursor(split(system("git log -n 1 -L " . line(".") . ",+1:" . expand("%:p")), "\n"), { "padding": [1,1,1,1], "pos": "botleft", "wrap": 0 })), "&filetype", "git")<CR>
+nnoremap <silent> <Leader>g :call setbufvar(winbufnr(popup_atcursor(systemlist("cd " . shellescape(fnamemodify(resolve(expand('%:p')), ":h")) . " && git log --no-merges -n 1 -L " . shellescape(line("v") . "," . line(".") . ":" . resolve(expand("%:p")))), { "padding": [1,1,1,1], "pos": "botleft", "wrap": 0 })), "&filetype", "git")<CR>
 nnoremap gx :call job_start('xdg-open '.expand("<cfile>"))<CR>
 nnoremap j gj
 nnoremap k gk

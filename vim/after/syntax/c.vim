@@ -5,5 +5,6 @@ syntax region cMarkerFold matchgroup=cCommentL start='//.*{{{' end='//.*}}}' tra
 
 " Fold switch's cases {{{1
 
-call KeywordGroupContained("cLabel")
-syntax region cCaseFold  start="case" start="default" end="\n\ze\n*.*\(case\|default\)" end="\n\ze\n*.*}" transparent fold
+syntax clear cLabel
+syntax match cLabel "case\|default"
+syntax region cCaseFold  start="\(case\|default\)\ze\(.*case\)\@!" end="\n\ze\n*.*\(case\|default\|}\)" transparent fold
