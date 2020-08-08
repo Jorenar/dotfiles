@@ -8,3 +8,7 @@ syntax region cMarkerFold matchgroup=cCommentL start='//.*{{{' end='//.*}}}' tra
 syntax clear cLabel
 syntax match cLabel "case\|default"
 syntax region cCaseFold  start="\(case\|default\)\ze\(.*case\)\@!" end="\n\ze\n*.*\(case\|default\|}\)" transparent fold
+
+" Multiline macro {{{1
+
+syntax region cMacroFold start="#define .*\\$" end="\\\n\(.*\\$\)\@!.*" keepend transparent fold
