@@ -1,14 +1,29 @@
-" vim: fdm=marker fen
+" vim: fdm=marker fen fdl=1
 
-" Marker fold {{{1
+" FOLDING {{{1
+" K&R/Allman/GNU/... style {{{2
+
+" syntax clear  cBlock
+" syntax region cBlockImp start="\%(/.*\)\@!.\n\?{" start="//.*\n{" end="}" transparent fold contains=ALLBUT,cBadBlock,cCurlyError,@cParenGroup,cErrInParen,cErrInBracket
+
+" Marker {{{2
+
 syntax region cMarkerFold matchgroup=cCommentL start='//.*{{{' end='//.*}}}' transparent fold
 
-" Fold switch's cases {{{1
+" Switch's cases {{{2
 
-syntax clear cLabel
-syntax match cLabel "case\|default"
-syntax region cCaseFold  start="\(case\|default\)\ze\(.*case\)\@!" end="\n\ze\n*.*\(case\|default\|}\)" transparent fold
+syntax region cCaseFold
+      \ start = "\v(<%(case|default)>)@<=\ze(.*((//.*)|(/\*.*(\*/)@!))@<!(<%(case|default)>))@!"
+      \ skip  = "\v\n*\s*((//.*)|(/\*\_.*\*/\s*))$"
+      \ end   = "\v\n\ze\n*.*(<%(case|default)>)@<="
+      \ end   = "\n\ze\n*.*}"
+      \ transparent fold
 
-" Multiline macro {{{1
+" Multiline macro {{{2
 
 syntax region cMacroFold start="#define .*\\$" end="\\\n\(.*\\$\)\@!.*" keepend transparent fold
+
+" Long comment {{{2
+
+syntax region cLongComment start="^\s*//.*\n\ze\(\s*//.*\n\)\{3,}" end="^\(//\)\@!" fold
+hi link cLongComment cCommentL
