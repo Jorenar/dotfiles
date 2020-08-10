@@ -1,7 +1,7 @@
 wincmd J " QuickFix window below other windows
-set nocursorline nocursorcolumn
-set nonumber
-set wrap
+setlocal nocursorline nocursorcolumn
+setlocal nonumber
+setlocal wrap
 
 noremap <buffer> g- :colder<CR>
 noremap <buffer> g+ :cnewer<CR>

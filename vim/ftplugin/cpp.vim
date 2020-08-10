@@ -1,6 +1,6 @@
 if !g:enable_lsp
-  set tags+=$XDG_DATA_HOME/tags/cpp
-  set tags+=$XDG_DATA_HOME/tags/boost
+  setlocal tags+=$XDG_DATA_HOME/tags/cpp
+  setlocal tags+=$XDG_DATA_HOME/tags/boost
 
   let OmniCpp_DefaultNamespaces = [ "std", "_GLIBCXX_STD", "_GLIBCXX_STD_A", "_GLIBCXX_STD_C", "::" ]
   let OmniCpp_DisplayMode       = 1

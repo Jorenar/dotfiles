@@ -1,5 +1,5 @@
 let g:vimsyn_folding="af"
-set foldmethod=syntax
+setlocal foldmethod=syntax
 
 " ColorDemo - preview of Vim 256 colors
 function! ColorDemo() abort

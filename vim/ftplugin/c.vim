@@ -1,10 +1,10 @@
-set cinoptions=g0,N-s,t0,(0,u0,U0,j1,ws,Ws,J1,#0
-set complete-=i " Scanning included files when ^n is troublesome
-set foldmethod=syntax
-set path+=/usr/include/**
+setlocal cinoptions=g0,N-s,t0,(0,u0,U0,j1,ws,Ws,J1,#0
+setlocal complete-=i " Scanning included files when ^n is troublesome
+setlocal foldmethod=syntax
+setlocal path+=/usr/include/**
 
 if !g:enable_lsp
-  set tags+=$XDG_DATA_HOME/tags/c
+  setlocal tags+=$XDG_DATA_HOME/tags/c
 
   let OmniCpp_GlobalScopeSearch   = 1
   let OmniCpp_LocalSearchDecl     = 1
