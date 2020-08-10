@@ -1,11 +1,6 @@
 " vim: fdm=marker fen fdl=1
 
 " FOLDING {{{1
-" K&R/Allman/GNU/... style {{{2
-
-" syntax clear  cBlock
-" syntax region cBlockImp start="\%(/.*\)\@!.\n\?{" start="//.*\n{" end="}" transparent fold contains=ALLBUT,cBadBlock,cCurlyError,@cParenGroup,cErrInParen,cErrInBracket
-
 " Marker {{{2
 
 syntax region cMarkerFold matchgroup=cCommentL start='//.*{{{' end='//.*}}}' transparent fold
