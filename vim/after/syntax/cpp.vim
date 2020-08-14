@@ -3,12 +3,11 @@
 " FOLDING {{{1
 " Class access specifiers {{{2
 
-syntax region cAccessFold
-      \ start = "\v(<%(public|private|protected)>)@<=\ze(.*((//.*)|(/\*.*(\*/)@!))@<!(<%(public|private|protected)>))@!"
-      \ skip  = "\v\n*\s*((//.*)|(/\*\_.*\*/\s*))$"
-      \ end   = "\v\n\ze\n*.*<%(public|private|protected)>"
+syntax region cAccessFold transparent fold
+      \ start = "\v(<%(public|private|protected)>)@<=\s*:"
+      \ skip  = "\v\n*\s*((//.*)|(/\*\_.*\*/\s*)|(.*\".*\".*;))$"
+      \ end   = "\v\n?\ze\n*.*<%(public|private|protected)>"
       \ end   = "\n\ze\n*.*}"
-      \ transparent fold
 
 " Boost test suite {{{2
 
