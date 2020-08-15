@@ -1,6 +1,7 @@
-" vim: fdm=marker fen
+" vim: fdm=marker fen fdl=1
 
-" Poorly placed "case" label {{{1
+" POORLY PLACED {{{1
+" 'case' label {{{2
 
 syn clear cLabel
 syn match cLabel "\v<%(case|default)>\ze(\s+\S+)?\s*:" display
@@ -21,6 +22,7 @@ syntax region cCaseFold transparent fold
       \ end   = "\v\n?\ze\n*(\s*//.*\n\s*)+<%(case|default)>(\s+\S+)?\s*:"
       \ end   = "\v\n?\ze\n+\s*/\*.*\*/\n?\s*<%(case|default)>(\s+\S+)?\s*:"
       \ end   = "\n\ze\n*.*}"
+
 " Multiline macro {{{2
 
 syntax region cMacroFold start="#define .*\\$" end="\\\n\(.*\\$\)\@!.*" keepend transparent fold

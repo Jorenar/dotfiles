@@ -3,6 +3,9 @@ setlocal complete-=i " Scanning included files when ^n is troublesome
 setlocal foldmethod=syntax
 setlocal path+=/usr/include/**
 
+let c_curly_error  = 1
+let c_space_errors = 1
+
 if !g:enable_lsp
   setlocal tags+=$XDG_DATA_HOME/tags/c
 
