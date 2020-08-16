@@ -25,7 +25,7 @@ syntax region cCaseFold transparent fold
 
 " Multiline macro {{{2
 
-syntax region cMacroFold start="#define .*\\$" end="\\\n\(.*\\$\)\@!.*" keepend transparent fold
+syntax region cMacroFold start="#define .*\\$" end="\v(\\\n)@<=.*[^\\]\_$" keepend transparent fold
 
 " Long comment {{{2
 
