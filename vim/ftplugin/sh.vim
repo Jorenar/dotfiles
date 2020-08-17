@@ -1,7 +1,9 @@
-let g:sh_fold_enabled=5
+let g:sh_fold_enabled = 5
 setlocal foldmethod=syntax
 
 setlocal iskeyword+=-
+
+let g:is_posix = 1
 
 let s:dict_compl = expand("$XDG_CACHE_HOME/vim/dict_compl/sh")
 call mkdir(s:dict_compl, "p")
