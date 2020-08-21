@@ -93,19 +93,19 @@ execute "autocmd FileType ".
       \ " setlocal tabstop=3"
 
 let s:formatprg_for_filetype = {
-      \ "c"          : "uncrustify --l C base kr mb",
-      \ "cpp"        : "uncrustify --l CPP base kr mb stroustrup",
-      \ "cmake"      : "cmake-format --command-case lower -",
-      \ "css"        : "css-beautify -s 2 --space-around-combinator",
-      \ "go"         : "gofmt",
-      \ "html"       : "tidy -q -w -i --show-warnings 0 --show-errors 0 --tidy-mark no",
-      \ "java"       : "uncrustify --l JAVA base kr mb java",
-      \ "javascript" : "js-beautify -s 2",
-      \ "json"       : "js-beautify -s 2",
-      \ "python"     : "autopep8 -",
-      \ "sql"        : "sqlformat -k upper -r -",
-      \ "xhtml"      : "tidy -asxhtml -q -m -w -i --show-warnings 0 --show-errors 0 --tidy-mark no --doctype loose",
-      \ "xml"        : "tidy -xml -q -m -w -i --show-warnings 0 --show-errors 0 --tidy-mark no",
+      \ "c"           : "uncrustify --l C base kr mb",
+      \ "arduino,cpp" : "uncrustify --l CPP base kr mb stroustrup",
+      \ "cmake"       : "cmake-format --command-case lower -",
+      \ "css"         : "css-beautify -s 2 --space-around-combinator",
+      \ "go"          : "gofmt",
+      \ "html"        : "tidy -q -w -i --show-warnings 0 --show-errors 0 --tidy-mark no",
+      \ "java"        : "uncrustify --l JAVA base kr mb java",
+      \ "javascript"  : "js-beautify -s 2",
+      \ "json"        : "js-beautify -s 2",
+      \ "python"      : "autopep8 -",
+      \ "sql"         : "sqlformat -k upper -r -",
+      \ "xhtml"       : "tidy -asxhtml -q -m -w -i --show-warnings 0 --show-errors 0 --tidy-mark no --doctype loose",
+      \ "xml"         : "tidy -xml -q -m -w -i --show-warnings 0 --show-errors 0 --tidy-mark no",
       \}
 
 for [ft, fp] in items(s:formatprg_for_filetype)
@@ -395,7 +395,9 @@ augroup OTHER " {{{
   autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
 
   " Set 'foldmethod' to 'syntax'
-  autocmd FileType css,javascript,json,typescript setlocal foldmethod=syntax
+  autocmd FileType arduino,css,javascript,json,typescript setlocal foldmethod=syntax
+
+  autocmd FileType arduino runtime! ftplugin/cpp.vim
 
   " Protect folds when toggling insert mode / switching windows
   autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif

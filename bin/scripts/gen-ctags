@@ -12,6 +12,7 @@ generate() {
     ctags -f "$tagsdir/$file" -R -B --sort=yes --kinds-"$lang"="$kinds" --fields=+iaSmz --extras=+qf --language-force="$lang" "$@"
 }
 
-generate c     C   +pxlzLD   /usr/include
-generate cpp   C++ +pxlzLDAZ /usr/include/c++
-generate boost C++ +pxlzLDAZ /usr/include/boost
+# generate c     C   +pxlzLD   /usr/include
+# generate cpp   C++ +pxlzLDAZ /usr/include/c++
+# generate boost C++ +pxlzLDAZ /usr/include/boost
+generate arduino C++ +pxlzLDAZ $ARDUINO_DIRECTORIES_DATA/packages/arduino/hardware
