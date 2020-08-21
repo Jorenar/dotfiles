@@ -57,6 +57,11 @@ cheat() { curl cheat.sh/$1; }
 
 wttr() { curl wttr.in/$1; }
 
+cmake_run() {
+    cmake -B build/ -DCMAKE_BUILD_TYPE=Debug -DRUN_ARGS="$@" > /dev/null
+    cmake --build build/ -t run
+}
+
 feh() {
     if [ -d "$1" ] || [ -d "$2" ]; then
         command feh "$@" > /dev/null 2>&1 & disown
