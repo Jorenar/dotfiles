@@ -108,11 +108,9 @@ while IFS= read -r exe; do
 done < "$DIR/_patch/xdg_base_dir/fakehome.list"
 
 # Link necessary dirs from HOME to FAKEHOME
-[ -d "$HOME/.local" ] && linking "$HOME/.local" "$XDG_FAKEHOME_DIR/.local"
-[ -d "$HOME/images" ] && linking "$HOME/images" "$XDG_FAKEHOME_DIR/images"
-[ -d "$HOME/music"  ] && linking "$HOME/music"  "$XDG_FAKEHOME_DIR/music"
-[ -d "$HOME/temp"   ] && linking "$HOME/temp"   "$XDG_FAKEHOME_DIR/temp"
-[ -d "$HOME/videos" ] && linking "$HOME/videos" "$XDG_FAKEHOME_DIR/videos"
+for d in $(ls -A1 $HOME); do
+    [ -d "$HOME/$d" ] && ln -s "$HOME/$d" "$XDG_FAKEHOME_DIR/$d"
+done
 
 # Install /etc/profile.d/profile_xdg.sh ? {{{1
 
