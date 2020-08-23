@@ -1,0 +1,11 @@
+# Add or remove newline between function signature and '{'.
+nl_fdef_brace                   = remove   # ignore/add/remove/force
+
+# Add or remove newline between '}' and 'else'.
+nl_brace_else                   = remove   # ignore/add/remove/force
+
+# Add or remove newline between '}' and 'finally'.
+nl_brace_finally                = remove   # ignore/add/remove/force
+
+# Add or remove newline between '}' and 'catch'.
+nl_brace_catch                  = remove   # ignore/add/remove/force

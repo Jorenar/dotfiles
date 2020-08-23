@@ -1,18 +1,16 @@
 #!/usr/bin/env sh
 
-tagsdir="$XDG_DATA_HOME/tags"
-
-mkdir -p "$tagsdir"
+mkdir -p "$XDG_TAGS_DIR"
 
 generate() {
     file=$1
     lang=$2
     kinds=$3
     shift 3
-    ctags -f "$tagsdir/$file" -R -B --sort=yes --kinds-"$lang"="$kinds" --fields=+iaSmz --extras=+qf --language-force="$lang" "$@"
+    ctags -f "$XDG_TAGS_DIR/$file" -R -B --sort=yes --kinds-"$lang"="$kinds" --fields=+iaSmz --extras=+qf --language-force="$lang" "$@"
 }
 
 # generate c     C   +pxlzLD   /usr/include
 # generate cpp   C++ +pxlzLDAZ /usr/include/c++
 # generate boost C++ +pxlzLDAZ /usr/include/boost
-generate arduino C++ +pxlzLDAZ $ARDUINO_DIRECTORIES_DATA/packages/arduino/hardware
+generate arduino C++ +pxlzLDAZ $ARDUINO_DIRECTORIES_DATA/packages/arduino/hardware $ARDUINO_DIRECTORIES_USER/libraries

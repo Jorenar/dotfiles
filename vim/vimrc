@@ -77,6 +77,7 @@ set textwidth=79
 
 " For thise filetypes set 'tabstop' to 2
 execute "autocmd FileType ".
+      \   "arduino"           .",".
       \   "html,xhtml,xml"    .",".
       \   "*css"              .",".
       \   "javascript,json"   .",".
@@ -93,8 +94,9 @@ execute "autocmd FileType ".
       \ " setlocal tabstop=3"
 
 let s:formatprg_for_filetype = {
+      \ "arduino"     : "uncrustify --l CPP base kr mb stroustrup 1tbs 2sw",
       \ "c"           : "uncrustify --l C base kr mb",
-      \ "arduino,cpp" : "uncrustify --l CPP base kr mb stroustrup",
+      \ "cpp"         : "uncrustify --l CPP base kr mb stroustrup",
       \ "cmake"       : "cmake-format --command-case lower -",
       \ "css"         : "css-beautify -s 2 --space-around-combinator",
       \ "go"          : "gofmt",
@@ -309,6 +311,7 @@ packadd minPlug
 MinPlug artur-shaik/vim-javacomplete2
 MinPlug ctrlpvim/ctrlp.vim
 MinPlug dense-analysis/ale
+MinPlug FromtonRouge/OmniCppComplete " if possible LSP will be used instead
 MinPlug Jorengarenar/fauxClip
 MinPlug Jorengarenar/miniSnip
 MinPlug Jorengarenar/vim-darkness
@@ -346,6 +349,7 @@ let g:tagbar_sort                 = 0
 let g:undotree_SetFocusWhenToggle = 1
 
 let g:miniSnip_extends = {
+      \ "arduino"  : [ "cpp", "c" ],
       \ "cpp"      : [ "c" ],
       \ "markdown" : [ "html" ],
       \ "tex"      : [ "plaintex" ],
@@ -395,9 +399,7 @@ augroup OTHER " {{{
   autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
 
   " Set 'foldmethod' to 'syntax'
-  autocmd FileType arduino,css,javascript,json,typescript setlocal foldmethod=syntax
-
-  autocmd FileType arduino runtime! ftplugin/cpp.vim
+  autocmd FileType css,javascript,json,typescript setlocal foldmethod=syntax
 
   " Protect folds when toggling insert mode / switching windows
   autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif

@@ -19,8 +19,9 @@ export _XDG_WRAPPERS="$XDG_LOCAL_HOME/bin/_xdg_wrappers"
 export XDG_FAKEHOME_DIR="$XDG_LOCAL_HOME/home"
 export XDG_GAMES_DIR="$XDG_LOCAL_HOME/games"
 export XDG_HISTORY_DIR="$XDG_CACHE_HOME/history"
-export XDG_VM_DIR="$XDG_LOCAL_HOME/vm"
 export XDG_LIB_DIR="$XDG_LOCAL_HOME/lib"
+export XDG_TAGS_DIR="$XDG_DATA_HOME/tags"
+export XDG_VM_DIR="$XDG_LOCAL_HOME/vm"
 
 # PATH {{{2
 export PATH="$XDG_LOCAL_HOME/AppImages:$PATH"
@@ -63,7 +64,7 @@ export WEECHAT_HOME="$XDG_CONFIG_HOME/weechat"
 export WINEPREFIX="$XDG_DATA_HOME/wine"
 
 # Arduino {{{3
-export ARDUINO_DIRECTORIES_DATA="$XDG_DATA_HOME/arduino15"
+export ARDUINO_DIRECTORIES_DATA="$XDG_DATA_HOME/arduino"
 export ARDUINO_DIRECTORIES_DOWNLOADS="$XDG_CACHE_HOME/arduino"
 export ARDUINO_DIRECTORIES_USER="$XDG_LIB_DIR/arduino" # just treat it as directory for libraries
 
@@ -75,7 +76,7 @@ export GEM_HOME="$XDG_DATA_HOME/gem"
 export GEM_SPEC_CACHE="$XDG_CACHE_HOME/gem"
 
 # Shells etc. {{{3
-export BASH_COMPLETION_USER_FILE="$XDG_CONFIG_HOME/bash/bash_completion"
+export BASH_COMPLETION_USER_FILE="$XDG_CONFIG_HOME/bash/completion"
 export BASH_DOTDIR="$XDG_CONFIG_HOME/bash"
 export ENV="$XDG_CONFIG_HOME/shell/shrc"  # sh, ksh
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
