@@ -421,8 +421,8 @@ augroup TERMINAL_OPTIONS " {{{2
   autocmd!
 
   execute 'autocmd '.(has("nvim") ? "TermOpen" : "TerminalOpen").' *
-        \ let b:auto_insert = 1 | setlocal nonumber |
-        \ autocmd WinEnter <buffer> if b:auto_insert | silent! normal! i | endif'
+        \ let b:auto_insert = 1 | setlocal nonu stl=%f |
+        \ au WinEnter <buffer> if b:auto_insert | sil! norm! i | endif'
 
   " Sanitize Neovim :terminal
   if has('nvim')
