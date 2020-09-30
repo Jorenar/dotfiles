@@ -39,6 +39,7 @@ linking  aerc/             $XDG_CONFIG_HOME/aerc
 linking  autostart/        $XDG_CONFIG_HOME/autostart
 linking  bashrc            $XDG_CONFIG_HOME/bash/bashrc
 linking  cshrc             $XDG_CONFIG_HOME/csh/.cshrc  # thanks to wrapper
+linking  dosbox.conf       $XDG_CONFIG_HOME/dosbox/dosbox.conf
 linking  env_variables     $XDG_CONFIG_HOME/env_variables
 linking  feh/              $XDG_CONFIG_HOME/feh
 linking  fish/             $XDG_CONFIG_HOME/fish

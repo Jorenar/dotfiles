@@ -433,8 +433,9 @@ augroup TERMINAL_OPTIONS " {{{2
 
 augroup END " }}}
 
-call mkdir(&backupdir, 'p')
+call mkdir($XDG_CACHE_HOME."/vim/swap", "p")
 call mkdir($XDG_DATA_HOME."/vim/spell", 'p')
+call mkdir(&backupdir, 'p')
 
 let g:sql_type_default = 'mysql'
 let javaScript_fold    = 1
