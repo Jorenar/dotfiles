@@ -110,7 +110,7 @@ done < "$DIR/_patch/xdg_base_dir/fakehome.list"
 
 # Link necessary dirs from HOME to FAKEHOME
 for d in $(ls -A1 $HOME); do
-    [ -d "$HOME/$d" ] && ln -s "$HOME/$d" "$XDG_FAKEHOME_DIR/$d"
+    [ -d "$HOME/$d" ] && [ ! -x "$XDG_FAKEHOME_DIR/$d" ] && ln -s "$HOME/$d" "$XDG_FAKEHOME_DIR/$d"
 done
 
 # Install /etc/profile.d/profile_xdg.sh ? {{{1
