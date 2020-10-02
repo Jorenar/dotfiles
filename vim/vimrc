@@ -7,7 +7,12 @@ set backspace=indent,eol,start
 set nocompatible
 syntax enable
 
-" XDG support    (`set rtp^=$VIMDOTDIR` is in $VIMINIT)
+" XDG support    (`set rtp^=$VIMDOTDIR` is in $VIMINIT) {{{
+
+if empty($XDG_CACHE_HOME)  | let $XDG_CACHE_HOME  = $HOME."/.cache"       | endif
+if empty($XDG_CONFIG_HOME) | let $XDG_CONFIG_HOME = $HOME."/.config"      | endif
+if empty($XDG_DATA_HOME)   | let $XDG_DATA_HOME   = $HOME."/.local/share" | endif
+
 set backupdir=$XDG_DATA_HOME/vim/backup
 set directory=$XDG_CACHE_HOME/vim/swap
 set packpath^=$XDG_DATA_HOME/vim
@@ -18,6 +23,8 @@ set undodir=$XDG_CACHE_HOME/vim/undo
 if !has('nvim') " Neovim has its own special location
   set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
 endif
+
+" }}}
 
 " "Force" Python3 (helpful for plugins)
 if has('python3')
