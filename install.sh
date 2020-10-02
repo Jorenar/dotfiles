@@ -33,116 +33,133 @@ linking() {
     fi
 } # }}}
 
-# MAIN LINKING {{{1
+full() { #{{{1
+# MAIN LINKING {{{2
 
-linking  aerc/             $XDG_CONFIG_HOME/aerc
-linking  autostart/        $XDG_CONFIG_HOME/autostart
-linking  bashrc            $XDG_CONFIG_HOME/bash/bashrc
-linking  cshrc             $XDG_CONFIG_HOME/csh/.cshrc  # thanks to wrapper
-linking  dosbox.conf       $XDG_CONFIG_HOME/dosbox/dosbox.conf
-linking  env_variables     $XDG_CONFIG_HOME/env_variables
-linking  feh/              $XDG_CONFIG_HOME/feh
-linking  fish/             $XDG_CONFIG_HOME/fish
-linking  gdbinit           $XDG_CONFIG_HOME/gdb/init
-linking  git/              $XDG_CONFIG_HOME/git
-linking  htoprc            $XDG_CONFIG_HOME/htop/htoprc        -w
-linking  i3/               $XDG_CONFIG_HOME/i3
-linking  mimeapps.list     $XDG_CONFIG_HOME/mimeapps.list
-linking  mpv/              $XDG_CONFIG_HOME/mpv
-linking  muttrc            $XDG_CONFIG_HOME/mutt/muttrc
-linking  myclirc           $XDG_CONFIG_HOME/mycli/myclirc
-linking  newsboat/config   $XDG_CONFIG_HOME/newsboat/config
-linking  profile           $XDG_CONFIG_HOME/profile
-linking  shell/            $XDG_CONFIG_HOME/shell
-linking  spicy_settings    $XDG_CONFIG_HOME/spicy/settings # linking is nulled after each run and replcaced with copy
-linking  ssh_config        $XDG_CONFIG_HOME/ssh/config
-linking  tmux.conf         $XDG_CONFIG_HOME/tmux/tmux.conf
-linking  user-dirs.dirs    $XDG_CONFIG_HOME/user-dirs.dirs
-linking  X11/              $XDG_CONFIG_HOME/X11
-linking  zathurarc         $XDG_CONFIG_HOME/zathura/zathurarc
+    linking  aerc/             $XDG_CONFIG_HOME/aerc
+    linking  autostart/        $XDG_CONFIG_HOME/autostart
+    linking  bashrc            $XDG_CONFIG_HOME/bash/bashrc
+    linking  cshrc             $XDG_CONFIG_HOME/csh/.cshrc  # thanks to wrapper
+    linking  dosbox.conf       $XDG_CONFIG_HOME/dosbox/dosbox.conf
+    linking  env_variables     $XDG_CONFIG_HOME/env_variables
+    linking  feh/              $XDG_CONFIG_HOME/feh
+    linking  fish/             $XDG_CONFIG_HOME/fish
+    linking  gdbinit           $XDG_CONFIG_HOME/gdb/init
+    linking  git/              $XDG_CONFIG_HOME/git
+    linking  htoprc            $XDG_CONFIG_HOME/htop/htoprc        -w
+    linking  i3/               $XDG_CONFIG_HOME/i3
+    linking  mimeapps.list     $XDG_CONFIG_HOME/mimeapps.list
+    linking  mpv/              $XDG_CONFIG_HOME/mpv
+    linking  muttrc            $XDG_CONFIG_HOME/mutt/muttrc
+    linking  myclirc           $XDG_CONFIG_HOME/mycli/myclirc
+    linking  newsboat/config   $XDG_CONFIG_HOME/newsboat/config
+    linking  profile           $XDG_CONFIG_HOME/profile
+    linking  shell/            $XDG_CONFIG_HOME/shell
+    linking  spicy_settings    $XDG_CONFIG_HOME/spicy/settings # linking is nulled after each run and replcaced with copy
+    linking  ssh_config        $XDG_CONFIG_HOME/ssh/config
+    linking  tmux.conf         $XDG_CONFIG_HOME/tmux/tmux.conf
+    linking  user-dirs.dirs    $XDG_CONFIG_HOME/user-dirs.dirs
+    linking  X11/              $XDG_CONFIG_HOME/X11
+    linking  zathurarc         $XDG_CONFIG_HOME/zathura/zathurarc
 
-linking  ccache.config     $CCACHE_CONFIGPATH
-linking  gpg-agent.conf    $GNUPGHOME/gpg-agent.conf
-linking  gtkrc-2.0         ${GTK2_RC_FILES%:*} # link only real gtkrc, omit the one from GTK_THEME
-linking  inputrc           $INPUTRC
-linking  mailcap           $MAILCAP
-linking  npmrc             $NPM_CONFIG_USERCONFIG
-linking  python_config.py  $PYTHONSTARTUP
-linking  themes/           $XDG_FAKEHOME_DIR/.themes # for compatibility with _XDG_wrappers
-linking  uncrustify/       $(dirname $UNCRUSTIFY_CONFIG)
-linking  vim/              $VIMDOTDIR
-linking  zshrc             $ZDOTDIR/.zshrc
+    linking  ccache.config     $CCACHE_CONFIGPATH
+    linking  gpg-agent.conf    $GNUPGHOME/gpg-agent.conf
+    linking  gtkrc-2.0         ${GTK2_RC_FILES%:*} # link only real gtkrc, omit the one from GTK_THEME
+    linking  inputrc           $INPUTRC
+    linking  mailcap           $MAILCAP
+    linking  npmrc             $NPM_CONFIG_USERCONFIG
+    linking  python_config.py  $PYTHONSTARTUP
+    linking  themes/           $XDG_FAKEHOME_DIR/.themes # for compatibility with _XDG_wrappers
+    linking  uncrustify/       $(dirname $UNCRUSTIFY_CONFIG)
+    linking  vim/              $VIMDOTDIR
+    linking  zshrc             $ZDOTDIR/.zshrc
 
-linking  desktop_entries/  $XDG_DATA_HOME/applications/custom
-linking  fonts/            $XDG_DATA_HOME/fonts
-linking  themes/           $XDG_DATA_HOME/themes
+    linking  desktop_entries/  $XDG_DATA_HOME/applications/custom
+    linking  fonts/            $XDG_DATA_HOME/fonts
+    linking  themes/           $XDG_DATA_HOME/themes
 
-linking  bin/scripts/      $XDG_LOCAL_HOME/scripts
-linking  bin/wrappers/     $XDG_LOCAL_HOME/wrappers
+    linking  bin/scripts/      $XDG_LOCAL_HOME/scripts
+    linking  bin/wrappers/     $XDG_LOCAL_HOME/wrappers
 
-for firefox_profile in $XDG_FAKEHOME_DIR/.mozilla/firefox/*.default-release; do
-    linking userContent.css "$firefox_profile/chrome/userContent.css"
-done
+    for firefox_profile in $XDG_FAKEHOME_DIR/.mozilla/firefox/*.default-release; do
+        linking userContent.css "$firefox_profile/chrome/userContent.css"
+    done
 
-# WRAPPERS {{{1
-# "XDG Base Dir" wrappers {{{2
+# WRAPPERS {{{2
+# "XDG Base Dir" wrappers {{{3
 
-chmod +x $DIR/_patch/xdg_base_dir/wrappers/*
+    chmod +x $DIR/_patch/xdg_base_dir/wrappers/*
 
 # clean old symlinks to wrappers
-if [ -d "$_XDG_WRAPPERS" ] && [ "$(find $_XDG_WRAPPERS -type l | wc -l)" -eq "$(ls -1 $_XDG_WRAPPERS | wc -l)" ]; then
-    rm -r "$_XDG_WRAPPERS"
-fi
+    if [ -d "$_XDG_WRAPPERS" ] && [ "$(find $_XDG_WRAPPERS -type l | wc -l)" -eq "$(ls -1 $_XDG_WRAPPERS | wc -l)" ]; then
+        rm -r "$_XDG_WRAPPERS"
+    fi
 
 # Link wrappers
-for exe in $DIR/_patch/xdg_base_dir/wrappers/*; do
-    [ -x "$(command -v $(basename $exe))" ] && linking  "_patch/xdg_base_dir/wrappers/$(basename $exe)"  "$_XDG_WRAPPERS/$(basename $exe)"
-done
+    for exe in $DIR/_patch/xdg_base_dir/wrappers/*; do
+        [ -x "$(command -v $(basename $exe))" ] && linking  "_patch/xdg_base_dir/wrappers/$(basename $exe)"  "$_XDG_WRAPPERS/$(basename $exe)"
+    done
 
-[ -x "$(command -v scp)"  ] && linking  _patch/xdg_base_dir/wrappers/ssh  $_XDG_WRAPPERS/scp
-[ -x "$(command -v tcsh)" ] && linking  _patch/xdg_base_dir/wrappers/csh  $_XDG_WRAPPERS/tcsh
+    [ -x "$(command -v scp)"  ] && linking  _patch/xdg_base_dir/wrappers/ssh  $_XDG_WRAPPERS/scp
+    [ -x "$(command -v tcsh)" ] && linking  _patch/xdg_base_dir/wrappers/csh  $_XDG_WRAPPERS/tcsh
 
 # Generate FAKEHOME wrappers
-while IFS= read -r exe; do
-    exe="$(echo $exe | cut -f1 -d'#')"
-    [ -n "$exe" ] && [ -x "$(command -v $exe)" ] && linking  _patch/xdg_base_dir/wrappers/_xdg_fakehome.sh  $_XDG_WRAPPERS/$exe
-done < "$DIR/_patch/xdg_base_dir/fakehome.list"
+    while IFS= read -r exe; do
+        exe="$(echo $exe | cut -f1 -d'#')"
+        [ -n "$exe" ] && [ -x "$(command -v $exe)" ] && linking  _patch/xdg_base_dir/wrappers/_xdg_fakehome.sh  $_XDG_WRAPPERS/$exe
+    done < "$DIR/_patch/xdg_base_dir/fakehome.list"
 
 # Link necessary dirs from HOME to FAKEHOME
-for d in $(ls -A1 $HOME); do
-    [ -d "$HOME/$d" ] && [ ! -x "$XDG_FAKEHOME_DIR/$d" ] && ln -s "$HOME/$d" "$XDG_FAKEHOME_DIR/$d"
-done
+    for d in $(ls -A1 $HOME); do
+        [ -d "$HOME/$d" ] && [ ! -x "$XDG_FAKEHOME_DIR/$d" ] && ln -s "$HOME/$d" "$XDG_FAKEHOME_DIR/$d"
+    done
 
-# Install /etc/profile.d/profile_xdg.sh ? {{{1
+# Install /etc/profile.d/profile_xdg.sh ? {{{2
 
 # Check if user has sudo privileges
-prompt_sudo=$(sudo -nv 2>&1)
-if [ $? -eq 0 ] || echo "$prompt_sudo" | grep -q '^sudo:'; then
-    is_sudo=true
-else
-    is_sudo=false
-fi
-
-status=no
-if [ ! -f /etc/profile.d/profile_xdg.sh ]; then
-    if [ $is_sudo = true ]; then
-        printf 'Do you wish to install root patches for XDG support for 'profile' file? [y/N] '
-        read -r REPLY
-        if [ "$REPLY" = "y" -o "$REPLY" = "Y" ]; then
-            status=installing
-        fi
+    prompt_sudo=$(sudo -nv 2>&1)
+    if [ $? -eq 0 ] || echo "$prompt_sudo" | grep -q '^sudo:'; then
+        is_sudo=true
+    else
+        is_sudo=false
     fi
+
+    status=no
+    if [ ! -f /etc/profile.d/profile_xdg.sh ]; then
+        if [ $is_sudo = true ]; then
+            printf 'Do you wish to install root patches for XDG support for 'profile' file? [y/N] '
+            read -r REPLY
+            if [ "$REPLY" = "y" -o "$REPLY" = "Y" ]; then
+                status=installing
+            fi
+        fi
+    else
+        status=installed
+    fi
+
+    if [ "$status" = "installing" ]; then
+        sudo ln -sf $DIR/_patch/xdg_base_dir/profile_xdg.sh /etc/profile.d/profile_xdg.sh
+        sudo chmod 644 /etc/profile.d/profile_xdg.sh  # just in case
+    elif [ $status != installed ]; then
+        linking  profile  $HOME/.profile
+    fi
+
+# OTHER {{{2
+    mkdir -p "$(dirname $DCONF_PROFILE)" && touch "$DCONF_PROFILE" # prevents creating ~/.dconf
+# }}}
+}
+
+lite() { #{{{1
+    linking  bin/scripts/      $XDG_LOCAL_HOME/scripts
+    linking  bin/wrappers/     $XDG_LOCAL_HOME/wrappers
+    linking  git/              $XDG_CONFIG_HOME/git
+    linking  mpv/              $XDG_CONFIG_HOME/mpv
+    linking  vim/              $HOME/.vim
+}
+
+# main {{{1
+if [ "$1" = "--lite" -o "$2" = "--lite" ]; then
+    lite
 else
-    status=installed
+    full
 fi
-
-if [ "$status" = "installing" ]; then
-    sudo ln -sf $DIR/_patch/xdg_base_dir/profile_xdg.sh /etc/profile.d/profile_xdg.sh
-    sudo chmod 644 /etc/profile.d/profile_xdg.sh  # just in case
-elif [ $status != installed ]; then
-    linking  profile  $HOME/.profile
-fi
-
-# OTHER {{{1
-
-mkdir -p "$(dirname $DCONF_PROFILE)" && touch "$DCONF_PROFILE" # prevents creating ~/.dconf
