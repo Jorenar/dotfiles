@@ -35,7 +35,6 @@ linking() {
 
 full() { #{{{1
 # MAIN LINKING {{{2
-
     linking  aerc/             $XDG_CONFIG_HOME/aerc
     linking  autostart/        $XDG_CONFIG_HOME/autostart
     linking  bashrc            $XDG_CONFIG_HOME/bash/bashrc

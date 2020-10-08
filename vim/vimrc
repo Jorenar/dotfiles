@@ -24,6 +24,11 @@ if !has('nvim') " Neovim has its own special location
   set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
 endif
 
+call mkdir($XDG_CACHE_HOME."/vim/swap", "p")
+call mkdir($XDG_DATA_HOME."/vim/spell", 'p')
+call mkdir(&backupdir, 'p')
+call mkdir(&undodir, 'p')
+
 " }}}
 
 " "Force" Python3 (helpful for plugins)
@@ -439,10 +444,6 @@ augroup TERMINAL_OPTIONS " {{{2
   endif
 
 augroup END " }}}
-
-call mkdir($XDG_CACHE_HOME."/vim/swap", "p")
-call mkdir($XDG_DATA_HOME."/vim/spell", 'p')
-call mkdir(&backupdir, 'p')
 
 let g:sql_type_default = 'mysql'
 let javaScript_fold    = 1
