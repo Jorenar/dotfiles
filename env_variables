@@ -91,8 +91,9 @@ export XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
 # HISTORY FILES {{{3
 export HISTFILE="$XDG_HISTORY_DIR/shell"
 export LESSHISTFILE=-
+export MYCLI_HISTFILE="$XDG_HISTORY_DIR/mycli"
 export MYSQL_HISTFILE="$XDG_HISTORY_DIR/mysql"
-export NODE_REPL_HISTORY="$XDG_HISTORY_HOME/node_repl_history"
+export NODE_REPL_HISTORY="$XDG_HISTORY_DIR/node_repl_history"
 export SQLITE_HISTORY="$XDG_HISTORY_DIR/sqlite"
 
 # "Source" $XDG_CONFIG_HOME/user-dirs.dirs {{{2
@@ -106,7 +107,7 @@ SHELL=bash # path determined in -End-
 
 export EDITOR=vim
 export MANPAGER="vim -M +MANPAGER -"
-export PAGER="less -FRX"
+export PAGER="less"
 export TERMINAL=xterm
 export VISUAL="$EDITOR"
 
@@ -146,6 +147,9 @@ export TMPFLAGS="$TMPDIR/flags_$USER"
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 export GTK_IM_MODULE=fcitx
+
+# less' default options
+export LESS="-FXR"
 
 # Enable GPG agent
 export GPG_AGENT_INFO

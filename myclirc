@@ -1,7 +1,5 @@
 [main]
 
-export LESS="-SRXF"
-
 # Enables context sensitive auto-completion. If this is disabled the all
 # possible completions will be listed.
 smart_completion = True
@@ -18,7 +16,7 @@ multi_line = True
 destructive_warning = True
 
 # log_file location.
-log_file = ~/.mycli.log
+log_file = ~/.local/cache/mycli/log
 
 # Default log level. Possible values: "CRITICAL", "ERROR", "WARNING", "INFO"
 # and "DEBUG". "NONE" disables logging.
@@ -66,6 +64,16 @@ less_chatty = True
 # Use alias from --login-path instead of host name in prompt
 login_path_as_host = False
 
+# Cause result sets to be displayed vertically if they are too wide for the current window,
+# and using normal tabular format otherwise. (This applies to statements terminated by ; or \G.)
+auto_vertical_output = False
+
+# keyword casing preference. Possible values "lower", "upper", "auto"
+keyword_casing = upper
+
+# Enable the pager on startup.
+enable_pager = True
+
 # Custom colors for the completion menu, toolbar, etc.
 [colors]
 # Completion menus.
@@ -96,6 +104,7 @@ Token.Toolbar.Arg.Text = nobold
 
 # Favorite queries.
 [favorite_queries]
+showdb = SHOW DATABASES;
 showtb = SHOW TABLES;
 
 # vi: ft=dosini
