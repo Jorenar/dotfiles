@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+profile="${XDG_CONFIG_HOME:-$HOME/.config}/firefox"
+
+for dir in $(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)"); do
+    if [ -x "$dir/$(basename $0)" ]; then
+        firefox="$dir/$(basename $0)"
+    fi
+done
+
+if [ ! -e "$profile" ]; then
+    "$firefox" -CreateProfile "default $profile"
+fi
+
+"$firefox" --profile "$profile" "$@" &
+
+until [ -e "$HOME/.mozilla" ]; do sleep 1; done
+rm -rf "$HOME/.mozilla"

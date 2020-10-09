@@ -80,9 +80,8 @@ full() { #{{{1
     linking  bin/scripts/      $XDG_LOCAL_HOME/scripts
     linking  bin/wrappers/     $XDG_LOCAL_HOME/wrappers
 
-    for firefox_profile in $XDG_FAKEHOME_DIR/.mozilla/firefox/*.default-release; do
-        linking userContent.css "$firefox_profile/chrome/userContent.css"
-    done
+    linking firefox/user.js         $XDG_CONFIG_HOME/firefox/user.js
+    linking firefox/userContent.css $XDG_CONFIG_HOME/firefox/chrome/userContent.css
 
 # WRAPPERS {{{2
 # "XDG Base Dir" wrappers {{{3
