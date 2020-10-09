@@ -1,4 +1,4 @@
-user_pref("app.normandy.first_run",                   false)
+user_pref("app.normandy.first_run",                   false);
 user_pref("browser.shell.checkDefaultBrowser",        false);
 user_pref("browser.startup.homepage_override.mstone", "ignore");
 user_pref("datareporting.policy.firstRunURL",         "");

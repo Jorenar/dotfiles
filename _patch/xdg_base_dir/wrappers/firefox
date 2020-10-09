@@ -3,16 +3,21 @@
 profile="${XDG_CONFIG_HOME:-$HOME/.config}/firefox"
 
 for dir in $(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)"); do
-    if [ -x "$dir/$(basename $0)" ]; then
-        firefox="$dir/$(basename $0)"
-    fi
+    [ -x "$dir/$(basename $0)" ] && firefox="$dir/$(basename $0)" && break
 done
 
 if [ ! -e "$profile" ]; then
     "$firefox" -CreateProfile "default $profile"
 fi
 
+for p in $@; do
+    if [ "$p" = "--profile" ]; then
+        exec $firefox "$@"
+    fi
+done
+
 "$firefox" --profile "$profile" "$@" &
 
 until [ -e "$HOME/.mozilla" ]; do sleep 1; done
-rm -rf "$HOME/.mozilla"
+rm -rf "$HOME/.mozilla/firefox/Crash Reports"
+rmdir "$HOME/.mozilla/firefox/Pending Pings" "$HOME/".mozilla/* "$HOME/".mozilla
