@@ -27,9 +27,9 @@ user_pref("browser.newtabpage.activity-stream.feeds.topsites",           false);
 user_pref("browser.urlbar.suggest.topsites",                             false);
 
 user_pref("browser.pagethumbnails.capturing_disabled", true);
-user_pref("network.cookie.cookieBehavior", 1);
-user_pref("network.cookie.thirdparty.sessionOnly", true);
-user_pref("privacy.donottrackheader.enabled", true);
+user_pref("network.cookie.cookieBehavior",             1);
+user_pref("network.cookie.thirdparty.sessionOnly",     true);
+user_pref("privacy.donottrackheader.enabled",          true);
 user_pref("security.insecure_password.ui.enabled",     true);
 user_pref("signon.rememberSignons",                    false);
 
