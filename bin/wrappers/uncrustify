@@ -1,5 +1,9 @@
 #!/usr/bin/env sh
 
+for dir in $(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)"); do
+    [ -x "$dir/uncrustify" ] && uncrustify="$dir/uncrustify" && break
+done
+
 if [ "$1" = "--l" ]; then
     lang="-l $2"
     shift 2
@@ -20,17 +24,10 @@ if [ "$1" = "--l" ]; then
 
     cat "${UNCRUSTIFY_CONFIG:-"$dir/default"}" $cfgs > "$cfg" &
 
-    for dir in $(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)"); do
-        if [ -x "$dir/uncrustify" ]; then
-            "$dir/uncrustify" -q --no-backup $lang -c "$cfg"
-            break
-        fi
-    done
+    "$uncrustify" -q --no-backup $lang -c "$cfg"
 
     rm $cfg
 
 else
-    for dir in $(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)"); do
-        [ -x "$dir/uncrustify" ] && exec "$dir/uncrustify" $@
-    done
+    exec "$uncrustify" "$@"
 fi
