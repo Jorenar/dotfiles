@@ -89,8 +89,8 @@ linking  themes/           $XDG_DATA_HOME/themes
 linking  bin/scripts/      $XDG_LOCAL_HOME/scripts
 linking  bin/wrappers/     $XDG_LOCAL_HOME/wrappers
 
-linking firefox/user.js         $XDG_CONFIG_HOME/firefox/user.js
-linking firefox/userContent.css $XDG_CONFIG_HOME/firefox/chrome/userContent.css
+linking firefox/user.js         $XDG_DATA_HOME/firefox/user.js
+linking firefox/userContent.css $XDG_DATA_HOME/firefox/chrome/userContent.css
 
 # WRAPPERS {{{2
 # "XDG Base Dir" wrappers {{{3
