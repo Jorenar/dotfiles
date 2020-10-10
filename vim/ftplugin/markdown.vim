@@ -1,6 +1,8 @@
 " Markdown
 " vim: fdm=marker fen
 
+let g:markdown_fenced_languages = [ 'c', 'cpp', 'html', 'javascript', 'python', 'sh', 'vim' ]
+
 " COMMANDS {{{1
 
 command! GripSession call GripSession()
