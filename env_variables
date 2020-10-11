@@ -3,6 +3,17 @@
 # It is important for this file, to be in the same directory as 'profile' file
 #    (originals, not symlinks)
 
+# Init {{{
+pathmunge () {
+    if ! echo "$PATH" | /bin/grep -Eq "(^|:)$1($|:)" ; then
+        if [ "$2" != "after" ] ; then
+            export PATH="$1:$PATH"
+        else
+            export PATH="$PATH:$1"
+        fi
+    fi
+}
+
 # -#- XDG Base Directory -#- {{{1
 # BASIC {{{2
 
@@ -26,12 +37,11 @@ export XDG_TAGS_DIR="$XDG_DATA_HOME/tags"
 export XDG_VM_DIR="$XDG_LOCAL_HOME/vm"
 
 # PATH {{{2
-export PATH="$XDG_LOCAL_HOME/bin/AppImages:$PATH"
-export PATH="$XDG_LOCAL_HOME/bin:$PATH"
-export PATH="$XDG_LOCAL_HOME/scripts:$PATH"
-export PATH="$XDG_LOCAL_HOME/wrappers:$PATH"
+pathmunge "$XDG_LOCAL_HOME/bin/AppImages"
+pathmunge "$XDG_LOCAL_HOME/bin"
+pathmunge "$XDG_LOCAL_HOME/scripts"
 
-export PATH="$_XDG_WRAPPERS:$PATH"
+# Wrappers ("$_XDG_WRAPPERS", "$XDG_LOCAL_HOME/wrappers", ...) are added at the -End-
 
 # RELOCATING VARIABLES {{{2
 # ~misc {{{3
@@ -156,21 +166,25 @@ export GPG_AGENT_INFO
 
 # VITASDK
 export VITASDK=/usr/local/vitasdk
-export PATH=$VITASDK/bin:$PATH
+pathmunge "$VITASDK/bin"
 
 # Virtual terminal number (if not set already by PAM)
 export XDG_VTNR="${XDG_VTNR:-$(tty | sed 's/[^0-9]*//g')}"
 
 # Enable ccache by default
-export PATH="/usr/lib/ccache/bin/:$PATH"
+pathmunge /usr/lib/ccache/bin
 
 # Add gem to PATH
-export PATH="$GEM_HOME/bin:$PATH"
+pathmunge "$GEM_HOME/bin"
 
 # Source additional, local env_variables {{{1
 [ -f $XDG_LOCAL_HOME/supp/env_variables ] && . $XDG_LOCAL_HOME/supp/env_variables
 
 # -End- {{{1
+
+# start searching from wrappers
+pathmunge "$XDG_LOCAL_HOME/wrappers"
+pathmunge "$_XDG_WRAPPERS"
 
 export SHELL="$(command -v $SHELL)"
 
