@@ -6,8 +6,8 @@
 # Source env variables
 . $XDG_CONFIG_HOME/env_variables
 
-# Source local additional env
-[ -f $XDG_LOCAL_HOME/supp/env ] && . $XDG_LOCAL_HOME/supp/env
+# Source local additional shell config
+[ -f $XDG_AUX_HOME/shell ] && . $XDG_AUX_HOME/shell
 
 # Restore OLDPWD
 [ -f "$XDG_HISTORY_DIR/oldpwd" ] && . "$XDG_HISTORY_DIR/oldpwd"

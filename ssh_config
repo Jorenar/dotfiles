@@ -1,6 +1,6 @@
 Host *
     ForwardX11Trusted yes
-    Include ~/.local/supp/ssh_config
+    Include ~/.local/aux/ssh
 
 Host aur.archlinux.org
     IdentityFile ~/.local/share/ssh/aur

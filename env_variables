@@ -25,6 +25,8 @@ export XDG_DATA_HOME="$XDG_LOCAL_HOME/share"
 
 export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-$XDG_LOCAL_HOME/.runtime}" # just in case
 
+export XDG_AUX_HOME="$XDG_LOCAL_HOME/aux" # auxiliary, local configs
+
 # CUSTOM {{{2
 export _XDG_WRAPPERS="$XDG_LOCAL_HOME/bin/_xdg_wrappers"
 export XDG_BACKUPS_DIR="$XDG_LOCAL_HOME/backups"
@@ -178,7 +180,7 @@ pathmunge /usr/lib/ccache/bin
 pathmunge "$GEM_HOME/bin"
 
 # Source additional, local env_variables {{{1
-[ -f $XDG_LOCAL_HOME/supp/env_variables ] && . $XDG_LOCAL_HOME/supp/env_variables
+[ -f $XDG_AUX_HOME/env_variables ] && . $XDG_AUX_HOME/env_variables
 
 # -End- {{{1
 
