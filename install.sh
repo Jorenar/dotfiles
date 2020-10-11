@@ -116,6 +116,11 @@ while IFS= read -r exe; do
     [ -n "$exe" ] && [ -x "$(command -v $exe)" ] && linking  _patch/xdg_base_dir/wrappers/_xdg_fakehome.sh  $_XDG_WRAPPERS/$exe
 done < "$DIR/_patch/xdg_base_dir/fakehome.list"
 
+# Compile wrappers
+cd $DIR/_patch/xdg_base_dir/wrappers/src
+make
+cd -
+
 # Install /etc/profile.d/profile_xdg.sh ? {{{3
 
 # Check if user has sudo privileges
