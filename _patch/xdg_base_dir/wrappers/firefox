@@ -7,7 +7,7 @@ done
 
 # Get default behaviour, if executed with "--profile" argument
 for p in $@; do
-    [ "$p" = "--profile" ] && exec $firefox "$@"
+    [ "$p" = "--profile" ] && exec "$firefox" "$@"
 done
 
 # Profile directory fits the best into XDG_DATA_HOME
