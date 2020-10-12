@@ -15,6 +15,7 @@
 
 #define TIME_LIMIT 5    // wait 5 seconds for '~/.mozilla' dir to appear
 #define PROC_SELF  "/proc/self/exe"
+#define NAME "Firefox XDG wrapper"
 
 int rm(const char mode, const char* fmt, ...);
 int ntfw_rm(const char* fpath, const struct stat* sb, int typeflag, struct FTW* ftwbuf);
@@ -26,13 +27,31 @@ char* findRealBin();
 void clearJunk();
 void genArgs(char* firefox, char* args[], int argc, char* argv[]);
 
+char execChainEnvVar[100];
+int appendExecChain(ino_t I);
+
+void Exit(int status, pid_t pid);
+
 struct stat fb = { 0 };
+extern char** environ;
 
 int main(int argc, char* argv[])
 {
+    char cur[PATH_MAX];
+    if (readlink(PROC_SELF, cur, PATH_MAX) < 0) {
+        perror(NAME);
+        exit(1);
+    }
+
+    char* bs = basename(cur);
+    stat(cur, &fb);
+    ino_t curInode = fb.st_ino;
+
+    snprintf(execChainEnvVar, 100, "%zu%s", curInode, "_execution_chain");
+
     char firefox[PATH_MAX];
-    if (findRealBin(firefox) == NULL) {
-        perror("Could not find original binary");
+    if (findRealBin(firefox, bs, curInode) == NULL) {
+        perror(NAME ": Could not find original binary");
         exit(1);
     }
 
@@ -45,7 +64,7 @@ int main(int argc, char* argv[])
     pid_t pid = fork();
 
     if (pid < 0) {
-        perror("");
+        perror(NAME);
         exit(1);
     }
 
@@ -53,16 +72,48 @@ int main(int argc, char* argv[])
         char* args[ARG_MAX];
         genArgs(firefox, args, argc, argv);
 
-        if (stat(args[2], &fb) < 0) { // create dir for profile doesn't already exist
-            mkdir_p(args[2]);
+        if (stat(args[2], &fb) < 0) { // create dir for profile if doesn't already exist
+            if (mkdir_p(args[2]) < 0) {
+                perror(NAME);
+                Exit(1, pid);
+            }
         }
 
         signal(SIGCHLD, SIG_IGN); // forget about zombie from clearJunk()
-        execv(firefox, args);
+        if (execve(firefox, args, environ) < 0) {
+            perror(NAME);
+            Exit(1, pid);
+        }
     } else {
         clearJunk();
     }
 
+    return 0;
+}
+
+void Exit(int status, pid_t pid)
+{
+    kill(pid, SIGKILL);
+    exit(status);
+}
+
+int appendExecChain(ino_t I)
+{
+    char inoStr[100];
+    snprintf(inoStr, 100, "%zu", I);
+
+    char* chain = getenv(execChainEnvVar);
+    if (chain && strstr(chain, inoStr)) {
+        return 1;
+    } else {
+        char buf[BUFSIZ];
+        if (chain) {
+            snprintf(buf, BUFSIZ, "%s%s%s%s%s", execChainEnvVar, "=", chain, ":", inoStr);
+        } else {
+            snprintf(buf, BUFSIZ, "%s%s%s", execChainEnvVar, "=", inoStr);
+        }
+        putenv(buf);
+    }
     return 0;
 }
 
@@ -91,19 +142,9 @@ void genArgs(char* firefox, char* args[], int argc, char* argv[])
     }
 }
 
-char* findRealBin(char* bin)
+char* findRealBin(char* bin, const char* bs, ino_t curInode)
 {
     errno = 0;
-
-    char cur[PATH_MAX];
-    if (readlink(PROC_SELF, cur, PATH_MAX) < 0) {
-        errno = ENOENT;
-        return NULL;
-    }
-
-    char* bs = basename(cur);
-    stat(cur, &fb);
-    ino_t curInode = fb.st_ino;
 
     char buf[PATH_MAX];
     char PATH[BUFSIZ];
@@ -112,9 +153,16 @@ char* findRealBin(char* bin)
 
     do {
         snprintf(buf, PATH_MAX, "%s%s%s", dir, "/", bs);
-        if (stat(buf, &fb) == 0 && fb.st_ino != curInode && fb.st_mode & S_IXUSR) {
-            strncpy(bin, buf, PATH_MAX);
-            return bin;
+        if (stat(buf, &fb) < 0) {
+            continue;
+        }
+        ino_t ino = fb.st_ino;
+
+        if (ino != curInode && fb.st_mode & S_IXUSR) {
+            if (appendExecChain(ino) == 0) {
+                strncpy(bin, buf, PATH_MAX);
+                return bin;
+            }
         }
     } while ((dir = strtok(NULL, ":")));
 
@@ -131,7 +179,7 @@ void clearJunk()
 
     while (access(mozilla, F_OK) < 0) {
         if (t > TIME_LIMIT) {
-            perror("Time limit exceeded | ~/.mozilla");
+            perror(NAME ": Time limit exceeded - '~/.mozilla'");
             exit(1);
         }
         sleep(1);
