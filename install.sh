@@ -119,9 +119,7 @@ while IFS= read -r exe; do
 done < "$DIR/_patch/xdg_base_dir/fakehome.list"
 
 # Compile wrappers
-cd $DIR/_patch/xdg_base_dir/wrappers/src
-make
-cd -
+make -C $DIR/_patch/xdg_base_dir/wrappers/src > /dev/null
 
 # Install /etc/profile.d/profile_xdg.sh ? {{{3
 
