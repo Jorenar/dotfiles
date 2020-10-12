@@ -45,6 +45,7 @@ if [ "$1" = "--lite" -o "$2" = "--lite" ]; then
 fi
 # FULL {{{1
 # MAIN LINKING {{{2
+
 linking  aerc/             $XDG_CONFIG_HOME/aerc
 linking  autostart/        $XDG_CONFIG_HOME/autostart
 linking  bashrc            $XDG_CONFIG_HOME/bash/bashrc
@@ -63,6 +64,7 @@ linking  muttrc            $XDG_CONFIG_HOME/mutt/muttrc
 linking  myclirc           $XDG_CONFIG_HOME/mycli/myclirc
 linking  newsboat/config   $XDG_CONFIG_HOME/newsboat/config
 linking  profile           $XDG_CONFIG_HOME/profile
+linking  ranger            $XDG_CONFIG_HOME/ranger/rc.conf
 linking  shell/            $XDG_CONFIG_HOME/shell
 linking  spicy_settings    $XDG_CONFIG_HOME/spicy/settings # linking is nulled after each run and replcaced with copy
 linking  ssh_config        $XDG_CONFIG_HOME/ssh/config

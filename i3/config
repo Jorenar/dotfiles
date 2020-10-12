@@ -64,8 +64,8 @@ bindsym $mod+v exec --no-startup-id vim-anywhere
 # passmenu (type password)
 bindsym $mod+p exec --no-startup-id passmenu --type
 
-# passmenu (copy to clipboard)
-bindsym $mod+shift+p exec --no-startup-id passmenu
+# Ranger
+bindsym $mod+r exec --no-startup-id ${TERMINAL:-xterm} -T Ranger ranger
 
 # Game Launcher
 bindsym $mod+g exec --no-startup-id dgl
@@ -141,7 +141,7 @@ bindsym $mod+minus [class="^(?!QuiteRss).*$"] scratchpad show
 # Workspaces {{{2
 
 # rename workspace
-bindsym $mod+r exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
+#bindsym $mod+r exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
 
 # switch to next workspace
 bindsym $mod+grave workspace next
