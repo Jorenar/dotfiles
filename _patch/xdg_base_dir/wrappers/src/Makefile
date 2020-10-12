@@ -1,6 +1,9 @@
 CFLAGS = -std=gnu99 -O2
 
-all: $(patsubst %.c,%,$(wildcard *.c))
+SOURCES := $(wildcard *.c)
+TARGETS := $(patsubst %.c,$(_XDG_WRAPPERS)/%,$(SOURCES))
 
-%: %.c
-	$(CC) $(CFLAGS) -o $(_XDG_WRAPPERS)/$@ $<
+all: $(TARGETS)
+
+$(_XDG_WRAPPERS)/%: %.c
+	$(CC) $(CFLAGS) -o $@ $<
