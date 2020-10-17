@@ -152,3 +152,4 @@ fi
 
 # OTHER {{{2
 mkdir -p "$(dirname $DCONF_PROFILE)" && touch "$DCONF_PROFILE" # prevents creating ~/.dconf
+mkdir -p $XDG_DATA_HOME/alsa

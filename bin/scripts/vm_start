@@ -39,5 +39,4 @@ qemu-system-x86_64 \
     -device usb-redir,chardev=usbredirchardev3,id=usbredirdev3 \
     \
     $install \
-    -daemonize \
     -display spice-app

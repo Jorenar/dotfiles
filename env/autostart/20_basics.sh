@@ -8,7 +8,7 @@ if ! grep -Fxqs "executed_autostart" "$TMPFLAGS"; then
     fi
 
     # restore ALSA mixer state
-    [ -f "$XDG_CONFIG_HOME/alsa/asound.state" ] && alsactl --file "$XDG_CONFIG_HOME/alsa/asound.state" restore
+    [ -f "$XDG_DATA_HOME/alsa/asound.state" ] && alsactl --file "$XDG_DATA_HOME/alsa/asound.state" restore
 
     # set volume
     amixer -- set Master -60dB

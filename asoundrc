@@ -1,22 +1,5 @@
 # vim: fdm=marker fen
 
-# Equalizer {{{1
-
-pcm.eq {
-    type plug
-    slave.pcm {
-        type equal
-        slave.pcm "system_default"
-    }
-    hint {
-        show on
-        description "Equalizer"
-    }
-}
-ctl.eq {
-    type equal
-}
-
 # Pre-Amp {{{1
 
 pcm.!default {
@@ -35,7 +18,6 @@ pcm.softvol {
     }
     min_dB -30.0
     max_dB  40.0
-    resolution 20
 }
 
 # BlueALSA {{{1
@@ -64,4 +46,21 @@ pcm.bt {
     slave {
         pcm bluetooth
     }
+}
+# Equalizer (doesn't work) {{{1
+
+pcm.eq {
+    type plug
+    slave.pcm {
+        type equal
+        slave.pcm "system_default"
+    }
+    hint {
+        show on
+        description "Equalizer"
+    }
+}
+ctl.eq {
+    type equal
+    controls "/home/joren/.local/share/alsa/alsaequal.bin";
 }
