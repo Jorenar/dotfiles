@@ -1,0 +1,67 @@
+# vim: fdm=marker fen
+
+# Equalizer {{{1
+
+pcm.eq {
+    type plug
+    slave.pcm {
+        type equal
+        slave.pcm "system_default"
+    }
+    hint {
+        show on
+        description "Equalizer"
+    }
+}
+ctl.eq {
+    type equal
+}
+
+# Pre-Amp {{{1
+
+pcm.!default {
+    type plug
+    slave.pcm "softvol"
+}
+
+pcm.softvol {
+    type softvol
+    slave {
+        pcm "dmix"
+    }
+    control {
+        name "Pre-Amp"
+        card 1
+    }
+    min_dB -30.0
+    max_dB  40.0
+    resolution 20
+}
+
+# BlueALSA {{{1
+
+pcm.bluetooth {
+    type plug
+    slave.pcm {
+        type bluealsa
+        device { @func getenv
+            vars [ ALSA_BT_MAC ]
+            default "00:00:00:00:00:00"
+        }
+        profile "a2dp"
+    }
+    hint {
+        show on
+        description "Bluetooth audio device"
+    }
+}
+ctl.bluetooth {
+    type bluealsa
+}
+
+pcm.bt {
+    type plug
+    slave {
+        pcm bluetooth
+    }
+}
