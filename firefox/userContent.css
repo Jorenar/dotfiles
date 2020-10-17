@@ -4,14 +4,11 @@ input:not(.urlbar-input):not(.textbox-input):not(.form-control):not([type='check
   color: black;
 }
 
-#downloads-indicator-counter {
-  color: white;
-}
-
+/*
 textarea {
   -moz-appearance: none !important;
-  background-color: white;
-  color: black;
+  background-color: white !important;
+  color: black !important;
 }
 
 select {
@@ -19,3 +16,4 @@ select {
   background-color: white;
   color: black;
 }
+*/

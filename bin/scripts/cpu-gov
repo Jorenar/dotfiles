@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+
+case "$1" in
+    t)
+        if [ "$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)" = "powersave" ]; then
+            GOV="performance"
+        else
+            GOV="powersave"
+        fi
+
+        if [ -x "$(command -v cpupower)" ]; then
+            sudo cpupower frequency-set -g $GOV
+        else
+            echo $GOV | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+        fi
+        ;;
+    p|*)
+        cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+        ;;
+esac

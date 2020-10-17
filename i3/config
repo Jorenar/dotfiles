@@ -105,8 +105,9 @@ bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
-# switch focus to next window to right
-bindsym $mod+Tab focus right
+# switch focus to next/prev window
+bindsym $mod+Tab focus next
+bindsym $mod+Shift+Tab focus prev
 
 # move focused window
 bindsym $mod+Shift+h move left
@@ -168,29 +169,34 @@ bindsym $mod+Shift+7 move container to workspace number 7
 bindsym $mod+Shift+8 move container to workspace number 8
 bindsym $mod+Shift+9 move container to workspace number 9
 
+# move workspace to next output
+bindsym $mod+Mod1+l move workspace to output right
+bindsym $mod+Mod1+h move workspace to output left
+
 # XF86 keyboard symbols {{{2
 
-# audio controls
-bindsym XF86AudioLowerVolume exec $XDG_CONFIG_HOME/i3/scripts/volume_down
+# Audio controls
+bindsym XF86AudioLowerVolume exec amixer -q set Master 1dB- unmute
 bindsym XF86AudioMute        exec amixer -q set Master toggle
-bindsym XF86AudioRaiseVolume exec amixer -q set Master 3dB+ unmute
+bindsym XF86AudioRaiseVolume exec amixer -q set Master 1dB+ unmute
 
-## send signal to change i3blocks
+## Send signal to change i3blocks
 bindsym --release XF86AudioLowerVolume exec pkill -SIGRTMIN+10 i3blocks
 bindsym --release XF86AudioMute        exec pkill -SIGRTMIN+10 i3blocks
 bindsym --release XF86AudioRaiseVolume exec pkill -SIGRTMIN+10 i3blocks
 
-# sreen brightness controls
-# bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight -inc 10 # increase screen brightness
-# bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10 # decrease screen brightness
+# Screen brightness controls
 bindsym XF86MonBrightnessUp   exec --no-startup-id light -A 5 # increase screen brightness
 bindsym XF86MonBrightnessDown exec --no-startup-id light -U 5 # decrease screen brightness
 
-# media player controls
+# Media player controls
 bindsym XF86AudioNext  exec playerctl next
 bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioPlay  exec playerctl play
 bindsym XF86AudioPrev  exec playerctl previous
+
+# Random
+bindsym XF86Explorer exec systemctl suspend
 
 # }}}
 # OTHER {{{2

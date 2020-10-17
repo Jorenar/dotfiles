@@ -5,3 +5,6 @@ for dir in $(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)"); do
         exec "$dir/$(basename $0)" -conf "${XDG_CONFIG_HOME:-$HOME/.config}"/dosbox/dosbox.conf "$@"
     fi
 done
+
+echo "$0: command not found" >&2
+exit 127

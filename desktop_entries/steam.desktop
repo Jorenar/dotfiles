@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=Steam (Runtime)
-Exec=steam-runtime %U
-Icon=steam
-Terminal=false
-Type=Application
-Categories=Network;FileTransfer;Game;
-MimeType=x-scheme-handler/steam;
-NoDisplay=true

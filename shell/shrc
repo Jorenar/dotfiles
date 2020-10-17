@@ -4,7 +4,7 @@
 # Init {{{1
 
 # Source env variables
-. $XDG_CONFIG_HOME/env_variables
+. $XDG_CONFIG_HOME/env/variables
 
 # Source local additional shell config
 [ -f $XDG_AUX_HOME/shell ] && . $XDG_AUX_HOME/shell
@@ -56,6 +56,8 @@ PS1=$(printf "$PS1 ")
 cheat() { curl cheat.sh/$1; }
 
 wttr() { curl wttr.in/$1; }
+
+bak() { cp "$1" "$1.bak"; }
 
 cmake_run() {
     cmake -B build/ -DCMAKE_BUILD_TYPE=Debug -DRUN_ARGS="$@" > /dev/null

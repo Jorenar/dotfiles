@@ -1,32 +1,30 @@
-full_text=|
 align=center
 color=#BBB
 separator_block_width=20
 
-
 [cpu-temp]
-command=sensors | awk '/Package id 0:/ {print $4}'
+command=sensors | awk '/Tdie/ {print $2}'
 interval=1
 
 [cpu-freq]
-command=lscpu | awk '/CPU MHz/ {printf "%4s MHz\n", int($3)}'
+command=lscpu | awk '/CPU MHz/ {printf "%4s MHz", int($3)}' && [ "$(cpu-gov p)" = "performance" ] && echo "'" || echo
 interval=1
 
 [wifi]
-command=ssid="$(iw dev wlo1 info | awk '/ssid/ {print $2}')"; if [ -z "$ssid" ]; then echo "[X]"; else echo "$ssid [$(awk 'NR==3 {print int($4)}' /proc/net/wireless) dBm]"; fi
+command=ssid="$(iw dev wlan0 info | awk '/ssid/ {print $2}')"; if [ -z "$ssid" ]; then echo "[X]"; else echo "$ssid [$(awk 'NR==3 {print int($4)}' /proc/net/wireless) dBm]"; fi
 interval=5
 
 [bluetooth]
 command=echo "BT: $(rfkill list bluetooth | awk '/Soft/ {print $3}' | sed -e 's/yes/off/g' -e 's/no/on/g')"
 interval=15
 
-[gpu]
-command=grep "GPU *" "$TMPFLAGS" | sed 's/GPU //'
-interval=once
-
-[battery]
-command=$XDG_CONFIG_HOME/i3/scripts/battery_stat
-interval=15
+# [gpu]
+# command=grep "GPU *" "$TMPFLAGS" | sed 's/GPU //'
+# interval=once
+#
+# [battery]
+# command=$XDG_CONFIG_HOME/i3/scripts/battery_stat
+# interval=15
 
 [volume]
 command=echo $(amixer sget Master | awk -F"[][]" '/dB/ { print $4 " " $6 }' | sed -e 's/on//g' -e 's/off/(muted)/g')
@@ -36,3 +34,5 @@ signal=10
 [date]
 command=LC_ALL=C date "+%a, %F %T "
 interval=1
+
+# vim: ft=conf

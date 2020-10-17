@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+mkdir -p "$XDG_CONFIG_HOME/nvidia"
+
+for dir in $(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)"); do
+    [ -x "$dir/$(basename $0)" ] && exec "$dir/$(basename $0)" --config="$XDG_CONFIG_HOME/nvidia/rc.conf" $@
+done
+
+echo "$0: error: Wrapped command does not exist" >&2

@@ -14,14 +14,13 @@ qemu-system-x86_64 \
     -device intel-iommu \
     -drive format=raw,file="$DISK",aio=native,cache.direct=on \
     -cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time \
-    -smp 9,sockets=1,cores=3,threads=3 \
-    -m 4G \
+    -m 8G \
     -device virtio-balloon \
-    -mem-path /dev/hugepages \
+    `# -mem-path /dev/hugepages` \
     -net nic \
     -net user,smb="$XDG_PUBLICSHARE_DIR" \
     -usb -device usb-tablet \
-    -soundhw all \
+    -device intel-hda -device hda-duplex \
     -vga std \
     `# Clipboard sharing` \
     -device virtio-serial \

@@ -39,9 +39,9 @@ export XDG_TAGS_DIR="$XDG_DATA_HOME/tags"
 export XDG_VM_DIR="$XDG_LOCAL_HOME/vm"
 
 # PATH {{{2
-pathmunge "$XDG_LOCAL_HOME/bin/AppImages"
 pathmunge "$XDG_LOCAL_HOME/bin"
-pathmunge "$XDG_LOCAL_HOME/scripts"
+pathmunge "$XDG_LOCAL_HOME/bin/AppImages"
+pathmunge "$XDG_LOCAL_HOME/bin/scripts"
 
 # Wrappers ("$_XDG_WRAPPERS", "$XDG_LOCAL_HOME/wrappers", ...) are added at the -End-
 
@@ -185,7 +185,7 @@ pathmunge "$GEM_HOME/bin"
 # -End- {{{1
 
 # start searching from wrappers
-pathmunge "$XDG_LOCAL_HOME/wrappers"
+pathmunge "$XDG_LOCAL_HOME/bin/wrappers"
 pathmunge "$_XDG_WRAPPERS"
 
 export SHELL="$(command -v $SHELL)"

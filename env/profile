@@ -17,10 +17,10 @@ else
     t="$HOME/.local/config/profile"
 fi
 
-. "$(dirname $(realpath $t))/env_variables"; unset t
+. "$(dirname $(realpath $t))/variables"; unset t
 
 # AUTOSTART
-for script in $XDG_CONFIG_HOME/autostart/*.sh; do
+for script in $XDG_CONFIG_HOME/env/autostart/*.sh; do
     . "$script"
 done
 

@@ -6,7 +6,7 @@
 force_flag=$1
 DIR="$(dirname $(realpath $0))"
 
-. $DIR/env_variables
+. $DIR/env/variables
 
 chmod -R +x bin/
 
@@ -47,11 +47,11 @@ fi
 # MAIN LINKING {{{2
 
 linking  aerc/             $XDG_CONFIG_HOME/aerc
-linking  autostart/        $XDG_CONFIG_HOME/autostart
+linking  asoundrc          $XDG_CONFIG_HOME/alsa/asoundrc
 linking  bashrc            $XDG_CONFIG_HOME/bash/bashrc
 linking  cshrc             $XDG_CONFIG_HOME/csh/.cshrc  # thanks to wrapper
 linking  dosbox.conf       $XDG_CONFIG_HOME/dosbox/dosbox.conf
-linking  env_variables     $XDG_CONFIG_HOME/env_variables
+linking  env               $XDG_CONFIG_HOME/env
 linking  feh/              $XDG_CONFIG_HOME/feh
 linking  fish/             $XDG_CONFIG_HOME/fish
 linking  gdbinit           $XDG_CONFIG_HOME/gdb/init
@@ -63,7 +63,6 @@ linking  mpv/              $XDG_CONFIG_HOME/mpv
 linking  muttrc            $XDG_CONFIG_HOME/mutt/muttrc
 linking  myclirc           $XDG_CONFIG_HOME/mycli/myclirc
 linking  newsboat/config   $XDG_CONFIG_HOME/newsboat/config
-linking  profile           $XDG_CONFIG_HOME/profile
 linking  ranger            $XDG_CONFIG_HOME/ranger/rc.conf
 linking  shell/            $XDG_CONFIG_HOME/shell
 linking  spicy_settings    $XDG_CONFIG_HOME/spicy/settings # linking is nulled after each run and replcaced with copy
@@ -84,12 +83,12 @@ linking  uncrustify/       $(dirname $UNCRUSTIFY_CONFIG)
 linking  vim/              $VIMDOTDIR
 linking  zshrc             $ZDOTDIR/.zshrc
 
-linking  desktop_entries/  $XDG_DATA_HOME/applications/custom
+linking  app.desktop.d/    $XDG_DATA_HOME/applications/custom
 linking  fonts/            $XDG_DATA_HOME/fonts
 linking  themes/           $XDG_DATA_HOME/themes
 
-linking  bin/scripts/      $XDG_LOCAL_HOME/scripts
-linking  bin/wrappers/     $XDG_LOCAL_HOME/wrappers
+linking  bin/scripts/      $XDG_LOCAL_HOME/bin/scripts
+linking  bin/wrappers/     $XDG_LOCAL_HOME/bin/wrappers
 
 linking firefox/user.js         $XDG_DATA_HOME/firefox/user.js
 linking firefox/userContent.css $XDG_DATA_HOME/firefox/chrome/userContent.css
