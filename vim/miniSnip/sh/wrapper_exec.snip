@@ -1,5 +1,15 @@
+execChainEnvVar=execution_chain_$(stat -c "%i" "$0")
+
 for dir in $(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)"); do
-	[ -x "$dir/$(basename $0)" ] && exec "$dir/$(basename $0)" $@
+    f="$dir/$(basename $0)"
+    if [ -x "$f" ]; then
+        i=$(stat -c "%i" "$f")
+        if [ "${!execChainEnvVar#*$i}" = "${!execChainEnvVar}" ]; then
+            export "$execChainEnvVar"="${!execChainEnvVar}:$i"
+            unset i f
+            exec "$dir/$(basename $0)" $@
+        fi
+    fi
 done
 
 echo "$0: error: Wrapped command does not exist" >&2
