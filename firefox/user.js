@@ -37,7 +37,7 @@ user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons",   
 user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false);
 
 // New tabpage
-user_pref("browser.newtabpage.activity-stream.default.sites"             "");
+user_pref("browser.newtabpage.activity-stream.default.sites",            "");
 user_pref("browser.newtabpage.pinned",                                   "");
 user_pref("browser.newtabpage.activity-stream.feeds.section.highlights", false);
 user_pref("browser.newtabpage.activity-stream.feeds.snippets",           false);
@@ -60,10 +60,10 @@ user_pref("toolkit.telemetry.unified", false);
 
 // The developer tools configuration
 user_pref("devtools.theme",                    "dark");
-pref_pref("devtools.editor.tabsize",           2);
-pref_pref("devtools.editor.expandtab",         true);
-pref_pref("devtools.editor.keymap",            "vim");
-pref_pref("devtools.editor.autoclosebrackets", false);
-pref_pref("devtools.editor.detectindentation", true);
-pref_pref("devtools.editor.enableCodeFolding", true);
-pref_pref("devtools.editor.autocomplete",      true);
+user_pref("devtools.editor.tabsize",           2);
+user_pref("devtools.editor.expandtab",         true);
+user_pref("devtools.editor.keymap",            "vim");
+user_pref("devtools.editor.autoclosebrackets", false);
+user_pref("devtools.editor.detectindentation", true);
+user_pref("devtools.editor.enableCodeFolding", true);
+user_pref("devtools.editor.autocomplete",      true);
