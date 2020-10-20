@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
     stat(cur, &fb);
     ino_t curInode = fb.st_ino;
 
-    snprintf(execChainEnvVar, 100, "%zu%s", curInode, "_execution_chain");
+    snprintf(execChainEnvVar, 100, "%s%zu", "execution_chain_", curInode);
 
     char firefox[PATH_MAX];
     if (findRealBin(firefox, bs, curInode) == NULL) {
