@@ -1,25 +1,5 @@
 # vim: fdm=marker fen
 
-# Pre-Amp {{{1
-
-pcm.!default {
-    type plug
-    slave.pcm "softvol"
-}
-
-pcm.softvol {
-    type softvol
-    slave {
-        pcm "dmix"
-    }
-    control {
-        name "Pre-Amp"
-        card 1
-    }
-    min_dB -30.0
-    max_dB  40.0
-}
-
 # BlueALSA {{{1
 
 pcm.bluetooth {
@@ -47,20 +27,42 @@ pcm.bt {
         pcm bluetooth
     }
 }
-# Equalizer (doesn't work) {{{1
 
-pcm.eq {
-    type plug
-    slave.pcm {
-        type equal
-        slave.pcm "system_default"
-    }
-    hint {
-        show on
-        description "Equalizer"
-    }
-}
-ctl.eq {
-    type equal
-    controls "/home/joren/.local/share/alsa/alsaequal.bin";
-}
+# DISABLED {{{1
+# Pre-Amp {{{2
+
+# pcm.!default {
+#     type plug
+#     slave.pcm "softvol"
+# }
+#
+# pcm.softvol {
+#     type softvol
+#     slave {
+#         pcm "dmix"
+#     }
+#     control {
+#         name "Pre-Amp"
+#         card 1
+#     }
+#     min_dB -30.0
+#     max_dB  40.0
+# }
+
+# Equalizer (doesn't work) {{{2
+
+# pcm.eq {
+#     type plug
+#     slave.pcm {
+#         type equal
+#         slave.pcm "system_default"
+#     }
+#     hint {
+#         show on
+#         description "Equalizer"
+#     }
+# }
+# ctl.eq {
+#     type equal
+#     controls "/home/joren/.local/share/alsa/alsaequal.bin";
+# }
