@@ -277,7 +277,6 @@ set incsearch
 set laststatus=2
 set linebreak
 set modeline
-set mouse=a
 set nomodelineexpr
 set nowrap
 set number
