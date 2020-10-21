@@ -28,7 +28,6 @@ export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-$XDG_LOCAL_HOME/.runtime}" # just in 
 export XDG_AUX_HOME="$XDG_LOCAL_HOME/aux" # auxiliary, local configs
 
 # CUSTOM {{{2
-export _XDG_WRAPPERS="$XDG_LOCAL_HOME/bin/_xdg_wrappers"
 export XDG_BACKUPS_DIR="$XDG_LOCAL_HOME/backups"
 export XDG_FAKEHOME_DIR="$XDG_LOCAL_HOME/fakehome"
 export XDG_GAMES_DIR="$XDG_LOCAL_HOME/games"
@@ -70,7 +69,7 @@ export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/config.py"
 export PYTHONUSERBASE="$XDG_LOCAL_HOME"
 export RANDFILE="$XDG_CACHE_HOME/rnd"
-export TEXMFHOME="$XDG_LOCAL_HOME/texmf"
+export TEXMFHOME="$XDG_LOCAL_HOME/lib/texmf"
 export UNCRUSTIFY_CONFIG="$XDG_CONFIG_HOME/uncrustify/default"
 export VIMDOTDIR="$XDG_CONFIG_HOME/vim"
 export VIMINIT='set rtp^=$VIMDOTDIR | let $MYVIMRC="$VIMDOTDIR/vimrc" | so $MYVIMRC'
@@ -124,7 +123,7 @@ export TERMINAL=xterm
 export VISUAL="$EDITOR"
 
 if [ -n "$DISPLAY" ]; then
-    [ -x "$_XDG_WRAPPERS/firefox" ] && BROWSER="$_XDG_WRAPPERS/firefox" || BROWSER=firefox
+    BROWSER=firefox
 else
     BROWSER=elinks
 fi
@@ -185,8 +184,10 @@ pathmunge "$GEM_HOME/bin"
 # -End- {{{1
 
 # start searching from wrappers
+export _PATCH_WRAPPERS="$XDG_LOCAL_HOME/bin/_patch/"
 pathmunge "$XDG_LOCAL_HOME/bin/wrappers"
-pathmunge "$_XDG_WRAPPERS"
+pathmunge "$_PATCH_WRAPPERS/xdg_wrappers"
+pathmunge "$_PATCH_WRAPPERS/misc"
 
 export SHELL="$(command -v $SHELL)"
 

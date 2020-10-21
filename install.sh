@@ -93,11 +93,18 @@ linking  bin/wrappers/     $XDG_LOCAL_HOME/bin/wrappers
 linking firefox/user.js         $XDG_DATA_HOME/firefox/user.js
 linking firefox/userContent.css $XDG_DATA_HOME/firefox/chrome/userContent.css
 
-# WRAPPERS {{{2
-# "XDG Base Dir" wrappers {{{3
+# "PATCHING" {{{2
+# ~misc {{{3
+chmod +x $DIR/_patch/misc/*
+for exe in $DIR/_patch/misc/*; do
+    [ -x "$(command -v $(basename $exe))" ] && linking  "_patch/misc/$(basename $exe)"  "$_PATCH_WRAPPERS/misc/$(basename $exe)"
+done
 
+# XDG Base Dir {{{3
+# WRAPPERS {{{4
 chmod +x $DIR/_patch/xdg_base_dir/wrappers/*
 
+_XDG_WRAPPERS="$_PATCH_WRAPPERS/xdg_wrappers"
 # clean old symlinks to wrappers
 if [ -d "$_XDG_WRAPPERS" ] && [ "$(find $_XDG_WRAPPERS -type l | wc -l)" -eq "$(ls -1 $_XDG_WRAPPERS | wc -l)" ]; then
     rm -r "$_XDG_WRAPPERS"
@@ -120,7 +127,7 @@ done < "$DIR/_patch/xdg_base_dir/fakehome.list"
 # Compile wrappers
 make -C $DIR/_patch/xdg_base_dir/wrappers/src > /dev/null
 
-# Install /etc/profile.d/profile_xdg.sh ? {{{3
+# Install /etc/profile.d/profile_xdg.sh ? {{{4
 
 # Check if user has sudo privileges
 prompt_sudo=$(sudo -nv 2>&1)
