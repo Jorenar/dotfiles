@@ -93,6 +93,9 @@ for_window [class="^Gimp$" title="^Quit GIMP$"] floating enable
 # The Binding of Isaac
 for_window [class="Wine" instance="isaac.exe" title="Isaac"] floating disable
 
+# MultiMC
+for_window [class="MultiMC5" instance="multimc" ] floating enable
+
 # BINDINGS {{{1
 # Windows {{{2
 

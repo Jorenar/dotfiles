@@ -1,7 +1,7 @@
 # vim: ft=sh
 
 alias amixer-save='mkdir -p $XDG_DATA_HOME/alsa && alsactl --file $XDG_DATA_HOME/alsa/asound.state store'
-alias ap1='sudo create_ap wlo1 wlo1 x I_love_BASH' # semi open WiFi network
+alias ap1='sudo create_ap wlan0 wlan0 x I_love_BASH' # semi open WiFi network
 alias cal='cal -m'
 alias cbuild='cmake --build build/ 2> >(tee build/errors.err >&2)'
 alias cbuild_='cmake -B build/ -DCMAKE_BUILD_TYPE=Debug && cmake --build build/'

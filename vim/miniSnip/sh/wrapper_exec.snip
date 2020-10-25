@@ -7,7 +7,7 @@ for dir in $(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)"); do
         if [ "${!execChainEnvVar#*$i}" = "${!execChainEnvVar}" ]; then
             export "$execChainEnvVar"="${!execChainEnvVar}:$i"
             unset i f
-            exec "$dir/$(basename $0)" $@
+            exec "$dir/$(basename $0)" "$@"
         fi
     fi
 done
