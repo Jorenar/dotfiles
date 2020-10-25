@@ -104,7 +104,7 @@ done
 # WRAPPERS {{{4
 chmod +x $DIR/_patch/xdg_base_dir/wrappers/*
 
-_XDG_WRAPPERS="$_PATCH_WRAPPERS/xdg_wrappers"
+export _XDG_WRAPPERS="$_PATCH_WRAPPERS/xdg_wrappers"
 # clean old symlinks to wrappers
 if [ -d "$_XDG_WRAPPERS" ] && [ "$(find $_XDG_WRAPPERS -type l | wc -l)" -eq "$(ls -1 $_XDG_WRAPPERS | wc -l)" ]; then
     rm -r "$_XDG_WRAPPERS"

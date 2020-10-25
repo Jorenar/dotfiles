@@ -29,7 +29,7 @@ export XDG_AUX_HOME="$XDG_LOCAL_HOME/aux" # auxiliary, local configs
 
 # CUSTOM {{{2
 export XDG_BACKUPS_DIR="$XDG_LOCAL_HOME/backups"
-export XDG_FAKEHOME_DIR="$XDG_LOCAL_HOME/fakehome"
+export XDG_FAKEHOME_DIR="$XDG_LOCAL_HOME/.fakehome"
 export XDG_GAMES_DIR="$XDG_LOCAL_HOME/games"
 export XDG_HISTORY_DIR="$XDG_CACHE_HOME/history"
 export XDG_LIB_DIR="$XDG_LOCAL_HOME/lib"
