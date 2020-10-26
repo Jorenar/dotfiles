@@ -97,6 +97,10 @@ for l in lib/*; do
     linking $l $XDG_LIB_DIR/$(basename $l)
 done
 
+for i in include/*; do
+    linking $i $XDG_INCLUDE_DIR/$(basename $i)
+done
+
 # "PATCHING" {{{2
 # ~misc {{{3
 chmod +x $DIR/_patch/misc/*

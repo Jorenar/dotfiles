@@ -32,6 +32,7 @@ export XDG_BACKUPS_DIR="$XDG_LOCAL_HOME/backups"
 export XDG_FAKEHOME_DIR="$XDG_LOCAL_HOME/.fakehome"
 export XDG_GAMES_DIR="$XDG_LOCAL_HOME/games"
 export XDG_HISTORY_DIR="$XDG_CACHE_HOME/history"
+export XDG_INCLUDE_DIR="$XDG_LOCAL_HOME/include"
 export XDG_LIB_DIR="$XDG_LOCAL_HOME/lib"
 export XDG_PROJECTS_DIR="$HOME/projects"
 export XDG_TAGS_DIR="$XDG_DATA_HOME/tags"
@@ -177,6 +178,9 @@ pathmunge /usr/lib/ccache/bin
 
 # Add gem to PATH
 pathmunge "$GEM_HOME/bin"
+
+#
+export CPATH="$XDG_INCLUDE_DIR/c:$CPATH"
 
 # Source additional, local env_variables {{{1
 [ -f $XDG_AUX_HOME/env_variables ] && . $XDG_AUX_HOME/env_variables

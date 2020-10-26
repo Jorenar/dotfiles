@@ -1,56 +1,40 @@
 #define _XOPEN_SOURCE 500
 
-#include <errno.h>
-#include <ftw.h>
-#include <libgen.h>
 #include <linux/limits.h>
 #include <signal.h>
-#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
+
+#include <mkdir_p.h>
+#include <rm.h>
+#include <wrapper_exec.h>
 
 #define TIME_LIMIT 5    // wait 5 seconds for '~/.mozilla' dir to appear
 #define PROC_SELF  "/proc/self/exe"
 #define NAME "Firefox XDG wrapper"
 
-int rm(const char mode, const char* fmt, ...);
-int ntfw_rm(const char* fpath, const struct stat* sb, int typeflag, struct FTW* ftwbuf);
-int ntfw_rmdir(const char* fpath, const struct stat* sb, int typeflag, struct FTW* ftwbuf);
-
-int mkdir_p(const char* path);
-
-char* findRealBin(char* bin, const char* bs, ino_t curInode);
 void clearJunk();
 void genArgs(char* firefox, char* args[], int argc, char* argv[]);
 
-char execChainEnvVar[100];
-int appendExecChain(ino_t I);
-
 void Exit(int status, pid_t pid);
 
-struct stat fb = { 0 };
 extern char** environ;
 
 int main(int argc, char* argv[])
 {
+    struct stat fb;
+
     char cur[PATH_MAX];
     if (readlink(PROC_SELF, cur, PATH_MAX) < 0) {
         perror(NAME);
         exit(1);
     }
 
-    char* bs = basename(cur);
-    stat(cur, &fb);
-    ino_t curInode = fb.st_ino;
-
-    snprintf(execChainEnvVar, 100, "%s%s", "execution_chain_", bs);
-
     char firefox[PATH_MAX];
-    if (findRealBin(firefox, bs, curInode) == NULL) {
+    if (findRealBin(firefox, cur) == NULL) {
         perror(NAME ": Could not find original binary");
         exit(1);
     }
@@ -97,26 +81,6 @@ void Exit(int status, pid_t pid)
     exit(status);
 }
 
-int appendExecChain(ino_t I)
-{
-    char inoStr[100];
-    snprintf(inoStr, 100, "%zu", I);
-
-    char* chain = getenv(execChainEnvVar);
-    if (chain && strstr(chain, inoStr)) {
-        return 1;
-    } else {
-        char buf[BUFSIZ];
-        if (chain) {
-            snprintf(buf, BUFSIZ, "%s%s%s%s%s", execChainEnvVar, "=", chain, ":", inoStr);
-        } else {
-            snprintf(buf, BUFSIZ, "%s%s%s", execChainEnvVar, "=", inoStr);
-        }
-        putenv(buf);
-    }
-    return 0;
-}
-
 void genArgs(char* firefox, char* args[], int argc, char* argv[])
 {
     char xdg_data_home[PATH_MAX];
@@ -142,34 +106,6 @@ void genArgs(char* firefox, char* args[], int argc, char* argv[])
     }
 }
 
-char* findRealBin(char* bin, const char* bs, ino_t curInode)
-{
-    errno = 0;
-
-    char buf[PATH_MAX];
-    char PATH[BUFSIZ];
-    strncpy(PATH, getenv("PATH"), BUFSIZ);
-    char* dir = strtok(PATH, ":");
-
-    do {
-        snprintf(buf, PATH_MAX, "%s%s%s", dir, "/", bs);
-        if (stat(buf, &fb) < 0) {
-            continue;
-        }
-        ino_t ino = fb.st_ino;
-
-        if (ino != curInode && fb.st_mode & S_IXUSR) {
-            if (appendExecChain(ino) == 0) {
-                strncpy(bin, buf, PATH_MAX);
-                return bin;
-            }
-        }
-    } while ((dir = strtok(NULL, ":")));
-
-    errno = ENOENT;
-    return NULL;
-}
-
 void clearJunk()
 {
     char mozilla[BUFSIZ]; // "~/.mozilla"
@@ -189,67 +125,4 @@ void clearJunk()
     rm('r', "%s%s", mozilla, "/firefox/Crash Reports");
     rm('d', "%s%s", mozilla, "/firefox/Pending Pings");
     rm('D', "%s",   mozilla);
-}
-
-int rm(const char mode, const char* fmt, ...)
-{
-    va_list vars;
-    va_start(vars, fmt);
-    char path[BUFSIZ];
-    vsnprintf(path, BUFSIZ, fmt, vars);
-    va_end(vars);
-
-    switch (mode) {
-        case 'r': // remove recursively
-            return nftw(path, ntfw_rm, 100, FTW_DEPTH|FTW_PHYS);
-        case 'd': // remove dir
-            return rmdir(path);
-        case 'D': // remove empty subdirs and if emptied, then dir too
-            return nftw(path, ntfw_rmdir, 100, FTW_DEPTH|FTW_PHYS);
-        default:  // remove file
-            return unlink(path);
-    }
-}
-
-int ntfw_rm(const char* fpath, const struct stat* sb, int typeflag, struct FTW* ftwbuf)
-{
-    return remove(fpath);
-}
-
-int ntfw_rmdir(const char* fpath, const struct stat* sb, int typeflag, struct FTW* ftwbuf)
-{
-    return rmdir(fpath);
-}
-
-int mkdir_p(const char* path_)
-{
-    errno = 0;
-
-    if (strlen(path_) > PATH_MAX-1) {
-        errno = ENAMETOOLONG;
-        return -1;
-    }
-
-    char path[PATH_MAX];
-    strcpy(path, path_);
-
-    // Create "intermediate" directories
-    for (char* p = path + 1; *p; ++p) {
-        if (*p == '/') {
-            *p = '\0'; // temporarily truncate
-            if (mkdir(path, S_IRWXU) < 0 && errno != EEXIST) {
-                return -1;
-            }
-            *p = '/';
-        }
-    }
-
-    // Create final dir
-    if (mkdir(path, S_IRWXU) < 0) {
-        if (errno != EEXIST) {
-            return -1;
-        }
-    }
-
-    return 0;
 }
