@@ -1,7 +1,5 @@
 # BASHRC #
 
-[ -n "$execution_chain_bash" ] && unset execution_chain_bash
-
 # Source basic shell config
 source $XDG_CONFIG_HOME/shell/shrc
 

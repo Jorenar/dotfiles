@@ -1,4 +1,8 @@
 #!/usr/bin/env sh
 
-. $XDG_LIB_DIR/shell/wrapper_exec.sh
-wrapper_exec --rcfile "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc" "$@"
+for dir in $(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)"); do
+    if [ -x "$dir/$(basename $0)" ]; then
+        exec "$dir/$(basename $0)" --rcfile "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc" "$@"
+    fi
+done
+echo "$0: error: Wrapped command does not exist" >&2
