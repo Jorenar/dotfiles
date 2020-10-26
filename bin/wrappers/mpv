@@ -14,6 +14,5 @@ elif [ "$1" == "--yt" ]; then
     ARGS="--volume=50 --loop-playlist --no-video"
 fi
 
-for dir in $(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)"); do
-    [ -x "$dir/$(basename $0)" ] && exec "$dir/$(basename $0)" $ARGS "$@"
-done
+. $XDG_LIB_DIR/shell/wrapper_exec.sh
+wrapper_exec $ARGS "$@"

@@ -1,7 +1,4 @@
 #!/usr/bin/env sh
 
-for dir in $(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)"); do
-    if [ -x "$dir/$(basename $0)" ]; then
-        exec "$dir/$(basename $0)" -f $XDG_CONFIG_HOME/tmux/tmux.conf "$@"
-    fi
-done
+. $XDG_LIB_DIR/shell/wrapper_exec.sh
+wrapper_exec -f $XDG_CONFIG_HOME/tmux/tmux.conf "$@"

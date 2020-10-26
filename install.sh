@@ -93,6 +93,10 @@ linking  bin/wrappers/     $XDG_LOCAL_HOME/bin/wrappers
 linking firefox/user.js         $XDG_DATA_HOME/firefox/user.js
 linking firefox/userContent.css $XDG_DATA_HOME/firefox/chrome/userContent.css
 
+for l in lib/*; do
+    linking $l $XDG_LIB_DIR/$(basename $l)
+done
+
 # "PATCHING" {{{2
 # ~misc {{{3
 chmod +x $DIR/_patch/misc/*

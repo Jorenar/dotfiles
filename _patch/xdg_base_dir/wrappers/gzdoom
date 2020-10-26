@@ -2,9 +2,5 @@
 
 HOME="${XDG_FAKEHOME_DIR:-$HOME/.local/home}"
 
-for dir in $(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)"); do
-    if [ -x "$dir/$(basename $0)" ]; then
-        exec "$dir/$(basename $0)" -config $XDG_CONFIG_HOME/gzdoom/gzdoom.ini \
-            -savedir $XDG_CONFIG_HOME/gzdoom "$@"
-    fi
-done
+. $XDG_LIB_DIR/shell/wrapper_exec.sh
+wrapper_exec -config $XDG_CONFIG_HOME/gzdoom/gzdoom.ini -savedir $XDG_CONFIG_HOME/gzdoom "$@"

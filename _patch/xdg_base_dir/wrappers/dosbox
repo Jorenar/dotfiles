@@ -1,10 +1,4 @@
 #!/usr/bin/env sh
 
-for dir in $(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)"); do
-    if [ -x "$dir/$(basename $0)" ]; then
-        exec "$dir/$(basename $0)" -conf "${XDG_CONFIG_HOME:-$HOME/.config}"/dosbox/dosbox.conf "$@"
-    fi
-done
-
-echo "$0: command not found" >&2
-exit 127
+. $XDG_LIB_DIR/shell/wrapper_exec.sh
+wrapper_exec -conf "${XDG_CONFIG_HOME:-$HOME/.config}"/dosbox/dosbox.conf "$@"

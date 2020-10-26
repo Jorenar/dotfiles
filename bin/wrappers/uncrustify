@@ -1,8 +1,6 @@
 #!/usr/bin/env sh
 
-for dir in $(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)"); do
-    [ -x "$dir/uncrustify" ] && uncrustify="$dir/uncrustify" && break
-done
+. $XDG_LIB_DIR/shell/wrapper_exec.sh
 
 if [ "$1" = "--l" ]; then
     lang="-l $2"
@@ -24,10 +22,10 @@ if [ "$1" = "--l" ]; then
 
     cat "${UNCRUSTIFY_CONFIG:-"$dir/default"}" $cfgs > "$cfg" &
 
-    "$uncrustify" -q --no-backup $lang -c "$cfg"
+    wrapper_exec -q --no-backup $lang -c "$cfg"
 
     rm $cfg
 
 else
-    exec "$uncrustify" "$@"
+    wrapper_exec "$@"
 fi

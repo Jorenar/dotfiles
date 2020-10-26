@@ -5,8 +5,5 @@ for dir in $(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $SHELL)"); do
     [ -x "$dir/$(basename $SHELL)" ] && SHELL="$dir/$(basename $SHELL)" && break
 done
 
-for dir in $(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)"); do
-    if [ -x "$dir/$(basename $0)" ]; then
-        exec "$dir/$(basename $0)" -q -x "$XDG_CONFIG_HOME/gdb/init" "$@"
-    fi
-done
+. $XDG_LIB_DIR/shell/wrapper_exec.sh
+wrapper_exec -q -x "$XDG_CONFIG_HOME/gdb/init" "$@"
