@@ -23,7 +23,7 @@ int ntfw_rmdir(const char* fpath, const struct stat* sb, int typeflag, struct FT
 
 int mkdir_p(const char* path);
 
-char* findRealBin();
+char* findRealBin(char* bin, const char* bs, ino_t curInode);
 void clearJunk();
 void genArgs(char* firefox, char* args[], int argc, char* argv[]);
 
@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
     stat(cur, &fb);
     ino_t curInode = fb.st_ino;
 
-    snprintf(execChainEnvVar, 100, "%s%zu", "execution_chain_", curInode);
+    snprintf(execChainEnvVar, 100, "%s%s", "execution_chain_", bs);
 
     char firefox[PATH_MAX];
     if (findRealBin(firefox, bs, curInode) == NULL) {

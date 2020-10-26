@@ -1,5 +1,5 @@
 wrapper_exec() {
-    execChainEnvVar=execution_chain_$(stat -c "%i" "$0")
+    execChainEnvVar=execution_chain_$(basename "$0")
 
     if [ "$1" = "--P" ]; then
         PREFIX="$2"
