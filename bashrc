@@ -18,6 +18,10 @@ bind '"\e[Z":menu-complete'
 # Magic space
 bind space:magic-space
 
+# C-x C-h to open man page for currently typed command
+bind -x '"\C-x\C-h":__man'
+__man(){ man $(echo $READLINE_LINE | awk '{print $1}'); }
+
 # Enable extended globbing
 shopt -s extglob
 
