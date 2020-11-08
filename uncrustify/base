@@ -255,7 +255,7 @@ indent_case_brace               = indent_columns        # number
 # 0: Indent to body level (default)
 # 1: Align under the open parenthesis
 # 2: Indent to the brace level
-indent_paren_close              = 1        # unsigned number
+indent_paren_close              = 2        # unsigned number
 
 # Whether to indent the body of a C++11 lambda.
 indent_cpp_lambda_body          = true     # true/false
