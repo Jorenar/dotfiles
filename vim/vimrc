@@ -412,7 +412,7 @@ augroup OTHER " {{{
   autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
 
   " Set 'foldmethod' to 'syntax'
-  autocmd FileType css,javascript,json,typescript setlocal foldmethod=syntax
+  autocmd FileType css,javascript,json,typescript,scss setlocal foldmethod=syntax
 
   " Protect folds when toggling insert mode / switching windows
   autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
@@ -445,6 +445,8 @@ augroup TERMINAL_OPTIONS " {{{2
   endif
 
 augroup END " }}}
+
+hi cmakeCommand  cterm=bold
 
 let g:sql_type_default = 'mysql'
 let javaScript_fold    = 1
