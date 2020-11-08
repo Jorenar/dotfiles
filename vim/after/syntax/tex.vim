@@ -1,1 +1,3 @@
-syntax region texBeginEndFold start="\v\\<begin>\{" end="\v\\<end>" transparent fold containedin=texBeginEnd
+syntax region texBeginEndFold transparent fold containedin=texBeginEnd
+      \ start = "\v\\<begin>\{(document)@!"
+      \ end   = "\v\\<end>"
