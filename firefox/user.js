@@ -62,7 +62,6 @@ user_pref("toolkit.telemetry.unified", false);
 user_pref("devtools.theme",                    "dark");
 user_pref("devtools.editor.tabsize",           2);
 user_pref("devtools.editor.expandtab",         true);
-user_pref("devtools.editor.keymap",            "vim");
 user_pref("devtools.editor.autoclosebrackets", false);
 user_pref("devtools.editor.detectindentation", true);
 user_pref("devtools.editor.enableCodeFolding", true);
