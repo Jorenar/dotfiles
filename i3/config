@@ -67,9 +67,6 @@ bindsym $mod+p exec --no-startup-id passmenu --type
 # Ranger
 bindsym $mod+r exec --no-startup-id ${TERMINAL:-xterm} -T Ranger ranger
 
-# Game Launcher
-bindsym $mod+g exec --no-startup-id dgl
-
 # WINDOWS RULES {{{1
 
 # QuiteRSS
