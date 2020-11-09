@@ -1,0 +1,16 @@
+class <{}> {
+	<{~1}>() = default;
+public:
+	<{~1}>(const <{~1}>&) = delete;
+    void operator=(const <{~1}>&) = delete;
+
+	static <{~1}>& getInstance()
+	{
+		static <{~1}> instance;
+		return instance;
+	}
+private:
+	<{}>
+};
+
+#define <{~1}>() <{~1}>::getInstance()
