@@ -6,11 +6,15 @@
 # set mod key
 set $mod Mod4
 
+# set other variables
+set $i3scripts $XDG_CONFIG_HOME/i3/scripts
+
+
 # font for window titles
 font pango:DejaVu Sans Mono 8
 
 # multi-monitor
-exec --no-startup-id $XDG_CONFIG_HOME/i3/scripts/multi-monitor
+exec --no-startup-id $i3scripts/multi-monitor
 
 # use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -53,7 +57,7 @@ bindsym $mod+x exec --no-startup-id ${TERMINAL:-xterm}
 bindsym $mod+w exec firefox
 
 # open QuiteRSS
-bindsym $mod+q exec --no-startup-id $XDG_CONFIG_HOME/i3/scripts/quiterss_wrapper
+bindsym $mod+q exec --no-startup-id $i3scripts/quiterss_wrapper
 
 # open aerc
 bindsym $mod+m exec --no-startup-id imapfilter && ${TERMINAL:-xterm} -T aerc aerc && rm -f "${TMPDIR:-/tmp}/aerc.html"
@@ -144,9 +148,6 @@ bindsym $mod+minus [class="^(?!QuiteRss).*$"] scratchpad show
 # rename workspace
 #bindsym $mod+r exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
 
-# switch to next workspace
-bindsym $mod+grave workspace next
-
 # switch to workspace
 bindsym $mod+1 workspace number "1"
 bindsym $mod+2 workspace number "2"
@@ -157,6 +158,11 @@ bindsym $mod+6 workspace number "6"
 bindsym $mod+7 workspace number "7"
 bindsym $mod+8 workspace number "8"
 bindsym $mod+9 workspace number "9"
+
+bindsym $mod+Mod1+1 workspace number "6"
+bindsym $mod+Mod1+2 workspace number "7"
+bindsym $mod+Mod1+3 workspace number "8"
+bindsym $mod+Mod1+4 workspace number "9"
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number 1
@@ -172,6 +178,12 @@ bindsym $mod+Shift+9 move container to workspace number 9
 # move workspace to next output
 bindsym $mod+Mod1+l move workspace to output right
 bindsym $mod+Mod1+h move workspace to output left
+
+# select workspace via dmenu
+bindsym $mod+grave exec sh -c '$i3scripts/list_workspaces | dmenu | xargs -i i3-msg workspace {}'
+
+# move container to workspace selected via dmenu
+bindsym $mod+Shift+grave exec sh -c '$i3scripts/list_workspaces | dmenu | xargs -i i3-msg move container to workspace {}'
 
 # XF86 keyboard symbols {{{2
 
@@ -195,8 +207,8 @@ bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioPlay  exec playerctl play
 bindsym XF86AudioPrev  exec playerctl previous
 
-# Random
-bindsym XF86Explorer exec systemctl suspend
+# Other
+bindsym XF86Explorer exec $i3scripts/suspend
 
 # }}}
 # OTHER {{{2
