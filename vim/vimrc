@@ -332,7 +332,6 @@ packadd minPlug
 MinPlug artur-shaik/vim-javacomplete2
 MinPlug ctrlpvim/ctrlp.vim
 MinPlug dense-analysis/ale
-MinPlug FromtonRouge/OmniCppComplete " if possible LSP will be used instead
 MinPlug Jorengarenar/fauxClip
 MinPlug Jorengarenar/miniSnip
 MinPlug Jorengarenar/vim-darkness
@@ -455,7 +454,6 @@ augroup END " }}}
 let g:sql_type_default = 'mysql'
 let javaScript_fold    = 1
 
-" Local vimrc (must be last, because of secure)
-set secure exrc
+runtime! vimrc.d/*.vim
 
 " vim: fdm=marker fen:

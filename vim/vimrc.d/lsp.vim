@@ -39,5 +39,6 @@ if g:enable_lsp
 
 else
   MinPlug davidhalter/jedi-vim
+  MinPlug FromtonRouge/OmniCppComplete
   MinPlug vim-scripts/dbext.vim
 endif
