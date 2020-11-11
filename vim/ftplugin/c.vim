@@ -6,8 +6,6 @@ setlocal path+=/usr/include/**
 let c_curly_error  = 1
 let c_space_errors = 1
 
-hi cIncludeGuard cterm=italic ctermfg=245
-
 if !g:enable_lsp
   setlocal tags+=$XDG_TAGS_DIR/c
 endif

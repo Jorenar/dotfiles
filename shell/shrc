@@ -57,7 +57,7 @@ cheat() { curl cheat.sh/$1; }
 
 wttr() { curl wttr.in/$1; }
 
-bak() { cp "$1" "$1.bak"; }
+bak() { cp -r "$1" "$1.bak"; }
 
 cmake_run() {
     cmake -B build/ -DCMAKE_BUILD_TYPE=Debug -DRUN_ARGS="$@" > /dev/null

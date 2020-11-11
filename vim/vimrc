@@ -39,6 +39,13 @@ endif
 silent! helptags ALL " genereate help tags
 
 " COLORSCHEME {{{1
+
+augroup colors
+  au!
+  au ColorScheme darkness hi cmakeCommand  cterm=bold
+  au ColorScheme darkness hi Dimmer        cterm=italic ctermfg=245
+augroup END
+
 try
   colorscheme darkness
 catch
@@ -265,6 +272,7 @@ vnoremap <Leader>s y:%s//g<Left><Left><C-r>"/
 " ### DISABLE {{{2
 map gh <nop>
 vmap s <nop>
+nmap s <nop>
 
 " OPTIONS {{{1
 
@@ -277,6 +285,7 @@ set incsearch
 set laststatus=2
 set linebreak
 set modeline
+set mouse=n
 set nomodelineexpr
 set nowrap
 set number
@@ -330,7 +339,6 @@ MinPlug Jorengarenar/vim-darkness
 MinPlug Jorengarenar/vim-sBnR
 MinPlug majutsushi/tagbar
 MinPlug mbbill/undotree
-MinPlug tpope/vim-surround
 
 packadd cfilter
 packadd matchit
@@ -339,11 +347,9 @@ source  $VIMRUNTIME/ftplugin/man.vim
 
 " MAPPINGS
 nmap <M-a> <Plug>(ale_detail)
-nmap s ys
 nnoremap <F1> :UndotreeToggle<cr>
 nnoremap <F2> :ALEToggle<CR>
 nnoremap <Leader>t :Tagbar<CR>
-vmap s S
 
 " OPTIONS
 let g:ale_disable_lsp             = 1
@@ -445,8 +451,6 @@ augroup TERMINAL_OPTIONS " {{{2
   endif
 
 augroup END " }}}
-
-hi cmakeCommand  cterm=bold
 
 let g:sql_type_default = 'mysql'
 let javaScript_fold    = 1
