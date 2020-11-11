@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+# No idea why in script works, but binded alone not - even with `sh -c`!
+
+exec systemctl suspend
