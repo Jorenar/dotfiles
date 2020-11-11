@@ -1,10 +1,17 @@
 " vim: fdm=marker fen fdl=1
 
-" Include guards {{{1
+" REGIONS {{{1
+" Include guards {{{2
 
-syntax region cIncludeGuarded transparent matchgroup=cIncludeGuard
-      \ start="\v%1l#ifndef (.*)\n#define \1"
-      \ end="#endif"
+syntax region cIncludeGuarded transparent matchgroup=Dimmer
+      \ start = "\v#ifndef (.+_H.*_)\n#define \1"
+      \ end   = "\#endif"
+
+" Extern "C" {{{2
+
+syntax region cExternC transparent matchgroup=Dimmer
+      \ start = '\v#ifdef __cplusplus\nextern "C" \{\n#endif'
+      \ end   = '\v#ifdef __cplusplus\n}\n#endif'
 
 " BAD STYLE {{{1
 " 'case' label {{{2
@@ -37,7 +44,3 @@ syntax region cMacroFold start="#define .*\\$" end="\v(\\\n)@<=.*[^\\]\_$" keepe
 
 syntax region cLongComment start="^\s*//.*\n\ze\(\s*//.*\n\)\{3,}" end="^\(//\)\@!" fold
 hi link cLongComment cCommentL
-
-" Preprocessor {{{2
-
-syntax region cPreProcFold start="\v(%1l#ifndef)@!#if" end="#endif" transparent fold
