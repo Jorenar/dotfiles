@@ -338,6 +338,7 @@ MinPlug Jorengarenar/vim-sBnR
 MinPlug majutsushi/tagbar
 MinPlug mbbill/undotree
 MinPlug prabirshrestha/vim-lsp
+MinPlug puremourning/vimspector
 
 packadd cfilter
 packadd matchit
