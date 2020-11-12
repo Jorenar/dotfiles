@@ -2,8 +2,6 @@ let g:enable_lsp = 1
 
 if g:enable_lsp
 
-  MinPlug prabirshrestha/vim-lsp
-
   let g:lsp_diagnostics_enabled = 0
 
   function! s:lsp_init() abort
