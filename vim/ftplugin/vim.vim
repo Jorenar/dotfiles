@@ -1,4 +1,4 @@
-let g:vimsyn_folding="af"
+let g:vimsyn_folding="aflmpPrt"
 setlocal foldmethod=syntax
 
 " ColorDemo - preview of Vim 256 colors
