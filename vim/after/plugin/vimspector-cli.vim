@@ -44,7 +44,9 @@ function! s:Complete(ArgLead, CmdLine, CursorPos) abort
     if cmd ==# "file"
       return split(glob(a:ArgLead.'*'), "\n") + [ a:ArgLead ]
     elseif cmd ==# "watch"
-      return split(vimspector#CompleteExpr(a:ArgLead, CmdLine, CursorPo))
+      let line = "VimspectorWatch " + line
+      let i += 16
+      return split(vimspector#CompleteExpr(a:ArgLead, line, i))
     elseif cmd ==# "cl"
       return [ "all" ]
     endif
