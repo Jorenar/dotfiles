@@ -328,7 +328,6 @@ endif " }}}
 
 packadd minPlug
 
-MinPlug artur-shaik/vim-javacomplete2
 MinPlug ctrlpvim/ctrlp.vim
 MinPlug dense-analysis/ale
 MinPlug Jorengarenar/fauxClip

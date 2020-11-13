@@ -29,14 +29,40 @@ if g:enable_lsp
       au User lsp_setup call lsp#register_server({
             \ 'name': 'pyls',
             \ 'cmd': {server_info->['pyls']},
-            \ 'whitelist': ['python'],
+            \ 'whitelist': [ 'python' ],
+            \ })
+    endif
+
+    if executable('java') && filereadable(expand($XDG_LSP_DIR.'/eclipse.jdt.ls/plugins/org.eclipse.equinox.launcher_*.jar'))
+      au User lsp_setup call lsp#register_server({
+            \ 'name': 'eclipse.jdt.ls',
+            \ 'cmd': {server_info->[
+            \     'java',
+            \     '-Declipse.application=org.eclipse.jdt.ls.core.id1',
+            \     '-Dosgi.bundles.defaultStartLevel=4',
+            \     '-Declipse.product=org.eclipse.jdt.ls.core.product',
+            \     '-Dlog.level=ALL',
+            \     '-noverify',
+            \     '-Dfile.encoding=UTF-8',
+            \     '-Xmx1G',
+            \     '-jar',
+            \     expand($XDG_LSP_DIR.'/eclipse.jdt.ls/plugins/org.eclipse.equinox.launcher_*.jar'),
+            \     '-configuration',
+            \     expand($XDG_LSP_DIR.'/eclipse.jdt.ls/config_linux'),
+            \     '-data',
+            \     getcwd()
+            \ ]},
+            \ 'whitelist': [ 'java' ],
             \ })
     endif
 
   augroup END
 
 else
+  MinPlug artur-shaik/vim-javacomplete2
   MinPlug davidhalter/jedi-vim
   MinPlug FromtonRouge/OmniCppComplete
   MinPlug vim-scripts/dbext.vim
 endif
+
+" vim: fdl=2
