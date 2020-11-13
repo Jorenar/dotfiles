@@ -208,7 +208,7 @@ bindsym XF86AudioPlay  exec playerctl play
 bindsym XF86AudioPrev  exec playerctl previous
 
 # Other
-bindsym XF86Explorer exec $i3scripts/suspend
+bindsym XF86Explorer exec --no-startup-id systemctl suspend
 
 # }}}
 # OTHER {{{2
