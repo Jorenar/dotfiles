@@ -366,6 +366,8 @@ let g:ctrlp_types                 = [ 'fil' ]
 let g:tagbar_compact              = 1
 let g:tagbar_sort                 = 0
 let g:undotree_SetFocusWhenToggle = 1
+let g:vimspector_base_dir         = expand('$XDG_CONFIG_HOME/vimspector')
+let g:vimspector_install_gadgets  = [ 'debugpy', 'vscode-cpptools' ]
 
 let g:miniSnip_extends = {
       \ "arduino"  : [ "cpp", "c" ],
