@@ -5,11 +5,27 @@
 
 # Init {{{
 pathmunge () {
-    if ! echo "$PATH" | grep -Eq "(^|:)$1($|:)" ; then
-        if [ "$2" != "after" ]; then
-            export PATH="$1:$PATH"
+    after=0
+    if [ "$1" = "-a" ]; then
+        after=1
+        shift 1
+    fi
+
+    if [ -z "$2" ]; then
+        var='PATH'
+        new="$1"
+    else
+        var="$1"
+        new="$2"
+    fi
+
+    if ! echo "${!var}" | grep -Eq "(^|:)$new($|:)" ; then
+        if [ -z "${!var}" ]; then
+            export ${var}="$new"
+        elif [ "$after" = "0" ]; then
+            export ${var}="$new:${!var}"
         else
-            export PATH="$PATH:$1"
+            export ${var}="${!var}:$new"
         fi
     fi
 }
@@ -180,8 +196,10 @@ pathmunge /usr/lib/ccache/bin
 # Add gem to PATH
 pathmunge "$GEM_HOME/bin"
 
-#
-export CPATH="$XDG_INCLUDE_DIR/c:$CPATH"
+# C
+pathmunge CPATH           "$XDG_INCLUDE_DIR/c"
+pathmunge LD_LIBRARY_PATH "$XDG_LIB_DIR/c"
+pathmunge LIBRARY_PATH    "$XDG_LIB_DIR/c"
 
 # Source additional, local env_variables {{{1
 [ -f $XDG_AUX_HOME/env_variables ] && . $XDG_AUX_HOME/env_variables
