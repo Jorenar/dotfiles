@@ -22,16 +22,6 @@ syntax match cCaseBadFormat "\v%(<%(case|default)>.*)@<!%(\S.*)@<=<%(case|defaul
 hi def link cCaseBadFormat cError
 
 " FOLDING {{{1
-" Marker {{{2
-
-syntax region cMarkerFold matchgroup=cCommentL start='//.*{{{$' end='//.*}}}' transparent fold
-
-syntax region cMarkerFoldSub matchgroup=cCommentL transparent fold
-      \ start = '//.*{{{\z(\d\)$'
-      \ end   = '\n\ze//.*{{{\z1'
-      \ end   = '\n\ze//.*}}}'
-      \ end   = '//.*}}}\z1'
-
 " Switch's cases {{{2
 
 syntax region cCaseFold transparent fold
@@ -53,7 +43,7 @@ hi link cLongComment cCommentL
 
 " Preprocessor '#if' folding {{{2
 
-syntax region cPreProcFold transparent fold
-      \ start = "\v#if%(ndef (.+_H.*_?)\n#define \1)@!"
-      \ skip  = "\v\#endif //\s*(.+_H.*_?)"
-      \ end   = "#endif"
+"syntax region cPreProcFold transparent fold
+"      \ start = "\v#if%(ndef (.+_H.*_?)\n#define \1)@!"
+"      \ skip  = "\v\#endif //\s*(.+_H.*_?)"
+"      \ end   = "#endif"
