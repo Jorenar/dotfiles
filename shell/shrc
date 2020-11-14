@@ -57,7 +57,21 @@ cheat() { curl cheat.sh/$1; }
 
 wttr() { curl wttr.in/$1; }
 
-bak() { cp -r "$1" "$1.bak"; }
+bak() {
+    if [ "$1" = "-r" ] || [ "$1" = "-rf" ]; then
+        out="${2%.*}"
+        if [ -e "$out" ];then
+            if [ "$1" = "-rf" ]; then
+                rm -rf "$out"
+                cp -r "$2" "$out"
+            fi
+        else
+            cp -r "$2" "$out"
+        fi
+    else
+        cp -r "$1" "$1.bak"
+    fi
+}
 
 cmake_run() {
     cmake -B build/ -DCMAKE_BUILD_TYPE=Debug -DRUN_ARGS="$@" > /dev/null
