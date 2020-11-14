@@ -4,14 +4,14 @@
 " Include guards {{{2
 
 syntax region cIncludeGuarded transparent matchgroup=Dimmer
-      \ start = "\v#ifndef (.+_H.*_)\n#define \1"
+      \ start = "\v#ifndef (.+_H.*_?)\n#define \1"
       \ end   = "\#endif"
 
 " Extern "C" {{{2
 
 syntax region cExternC transparent matchgroup=Dimmer
       \ start = '\v#ifdef __cplusplus\nextern "C" \{\n#endif'
-      \ end   = '\v#ifdef __cplusplus\n}\n#endif'
+      \ end   = '\v#ifdef __cplusplus\n}(\s*//.*)?\n#endif'
 
 " BAD STYLE {{{1
 " 'case' label {{{2
