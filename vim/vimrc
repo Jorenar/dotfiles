@@ -277,6 +277,7 @@ nmap s <nop>
 
 set backup
 set colorcolumn=+1,+21
+set complete+=kspell
 set hidden
 set hlsearch
 set ignorecase
