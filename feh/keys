@@ -79,5 +79,7 @@ scroll_right_page C-l
 # Zoom {{{1
 
 zoom_default equal
-zoom_fit s
 zoom_fill exclam
+zoom_fit s
+zoom_in plus
+zoom_out minus
