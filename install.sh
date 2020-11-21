@@ -108,7 +108,7 @@ if [ -z "$(ldconfig -p | grep 'jorenc')" ]; then
 fi
 
 cd "$DIR"
-rm -r "$tmp"
+rm -rf "$tmp"
 
 # "PATCHING" {{{2
 # ~misc {{{3
