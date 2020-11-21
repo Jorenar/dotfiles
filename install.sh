@@ -93,13 +93,22 @@ linking  bin/wrappers/     $XDG_LOCAL_HOME/bin/wrappers
 linking firefox/user.js         $XDG_DATA_HOME/firefox/user.js
 linking firefox/userContent.css $XDG_DATA_HOME/firefox/chrome/userContent.css
 
-for l in lib/*; do
-    linking $l $XDG_LIB_DIR/$(basename $l)
-done
+# INSTALL LIBS {{{2
 
-for i in include/*; do
-    linking $i $XDG_INCLUDE_DIR/$(basename $i)
-done
+tmp="$(mktemp -d)"
+cd "$tmp"
+
+if [ -z "$(ldconfig -p | grep 'jorenc')" ]; then
+    if [ ! -e "$XDG_LIB_DIR/c/libjorenc.so" ]; then
+        git clone https://github.com/Jorengarenar/libJORENc.git
+        cd libJORENc
+        ./autogen.sh --XDG
+        make install
+    fi
+fi
+
+cd "$DIR"
+rm -r "$tmp"
 
 # "PATCHING" {{{2
 # ~misc {{{3

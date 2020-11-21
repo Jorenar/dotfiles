@@ -8,9 +8,9 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include <mkdir_p.h>
-#include <rm.h>
-#include <wrapper_exec.h>
+#include <joren/sys/mkdir_p.h>
+#include <joren/sys/rm.h>
+#include <joren/sys/wrapper_exec.h>
 
 #define TIME_LIMIT 5    // wait 5 seconds for '~/.mozilla' dir to appear
 #define PROC_SELF  "/proc/self/exe"
@@ -28,13 +28,13 @@ int main(int argc, char* argv[])
     struct stat fb;
 
     char cur[PATH_MAX];
-    if (readlink(PROC_SELF, cur, PATH_MAX) < 0) {
+    if (getCurrentBin(cur) == NULL) {
         perror(NAME);
         exit(1);
     }
 
     char firefox[PATH_MAX];
-    if (findRealBin(firefox, cur) == NULL) {
+    if (findRealBin(firefox) == NULL) {
         perror(NAME ": Could not find original binary");
         exit(1);
     }

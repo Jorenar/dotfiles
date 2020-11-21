@@ -1,6 +1,8 @@
 .ccls-cache
 .clangd
 .exrc
+.miniSnip
+.vimspector.json
 __pycache__
 a.out
 build/
