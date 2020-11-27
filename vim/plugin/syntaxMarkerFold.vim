@@ -21,12 +21,6 @@ function! s:genLeveled(lvl) abort
 
 endfunction
 
-function! Foo() abort
-  setlocal foldmethod=marker
-  normal! zf
-  setlocal foldmethod=syntax
-endfunction
-
 function! s:init(...) abort
   let [ m1, m2 ] = split(&l:foldmarker, ",")
 

@@ -1,5 +1,6 @@
 wrapper_exec() {
-    execChainEnvVar=execution_chain_$(basename "$0")
+    bs="$(basename "$0" | sed 's/-/_/')"
+    execChainEnvVar=execution_chain_$bs
 
     if [ "$1" = "--P" ]; then
         PREFIX="$2"

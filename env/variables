@@ -73,7 +73,6 @@ export ELECTRUMDIR="$XDG_DATA_HOME/electrum"
 export ELINKS_CONFDIR="$XDG_CONFIG_HOME/elinks"
 export GIT_TEMPLATE_DIR="$XDG_CONFIG_HOME/git/template"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
-export GOPATH="$XDG_DATA_HOME/go"
 export GOPS_CONFIG_DIR="$XDG_CONFIG_HOME/gops" # temporary
 export GRIPHOME="$XDG_CONFIG_HOME/grip"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
@@ -82,6 +81,7 @@ export IMAPFILTER_HOME="$XDG_CONFIG_HOME/imapfilter"
 export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
 export MAILCAP="$XDG_CONFIG_HOME/mailcap" # elinks, w3m
 export MAILCAPS="$MAILCAP"   # Mutt, pine
+export MYSQL_HOME="$XDG_CONFIG_HOME/mysql"
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/config.py"
@@ -98,6 +98,10 @@ export WINEPREFIX="$XDG_DATA_HOME/wine"
 export ARDUINO_DIRECTORIES_DATA="$XDG_DATA_HOME/arduino"
 export ARDUINO_DIRECTORIES_DOWNLOADS="$XDG_CACHE_HOME/arduino"
 export ARDUINO_DIRECTORIES_USER="$XDG_LIB_DIR/arduino" # just treat it as directory for libraries
+
+# Golang {{{3
+export GOBIN="$XDG_LOCAL_HOME/bin"
+export GOPATH="$XDG_DATA_HOME/go"
 
 # Ruby {{{3
 export BUNDLE_USER_CACHE="$XDG_CACHE_HOME/bundle"
@@ -178,7 +182,7 @@ export XMODIFIERS=@im=fcitx
 export GTK_IM_MODULE=fcitx
 
 # less' default options
-export LESS="-FXR"
+export LESS="-FXRS"
 
 # Enable GPG agent
 export GPG_AGENT_INFO

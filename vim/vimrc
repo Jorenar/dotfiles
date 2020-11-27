@@ -333,12 +333,16 @@ MinPlug ctrlpvim/ctrlp.vim
 MinPlug dense-analysis/ale
 MinPlug Jorengarenar/fauxClip
 MinPlug Jorengarenar/miniSnip
-MinPlug Jorengarenar/vim-darkness
 MinPlug Jorengarenar/vim-sBnR
 MinPlug majutsushi/tagbar
 MinPlug mbbill/undotree
 MinPlug prabirshrestha/vim-lsp
 MinPlug puremourning/vimspector
+
+let g:minPlug_singleFiles = {
+      \ "darkness.vim" : [ "colors", "https://git.io/JkS8m" ],
+      \ "MvVis.vim"    : [ "plugin", "https://git.io/JkSRr" ],
+      \ }
 
 packadd cfilter
 packadd matchit

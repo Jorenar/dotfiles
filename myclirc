@@ -32,7 +32,7 @@ timing = True
 # Table format. Possible values: psql, plain, simple, grid, fancy_grid, pipe,
 # orgtbl, rst, mediawiki, html, latex, latex_booktabs, tsv.
 # Recommended: psql, fancy_grid and grid.
-table_format = grid
+table_format = psql
 
 # Syntax coloring style. Possible values (many support the "-dark" suffix):
 # manni, igor, xcode, vim, autumn, vs, rrt, native, perldoc, borland, tango, emacs,
