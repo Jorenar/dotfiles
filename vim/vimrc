@@ -340,8 +340,9 @@ MinPlug prabirshrestha/vim-lsp
 MinPlug puremourning/vimspector
 
 let g:minPlug_singleFiles = {
-      \ "darkness.vim" : [ "colors", "https://git.io/JkS8m" ],
-      \ "MvVis.vim"    : [ "plugin", "https://git.io/JkSRr" ],
+      \ "darkness.vim"  : [ "colors", "https://git.io/JkS8m" ],
+      \ "MvVis.vim"     : [ "plugin", "https://git.io/JkSRr" ],
+      \ "sql-upper.vim" : [ "ftplugin/sql", "https://git.io/JkQjr" ],
       \ }
 
 packadd cfilter
@@ -458,8 +459,7 @@ augroup TERMINAL_OPTIONS " {{{2
 
 augroup END " }}}
 
-let g:sql_type_default = 'mysql'
-let javaScript_fold    = 1
+let javaScript_fold = 1
 
 runtime! vimrc.d/*.vim
 

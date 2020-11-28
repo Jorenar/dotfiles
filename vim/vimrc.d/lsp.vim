@@ -56,6 +56,28 @@ if g:enable_lsp
             \ })
     endif
 
+    if executable('sqls')
+      autocmd User lsp_setup call lsp#register_server({
+            \ 'name': 'sqls',
+            \ 'cmd': {server_info->['sqls']},
+            \ 'workspace_config': {
+            \   'sqls': {
+            \     'connections': [
+            \       {
+            \         'driver': 'mysql',
+            \         'proto':  'unix',
+            \         'user':   expand($SQLS_MYSQL_USER),
+            \         'passwd': expand($SQLS_MYSQL_PASSWD),
+            \         'path':   '/run/mysqld/mysqld.sock',
+            \         'dbName': expand($SQLS_MYSQL_DB),
+            \       },
+            \     ],
+            \   },
+            \ },
+            \ 'whitelist': [ 'sql' ]
+            \ })
+    endif
+
   augroup END
 
 else
