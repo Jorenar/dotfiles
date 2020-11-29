@@ -1,4 +1,4 @@
-if ( &term =~ "screen" || &term =~ "xterm" )
+if executable("tmux") && ( &term =~? "screen" || &term =~? "xterm" )
 
   " window title fix
   if &t_ts == ""

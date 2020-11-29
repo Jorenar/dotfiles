@@ -6,6 +6,8 @@
 force_flag=$1
 DIR="$(dirname $(realpath $0))"
 
+sh -c "cd $DIR/_depts/ && sh download.sh"
+
 . $DIR/env/variables
 
 chmod -R +x bin/
@@ -94,21 +96,16 @@ linking firefox/user.js         $XDG_DATA_HOME/firefox/user.js
 linking firefox/userContent.css $XDG_DATA_HOME/firefox/chrome/userContent.css
 
 # INSTALL LIBS {{{2
-
-tmp="$(mktemp -d)"
-cd "$tmp"
+# libJORENc {{{3
 
 if [ -z "$(ldconfig -p | grep 'jorenc')" ]; then
     if [ ! -e "$XDG_LIB_DIR/c/libjorenc.so" ]; then
-        git clone https://github.com/Jorengarenar/libJORENc.git
-        cd libJORENc
-        ./autogen.sh --XDG
-        make install
+        sh -c 'cd _depts/libJORENc && ./autogen.sh --XDG && make install'
     fi
 fi
 
-cd "$DIR"
-rm -rf "$tmp"
+# joren.sh.d {{{3
+linking  _depts/joren.sh.d  $XDG_LIB_DIR/shell/joren.sh.d
 
 # "PATCHING" {{{2
 # ~misc {{{3

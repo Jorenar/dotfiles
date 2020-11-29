@@ -2,5 +2,5 @@
 
 [ -x "$(command -v apulse)" ] && apulse="--P apulse" || echo "'apulse' is not installed"
 
-. $XDG_LIB_DIR/shell/wrapper_exec.sh
+. $JOREN_SHELL_LIB/wrapper_exec.sh
 wrapper_exec $apulse "$@"

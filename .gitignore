@@ -1,3 +1,6 @@
+_depts/*
 aerc/accounts.conf
 fonts/.uuid
 vim/doc/tags
+
+!_depts/download.sh

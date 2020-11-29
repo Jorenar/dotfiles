@@ -3,33 +3,6 @@
 # It is important for this file, to be in the same directory as 'profile' file
 #    (originals, not symlinks)
 
-# Init {{{
-pathmunge () {
-    after=0
-    if [ "$1" = "-a" ]; then
-        after=1
-        shift 1
-    fi
-
-    if [ -z "$2" ]; then
-        var='PATH'
-        new="$1"
-    else
-        var="$1"
-        new="$2"
-    fi
-
-    if ! echo "${!var}" | grep -Eq "(^|:)$new($|:)" ; then
-        if [ -z "${!var}" ]; then
-            export ${var}="$new"
-        elif [ "$after" = "0" ]; then
-            export ${var}="$new:${!var}"
-        else
-            export ${var}="${!var}:$new"
-        fi
-    fi
-}
-
 # -#- XDG Base Directory -#- {{{1
 # BASIC {{{2
 
@@ -54,13 +27,6 @@ export XDG_LSP_DIR="$XDG_DATA_HOME/lsp"
 export XDG_PROJECTS_DIR="$HOME/projects"
 export XDG_TAGS_DIR="$XDG_DATA_HOME/tags"
 export XDG_VM_DIR="$XDG_LOCAL_HOME/vm"
-
-# PATH {{{2
-pathmunge "$XDG_LOCAL_HOME/bin"
-pathmunge "$XDG_LOCAL_HOME/bin/AppImages"
-pathmunge "$XDG_LOCAL_HOME/bin/scripts"
-
-# Wrappers ("$_XDG_WRAPPERS", "$XDG_LOCAL_HOME/wrappers", ...) are added at the -End-
 
 # RELOCATING VARIABLES {{{2
 # ~misc {{{3
@@ -132,6 +98,39 @@ export SQLITE_HISTORY="$XDG_HISTORY_DIR/sqlite"
 # "Source" $XDG_CONFIG_HOME/user-dirs.dirs {{{2
 eval "$(sed 's/^[^#].*/export &/g;t;d' ${DIR:-$XDG_CONFIG_HOME}/user-dirs.dirs)"
 
+# JOREN_SHELL_LIB {{{1
+
+JOREN_SHELL_LIB="$XDG_LIB_DIR/shell/joren.sh.d"
+if [ -e "$JOREN_SHELL_LIB" ]; then
+    export JOREN_SHELL_LIB
+elif [ -n "$DIR" ]; then
+    JOREN_SHELL_LIB="$DIR/_depts/joren.sh.d"
+else
+    return
+fi
+
+# PATH etc. {{{1
+
+. "$JOREN_SHELL_LIB/pathmunge.sh"
+
+pathmunge "$XDG_LOCAL_HOME/bin"
+pathmunge "$XDG_LOCAL_HOME/bin/AppImages"
+pathmunge "$XDG_LOCAL_HOME/bin/scripts"
+
+pathmunge "$GEM_HOME/bin"     # Add gem to PATH
+pathmunge /usr/lib/ccache/bin # Enable ccache by default
+
+# Wrappers ("$_XDG_WRAPPERS", "$XDG_LOCAL_HOME/wrappers", ...) are added at the -End-
+
+# VITASDK
+export VITASDK=/usr/local/vitasdk
+pathmunge "$VITASDK/bin"
+
+# C
+pathmunge CPATH           "$XDG_INCLUDE_DIR/c"
+pathmunge LD_LIBRARY_PATH "$XDG_LIB_DIR/c"
+pathmunge LIBRARY_PATH    "$XDG_LIB_DIR/c"
+
 # General {{{1
 # Default programs {{{2
 
@@ -187,23 +186,8 @@ export LESS="-FXRS"
 # Enable GPG agent
 export GPG_AGENT_INFO
 
-# VITASDK
-export VITASDK=/usr/local/vitasdk
-pathmunge "$VITASDK/bin"
-
 # Virtual terminal number (if not set already by PAM)
 export XDG_VTNR="${XDG_VTNR:-$(tty | sed 's/[^0-9]*//g')}"
-
-# Enable ccache by default
-pathmunge /usr/lib/ccache/bin
-
-# Add gem to PATH
-pathmunge "$GEM_HOME/bin"
-
-# C
-pathmunge CPATH           "$XDG_INCLUDE_DIR/c"
-pathmunge LD_LIBRARY_PATH "$XDG_LIB_DIR/c"
-pathmunge LIBRARY_PATH    "$XDG_LIB_DIR/c"
 
 # Source additional, local env_variables {{{1
 [ -f $XDG_AUX_HOME/env_variables ] && . $XDG_AUX_HOME/env_variables
