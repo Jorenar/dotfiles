@@ -6,7 +6,7 @@
 force_flag=$1
 DIR="$(dirname $(realpath $0))"
 
-sh -c "cd $DIR/_depts/ && sh download.sh"
+sh -c "cd $DIR/_deps/ && sh download.sh"
 
 . $DIR/env/variables
 
@@ -100,12 +100,12 @@ linking firefox/userContent.css $XDG_DATA_HOME/firefox/chrome/userContent.css
 
 if [ -z "$(ldconfig -p | grep 'jorenc')" ]; then
     if [ ! -e "$XDG_LIB_DIR/c/libjorenc.so" ]; then
-        sh -c 'cd _depts/libJORENc && ./autogen.sh --XDG && make install'
+        sh -c 'cd _deps/libJORENc && ./autogen.sh --XDG && make install'
     fi
 fi
 
 # joren.sh.d {{{3
-linking  _depts/joren.sh.d  $XDG_LIB_DIR/shell/joren.sh.d
+linking  _deps/joren.sh.d  $XDG_LIB_DIR/shell/joren.sh.d
 
 # "PATCHING" {{{2
 # ~misc {{{3

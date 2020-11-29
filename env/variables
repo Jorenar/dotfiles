@@ -104,7 +104,7 @@ JOREN_SHELL_LIB="$XDG_LIB_DIR/shell/joren.sh.d"
 if [ -e "$JOREN_SHELL_LIB" ]; then
     export JOREN_SHELL_LIB
 elif [ -n "$DIR" ]; then
-    JOREN_SHELL_LIB="$DIR/_depts/joren.sh.d"
+    JOREN_SHELL_LIB="$DIR/_deps/joren.sh.d"
 else
     return
 fi
