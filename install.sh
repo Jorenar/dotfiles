@@ -96,15 +96,11 @@ linking firefox/user.js         $XDG_DATA_HOME/firefox/user.js
 linking firefox/userContent.css $XDG_DATA_HOME/firefox/chrome/userContent.css
 
 # INSTALL LIBS {{{2
-# libJORENc {{{3
 
-if [ -z "$(ldconfig -p | grep 'jorenc')" ]; then
-    if [ ! -e "$XDG_LIB_DIR/c/libjorenc.so" ]; then
-        sh -c 'cd _deps/libJORENc && ./autogen.sh --XDG && make install'
-    fi
-fi
+# libJOREN
+sh -c 'cd _deps/libJOREN && ./autogen.sh --XDG && make install'
 
-# joren.sh.d {{{3
+# joren.sh.d
 linking  _deps/joren.sh.d  $XDG_LIB_DIR/shell/joren.sh.d
 
 # "PATCHING" {{{2

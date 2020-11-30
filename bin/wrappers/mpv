@@ -14,5 +14,5 @@ elif [ "$1" == "--yt" ]; then
     ARGS="--volume=50 --loop-playlist --no-video"
 fi
 
-. $XDG_LIB_DIR/shell/wrapper_exec.sh
+. "$JOREN_SHELL_LIB/wrapper_exec.sh"
 wrapper_exec $ARGS "$@"

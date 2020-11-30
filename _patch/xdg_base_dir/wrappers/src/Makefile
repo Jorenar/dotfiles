@@ -8,4 +8,4 @@ TARGETS := $(patsubst %.c,$(_XDG_WRAPPERS)/%,$(SOURCES))
 all: $(TARGETS)
 
 $(_XDG_WRAPPERS)/%: %.c
-	$(CC) $(CFLAGS) -o $@ $< -ljorenc
+	$(CC) $(CFLAGS) -o $@ $< -ljoren

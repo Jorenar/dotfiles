@@ -3,7 +3,7 @@
 PRIMARY="HDMI-0"
 SECONDARY="DP-3"
 
-WACOM_ID="10"
+WACOM_ID="16"
 
 if [ -z "$(xrandr --listactivemonitors | grep 'Monitors: 1')" ]; then
     xrandr --output $PRIMARY --primary
