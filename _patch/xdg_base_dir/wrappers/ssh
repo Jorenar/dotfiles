@@ -7,5 +7,5 @@ SSH_CONFIG="-F $XDG_CONFIG_HOME/ssh/config"
 SSH_ID="$XDG_DATA_HOME/ssh/id_rsa"
 OPTIONS="-o IdentityFile=$SSH_ID -o UserKnownHostsFile=$XDG_DATA_HOME/ssh/known_hosts"
 
-. "$JOREN_SHELL_LIB/wrapper_exec.sh"
+. "$XDG_LIB_DIR/shell/wrapper_exec.sh"
 wrapper_exec $SSH_CONFIG $OPTIONS "$@"

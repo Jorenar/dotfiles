@@ -2,5 +2,5 @@
 
 mkdir -p "$XDG_CONFIG_HOME/nvidia"
 
-. "$JOREN_SHELL_LIB/wrapper_exec.sh"
+. "$XDG_LIB_DIR/shell/wrapper_exec.sh"
 wrapper_exec --config="$XDG_CONFIG_HOME/nvidia/rc.conf" "$@"

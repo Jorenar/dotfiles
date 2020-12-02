@@ -10,7 +10,7 @@
 
 #include <joren/sys/mkdir_p.h>
 #include <joren/sys/rm.h>
-#include <joren/sys/wrapper_exec.h>
+#include <wrapper_exec.h>
 
 #define TIME_LIMIT 5    // wait 5 seconds for '~/.mozilla' dir to appear
 #define PROC_SELF  "/proc/self/exe"

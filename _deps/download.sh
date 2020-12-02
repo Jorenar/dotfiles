@@ -5,6 +5,7 @@ gitclone() {
 }
 
 gitclone https://github.com/Jorengarenar/joren.sh.d.git
+gitclone https://github.com/Jorengarenar/wrapper_exec.git
 
 if [ -z "$(ldconfig -p | grep 'joren')" ]; then
     if [ ! -e "$XDG_LIB_DIR/c/libjoren.so" ]; then

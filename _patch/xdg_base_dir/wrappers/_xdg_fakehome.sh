@@ -2,5 +2,5 @@
 
 HOME="${XDG_FAKEHOME_DIR:-$HOME/.local/fakehome}"
 
-. "$JOREN_SHELL_LIB/wrapper_exec.sh"
+. "$XDG_LIB_DIR/shell/wrapper_exec.sh"
 wrapper_exec "$@"

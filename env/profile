@@ -14,7 +14,7 @@ elif [ -n "$TMOUT" ]; then
 elif [ -x "$(command -v lsof)" ]; then
     t="$(lsof -p $$ -Fn0 | tail -1)"; t="${t#n}"
 else
-    t="$HOME/.local/config/profile"
+    t="$HOME/.local/config/env/profile"
 fi
 
 . "$(dirname $(realpath $t))/variables"; unset t
