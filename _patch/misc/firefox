@@ -3,4 +3,4 @@
 [ -x "$(command -v apulse)" ] && apulse="--P apulse" || echo "'apulse' is not installed"
 
 . $XDG_LIB_DIR/shell/progwrap.sh
-progwrap $apulse "$@"
+progwrap_exec $apulse "$@"

@@ -8,4 +8,4 @@ SSH_ID="$XDG_DATA_HOME/ssh/id_rsa"
 OPTIONS="-o IdentityFile=$SSH_ID -o UserKnownHostsFile=$XDG_DATA_HOME/ssh/known_hosts"
 
 . "$XDG_LIB_DIR/shell/progwrap.sh"
-progwrap $SSH_CONFIG $OPTIONS "$@"
+progwrap_exec $SSH_CONFIG $OPTIONS "$@"

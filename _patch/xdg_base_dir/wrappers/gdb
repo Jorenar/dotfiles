@@ -6,4 +6,4 @@ for dir in $(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $SHELL)"); do
 done
 
 . "$XDG_LIB_DIR/shell/progwrap.sh"
-progwrap -q -x "$XDG_CONFIG_HOME/gdb/init" "$@"
+progwrap_exec -q -x "$XDG_CONFIG_HOME/gdb/init" "$@"

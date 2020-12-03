@@ -8,7 +8,7 @@ TARGETS := $(patsubst %.c,$(_XDG_WRAPPERS)/%,$(SOURCES))
 all: $(TARGETS)
 
 $(_XDG_WRAPPERS)/%: %.c
-	$(CC) $(CFLAGS) -o $@ $< -ljoren -lprogwrap
+	$(CC) $(CFLAGS) -o $@ $< -ljoren
 
 clean:
 	rm $(_XDG_WRAPPERS)/firefox

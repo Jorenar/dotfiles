@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 
 . "$XDG_LIB_DIR/shell/progwrap.sh"
-progwrap -conf "${XDG_CONFIG_HOME:-$HOME/.config}"/dosbox/dosbox.conf "$@"
+progwrap_exec -conf "${XDG_CONFIG_HOME:-$HOME/.config}"/dosbox/dosbox.conf "$@"
