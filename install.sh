@@ -107,8 +107,8 @@ fi
 # joren.sh.d
 linking  _deps/joren.sh.d  $XDG_LIB_DIR/shell/joren.sh.d
 
-# wrapper_exec
-sh -c 'cd _deps/wrapper_exec && make install'
+# libProgWrap
+sh -c 'cd _deps/libProgWrap && make install'
 
 # "PATCHING" {{{2
 # ~misc {{{3
