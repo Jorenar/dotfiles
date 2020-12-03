@@ -136,7 +136,8 @@ endfor
 " FUNCTIONS {{{1
 " GrepRename - replace through whole project {{{2
 function! s:GrepRename(expr1, expr2) abort
-  execute "tabe | lvimgrep /\\C\\W".a:expr1."\\W/j ** | ldo s/\\C\\\(\\W\\)".a:expr1."\\\(\\W\\)/\\1".a:expr2."\\2/gc | update" | q
+  execute 'tabe | lvimgrep /\C\<' . a:expr1 . '\>/j ** | ldo s/\C\<' . a:expr1 . '\>/' . a:expr2 . '/gc | update'
+  quit
 endfunction
 
 " FillLine - fill line with characters to given column {{{2
@@ -343,6 +344,7 @@ let g:minPlug_singleFiles = {
       \ "darkness.vim"  : [ "colors", "https://git.io/JkS8m" ],
       \ "MvVis.vim"     : [ "plugin", "https://git.io/JkSRr" ],
       \ "sql-upper.vim" : [ "ftplugin/sql", "https://git.io/JkQjr" ],
+      \ "syntaxMarkerFold.vim": [ "plugin", "https://git.io/JItHQ" ],
       \ }
 
 packadd cfilter

@@ -1,7 +1,7 @@
 " Markdown
 " vim: fdm=marker fen
 
-let g:markdown_fenced_languages = [ 'c', 'cpp', 'html', 'javascript', 'python', 'sh', 'vim' ]
+let g:markdown_fenced_languages = [ 'c', 'cpp', 'html', 'javascript', 'python', 'sh', 'sql', 'vim' ]
 
 " COMMANDS {{{1
 
