@@ -134,14 +134,13 @@ for [ft, fp] in items(s:formatprg_for_filetype)
 endfor
 
 " FUNCTIONS {{{1
-" GrepRename - replace through whole project {{{2
-function! s:GrepRename(expr1, expr2) abort
+
+function! s:GrepRename(expr1, expr2) abort " replace through whole project
   execute 'tabe | lvimgrep /\C\<' . a:expr1 . '\>/j ** | ldo s/\C\<' . a:expr1 . '\>/' . a:expr2 . '/gc | update'
   quit
 endfunction
 
-" FillLine - fill line with characters to given column {{{2
-function! s:FillLine(str, ...) abort
+function! s:FillLine(str, ...) abort " fill line with characters to given column
   let to_column = get(a:, 1, &tw)
   let reps = (to_column - col("$")) / len(a:str)
   if reps > 0
@@ -149,7 +148,6 @@ function! s:FillLine(str, ...) abort
   endif
 endfunction
 
-" Rename variable {{{2
 function! RenameVar(old, ...) abort
   let newName = input( a:old . " -> ", get(a:, 1, a:old))
   if !empty(newName)
@@ -157,8 +155,7 @@ function! RenameVar(old, ...) abort
   endif
 endfunction
 
-" VisSort - sorts based on visual-block selected portion of the lines {{{2
-function! s:VisSort(isnmbr) range abort
+function! s:VisSort(isnmbr) range abort " sorts based on visual-block selected portion of the lines
   if visualmode() != "\<c-v>"
     execute "silent! ".a:firstline.",".a:lastline."sort i"
     return
@@ -177,21 +174,19 @@ function! s:VisSort(isnmbr) range abort
   let @a = keeprega
 endfun
 
-" VSetSearch - Search for selected text, forwards or backwards. {{{2
-function! s:VSetSearch(cmdtype) abort
+function! s:VSetSearch(cmdtype) abort " search for selected text, forwards or backwards
   let temp = @s
   norm! gv"sy
   let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
   let @s = temp
 endfunction
 
-" FOR STATUS LINE {{{2
-" FileEncoding {{{3
+" FOR STATUS LINE {{{
+
 function! FileEncoding() abort
   return (&fenc == "" ? &enc : &fenc).((exists("+bomb") && &bomb) ? " BOM" : "")
 endfunction
 
-" FileSize {{{3
 function! FileSize() abort
   let bytes = getfsize(expand(@%))
   if (bytes >= 1024*1024)
@@ -205,7 +200,6 @@ function! FileSize() abort
   endif
 endfunction
 
-" IssuesCount {{{3
 function! IssuesCount() abort
   if get(g:, 'ale_enabled', 0)
     let l:counts = ale#statusline#Count(bufnr(''))
@@ -217,18 +211,18 @@ function! IssuesCount() abort
   endif
 endfunction
 
-" ModifBufs {{{3
 function! ModifBufs() abort
   let cnt = len(filter(getbufinfo(), 'v:val.changed'))
   return cnt == 0 ? "" : ( &mod ? "[+". (cnt>1?cnt:"") ."]" : "[".cnt."]" )
 endfunction
 
-" Number of buffers {{{3
 function! NumOfBufs() abort
   let num = len(getbufinfo({'buflisted':1}))
   let hid = len(filter(getbufinfo({'buflisted':1}), 'empty(v:val.windows)'))
   return hid ? num-hid."+".hid : num
 endfunction
+
+" }}}
 
 " MAPPINGS {{{1
 " Normal mode {{{2
@@ -240,7 +234,6 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <expr> <F4> &virtualedit == "all" ? ":set virtualedit=\<CR>" : ":set virtualedit=all\<CR>"
 nnoremap <F3> :set cursorline! cursorcolumn!<CR>
-nnoremap <Leader><F5> :syntax off <bar> syntax on<CR>
 nnoremap <Leader>= gg=G``
 nnoremap <Leader>b :bnext<CR>
 nnoremap <Leader>h :nohlsearch<CR>
@@ -322,11 +315,11 @@ set tags+=.git/tags;
 
 " PLUGINS AND PACKAGES {{{1
 
-if empty(glob(substitute(&packpath, ",.*", "", "")."/pack/plugins/opt/minPlug")) " {{{
+if empty(glob(substitute(&packpath, ",.*", "", "")."/pack/plugins/opt/minPlug"))
   call system("git clone --depth=1 https://github.com/Jorengarenar/minPlug ".
         \ substitute(&packpath, ",.*", "", "")."/pack/plugins/opt/minPlug")
   autocmd VimEnter * silent! MinPlugInstall | echo "minPlug: INSTALLED"
-endif " }}}
+endif
 
 packadd minPlug
 
@@ -417,7 +410,7 @@ set statusline+=\ \:\ %c\              " Current column
 
 " ### OTHER {{{1
 
-augroup OTHER " {{{
+augroup OTHER
   autocmd!
 
   " Open file at the last known position
@@ -443,9 +436,9 @@ augroup OTHER " {{{
   " If file has more lines than window height, then fold it
   autocmd BufReadPost * if line('$') > winheight(0) | setlocal fen | endif
 
-augroup END " }}}
+augroup END
 
-augroup TERMINAL_OPTIONS " {{{2
+augroup TERMINAL_OPTIONS
   autocmd!
 
   execute 'autocmd '.(has("nvim") ? "TermOpen" : "TerminalOpen").' *
@@ -459,10 +452,8 @@ augroup TERMINAL_OPTIONS " {{{2
     autocmd TermClose * let b:term_job_finished = 1 | call feedkeys("\<C-\>\<C-n>")
   endif
 
-augroup END " }}}
+augroup END
 
 let javaScript_fold = 1
 
 runtime! vimrc.d/*.vim
-
-" vim: fdm=marker fen:

@@ -7,8 +7,8 @@ gitclone() {
 gitclone https://github.com/Jorengarenar/joren.sh.d.git
 gitclone https://github.com/Jorengarenar/libProgWrap.git
 
-if [ -z "$(ldconfig -p | grep 'joren')" ]; then
-    if [ ! -e "$XDG_LIB_DIR/c/libjoren.so" ]; then
-        gitclone https://github.com/Jorengarenar/libJOREN.git
+if [ -z "$(ldconfig -p | grep 'jcbc')" ]; then
+    if [ ! -e "$XDG_LIB_DIR/c/libjcbc.so" ]; then
+        gitclone https://github.com/Jorengarenar/libJCBC.git
     fi
 fi

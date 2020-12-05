@@ -98,11 +98,11 @@ linking firefox/userContent.css $XDG_DATA_HOME/firefox/chrome/userContent.css
 # INSTALL LIBS {{{2
 
 # libJOREN
-if [ -z "$(ldconfig -p | grep 'joren')" ]; then
-    if [ ! -e "$XDG_LIB_DIR/c/libjoren.so" ]; then
-        cd _deps/libJOREN
+if [ -z "$(ldconfig -p | grep 'jcbc')" ]; then
+    if [ ! -e "$XDG_LIB_DIR/c/libjcbc.so" ]; then
+        cd _deps/libJCBC
         ./autogen.sh --includedir=$XDG_INCLUDE_DIR/c --libdir=$XDG_LIB_DIR/c
-        make install
+        cd build && make install
         cd $DIR
     fi
 fi
