@@ -8,8 +8,8 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include <joren/sys/mkdir_p.h>
-#include <joren/sys/rm.h>
+#include <jcbc/sys/mkdir_p.h>
+#include <jcbc/sys/rm.h>
 #include <progwrap.h>
 
 #define TIME_LIMIT 5    // wait 5 seconds for '~/.mozilla' dir to appear
