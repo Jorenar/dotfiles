@@ -1,4 +1,4 @@
-" vim: fdm=marker fen fdl=1
+" vim: fen fdl=1
 
 " REGIONS {{{1
 " Include guards {{{2
@@ -22,6 +22,46 @@ syntax match cCaseBadFormat "\v%(<%(case|default)>.*)@<!%(\S.*)@<=<%(case|defaul
 hi def link cCaseBadFormat cError
 
 " FOLDING {{{1
+" Fold K&R style {{{2
+
+syn clear cBlock
+
+let s:contains = ''
+if exists("c_curly_error")
+  let s:contains = ' contains=ALLBUT,cBadBlock,cCurlyError,@cParenGroup,cErrInParen,cErrInBracket,@cStringGroup,@Spell'
+endif
+
+let s:pattern = '%('
+
+if &ft ==# "cpp" " Constructors
+  let s:pattern .= ''
+        \ . '%('
+        \ .    '%([^,:]|\n|^|<%(public|private|protected)>\s*:)'
+        \ .    '\n\s*'
+        \ . ')@<='
+        \ . '%(<%(while|for|if|switch|catch)>)@!'
+        \ . '\S\ze\S*%(::\S+)*\s*\(.*\)\s*%(:.*)?'
+
+  let s:pattern .= '|'
+endif
+
+let s:pattern .= ''
+      \ . '%('
+      \ .    '^\s*%(//.*|.*\*/|\{|<%(public|private|protected)>\s*:)?'
+      \ .    '\n\s*\S+'
+      \ .    '%(.*[^:]:[^:].*)@!'
+      \ .    '%(\s+\S+)*'
+      \ . ')@<='
+      \ . '\s\ze\S+\s*'
+
+let s:pattern .= ')%(;)@<!\n\s*'
+
+exec 'syn region cBlock_ end="}" fold' . s:contains
+      \ . ' start = "\%#=1\C\v'   . s:pattern . '\{"'
+      \ . ' start = "\%#=1\C\v%(' . s:pattern . ')@<!\{"'
+
+unlet s:contains s:pattern
+
 " Switch's cases {{{2
 
 syntax region cCaseFold transparent fold
