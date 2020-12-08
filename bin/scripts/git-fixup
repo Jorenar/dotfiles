@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+if ! git diff-files --quiet; then
+    echo "Unstaged changes, please commit or stash with --keep-index"
+    exit 1
+fi
+
+COMMIT=$(git rev-parse $1) || exit 1
+git commit --fixup $COMMIT || exit 1
+EDITOR=true VISUAL=true git rebase -i --autosquash $COMMIT~1
