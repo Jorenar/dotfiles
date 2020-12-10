@@ -343,10 +343,8 @@ MinPlug prabirshrestha/vim-lsp
 MinPlug puremourning/vimspector
 
 let g:minPlug_singleFiles = {
-      \ "darkness.vim"  : [ "colors", "https://git.io/JkS8m" ],
       \ "MvVis.vim"     : [ "plugin", "https://git.io/JkSRr" ],
       \ "sql-upper.vim" : [ "ftplugin/sql", "https://git.io/JkQjr" ],
-      \ "syntaxMarkerFold.vim": [ "plugin", "https://git.io/JItHQ" ],
       \ }
 
 
@@ -435,10 +433,6 @@ augroup OTHER
   " Set 'foldmethod' to 'syntax'
   autocmd FileType css,javascript,json,typescript,scss setlocal foldmethod=syntax
 
-  " Protect folds when toggling insert mode / switching windows
-  autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
-  autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
-
   " Automatically open QuickFix
   autocmd QuickFixCmdPost [^l]* nested cwindow
   autocmd QuickFixCmdPost    l* nested lwindow
@@ -470,3 +464,5 @@ augroup END
 let javaScript_fold = 1
 
 runtime! vimrc.d/*.vim
+
+set secure exrc
