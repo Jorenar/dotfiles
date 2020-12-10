@@ -148,6 +148,13 @@ function! s:FillLine(str, ...) abort " fill line with characters to given column
   endif
 endfunction
 
+function! MyFoldText() abort
+  let [ old_cms, &l:cms ] = [ &l:cms, '' ]
+  let text = foldtext()
+  let &l:cms = old_cms
+  return text
+endfunction
+
 function! RenameVar(old, ...) abort
   let newName = input( a:old . " -> ", get(a:, 1, a:old))
   if !empty(newName)
@@ -273,6 +280,7 @@ nmap s <nop>
 set backup
 set colorcolumn=+1,+21
 set complete+=kspell
+set foldtext=MyFoldText()
 set hidden
 set hlsearch
 set ignorecase
@@ -336,7 +344,6 @@ MinPlug puremourning/vimspector
 
 let g:minPlug_singleFiles = {
       \ "darkness.vim"  : [ "colors", "https://git.io/JkS8m" ],
-      \ "fastfold.vim"  : [ "plugin", "https://git.io/JIEo6" ],
       \ "MvVis.vim"     : [ "plugin", "https://git.io/JkSRr" ],
       \ "sql-upper.vim" : [ "ftplugin/sql", "https://git.io/JkQjr" ],
       \ "syntaxMarkerFold.vim": [ "plugin", "https://git.io/JItHQ" ],
@@ -384,11 +391,6 @@ let g:miniSnip_extends = {
 
 hi! link TagbarNestedKind Comment
 hi! link TagbarType Comment
-
-augroup FastFold_update
-  au!
-  autocmd TextChanged,InsertLeave * silent! FastFoldUpdate
-augroup END
 
 " STATUS LINE {{{1
 
