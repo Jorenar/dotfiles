@@ -137,19 +137,12 @@ pathmunge LIBRARY_PATH    "$XDG_LIB_DIR/c"
 SHELL=bash # path determined in -End-
 # Also, dont set `tmux` etc. here or as login shell - can cause problems
 
+export BROWSER=firefox
 export EDITOR=vim
 export MANPAGER="vim -M +MANPAGER -"
 export PAGER="less"
 export TERMINAL=xterm
 export VISUAL="$EDITOR"
-
-if [ -n "$DISPLAY" ]; then
-    BROWSER=firefox
-else
-    BROWSER=elinks
-fi
-
-export BROWSER
 
 # Theme {{{2
 

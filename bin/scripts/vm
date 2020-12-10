@@ -12,7 +12,7 @@ qemu-system-x86_64 \
     -enable-kvm \
     -machine type=q35,accel=kvm \
     -device intel-iommu \
-    -smp cores=8,sockets=1 \
+    -smp cores=4,sockets=2 \
     -drive format=raw,file="$DISK",aio=native,cache.direct=on \
     -cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time \
     -m 8G \

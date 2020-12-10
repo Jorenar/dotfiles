@@ -26,7 +26,11 @@ if [ "$1" = "--l" ]; then
 
     "$uncrustify" -q --no-backup $lang -c "$cfg" | sed -e 's/\(\(while\|for\).*)\)\s\?{}/\1;/g'
 
+    st=$?
+
     rm $cfg
+
+    exit $st
 
 else
     exec "$uncrustify" "$@"
