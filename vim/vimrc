@@ -324,13 +324,7 @@ set tags+=.git/tags;
 
 " PLUGINS AND PACKAGES {{{1
 
-if empty(glob(substitute(&packpath, ",.*", "", "")."/pack/plugins/opt/minPlug"))
-  call system("git clone --depth=1 https://github.com/Jorengarenar/minPlug ".
-        \ substitute(&packpath, ",.*", "", "")."/pack/plugins/opt/minPlug")
-  autocmd VimEnter * silent! MinPlugInstall | echo "minPlug: INSTALLED"
-endif
-
-packadd minPlug
+source $VIMDOTDIR/plugin/minPlug.vim
 
 MinPlug ctrlpvim/ctrlp.vim
 MinPlug dense-analysis/ale
@@ -343,8 +337,12 @@ MinPlug prabirshrestha/vim-lsp
 MinPlug puremourning/vimspector
 
 let g:minPlug_singleFiles = {
+      \ "darkness.vim"  : [ "colors", "https://git.io/JkS8m", "$VIMDOTDIR" ],
+      \ "fastfold.vim"  : [ "plugin", "https://git.io/JIEo6", "$VIMDOTDIR" ],
+      \ "minPlug.vim"   : [ "plugin", "https://git.io/JIoGr", "$VIMDOTDIR" ],
       \ "MvVis.vim"     : [ "plugin", "https://git.io/JkSRr" ],
-      \ "sql-upper.vim" : [ "ftplugin/sql", "https://git.io/JkQjr" ],
+      \ "sql-upper.vim" : [ "ftplugin/sql", "https://git.io/JkQjr", "$VIMDOTDIR" ],
+      \ "syntaxMarkerFold.vim": [ "plugin", "https://git.io/JItHQ", "$VIMDOTDIR" ],
       \ }
 
 
@@ -373,6 +371,7 @@ let g:ctrlp_prompt_mappings          = { 'PrtExit()': [ '<C-[>', '<Esc>', '<C-c>
 let g:ctrlp_types                    = [ 'fil' ]
 let g:fastfold_fold_command_suffixes = [ 'x' ]
 let g:fastfold_savehook              = 0
+let g:minPlug_updateSelf             = 0
 let g:tagbar_compact                 = 1
 let g:tagbar_sort                    = 0
 let g:undotree_SetFocusWhenToggle    = 1
@@ -425,13 +424,13 @@ augroup OTHER
   autocmd!
 
   " Open file at the last known position
-  autocmd BufReadPost * if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit' | exe "normal! g`\"" | endif
+  autocmd BufReadPost * if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit' | exec "norm! g`\"" | endif
 
   " Trim trailing whitespace
   autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
 
   " Set 'foldmethod' to 'syntax'
-  autocmd FileType css,javascript,json,typescript,scss setlocal foldmethod=syntax
+  autocmd FileType css,json,typescript,scss setlocal foldmethod=syntax
 
   " Automatically open QuickFix
   autocmd QuickFixCmdPost [^l]* nested cwindow
@@ -460,8 +459,6 @@ augroup TERMINAL_OPTIONS
   endif
 
 augroup END
-
-let javaScript_fold = 1
 
 runtime! vimrc.d/*.vim
 

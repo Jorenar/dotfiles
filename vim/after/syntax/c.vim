@@ -53,6 +53,8 @@ if &ft ==# "cpp"
   let s:pattern .= '|'
 endif
 
+let s:pattern .= '%(<%(while|for|if|switch|catch)\(.*)@<=\)\ze\s*' . '|'
+
 let s:pattern .= ''
       \ . '%('
       \ .    '^\s*%(//.*|.*\*/|\{|<%(public|private|protected)>\s*:|.*\>)?'
@@ -64,20 +66,11 @@ let s:pattern .= ''
 
 let s:pattern .= ')%(;\s*)@<!%(//.*|/\*.*\*/)?\n\s*'
 
-let s:inv_pat = ''
-      \ . '%('
-      \ .    '\S.*'      . '|'
-      \ .    '^\s*\n\s*' . '|'
-      \ .    ';\s*(//.*|/\*.*\*/)?\n\s*' . '|'
-      \ .    '<%(while|for|if|switch|catch)>\(.*\n\s*' . '|'
-      \ .    '%(' . s:pattern . ')@<!'
-      \ . ')@<='
-
 exec 'syn region cBlock_ end="}" fold' . s:contains
       \ . ' start = "\%#=1\C\v' . s:pattern . '\{"'
-      \ . ' start = "\%#=1\C\v' . s:inv_pat . '\{"'
+      \ . ' start = "\%#=1\C\v%(' . s:pattern . ')@<!\{"'
 
-unlet s:contains s:pattern s:inv_pat
+unlet s:contains s:pattern
 
 " Switch's cases {{{2
 
