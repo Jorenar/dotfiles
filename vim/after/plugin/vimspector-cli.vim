@@ -18,6 +18,7 @@ let s:list = {
       \ "file ":      "",
       \ "fin":        "StepOut()",
       \ "funcBreak":  "AddFunctionBreakpoint(expand('<cexpr>'))",
+      \ "pid":        "",
       \ "kill":       "Stop()",
       \ "n":          "StepOver()",
       \ "pause":      "Pause()",
@@ -113,7 +114,8 @@ function! s:Vimspector(...) abort
     if cmd ==# "q!"
       silent! call :silent! vimspector#ClearBreakpoints()
     endif
-
+  elseif cmd ==# "pid"
+      call vimspector#LaunchWithSettings( #{ configuration: "GDB-attach" } )
   elseif !empty(args)
     if cmd ==# "!"
       call vimspector#Evaluate('-exec '.args)

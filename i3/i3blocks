@@ -11,7 +11,7 @@ command=lscpu | awk '/CPU MHz/ {printf "%4s MHz", int($3)}' && [ "$(cpu-gov p)" 
 interval=1
 
 [wifi]
-command=ssid="$(iw dev wlan0 info | awk '/ssid/ {print $2}')"; if [ -z "$ssid" ]; then echo "[X]"; else echo "$ssid [$(awk 'NR==3 {print int($4)}' /proc/net/wireless) dBm]"; fi
+command=ssid="$(iw dev wlan0 info | awk '/ssid/ {print $2}')"; [ -z "$ssid" ] && echo "[X]" || echo "$ssid [$(awk 'NR==3 {print int($4)}' /proc/net/wireless) dBm]"
 interval=5
 
 [bluetooth]

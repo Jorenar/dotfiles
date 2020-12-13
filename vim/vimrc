@@ -13,21 +13,20 @@ if empty($XDG_CACHE_HOME)  | let $XDG_CACHE_HOME  = $HOME."/.cache"       | endi
 if empty($XDG_CONFIG_HOME) | let $XDG_CONFIG_HOME = $HOME."/.config"      | endif
 if empty($XDG_DATA_HOME)   | let $XDG_DATA_HOME   = $HOME."/.local/share" | endif
 
-set backupdir=$XDG_DATA_HOME/vim/backup
-set directory=$XDG_CACHE_HOME/vim/swap
-set packpath^=$XDG_DATA_HOME/vim
-set runtimepath+=$VIMDOTDIR/after
+set runtimepath+=$VIMDOTDIR/vim/after
 set runtimepath+=$XDG_DATA_HOME/vim
-set undodir=$XDG_CACHE_HOME/vim/undo
+set packpath^=$XDG_DATA_HOME/vim
+
+set backupdir=$XDG_CACHE_HOME/vim/backup | call mkdir(&backupdir, 'p', 0700)
+set directory=$XDG_CACHE_HOME/vim/swap   | call mkdir(&directory, 'p', 0700)
+set undodir=$XDG_CACHE_HOME/vim/undo     | call mkdir(&undodir,   'p', 0700)
+set viewdir=$XDG_CACHE_HOME/vim/view     | call mkdir(&viewdir,   'p', 0700)
 
 if !has('nvim') " Neovim has its own special location
   set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
 endif
 
-call mkdir($XDG_CACHE_HOME."/vim/swap", "p")
-call mkdir($XDG_DATA_HOME."/vim/spell", 'p')
-call mkdir(&backupdir, 'p')
-call mkdir(&undodir, 'p')
+call mkdir($XDG_DATA_HOME."/vim/spell", 'p', 0700)
 
 " }}}
 
@@ -271,9 +270,10 @@ xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-r>=@/<CR><CR>
 vnoremap <Leader>s y:%s//g<Left><Left><C-r>"/
 
 " ### DISABLE {{{2
+map <Esc>[29~ <nop>
 map gh <nop>
-vmap s <nop>
 nmap s <nop>
+vmap s <nop>
 
 " OPTIONS {{{1
 
@@ -369,7 +369,7 @@ let g:ctrlp_clear_cache_on_exit      = 0
 let g:ctrlp_extensions               = [ 'buffertag', 'quickfix' ]
 let g:ctrlp_prompt_mappings          = { 'PrtExit()': [ '<C-[>', '<Esc>', '<C-c>' ] }
 let g:ctrlp_types                    = [ 'fil' ]
-let g:fastfold_fold_command_suffixes = [ 'x' ]
+let g:fastfold_fold_command_suffixes = [ 'C', 'x', 'X', 'm', 'M' ]
 let g:fastfold_savehook              = 0
 let g:minPlug_updateSelf             = 0
 let g:tagbar_compact                 = 1
