@@ -1,19 +1,13 @@
 " # VIMRC #
 
-" BASICS {{{1
-
-filetype plugin indent on
-set backspace=indent,eol,start
-set nocompatible
-syntax enable
-
-" XDG support    (`set rtp^=$VIMDOTDIR` is in $VIMINIT) {{{
+" XDG support {{{1
 
 if empty($XDG_CACHE_HOME)  | let $XDG_CACHE_HOME  = $HOME."/.cache"       | endif
 if empty($XDG_CONFIG_HOME) | let $XDG_CONFIG_HOME = $HOME."/.config"      | endif
 if empty($XDG_DATA_HOME)   | let $XDG_DATA_HOME   = $HOME."/.local/share" | endif
 
-set runtimepath+=$VIMDOTDIR/vim/after
+set runtimepath^=$XDG_CONFIG_HOME/vim
+set runtimepath+=$XDG_CONFIG_HOME/vim/after
 set runtimepath+=$XDG_DATA_HOME/vim
 set packpath^=$XDG_DATA_HOME/vim
 
@@ -23,12 +17,18 @@ set undodir=$XDG_CACHE_HOME/vim/undo     | call mkdir(&undodir,   'p', 0700)
 set viewdir=$XDG_CACHE_HOME/vim/view     | call mkdir(&viewdir,   'p', 0700)
 
 if !has('nvim') " Neovim has its own special location
-  set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
+  set viminfofile=$XDG_CACHE_HOME/vim/viminfo
 endif
 
 call mkdir($XDG_DATA_HOME."/vim/spell", 'p', 0700)
 
-" }}}
+" BASICS {{{1
+
+set nocompatible
+
+filetype plugin indent on
+set backspace=indent,eol,start
+syntax enable
 
 " "Force" Python3 (helpful for plugins)
 if has('python3')
@@ -324,7 +324,7 @@ set tags+=.git/tags;
 
 " PLUGINS AND PACKAGES {{{1
 
-source $VIMDOTDIR/plugin/minPlug.vim
+source $XDG_CONFIG_HOME/vim/plugin/minPlug.vim
 
 MinPlug ctrlpvim/ctrlp.vim
 MinPlug dense-analysis/ale
@@ -337,12 +337,12 @@ MinPlug prabirshrestha/vim-lsp
 MinPlug puremourning/vimspector
 
 let g:minPlug_singleFiles = {
-      \ "darkness.vim"  : [ "colors", "https://git.io/JkS8m", "$VIMDOTDIR" ],
-      \ "fastfold.vim"  : [ "plugin", "https://git.io/JIEo6", "$VIMDOTDIR" ],
-      \ "minPlug.vim"   : [ "plugin", "https://git.io/JIoGr", "$VIMDOTDIR" ],
+      \ "darkness.vim"  : [ "colors", "https://git.io/JkS8m", "$XDG_CONFIG_HOME/vim" ],
+      \ "fastfold.vim"  : [ "plugin", "https://git.io/JIEo6", "$XDG_CONFIG_HOME/vim" ],
+      \ "minPlug.vim"   : [ "plugin", "https://git.io/JIoGr", "$XDG_CONFIG_HOME/vim" ],
       \ "MvVis.vim"     : [ "plugin", "https://git.io/JkSRr" ],
-      \ "sql-upper.vim" : [ "ftplugin/sql", "https://git.io/JkQjr", "$VIMDOTDIR" ],
-      \ "syntaxMarkerFold.vim": [ "plugin", "https://git.io/JItHQ", "$VIMDOTDIR" ],
+      \ "sql-upper.vim" : [ "ftplugin/sql", "https://git.io/JkQjr", "$XDG_CONFIG_HOME/vim" ],
+      \ "syntaxMarkerFold.vim": [ "plugin", "https://git.io/JItHQ", "$XDG_CONFIG_HOME/vim" ],
       \ }
 
 

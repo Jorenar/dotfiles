@@ -55,8 +55,7 @@ export PYTHONUSERBASE="$XDG_LOCAL_HOME"
 export RANDFILE="$XDG_CACHE_HOME/rnd"
 export TEXMFHOME="$XDG_LOCAL_HOME/lib/texmf"
 export UNCRUSTIFY_CONFIG="$XDG_CONFIG_HOME/uncrustify/default"
-export VIMDOTDIR="$XDG_CONFIG_HOME/vim"
-export VIMINIT='set rtp^=$VIMDOTDIR | let $MYVIMRC="$VIMDOTDIR/vimrc" | so $MYVIMRC'
+export VIMINIT='if !has("nvim") | let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | so $MYVIMRC | endif'
 export WEECHAT_HOME="$XDG_CONFIG_HOME/weechat"
 export WINEPREFIX="$XDG_DATA_HOME/wine"
 
