@@ -114,38 +114,36 @@ linking  _deps/joren.sh.d  $XDG_LIB_DIR/shell/joren.sh.d
 sh -c 'cd _deps/libProgWrap && sh install.sh'
 
 # "PATCHING" {{{2
+wrappers_dir="$XDG_LOCAL_HOME/bin/_patch"
 # ~misc {{{3
 chmod +x $DIR/_patch/misc/*
 for exe in $DIR/_patch/misc/*; do
-    [ -x "$(command -v $(basename $exe))" ] && linking  "_patch/misc/$(basename $exe)"  "$_PATCH_WRAPPERS/misc/$(basename $exe)"
+    [ -x "$(command -v $(basename $exe))" ] && linking  "_patch/misc/$(basename $exe)"  "wrappers_dir/misc/$(basename $exe)"
 done
 
 # XDG Base Dir {{{3
 # WRAPPERS {{{4
 chmod +x $DIR/_patch/xdg_base_dir/wrappers/*
 
-export _XDG_WRAPPERS="$_PATCH_WRAPPERS/xdg_wrappers"
+xdg_wrappers_dir="$wrappers_dir/xdg_wrappers"
 # clean old symlinks to wrappers
-if [ -d "$_XDG_WRAPPERS" ] && [ "$(find $_XDG_WRAPPERS -type l | wc -l)" -eq "$(ls -1 $_XDG_WRAPPERS | wc -l)" ]; then
-    rm -r "$_XDG_WRAPPERS"
+if [ -d "$xdg_wrappers_dir" ] && [ "$(find $xdg_wrappers_dir -type l | wc -l)" -eq "$(ls -1 $xdg_wrappers_dir | wc -l)" ]; then
+    rm -r "$xdg_wrappers_dir"
 fi
 
 # Link wrappers
 for exe in $DIR/_patch/xdg_base_dir/wrappers/*; do
-    [ -x "$(command -v $(basename $exe))" ] && linking  "_patch/xdg_base_dir/wrappers/$(basename $exe)"  "$_XDG_WRAPPERS/$(basename $exe)"
+    [ -x "$(command -v $(basename $exe))" ] && linking  "_patch/xdg_base_dir/wrappers/$(basename $exe)"  "$xdg_wrappers_dir/$(basename $exe)"
 done
 
-[ -x "$(command -v scp)"  ] && linking  _patch/xdg_base_dir/wrappers/ssh  $_XDG_WRAPPERS/scp
-[ -x "$(command -v tcsh)" ] && linking  _patch/xdg_base_dir/wrappers/csh  $_XDG_WRAPPERS/tcsh
+[ -x "$(command -v scp)"  ] && linking  _patch/xdg_base_dir/wrappers/ssh  $xdg_wrappers_dir/scp
+[ -x "$(command -v tcsh)" ] && linking  _patch/xdg_base_dir/wrappers/csh  $xdg_wrappers_dir/tcsh
 
 # Generate FAKEHOME wrappers
 while IFS= read -r exe; do
     exe="$(echo $exe | cut -f1 -d'#')"
-    [ -n "$exe" ] && [ -x "$(command -v $exe)" ] && linking  _patch/xdg_base_dir/wrappers/_xdg_fakehome.sh  $_XDG_WRAPPERS/$exe
+    [ -n "$exe" ] && [ -x "$(command -v $exe)" ] && linking  _patch/xdg_base_dir/wrappers/_xdg_fakehome.sh  $xdg_wrappers_dir/$exe
 done < "$DIR/_patch/xdg_base_dir/fakehome.list"
-
-# Compile wrappers
-make -C $DIR/_patch/xdg_base_dir/wrappers/src > /dev/null
 
 # Install /etc/profile.d/profile_xdg.sh ? {{{4
 

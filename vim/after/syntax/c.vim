@@ -26,51 +26,52 @@ hi def link cCaseBadFormat cError
 " FOLDING {{{1
 " Fold K&R style {{{2
 
-syn clear cBlock
+if get(b:, "fold_kr", 0)
+  let s:contains = ''
+  if exists("c_curly_error")
+    let s:contains = ' contains=ALLBUT,cBadBlock,cCurlyError,@cParenGroup,cErrInParen,cErrInBracket,@cStringGroup,@Spell'
+  endif
 
-let s:contains = ''
-if exists("c_curly_error")
-  let s:contains = ' contains=ALLBUT,cBadBlock,cCurlyError,@cParenGroup,cErrInParen,cErrInBracket,@cStringGroup,@Spell'
-endif
+  let s:pattern = '%('
 
-let s:pattern = '%('
+  if &ft ==# "cpp"
+    " struct/class inheriting
+    let s:pattern .= ''
+          \ . '%(<struct|<class)@<='
+          \ . '\s\ze\s*\S+[^:]:[^:]\s*\S+.*'
+    let s:pattern .= '|'
 
-if &ft ==# "cpp"
-  " struct/class inheriting
-  let s:pattern .= ''
-        \ . '%(<struct|<class)@<='
-        \ . '\s\ze\s*\S+[^:]:[^:]\s*\S+.*'
-  let s:pattern .= '|'
+    " Constructors
+    let s:pattern .= ''
+          \ . '%('
+          \ .    '%([^,:]|\n|^|<%(public|private|protected)>\s*:)'
+          \ .    '\n\s*'
+          \ . ')@<='
+          \ . '%(<%(while|for|if|switch|catch)>)@!'
+          \ . '\S\ze\S*%(::\S+)*\s*\(.*\)\s*%(:.*)?'
+    let s:pattern .= '|'
+  endif
 
-  " Constructors
+  let s:pattern .= '%(<%(while|for|if|switch|catch)\(.*)@<=\)\ze\s*' . '|'
+
   let s:pattern .= ''
         \ . '%('
-        \ .    '%([^,:]|\n|^|<%(public|private|protected)>\s*:)'
-        \ .    '\n\s*'
+        \ .    '^\s*%(//.*|.*\*/|\{|<%(public|private|protected)>\s*:|.*\>)?'
+        \ .    '\s*\n\s*\S+'
         \ . ')@<='
-        \ . '%(<%(while|for|if|switch|catch)>)@!'
-        \ . '\S\ze\S*%(::\S+)*\s*\(.*\)\s*%(:.*)?'
-  let s:pattern .= '|'
+        \ . '\s\ze\s*\S+\s*'
+        \ . '%(.*[^:]:[^:].*)@!'
+        \ . '%(\s+\S+)*'
+
+  let s:pattern .= ')%(;\s*)@<!%(//.*|/\*.*\*/)?\n\s*'
+
+  syn clear cBlock
+  exec 'syn region cBlock_ end="}" fold' . s:contains
+        \ . ' start = "\%#=1\C\v' . s:pattern . '\{"'
+        \ . ' start = "\%#=1\C\v%(' . s:pattern . ')@<!\{"'
+
+  unlet s:contains s:pattern
 endif
-
-let s:pattern .= '%(<%(while|for|if|switch|catch)\(.*)@<=\)\ze\s*' . '|'
-
-let s:pattern .= ''
-      \ . '%('
-      \ .    '^\s*%(//.*|.*\*/|\{|<%(public|private|protected)>\s*:|.*\>)?'
-      \ .    '\s*\n\s*\S+'
-      \ .    '%(.*[^:]:[^:].*)@!'
-      \ .    '%(\s+\S+)*'
-      \ . ')@<='
-      \ . '\s\ze\S+\s*'
-
-let s:pattern .= ')%(;\s*)@<!%(//.*|/\*.*\*/)?\n\s*'
-
-exec 'syn region cBlock_ end="}" fold' . s:contains
-      \ . ' start = "\%#=1\C\v' . s:pattern . '\{"'
-      \ . ' start = "\%#=1\C\v%(' . s:pattern . ')@<!\{"'
-
-unlet s:contains s:pattern
 
 " Switch's cases {{{2
 
