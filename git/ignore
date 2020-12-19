@@ -2,6 +2,7 @@
 .clangd
 .exrc
 .miniSnip
+.vimrc
 .vimspector.json
 __pycache__
 a.out

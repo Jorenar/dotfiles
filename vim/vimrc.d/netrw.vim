@@ -14,14 +14,20 @@ augroup netrw_autocmd
   autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&filetype") == "netrw" | q | endif
 augroup END
 
-" Toggle Vexplore with Ctrl-O
 function! ToggleVExplorer()
-  if exists("t:expl_buf_num")
-    let expl_win_num = bufwinnr(t:expl_buf_num)
+  if !exists("t:explorer_buf_num")
+    Vexplore $PWD
+    let t:opened = 1
+    let t:explorer_buf_num = bufnr("%")
+    return
+  endif
+
+  if t:opened
+    let explorer_win_num = bufwinnr(t:explorer_buf_num)
     let cur_win_num = winnr()
 
-    if expl_win_num != -1
-      while expl_win_num != cur_win_num
+    if explorer_win_num != -1
+      while explorer_win_num != cur_win_num
         exec "wincmd w"
         let cur_win_num = winnr()
       endwhile
@@ -29,29 +35,12 @@ function! ToggleVExplorer()
       close
     endif
 
-    unlet t:expl_buf_num
+    let t:opened = 0
   else
-    Vexplore
-    let t:expl_buf_num = bufnr("%")
+    execute "leftabove " . abs(g:netrw_winsize) . "vsplit #" . t:explorer_buf_num
+    let t:opened = 1
   endif
 endfunction
 
 command ToggleVExplorer call ToggleVExplorer()
-
-function! Drawer() abort
-  let nr = bufnr('%')
-  ToggleVExplorer
-
-  if exists(":Tagbar")
-    let vert_old = g:tagbar_vertical
-    let g:tagbar_vertical = 30
-    Tagbar
-    let g:tagbar_vertical = vert_old
-  endif
-
-  execute bufwinnr(nr)."wincmd w"
-endfunction
-
-nnoremap <silent> <C-e> :call Drawer()<CR>
-
-" vim: fen
+nnoremap <silent> <C-e> :call ToggleVExplorer()<CR>

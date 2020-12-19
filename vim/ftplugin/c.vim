@@ -18,3 +18,5 @@ let OmniCpp_ShowAccess          = 1
 let OmniCpp_ShowPrototypeInAbbr = 1
 
 let b:fold_kr = 1
+
+let b:ale_linters_ignore = [ "clangtidy" ]

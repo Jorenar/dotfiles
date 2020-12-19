@@ -98,3 +98,9 @@ hi link cLongComment cCommentL
 "      \ start = "\v#if%(ndef (.+_H.*_?)\n#define \1)@!"
 "      \ skip  = "\v\#endif //\s*(.+_H.*_?)"
 "      \ end   = "#endif"
+
+" Doxygen groups {{{2
+
+syntax region doxygenGroupFold matchgroup=Comment transparent fold
+      \ start = '\(///.*\n\)*///.*@{.*'
+      \ end   = '///.*@}.*'
