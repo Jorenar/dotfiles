@@ -1,0 +1,15 @@
+{
+  "configurations": {
+    "PDB": {
+      "default": true,
+      "adapter": "debugpy",
+      "configuration": {
+        "type":        "python",
+        "request":     "launch",
+        "program":     "${file}",
+        "stopOnEntry": true,
+        "console":     "externalTerminal"
+      }
+    }
+  }
+}

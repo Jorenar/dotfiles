@@ -1,11 +1,15 @@
-" Vimspector CLI
-" Maintainer:  Jorengarenar <https://joren.ga>
-" License:     MIT
+if !exists('g:loaded_vimpector') | finish | endif
 
-if exists('g:loaded_vimpector')
+" Init {{{1
 
-if exists('g:loaded_vimspector_cli') | finish | endif
-let s:cpo_save = &cpo | set cpo&vim
+let g:vimspector_base_dir            = expand('$XDG_DATA_HOME/vim/vimspector')
+let g:vimspector_install_gadgets     = [ 'debugpy', 'vscode-cpptools' ]
+
+if !isdirectory(g:vimspector_base_dir . "/configurations")
+  call system("ln -s " . $XDG_CONFIG_HOME."/vim/vimspector" . " " . g:vimspector_base_dir."/configurations")
+endif
+
+" Vimspector CLI {{{1
 
 let s:list = {
       \ "! ":         "",
@@ -71,7 +75,7 @@ function! s:Complete(ArgLead, CmdLine, CursorPos) abort
 endfunction
 
 function! s:VimspectorClean() abort
-  call system("mv ~/.vimspector.log ".g:vimspector_base_dir."/log")
+  call system("mv ~/.vimspector.log " . $XDG_CACHE_HOME."/vim/")
   call delete($HOME."/.mono", "rf")
 endfunction
 
@@ -101,13 +105,6 @@ function! s:Vimspector(...) abort
 
     return
   endif
-
-  " if empty(cmd)
-  "   let in = split(input("Vimspector: ", "", "customlist,".get(function("s:Complete"), "name")))
-  "   let l = len(in)
-  "   let cmd  = l > 0 ? in[0] : ""
-  "   let args = l > 1 ? join(in[1:]) : ""
-  " endif
 
   if cmd =~# '^q.\?$'
     call s:VimspectorClose()
@@ -144,6 +141,12 @@ function! s:Vimspector(...) abort
 
 endfunction
 
+command! -complete=customlist,s:Complete -nargs=* Vimspector call s:Vimspector(<f-args>)
+
+nnoremap <F6> :call <SID>Vimspector()<CR>
+
+" UI {{{1
+
 function! s:CustomiseUI() abort
   for w in keys(g:vimspector_session_windows)
     execute 'call win_gotoid(g:vimspector_session_windows.' . w . ')'
@@ -172,15 +175,3 @@ augroup MyVimspectorUICustomistaion
   autocmd!
   autocmd User VimspectorUICreated call s:CustomiseUI()
 augroup END
-
-command! -complete=customlist,s:Complete -nargs=* Vimspector call s:Vimspector(<f-args>)
-
-nnoremap <F6> :call <SID>Vimspector()<CR>
-
-
-let g:loaded_vimspector_cli = 1
-let &cpo = s:cpo_save | unlet s:cpo_save
-
-endif
-
-" vim: fdl=1

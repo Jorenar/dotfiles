@@ -381,8 +381,6 @@ let g:minPlug_updateSelf             = 0
 let g:tagbar_compact                 = 1
 let g:tagbar_sort                    = 0
 let g:undotree_SetFocusWhenToggle    = 1
-let g:vimspector_base_dir            = expand('$XDG_CONFIG_HOME/vimspector')
-let g:vimspector_install_gadgets     = [ 'debugpy', 'vscode-cpptools' ]
 
 let g:miniSnip_extends = {
       \ "arduino"  : [ "cpp", "c" ],
@@ -467,5 +465,9 @@ augroup TERMINAL_OPTIONS
 augroup END
 
 runtime! vimrc.d/*.vim
+augroup VIMRC_D
+  au!
+  autocmd VimEnter * runtime! after/vimrc.d/*.vim
+augroup END
 
 set secure exrc
