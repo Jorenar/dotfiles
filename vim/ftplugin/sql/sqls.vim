@@ -1,6 +1,6 @@
 " Modified https://github.com/lighttiger2505/sqls.vim
 
-if g:enable_lsp && executable('sqls')
+if !(g:enable_lsp && executable('sqls')) | finish | endif
 
 let s:commands = {}
 
@@ -245,7 +245,3 @@ command! -nargs=1 SqlsSwitchConnection call s:switch_connection("<args>")
 
 nnoremap <F8> :w <bar> <C-u>call <SID>execute_query('n')<CR>
 vnoremap <F8> :w <bar> <C-u>call <SID>execute_query('v')<CR>
-
-endif
-
-" vim: fdl=1
