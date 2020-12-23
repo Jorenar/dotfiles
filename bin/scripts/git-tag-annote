@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+tag="$1"
+
+if [ "$(git cat-file -t $tag)" != "commit" ]; then
+    exit
+fi
+
+commit=$(git rev-list -n 1 "$tag")
+git tag -f -a "$tag" -m "$tag" $commit

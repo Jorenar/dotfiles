@@ -11,6 +11,9 @@
     required = true
     smudge   = git-lfs smudge -- %f
 
+[push]
+    followTags = true
+
 [merge]
     tool = vimdiff
     conflictstyle = diff3
@@ -20,9 +23,8 @@
     trustExitCode = true
 
 [alias]
-    b  = branch
-    bb = checkout
-    rc = clone --recursive
+    rc   = clone --recursive
+    rcd1 = clone --recursive --depth=1
 
     aur        = !sh -c 'git clone ssh://aur@aur.archlinux.org/\"$1\".git' -
     change-url = !sh -c 'git remote set-url origin \"$1\"' -
