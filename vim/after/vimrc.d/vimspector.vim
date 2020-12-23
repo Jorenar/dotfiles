@@ -12,21 +12,21 @@ endif
 " Vimspector CLI {{{1
 
 let s:list = {
-      \ "! ":         "",
-      \ "b ":         "SetLineBreakpoint(expand('%'), line('.'))",
+      \ "!":          "",
+      \ "b":          "SetLineBreakpoint(expand('%'), line('.'))",
       \ "c":          "Continue()",
-      \ "cl ":        "ClearLineBreakpoint(expand('%'), line('.'))",
+      \ "cl":         "ClearLineBreakpoint(expand('%'), line('.'))",
       \ "cursor":     "RunToCursor()",
-      \ "eval ":      "Evaluate(",
+      \ "eval":       "Evaluate(",
       \ "f":          "GoToFrame()",
-      \ "file ":      "",
+      \ "file":       "",
       \ "fin":        "StepOut()",
       \ "funcBreak":  "AddFunctionBreakpoint(expand('<cexpr>'))",
       \ "pid":        "",
       \ "kill":       "Stop()",
       \ "n":          "StepOver()",
       \ "pause":      "Pause()",
-      \ "pCstring ":  "",
+      \ "pCstring":   "",
       \ "q!":         "",
       \ "q":          "",
       \ "restart":    "Restart()",
@@ -82,6 +82,7 @@ endfunction
 function! s:VimspectorClose() abort
   call win_gotoid(g:vimspector_session_windows.code)
   nnoremap <buffer> <Tab> <Tab>
+  call win_gotoid(g:vimspector_session_windows.terminal) " to rm it from buffer list
   call vimspector#Stop()
   call vimspector#Reset()
   call s:VimspectorClean()
