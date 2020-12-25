@@ -346,6 +346,7 @@ let g:minPlug_singleFiles = {
       \ "minPlug.vim"   : [ "plugin", "https://git.io/JIoGr", "$XDG_CONFIG_HOME/vim" ],
       \ "MvVis.vim"     : [ "plugin", "https://git.io/JkSRr" ],
       \ "sql-upper.vim" : [ "ftplugin/sql", "https://git.io/JkQjr", "$XDG_CONFIG_HOME/vim" ],
+      \ "surround.vim"  : [ "plugin", "https://git.io/JLXyW", "$XDG_CONFIG_HOME/vim" ],
       \ "syntaxMarkerFold.vim": [ "plugin", "https://git.io/JItHQ", "$XDG_CONFIG_HOME/vim" ],
       \ }
 

@@ -82,7 +82,9 @@ endfunction
 function! s:VimspectorClose() abort
   call win_gotoid(g:vimspector_session_windows.code)
   nnoremap <buffer> <Tab> <Tab>
-  call win_gotoid(g:vimspector_session_windows.terminal) " to rm it from buffer list
+  if exists("g:vimspector_session_windows.terminal")
+    call win_gotoid(g:vimspector_session_windows.terminal) " to rm it from buffer list
+  endif
   call vimspector#Stop()
   call vimspector#Reset()
   call s:VimspectorClean()

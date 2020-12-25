@@ -1,4 +1,6 @@
-if !has("cscope") | finish | endif
+if !has("cscope") || !executable("cscope")
+  finish
+endif
 
 let db = findfile("cscope.out", ".git;")
 if !empty(db)
