@@ -6,6 +6,7 @@ gitclone() {
 
 gitclone https://github.com/Jorengarenar/joren.sh.d.git
 gitclone https://github.com/Jorengarenar/libProgWrap.git
+gitclone https://github.com/Jorengarenar/MozXDG.git
 
 if [ -z "$(ldconfig -p | grep 'jcbc')" ]; then
     if [ ! -e "$XDG_LIB_DIR/c/libjcbc.so" ]; then

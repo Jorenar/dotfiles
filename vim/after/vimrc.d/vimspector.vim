@@ -132,7 +132,7 @@ function! s:Vimspector(...) abort
     elseif cmd ==# "watch"
       call vimspector#AddWatch(args)
     elseif cmd ==# "file"
-      call vimspector#LaunchWithSettings( { 'PROG': args } )
+      call vimspector#LaunchWithSettings( { 'PROG': fnamemodify(args, ":p") } )
     elseif cmd ==# "pCstring"
       call vimspector#Evaluate('(char*)'.args)
     elseif has_key(s:list, cmd)
@@ -155,6 +155,7 @@ function! s:CustomiseUI() abort
     execute 'call win_gotoid(g:vimspector_session_windows.' . w . ')'
     setlocal laststatus=2
     setlocal statusline=\ %f
+    setlocal nofoldenable
     nnoremap <buffer> <Tab> :Vimspector<space>
   endfor
 

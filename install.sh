@@ -145,6 +145,9 @@ while IFS= read -r exe; do
     [ -n "$exe" ] && [ -x "$(command -v $exe)" ] && linking  _patch/xdg_base_dir/wrappers/_xdg_fakehome.sh  $xdg_wrappers_dir/$exe
 done < "$DIR/_patch/xdg_base_dir/fakehome.list"
 
+# MozXDG
+(cd _deps/MozXDG && make && make install && make link-firefox LINK_DIR=$xdg_wrappers_dir)
+
 # Install /etc/profile.d/profile_xdg.sh ? {{{4
 
 # Check if user has sudo privileges
