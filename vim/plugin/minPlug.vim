@@ -33,7 +33,7 @@ endf
 fu! s:minPlug(b, plugin, ...) abort
   let s:plugins[a:plugin] = get(a:, 1, "master")
   if !a:b
-    exe "sil! pa! ".substitute(a:plugin, ".*\/", "", "")
+    exe "sil! pa".get(g:, "minPlug_paBang", "!") substitute(a:plugin, ".*\/", "", "")
   endif
 endf
 

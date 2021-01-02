@@ -87,6 +87,7 @@ function! s:VimspectorClose() abort
   endif
   call vimspector#Stop()
   call vimspector#Reset()
+  augroup VIMSPECTOR_CUSTOM | au! | augroup END
   call s:VimspectorClean()
 endfunction
 
@@ -115,7 +116,7 @@ function! s:Vimspector(...) abort
       silent! call :silent! vimspector#ClearBreakpoints()
     endif
   elseif cmd ==# "pid"
-      call vimspector#LaunchWithSettings( #{ configuration: "GDB-attach" } )
+    call vimspector#LaunchWithSettings( #{ configuration: "GDB-attach" } )
   elseif !empty(args)
     if cmd ==# "!"
       call vimspector#Evaluate('-exec '.args)
@@ -150,6 +151,14 @@ nnoremap <F6> :call <SID>Vimspector()<CR>
 
 " UI {{{1
 
+function! s:setWindow() abort
+  if win_getid() != g:vimspector_session_windows.code | return | endif
+  setlocal laststatus=2
+  setlocal nofoldenable
+  setlocal statusline=\ %f\ %=%l/%L\ :\ %c
+  nnoremap <buffer> <Tab> :Vimspector<space>
+endfunction
+
 function! s:CustomiseUI() abort
   for w in keys(g:vimspector_session_windows)
     execute 'call win_gotoid(g:vimspector_session_windows.' . w . ')'
@@ -171,7 +180,11 @@ function! s:CustomiseUI() abort
   nnoremenu WinBar.↺     :call vimspector#Restart()<CR>
   nnoremenu WinBar.X     :call <SID>VimspectorClose()<CR>
 
-  setlocal statusline=\ %f\ %=%l/%L\ :\ %c
+  augroup VIMSPECTOR_CUSTOM
+    au!
+    autocmd BufEnter * call <SID>setWindow()
+    autocmd BufLeave * nnoremap <buffer> <Tab> <Tab>
+  augroup END
 
 endfunction
 

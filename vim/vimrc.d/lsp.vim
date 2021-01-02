@@ -1,15 +1,3 @@
-let g:enable_lsp = 1
-
-if !g:enable_lsp
-
-  MinPlug artur-shaik/vim-javacomplete2
-  MinPlug davidhalter/jedi-vim
-  MinPlug FromtonRouge/OmniCppComplete
-  MinPlug vim-scripts/dbext.vim
-
-  finish
-endif
-
 let g:lsp_diagnostics_enabled = 0
 
 function! s:lsp_init() abort
@@ -62,6 +50,8 @@ augroup LSP
           \ ]},
           \ 'whitelist': [ 'java' ],
           \ })
+  else
+    MinPlug artur-shaik/vim-javacomplete2
   endif
 
   if executable('sqls')

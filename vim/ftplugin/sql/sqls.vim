@@ -1,6 +1,6 @@
 " Modified https://github.com/lighttiger2505/sqls.vim
 
-if !(g:enable_lsp && executable('sqls')) | finish | endif
+if !executable('sqls') | finish | endif
 
 let s:commands = {}
 

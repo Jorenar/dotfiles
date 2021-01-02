@@ -12,8 +12,8 @@ set runtimepath^=$XDG_CONFIG_HOME/vim
 set runtimepath+=$XDG_CONFIG_HOME/vim/after
 set runtimepath+=$XDG_DATA_HOME/vim
 
-set packpath^=$XDG_DATA_HOME/vim
-set packpath+=$XDG_DATA_HOME/vim/after
+set packpath^=$XDG_DATA_HOME/vim,$XDG_CONFIG_HOME/vim
+set packpath+=$XDG_CONFIG_HOME/vim/after,$XDG_DATA_HOME/vim/after
 
 let g:netrw_home = $XDG_DATA_HOME."/vim"
 call mkdir($XDG_DATA_HOME."/vim/spell", 'p', 0700)
@@ -251,6 +251,7 @@ nnoremap <silent> <expr> <F5> g:colors_name == "darkness" ? ":syntax reset <bar>
 nnoremap gx :call job_start('xdg-open '.expand("<cfile>"))<CR>
 nnoremap j gj
 nnoremap k gk
+nnoremap zS :echo join(reverse(map(synstack(line('.'), col('.')), 'synIDattr(v:val,"name")')),' ')<CR>
 
 " Insert mode {{{2
 inoremap <expr> <C-o> pumvisible() ? "\<C-n>" : "\<C-o>"
@@ -323,28 +324,21 @@ set tags+=.git/tags;
 
 " PLUGINS AND PACKAGES {{{1
 
-source $XDG_CONFIG_HOME/vim/plugin/minPlug.vim
+runtime plugin/minPlug.vim
 
 MinPlug ctrlpvim/ctrlp.vim
 MinPlug dense-analysis/ale
-MinPlug Jorengarenar/fauxClip
 MinPlug Jorengarenar/miniSnip
-MinPlug Jorengarenar/vim-sBnR
 MinPlug majutsushi/tagbar
 MinPlug mbbill/undotree
 MinPlug prabirshrestha/vim-lsp
 MinPlug puremourning/vimspector
 
 let g:minPlug_singleFiles = {
-      \ "darkness.vim"  : [ "colors", "https://git.io/JkS8m", "$XDG_CONFIG_HOME/vim" ],
-      \ "fastfold.vim"  : [ "plugin", "https://git.io/JIEo6", "$XDG_CONFIG_HOME/vim" ],
-      \ "minPlug.vim"   : [ "plugin", "https://git.io/JIoGr", "$XDG_CONFIG_HOME/vim" ],
-      \ "MvVis.vim"     : [ "plugin", "https://git.io/JkSRr" ],
-      \ "sql-upper.vim" : [ "ftplugin/sql", "https://git.io/JkQjr", "$XDG_CONFIG_HOME/vim" ],
-      \ "surround.vim"  : [ "plugin", "https://git.io/JLXyW", "$XDG_CONFIG_HOME/vim" ],
-      \ "syntaxMarkerFold.vim": [ "plugin", "https://git.io/JItHQ", "$XDG_CONFIG_HOME/vim" ],
+      \ "fastfold.vim" : [ "plugin", "https://git.io/JIEo6", "$XDG_CONFIG_HOME/vim" ],
+      \ "minPlug.vim"  : [ "plugin", "https://git.io/JIoGr", "$XDG_CONFIG_HOME/vim" ],
+      \ "surround.vim" : [ "plugin", "https://git.io/JLXyW", "$XDG_CONFIG_HOME/vim" ],
       \ }
-
 
 packadd cfilter
 packadd matchit
@@ -358,18 +352,15 @@ nnoremap <F2> :ALEToggle<CR>
 nnoremap <Leader>t :Tagbar<CR>
 
 " OPTIONS
-let g:ale_disable_lsp                = 1
 let g:ale_echo_msg_format            = '[%linter%]: %s'
-let g:ale_enabled                    = 0
-let g:ale_set_loclist                = 0
 let g:ale_set_quickfix               = 1
 let g:ale_set_signs                  = 0
 let g:ctrlp_brief_prompt             = 1
+let g:ctrlp_cache_dir                = $XDG_CACHE_DIR . "/vim/ctrlp"
 let g:ctrlp_clear_cache_on_exit      = 0
 let g:ctrlp_extensions               = [ 'buffertag', 'quickfix' ]
 let g:ctrlp_prompt_mappings          = { 'PrtExit()': [ '<C-[>', '<Esc>', '<C-c>' ] }
 let g:ctrlp_types                    = [ 'fil' ]
-let g:ctrlp_cache_dir                = $XDG_CACHE_DIR . "/vim/ctrlp"
 let g:fastfold_fold_command_suffixes = [ 'C', 'm', 'M', 'N', 'x', 'X' ]
 let g:fastfold_minlines              = 0
 let g:fastfold_savehook              = 0
@@ -388,6 +379,11 @@ let g:miniSnip_extends = {
 
 hi! link TagbarNestedKind Comment
 hi! link TagbarType Comment
+
+augroup PLUGINS
+  au!
+  autocmd VimEnter * let g:ale_enabled = empty(filter(getqflist(), 'v:val.valid'))
+augroup END
 
 " STATUS LINE {{{1
 
