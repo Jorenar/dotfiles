@@ -1,12 +1,17 @@
 #!/usr/bin/env sh
-# vim: fdm=marker fen
 
 # Init {{{1
 
+gitclone() {
+    cd ${TMPDIR:-/tmp}
+    rm -rf dotfiles_${USER}_deps
+    mkdir  dotfiles_${USER}_deps
+    cd     dotfiles_${USER}_deps
+    git clone --recurse --depth=1 --single-branch "$1" 2> /dev/null
+}
+
 force_flag=$1
 DIR="$(dirname $(realpath $0))"
-
-sh -c "cd $DIR/_deps/ && sh download.sh"
 
 . $DIR/env/variables
 
@@ -95,24 +100,6 @@ linking  bin/wrappers/     $XDG_LOCAL_HOME/bin/wrappers
 linking firefox/user.js         $XDG_DATA_HOME/firefox/user.js
 linking firefox/userContent.css $XDG_DATA_HOME/firefox/chrome/userContent.css
 
-# INSTALL LIBS {{{2
-
-# libJOREN
-if [ -z "$(ldconfig -p | grep 'jcbc')" ]; then
-    if [ ! -e "$XDG_LIB_DIR/c/libjcbc.so" ]; then
-        cd _deps/libJCBC
-        ./autogen.sh --includedir=$XDG_INCLUDE_DIR/c --libdir=$XDG_LIB_DIR/c
-        cd build && make install
-        cd $DIR
-    fi
-fi
-
-# joren.sh.d
-linking  _deps/joren.sh.d  $XDG_LIB_DIR/shell/joren.sh.d
-
-# libProgWrap
-sh -c 'cd _deps/libProgWrap && sh install.sh'
-
 # "PATCHING" {{{2
 wrappers_dir="$XDG_LOCAL_HOME/bin/_patch"
 # ~misc {{{3
@@ -145,9 +132,6 @@ while IFS= read -r exe; do
     [ -n "$exe" ] && [ -x "$(command -v $exe)" ] && linking  _patch/xdg_base_dir/wrappers/_xdg_fakehome.sh  $xdg_wrappers_dir/$exe
 done < "$DIR/_patch/xdg_base_dir/fakehome.list"
 
-# MozXDG
-(cd _deps/MozXDG && make && make install && make link-firefox LINK_DIR=$xdg_wrappers_dir)
-
 # Install /etc/profile.d/profile_xdg.sh ? {{{4
 
 # Check if user has sudo privileges
@@ -179,5 +163,14 @@ elif [ $status != installed ]; then
 fi
 
 # OTHER {{{2
+
 mkdir -p "$(dirname $DCONF_PROFILE)" && touch "$DCONF_PROFILE" # prevents creating ~/.dconf
 mkdir -p $XDG_DATA_HOME/alsa
+
+# libProgWrap
+gitclone https://github.com/Jorengarenar/libProgWrap.git
+sh -c 'cd $TMPDIR/dotfiles_${USER}_deps/libProgWrap && sh install.sh'
+
+# MozXDG
+gitclone https://github.com/Jorengarenar/MozXDG.git
+(cd $TMPDIR/dotfiles_${USER}_deps/MozXDG && make && make install && make link-firefox LINK_DIR=$xdg_wrappers_dir)

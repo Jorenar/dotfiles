@@ -1,4 +1,4 @@
-# vim: ft=sh fdm=marker fen
+# vim: ft=sh
 
 # It is important for this file, to be in the same directory as 'profile' file
 #    (originals, not symlinks)
@@ -96,20 +96,42 @@ export SQLITE_HISTORY="$XDG_HISTORY_DIR/sqlite"
 # "Source" $XDG_CONFIG_HOME/user-dirs.dirs {{{2
 eval "$(sed 's/^[^#].*/export &/g;t;d' ${DIR:-$XDG_CONFIG_HOME}/user-dirs.dirs)"
 
-# JOREN_SHELL_LIB {{{1
-
-JOREN_SHELL_LIB="$XDG_LIB_DIR/shell/joren.sh.d"
-if [ -e "$JOREN_SHELL_LIB" ]; then
-    export JOREN_SHELL_LIB
-elif [ -n "$DIR" ]; then
-    JOREN_SHELL_LIB="$DIR/_deps/joren.sh.d"
-else
-    return
-fi
 
 # PATH etc. {{{1
 
-. "$JOREN_SHELL_LIB/pathmunge.sh"
+pathmunge() {
+    after=0
+    sep=":"
+
+    while getopts as: option; do
+        case $option in
+            a) after=1       ;;
+            s) sep="$OPTARG" ;;
+        esac
+    done
+
+    shift $(($OPTIND - 1))
+
+    if [ -z "$2" ]; then
+        var='PATH'
+        new="$1"
+    else
+        var="$1"
+        new="$2"
+    fi
+
+    if ! echo "${!var}" | grep -Eq '(^|'"$sep)$new("'$|'"$sep)" ; then
+        if [ -z "${!var}" ]; then
+            export ${var}="$new"
+        elif [ "$after" = "0" ]; then
+            export ${var}="$new$sep${!var}"
+        else
+            export ${var}="${!var}$sep$new"
+        fi
+    fi
+
+    unset after sep option OPTIND OPTARG
+}
 
 pathmunge "$XDG_LOCAL_HOME/bin"
 pathmunge "$XDG_LOCAL_HOME/bin/AppImages"
