@@ -39,7 +39,6 @@ export ELECTRUMDIR="$XDG_DATA_HOME/electrum"
 export ELINKS_CONFDIR="$XDG_CONFIG_HOME/elinks"
 export GIT_TEMPLATE_DIR="$XDG_CONFIG_HOME/git/template"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
-export GOPS_CONFIG_DIR="$XDG_CONFIG_HOME/gops" # temporary
 export GRIPHOME="$XDG_CONFIG_HOME/grip"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 export ICEAUTHORITY="$XDG_CACHE_HOME/ICEauthority"
@@ -55,6 +54,7 @@ export PYTHONUSERBASE="$XDG_LOCAL_HOME"
 export RANDFILE="$XDG_CACHE_HOME/rnd"
 export TEXMFHOME="$XDG_LOCAL_HOME/lib/texmf"
 export UNCRUSTIFY_CONFIG="$XDG_CONFIG_HOME/uncrustify/default"
+export VIMINIT='so $XDG_CONFIG_HOME/vim/vimrc'
 export WEECHAT_HOME="$XDG_CONFIG_HOME/weechat"
 export WINEPREFIX="$XDG_DATA_HOME/wine"
 
@@ -137,10 +137,10 @@ pathmunge "$XDG_LOCAL_HOME/bin"
 pathmunge "$XDG_LOCAL_HOME/bin/AppImages"
 pathmunge "$XDG_LOCAL_HOME/bin/scripts"
 
+# Wrappers ("$XDG_LOCAL_HOME/wrappers", ...) are added at the -End-
+
 pathmunge "$GEM_HOME/bin"     # Add gem to PATH
 pathmunge /usr/lib/ccache/bin # Enable ccache by default
-
-# Wrappers ("$_XDG_WRAPPERS", "$XDG_LOCAL_HOME/wrappers", ...) are added at the -End-
 
 # VITASDK
 export VITASDK=/usr/local/vitasdk

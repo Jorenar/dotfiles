@@ -1,4 +1,0 @@
-#!/usr/bin/env sh
-
-. "$XDG_LIB_DIR/shell/progwrap.sh"
-progwrap_exec -u "${XDG_CONFIG_HOME:-$HOME/.config}"/vim/vimrc "$@"
