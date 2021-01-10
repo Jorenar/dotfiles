@@ -2,9 +2,6 @@ if !exists('g:loaded_vimpector') | finish | endif
 
 " Init {{{1
 
-let g:vimspector_base_dir            = expand('$XDG_DATA_HOME/vim/vimspector')
-let g:vimspector_install_gadgets     = [ 'debugpy', 'vscode-cpptools' ]
-
 if !isdirectory(g:vimspector_base_dir . "/configurations")
   call system("ln -s " . $XDG_CONFIG_HOME."/vim/vimspector" . " " . g:vimspector_base_dir."/configurations")
 endif

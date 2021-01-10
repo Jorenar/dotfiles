@@ -278,7 +278,7 @@ vmap s <nop>
 " OPTIONS {{{1
 
 set backup
-set colorcolumn=+1,+21
+set colorcolumn=+1,+21,+31
 set complete+=kspell
 set foldtext=MyFoldText()
 set hidden
@@ -334,12 +334,6 @@ MinPlug mbbill/undotree
 MinPlug prabirshrestha/vim-lsp
 MinPlug puremourning/vimspector
 
-let g:minPlug_singleFiles = {
-      \ "fastfold.vim" : [ "plugin", "https://git.io/JIEo6", "$XDG_CONFIG_HOME/vim" ],
-      \ "minPlug.vim"  : [ "plugin", "https://git.io/JIoGr", "$XDG_CONFIG_HOME/vim" ],
-      \ "surround.vim" : [ "plugin", "https://git.io/JLXyW", "$XDG_CONFIG_HOME/vim" ],
-      \ }
-
 packadd cfilter
 packadd matchit
 packadd termdebug
@@ -364,10 +358,13 @@ let g:ctrlp_types                    = [ 'fil' ]
 let g:fastfold_fold_command_suffixes = [ 'C', 'm', 'M', 'N', 'x', 'X' ]
 let g:fastfold_minlines              = 0
 let g:fastfold_savehook              = 0
+let g:lsp_diagnostics_enabled        = 0
 let g:minPlug_updateSelf             = 0
 let g:tagbar_compact                 = 1
 let g:tagbar_sort                    = 0
 let g:undotree_SetFocusWhenToggle    = 1
+let g:vimspector_base_dir            = $XDG_DATA_HOME . '/vim/vimspector'
+let g:vimspector_install_gadgets     = [ 'debugpy', 'vscode-cpptools' ]
 
 let g:miniSnip_extends = {
       \ "arduino"  : [ "cpp", "c" ],

@@ -4,9 +4,9 @@
 
 gitclone() {
     cd ${TMPDIR:-/tmp}
-    rm -rf dotfiles_${USER}_deps
-    mkdir  dotfiles_${USER}_deps
-    cd     dotfiles_${USER}_deps
+    rm -rf   dotfiles_${USER}_deps
+    mkdir -p dotfiles_${USER}_deps
+    cd       dotfiles_${USER}_deps
     git clone --recurse --depth=1 --single-branch "$1" 2> /dev/null
 }
 

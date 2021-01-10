@@ -1,5 +1,3 @@
-let g:lsp_diagnostics_enabled = 0
-
 function! s:lsp_init() abort
   setlocal omnifunc=lsp#complete
   if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
@@ -77,3 +75,5 @@ augroup LSP
   endif
 
 augroup END
+
+" vim: fdl=1

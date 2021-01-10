@@ -1,6 +1,16 @@
-" vim: fen fdl=1
-
 if &ft !~# '\vc(pp)?' | finish | endif
+
+function! s:append(group, type, addition) abort
+  let x = split(execute("syntax list " . a:group), '\n')
+  let y = index(map(deepcopy(x), 'v:val =~ ".*links to .*"'), 1)
+  if y > 0
+    let y = y-1
+  endif
+  let x = split(join(x[:y]))
+  let x = x[index(x, 'xxx')+1:]
+  execute "syntax clear ".a:group
+  execute "syntax " . a:type . " " .a:group." ". a:addition . " ".join(x)
+endfunction
 
 " REGIONS {{{1
 " Include guards {{{2
@@ -24,54 +34,55 @@ syntax match cCaseBadFormat "\v%(<%(case|default)>.*)@<!%(\S.*)@<=<%(case|defaul
 hi def link cCaseBadFormat cError
 
 " FOLDING {{{1
-" Fold K&R style {{{2
+" Parenthesis {{{2
+call s:append("cParen", "region", "fold")
 
-if get(b:, "fold_kr", 0)
-  let s:contains = ''
-  if exists("c_curly_error")
-    let s:contains = ' contains=ALLBUT,cBadBlock,cCurlyError,@cParenGroup,cErrInParen,cErrInBracket,@cStringGroup,@Spell'
-  endif
+" K&R style {{{2
 
-  let s:pattern = '%('
+let s:contains = ''
+if exists("c_curly_error")
+  let s:contains = ' contains=ALLBUT,cBadBlock,cCurlyError,@cParenGroup,cErrInParen,cErrInBracket,@cStringGroup,@Spell'
+endif
 
-  if &ft ==# "cpp"
-    " struct/class inheriting
-    let s:pattern .= ''
-          \ . '%(<struct|<class)@<='
-          \ . '\s\ze\s*\S+[^:]:[^:]\s*\S+.*'
-    let s:pattern .= '|'
+let s:pattern = '%('
 
-    " Constructors
-    let s:pattern .= ''
-          \ . '%('
-          \ .    '%([^,:]|\n|^|<%(public|private|protected)>\s*:)'
-          \ .    '\n\s*'
-          \ . ')@<='
-          \ . '%(<%(while|for|if|switch|catch)>)@!'
-          \ . '\S\ze\S*%(::\S+)*\s*\(.*\)\s*%(:.*)?'
-    let s:pattern .= '|'
-  endif
+if &ft ==# "cpp"
+  " struct/class inheriting
+  let s:pattern .= ''
+        \ . '%(<struct|<class)@<='
+        \ . '\s\ze\s*\S+[^:]:[^:]\s*\S+.*'
+  let s:pattern .= '|'
 
-  let s:pattern .= '%(<%(while|for|if|switch|catch)\(.*)@<=\)\ze\s*' . '|'
-
+  " Constructors
   let s:pattern .= ''
         \ . '%('
-        \ .    '^\s*%(//.*|.*\*/|\{|<%(public|private|protected)>\s*:|.*\>)?'
-        \ .    '\s*\n\s*\S+'
+        \ .    '%([^,:]|\n|^|<%(public|private|protected)>\s*:)'
+        \ .    '\n\s*'
         \ . ')@<='
-        \ . '\s\ze\s*\S+\s*'
-        \ . '%(.*[^:]:[^:].*)@!'
-        \ . '%(\s+\S+)*'
-
-  let s:pattern .= ')%(;\s*)@<!%(//.*|/\*.*\*/)?\n\s*'
-
-  syn clear cBlock
-  exec 'syn region cBlock_ end="}" fold' . s:contains
-        \ . ' start = "\%#=1\C\v' . s:pattern . '\{"'
-        \ . ' start = "\%#=1\C\v%(' . s:pattern . ')@<!\{"'
-
-  unlet s:contains s:pattern
+        \ . '%(<%(while|for|if|switch|catch)>)@!'
+          \ . '\S\ze\S*%(::\S+)*\s*\(.*\)\s*%(:.*)?'
+  let s:pattern .= '|'
 endif
+
+let s:pattern .= '%(<%(while|for|if|switch|catch)\(.*)@<=\)\ze\s*' . '|'
+
+let s:pattern .= ''
+      \ . '%('
+      \ .    '^\s*%(//.*|.*\*/|\{|<%(public|private|protected)>\s*:|.*\>)?'
+      \ .    '\s*\n\s*\S+'
+      \ . ')@<='
+      \ . '\s\ze\s*\S+\s*'
+      \ . '%(.*[^:]:[^:].*)@!'
+      \ . '%(\s+\S+)*'
+
+let s:pattern .= ')%(;\s*)@<!%(//.*|/\*.*\*/)?\n\s*'
+
+syn clear cBlock
+exec 'syn region cBlock_ end="}" fold' . s:contains
+      \ . ' start = "\%#=1\C\v' . s:pattern . '\{"'
+      \ . ' start = "\%#=1\C\v%(' . s:pattern . ')@<!\{"'
+
+unlet s:contains s:pattern
 
 " Switch's cases {{{2
 
@@ -86,6 +97,12 @@ syntax region cCaseFold transparent fold
 " Multiline macro {{{2
 
 syntax region cMacroFold start="#define .*\\$" end="\v%(\\\n)@<=.*[^\\]\_$" keepend transparent fold
+
+" Multiline string {{{2
+
+syntax region cStringFold transparent fold
+      \ start = "\v%(%(const\s)?\s*char)@<=\s+.*\\$"
+      \ end   = ";"
 
 " Long comment {{{2
 
