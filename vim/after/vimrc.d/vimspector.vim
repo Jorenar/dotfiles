@@ -46,7 +46,7 @@ function! s:Complete(ArgLead, CmdLine, CursorPos) abort
     if cmd ==# "file"
       return split(glob(a:ArgLead.'*'), "\n") + [ a:ArgLead ]
     elseif cmd ==# "watch"
-      let line = "VimspectorWatch " + line
+      let line = "VimspectorWatch " . a:ArgLead
       let i += 16
       return split(vimspector#CompleteExpr(a:ArgLead, line, i))
     elseif cmd ==# "cl"
@@ -88,8 +88,15 @@ function! s:VimspectorClose() abort
   call s:VimspectorClean()
 endfunction
 
+let s:cont = 1
+
 function! s:Vimspector(...) abort
   let cmd  = get(a:, 1, "")
+
+  if cmd == "~"
+    let s:cont = !s:cont
+    return
+  endif
 
   if a:0 > 2
     let args = join(a:000[1:])
@@ -109,6 +116,7 @@ function! s:Vimspector(...) abort
 
   if cmd =~# '^q.\?$'
     call s:VimspectorClose()
+    return
     if cmd ==# "q!"
       silent! call :silent! vimspector#ClearBreakpoints()
     endif
@@ -140,6 +148,10 @@ function! s:Vimspector(...) abort
     execute "call vimspector#".s:list[cmd]
   endif
 
+  if s:cont
+    call feedkeys(":Vimspector ", "n")
+  endif
+
 endfunction
 
 command! -complete=customlist,s:Complete -nargs=* Vimspector call s:Vimspector(<f-args>)
@@ -148,11 +160,12 @@ nnoremap <F6> :call <SID>Vimspector()<CR>
 
 " UI {{{1
 
-function! s:setWindow() abort
+function! s:setCodeWindow() abort
   if win_getid() != g:vimspector_session_windows.code | return | endif
   setlocal laststatus=2
   setlocal nofoldenable
   setlocal statusline=\ %f\ %=%l/%L\ :\ %c
+  setlocal mouse=n
   nnoremap <buffer> <Tab> :Vimspector<space>
 endfunction
 
@@ -162,6 +175,7 @@ function! s:CustomiseUI() abort
     setlocal laststatus=2
     setlocal statusline=\ %f
     setlocal nofoldenable
+    setlocal mouse=n
     nnoremap <buffer> <Tab> :Vimspector<space>
   endfor
 
@@ -179,8 +193,9 @@ function! s:CustomiseUI() abort
 
   augroup VIMSPECTOR_CUSTOM
     au!
-    autocmd BufEnter * call <SID>setWindow()
+    autocmd BufEnter * call <SID>setCodeWindow()
     autocmd BufLeave * nnoremap <buffer> <Tab> <Tab>
+    autocmd BufReadPost * ++once call feedkeys(":Vimspector ", "n")
   augroup END
 
 endfunction

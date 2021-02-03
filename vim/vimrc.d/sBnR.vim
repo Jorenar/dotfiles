@@ -36,7 +36,7 @@ let g:sBnR_makeprgs = {
       \ "python"   : [ 1, "python %" ],
       \ "rust"     : [ 1, "rustc %" ],
       \ "sh"       : [ 1, "chmod +x %:p && %:p" ],
-      \ "tex"      : [ 0, "xelatex -output-directory=$TMPDIR/TeX -interaction=nonstopmode % 1>&2 && mv $TMPDIR/TeX/%:t:r.pdf ./" ],
+      \ "tex"      : [ 0, "latexmk -outdir=%:t:r.out.d -pdfxe -interaction=nonstopmode %" ],
       \ "xhtml"    : [ 0, "tidy -asxhtml -quiet -errors --gnu-emacs yes %" ],
       \}
 
@@ -44,14 +44,14 @@ let g:sBnR_runCmds = {
       \ "html"     : [ 1, "$BROWSER %:p" ],
       \ "java"     : [ 0, "java -jar %:t:r.jar" ],
       \ "markdown" : [ 0, "grip --quiet -b %" ],
-      \ "plaintex" : [ 2, "zathura %:p:h/%:t:r.pdf" ],
-      \ "tex"      : [ 2, "zathura %:p:h/%:t:r.pdf" ],
+      \ "plaintex" : [ 2, "zathura %:t:r.out.d/%:t:r.pdf" ],
+      \ "tex"      : [ 2, "zathura %:t:r.out.d/%:t:r.pdf" ],
       \ "xhtml"    : [ 1, "$BROWSER %:p" ],
       \}
 
-command! -nargs=* -bar RunProg     call sBnR#run(expand('%:t:r'), "<args>")
-command! -nargs=* -bar Build       call sBnR#build("<args>")
-command! -nargs=* BuildAndRun call sBnR#buildAndRun()
+command! -nargs=* -bar RunProg      call sBnR#run(expand('%:t:r'), "<args>")
+command! -nargs=* -bar Build        call sBnR#build("<args>")
+command! -nargs=* -bar BuildAndRun  call sBnR#buildAndRun()
 
 nnoremap <F7>  :Build<CR>
 nnoremap <F8>  :RunProg<CR>

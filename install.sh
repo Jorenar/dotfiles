@@ -56,6 +56,7 @@ fi
 linking  aerc/             $XDG_CONFIG_HOME/aerc
 linking  asoundrc          $XDG_CONFIG_HOME/alsa/asoundrc
 linking  bashrc            $XDG_CONFIG_HOME/bash/bashrc
+linking  chktexrc          $XDG_CONFIG_HOME/.chktexrc
 linking  cshrc             $XDG_CONFIG_HOME/csh/.cshrc  # thanks to wrapper
 linking  dosbox.conf       $XDG_CONFIG_HOME/dosbox/dosbox.conf
 linking  env               $XDG_CONFIG_HOME/env
@@ -99,6 +100,7 @@ linking  bin/wrappers/     $XDG_LOCAL_HOME/bin/wrappers
 
 linking firefox/user.js         $XDG_DATA_HOME/firefox/user.js
 linking firefox/userContent.css $XDG_DATA_HOME/firefox/chrome/userContent.css
+linking firefox/userChrome.css  $XDG_DATA_HOME/firefox/chrome/userChrome.css
 
 # "PATCHING" {{{2
 wrappers_dir="$XDG_LOCAL_HOME/bin/_patch"
@@ -167,10 +169,14 @@ fi
 mkdir -p "$(dirname $DCONF_PROFILE)" && touch "$DCONF_PROFILE" # prevents creating ~/.dconf
 mkdir -p $XDG_DATA_HOME/alsa
 
-# libProgWrap
-gitclone https://github.com/Jorengarenar/libProgWrap.git
-sh -c 'cd $TMPDIR/dotfiles_${USER}_deps/libProgWrap && sh install.sh'
+if [ "$force_flag" = "-f" ]; then
 
-# MozXDG
-gitclone https://github.com/Jorengarenar/MozXDG.git
-(cd $TMPDIR/dotfiles_${USER}_deps/MozXDG && make && make install && make link-firefox LINK_DIR=$xdg_wrappers_dir)
+    # libProgWrap
+    gitclone https://github.com/Jorengarenar/libProgWrap.git
+    sh -c 'cd $TMPDIR/dotfiles_${USER}_deps/libProgWrap && sh install.sh'
+
+    # MozXDG
+    gitclone https://github.com/Jorengarenar/MozXDG.git
+    (cd $TMPDIR/dotfiles_${USER}_deps/MozXDG && make && make install && make link-firefox LINK_DIR=$xdg_wrappers_dir)
+
+fi

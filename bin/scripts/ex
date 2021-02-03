@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-for f in $@; do
+for f in "$@"; do
     if [ -f "$f" ] ; then
         case "$f" in
             *.tar.bz2)   tar xvjf   "$f"                    ;;

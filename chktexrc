@@ -1,0 +1,11 @@
+CmdLine { --nowarn  1 } # Command terminated with space
+CmdLine { --nowarn  3 } # You should enclose the previous parenthesis with `{}'
+CmdLine { --nowarn  8 } # Wrong length of dash may have been used
+CmdLine { --nowarn 11 } # You should use \cdots or \ldots to achieve an ellipsis
+CmdLine { --nowarn 18 } # Use either `` or '' as an alternative to `"'
+CmdLine { --nowarn 32 } # Use ` to begin quotation, not '
+CmdLine { --nowarn 40 } # You should put punctuation outside inner math mode
+
+UserWarnRegex {
+    (?!#You! should! use! \dots! to! achieve! an! ellipsis)(\.\.\.)
+}

@@ -1,5 +1,3 @@
-" # VIMRC #
-
 " XDG support {{{1
 
 if empty($MYVIMRC) | let $MYVIMRC = expand('<sfile>:p') | endif
@@ -9,19 +7,19 @@ if empty($XDG_CONFIG_HOME) | let $XDG_CONFIG_HOME = $HOME."/.config"      | endi
 if empty($XDG_DATA_HOME)   | let $XDG_DATA_HOME   = $HOME."/.local/share" | endif
 
 set runtimepath^=$XDG_CONFIG_HOME/vim
-set runtimepath+=$XDG_CONFIG_HOME/vim/after
 set runtimepath+=$XDG_DATA_HOME/vim
+set runtimepath+=$XDG_CONFIG_HOME/vim/after
 
 set packpath^=$XDG_DATA_HOME/vim,$XDG_CONFIG_HOME/vim
 set packpath+=$XDG_CONFIG_HOME/vim/after,$XDG_DATA_HOME/vim/after
 
 let g:netrw_home = $XDG_DATA_HOME."/vim"
 call mkdir($XDG_DATA_HOME."/vim/spell", 'p', 0700)
+set viewdir=$XDG_DATA_HOME/vim/view | call mkdir(&viewdir, 'p', 0700)
 
 set backupdir=$XDG_CACHE_HOME/vim/backup | call mkdir(&backupdir, 'p', 0700)
 set directory=$XDG_CACHE_HOME/vim/swap   | call mkdir(&directory, 'p', 0700)
 set undodir=$XDG_CACHE_HOME/vim/undo     | call mkdir(&undodir,   'p', 0700)
-set viewdir=$XDG_CACHE_HOME/vim/view     | call mkdir(&viewdir,   'p', 0700)
 
 if !has('nvim') " Neovim has its own special location
   set viminfofile=$XDG_CACHE_HOME/vim/viminfo
@@ -277,6 +275,8 @@ vmap s <nop>
 
 " OPTIONS {{{1
 
+set t_fd= t_fe= " disable xterm-focus-event
+
 set backup
 set colorcolumn=+1,+21,+31
 set complete+=kspell
@@ -288,7 +288,6 @@ set incsearch
 set laststatus=2
 set linebreak
 set modeline
-set mouse=n
 set nomodelineexpr
 set nowrap
 set number
@@ -339,48 +338,69 @@ packadd matchit
 packadd termdebug
 source  $VIMRUNTIME/ftplugin/man.vim
 
-" MAPPINGS
+" Config {{{
+
+nmap s ys
+xmap s S
+
 nmap <M-a> <Plug>(ale_detail)
 nnoremap <F1> :UndotreeToggle<cr>
 nnoremap <F2> :ALEToggle<CR>
 nnoremap <Leader>t :Tagbar<CR>
 
-" OPTIONS
-let g:ale_echo_msg_format            = '[%linter%]: %s'
-let g:ale_set_quickfix               = 1
-let g:ale_set_signs                  = 0
-let g:ctrlp_brief_prompt             = 1
-let g:ctrlp_cache_dir                = $XDG_CACHE_DIR . "/vim/ctrlp"
-let g:ctrlp_clear_cache_on_exit      = 0
-let g:ctrlp_extensions               = [ 'buffertag', 'quickfix' ]
-let g:ctrlp_prompt_mappings          = { 'PrtExit()': [ '<C-[>', '<Esc>', '<C-c>' ] }
-let g:ctrlp_types                    = [ 'fil' ]
-let g:fastfold_fold_command_suffixes = [ 'C', 'm', 'M', 'N', 'x', 'X' ]
-let g:fastfold_minlines              = 0
-let g:fastfold_savehook              = 0
-let g:lsp_diagnostics_enabled        = 0
-let g:minPlug_updateSelf             = 0
-let g:tagbar_compact                 = 1
-let g:tagbar_sort                    = 0
-let g:undotree_SetFocusWhenToggle    = 1
-let g:vimspector_base_dir            = $XDG_DATA_HOME . '/vim/vimspector'
-let g:vimspector_install_gadgets     = [ 'debugpy', 'vscode-cpptools' ]
+" Options {{{
+
+let g:ale_disable_lsp                  = 1
+let g:ale_echo_msg_format              = '[%linter%]: %s'
+let g:ale_set_quickfix                 = 1
+let g:ale_set_signs                    = 0
+
+let g:lsp_diagnostics_enabled          = g:ale_disable_lsp
+let g:lsp_diagnostics_highlights_delay = 0
+let g:lsp_diagnostics_signs_enabled    = 0
+
+let g:ctrlp_brief_prompt               = 1
+let g:ctrlp_cache_dir                  = $XDG_CACHE_HOME . "/vim/ctrlp"
+let g:ctrlp_clear_cache_on_exit        = 0
+let g:ctrlp_extensions                 = [ 'buffertag', 'quickfix' ]
+let g:ctrlp_prompt_mappings            = { 'PrtExit()': [ '<C-[>', '<Esc>', '<C-c>' ] }
+let g:ctrlp_types                      = [ 'fil', 'buf' ]
+
+let g:fastfold_fold_command_suffixes   = [ 'C', 'm', 'M', 'N', 'x', 'X' ]
+let g:fastfold_minlines                = 0
+let g:fastfold_savehook                = 0
+
+let g:minPlug_updateSelf               = 0
+let g:tagbar_compact                   = 1
+let g:tagbar_sort                      = 0
+let g:undotree_SetFocusWhenToggle      = 1
+let g:vimspector_base_dir              = $XDG_DATA_HOME . '/vim/vimspector'
+let g:vimspector_install_gadgets       = [ 'debugpy', 'vscode-cpptools' ]
 
 let g:miniSnip_extends = {
       \ "arduino"  : [ "cpp", "c" ],
       \ "cpp"      : [ "c" ],
       \ "markdown" : [ "html" ],
+      \ "php"      : [ "html" ],
       \ "tex"      : [ "plaintex" ],
       \ }
 
+" Options }}}
 
 hi! link TagbarNestedKind Comment
 hi! link TagbarType Comment
+
+hi! link ALEError            Error
+hi! link ALEWarning          WarningMsg
+hi! link LspErrorHighlight   Error
+hi! link LspWarningHighlight WarningMsg
 
 augroup PLUGINS
   au!
   autocmd VimEnter * let g:ale_enabled = empty(filter(getqflist(), 'v:val.valid'))
 augroup END
+
+" Config }}}
 
 " STATUS LINE {{{1
 
@@ -423,7 +443,7 @@ augroup OTHER
   autocmd BufWritePre * silent! undojoin | %s/\s\+$//e | %s/\(\n\r\?\)\+\%$//e
 
   " Set 'foldmethod' to 'syntax'
-  autocmd FileType css,json,typescript,scss setlocal foldmethod=syntax
+  autocmd FileType css,scss,json,typescript,cs setlocal foldmethod=syntax
 
   " Automatically open QuickFix
   autocmd QuickFixCmdPost [^l]* nested cwindow

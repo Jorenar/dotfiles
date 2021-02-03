@@ -1,5 +1,10 @@
 #!/usr/bin/env sh
 
+if [ -z "$1" ]; then
+    echo "error: option 'fixup' requires a value"
+    exit 1
+fi
+
 if ! git diff-files --quiet; then
     echo "Unstaged changes, please commit or stash with --keep-index"
     exit 1
