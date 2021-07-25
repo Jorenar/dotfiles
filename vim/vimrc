@@ -34,6 +34,7 @@ colorscheme darkness
 " COMMANDS {{{1
 
 com! -range -nargs=+  Align            <line1>,<line2>!column -Lts'<args>' -o'<args>'
+com! -bang            ColorUp          exec "colo " . (<bang>0 ? "darkness" : "colorUp")
 com!                  CountSpell       echo utils#CountSpell()
 com!                  ExecCurrentLine  normal :.w !sh<CR>
 com! -nargs=1         FillLine         exec "norm! $" | exec "FillToColumn" <q-args> &tw
@@ -58,7 +59,6 @@ nnoremap <Leader>h :nohlsearch<CR>
 nnoremap <Leader>q m"gggqG`"
 nnoremap <Leader>r :exec {o -> {n -> n != "" ? '%s/\C\<' . o . '\>/' . n . '/g' : ''}(input(o." > ", o))}(expand('<cword>'))<CR>
 nnoremap <M-a> :cwindow<CR>
-nnoremap <silent> <expr> <F5> g:colors_name == "darkness" ? ":colo colorUp\<CR>" : ":colo darkness\<CR>"
 nnoremap j gj
 nnoremap k gk
 
@@ -295,6 +295,8 @@ augroup TERMINAL_OPTIONS
   endif
 
 augroup END
+
+hi! Dimmer ctermfg=244
 
 runtime! vimrc.d/*.vim
 autocmd VimEnter * ++once runtime! after/vimrc.d/*.vim
