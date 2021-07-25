@@ -21,8 +21,8 @@ let g:sBnR_makeprgs = {
       \ "ada"      : [ 0, "gnatmake % && gnatclean -c %" ],
       \ "asm"      : [ 0, "as -o %:t:r.o % && ld -s -o %:t:r %:t:r.o && rm %:t:r.o" ],
       \ "basic"    : [ 1, "vintbas %" ],
-      \ "c"        : [ 0, "gcc -std=gnu99 -Wall -g % -o %:t:r" ],
-      \ "cpp"      : [ 0, "g++ -std=gnu++14 -g % -o %:t:r" ],
+      \ "c"        : [ 0, "gcc -std=c99 -Wall -g % -o %:t:r" ],
+      \ "cpp"      : [ 0, "g++ -std=c++14 -Wall -g % -o %:t:r" ],
       \ "cobol"    : [ 0, "cobc -d -O -x -o %:t:r %" ],
       \ "go"       : [ 0, "go build" ],
       \ "haskell"  : [ 0, "ghc -o %:t:r %; rm %:t:r.hi %:t:r.o" ],
@@ -43,6 +43,7 @@ let g:sBnR_runCmds = {
       \ "html"     : [ 1, "$BROWSER %:p" ],
       \ "java"     : [ 0, "java -jar %:t:r.jar" ],
       \ "markdown" : [ 0, "grip --quiet -b %" ],
+      \ "svg"      : [ 1, "$BROWSER %:p" ],
       \ "tex"      : [ 2, "zathura %:t:r.out.d/%:t:r.pdf" ],
       \ "xhtml"    : [ 1, "$BROWSER %:p" ],
       \}
