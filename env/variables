@@ -67,6 +67,10 @@ export ARDUINO_DIRECTORIES_DATA="$XDG_DATA_HOME/arduino"
 export ARDUINO_DIRECTORIES_DOWNLOADS="$XDG_CACHE_HOME/arduino"
 export ARDUINO_DIRECTORIES_USER="$XDG_LIB_DIR/arduino" # just treat it as directory for libraries
 
+# Emscripten {{{3
+export EM_CACHE="$XDG_CACHE_HOME/emscripten"
+export EM_CONFIG="$XDG_CONFIG_HOME/emscripten"
+
 # Golang {{{3
 export GOBIN="$XDG_LOCAL_HOME/bin"
 export GOPATH="$XDG_DATA_HOME/go"
