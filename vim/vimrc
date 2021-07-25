@@ -175,7 +175,6 @@ nmap ss <Plug>Yssurround
 let g:ctrlp_brief_prompt        = 1
 let g:ctrlp_cache_dir           = $XDG_CACHE_HOME . "/vim/ctrlp"
 let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_extensions          = [ 'buffertag', 'quickfix' ]
 let g:ctrlp_types               = [ 'fil', 'buf' ]
 
 let g:ctrlp_prompt_mappings = {
