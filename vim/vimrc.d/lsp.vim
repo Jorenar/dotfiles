@@ -6,11 +6,11 @@ let s:servers["ccls"] = #{
       \   init: #{
       \     root: #{
       \       lsc: {m, p -> lsc#uri#documentUri(fnamemodify(findfile("compile_commands.json", expand("%:p") . ";"), ":p:h"))},
-      \       lsp: {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
+      \       lsp: {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), "compile_commands.json"))},
       \     },
       \     options: #{
-      \       cache: #{ directory: '/tmp/ccls/cache' },
-      \       clang: #{ extraArgs: ['--gcc-toolchain=/usr'] },
+      \       cache: #{ directory: "/tmp/ccls/cache" },
+      \       clang: #{ extraArgs: ["--gcc-toolchain=/usr"] },
       \     },
       \   },
       \   ft: [ "c", "cpp", "objc", "objcpp", "cc" ],
@@ -22,7 +22,7 @@ let s:servers["sqls"] = #{
       \     sqls: #{
       \       connections: [
       \         #{
-      \           driver: 'sqlite3',
+      \           driver: "sqlite3",
       \           dataSourceName: $SQLS_SQLITE_DB,
       \         },
       \         #{
@@ -39,12 +39,12 @@ let s:servers["sqls"] = #{
       \   ft: [ "sql" ]
       \ }
 
-let s:servers["eclipse.jdt.ls"] = #{
+let s:servers["Eclipse JDT Language Server"] = #{
       \   cmd: "jdtls",
       \   ft: [ "java" ],
       \ }
 
-let s:servers["pyls"] = #{
+let s:servers["Python Language Server"] = #{
       \   cmd: "pyls",
       \   ft: [ "python" ],
       \ }
@@ -171,7 +171,7 @@ function! s:lsc_init() abort
   nnoremap <buffer> <F2> :LSClientAllDiagnostics<CR>
 
   autocmd VimEnter <buffer>
-        \  if empty(filter(getqflist(), 'v:val.valid'))
+        \  if empty(filter(getqflist(), "v:val.valid"))
         \|   exec "LSClientAllDiagnostics" | q
         \| endif
 
