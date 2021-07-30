@@ -49,43 +49,20 @@ PS1="$PS1"'\033[1m$([ ${#PWD} -gt $((COLUMNS/3)) ] && echo; echo "$")\033[0m '
 # - PRINT PROMPT
 PS1=$(printf "$PS1")
 
-# FUNCTIONS & WRAPPERS {{{1
-
-cheat() { curl cheat.sh/$1; }
-
-wttr() { curl wttr.in/$1; }
+# FUNCTIONS {{{1
 
 bak() {
     if [ "$1" = "-r" ] || [ "$1" = "-rf" ]; then
-        out="${2%.*}"
-        if [ -e "$out" ];then
-            if [ "$1" = "-rf" ]; then
-                rm -rf "$out"
-                cp -r "$2" "$out"
-            fi
-        else
+        out="${2%.bak}"
+        if [ ! -e "$out" ]; then
+            cp -r "$2" "$out"
+        elif [ "$1" = "-rf" ]; then
+            rm -rf "$out"
             cp -r "$2" "$out"
         fi
     else
-        cp -r "$1" "$1.bak"
+        cp -r "${1%/}" "${1%/}.bak"
     fi
-}
-
-cmake_run() {
-    cmake -B build/ -DCMAKE_BUILD_TYPE=Debug -DRUN_ARGS="$@" > /dev/null
-    cmake --build build/ -t run
-}
-
-feh() {
-    if [ -d "$1" ] || [ -d "$2" ]; then
-        command feh "$@" > /dev/null 2>&1
-    else
-        command feh --start-at "$@" > /dev/null 2>&1
-    fi
-}
-
-find() {
-    command find $@ 2> /dev/null
 }
 
 organizer() {
