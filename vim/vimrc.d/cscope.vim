@@ -26,3 +26,6 @@ nnoremap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
 nnoremap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
 nnoremap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nnoremap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+nnoremap <C-\>a :cs find a <C-R>=expand("<cword>")<CR><CR>
+
+nnoremap <C-\><C-i> :cs find i ^%:t$<CR>

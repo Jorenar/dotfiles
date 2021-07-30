@@ -148,6 +148,8 @@ pathmunge "$XDG_LOCAL_HOME/bin/scripts"
 pathmunge /usr/lib/ccache/bin # Enable ccache by default
 pathmunge $XDG_DATA_HOME/gem/ruby/*/bin
 
+# Dev {{{1
+
 # VITASDK
 export VITASDK=/usr/local/vitasdk
 pathmunge "$VITASDK/bin"
@@ -156,6 +158,10 @@ pathmunge "$VITASDK/bin"
 pathmunge CPATH           "$XDG_INCLUDE_DIR/c"
 pathmunge LD_LIBRARY_PATH "$XDG_LIB_DIR/c"
 pathmunge LIBRARY_PATH    "$XDG_LIB_DIR/c"
+
+export DEVKITPRO="/opt/devkitpro"
+export DEVKITARM="$DEVKITPRO/devkitARM"
+export DEVKITPPC="$DEVKITPRO/devkitPPC"
 
 # General {{{1
 # Default programs {{{2

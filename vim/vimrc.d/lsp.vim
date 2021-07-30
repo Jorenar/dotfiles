@@ -10,7 +10,6 @@ let s:servers["ccls"] = #{
       \     },
       \     options: #{
       \       cache: #{ directory: "/tmp/ccls/cache" },
-      \       clang: #{ extraArgs: ["--gcc-toolchain=/usr"] },
       \     },
       \   },
       \   ft: [ "c", "cpp", "objc", "objcpp", "cc" ],
@@ -133,6 +132,7 @@ hi! link lscDiagnosticWarning  WarningMsg
 function! s:lsc_register() abort
   function! s:reg(name, svr) abort
     let server = {}
+    let server.name = a:name
     let server.command = a:svr.cmd
 
     if has_key(a:svr, "init")
