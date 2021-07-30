@@ -10,6 +10,7 @@ augroup filetypedetect
   au! BufRead,BufNewFile *.fish      setf fish
   au! BufRead,BufNewFile *.h         setf c
   au! BufRead,BufNewFile *.list      setf conf
+  au! BufRead,BufNewFile *.m3u       setf m3u
   au! BufRead,BufNewFile *.snippets  setf snippets
   au! BufRead,BufNewFile LICENSE     setf LICENSE
 
