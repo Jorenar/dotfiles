@@ -9,7 +9,7 @@ pathmunge() {
     after=0
     sep=":"
 
-    while getopts as: option; do
+    while getopts "as:" option; do
         case $option in
             a) after=1       ;;
             s) sep="$OPTARG" ;;
@@ -26,17 +26,19 @@ pathmunge() {
         new="$2"
     fi
 
-    if ! echo "${!var}" | grep -Eq '(^|'"$sep)$new("'$|'"$sep)" ; then
-        if [ -z "${!var}" ]; then
+    eval val="\$$var"
+
+    if ! echo "$val" | grep -Eq '(^|'"$sep)$new("'$|'"$sep)" ; then
+        if [ -z "$val" ]; then
             export ${var}="$new"
         elif [ "$after" = "0" ]; then
-            export ${var}="$new$sep${!var}"
+            export ${var}="$new$sep$val"
         else
-            export ${var}="${!var}$sep$new"
+            export ${var}="$val$sep$new"
         fi
     fi
 
-    unset after sep option OPTIND OPTARG
+    unset after sep option OPTARG var new val
 }
 
 # XDG Base Directory {{{1
