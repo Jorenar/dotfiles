@@ -273,6 +273,9 @@ augroup OTHER
   " If file has more lines than window height, then fold it
   autocmd BufReadPost * if line('$') > winheight(0) | setlocal fen | endif
 
+  " Set fold method to syntax
+  autocmd FileType dosini,make  setlocal foldmethod=syntax
+
 augroup END
 
 augroup TRIM_TRAILING_WHITESPACE

@@ -1,11 +1,8 @@
-if exists("did_load_filetypes")
-  finish
-endif
+if exists("did_load_filetypes") | finish | endif
 
 augroup filetypedetect
 
   au! BufRead,BufNewFile *.asm       setf nasm
-  au! BufRead,BufNewFile *.conf      setf conf
   au! BufRead,BufNewFile *.csv       setf csv
   au! BufRead,BufNewFile *.fish      setf fish
   au! BufRead,BufNewFile *.h         setf c
@@ -13,5 +10,12 @@ augroup filetypedetect
   au! BufRead,BufNewFile *.m3u       setf m3u
   au! BufRead,BufNewFile *.snippets  setf snippets
   au! BufRead,BufNewFile LICENSE     setf LICENSE
+
+  au! BufRead,BufNewFile *.conf
+        \   if search('^\[\a\+\]')
+        \ |   setf dosini
+        \ | else
+        \ |   setf conf
+        \ | endif
 
 augroup END
