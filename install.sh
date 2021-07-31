@@ -5,7 +5,7 @@
 force_flag=$1
 DIR="$(dirname $(realpath $0))"
 
-. $DIR/env/variables
+. $DIR/env/variables; . $DIR/env/user-dirs.dirs
 
 chmod -R +x bin/
 
@@ -34,44 +34,44 @@ linking() {
 # Files going to $XDG_CONFIG_HOME
 echo '
 
-    aerc/             @  aerc
-    asoundrc          @  alsa/asoundrc
-    bashrc            @  bash/bashrc
-    ccache.config     @  ccache/config
-    chktexrc          @  .chktexrc
-    cshrc             @  csh/.cshrc
-    dosbox.conf       @  dosbox/dosbox.conf
-    env               @  env
-    feh/              @  feh
-    fish/             @  fish
-    gdbinit           @  gdb/init
-    git/              @  git
-    grip.py           @  grip/grip.py
-    gtkrc-2.0         @  gtk-2.0/gtkrc
-    htoprc            @  htop/htoprc               -w
-    i3/               @  i3
-    inputrc           @  readline/inputrc
-    mailcap           @  mailcap
-    mimeapps.list     @  mimeapps.list
-    mpv/              @  mpv
-    muttrc            @  mutt/muttrc
-    myclirc           @  mycli/myclirc
-    newsboat/config   @  newsboat/config
-    npmrc             @  npm/npmrc
-    python_config.py  @  python/config.py
-    QuiteRss.ini      @  QuiteRss/QuiteRss.ini     -w
-    ranger.conf       @  ranger/rc.conf
-    Renviron          @  R/Renviron
-    shell/            @  shell
-    spicy_settings    @  spicy/settings
-    ssh_config        @  ssh/config
-    tmux.conf         @  tmux/tmux.conf
-    uncrustify/       @  uncrustify
-    user-dirs.dirs    @  user-dirs.dirs
-    vim/              @  vim
-    X11/              @  X11
-    zathurarc         @  zathura/zathurarc
-    zshrc             @  zsh/.zshrc
+    aerc/               @  aerc
+    asoundrc            @  alsa/asoundrc
+    bashrc              @  bash/bashrc
+    ccache.config       @  ccache/config
+    chktexrc            @  .chktexrc
+    cshrc               @  csh/.cshrc
+    dosbox.conf         @  dosbox/dosbox.conf
+    env                 @  env
+    env/mimeapps.list   @  mimeapps.list
+    env/user-dirs.dirs  @  user-dirs.dirs
+    feh/                @  feh
+    fish/               @  fish
+    gdbinit             @  gdb/init
+    git/                @  git
+    grip.py             @  grip/grip.py
+    gtkrc-2.0           @  gtk-2.0/gtkrc
+    htoprc              @  htop/htoprc               -w
+    i3/                 @  i3
+    inputrc             @  readline/inputrc
+    mailcap             @  mailcap
+    mpv/                @  mpv
+    muttrc              @  mutt/muttrc
+    myclirc             @  mycli/myclirc
+    newsboat/config     @  newsboat/config
+    npmrc               @  npm/npmrc
+    python_config.py    @  python/config.py
+    QuiteRss.ini        @  QuiteRss/QuiteRss.ini     -w
+    ranger.conf         @  ranger/rc.conf
+    Renviron            @  R/Renviron
+    shell/              @  shell
+    spicy_settings      @  spicy/settings
+    ssh_config          @  ssh/config
+    tmux.conf           @  tmux/tmux.conf
+    uncrustify/         @  uncrustify
+    vim/                @  vim
+    X11/                @  X11
+    zathurarc           @  zathura/zathurarc
+    zshrc               @  zsh/.zshrc
 
 ' | while IFS= read -r line; do
     [ -n "$line" ] && linking $(echo "$line" | sed "s,@\s*,$XDG_CONFIG_HOME/,")

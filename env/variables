@@ -3,107 +3,7 @@
 # It is important for this file, to be in the same directory as 'profile' file
 #    (originals, not symlinks)
 
-# -#- XDG Base Directory -#- {{{1
-# BASIC {{{2
-
-export XDG_LOCAL_HOME="$HOME/.local" # This sould be one of defaults
-
-export XDG_CACHE_HOME="$XDG_LOCAL_HOME/cache"
-export XDG_CONFIG_HOME="$XDG_LOCAL_HOME/config"
-export XDG_DATA_HOME="$XDG_LOCAL_HOME/share"
-
-export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-$XDG_LOCAL_HOME/.runtime}" # just in case
-
-export XDG_AUX_HOME="$XDG_LOCAL_HOME/aux" # auxiliary, local configs
-
-# CUSTOM {{{2
-export XDG_BACKUPS_DIR="$XDG_LOCAL_HOME/backups"
-export XDG_FAKEHOME_DIR="$XDG_LOCAL_HOME/.fakehome"
-export XDG_GAMES_DIR="$XDG_LOCAL_HOME/games"
-export XDG_HISTORY_DIR="$XDG_CACHE_HOME/history"
-export XDG_INCLUDE_DIR="$XDG_LOCAL_HOME/include"
-export XDG_LIB_DIR="$XDG_LOCAL_HOME/lib"
-export XDG_LSP_DIR="$XDG_DATA_HOME/lsp"
-export XDG_PROJECTS_DIR="$HOME/projects"
-export XDG_TAGS_DIR="$XDG_DATA_HOME/tags"
-export XDG_VM_DIR="$XDG_DATA_HOME/vm"
-
-# RELOCATING VARIABLES {{{2
-# ~misc {{{3
-
-export CCACHE_CONFIGPATH="$XDG_CONFIG_HOME/ccache/config"
-export CCACHE_DIR="$XDG_CACHE_HOME/ccache"
-export CHKTEXRC="$XDG_CONFIG_HOME"
-export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
-export DCONF_PROFILE="$XDG_CONFIG_HOME/dconf/user"
-export ELECTRUMDIR="$XDG_DATA_HOME/electrum"
-export ELINKS_CONFDIR="$XDG_CONFIG_HOME/elinks"
-export GIT_TEMPLATE_DIR="$XDG_CONFIG_HOME/git/template"
-export GNUPGHOME="$XDG_DATA_HOME/gnupg"
-export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
-export GRIPHOME="$XDG_CONFIG_HOME/grip"
-export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
-export ICEAUTHORITY="$XDG_CACHE_HOME/ICEauthority"
-export IMAPFILTER_HOME="$XDG_CONFIG_HOME/imapfilter"
-export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
-export MAILCAP="$XDG_CONFIG_HOME/mailcap" # elinks, w3m
-export MAILCAPS="$MAILCAP"   # Mutt, pine
-export MOZXDG_MODE=2
-export MYSQL_HOME="$XDG_CONFIG_HOME/mysql"
-export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
-export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
-export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/config.py"
-export PYTHONUSERBASE="$XDG_LOCAL_HOME"
-export R_ENVIRON_USER="$XDG_CONFIG_HOME/r/Renviron"
-export RANDFILE="$XDG_CACHE_HOME/rnd"
-export TEXMFHOME="$XDG_LOCAL_HOME/lib/texmf"
-export UNCRUSTIFY_CONFIG="$XDG_CONFIG_HOME/uncrustify/default"
-export VIMINIT="so $XDG_CONFIG_HOME/vim/vimrc"
-export WEECHAT_HOME="$XDG_CONFIG_HOME/weechat"
-export WINEPREFIX="$XDG_DATA_HOME/wine"
-
-# Arduino {{{3
-export ARDUINO_DIRECTORIES_DATA="$XDG_DATA_HOME/arduino"
-export ARDUINO_DIRECTORIES_DOWNLOADS="$XDG_CACHE_HOME/arduino"
-export ARDUINO_DIRECTORIES_USER="$XDG_LIB_DIR/arduino" # just treat it as directory for libraries
-
-# Emscripten {{{3
-export EM_CACHE="$XDG_CACHE_HOME/emscripten"
-export EM_CONFIG="$XDG_CONFIG_HOME/emscripten"
-
-# Golang {{{3
-export GOBIN="$XDG_LOCAL_HOME/bin"
-export GOPATH="$XDG_DATA_HOME/go"
-
-# Ruby {{{3
-export BUNDLE_USER_CACHE="$XDG_CACHE_HOME/bundle"
-export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME/bundle"
-export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME/bundle"
-
-# Shells etc. {{{3
-export BASH_COMPLETION_USER_FILE="$XDG_CONFIG_HOME/bash/completion"
-export BASH_DOTDIR="$XDG_CONFIG_HOME/bash"
-export ENV="$XDG_CONFIG_HOME/shell/shrc"  # sh, ksh
-export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
-
-# X11 {{{3
-export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
-export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
-export XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
-
-# HISTORY FILES {{{3
-export HISTFILE="$XDG_HISTORY_DIR/shell"
-export LESSHISTFILE=-
-export MYCLI_HISTFILE="$XDG_HISTORY_DIR/mycli"
-export MYSQL_HISTFILE="$XDG_HISTORY_DIR/mysql"
-export NODE_REPL_HISTORY="$XDG_HISTORY_DIR/node_repl_history"
-export SQLITE_HISTORY="$XDG_HISTORY_DIR/sqlite"
-
-# "Source" $XDG_CONFIG_HOME/user-dirs.dirs {{{2
-eval "$(sed 's/^[^#].*/export &/g;t;d' ${DIR:-$XDG_CONFIG_HOME}/user-dirs.dirs)"
-
-
-# PATH etc. {{{1
+# ~init {{{1
 
 pathmunge() {
     after=0
@@ -139,40 +39,126 @@ pathmunge() {
     unset after sep option OPTIND OPTARG
 }
 
-pathmunge "$XDG_LOCAL_HOME/bin"
-pathmunge "$XDG_LOCAL_HOME/bin/AppImages"
-pathmunge "$XDG_LOCAL_HOME/bin/scripts"
+# XDG Base Directory {{{1
 
-# Wrappers ("$XDG_LOCAL_HOME/wrappers", ...) are added at the -End-
+export XDG_LOCAL_HOME="$HOME/.local" # This sould be one of defaults
 
-pathmunge /usr/lib/ccache/bin # Enable ccache by default
-pathmunge $XDG_DATA_HOME/gem/ruby/*/bin
+export XDG_CACHE_HOME="$XDG_LOCAL_HOME/cache"
+export XDG_CONFIG_HOME="$XDG_LOCAL_HOME/config"
+export XDG_DATA_HOME="$XDG_LOCAL_HOME/share"
+
+export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-$XDG_LOCAL_HOME/.runtime}" # just in case
+
+export XDG_AUX_HOME="$XDG_LOCAL_HOME/aux" # auxiliary, local configs
+
+eval "$(sed 's/^[^#].*/export &/g;t;d' $XDG_CONFIG_HOME/user-dirs.dirs)"
+
+# RELOCATING {{{
+# ~history {{{1
+export HISTFILE="$XDG_HISTORY_DIR/shell"
+export LESSHISTFILE=-
+export MYCLI_HISTFILE="$XDG_HISTORY_DIR/mycli"
+export MYSQL_HISTFILE="$XDG_HISTORY_DIR/mysql"
+export NODE_REPL_HISTORY="$XDG_HISTORY_DIR/node_repl_history"
+export SQLITE_HISTORY="$XDG_HISTORY_DIR/sqlite"
+
+# ~misc {{{1
+
+export CHKTEXRC="$XDG_CONFIG_HOME"
+export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
+export DCONF_PROFILE="$XDG_CONFIG_HOME/dconf/user"
+export ELECTRUMDIR="$XDG_DATA_HOME/electrum"
+export ELINKS_CONFDIR="$XDG_CONFIG_HOME/elinks"
+export GIT_TEMPLATE_DIR="$XDG_CONFIG_HOME/git/template"
+export GNUPGHOME="$XDG_DATA_HOME/gnupg"
+export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
+export GRIPHOME="$XDG_CONFIG_HOME/grip"
+export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
+export ICEAUTHORITY="$XDG_CACHE_HOME/ICEauthority"
+export IMAPFILTER_HOME="$XDG_CONFIG_HOME/imapfilter"
+export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
+export MYSQL_HOME="$XDG_CONFIG_HOME/mysql"
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
+export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
+export R_ENVIRON_USER="$XDG_CONFIG_HOME/r/Renviron"
+export RANDFILE="$XDG_CACHE_HOME/rnd"
+export TEXMFHOME="$XDG_LOCAL_HOME/lib/texmf"
+export UNCRUSTIFY_CONFIG="$XDG_CONFIG_HOME/uncrustify/default"
+export VIMINIT="so $XDG_CONFIG_HOME/vim/vimrc"
+export WEECHAT_HOME="$XDG_CONFIG_HOME/weechat"
+export WINEPREFIX="$XDG_DATA_HOME/wine"
+
+# Arduino {{{1
+export ARDUINO_DIRECTORIES_DATA="$XDG_DATA_HOME/arduino"
+export ARDUINO_DIRECTORIES_DOWNLOADS="$XDG_CACHE_HOME/arduino"
+export ARDUINO_DIRECTORIES_USER="$XDG_LIB_DIR/arduino" # just treat it as directory for libraries
+
+# Ccache {{{1
+export CCACHE_CONFIGPATH="$XDG_CONFIG_HOME/ccache/config"
+export CCACHE_DIR="$XDG_CACHE_HOME/ccache"
+
+# Emscripten {{{1
+export EM_CACHE="$XDG_CACHE_HOME/emscripten"
+export EM_CONFIG="$XDG_CONFIG_HOME/emscripten"
+
+# Golang {{{1
+export GOBIN="$XDG_LOCAL_HOME/bin"
+export GOPATH="$XDG_DATA_HOME/go"
+
+# mailcap {{{1
+export MAILCAP="$XDG_CONFIG_HOME/mailcap" # elinks, w3m
+export MAILCAPS="$MAILCAP"   # Mutt, pine
+
+# Python {{{1
+export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/config.py"
+export PYTHONUSERBASE="$XDG_LOCAL_HOME"
+
+# Ruby {{{1
+export BUNDLE_USER_CACHE="$XDG_CACHE_HOME/bundle"
+export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME/bundle"
+export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME/bundle"
+
+# Shells {{{1
+export BASH_COMPLETION_USER_FILE="$XDG_CONFIG_HOME/bash/completion"
+export BASH_DOTDIR="$XDG_CONFIG_HOME/bash"
+export ENV="$XDG_CONFIG_HOME/shell/shrc"  # sh, ksh
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+
+# X11 {{{1
+export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
+export XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
+
+# }}}
 
 # Dev {{{1
 
-# VITASDK
 export VITASDK=/usr/local/vitasdk
 pathmunge "$VITASDK/bin"
-
-# C
-pathmunge CPATH           "$XDG_INCLUDE_DIR/c"
-pathmunge LD_LIBRARY_PATH "$XDG_LIB_DIR/c"
-pathmunge LIBRARY_PATH    "$XDG_LIB_DIR/c"
 
 export DEVKITPRO="/opt/devkitpro"
 export DEVKITARM="$DEVKITPRO/devkitARM"
 export DEVKITPPC="$DEVKITPRO/devkitPPC"
 
+pathmunge /usr/lib/ccache/bin
+pathmunge $XDG_DATA_HOME/gem/ruby/*/bin
+
+# PATH {{{1
+
+pathmunge "$XDG_LOCAL_HOME/bin"
+pathmunge "$XDG_LOCAL_HOME/bin/AppImages"
+pathmunge "$XDG_LOCAL_HOME/bin/scripts"
+
+pathmunge "$XDG_LOCAL_HOME/bin/_patch"
+
 # General {{{1
 # Default programs {{{2
-
-SHELL=bash # path determined in -End-
-# Also, dont set `tmux` etc. here or as login shell - can cause problems
 
 export BROWSER=firefox
 export EDITOR=vim
 export MANPAGER="vim -M +MANPAGER -"
 export PAGER="less"
+export SHELL="$(command -v bash)"
 export TERMINAL=xterm
 export VISUAL="$EDITOR"
 
@@ -214,18 +200,9 @@ export GPG_AGENT_INFO
 # Virtual terminal number (if not set already by PAM)
 export XDG_VTNR="${XDG_VTNR:-$(tty | sed 's/[^0-9]*//g')}"
 
-# Source additional, local env_variables {{{1
-[ -f $XDG_AUX_HOME/env_variables ] && . $XDG_AUX_HOME/env_variables
-
 # -End- {{{1
 
-# start searching from wrappers
-pathmunge "$XDG_LOCAL_HOME/bin/_patch"
+[ -f $XDG_AUX_HOME/env_variables ] && . $XDG_AUX_HOME/env_variables # additional, local env_variables
 
-export SHELL="$(command -v $SHELL)"
-
-# Create history dir
-mkdir -p "$XDG_HISTORY_DIR"
-
-# just in case
-[ "$XDG_RUNTIME_DIR" = "$XDG_LOCAL_HOME/.runtime" ] && mkdir -p "$XDG_RUNTIME_DIR"
+mkdir -p "$XDG_HISTORY_DIR" # Create history dir
+[ "$XDG_RUNTIME_DIR" = "$XDG_LOCAL_HOME/.runtime" ] && mkdir -p "$XDG_RUNTIME_DIR" # just in case
