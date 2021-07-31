@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+if [ "$1" = "-r" ] || [ "$1" = "-rf" ]; then
+    out="${2%.bak}"
+    if [ ! -e "$out" ]; then
+        cp -r "$2" "$out"
+    elif [ "$1" = "-rf" ]; then
+        rm -rf "$out"
+        cp -r "$2" "$out"
+    fi
+else
+    cp -r "${1%/}" "${1%/}.bak"
+fi

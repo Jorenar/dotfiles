@@ -1,9 +1,0 @@
-#!/usr/bin/env sh
-
-ID="$(xinput list | grep -io 'touchpad.*id=[0-9]*' | sed 's/^.*id=//')"
-
-if [ -z "$(xinput list $ID | grep 'This device is disabled')" ]; then
-    xinput disable $ID
-else
-    xinput enable $ID
-fi

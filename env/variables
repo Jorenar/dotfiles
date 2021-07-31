@@ -220,9 +220,7 @@ export XDG_VTNR="${XDG_VTNR:-$(tty | sed 's/[^0-9]*//g')}"
 # -End- {{{1
 
 # start searching from wrappers
-pathmunge "$XDG_LOCAL_HOME/bin/wrappers"
-pathmunge "$XDG_LOCAL_HOME/bin/_patch/xdg_wrappers"
-pathmunge "$XDG_LOCAL_HOME/bin/_patch/misc"
+pathmunge "$XDG_LOCAL_HOME/bin/_patch"
 
 export SHELL="$(command -v $SHELL)"
 

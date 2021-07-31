@@ -76,8 +76,7 @@ bindsym $mod+r exec --no-startup-id ${TERMINAL:-xterm} -T Ranger ranger
 # QuiteRSS
 for_window [class="QuiteRss" instance="quiterss" title="QuiteRSS"] floating enable         # 1
 for_window [class="QuiteRss" instance="quiterss" title="QuiteRSS"] move position 80px 50px # 2
-for_window [class="QuiteRss" instance="quiterss" title="QuiteRSS"] resize set 1400 900     # 3
-for_window [class="QuiteRss" instance="quiterss" title="QuiteRSS"] move scratchpad         # 4
+for_window [class="QuiteRss" instance="quiterss" title="QuiteRSS"] move scratchpad         # 3
 
 # KanjiTomo
 for_window [class="kanjitomo-reader-Launcher" title="KanjiTomo"] floating enable       # 1

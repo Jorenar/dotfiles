@@ -27,6 +27,7 @@ case "$(basename "$0")" in
         ;;
     firefox)
         ARGS="--profile $XDG_DATA_HOME/firefox"
+        { while kill -0 $$; do rm -rf $HOME/.mozilla; done; } &
         ;;
     gdb)
         # if SHELL points also to XDG wrapper, then change it to actual executable
@@ -87,7 +88,6 @@ progwrap_exec $ARGS "$@"
 
 #~ audacity
 #~ bash
-#~ chromium
 #~ csh
 #~ dosbox
 #~ firefox

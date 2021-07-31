@@ -48,27 +48,3 @@ PS1="$PS1"'\033[1m$([ ${#PWD} -gt $((COLUMNS/3)) ] && echo; echo "$")\033[0m '
 
 # - PRINT PROMPT
 PS1=$(printf "$PS1")
-
-# FUNCTIONS {{{1
-
-bak() {
-    if [ "$1" = "-r" ] || [ "$1" = "-rf" ]; then
-        out="${2%.bak}"
-        if [ ! -e "$out" ]; then
-            cp -r "$2" "$out"
-        elif [ "$1" = "-rf" ]; then
-            rm -rf "$out"
-            cp -r "$2" "$out"
-        fi
-    else
-        cp -r "${1%/}" "${1%/}.bak"
-    fi
-}
-
-organizer() {
-    mkdir "$XDG_DATA_HOME/organizer"
-    options="let g:netrw_liststyle=0"
-    options="$options | let g:netrw_browse_split = 0"
-    options="$options"' | let netrw_list_hide="\\."'
-    vim +"$options" "$XDG_DATA_HOME/organizer"
-}

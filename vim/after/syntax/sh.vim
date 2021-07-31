@@ -1,5 +1,7 @@
 " vim: fdm=marker
 
+call utils#appendToSynRule("shSingleQuote", "region", "fold")
+
 " Embedding languages {{{1
 
 function! s:embed(lang) abort
@@ -22,4 +24,4 @@ function! s:embed(lang) abort
 endfunction
 
 call s:embed("awk")
-call s:embed("sed")
+" call s:embed("sed")
