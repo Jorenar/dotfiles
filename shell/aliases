@@ -34,5 +34,5 @@ alias yay-autoremove='yay -Rns $(yay -Qtdq)'
 alias yt-mp3='youtube-dl --extract-audio --audio-format mp3'
 
 alias cheat='sh -c '\''curl cheat.sh/$1'\'' _'
-alias find='sh -c '\''find $@ 2>&1 | grep -v "Permission denied" >&2'\'' _'
+alias find_='sh -c '\''find $@ 2>&1 | grep -v "Permission denied" >&2'\'' _'
 alias wttr='sh -c '\''curl wttr.in/$1'\'' _'
