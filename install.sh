@@ -119,10 +119,10 @@ xdg_wrappers_dir="$patch_dir/xdg_wrappers"
 
 find "$xdg_wrappers_dir" -type l -delete # clean old symlinks to wrappers
 
-while IFS= read -r exe; do
+for exe in $(sed -n -e 's/^#~ //p' "$DIR/_patch/xdg_base_dir/xdg_wrapper.sh"); do
     exe="$(echo $exe | cut -f1 -d'#')"
     [ -x "$(command -v $exe)" ] && linking  _patch/xdg_base_dir/xdg_wrapper.sh  $xdg_wrappers_dir/$exe
-done < "$DIR/_patch/xdg_base_dir/wrapping.list"
+done
 
 # MozXDG
 if [ -x "$(command -v firefox)" ]; then

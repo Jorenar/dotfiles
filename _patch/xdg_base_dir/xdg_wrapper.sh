@@ -46,6 +46,9 @@ case "$(basename "$0")" in
 
         ARGS="$SSH_CONFIG $OPTIONS"
         ;;
+    steam)
+        HOME="$XDG_DATA_HOME/Steam"
+        ;;
     *) # FAKEHOME
         HOME="${XDG_FAKEHOME_DIR:-$HOME/.local/.fakehome}"
         ;;
@@ -80,3 +83,18 @@ progwrap_exec() {
 }
 
 progwrap_exec $ARGS "$@"
+
+
+#~ audacity
+#~ bash
+#~ chromium
+#~ csh
+#~ dosbox
+#~ firefox
+#~ gdb
+#~ gphoto2
+#~ nvidia-settings
+#~ scp
+#~ ssh
+#~ steam
+#~ tcsh
