@@ -51,7 +51,7 @@ export XDG_DATA_HOME="$XDG_LOCAL_HOME/share"
 
 export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-$XDG_LOCAL_HOME/.runtime}" # just in case
 
-export XDG_AUX_HOME="$XDG_LOCAL_HOME/aux" # auxiliary, local configs
+export XDG_AUX_DIR="$XDG_LOCAL_HOME/aux" # auxiliary, local configs
 
 eval "$(sed 's/^[^#].*/export &/g;t;d' $XDG_CONFIG_HOME/user-dirs.dirs)"
 
@@ -204,7 +204,7 @@ export XDG_VTNR="${XDG_VTNR:-$(tty | sed 's/[^0-9]*//g')}"
 
 # -End- {{{1
 
-[ -f $XDG_AUX_HOME/env_variables ] && . $XDG_AUX_HOME/env_variables # additional, local env_variables
+[ -f $XDG_AUX_DIR/env_variables ] && . $XDG_AUX_DIR/env_variables # additional, local env_variables
 
 mkdir -p "$XDG_HISTORY_DIR" # Create history dir
 [ "$XDG_RUNTIME_DIR" = "$XDG_LOCAL_HOME/.runtime" ] && mkdir -p "$XDG_RUNTIME_DIR" # just in case
