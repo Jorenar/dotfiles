@@ -1,10 +1,7 @@
 Host *
-    ForwardX11Trusted yes
+    Compression yes
     Include ~/.local/aux/ssh
 
 Host aur.archlinux.org
     IdentityFile ~/.local/share/ssh/aur
     User aur
-
-Host github.com
-    ForwardX11Trusted no
