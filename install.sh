@@ -29,10 +29,17 @@ linking() {
 
 }
 
+# 1nd argument - prefix
+# 2rd argument - list
+linking_() {
+    echo "$2" | while IFS= read -r line; do
+        [ -n "$line" ] && linking $(echo "$line" | sed "s,@\s*,$1/,")
+    done
+}
+
 # MAIN {{{1
 
-# Files going to $XDG_CONFIG_HOME
-echo '
+linking_ "$XDG_CONFIG_HOME" '
 
     aerc/               @  aerc
     asoundrc            @  alsa/asoundrc
@@ -73,19 +80,21 @@ echo '
     zathurarc           @  zathura/zathurarc
     zshrc               @  zsh/.zshrc
 
-' | while IFS= read -r line; do
-    [ -n "$line" ] && linking $(echo "$line" | sed "s,@\s*,$XDG_CONFIG_HOME/,")
-done
+'
 
-linking  app.desktop.d/           $XDG_DATA_HOME/applications/custom
-linking  firefox/user.js          $XDG_DATA_HOME/firefox/user.js
-linking  firefox/userChrome.css   $XDG_DATA_HOME/firefox/chrome/userChrome.css
-linking  firefox/userContent.css  $XDG_DATA_HOME/firefox/chrome/userContent.css
-linking  fonts/                   $XDG_DATA_HOME/fonts
-linking  gpg-agent.conf           $XDG_DATA_HOME/gnupg/gpg-agent.conf
-linking  themes/                  $XDG_DATA_HOME/themes
+linking_ "$XDG_DATA_HOME" '
 
-linking  bin/                     $XDG_LOCAL_HOME/bin/scripts
+    app.desktop.d/           @  applications/custom
+    firefox/user.js          @  firefox/user.js
+    firefox/userChrome.css   @  firefox/chrome/userChrome.css
+    firefox/userContent.css  @  firefox/chrome/userContent.css
+    fonts/                   @  fonts
+    gpg-agent.conf           @  gnupg/gpg-agent.conf
+    themes/                  @  themes
+
+'
+
+linking  bin/ $XDG_LOCAL_HOME/bin/scripts
 
 # "PATCHING" {{{1
 
