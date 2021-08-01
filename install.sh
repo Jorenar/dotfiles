@@ -89,7 +89,6 @@ linking_ "$XDG_DATA_HOME" '
     firefox/userChrome.css   @  firefox/chrome/userChrome.css
     firefox/userContent.css  @  firefox/chrome/userContent.css
     fonts/                   @  fonts
-    gpg-agent.conf           @  gnupg/gpg-agent.conf
     themes/                  @  themes
 
 '
