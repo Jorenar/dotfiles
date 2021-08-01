@@ -64,7 +64,9 @@ progwrap_exec() {
         shift 2
     fi
 
-    if [ -z "${!execChainEnvVar}" ]; then
+    eval val="\$$execChainEnvVar"
+
+    if [ -z "$val" ]; then
         export "$execChainEnvVar"="$(stat -c "%i" "$(realpath $0)")"
     fi
 
@@ -72,8 +74,8 @@ progwrap_exec() {
         f="$dir/$(basename $0)"
         if [ -x "$f" ]; then
             i=$(stat -c "%i" "$f")
-            if [ "${!execChainEnvVar#*$i}" = "${!execChainEnvVar}" ]; then
-                export "$execChainEnvVar"="${!execChainEnvVar}:$i"
+            if [ "${val#*$i}" = "$val" ]; then
+                export "$execChainEnvVar"="$val:$i"
                 unset i f
                 exec $PREFIX "$dir/$(basename $0)" "$@"
             fi
