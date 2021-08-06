@@ -22,10 +22,16 @@ linking() {
 
     if [ ! -e $2 ]; then
         mkdir -p "$(dirname $2)"
-        ln -sf $DIR/$1 $2
+        if [ "$3" = "CP" ]; then
+            cp $DIR/$1 $2
+            mod="$4"
+        else
+            ln -sf $DIR/$1 $2
+            mod="$3"
+        fi
     fi
 
-    [ -n "$3" ] && chmod "$3" "$2"
+    [ -n "$mod" ] && chmod "$mod" "$2"
 
 }
 
@@ -57,7 +63,7 @@ linking_ "$XDG_CONFIG_HOME" '
     git/                @  git
     grip.py             @  grip/grip.py
     gtkrc-2.0           @  gtk-2.0/gtkrc
-    htoprc              @  htop/htoprc               -w
+    htoprc              @  htop/htoprc                          -w
     i3/                 @  i3
     inputrc             @  readline/inputrc
     mailcap             @  mailcap
@@ -67,12 +73,13 @@ linking_ "$XDG_CONFIG_HOME" '
     newsboat/config     @  newsboat/config
     npmrc               @  npm/npmrc
     python_config.py    @  python/config.py
-    QuiteRss.ini        @  QuiteRss/QuiteRss.ini     -w
+    QuiteRss.ini        @  QuiteRss/QuiteRss.ini                CP
     ranger.conf         @  ranger/rc.conf
     Renviron            @  R/Renviron
     shell/              @  shell
     spicy_settings      @  spicy/settings
     ssh_config          @  ssh/config
+    ssr.conf            @  simplescreenrecorder/settings.conf   CP
     tmux.conf           @  tmux/tmux.conf
     uncrustify/         @  uncrustify
     vim/                @  vim

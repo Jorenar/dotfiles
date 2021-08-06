@@ -3,17 +3,18 @@
 for f in "$@"; do
     if [ -f "$f" ] ; then
         case "$f" in
-            *.tar.bz2)   tar xvjf   "$f"                    ;;
-            *.tar.gz)    tar xvzf   "$f"                    ;;
-            *.bz2)       bunzip2    "$f"                    ;;
-            *.rar)       unrar x    "$f"                    ;;
-            *.gz)        gunzip     "$f"                    ;;
-            *.tar)       tar xvf    "$f"                    ;;
-            *.tbz2)      tar xvjf   "$f"                    ;;
-            *.tgz)       tar xvzf   "$f"                    ;;
-            *.zip)       unzip      "$f"                    ;;
-            *.Z)         uncompress "$f"                    ;;
-            *.7z)        7z x       "$f"                    ;;
+            *.tar.bz2)  tar xvjf   "$f"  ;;
+            *.tar.gz)   tar xvzf   "$f"  ;;
+            *.tar.xz)   tar xvf    "$f"  ;;
+            *.bz2)      bunzip2    "$f"  ;;
+            *.rar)      unrar x    "$f"  ;;
+            *.gz)       gunzip     "$f"  ;;
+            *.tar)      tar xvf    "$f"  ;;
+            *.tbz2)     tar xvjf   "$f"  ;;
+            *.tgz)      tar xvzf   "$f"  ;;
+            *.zip)      unzip      "$f"  ;;
+            *.Z)        uncompress "$f"  ;;
+            *.7z)       7z x       "$f"  ;;
             *)
                 echo "'$f' - unknown archive type"  >&2
                 ;;
