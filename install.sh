@@ -81,6 +81,7 @@ linking_ "$XDG_CONFIG_HOME" '
     ssh_config          @  ssh/config
     ssr.conf            @  simplescreenrecorder/settings.conf   CP
     tmux.conf           @  tmux/tmux.conf
+    transmission.json   @  transmission/settings.json           CP
     uncrustify/         @  uncrustify
     vim/                @  vim
     X11/                @  X11
