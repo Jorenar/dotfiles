@@ -1,7 +1,8 @@
-_deps/*
 aerc/accounts.conf
 fonts/.uuid
 vim/doc/tags
 vim/spell/*.spl
 
-!_deps/download.sh
+weechat/irc.conf
+weechat/relay.conf
+weechat/sec.conf

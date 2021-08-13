@@ -84,6 +84,7 @@ linking_ "$XDG_CONFIG_HOME" '
     transmission.json   @  transmission/settings.json           CP
     uncrustify/         @  uncrustify
     vim/                @  vim
+    weechat/            @  weechat
     X11/                @  X11
     zathurarc           @  zathura/zathurarc
     zshrc               @  zsh/.zshrc
