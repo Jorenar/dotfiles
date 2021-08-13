@@ -3,17 +3,3 @@ input:not(.urlbar-input):not(.textbox-input):not(.form-control):not([type='check
   background-color: white;
   color: black;
 }
-
-/*
-textarea {
-  -moz-appearance: none !important;
-  background-color: white !important;
-  color: black !important;
-}
-
-select {
-  -moz-appearance: none !important;
-  background-color: white;
-  color: black;
-}
-*/

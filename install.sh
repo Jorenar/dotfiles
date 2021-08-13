@@ -23,7 +23,7 @@ linking() {
     if [ ! -e $2 ]; then
         mkdir -p "$(dirname $2)"
         if [ "$3" = "CP" ]; then
-            cp $DIR/$1 $2
+            cp -r $DIR/$1 $2
             mod="$4"
         else
             ln -sf $DIR/$1 $2
