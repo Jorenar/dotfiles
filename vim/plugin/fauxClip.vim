@@ -1,15 +1,12 @@
 " fauxClip - Clipboard support without +clipboard
-" Maintainer:  Jorengarenar <https://joren.ga>
+" Maintainer:  Jorengarenar <dev@joren.ga>
 
-if exists("g:loaded_fauxClip") || !exists("##CmdlineLeave")
-  finish
-endif
-
-if has("clipboard") && !get(g:, "fauxClip_always_use", 0)
-  finish
-endif
+if exists("g:loaded_fauxClip") | finish | endif
+if has("clipboard") && !get(g:, "fauxClip_always_use", 0) | finish | endif
 
 let s:cpo_save = &cpo | set cpo&vim
+
+" Variables {{{1
 
 let s:is_pbcopy     = executable("pbcopy")
 let s:is_clipExe    = executable("clip.exe")
@@ -40,41 +37,126 @@ if !exists("g:fauxClip_paste_primary_cmd")
 endif
 
 if get(g:, "fauxClip_suppress_errors", 1)
-  if s:is_clipExe
-    let s:null = " 2> NUL"
-  else
-    let s:null = " 2> /dev/null"
-  endif
+  let s:null = s:is_clipExe ? " 2> NUL" : " 2> /dev/null"
   let g:fauxClip_copy_cmd          .= s:null
   let g:fauxClip_paste_cmd         .= s:null
   let g:fauxClip_copy_primary_cmd  .= s:null
   let g:fauxClip_paste_primary_cmd .= s:null
 endif
 
+" Functions {{{1
+
+function! s:start(REG) abort
+  let s:REG = a:REG
+  let s:reg = [getreg('"'), getregtype('"')]
+
+  let @@ = s:paste(s:REG)
+
+  augroup fauxClip
+    autocmd!
+    if exists('##TextYankPost')
+      autocmd TextYankPost * if v:event.regname == '"' | call s:yank(v:event.regcontents) | endif
+    else
+      autocmd CursorMoved  * if @@ != s:reg | call s:yank(@@) | endif
+    endif
+    autocmd TextChanged  * call s:end()
+  augroup END
+
+  return '""'
+endfunction
+
+function! s:yank(content) abort
+  if s:REG == "+"
+    call system(g:fauxClip_copy_cmd, a:content)
+  else
+    call system(g:fauxClip_copy_primary_cmd, a:content)
+  endif
+
+  call s:end()
+endfunction
+
+function! s:paste(REG) abort
+  if a:REG == "+"
+    return system(g:fauxClip_paste_cmd)
+  else
+    return system(g:fauxClip_paste_primary_cmd)
+  endif
+endfunction
+
+function! s:end() abort
+  augroup fauxClip
+    autocmd!
+  augroup END
+  call setreg('"', s:reg[0], s:reg[1])
+  unlet! s:reg s:REG
+endfunction
+
+function! s:cmd(cmd, REG) abort range
+  let s:REG = a:REG
+  let s:reg = [getreg('"'), getregtype('"')]
+  if a:cmd =~# 'pu\%[t]'
+    execute a:firstline . ',' . a:lastline . a:cmd ."=s:paste(s:REG)"
+    call s:end()
+  else
+    execute a:firstline . ',' . a:lastline . a:cmd
+    call s:yank(getreg('"'))
+  endif
+endfunction
+
+function! s:restore_CR() abort
+  if empty(g:CR_old)
+    cunmap <CR>
+  else
+    execute   (g:CR_old["noremap"] ? "cnoremap " : "cmap ")
+          \ . (g:CR_old["silent"]  ? "<silent> " : "")
+          \ . (g:CR_old["nowait"]  ? "<nowait> " : "")
+          \ . (g:CR_old["expr"]    ? "<expr> "   : "")
+          \ . (g:CR_old["buffer"]  ? "<buffer> " : "")
+          \ . g:CR_old["lhs"]." ".g:CR_old["rhs"]
+  endif
+  unlet g:CR_old
+endfunction
+
+function! s:cmd_pattern() abort
+  return '\v%(%(^|\|)\s*%(\%|\d\,\d|' . "'\\<\\,'\\>" . ')?\s*)@<=(y%[ank]|d%[elete]|pu%[t]!?)\s*([+*])'
+endfunction
+
+function! s:CR() abort
+  call s:restore_CR()
+  call histadd(":", getcmdline())
+  return substitute(getcmdline(),
+        \ s:cmd_pattern(),
+        \ 'call '.expand('<SID>').'cmd(''\1'', ''\2'')', 'g')
+        \ . " | call histdel(':', -1)"
+endfunction
+
+" Mappings {{{1
+
 augroup fauxClipCmdWrapper
   autocmd!
-  autocmd CmdlineChanged : if getcmdline() =~# fauxClip#cmd_pattern()
-        \| let g:CR_old = maparg('<CR>', 'c', '', 1)
-        \| cnoremap <expr> <silent> <CR> getcmdline() =~# fauxClip#cmd_pattern() ? '<C-u>'.fauxClip#CR().'<CR>' : '<CR>'
-        \| elseif exists('g:CR_old') | call fauxClip#restore_CR() | endif
-  autocmd CmdlineLeave : if exists('g:CR_old') | call fauxClip#restore_CR() | endif
+  autocmd CmdlineChanged : if getcmdline() =~# <SID>cmd_pattern()
+        \| if !exists('g:CR_old') | let g:CR_old = maparg('<CR>', 'c', '', 1) | endif
+        \| cnoremap <expr> <silent> <CR> getcmdline() =~# <SID>cmd_pattern() ? '<C-u>'.<SID>CR().'<CR>' : '<CR>'
+        \| elseif exists('g:CR_old') | call <SID>restore_CR() | endif
 augroup END
 
-nnoremap <expr> "* fauxClip#start("*")
-nnoremap <expr> "+ fauxClip#start("+")
+nnoremap <expr> "* <SID>start("*")
+nnoremap <expr> "+ <SID>start("+")
 
-vnoremap <expr> "* fauxClip#start("*")
-vnoremap <expr> "+ fauxClip#start("+")
+vnoremap <expr> "* <SID>start("*")
+vnoremap <expr> "+ <SID>start("+")
 
-noremap! <C-r>+       <C-r>=fauxClip#paste("+")<CR>
-noremap! <C-r><C-r>+  <C-r><C-r>=fauxClip#paste("+")<CR>
-noremap! <C-r><C-o>+  <C-r><C-o>=fauxClip#paste("+")<CR>
-inoremap <C-r><C-p>+  <C-r><C-p>=fauxClip#paste("+")<CR>
+noremap! <C-r>+       <C-r>=<SID>paste("+")<CR>
+noremap! <C-r><C-r>+  <C-r><C-r>=<SID>paste("+")<CR>
+noremap! <C-r><C-o>+  <C-r><C-o>=<SID>paste("+")<CR>
+inoremap <C-r><C-p>+  <C-r><C-p>=<SID>paste("+")<CR>
 
-noremap! <C-r>*       <C-r>=fauxClip#paste("*")<CR>
-noremap! <C-r><C-r>*  <C-r><C-r>=fauxClip#paste("*")<CR>
-noremap! <C-r><C-o>*  <C-r><C-o>=fauxClip#paste("*")<CR>
-inoremap <C-r><C-p>*  <C-r><C-p>=fauxClip#paste("*")<CR>
+noremap! <C-r>*       <C-r>=<SID>paste("*")<CR>
+noremap! <C-r><C-r>*  <C-r><C-r>=<SID>paste("*")<CR>
+noremap! <C-r><C-o>*  <C-r><C-o>=<SID>paste("*")<CR>
+inoremap <C-r><C-p>*  <C-r><C-p>=<SID>paste("*")<CR>
+
+" }}}1
 
 let g:loaded_fauxClip = 1
 let &cpo = s:cpo_save | unlet s:cpo_save
