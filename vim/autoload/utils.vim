@@ -1,29 +1,3 @@
-function! utils#markerFoldExpr(maxlvl, ...) abort
-  let line = getline(v:lnum)
-
-  let [ m1, m2 ] = split(&l:foldmarker, ",")
-
-  if a:0 == 0
-    let comm = split(&l:comments, ',')
-    call map(comm, 'substitute(v:val, ".\\{-}:", "", "")')
-    let comm = '\%(' . join(comm, '\|') . '\)'
-  else
-    let comm = a:1
-  endif
-
-  let s:st = "\\V\\s\\*" . comm . "\\.\\{-}"
-  let s:op = s:st . m1
-  let s:cl = s:st . m2
-
-  if line =~? s:op
-    return "a1"
-  elseif line =~? s:cl
-    return "s1"
-  endif
-
-  return "="
-endfunction
-
 function! utils#upper(k)
   if synIDattr(synID(line('.'), col('.')-1, 0), "name") !~# 'Comment\|String'
     return toupper(a:k)
@@ -75,3 +49,21 @@ function! utils#VisSort() range abort " sorts based on visual-block selected por
   execute "sil! keepj ".firstline.",".lastline.'s/^.\{-}@@@//'
   let @a = old_a
 endfun
+
+function! utils#InstallPlugins() abort
+  let dir = substitute(&packpath, ",.*", "", "")."/pack/plugins/start/"
+  silent! call mkdir(dir, 'p')
+  call system("git init ".dir)
+
+  for plugin in g:plugins.repos
+    call system("git -C ".dir." submodule add --depth=1 https://github.com/".plugin)
+  endfor
+  call system("git -C ".dir." submodule update --recursive --remote")
+
+  for f in g:plugins.files
+    call system("curl -o ".substitute(&rtp, ",.*", "", "").f[0]." -L ".f[1])
+  endfor
+
+  silent! helptags ALL
+  echo "Plugins installed"
+endfunction

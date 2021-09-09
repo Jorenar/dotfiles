@@ -41,6 +41,7 @@ com! -nargs=1         FillLine         exec "norm! $" | exec "FillToColumn" <q-a
 com! -nargs=+         FillToColumn     exec {str,r -> "norm! a".repeat(str, (r-col("."))/len(str))}(<f-args>)
 com! -nargs=+         Grep             exec "lvimgrep /".<q-args>."/j **"
 com! -nargs=+         GrepRename       exec {a,b -> 'tabe | lv /\C\<' . a . '\>/j ** | ldo s/\C\<' . a . '\>/' . b . '/gc | up'}(<f-args>) | q
+com!                  InstallPlugins   call utils#InstallPlugins()
 com! -range=%         Sort             normal :<line1>,<line2>sort i<CR>
 com!                  SortBlock        normal! vip:sort i<CR>
 com! -nargs=? -bang   Spelling         setlocal spell<bang> spelllang=<args>
@@ -138,22 +139,23 @@ endfunction
 
 " PLUGINS AND PACKAGES {{{1
 
-runtime plugin/minPlug.vim
-
-let g:minPlug_singleFiles = [
-      \   [ "autoload/repeat.vim",   "https://git.io/JmdpI", "$XDG_CONFIG_HOME/vim" ],
-      \   [ "plugin/commentary.vim", "https://git.io/JGOEP", "$XDG_CONFIG_HOME/vim" ],
-      \   [ "plugin/fastfold.vim",   "https://git.io/JIEo6", "$XDG_CONFIG_HOME/vim" ],
-      \   [ "plugin/surround.vim",   "https://git.io/JLXyW", "$XDG_CONFIG_HOME/vim" ],
-      \   [ "syntax/tex.vim",        "https://git.io/JYBDH", "$XDG_CONFIG_HOME/vim" ],
-      \ ]
-
-MinPlug ctrlpvim/ctrlp.vim
-MinPlug Jorengarenar/miniSnip
-MinPlug majutsushi/tagbar
-MinPlug mbbill/undotree
-MinPlug natebosch/vim-lsc
-MinPlug puremourning/vimspector
+let g:plugins = #{
+      \   repos: [
+      \     "ctrlpvim/ctrlp.vim",
+      \     "Jorengarenar/miniSnip",
+      \     "majutsushi/tagbar",
+      \     "mbbill/undotree",
+      \     "natebosch/vim-lsc",
+      \     "puremourning/vimspector",
+      \   ],
+      \   files: [
+      \     [ "autoload/repeat.vim",   "https://git.io/JmdpI" ],
+      \     [ "plugin/commentary.vim", "https://git.io/JGOEP" ],
+      \     [ "plugin/fastfold.vim",   "https://git.io/JIEo6" ],
+      \     [ "plugin/surround.vim",   "https://git.io/JLXyW" ],
+      \     [ "syntax/tex.vim",        "https://git.io/JYBDH" ],
+      \   ]
+      \ }
 
 packadd cfilter
 packadd matchit
@@ -172,16 +174,14 @@ nmap ss <Plug>Yssurround
 
 " CtrlP {{{1
 
-let g:ctrlp_brief_prompt        = 1
 let g:ctrlp_cache_dir           = $XDG_CACHE_HOME . "/vim/ctrlp"
-let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_types               = [ 'fil', 'buf' ]
 
 let g:ctrlp_prompt_mappings = {
-      \ 'PrtExit()':     [ '<Esc>' ],
-      \ 'PrtHistory(1)': [ '<C-f>' ],
-      \ 'ToggleType(1)': [ '<C-p>', '<c-up>' ],
-      \ }
+    \ 'PrtExit()':     [ '<Esc>' ],
+    \ 'PrtHistory(1)': [ '<C-f>' ],
+    \ 'ToggleType(1)': [ '<C-p>', '<c-up>' ],
+    \ }
 
 " Tagbar {{{1
 
@@ -199,9 +199,6 @@ let g:fastfold_fold_command_suffixes = [ 'C', 'm', 'M', 'N', 'x', 'X' ]
 let g:fastfold_minlines              = 0
 let g:fastfold_savehook              = 0
 
-let g:minPlug_updateSelf          = 0
-let g:undotree_SetFocusWhenToggle = 1
-
 let g:miniSnip_extends = {
       \ "arduino"  : [ "cpp", "c" ],
       \ "cpp"      : [ "c" ],
@@ -210,6 +207,7 @@ let g:miniSnip_extends = {
       \ "tex"      : [ "plaintex" ],
       \ }
 
+let g:undotree_SetFocusWhenToggle = 1
 nnoremap <F1> :UndotreeToggle<CR>
 
 " }}}
@@ -274,7 +272,7 @@ augroup OTHER
   autocmd BufReadPost * if line('$') > winheight(0) | setlocal fen | endif
 
   " Set fold method to syntax
-  autocmd FileType dosini,make  setlocal foldmethod=syntax
+  autocmd FileType dosini,make,m3u  setlocal foldmethod=syntax
 
 augroup END
 
