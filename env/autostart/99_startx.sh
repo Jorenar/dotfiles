@@ -6,13 +6,13 @@ if grep -Fxqs "switched_gpu" "$TMPFLAGS" && sudo -n prime-switch > /dev/null 2>&
     sed -i '/switched_gpu/d' "$TMPFLAGS"
 fi
 
-# If there is no display and variable AUTOSTARTX is not empty then on tty1 start X
-if [ -n "$AUTOSTARTX" ] && [ -z "$DISPLAY" ] && [ $XDG_VTNR -eq 1 ] && ! grep -Fxqs "autostartedx" "$TMPFLAGS"; then
+# If there is no display and variable NOAUTOSTARTX is empty then on tty1 start X
+if      [ -z "$NOAUTOSTARTX" ]                      && \
+        [ -z "$DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ]  && \
+        ! grep -Fxqs "autostartedx" "$TMPFLAGS"           ; then
 
     echo "autostartedx" >> "$TMPFLAGS"
-
     sed -i '/GPU /d' "$TMPFLAGS"
-
     exec startX
 
 elif grep -Fxqs "autostartx=0" "$TMPFLAGS"; then
