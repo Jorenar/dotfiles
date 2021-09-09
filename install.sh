@@ -102,7 +102,8 @@ linking_ "$XDG_DATA_HOME" '
 
 '
 
-linking  bin/ $XDG_LOCAL_HOME/bin/scripts
+linking  bin/         $XDG_LOCAL_HOME/bin/scripts
+linking  templates/   $XDG_TEMPLATES_DIR
 
 # "PATCHING" {{{1
 
