@@ -1,12 +1,18 @@
 function! sBnR#run(file, ...) abort
-  let options = ""
+
+  let options = #{
+        \   term_name: "sB&R [" .&ft. "]  ",
+        \   term_finish: "open",
+        \   norestore: 1,
+        \   exit_cb: { _, nr -> execute('let &l:stl .= "  (".nr.")"') },
+        \ }
   let detach = 0
 
   if has_key(g:sBnR_runCmds, &ft)
     let cmd = g:sBnR_runCmds[&ft][1]
 
     if g:sBnR_runCmds[&ft][0] == 1
-      let options = "++close "
+      let options.term_finish = "close"
     elseif g:sBnR_runCmds[&ft][0] == 2
       let detach = 1
     endif
@@ -21,18 +27,22 @@ function! sBnR#run(file, ...) abort
   endif
 
   let cmd .= " ".get(a:, 1, "")
+  let options.term_name .= cmd
+  let cmd = expandcmd(cmd)
 
   if detach
-    call system(expandcmd(cmd)." &")
+    call system(cmd." &")
   elseif has('nvim')
     execute "tabe term://".cmd
-    if options == "++close "
+    if options.term_finish == "close"
       autocmd TermClose <buffer> call feedkeys("q")
     else
       autocmd TermClose <buffer> call feedkeys("\<C-\>\<C-n>")
     endif
   else
-    execute "tab term ++shell ".options.cmd
+    let buf = term_start(&shell, options)
+    wincmd T
+    call term_sendkeys(buf, 'printf "\033[2J\033[H"; '.cmd."; exit 2> /dev/null\<CR>")
   endif
 
 endfunction
