@@ -70,7 +70,7 @@ linking_ "$XDG_CONFIG_HOME" '
     mpv/                @  mpv
     muttrc              @  mutt/muttrc
     myclirc             @  mycli/myclirc
-    newsboat/config     @  newsboat/config
+    newsboat            @  newsboat/config
     npmrc               @  npm/npmrc
     python_config.py    @  python/config.py
     QuiteRss.ini        @  QuiteRss/QuiteRss.ini                CP
