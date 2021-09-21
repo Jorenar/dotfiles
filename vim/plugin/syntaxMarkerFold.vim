@@ -49,7 +49,15 @@ function! s:init(...) abort
 
 endfunction
 
-autocmd Syntax * call s:init()
+augroup syntaxMarkerFold
+  autocmd Syntax * call s:init()
+  autocmd OptionSet foldmarker
+        \  exec "syn clear syntaxMarkerFold"
+        \| for i in range(1, get(b:, "syntaxMarkerFold_maxlevel", get(g:, "syntaxMarkerFold_maxlevel", 5)))
+        \|   exec "syn clear syntaxMarkerFold".i
+        \| endfor | unlet i
+        \| call s:init()
+augroup END
 
 let g:loaded_syntaxMarkerFold = 1
 let &cpo = s:cpo_save | unlet s:cpo_save
