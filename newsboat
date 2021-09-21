@@ -1,11 +1,16 @@
 auto-reload              yes
 browser                  firefox
 confirm-exit             yes
-mark-as-read-on-hover    yes
+goto-first-unread        no
 notify-xterm             yes
 prepopulate-query-feeds  yes
 reload-time              10
+show-title-bar           no
 text-width               80
+
+datetime-format     "%F %R"
+feedlist-format     " %S %-20t %U"
+articlelist-format  " %f | %-20T | %-100t | %D"
 
 bind-key \      macro-prefix
 bind-key G      end
@@ -15,6 +20,6 @@ bind-key k      up
 bind-key O      open-all-unread-in-browser-and-mark-read
 bind-key SPACE  open-in-browser-and-mark-read
 
-# include path/to/filters
+include ~/.local/config/newsboat/filters
 
 # vim: ft=conf
