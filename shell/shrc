@@ -44,7 +44,7 @@ PS1="$PS1"':\033[0;90m$( echo $PWD | sed s,^$HOME,~, )\033[0m'
 PS1="$PS1\$(git rev-parse --abbrev-ref HEAD 2> /dev/null | sed 's/.*/:\033[0;1;4;90m&/')\033[0m"
 
 # $
-PS1="$PS1"'\033[1m$([ ${#PWD} -gt $((COLUMNS/3 + 20)) ] && echo; echo "$")\033[0m '
+PS1="$PS1"'\033[1m$([ $((${#PWD} + ${#USER} + ${#HOSTNAME})) -gt 60 ] && echo; echo "$")\033[0m '
 
 # - PRINT PROMPT
 PS1=$(printf "$PS1")
