@@ -67,3 +67,10 @@ function! utils#InstallPlugins() abort
   silent! helptags ALL
   echo "Plugins installed"
 endfunction
+
+function! utils#VSetSearch(cmdtype) abort " search for selected text, forwards or backwards
+  let temp = @s
+  norm! gv"sy
+  let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
+  let @s = temp
+endfunction
