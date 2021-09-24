@@ -1,6 +1,7 @@
 aerc/accounts.conf
 fonts/.uuid
 vim/doc/tags
+vim/pack/test
 vim/spell/*.spl
 
 weechat/irc.conf
