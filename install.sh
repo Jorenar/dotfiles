@@ -78,6 +78,7 @@ linking_ "$XDG_CONFIG_HOME" '
     Renviron            @  R/Renviron
     shell/              @  shell
     spicy_settings      @  spicy/settings
+    sqliterc            @  sqlite3/sqliterc
     ssh_config          @  ssh/config
     ssr.conf            @  simplescreenrecorder/settings.conf   CP
     tmux.conf           @  tmux/tmux.conf

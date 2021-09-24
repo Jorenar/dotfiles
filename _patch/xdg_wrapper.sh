@@ -40,6 +40,9 @@ case "$(basename "$0")" in
         mkdir -p "$XDG_CONFIG_HOME/nvidia"
         ARGS="--config=$XDG_CONFIG_HOME/nvidia/rc.conf"
         ;;
+    sqlite3)
+        ARGS="-init $XDG_CONFIG_HOME/sqlite3/sqliterc"
+        ;;
     ssh|scp)
         SSH_CONFIG="-F $XDG_CONFIG_HOME/ssh/config"
         SSH_ID="$XDG_DATA_HOME/ssh/id_rsa"
@@ -97,6 +100,7 @@ progwrap_exec $ARGS "$@"
 #~ gphoto2
 #~ nvidia-settings
 #~ scp
+#~ sqlite3
 #~ ssh
 #~ steam
 #~ tcsh
