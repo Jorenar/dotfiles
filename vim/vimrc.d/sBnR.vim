@@ -59,4 +59,4 @@ nnoremap <F10> :w <bar> make<CR>
 
 for [ft, comp] in items(g:sBnR_compilers)
   execute "autocmd filetype ".ft." compiler! ".comp
-endfor
+endfor | unlet ft comp
