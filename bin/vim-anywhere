@@ -8,4 +8,4 @@ xclip -o -selection clipboard > $file
 
 $TERMINAL -e "vim $file"
 
-cat $file | xclip -i -selection clipboard
+xclip -i -selection clipboard < $file
