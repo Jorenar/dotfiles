@@ -42,6 +42,8 @@ function! sBnR#run(file, ...) abort
   else
     let buf = term_start(&shell, options)
     wincmd T
+    call term_sendkeys(buf, "trap 'exit' SIGINT SIGTERM\<CR>")
+    call term_sendkeys(buf, "trap '' SIGTSTP\<CR>")
     call term_sendkeys(buf, 'printf "\033[2J\033[H"; '.cmd."; exit 2> /dev/null\<CR>")
   endif
 

@@ -24,7 +24,7 @@ hi def link cCaseBadFormat cError
 " Fix false positive curly error {{{2
 
 if exists("c_curly_error") && &ft == "c"
-  syn clear cBlock
+  silent! syn clear cBlock
   syn region cBlock_ start="{" end="}" transparent fold contains=ALLBUT,cBadBlock,cCurlyError,@cParenGroup,cErrInParen,cErrInBracket,@cStringGroup,@Spell
 endif
 

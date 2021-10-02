@@ -1,8 +1,4 @@
 #!/bin/bash
 
-exec > "${TMPDIR:-/tmp}/aerc.html"
-while IFS= read -r line; do
-  printf '%s\n' "$line"
-done
-
-firefox --new-window "${TMPDIR:-/tmp}/aerc.html" & disown
+tee "${TMPDIR:-/tmp}/aerc.html"
+$BROWSER "${TMPDIR:-/tmp}/aerc.html" & disown
