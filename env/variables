@@ -17,7 +17,7 @@ pathmunge() {
         esac
     done
 
-    shift $(($OPTIND - 1))
+    shift $((OPTIND - 1))
     unset option OPTARG OPTIND
 
     if [ -z "$2" ]; then
