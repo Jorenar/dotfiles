@@ -1,25 +1,20 @@
+if !exists('g:loaded_vimpector') | finish | endif
+
 " Init {{{1
 
-let g:vimspector_base_dir         = $XDG_DATA_HOME . '/vim/vimspector'
-let g:vimspector_install_gadgets  = [ 'debugpy', 'vscode-cpptools' ]
+command! -nargs=1 -complete=file Vimspector call vimspector#LaunchWithSettings(#{PROG: <q-args>})
 
-function! s:init() abort
-  if !exists('g:loaded_vimpector') | return | endif
+nnoremap <expr> <F6> exists("g:vimspector_session_windows") ? ":VimspectorReset\<CR>" :
+      \ ":Vimspector " . expand('%:p:r') . "\<CR>"
 
-  command! -nargs=1 -complete=file Vimspector call vimspector#LaunchWithSettings(#{PROG: <q-args>})
-
-  nnoremap <expr> <F6> exists("g:vimspector_session_windows") ? ":VimspectorReset\<CR>" :
-        \ ":Vimspector " . expand('%:p:r') . "\<CR>"
-
-  let confs = g:vimspector_base_dir . "/configurations"
-  if !isdirectory(confs)
-    call system("ln -s " . $XDG_CONFIG_HOME."/vim/vimspector" . " " . confs)
-  endif
-endfunction
+let confs = g:vimspector_base_dir . "/configurations"
+if !isdirectory(confs)
+  call system("ln -s " . $XDG_CONFIG_HOME."/vim/vimspector" . " " . confs)
+endif
+unlet confs
 
 augroup VIMSPECTOR_
   autocmd!
-  autocmd VimEnter * call s:init()
 
   autocmd User VimspectorDebugEnded
         \  call delete($HOME."/.mono", "rf")
@@ -30,6 +25,7 @@ augroup VIMSPECTOR_
         \  if filereadable("~/.vimspector.log")
         \|   call system("mv ~/.vimspector.log " . $XDG_CACHE_HOME."/vim/")
         \| endif
+
 augroup END
 
 " UI {{{1
@@ -75,19 +71,10 @@ augroup END
 
 " Mappings {{{1
 
-" let g:vimspector_mappings = {
-"       \   'stack_trace': {},
-"       \   'variables': {
-"       \     'set_value': [ 'c' ],
-"       \   }
-"       \ }
-
-" Custom mappings while debugging ---------------------------------------------
-
 function! s:Eval(...) abort
-    call win_gotoid(g:vimspector_session_windows.output)
-    startinsert
-    call feedkeys(get(a:, 1, ""), "n")
+  call win_gotoid(g:vimspector_session_windows.output)
+  startinsert
+  call feedkeys(get(a:, 1, ""), "n")
 endfunction
 
 let s:mapped = {}

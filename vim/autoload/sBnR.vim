@@ -8,19 +8,19 @@ function! sBnR#run(file, ...) abort
         \ }
   let detach = 0
 
-  if has_key(g:sBnR_runCmds, &ft)
-    let cmd = g:sBnR_runCmds[&ft][1]
+  if exists("b:sBnR") && has_key(b:sBnR, "run")
+    let cmd = b:sBnR.run[1]
 
-    if g:sBnR_runCmds[&ft][0] == 1
+    if b:sBnR.run[0] == 1
       let options.term_finish = "close"
-    elseif g:sBnR_runCmds[&ft][0] == 2
+    elseif b:sBnR.run[0] == 2
       let detach = 1
     endif
 
   elseif executable("./" . a:file)
     let cmd = "./" . a:file
-  elseif has_key(g:sBnR_makeprgs, &ft) && g:sBnR_makeprgs[&ft][0]
-    let cmd = g:sBnR_makeprgs[&ft][1]
+  elseif exists("b:sBnR") && b:sBnR.make[0]
+    let cmd = b:sBnR.make[1]
   else
     echo "I don't know how to execute this file!"
     return
@@ -90,10 +90,10 @@ function! sBnR#build(...) abort
 
   let interpreter = 0
 
-  if has_key(g:sBnR_makeprgs, &ft)
-    let cmd = "(" . g:sBnR_makeprgs[&ft][1] . " " . get(a:, 1, "") . ")"
+  if exists("b:sBnR") && has_key(b:sBnR, "make")
+    let cmd = "(" . b:sBnR.make[1] . " " . get(a:, 1, "") . ")"
 
-    if g:sBnR_makeprgs[&ft][0]
+    if b:sBnR.make[0]
       call s:runInterpreter(cmd)
       return v:false
     else
@@ -120,30 +120,4 @@ function! sBnR#buildAndRun() abort
   if sBnR#build()
     call sBnR#run(file)
   endif
-endfunction
-
-
-function! sBnR#addMakeprg(bang, ft, ...) abort
-  let g:sBnR_makeprgs[a:ft] = [ a:bang, join(a:000) ]
-endfunction
-
-function! sBnR#addRunCmd(bang, ft, ...) abort
-  let foo = 0
-  let cmd = deepcopy(a:000)
-  if a:bang
-    let mode = cmd[0]
-    call remove(cmd, 0)
-    if mode == "detach"
-      let foo = 1
-    elseif mode == "close"
-      let foo = 2
-    endif
-  endif
-  let g:sBnR_runCmds[a:ft] = [ foo, join(cmd) ]
-  echo g:sBnR_runCmds[a:ft]
-endfunction
-
-function! sBnR#addCompiler(ft, comp) abort
-  let g:sBnR_makeprgs[a:ft] = a:comp
-  execute "autocmd filetype ".a:ft." compiler! ".a:comp
 endfunction

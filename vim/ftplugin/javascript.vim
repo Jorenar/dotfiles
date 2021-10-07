@@ -4,3 +4,5 @@ setlocal foldmethod=syntax
 setlocal tabstop=2
 
 autocmd Syntax <buffer> setlocal foldtext=MyFoldText()
+
+SetFormatProg "js-beautify -s 2"

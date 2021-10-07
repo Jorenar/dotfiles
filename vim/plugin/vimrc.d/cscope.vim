@@ -4,10 +4,10 @@ endif
 
 let db = findfile("cscope.out", ".git;")
 if !empty(db)
-  let csverb_old = &cscopeverbose
-  set nocscopeverbose
+  let [ csverb_old, &cscopeverbose ] = [ &cscopeverbose, 0 ]
   exe "cs add ".db." ".strpart(db, 0, match(db, ".git/cscope.out$"))
   let &cscopeverbose = csverb_old
+  unlet csverb_old
 elseif filereadable("cscope.out")
   cs add cscope.out
 elseif $CSCOPE_DB
@@ -15,8 +15,8 @@ elseif $CSCOPE_DB
 endif
 
 set cscopetag
-set csto=0
-set cspc=2
+set cscopetagorder=0
+set cscopepathcomp=2
 
 nnoremap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
 nnoremap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>

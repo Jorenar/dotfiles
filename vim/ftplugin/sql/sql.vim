@@ -7,3 +7,5 @@ augroup SQL_UPPER
         \| endfor
         \| unlet k
 augroup END
+
+SetFormatProg "sqlformat -k upper -r -"

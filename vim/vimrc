@@ -34,6 +34,7 @@ colorscheme darkness
 " COMMANDS {{{1
 
 com! -range -nargs=+  Align            <line1>,<line2>!column -Lts'<args>' -o'<args>'
+com! -nargs=* -bar    Build            call sBnR#build("<args>")
 com! -bang            ColorUp          exec "colo " . (<bang>0 ? "darkness" : "colorUp")
 com!                  CountSpell       echo utils#CountSpell()
 com!                  ExecCurrentLine  normal :.w !sh<CR>
@@ -42,6 +43,8 @@ com! -nargs=+         FillToColumn     exec {str,r -> "norm! a".repeat(str, (r-c
 com! -nargs=+         Grep             exec "lvimgrep /".<q-args>."/j **"
 com! -nargs=+         GrepRename       exec {a,b -> 'tabe | lv /\C\<' . a . '\>/j ** | ldo s/\C\<' . a . '\>/' . b . '/gc | up'}(<f-args>) | q
 com!                  InstallPlugins   call utils#InstallPlugins()
+com! -nargs=* -bar    RunProg          call sBnR#run(expand('%:t:r'), "<args>")
+com! -nargs=1         SetFormatProg    exec {prg -> 'let [ &l:formatprg, &l:formatexpr ] = [ "'.prg.'", "" ]'}(<args>)
 com! -range=%         Sort             normal :<line1>,<line2>sort i<CR>
 com!                  SortBlock        normal! vip:sort i<CR>
 com! -nargs=? -bang   Spelling         setlocal spell<bang> spelllang=<args>
@@ -53,7 +56,11 @@ com! -range           VisSort          sil! keepj <line1>,<line2>call utils#VisS
 
 nnoremap ' `
 nnoremap <expr> <F4> &ve == "all" ? ":set ve=\<CR>" : ":set ve=all\<CR>"
+nnoremap <F10> :w <bar> make<CR>
 nnoremap <F3> :set cursorline! cursorcolumn!<CR>
+nnoremap <F7> :call sBnR#build()<CR>
+nnoremap <F8> :call sBnR#run(expand('%:t:r'))<CR>
+nnoremap <F9> :call sBnR#buildAndRun()<CR>
 nnoremap <Leader>= gg=G``
 nnoremap <Leader>b :bnext<CR>
 nnoremap <Leader>h :nohlsearch<CR>
@@ -186,6 +193,13 @@ let g:ctrlp_prompt_mappings = {
     \ 'ToggleType(1)': [ '<C-p>', '<c-up>' ],
     \ }
 
+" NetRW {{{1
+
+let g:netrw_banner         = 0         " do not display info on the top of window
+let g:netrw_liststyle      = 3         " tree-view
+let g:netrw_browse_split   = 4         " use the previous window to open file
+let g:netrw_winsize        = -28       " window size
+
 " Tagbar {{{1
 
 nnoremap <Leader>t :Tagbar<CR>
@@ -212,6 +226,9 @@ let g:miniSnip_extends = {
 
 let g:undotree_SetFocusWhenToggle = 1
 nnoremap <F1> :UndotreeToggle<CR>
+
+let g:vimspector_base_dir         = $XDG_DATA_HOME . '/vim/vimspector'
+let g:vimspector_install_gadgets  = [ 'debugpy', 'vscode-cpptools' ]
 
 " }}}
 
@@ -300,9 +317,6 @@ augroup TERMINAL_OPTIONS
 augroup END
 
 hi! Dimmer ctermfg=244
-
-runtime! vimrc.d/*.vim
-autocmd VimEnter * ++once runtime! after/vimrc.d/*.vim
 
 set secure
 if filereadable("./.vimrc") | source ./.vimrc | endif

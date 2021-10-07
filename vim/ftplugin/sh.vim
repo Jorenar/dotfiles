@@ -13,3 +13,5 @@ call system("env | cut -f 1 -d= > ".s:dict_compl."/env_variables")
 
 let &complete .= ",k".s:dict_compl."/commands"
 let &complete .= ",k".s:dict_compl."/env_variables"
+
+let b:sBnR = #{ make: [ 1, "chmod +x %:p && %:p" ] }
