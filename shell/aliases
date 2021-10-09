@@ -17,6 +17,7 @@ alias less='less -R'
 alias ls='ls -hF'
 alias mkdir='mkdir -p'
 alias mnt='udisksctl mount -b'
+alias mount-qemu="mount -t cifs //10.0.2.4/qemu/"
 alias o='xdg-open'
 alias off='shutdown -h now'
 alias pass='EDITOR="vim -u NONE" pass'
