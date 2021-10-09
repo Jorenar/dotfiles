@@ -193,20 +193,18 @@ let g:ctrlp_prompt_mappings = {
     \ 'ToggleType(1)': [ '<C-p>', '<c-up>' ],
     \ }
 
-" NetRW {{{1
+" Netrw {{{1
 
-let g:netrw_banner         = 0         " do not display info on the top of window
-let g:netrw_liststyle      = 3         " tree-view
-let g:netrw_browse_split   = 4         " use the previous window to open file
-let g:netrw_winsize        = -28       " window size
+let g:netrw_banner       = 0    " do not display info on the top of window
+let g:netrw_liststyle    = 3    " tree-view
+let g:netrw_browse_split = 4    " use the previous window to open file
+let g:netrw_winsize      = -28  " window size
 
 augroup NETRW_CONF
   autocmd!
   autocmd filetype netrw silent! unmap <buffer> <F1>
   autocmd filetype netrw silent! unmap <buffer> <C-l>
   autocmd filetype netrw setlocal statusline=%f
-
-  autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&filetype") == "netrw" | q | endif
 augroup END
 
 " Tagbar {{{1
