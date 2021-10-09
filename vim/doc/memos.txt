@@ -1,0 +1,15 @@
+*MEMOS*
+
+|modifyOtherKeys|    -  worth checking when Alt/Ctrl acts up
+|xterm-focus-event|  -  when garbage appears on losed focus
+
+Neovim's issue #1496: [:! (bang) and system() are not interactive](https://github.com/neovim/neovim/issues/1496)
+
+
+
+
+
+
+
+
+ vim:tw=78:ft=help:
