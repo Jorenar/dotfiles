@@ -200,6 +200,15 @@ let g:netrw_liststyle      = 3         " tree-view
 let g:netrw_browse_split   = 4         " use the previous window to open file
 let g:netrw_winsize        = -28       " window size
 
+augroup NETRW_CONF
+  autocmd!
+  autocmd filetype netrw silent! unmap <buffer> <F1>
+  autocmd filetype netrw silent! unmap <buffer> <C-l>
+  autocmd filetype netrw setlocal statusline=%f
+
+  autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&filetype") == "netrw" | q | endif
+augroup END
+
 " Tagbar {{{1
 
 nnoremap <Leader>t :Tagbar<CR>
