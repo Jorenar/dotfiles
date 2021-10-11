@@ -12,7 +12,7 @@ let s:servers["ccls"] = #{
       \       cache: #{ directory: "/tmp/ccls/cache" },
       \     },
       \   },
-      \   ft: [ "c", "cpp", "objc", "objcpp", "cc" ],
+      \   ft: [ "c", "cpp", "objc", "objcpp" ],
       \ }
 
 let s:servers["sqls"] = #{
@@ -53,11 +53,32 @@ let s:servers["TexLab"] = #{
       \   ft: [ "tex" ],
       \ }
 
+let s:servers["Deno"] = #{
+      \   cmd: 'deno lsp',
+      \   init: #{
+      \     options: #{
+      \       enable: v:true,
+      \       unstable: v:true,
+      \       lint: v:true,
+      \       codeLens: #{
+      \         implementations: v:true,
+      \         references: v:true,
+      \         referencesAllFunctions: v:true,
+      \         test: v:true,
+      \       },
+      \       suggest: #{
+      \         names: v:true,
+      \       },
+      \     },
+      \   },
+      \   ft: [ "javascript", "typescript" ],
+      \ }
+
 " helpers {{{1
 
 function! s:register() abort
   for [ name, serv ] in items(s:servers)
-    if executable(serv.cmd)
+    if executable(split(serv.cmd)[0])
       call s:reg(name, serv)
     endif
   endfor
