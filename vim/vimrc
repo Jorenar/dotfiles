@@ -172,6 +172,26 @@ packadd matchit
 source  $VIMRUNTIME/ftplugin/man.vim
 
 " Config {{{
+" vim-lsc {{{1
+
+let g:lsc_enable_autocomplete  = v:false
+
+let g:lsc_auto_map = { "defaults": v:true,
+      \   "Completion": "omnifunc",
+      \   "ShowHover": "gK",
+      \   "NextReference": "<Leader><C-n>",
+      \   "PreviousReference": "<Leader><C-p>",
+      \ }
+
+hi! link lscDiagnosticWarning  WarningMsg
+
+nnoremap <buffer> <F2> :LSClientAllDiagnostics<CR>
+
+augroup LSC_
+  autocmd!
+  autocmd VimLeavePre <buffer> call lsc#server#disable() | delfunction lsc#server#exit
+augroup END
+
 " Surround {{{1
 
 let g:surround_no_mappings = 1
