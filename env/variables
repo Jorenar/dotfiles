@@ -68,6 +68,7 @@ export SQLITE_HISTORY="$XDG_HISTORY_DIR/sqlite"
 
 # ~misc {{{1
 
+export CARGO_HOME="$XDG_DATA_HOME/cargo"
 export CHKTEXRC="$XDG_CONFIG_HOME"
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
 export DCONF_PROFILE="$XDG_CONFIG_HOME/dconf/user"
