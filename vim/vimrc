@@ -147,6 +147,19 @@ function! MyFoldText() abort
         \ . trim(substitute(getline(v:foldstart), split(&l:fmr, ',')[0].'\d\?', '', '')) . " "
 endfunction
 
+let &statusline = ""
+      \ . "{%{stl#NumOfBufs()}}"
+      \ . "  %f  %y" . "[%{&ff}]"
+      \ . '[%{(&fenc == "" ? &enc : &fenc).(&bomb ? ",B" : "")}]'
+      \ . "  [%{&fo}]  "
+      \ . "[%{stl#FileSize()}]"
+      \ . "  %r" . "%{&ma\|\|&ro?'':'[-]'}" . "%w  "
+      \ . "%{stl#ModifBufs()}"
+      \ . "%="
+      \ . "*%{stl#IssuesCount()}*"
+      \ . "  <0x%02B>  " . "%l/%L" . " : %c "
+
+
 " PLUGINS {{{1
 
 let g:plugins = #{
@@ -339,47 +352,6 @@ let g:vimspector_base_dir         = $XDG_DATA_HOME . '/vim/vimspector'
 let g:vimspector_install_gadgets  = [ 'debugpy', 'vscode-cpptools' ]
 
 " }}}2
-
-" STATUS LINE {{{1
-
-" Helpers {{{
-
-function! s:FileSize() abort
-  let [ bytes, units, i ] = [ getfsize(expand(@%)), ['', 'Ki', 'Mi', 'Gi'], 0 ]
-  while bytes >= 1024 | let bytes = bytes / 1024.0 | let i += 1 | endwhile
-  return printf((i ? "~%.1f" : "%d")." %sB", bytes, units[i])
-endfunction
-
-function! s:IssuesCount() abort
-  let errors   = filter(getqflist(), 'v:val.type == "E"')
-  let warnings = filter(getqflist(), 'v:val.type == "w"')
-  return len(errors)."E ".len(warnings)."w"
-endfunction
-
-function! s:ModifBufs() abort
-  let cnt = len(filter(getbufinfo(), 'v:val.changed'))
-  return cnt == 0 ? "" : (&mod ? "[+". (cnt > 1 ? cnt : "") ."]" : "[".cnt."]")
-endfunction
-
-function! s:NumOfBufs() abort
-  let num = len(getbufinfo({'buflisted':1}))
-  let hid = len(filter(getbufinfo({'buflisted':1}), 'empty(v:val.windows)'))
-  return hid ? num-hid."+".hid : num
-endfunction
-
-" }}}
-
-let &statusline = ""
-      \ . "{%{" . expand('<SID>') . "NumOfBufs()}}"
-      \ . "  %f  %y" . "[%{&ff}]"
-      \ . '[%{(&fenc == "" ? &enc : &fenc).(&bomb ? ",B" : "")}]'
-      \ . "  [%{&fo}]  "
-      \ . "[%{" . expand('<SID>') . "FileSize()}]"
-      \ . "  %r" . "%{&ma\|\|&ro?'':'[-]'}" . "%w  "
-      \ . "%{" . expand('<SID>') . "ModifBufs()}"
-      \ . "%="
-      \ . "*%{" . expand('<SID>') . "IssuesCount()}*"
-      \ . "  <0x%02B>  " . "%l/%L" . " : %c "
 
 " ~ {{{1
 
