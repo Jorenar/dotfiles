@@ -55,7 +55,7 @@ export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-$XDG_LOCAL_HOME/.runtime}" # just in 
 
 export XDG_AUX_DIR="$XDG_LOCAL_HOME/aux" # auxiliary, local configs
 
-eval "$(sed 's/^[^#].*/export &/g;t;d' $XDG_CONFIG_HOME/user-dirs.dirs)"
+[ -f "$XDG_CONFIG_HOME/user-dirs.dirs" ] && eval "$(sed 's/^[^#].*/export &/g;t;d' $XDG_CONFIG_HOME/user-dirs.dirs)"
 
 # RELOCATING {{{
 # ~history {{{1
