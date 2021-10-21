@@ -1,28 +1,15 @@
-# i3 - config #
 # vim: fdm=marker
 
 # GENERAL {{{1
 
-# set mod key
-set $mod Mod4
-
-# set other variables
 set $i3scripts $XDG_CONFIG_HOME/i3/scripts
 
-
-# font for window titles
-font pango:DejaVu Sans Mono 8
-
-# multi-monitor
-exec --no-startup-id $i3scripts/multi-monitor
-
-# use Mouse+$mod to drag floating windows to their wanted position
+set $mod Mod4
 floating_modifier $mod
-
-# set workspace layout
 workspace_layout tabbed
 
-# i3bar
+exec --no-startup-id $i3scripts/multi-monitor
+
 bar {
     position top
     font pango: DejaVu Sans Mono 9
@@ -36,30 +23,27 @@ bar {
 
 # border / titlebar
 new_window normal
+font pango:DejaVu Sans Mono 8
 hide_edge_borders smart
 bindsym Control+Shift+x [class="^.*"] border toggle
 for_window [class="^.*"] border pixel 3
 client.unfocused #222222 #222222 #888888 #2e9ef4   #222222
 client.focused   #444444 #333333 #FFFFFF #292d2e   #285577
 
-# set background
-exec --no-startup-id xsetroot -solid "#000000"
-
-# toggle touchpad
-exec --no-startup-id touchpad-toggle
+exec --no-startup-id xsetroot -solid "#000000" # set background
 
 # SHORTCUTS BINDINGS {{{1
 
-# start TERMINAL
+# TERMINAL
 bindsym $mod+x exec --no-startup-id ${TERMINAL:-xterm}
 
-# open Firefox
+# Firefox
 bindsym $mod+w exec firefox
 
-# open QuiteRSS
-bindsym $mod+q exec --no-startup-id $i3scripts/quiterss_wrapper
+# QuiteRSS
+bindsym $mod+q exec --no-startup-id [ -z "$(xdotool search --class QuiteRss)" ] && exec quiterss || i3-msg \[class="QuiteRss"\] scratchpad show
 
-# open aerc
+# aerc
 bindsym $mod+m exec --no-startup-id imapfilter && ${TERMINAL:-xterm} -T aerc aerc && rm -f "${TMPDIR:-/tmp}/aerc.html"
 
 # vim-anywhere
@@ -89,12 +73,6 @@ for_window [class="^Gimp$" title="^GNU Image Manipulation Program$"] floating di
 for_window [class="^Gimp$" title=" ? GIMP$"] floating disabled
 for_window [class="^Gimp$" title="Tool Options$"] floating enable
 for_window [class="^Gimp$" title="^Quit GIMP$"] floating enable
-
-# The Binding of Isaac
-for_window [class="Wine" instance="isaac.exe" title="Isaac"] floating disable
-
-# MultiMC
-for_window [class="MultiMC5" instance="multimc"] floating enable
 
 # SimpleScreenRecorder
 for_window [class="SimpleScreenRecorder"] floating enable
@@ -213,7 +191,6 @@ bindsym XF86AudioPrev  exec playerctl previous
 # Other
 bindsym XF86Explorer exec --no-startup-id xterm -e "systemctl suspend"
 
-# }}}
 # OTHER {{{2
 
 # start dmenu
@@ -222,8 +199,6 @@ bindsym $mod+d exec --no-startup-id h2-dmenu-desktop
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 
-# touchpad toggle
-bindsym $mod+F4 exec --no-startup-id touchpad-toggle
 
 # Multi-screen screenshots with scrot
 bindsym --release Print exec --no-startup-id "mkdir -p ~/images/screenshots && scrot ~/images/screenshots/screenshot-%Y%m%d_%H%M%S.png"

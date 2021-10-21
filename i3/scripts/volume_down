@@ -1,5 +1,0 @@
-#!/usr/bin/env sh
-
-if [ $(amixer sget Master | awk -F"[][]" '/dB/ { print int($4)}') -gt -63 ]; then
-    amixer -- set Master 3dB- unmute
-fi

@@ -1,6 +1,14 @@
-align=center
 color=#BBB
 separator_block_width=20
+
+[date]
+command=LC_ALL=C date "+%a, %F %T"
+interval=1
+
+[volume]
+command=echo $(amixer sget Master | awk -F"[][]" '/dB/ { print $4 " " $6 }' | sed -e 's/on//g' -e 's/off/[X]/g')
+interval=once
+signal=10
 
 [cpu-temp]
 command=sensors | awk '/Tdie/ {print $2}'
@@ -8,31 +16,19 @@ interval=1
 
 [cpu-freq]
 command=lscpu -e=MHz | sort -r | sed '2q;d' | sed 's/\.[0-9]\+/ MHz/'
-interval=1
+interval=2
+
+[network]
+command=[ "$(cat /sys/class/net/enp34s0/carrier)" = "1" ] && echo "Eth"
+interval=300
 
 [wifi]
-command=ssid="$(iw dev wlan0 info | awk '/ssid/ {print $2}')"; [ -z "$ssid" ] && echo "[X]" || echo "$ssid [$(awk 'NR==3 {print int($4)}' /proc/net/wireless) dBm]"
+command=ssid="$(iw dev wlan0 info | awk '/ssid/ {print $2}')"; [ -n "$ssid" ] && echo "$ssid [$(awk 'NR==3 {print int($4)}' /proc/net/wireless) dBm]"
 interval=5
 
 [bluetooth]
-command=echo "BT: $(rfkill list bluetooth | awk '/Soft/ {print $3}' | sed -e 's/yes/off/g' -e 's/no/on/g')"
+command=[ "$(rfkill list bluetooth | awk '/Soft/ {print $3}')" = "no" ] && echo "BT"
 interval=15
 
-# [gpu]
-# command=grep "GPU *" "$TMPFLAGS" | sed 's/GPU //'
-# interval=once
-#
-# [battery]
-# command=$XDG_CONFIG_HOME/i3/scripts/battery_stat
-# interval=15
-
-[volume]
-command=echo $(amixer sget Master | awk -F"[][]" '/dB/ { print $4 " " $6 }' | sed -e 's/on//g' -e 's/off/(muted)/g')
-interval=once
-signal=10
-
-[date]
-command=LC_ALL=C date "+%a, %F %T "
-interval=1
-
-# vim: ft=conf
+[empty]
+full_text=""

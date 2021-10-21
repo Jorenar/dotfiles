@@ -1,7 +1,0 @@
-#!/usr/bin/env sh
-
-if [ -z "$(xdotool search --class QuiteRss)" ]; then
-    exec quiterss
-else
-    i3-msg \[class="QuiteRss"\] scratchpad show
-fi
