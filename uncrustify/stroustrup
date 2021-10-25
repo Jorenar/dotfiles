@@ -17,3 +17,6 @@ nl_brace_finally                = add      # ignore/add/remove/force
 
 # Add or remove newline between '}' and 'catch'.
 nl_brace_catch                  = add      # ignore/add/remove/force
+
+# Whether to indent the body of a 'namespace'.
+indent_namespace                = false    # true/false
