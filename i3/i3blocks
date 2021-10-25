@@ -1,14 +1,11 @@
 color=#BBB
 separator_block_width=20
 
-[date]
-command=LC_ALL=C date "+%a, %F %T"
-interval=1
-
-[volume]
-command=echo $(amixer sget Master | awk -F"[][]" '/dB/ { print $4 " " $6 }' | sed -e 's/on//g' -e 's/off/[X]/g')
-interval=once
-signal=10
+[tray]
+full_text=#
+command=i3-msg -q bar hidden_state toggle tray
+align=right
+min_width=100
 
 [cpu-temp]
 command=sensors | awk '/Tdie/ {print $2}'
@@ -18,17 +15,23 @@ interval=1
 command=lscpu -e=MHz | sort -r | sed '2q;d' | sed 's/\.[0-9]\+/ MHz/'
 interval=2
 
-[network]
-command=[ "$(cat /sys/class/net/enp34s0/carrier)" = "1" ] && echo "Eth"
+[public-ip]
+command=curl icanhazip.com
 interval=300
 
 [wifi]
-command=ssid="$(iw dev wlan0 info | awk '/ssid/ {print $2}')"; [ -n "$ssid" ] && echo "$ssid [$(awk 'NR==3 {print int($4)}' /proc/net/wireless) dBm]"
+command=[ -n "$x" ] && iw wlan0 info | awk '/ssid/ {print $2}'; awk 'NR==3 {print int($4) " dBm"}' /proc/net/wireless
 interval=5
 
 [bluetooth]
 command=[ "$(rfkill list bluetooth | awk '/Soft/ {print $3}')" = "no" ] && echo "BT"
 interval=15
 
-[empty]
-full_text=""
+[volume]
+command=echo $(amixer sget Master | awk -F"[][]" '/dB/ { print $4 " " $6 }' | sed -e 's/on//g' -e 's/off/[X]/g')
+interval=once
+signal=10
+
+[date]
+command=LC_ALL=C date "+%a, %F %T "
+interval=1

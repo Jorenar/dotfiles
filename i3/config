@@ -2,35 +2,43 @@
 
 # GENERAL {{{1
 
-set $i3scripts $XDG_CONFIG_HOME/i3/scripts
-
 set $mod Mod4
+
+font pango:DejaVu Sans Mono 8
+
 floating_modifier $mod
 workspace_layout tabbed
+hide_edge_borders smart
+client.unfocused #222222 #222222 #888888 #2e9ef4   #222222
+client.focused   #444444 #333333 #FFFFFF #292d2e   #285577
 
-exec --no-startup-id $i3scripts/multi-monitor
+exec --no-startup-id exec i3-msg "workspace 2, workspace 6, workspace 1" # workspace switcheroo
+
+# i3bar {{{1
 
 bar {
+    id top
     position top
     font pango: DejaVu Sans Mono 9
     status_command i3blocks -c $XDG_CONFIG_HOME/i3/i3blocks
-    tray_output primary
+    tray_output none
     colors {
         focused_workspace  #333333 #222222 #FFFFFF
         inactive_workspace #000000 #000000 #AAAAAA
     }
 }
 
-# border / titlebar
-new_window normal
-font pango:DejaVu Sans Mono 8
-hide_edge_borders smart
-bindsym Control+Shift+x [class="^.*"] border toggle
-for_window [class="^.*"] border pixel 3
-client.unfocused #222222 #222222 #888888 #2e9ef4   #222222
-client.focused   #444444 #333333 #FFFFFF #292d2e   #285577
-
-exec --no-startup-id xsetroot -solid "#000000" # set background
+bar {
+    id tray
+    position top
+    output      primary
+    tray_output primary
+    workspace_buttons no
+    mode hide
+    modifier none
+    bindsym button1 bar hidden_state toggle tray
+    bindsym button3 bar mode toggle tray
+}
 
 # SHORTCUTS BINDINGS {{{1
 
@@ -57,16 +65,18 @@ bindsym $mod+r exec --no-startup-id ${TERMINAL:-xterm} -T Ranger ranger
 
 # WINDOWS RULES {{{1
 
+for_window [class="^.*"] border pixel 3
+
 # QuiteRSS
-for_window [class="QuiteRss" instance="quiterss" title="QuiteRSS"] floating enable         # 1
-for_window [class="QuiteRss" instance="quiterss" title="QuiteRSS"] move position 80px 50px # 2
-for_window [class="QuiteRss" instance="quiterss" title="QuiteRSS"] move scratchpad         # 3
+for_window [class="QuiteRss" instance="quiterss" title="QuiteRSS"] floating enable
+for_window [class="QuiteRss" instance="quiterss" title="QuiteRSS"] move position 80px 50px
+for_window [class="QuiteRss" instance="quiterss" title="QuiteRSS"] move scratchpad
 
 # KanjiTomo
-for_window [class="kanjitomo-reader-Launcher" title="KanjiTomo"] floating enable       # 1
-for_window [class="kanjitomo-reader-Launcher" title="KanjiTomo"] move position 1370 70 # 2
-for_window [class="kanjitomo-reader-Launcher" title="KanjiTomo"] resize set 550 880    # 3
-for_window [class="kanjitomo-reader-Launcher" title="win0"] move scratchpad            # 4
+for_window [class="kanjitomo-reader-Launcher" title="KanjiTomo"] floating enable
+for_window [class="kanjitomo-reader-Launcher" title="KanjiTomo"] move position 1370 70
+for_window [class="kanjitomo-reader-Launcher" title="KanjiTomo"] resize set 550 880
+for_window [class="kanjitomo-reader-Launcher" title="win0"] move scratchpad
 
 # GIMP
 for_window [class="^Gimp$" title="^GNU Image Manipulation Program$"] floating disabled
@@ -76,7 +86,6 @@ for_window [class="^Gimp$" title="^Quit GIMP$"] floating enable
 
 # SimpleScreenRecorder
 for_window [class="SimpleScreenRecorder"] floating enable
-
 
 # BINDINGS {{{1
 # Windows {{{2
@@ -140,11 +149,6 @@ bindsym $mod+7 workspace number "7"
 bindsym $mod+8 workspace number "8"
 bindsym $mod+9 workspace number "9"
 
-bindsym $mod+Mod1+1 workspace number "6"
-bindsym $mod+Mod1+2 workspace number "7"
-bindsym $mod+Mod1+3 workspace number "8"
-bindsym $mod+Mod1+4 workspace number "9"
-
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number 1
 bindsym $mod+Shift+2 move container to workspace number 2
@@ -160,11 +164,11 @@ bindsym $mod+Shift+9 move container to workspace number 9
 bindsym $mod+Mod1+l move workspace to output right
 bindsym $mod+Mod1+h move workspace to output left
 
-# select workspace via dmenu
-bindsym $mod+grave exec sh -c '$i3scripts/list_workspaces | dmenu | xargs -i i3-msg workspace {}'
 
-# move container to workspace selected via dmenu
-bindsym $mod+Shift+grave exec sh -c '$i3scripts/list_workspaces | dmenu | xargs -i i3-msg move container to workspace {}'
+# move to workspace via dmenu
+set $dmenu_ws i3-msg -t get_workspaces | jq | awk -F'\\\"' '/name/ { print \$4 }' | sort | dmenu | xargs -i i3-msg
+bindsym $mod+grave exec sh -c "$dmenu_ws workspace {}"
+bindsym $mod+Shift+grave exec sh -c "$dmenu_ws move container to workspace {}"
 
 # XF86 keyboard symbols {{{2
 
@@ -195,9 +199,6 @@ bindsym XF86Explorer exec --no-startup-id xterm -e "systemctl suspend"
 
 # start dmenu
 bindsym $mod+d exec --no-startup-id h2-dmenu-desktop
-
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
 
 
 # Multi-screen screenshots with scrot
