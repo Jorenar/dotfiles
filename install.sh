@@ -72,6 +72,7 @@ linking_ "$XDG_CONFIG_HOME" '
     myclirc             @  mycli/myclirc
     newsboat            @  newsboat/config
     npmrc               @  npm/npmrc
+    polybar             @  polybar/config
     python_config.py    @  python/config.py
     QuiteRss.ini        @  QuiteRss/QuiteRss.ini                CP
     ranger.conf         @  ranger/rc.conf

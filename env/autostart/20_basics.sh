@@ -2,13 +2,14 @@
 
 if ! grep -Fxqs "executed_autostart" "$TMPFLAGS"; then
 
-    # turn off Bluetooth
     if sudo -n rfkill > /dev/null 2>&1; then
-        sudo rfkill block bluetooth
+        [ -z "AUTO_BT" ] && sudo rfkill block bluetooth
+        [ -n "NO_WIFI" ] && sudo rfkill block wifi
     fi
 
-    # start fcitx
     [ -x "$(command -v fcitx)" ] && fcitx -d
+
+    xsetroot -solid "#000000" # set background
 
     echo "executed_autostart" >> "$TMPFLAGS"
 fi

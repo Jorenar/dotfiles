@@ -201,6 +201,9 @@ export LESS="-FXRS"
 # Enable GPG agent
 export GPG_AGENT_INFO
 
+# Suppress Wine debug informations
+export WINEDEBUG=-all
+
 # Virtual terminal number (if not set already by PAM)
 export XDG_VTNR="${XDG_VTNR:-$(tty | sed 's/[^0-9]*//g')}"
 

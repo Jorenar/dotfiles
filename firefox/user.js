@@ -36,8 +36,6 @@ user_pref("media.videocontrols.picture-in-picture.video-toggle.enabled", false);
 
 user_pref("browser.search.geoSpecificDefaults", true);
 
-user_pref("identity.fxaccounts.enabled", false);
-
 user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons",   false);
 user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false);
 

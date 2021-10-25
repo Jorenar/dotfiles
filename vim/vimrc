@@ -194,7 +194,7 @@ let g:lsc_auto_map = { "defaults": v:true,
       \   "NextReference": "<Leader><C-n>",
       \   "PreviousReference": "<Leader><C-p>",
       \ }
-nnoremap <buffer> <F2> :LSClientAllDiagnostics<CR>
+nnoremap <F2> :LSClientAllDiagnostics<CR>
 
 hi! link lscDiagnosticWarning  WarningMsg
 
