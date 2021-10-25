@@ -1,1 +1,1 @@
-syntax region csBlock start="{" skip="}.*{" end="}" fold transparent
+syntax region csBlock start="{" end="}" fold transparent
