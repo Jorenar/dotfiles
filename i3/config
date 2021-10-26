@@ -100,8 +100,8 @@ bindsym $mod+k focus up
 bindsym $mod+l focus right
 
 # switch focus to next/prev window
-bindsym $mod+Tab focus next
-bindsym $mod+Shift+Tab focus prev
+bindsym $mod+Tab focus right
+bindsym $mod+Shift+Tab focus left
 
 # move focused window
 bindsym $mod+Shift+h move left
