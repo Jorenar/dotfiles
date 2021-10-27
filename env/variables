@@ -6,14 +6,16 @@
 # ~init {{{1
 
 pathmunge() {
-    append=0
-    sep=":"
-    help=0
+    A=0  # append flag
+    E=0  # use `eval` flag
+    H=0  # show help flag
+    S=":" # separator
 
-    while getopts "as:" option; do
+    while getopts "aes:" option; do
         case $option in
-            a) append=1      ;;
-            s) sep="$OPTARG" ;;
+            a) A=1         ;;
+            e) E=1         ;;
+            s) S="$OPTARG" ;;
         esac
     done
 
@@ -30,17 +32,21 @@ pathmunge() {
 
     eval val="\$$var"
 
-    if ! echo "$val" | grep -Eq '(^|'"$sep)$new("'$|'"$sep)" ; then
-        if [ -z "$val" ]; then
-            export "$var"="$new"
-        elif [ "$append" = "0" ]; then
-            export "$var"="$new$sep$val"
+    case "$S$val$S" in
+        *"$S$new$S"*) ;;
+        "$S$S") updated="$new" ;;
+        *) [ "$A" = "0" ] && updated="$new$S$val" || updated="$val$S$new" ;;
+    esac
+
+    if [ -n "$updated" ]; then
+        if [ "$E" = "0" ]; then
+            export "$var"="$updated"
         else
-            export "$var"="$val$sep$new"
+            eval "$var='$updated'"
         fi
     fi
 
-    unset append sep help var new val
+    unset A S E var new val updated
 }
 
 # XDG Base Directory {{{1
