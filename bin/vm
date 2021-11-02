@@ -21,6 +21,7 @@ exec qemu-system-x86_64 \
     `# -mem-path /dev/hugepages` \
     -net nic \
     -net user,smb="$XDG_PUBLICSHARE_DIR" \
+     -nic user,hostfwd=tcp:127.0.0.1:1080-:80 \
     -usb -device usb-tablet \
     -device intel-hda -device hda-duplex \
     -vga std \
