@@ -4,9 +4,11 @@ setlocal foldmethod=syntax
 call mkdir($TMPDIR."/java", "p")
 
 SetFormatProg "uncrustify --l JAVA base kr mb java"
-compiler! "javac"
 
-let b:sBnR = #{
-      \   make: [ 0, "javac -d $TMPDIR/java %:p && jar cvfe %:t:r.jar %:t:r -C $TMPDIR/java ." ],
-      \   run:  [ 0, "java -jar %:t:r.jar" ]
-      \ }
+nnoremap <F8> :call utils#term("java -jar %:t:r.jar")
+
+setlocal errorformat=%E%f:%l:\ error:\ %m,
+      \%W%f:%l:\ warning:\ %m,
+      \%-Z%p^,
+      \%-C%.%#,
+      \%-G%.%#

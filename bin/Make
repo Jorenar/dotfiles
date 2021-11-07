@@ -1,0 +1,57 @@
+#!/usr/bin/env -S make -s -f
+
+MAKEFLAGS += -B --no-print-directory
+
+CFLAGS := -Wall -Wextra -pedantic -g -lm
+
+.DEFAULT:
+	$(MAKE) $*
+
+%.c:
+	$(shell sleep 2)
+	$(CC)  $(CFLAGS) -std=gnu99   $@ -o $(*F)
+
+%.cpp:
+	$(CXX) $(CFLAGS) -std=gnu++14 $@ -o $(*F)
+
+%.latex:
+	latexmk -outdir=$(*F).out.d -pdfxe -interaction=nonstopmode $@ 1>&2
+
+%.nasm:
+	nasm -f elf64 -g $@
+	ld -g -o $(*F) $(*F).o
+	$(RM) $(*F).o
+
+%.asm:
+	$(AS) -o $(*F).o $@
+	ld -s -o $(*F) $(*F).o
+	$(RM) $(*F).o
+
+%.cs:
+	mcs $@
+
+%.java:
+	javac -d $(TMPDIR)/java $@
+	jar cvfe $(*F).jar $(*F) -C $(TMPDIR)/java .
+
+%.cobol %.cob %.cbl:
+	cobc -d -O -x -o $(*F) $@
+
+%.go:
+	go build
+
+%.html:
+	tidy -quiet -errors --gnu-emacs yes $@
+
+%.xhtml:
+	tidy -asxhtml -quiet -errors --gnu-emacs yes $@
+
+%.ada:
+	gnatmake $@
+	gnatclean -c $@
+
+%.py:
+	python $@
+
+%.sh:
+	shellcheck $@

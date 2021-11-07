@@ -74,3 +74,47 @@ function! utils#VSetSearch(cmdtype) abort " search for selected text, forwards o
   let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
   let @s = temp
 endfunction
+
+function! utils#TermEF(cmd) abort
+  let errorsfile = tempname()
+
+  let cmd  = expandcmd(a:cmd)
+  let cmd .= " 2>&1 "
+  let cmd .= has('nvim') ? "\\|" : "\|"
+  let cmd .= " tee ".errorsfile
+
+  if has('nvim')
+    execute "term://".cmd
+    augroup OPEN_ERROR_FILE
+      autocmd!
+      autocmd TermOpen  <buffer> let b:term_job_finished = 0
+      autocmd TermEnter <buffer> if  b:term_job_finished | call feedkeys("\<C-\>\<C-n>") | endif
+      execute "autocmd TermLeave <buffer> if !b:term_job_finished | cfile ".errorsfile." | endif"
+
+      execute 'autocmd TermClose <buffer> let b:term_job_finished = 1 | call feedkeys("\<C-\>\<C-n>") | cfile '. errorsfile .' | copen'
+    augroup END
+  else
+    tabe
+    call term_start([ &shell, '-c', expandcmd(cmd) ], #{
+          \   curwin:  1,
+          \   exit_cb: { -> execute("cfile ".errorsfile." | cwindow") },
+          \ })
+  endif
+
+  setlocal switchbuf=usetab
+endfunction
+
+function! utils#term(...) abort
+  let cmd = expandcmd(get(a:, 1, getcwd()."/".expand("%:t")))
+
+  if has('nvim')
+    split
+    autocmd TermClose <buffer> call feedkeys("\<C-\>\<C-n>")
+  endif
+
+  term
+  wincmd L
+  sleep 100m
+  startinsert
+  call feedkeys(cmd)
+endfunction

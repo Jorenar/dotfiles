@@ -43,6 +43,7 @@ com! -nargs=+         FillToColumn     exec {str,r -> "norm! a".repeat(str, (r-c
 com! -nargs=+         Grep             exec "lvimgrep /".<q-args>."/j **"
 com! -nargs=+         GrepRename       exec {a,b -> 'tabe | lv /\C\<' . a . '\>/j ** | ldo s/\C\<' . a . '\>/' . b . '/gc | up'}(<f-args>) | q
 com!                  InstallPlugins   call utils#InstallPlugins()
+com! -nargs=* -bang   Make             silent! make <args> | redraw!
 com! -nargs=* -bar    RunProg          call sBnR#run(expand('%:t:r'), "<args>")
 com! -nargs=1         SetFormatProg    exec {prg -> 'let [ &l:formatprg, &l:formatexpr ] = [ "'.prg.'", "" ]'}(<args>)
 com! -range=%         Sort             normal :<line1>,<line2>sort i<CR>
@@ -52,15 +53,16 @@ com!                  SudoW            exec 'silent! write !sudo tee % >/dev/nul
 com!                  SyntaxStack      echo join(reverse(map(synstack(line('.'), col('.')), 'synIDattr(v:val,"name")')),' ')
 com! -range           VisSort          sil! keepj <line1>,<line2>call utils#VisSort()
 
+com! -nargs=1 -bang -complete=file  TermEF  call utils#TermEF("<args>")
+
 " MAPPINGS {{{1
 
 nnoremap ' `
 nnoremap <expr> <F4> &ve == "all" ? ":set ve=\<CR>" : ":set ve=all\<CR>"
 nnoremap <F10> :w <bar> make<CR>
 nnoremap <F3> :set cursorline! cursorcolumn!<CR>
-nnoremap <F7> :call sBnR#build()<CR>
-nnoremap <F8> :call sBnR#run(expand('%:t:r'))<CR>
-nnoremap <F9> :call sBnR#buildAndRun()<CR>
+nnoremap <F7> :w <bar> Make %:p<CR>
+nnoremap <F8> :call utils#term()<CR>
 nnoremap <Leader>= gg=G``
 nnoremap <Leader>b :bnext<CR>
 nnoremap <Leader>h :nohlsearch<CR>
@@ -93,6 +95,7 @@ set hlsearch
 set ignorecase
 set incsearch
 set laststatus=2
+set makeprg=Make
 set modeline nomodelineexpr
 set nowrap
 set number
@@ -158,7 +161,6 @@ let &statusline = ""
       \ . "%="
       \ . "*%{stl#IssuesCount()}*"
       \ . "  <0x%02B>  " . "%l/%L" . " : %c "
-
 
 " PLUGINS {{{1
 

@@ -4,7 +4,9 @@ setlocal tabstop=3
 setlocal textwidth=90
 setlocal spell
 
-compiler! tex
+compiler tex
+
+nnoremap <F8> :sil! call system("zathura ".expand('%:t:r').".out.d/*.pdf &")<CR>
 
 let g:tex_fold_envs = ""
       \ ." algorithm"
@@ -34,8 +36,3 @@ augroup FilterLatexQuickfix
   autocmd QuickfixCmdPost <buffer> call setqflist(filter(getqflist(), 'v:val.valid'))
   autocmd FileType qf nnoremap <silent> <buffer> <CR> <CR>:call <SID>Foo()<CR>
 augroup END
-
-let b:sBnR = #{
-      \   make: [ 0, "latexmk -outdir=%:t:r.out.d -pdfxe -interaction=nonstopmode % 1>&2" ],
-      \   run:  [ 2, "zathura %:t:r.out.d/%:t:r.pdf" ],
-      \ }

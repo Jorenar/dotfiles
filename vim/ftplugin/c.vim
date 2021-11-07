@@ -8,6 +8,4 @@ let c_space_errors = 1
 
 SetFormatProg "uncrustify --l C base kr mb"
 
-compiler! gcc
-
-let b:sBnR = #{ make: [ 0, "gcc -std=gnu99 -Wall -g % -o %:t:r -lm" ] }
+compiler gcc

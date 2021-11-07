@@ -8,7 +8,7 @@ syn region makeIfElse transparent fold matchgroup=makePreCondit
       \ end = '\v\n\ze\s*else(\s+ifn?(eq|def))?>'
       \ end = '^\s*endif\>'
 
-syn match makeTargetFold transparent fold '\v^.+\s*:\s*([^=]|$)\_.{-}\ze\n+[^\t]'
+syn match makeTargetFold transparent fold '\v^.+\s*:\s*([^=]|$)\_.{-}\ze\n+([^\t]|$)'
 
 syntax region makeMultilineVar keepend transparent fold
       \ start = "\v^\s*(export )?.*:\=.*\\$"
