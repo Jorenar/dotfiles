@@ -24,6 +24,8 @@ trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && . $XDG_CONFIG_HOME/shell/logout"
 
 # PROMPT {{{1
 
+PS1=
+
 # - WINDOW TITLE | user@host:pwd
 case $TERM in
     xterm*|rxvt*|screen*)
@@ -32,7 +34,7 @@ case $TERM in
 esac
 
 # (shell)
-# PS1='\033[90m($(basename $0))\033[0m'
+#PS1="$PS1"'\033[90m($(basename $0))\033[0m'
 
 # user@host
 PS1="$PS1"'\033[1m$USER@$HOSTNAME\033[0m'
