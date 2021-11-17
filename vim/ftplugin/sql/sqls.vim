@@ -343,5 +343,5 @@ command! -nargs=1 SqlsSwitchDatabase call s:switch_database("<args>")
 command! -nargs=1 SqlsSwitchConnection call s:switch_connection("<args>")
 "command! SqlsShowTables call s:show_tables()
 
-nnoremap <F8> :w <bar> <C-u>call <SID>execute_query('n')<CR>
-vnoremap <F8> :w <bar> <C-u>call <SID>execute_query('v')<CR>
+nnoremap <buffer> <F8> :w <bar> <C-u>call <SID>execute_query('n')<CR>
+vnoremap <buffer> <F8> :w <bar> <C-u>call <SID>execute_query('v')<CR>

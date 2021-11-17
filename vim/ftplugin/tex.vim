@@ -6,7 +6,7 @@ setlocal spell
 
 compiler tex
 
-nnoremap <F8> :sil! call system("zathura ".expand('%:t:r').".out.d/*.pdf &")<CR>
+nnoremap <buffer> <F8> :sil! call system("zathura ".expand('%:t:r').".out.d/*.pdf &")<CR>
 
 let g:tex_fold_envs = ""
       \ ." algorithm"

@@ -6,4 +6,4 @@ if &fdm != "syntax"
   let g:markdown_folding = 1
 endif
 
-nnoremap <F8> :call utils#term("grip --quiet -b %")<CR>
+nnoremap <buffer> <F8> :call utils#term("grip --quiet -b %")<CR>

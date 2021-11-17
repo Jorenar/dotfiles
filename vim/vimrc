@@ -201,13 +201,14 @@ hi! link LspWarningHighlight WarningMsg
 function! s:lsp_init() abort
     setlocal omnifunc=lsp#complete
     if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> <F2> <Plug>(lsp-document-diagnostics)
     nmap <buffer> gd <Plug>(lsp-definition)
     nmap <buffer> gs <Plug>(lsp-document-symbol-search)
     nmap <buffer> gS <Plug>(lsp-workspace-symbol-search)
     nmap <buffer> gr <Plug>(lsp-references)
     nmap <buffer> gi <Plug>(lsp-implementation)
     nmap <buffer> gt <Plug>(lsp-type-definition)
-    nmap <buffer> <leader>rn <plug>(lsp-rename)
+    nmap <buffer> <leader>R <plug>(lsp-rename)
     nmap <buffer> [g <Plug>(lsp-previous-diagnostic)
     nmap <buffer> ]g <Plug>(lsp-next-diagnostic)
     nmap <buffer> gK <Plug>(lsp-hover)
@@ -225,17 +226,17 @@ augroup LSP
           \   cmd: [ "ccls" ],
           \   root_uri: {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), "compile_commands.json"))},
           \   initialization_options: #{
-          \     cache: #{ directory: "/tmp/ccls/cache" },
+          \     cache: #{ directory: "/tmp/ccls-cache" },
           \     clang: #{ extraArgs: ["--gcc-toolchain=/usr"] },
           \   },
           \   allowlist: [ "c", "cpp", "objc", "objcpp" ],
           \ })
   endif
 
-  if executable("pyls")
+  if executable("jedi-language-server")
     au User lsp_setup call lsp#register_server(#{
-          \   name: "Python Language Server",
-          \   cmd: [ "pyls" ],
+          \   name: "Jedi",
+          \   cmd: [ "jedi-language-server" ],
           \   allowlist: ["python"],
           \ })
   endif
