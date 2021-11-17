@@ -170,7 +170,7 @@ let g:plugins = #{
       \     "Jorengarenar/miniSnip",
       \     "majutsushi/tagbar",
       \     "mbbill/undotree",
-      \     "natebosch/vim-lsc",
+      \     "prabirshrestha/vim-lsp",
       \     "puremourning/vimspector",
       \   ],
       \   files: [
@@ -186,107 +186,126 @@ packadd cfilter
 packadd matchit
 source  $VIMRUNTIME/ftplugin/man.vim
 
-" vim-lsc {{{2
+" vim-lsp {{{2
 
-let g:lsc_enable_autocomplete  = v:false
+let g:lsp_diagnostics_enabled                = 1
+let g:lsp_diagnostics_echo_cursor            = 1
+let g:lsp_diagnostics_echo_delay             = 0
+let g:lsp_diagnostics_highlights_delay       = 0
+let g:lsp_diagnostics_signs_enabled          = 0
+let g:lsp_document_code_action_signs_enabled = 0
 
-let g:lsc_auto_map = { "defaults": v:true,
-      \   "Completion": "omnifunc",
-      \   "ShowHover": "gK",
-      \   "NextReference": "<Leader><C-n>",
-      \   "PreviousReference": "<Leader><C-p>",
-      \ }
-nnoremap <F2> :LSClientAllDiagnostics<CR>
+hi! link LspErrorHighlight   Error
+hi! link LspWarningHighlight WarningMsg
 
-hi! link lscDiagnosticWarning  WarningMsg
+function! s:lsp_init() abort
+    setlocal omnifunc=lsp#complete
+    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> gd <Plug>(lsp-definition)
+    nmap <buffer> gs <Plug>(lsp-document-symbol-search)
+    nmap <buffer> gS <Plug>(lsp-workspace-symbol-search)
+    nmap <buffer> gr <Plug>(lsp-references)
+    nmap <buffer> gi <Plug>(lsp-implementation)
+    nmap <buffer> gt <Plug>(lsp-type-definition)
+    nmap <buffer> <leader>rn <plug>(lsp-rename)
+    nmap <buffer> [g <Plug>(lsp-previous-diagnostic)
+    nmap <buffer> ]g <Plug>(lsp-next-diagnostic)
+    nmap <buffer> gK <Plug>(lsp-hover)
+    inoremap <buffer> <expr><C-f> lsp#scroll(+4)
+    inoremap <buffer> <expr><C-d> lsp#scroll(-4)
+endfunction
 
-augroup LSC_
+augroup LSP
   autocmd!
-  autocmd VimLeavePre <buffer> call lsc#server#disable() | delfunction lsc#server#exit
-augroup END
+  autocmd User lsp_buffer_enabled call s:lsp_init()
 
-let g:lsc_server_commands = {}
-let s:servers = {
-      \   "ccls": #{
-      \     command: "ccls",
-      \     message_hooks: #{
-      \       initialize: #{
-      \         rootUri: {m, p -> lsc#uri#documentUri(fnamemodify(findfile("compile_commands.json", expand("%:p") . ";"), ":p:h"))},
-      \         initializationOptions: #{
-      \           cache: #{ directory: "/tmp/ccls/cache" },
-      \           clang: #{ extraArgs: ["--gcc-toolchain=/usr"] },
-      \         },
-      \       },
-      \     },
-      \     ft: [ "c", "cpp", "objc", "objcpp" ],
-      \   },
-      \   "sqls": #{
-      \     command: "sqls",
-      \     workspace_config: #{
-      \       sqls: #{
-      \         connections: [
-      \           #{
-      \             driver: "sqlite3",
-      \             dataSourceName: $SQLS_SQLITE_DB,
-      \           },
-      \           #{
-      \             driver: "mysql",
-      \             proto:  "unix",
-      \             user:   empty($SQLS_MYSQL_USER) ? $USER : $SQLS_MYSQL_USER,
-      \             passwd: $SQLS_MYSQL_PASSWD,
-      \             path:   "/run/mysqld/mysqld.sock",
-      \             dbName: $SQLS_MYSQL_DB,
-      \           },
-      \         ],
-      \       },
-      \     },
-      \     ft: [ "sql" ]
-      \   },
-      \   "Eclipse JDT Language Server": #{
-      \     command: "jdtls",
-      \     ft: [ "java" ],
-      \   },
-      \   "Python Language Server": #{
-      \     command: "pyls",
-      \     ft: [ "python" ],
-      \   },
-      \   "TexLab": #{
-      \     command: "texlab",
-      \     ft: [ "tex" ],
-      \   },
-      \   "Deno": #{
-      \     command: "deno lsp",
-      \     message_hooks: #{
-      \       initialize: #{
-      \         initializationOptions: #{
-      \           enable: v:true,
-      \           unstable: v:true,
-      \           lint: v:true,
-      \           codeLens: #{
-      \             implementations: v:true,
-      \             references: v:true,
-      \             referencesAllFunctions: v:true,
-      \             test: v:true,
-      \           },
-      \           suggest: #{
-      \             names: v:true,
-      \           },
-      \         },
-      \       },
-      \     },
-      \     ft: [ "javascript", "typescript" ],
-      \   }
-      \ }
-for [ s:name, s:serv ] in items(s:servers)
-  if executable(split(s:serv.command)[0])
-    let server = s:serv
-    let server.name = s:name
-    let server.suppress_stderr = v:true
-    for ft in remove(server, "ft")
-      let g:lsc_server_commands[ft] = server
-    endfor
+  if executable("ccls")
+    au User lsp_setup call lsp#register_server(#{
+          \   name: "ccls",
+          \   cmd: [ "ccls" ],
+          \   root_uri: {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), "compile_commands.json"))},
+          \   initialization_options: #{
+          \     cache: #{ directory: "/tmp/ccls/cache" },
+          \     clang: #{ extraArgs: ["--gcc-toolchain=/usr"] },
+          \   },
+          \   allowlist: [ "c", "cpp", "objc", "objcpp" ],
+          \ })
   endif
-endfor | unlet s:name s:serv s:servers
+
+  if executable("pyls")
+    au User lsp_setup call lsp#register_server(#{
+          \   name: "Python Language Server",
+          \   cmd: [ "pyls" ],
+          \   allowlist: ["python"],
+          \ })
+  endif
+
+  if executable("texlab")
+    au User lsp_setup call lsp#register_server(#{
+          \   name: "TexLab",
+          \   cmd: [ "texlab" ],
+          \   allowlist: ["tex"],
+          \ })
+  endif
+
+  if executable("sqls")
+    au User lsp_setup call lsp#register_server(#{
+          \   name: "sqls",
+          \   cmd: [ "sqls" ],
+          \   command: "sqls",
+          \   workspace_config: #{
+          \     sqls: #{
+          \       connections: [
+          \         #{
+          \           driver: "sqlite3",
+          \           dataSourceName: $SQLS_SQLITE_DB,
+          \         },
+          \         #{
+          \           driver: "mysql",
+          \           proto:  "unix",
+          \           user:   empty($SQLS_MYSQL_USER) ? $USER : $SQLS_MYSQL_USER,
+          \           passwd: $SQLS_MYSQL_PASSWD,
+          \           path:   "/run/mysqld/mysqld.sock",
+          \           dbName: $SQLS_MYSQL_DB,
+          \         },
+          \       ],
+          \     },
+          \   },
+          \   allowlist: [ "sql" ]
+          \ })
+  endif
+
+  if executable("jdtls")
+    au User lsp_setup call lsp#register_server(#{
+          \   name: "Eclipse JDT Language Server",
+          \   cmd: [ "jdtls ],
+          \   allowlist: ["java"],
+          \ })
+  endif
+
+  if executable("deno")
+    au User lsp_setup call lsp#register_server(#{
+          \   name: "Deno",
+          \   cmd: [ "deno", "lsp" ],
+          \   initialization_options: #{
+          \     enable: v:true,
+          \     unstable: v:true,
+          \     lint: v:true,
+          \     codeLens: #{
+          \       implementations: v:true,
+          \       references: v:true,
+          \       referencesAllFunctions: v:true,
+          \       test: v:true,
+          \     },
+          \     suggest: #{
+          \       names: v:true,
+          \     },
+          \   },
+          \   allowlist: [ "javascript", "typescript" ],
+          \ })
+  endif
+
+augroup END
 
 " Surround {{{2
 
