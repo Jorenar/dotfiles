@@ -17,7 +17,7 @@ if s:is_pbcopy
   let s:paste_alt = "pbpaste"
 elseif s:is_clipExe
   let s:copy_alt  = "clip.exe"
-  let s:paste_alt = "paste.exe"
+  let s:paste_alt = "powershell.exe Get-Clipboard"
 endif
 
 if !exists("g:fauxClip_copy_cmd")
@@ -37,7 +37,7 @@ if !exists("g:fauxClip_paste_primary_cmd")
 endif
 
 if get(g:, "fauxClip_suppress_errors", 1)
-  let s:null = s:is_clipExe ? " 2> NUL" : " 2> /dev/null"
+  let s:null = (s:is_clipExe && !has("unix")) ? " 2> NUL" : " 2> /dev/null"
   let g:fauxClip_copy_cmd          .= s:null
   let g:fauxClip_paste_cmd         .= s:null
   let g:fauxClip_copy_primary_cmd  .= s:null
