@@ -6,6 +6,9 @@ source $XDG_CONFIG_HOME/shell/shrc
 # Enable completion (+ separate path for .zcompdump file)
 autoload -Uz compinit && compinit -d "$XDG_CACHE_HOME/zcompdump"
 
+# Disable "No match found" message
+setopt +o nomatch
+
 # Vi mode
 bindkey -v
 

@@ -40,13 +40,13 @@ esac
 PS1="$PS1"'\033[1m$USER@$HOSTNAME\033[0m'
 
 # :pwd
-PS1="$PS1"':\033[0;90m$( echo $PWD | sed -e s,^$HOME,~, -e s,..*/,./, )\033[0m'
+PS1="$PS1"':\033[90m$( echo $PWD | sed -e s,^$HOME,~, -e s,..*/,./, )\033[0m'
 
 # :git_branch
-PS1="$PS1\$(git rev-parse --abbrev-ref HEAD 2> /dev/null | sed 's/.*/:\033[0;1;4;90m&/')\033[0m"
+PS1="$PS1\$(git rev-parse --abbrev-ref HEAD 2> /dev/null | sed 's/.*/:\033[1;4;90m&\033[0m/')"
 
 # $
 PS1="$PS1"'\033[1m$\033[0m '
 
 # - PRINT PROMPT
-PS1=$(printf "$PS1")
+[ "$(basename $0)" != "bash" ] && PS1=$(printf "$PS1")
