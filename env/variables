@@ -141,6 +141,11 @@ export XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
 
 # }}}
 
+XDG_HISTORY_DIR="$XDG_CACHE_HOME/history"
+
+XDG_INCLUDE_DIR="$XDG_LOCAL_HOME/include"
+XDG_LIB_DIR="$XDG_LOCAL_HOME/lib"
+
 # Dev {{{1
 
 export VITASDK=/usr/local/vitasdk

@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 if [ "$1" = "-i" ]; then
-    install="-cdrom "$XDG_VM_DIR/$2/os.iso""
+    install="-cdrom "$XDG_LOCAL_HOME/vm/$2/os.iso""
     shift 1
 fi
 
