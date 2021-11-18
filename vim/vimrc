@@ -67,6 +67,7 @@ nnoremap <Leader>b :bnext<CR>
 nnoremap <Leader>h :nohlsearch<CR>
 nnoremap <Leader>q m"gggqG`"
 nnoremap <Leader>r :exec {o -> {n -> n != "" ? '%s/\C\<' . o . '\>/' . n . '/g' : ''}(input(o." > ", o))}(expand('<cword>'))<CR>
+nnoremap <M-a> :cwindow<CR>
 nnoremap j gj
 nnoremap k gk
 
@@ -165,6 +166,7 @@ let &statusline = ""
 let g:plugins = #{
       \   repos: [
       \     "ctrlpvim/ctrlp.vim",
+      \     "dense-analysis/ale",
       \     "Jorengarenar/miniSnip",
       \     "majutsushi/tagbar",
       \     "mbbill/undotree",
@@ -172,6 +174,7 @@ let g:plugins = #{
       \     "puremourning/vimspector",
       \   ],
       \   files: [
+      \     [ "autoload/lsp/ale.vim",  "https://git.io/J1zIG" ],
       \     [ "autoload/repeat.vim",   "https://git.io/JmdpI" ],
       \     [ "plugin/commentary.vim", "https://git.io/JGOEP" ],
       \     [ "plugin/fastfold.vim",   "https://git.io/JIEo6" ],
@@ -184,11 +187,31 @@ packadd cfilter
 packadd matchit
 source  $VIMRUNTIME/ftplugin/man.vim
 
+" ALE {{{2
+
+let g:ale_disable_lsp      = 1
+let g:ale_echo_msg_format  = '[%linter%]: %s'
+let g:ale_linters_explicit = 0
+let g:ale_set_quickfix     = 1
+let g:ale_set_signs        = 0
+
+hi! link ALEError   Error
+hi! link ALEWarning WarningMsg
+
+augroup LSP_ALE
+    autocmd!
+    autocmd User lsp_buffer_enabled
+          \  call lsp#ale#enable()
+          \| let b:ale_linters = get(b:, "ale_linters", []) + [ 'vim-lsp' ]
+          \| ALELint
+
+    let g:lsp_ale_diagnostics_severity = 'information'
+    let g:lsp_ale_auto_enable_linter   = 1
+augroup END
+
 " vim-lsp {{{2
 
-let g:lsp_diagnostics_enabled                = 1
-let g:lsp_diagnostics_echo_cursor            = 1
-let g:lsp_diagnostics_echo_delay             = 0
+let g:lsp_diagnostics_highlights_enabled     = 1
 let g:lsp_diagnostics_highlights_delay       = 0
 let g:lsp_diagnostics_signs_enabled          = 0
 let g:lsp_document_code_action_signs_enabled = 0
@@ -197,21 +220,21 @@ hi! link LspErrorHighlight   Error
 hi! link LspWarningHighlight WarningMsg
 
 function! s:lsp_init() abort
-    setlocal omnifunc=lsp#complete
-    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
-    nmap <buffer> <F2> <Plug>(lsp-document-diagnostics)
-    nmap <buffer> gd <Plug>(lsp-definition)
-    nmap <buffer> gs <Plug>(lsp-document-symbol-search)
-    nmap <buffer> gS <Plug>(lsp-workspace-symbol-search)
-    nmap <buffer> gr <Plug>(lsp-references)
-    nmap <buffer> gi <Plug>(lsp-implementation)
-    nmap <buffer> gt <Plug>(lsp-type-definition)
-    nmap <buffer> <leader>R <Plug>(lsp-rename)
-    nmap <buffer> [g <Plug>(lsp-previous-diagnostic)
-    nmap <buffer> ]g <Plug>(lsp-next-diagnostic)
-    nmap <buffer> gK <Plug>(lsp-hover)
-    inoremap <buffer> <expr><C-f> lsp#scroll(+4)
-    inoremap <buffer> <expr><C-d> lsp#scroll(-4)
+  setlocal omnifunc=lsp#complete
+  if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+
+  nmap <buffer> gd <Plug>(lsp-definition)
+  nmap <buffer> gs <Plug>(lsp-document-symbol-search)
+  nmap <buffer> gS <Plug>(lsp-workspace-symbol-search)
+  nmap <buffer> gr <Plug>(lsp-references)
+  nmap <buffer> gi <Plug>(lsp-implementation)
+  nmap <buffer> gt <Plug>(lsp-type-definition)
+  nmap <buffer> <leader>R <Plug>(lsp-rename)
+  nmap <buffer> [g <Plug>(lsp-previous-diagnostic)
+  nmap <buffer> ]g <Plug>(lsp-next-diagnostic)
+  nmap <buffer> gK <Plug>(lsp-hover)
+  inoremap <buffer> <expr><C-f> lsp#scroll(+4)
+  inoremap <buffer> <expr><C-d> lsp#scroll(-4)
 endfunction
 
 augroup LSP
