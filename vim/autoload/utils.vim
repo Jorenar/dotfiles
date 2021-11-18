@@ -103,18 +103,3 @@ function! utils#TermEF(cmd) abort
 
   setlocal switchbuf=usetab
 endfunction
-
-function! utils#term(...) abort
-  let cmd = expandcmd(get(a:, 1, getcwd()."/".expand("%:t")))
-
-  if has('nvim')
-    split
-    autocmd TermClose <buffer> call feedkeys("\<C-\>\<C-n>")
-  endif
-
-  term
-  wincmd L
-  sleep 100m
-  startinsert
-  call feedkeys(cmd)
-endfunction

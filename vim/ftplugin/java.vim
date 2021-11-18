@@ -5,8 +5,6 @@ call mkdir($TMPDIR."/java", "p")
 
 SetFormatProg "uncrustify --l JAVA base kr mb java"
 
-nnoremap <buffer> <F8> :call utils#term("java -jar %:t:r.jar")
-
 setlocal errorformat=%E%f:%l:\ error:\ %m,
       \%W%f:%l:\ warning:\ %m,
       \%-Z%p^,

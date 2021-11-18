@@ -6,4 +6,8 @@ if &fdm != "syntax"
   let g:markdown_folding = 1
 endif
 
-nnoremap <buffer> <F8> :call utils#term("grip --quiet -b %")<CR>
+if has("nvim")
+  nnoremap <buffer> <F8> :tabe term://grip --quiet -b %<CR>
+else
+  nnoremap <buffer> <F8> :tab term grip --quiet -b %<CR>
+endif

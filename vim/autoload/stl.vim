@@ -5,9 +5,14 @@ function! stl#FileSize() abort
 endfunction
 
 function! stl#IssuesCount() abort
-  let errors   = filter(getqflist(), 'v:val.type == "E"')
-  let warnings = filter(getqflist(), 'v:val.type == "w"')
-  return len(errors)."E ".len(warnings)."w"
+  let errors   = len(filter(getqflist(), 'v:val.type == "E"'))
+  let warnings = len(filter(getqflist(), 'v:val.type == "w"'))
+  if g:lsp_loaded
+    let lsp_count = lsp#get_buffer_diagnostics_counts()
+    let errors   += lsp_count.error
+    let warnings += lsp_count.warning
+  endif
+  return errors."E ".warnings."w"
 endfunction
 
 function! stl#ModifBufs() abort
@@ -18,5 +23,5 @@ endfunction
 function! stl#NumOfBufs() abort
   let num = len(getbufinfo({'buflisted':1}))
   let hid = len(filter(getbufinfo({'buflisted':1}), 'empty(v:val.windows)'))
-  return hid ? num-hid."+".hid : num
+  return hid ? (num-hid)."+".hid : num
 endfunction
