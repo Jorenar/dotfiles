@@ -7,11 +7,6 @@ endfunction
 function! stl#IssuesCount() abort
   let errors   = len(filter(getqflist(), 'v:val.type == "E"'))
   let warnings = len(filter(getqflist(), 'v:val.type == "w"'))
-  if g:lsp_loaded
-    let lsp_count = lsp#get_buffer_diagnostics_counts()
-    let errors   += lsp_count.error
-    let warnings += lsp_count.warning
-  endif
   return errors."E ".warnings."w"
 endfunction
 

@@ -61,7 +61,7 @@ function! utils#InstallPlugins() abort
   call system("git -C ".dir." submodule update --recursive --remote")
 
   for f in g:plugins.files
-    call system("curl -o ".substitute(&rtp, ",.*", "", "").f[0]." -L ".f[1])
+    call system("curl -o ".substitute(&rtp, ",.*", "", "")."/".f[0]." -L ".f[1])
   endfor
 
   silent! helptags ALL
