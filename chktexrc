@@ -1,11 +1,22 @@
+CmdLine { --headererr  1 }
+
 CmdLine { --nowarn  1 } # Command terminated with space
 CmdLine { --nowarn  3 } # You should enclose the previous parenthesis with `{}'
 CmdLine { --nowarn  8 } # Wrong length of dash may have been used
+CmdLine { --nowarn  9 } # `}' expected, found `)'
+CmdLine { --nowarn 10 } # `]' expected, found `)'
 CmdLine { --nowarn 11 } # You should use \cdots or \ldots to achieve an ellipsis
+CmdLine { --nowarn 17 } # Number of '(' doesn't match the number of ')'
 CmdLine { --nowarn 18 } # Use either `` or '' as an alternative to `"'
 CmdLine { --nowarn 32 } # Use ` to begin quotation, not '
 CmdLine { --nowarn 40 } # You should put punctuation outside inner math mode
 
 UserWarnRegex {
     (?!#You! should! use! \dots! to! achieve! an! ellipsis)(\.\.\.)
+}
+
+VerbEnvir
+{
+    verbatim Verbatim comment listing verbatimtab rawhtml errexam picture
+    texdraw filecontents pgfpicture tikzpicture minted
 }
