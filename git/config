@@ -37,6 +37,7 @@
 
 [alias]
     cloner = clone --recursive
+    clone1 = clone --depth=1
 
     change-url = !sh -c 'git remote set-url origin \"$1\"' -
     orphan     = !sh -c 'git checkout --orphan \"$1\" && git rm -rf .' -

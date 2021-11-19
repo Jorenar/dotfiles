@@ -1,7 +1,7 @@
-" fasterWinHopping.vim
+" cwh.vim - continuous windows hopping
 " Maintainer:  Jorengarenar <dev@joren.ga>
 
-if exists('g:loaded_fasterWinHopping') | finish | endif
+if exists('g:loaded_cwh') | finish | endif
 let s:cpo_save = &cpo | set cpo&vim
 
 function! s:CtrlW() abort " switching to windows
@@ -22,5 +22,5 @@ tmap <silent> <C-w><C-j> <C-\><C-n>:wincmd j<CR><C-w>
 tmap <silent> <C-w><C-k> <C-\><C-n>:wincmd k<CR><C-w>
 tmap <silent> <C-w><C-l> <C-\><C-n>:wincmd l<CR><C-w>
 
-let g:loaded_fasterWinHopping = 1
+let g:loaded_cwh = 1
 let &cpo = s:cpo_save | unlet s:cpo_save

@@ -191,12 +191,13 @@ source  $VIMRUNTIME/ftplugin/man.vim
 
 let g:ale_disable_lsp      = 1
 let g:ale_echo_msg_format  = '[%linter%]: %s'
-let g:ale_linters_explicit = 0
 let g:ale_set_quickfix     = 1
 let g:ale_set_signs        = 0
 
 hi! link ALEError   Error
 hi! link ALEWarning WarningMsg
+
+nnoremap <F2> :ALEToggle<CR>
 
 augroup LSP_ALE
     autocmd!
@@ -381,18 +382,18 @@ let g:fastfold_minlines              = 0
 let g:fastfold_savehook              = 0
 
 let g:miniSnip_extends = {
-      \ "arduino"  : [ "cpp", "c" ],
-      \ "cpp"      : [ "c" ],
-      \ "markdown" : [ "html" ],
-      \ "php"      : [ "html" ],
-      \ "tex"      : [ "plaintex" ],
+      \   "arduino"  : [ "cpp", "c" ],
+      \   "cpp"      : [ "c" ],
+      \   "markdown" : [ "html" ],
+      \   "php"      : [ "html" ],
+      \   "tex"      : [ "plaintex" ],
       \ }
 
 let g:undotree_SetFocusWhenToggle = 1
 nnoremap <F1> :UndotreeToggle<CR>
 
-let g:vimspector_base_dir         = $XDG_DATA_HOME . '/vim/vimspector'
-let g:vimspector_install_gadgets  = [ 'debugpy', 'vscode-cpptools' ]
+let g:vimspector_base_dir        = $XDG_DATA_HOME . '/vim/vimspector'
+let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-cpptools' ]
 
 " }}}2
 
