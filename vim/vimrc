@@ -229,11 +229,11 @@ function! s:lsp_init() abort
   nmap <buffer> gS <Plug>(lsp-workspace-symbol-search)
   nmap <buffer> gr <Plug>(lsp-references)
   nmap <buffer> gi <Plug>(lsp-implementation)
-  nmap <buffer> gt <Plug>(lsp-type-definition)
+  nmap <buffer> <leader>gt <Plug>(lsp-type-definition)
   nmap <buffer> <leader>R <Plug>(lsp-rename)
   nmap <buffer> [g <Plug>(lsp-previous-diagnostic)
   nmap <buffer> ]g <Plug>(lsp-next-diagnostic)
-  nmap <buffer> gK <Plug>(lsp-hover)
+  nmap <buffer> <leader>k <Plug>(lsp-hover)
   inoremap <buffer> <expr><C-f> lsp#scroll(+4)
   inoremap <buffer> <expr><C-d> lsp#scroll(-4)
 endfunction
@@ -249,7 +249,10 @@ augroup LSP
           \   root_uri: {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), "compile_commands.json"))},
           \   initialization_options: #{
           \     cache: #{ directory: "/tmp/ccls-cache" },
-          \     clang: #{ extraArgs: ["--gcc-toolchain=/usr"] },
+          \     clang: #{ extraArgs: [
+          \       "--gcc-toolchain=/usr",
+          \       "-D LSP",
+          \     ] },
           \   },
           \   allowlist: [ "c", "cpp", "objc", "objcpp" ],
           \ })
