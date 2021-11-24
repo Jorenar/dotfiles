@@ -151,12 +151,9 @@ endfunction
 
 let &statusline = ""
       \ . "{%{stl#NumOfBufs()}}"
-      \ . "  %f  %y" . "[%{&ff}]"
-      \ . '[%{(&fenc == "" ? &enc : &fenc).(&bomb ? ",B" : "")}]'
-      \ . "  [%{&fo}]  "
-      \ . "[%{stl#FileSize()}]"
-      \ . "  %r" . "%{&ma\|\|&ro?'':'[-]'}" . "%w  "
-      \ . "%{stl#ModifBufs()}"
+      \ . "  %f  %y"
+      \ . '[%{&ff};%{(&fenc == "" ? &enc : &fenc).(&bomb ? ",B" : "")}]'
+      \ . "%r%w " . "%{stl#ModifBufs()}"
       \ . "%="
       \ . "*%{stl#IssuesCount()}*"
       \ . "  <0x%02B>  " . "%l/%L" . " : %c "
