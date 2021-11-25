@@ -27,3 +27,6 @@ shopt -s extglob
 
 # When the shell exits, append to the history file instead of overwriting it
 shopt -s histappend
+
+# Fix PROMPT
+PS1='\['"$(sed 's/\x1B\[[0-9;]*[a-zA-Z]/\\001&\\002/g' <<< "$PS1")"
