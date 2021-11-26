@@ -1,6 +1,9 @@
 # INPUTRC #
 # vim: fen fdm=marker
 
+# Turn off bell/beep terminal sound
+set bell-style none
+
 # Use Vi mode
 set editing-mode vi
 
