@@ -108,7 +108,7 @@ set splitbelow splitright
 set switchbuf=usetab
 set title
 set undofile
-set visualbell
+set vb t_vb=
 set wildmenu wildmode=full
 
 set completeopt=menuone,noinsert,noselect
