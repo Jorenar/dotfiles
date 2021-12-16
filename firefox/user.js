@@ -15,7 +15,7 @@ user_pref("browser.uiCustomization.state", "{\"placements\":{\"widget-overflow-f
 
 user_pref("dom.webnotifications.enabled ", false);
 
-user_pref("widget.content.allow-gtk-dark-theme", true);
+user_pref("widget.content.allow-gtk-dark-theme", false);
 
 user_pref("browser.compactmode.show", true);
 user_pref("browser.proton.enabled", false);
