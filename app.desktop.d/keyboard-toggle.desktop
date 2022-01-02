@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Keyboard Toggle
+Exec=keyboard-toggle
+Icon=keyboard
+NoDisplay=false
+Categories=Utility;
+StartupNotify=false
+Terminal=false
