@@ -124,9 +124,10 @@ endfunction
 function! s:CR() abort
   call s:restore_CR()
   call histadd(":", getcmdline())
+  let sid = matchstr(expand("<sfile>"), '<SNR>\d\+_')
   return substitute(getcmdline(),
         \ s:cmd_pattern(),
-        \ 'call '.expand('<SID>').'cmd(''\1'', ''\2'')', 'g')
+        \ 'call '.sid.'cmd(''\1'', ''\2'')', 'g')
         \ . " | call histdel(':', -1)"
 endfunction
 
