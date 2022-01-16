@@ -135,9 +135,6 @@ bindsym $mod+minus [class="^(?!QuiteRss).*$"] scratchpad show
 
 # Workspaces {{{2
 
-# rename workspace
-#bindsym $mod+r exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
-
 # switch to workspace
 bindsym $mod+1 workspace number "1"
 bindsym $mod+2 workspace number "2"

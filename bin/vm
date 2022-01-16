@@ -5,7 +5,7 @@ if [ "$1" = "-i" ]; then
     shift 1
 fi
 
-DISK="$XDG_VM_DIR/$1/disk.img"
+DISK="$XDG_LOCAL_HOME/vm/$1/disk.img"
 [ ! -f "$DISK" ] && exit 1
 
 exec qemu-system-x86_64 \
@@ -20,8 +20,7 @@ exec qemu-system-x86_64 \
     -device virtio-balloon \
     `# -mem-path /dev/hugepages` \
     -net nic \
-    -net user,smb="$XDG_PUBLICSHARE_DIR" \
-     -nic user,hostfwd=tcp:127.0.0.1:1080-:80 \
+    -net user,smb="$XDG_PUBLICSHARE_DIR",hostfwd=tcp::1080-:80 \
     -usb -device usb-tablet \
     -device intel-hda -device hda-duplex \
     -vga std \
