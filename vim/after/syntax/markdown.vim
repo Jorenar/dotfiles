@@ -5,3 +5,5 @@ for h in range(1,6)
 endfor | unlet h
 
 syn region markdownNested_fold start="```" end="```" keepend transparent fold
+
+syn region markdownFrontMatter start='\%1l---' end='\%>1l---' transparent contains=NONE
