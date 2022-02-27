@@ -2,7 +2,6 @@
 
 ! General settings
 XTerm*termName: xterm-256color
-XTerm*geometry: 220x55+80+30
 XTerm*loginshell: False
 XTerm*cursorBlink: True
 XTerm*metaSendsEscape: True

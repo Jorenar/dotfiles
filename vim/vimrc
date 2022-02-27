@@ -42,17 +42,19 @@ com! -nargs=+         FillToColumn     exec {str,r -> "norm! a".repeat(str, (r-c
 com! -nargs=+         Grep             exec "lvimgrep /".<q-args>."/j **"
 com! -nargs=+         GrepRename       exec {a,b -> 'tabe | lv /\C\<' . a . '\>/j ** | ldo s/\C\<' . a . '\>/' . b . '/gc | up'}(<f-args>) | q
 com!                  InstallPlugins   call utils#InstallPlugins()
-com! -nargs=* -bang   Make             silent! make <args> | redraw!
 com! -nargs=1         SetFormatProg    exec {prg -> 'let [ &l:formatprg, &l:formatexpr ] = [ "'.prg.'", "" ]'}(<args>)
 com! -range=%         Sort             normal :<line1>,<line2>sort i<CR>
 com!                  SortBlock        normal! vip:sort i<CR>
 com! -nargs=? -bang   Spelling         setlocal spell<bang> spelllang=<args>
 com!                  SudoW            exec 'silent! write !sudo tee % >/dev/null' | edit!
 com!                  SyntaxStack      echo join(reverse(map(synstack(line('.'), col('.')), 'synIDattr(v:val,"name")')),' ')
-com!                  Term             if has('nvim') | split | endif | term
 com! -range           VisSort          sil! keepj <line1>,<line2>call utils#VisSort()
 
 com! -nargs=1 -bang -complete=file  TermEF  call utils#TermEF("<args>")
+
+if has('nvim')
+  cnoreabbrev term sp\|term
+endif
 
 " MAPPINGS {{{1
 
@@ -60,8 +62,8 @@ nnoremap ' `
 nnoremap <expr> <F4> &ve == "all" ? ":set ve=\<CR>" : ":set ve=all\<CR>"
 nnoremap <F10> :w <bar> make<CR>
 nnoremap <F3> :set cursorline! cursorcolumn!<CR>
-nnoremap <F7> :w <bar> Make %:p<CR>
-nnoremap <F8> :Term<CR>
+nnoremap <F7> :w <bar> silent! make %:p <bar> redraw!<CR>
+nnoremap <F8> :if has("nvim") <bar> split <bar> endif <bar> term<CR>
 nnoremap <Leader>= gg=G``
 nnoremap <Leader>b :bnext<CR>
 nnoremap <Leader>h :nohlsearch<CR>
@@ -115,6 +117,10 @@ set completeopt=menuone,noinsert,noselect
 set omnifunc=syntaxcomplete#Complete
 set pumheight=20
 
+set linebreak
+set breakindent
+let &showbreak = "↳  "
+
 if has('nvim')
   set guicursor=n-v-c-sm-i-r-ci-ve-cr-o:block " setting a:block breaks blinking
   set wildoptions-=pum " don't use popupmenu for wildmode completion
@@ -151,13 +157,9 @@ function! MyFoldText() abort
 endfunction
 
 let &statusline = ""
-      \ . "{%{stl#NumOfBufs()}}"
-      \ . "  %f  %y"
-      \ . '[%{&ff};%{(&fenc == "" ? &enc : &fenc).(&bomb ? ",B" : "")}]'
-      \ . "%r%w " . "%{stl#ModifBufs()}"
-      \ . "%="
-      \ . "*%{stl#IssuesCount()}*"
-      \ . "  <0x%02B>  " . "%l/%L" . " : %c "
+      \ . "{%{stl#NumOfBufs()}}" . "%{stl#ModifBufs()}" . "  %<%-25.25f "
+      \ . "%y" . '[%{&ff};%{(&fenc == "" ? &enc : &fenc).(&bomb ? ",B" : "")}]'
+      \ . "%5r  [%{stl#IssuesCount()}]    %5l/%L" . ":%c "
 
 " PLUGINS {{{1
 
@@ -260,7 +262,7 @@ augroup LSP
     au User lsp_setup call lsp#register_server(#{
           \   name: "Jedi",
           \   cmd: [ "jedi-language-server" ],
-          \   allowlist: ["python"],
+          \   allowlist: [ "python" ],
           \ })
   endif
 
@@ -268,7 +270,7 @@ augroup LSP
     au User lsp_setup call lsp#register_server(#{
           \   name: "TexLab",
           \   cmd: [ "texlab" ],
-          \   allowlist: ["tex"],
+          \   allowlist: [ "tex" ],
           \ })
   endif
 
@@ -302,8 +304,8 @@ augroup LSP
   if executable("jdtls")
     au User lsp_setup call lsp#register_server(#{
           \   name: "Eclipse JDT Language Server",
-          \   cmd: [ "jdtls ],
-          \   allowlist: ["java"],
+          \   cmd: [ "jdtls" ],
+          \   allowlist: [ "java" ],
           \ })
   endif
 
@@ -429,11 +431,11 @@ augroup END
 augroup TERMINAL_OPTIONS
   autocmd!
 
-  execute 'autocmd '.(has("nvim") ? "TermOpen" : "TerminalOpen").' *
-        \ let b:auto_insert = 1 | setlocal nonu stl=%f |
-        \ au WinEnter <buffer> if b:auto_insert | sil! norm! i | endif'
+  execute 'autocmd '.(has("nvim") ? "TermOpen" : "TerminalOpen").' *'
+        \ . ' setlocal nonu stl=%#StatusLineTerm#\ %t '
 
   if has('nvim') " Sanitize Neovim :terminal
+    autocmd TermOpen  * startinsert
     autocmd TermOpen  * let b:term_job_finished = 0
     autocmd TermEnter * if  b:term_job_finished | call feedkeys("\<C-\>\<C-n>") | endif
     autocmd TermClose * let b:term_job_finished = 1 | call feedkeys("\<C-\>\<C-n>")
