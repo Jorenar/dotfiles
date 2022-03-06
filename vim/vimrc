@@ -168,6 +168,7 @@ let g:plugins = #{
       \     "ctrlpvim/ctrlp.vim",
       \     "dense-analysis/ale",
       \     "Jorengarenar/miniSnip",
+      \     "jpalardy/vim-slime",
       \     "majutsushi/tagbar",
       \     "mbbill/undotree",
       \     "prabirshrestha/vim-lsp",
@@ -377,6 +378,44 @@ let g:tagbar_sort    = 0
 
 hi! link TagbarNestedKind Comment
 hi! link TagbarType Comment
+
+" vim-slime {{{2
+
+let g:slime_dont_ask_default = 1
+let g:slime_no_mappings = 1
+let g:slime_paste_file = tempname()
+
+if has("nvim")
+  let g:slime_target = "neovim"
+elseif has("terminal")
+  let g:slime_target = "vimterminal"
+elseif executable("tmux")
+  let g:slime_target = "tmux"
+elseif !empty($DISPLAY)
+  let g:slime_target = "x11"
+endif
+
+function! Slimeify()
+  let g:slime_default_config = get(g:, "slime_default_config", {})
+
+  let foo = {
+        \   "vimterminal": [ "bufnr", "bufnr()"  ],
+        \   "neovim":      [ "jobid", "&channel" ],
+        \ }
+
+  let st = get(g:, "slime_target", "")
+  if has_key(foo, st)
+    let [ target, y ] = foo[st]
+    let g:slime_default_config[target] = eval(y)
+  endif
+endfunction
+
+com! -nargs=+ -bang  Slime  call slime#send(<q-args> . (<bang>0 ? "" : "\r"))
+
+if has("nvim") || has("terminal")
+  tnoremap <M-R> <C-\><C-n>:call Slimeify()<CR>i
+endif
+noremap <M-r> :SlimeSend<CR>
 
 " ~ {{{2
 
