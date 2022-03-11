@@ -412,10 +412,8 @@ endfunction
 
 com! -nargs=+ -bang  Slime  call slime#send(<q-args> . (<bang>0 ? "" : "\r"))
 
-if has("nvim") || has("terminal")
-  tnoremap <M-R> <C-\><C-n>:call Slimeify()<CR>i
-endif
-noremap <M-r> :SlimeSend<CR>
+noremap  <F5> :SlimeSend<CR>
+tnoremap <F5> <C-\><C-n>:call Slimeify()<CR>a
 
 " ~ {{{2
 
