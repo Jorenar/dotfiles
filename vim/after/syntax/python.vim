@@ -7,4 +7,4 @@ syn region  pythonFold  fold transparent
 syn region pythonCurlyBrace start="{" end="}" fold transparent
 syn region pythonSquareBrace start="\[" end="\]" fold transparent
 
-call utils#appendToSynRule("pythonString", "region", "fold")
+call utils#appendToSynRule("pythonString", "fold")

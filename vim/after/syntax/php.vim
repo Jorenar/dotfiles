@@ -1,3 +1,3 @@
 if php_folding
-  call utils#appendToSynRule("phpRegion", "region", "fold")
+  call utils#appendToSynRule("phpRegion", "fold")
 endif

@@ -6,14 +6,13 @@ function! utils#upper(k)
   endif
 endfunction
 
-function! utils#appendToSynRule(group, type, addition) abort
-  let x = split(execute("syntax list " . a:group), '\n')
-  let y = index(map(deepcopy(x), 'v:val =~ ".*links to .*"'), 1)
-  let y = y > 0 ? y-1 : y
-  let x = split(join(x[:y]))
-  let x = x[index(x, 'xxx')+1:]
-  execute "syntax clear ".a:group
-  execute "syntax " . a:type . " " .a:group." ". a:addition . " ".join(x)
+function! utils#appendToSynRule(group, addition) abort
+  let rule = execute("silent syntax list " . a:group)
+  let type = rule =~ "\<match\>" ? "match" : "region"
+  exec "silent syntax clear" a:group
+  let args = matchstr(rule, '\v.*<xxx\s+%(match>)?\zs.+\ze%(<links to .*)?')
+  let args = substitute(args, '\_s\+', ' ', 'g')
+  exec "silent syntax" type a:group args a:addition
 endfunction
 
 function! utils#CountSpell() abort

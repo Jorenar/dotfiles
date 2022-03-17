@@ -31,7 +31,7 @@ endif
 " FOLDING {{{1
 " Parenthesis {{{2
 
-call utils#appendToSynRule("cParen", "region", "fold")
+call utils#appendToSynRule("cParen", "fold")
 
 " Switch's cases {{{2
 

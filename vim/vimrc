@@ -424,6 +424,7 @@ let g:fastfold_savehook              = 0
 let g:miniSnip_extends = {
       \   "arduino"  : [ "cpp", "c" ],
       \   "cpp"      : [ "c" ],
+      \   "html"     : [ "css", "javascript" ],
       \   "markdown" : [ "html" ],
       \   "php"      : [ "html" ],
       \   "tex"      : [ "plaintex" ],

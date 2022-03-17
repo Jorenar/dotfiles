@@ -1,1 +1,1 @@
-call utils#appendToSynRule("texArgsPreamble", "region", "fold")
+call utils#appendToSynRule("texArgsPreamble", "fold")

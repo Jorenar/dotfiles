@@ -5,5 +5,5 @@ SetFormatProg "css-beautify -s 2 --space-around-combinator"
 
 augroup ft_LESS
   au!
-  autocmd Syntax <buffer> silent! call utils#appendToSynRule("lessDefinition", "region", "fold")
+  autocmd Syntax <buffer> silent! call utils#appendToSynRule("lessDefinition", "fold")
 augroup END
