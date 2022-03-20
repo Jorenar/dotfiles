@@ -100,8 +100,8 @@ bindsym $mod+k focus up
 bindsym $mod+l focus right
 
 # switch focus to next/prev window
-bindsym $mod+Tab focus right
-bindsym $mod+Shift+Tab focus left
+bindsym Mod1+Tab focus right
+bindsym Mod1+Shift+Tab focus left
 
 # move focused window
 bindsym $mod+Shift+h move left
@@ -134,6 +134,10 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus [class="^(?!QuiteRss).*$"] scratchpad show
 
 # Workspaces {{{2
+
+# switch to next/prev workspace
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev
 
 # switch to workspace
 bindsym $mod+1 workspace number "1"

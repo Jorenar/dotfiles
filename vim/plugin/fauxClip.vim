@@ -6,45 +6,85 @@ if has("clipboard") && !get(g:, "fauxClip_always_use", 0) | finish | endif
 
 let s:cpo_save = &cpo | set cpo&vim
 
-" Variables {{{1
+function s:init() abort
+  let settedCmds = 0
+  for v in [ "copy", "copy_primary", "paste_cmd", "paste_primary" ]
+    let settedCmds += exists("g:fauxClip_".v."_cmd")
+  endfor
 
-let s:is_pbcopy     = executable("pbcopy")
-let s:is_clipExe    = executable("clip.exe")
-let s:fall_to_xclip = !(s:is_pbcopy || s:is_clipExe)
+  if settedCmds < 4
+    let cmds = {}
+    if executable("xclip")
+      let cmds = {
+          \   "copy": {
+          \     "clipboard": "xclip -f -i -selection clipboard",
+          \     "primary": "xclip -f -i",
+          \   },
+          \   "paste": {
+          \     "clipboard": "xclip -o -selection clipboard",
+          \     "primary": "xclip -o",
+          \   }
+          \ }
+    elseif executable("xsel")
+      let cmds = {
+          \   "copy": {
+          \     "clipboard": "xsel -i -b",
+          \     "primary": "xsel -i",
+          \   },
+          \   "paste": {
+          \     "clipboard": "xsel -o -b",
+          \     "primary": "xclip -o",
+          \   }
+          \ }
+    elseif executable("clip.exe")
+      let cmds = {
+          \   "copy": "clip.exe",
+          \   "paste": "powershell.exe Get-Clipboard",
+          \ }
+    elseif executable("pbcopy")
+      let cmds = {
+            \   "copy": "pbcopy",
+            \   "paste": "pbpaste",
+            \ }
+    else
+      echoerr "fauxClip: not all commands are set and could not find any of the default CLI program"
+      return
+    endif
 
-if s:is_pbcopy
-  let s:copy_alt  = "pbcopy"
-  let s:paste_alt = "pbpaste"
-elseif s:is_clipExe
-  let s:copy_alt  = "clip.exe"
-  let s:paste_alt = "powershell.exe Get-Clipboard"
-endif
+    let copy = cmds["copy"]
+    let isStr = type(copy) == 1
+    if !exists("g:fauxClip_copy_cmd")
+      let g:fauxClip_copy_cmd = isStr ? copy : copy["clipboard"]
+      let settedCmds += 1
+    endif
+    if !exists("g:fauxClip_copy_primary_cmd")
+      let g:fauxClip_copy_primary_cmd = isStr ? copy : copy["primary"]
+      let settedCmds += 1
+    endif
 
-if !exists("g:fauxClip_copy_cmd")
-  let g:fauxClip_copy_cmd = s:fall_to_xclip ? "xclip -f -i -selection clipboard" : s:copy_alt
-endif
+    let paste = cmds["paste"]
+    let isStr = type(paste) == 1
+    if !exists("g:fauxClip_paste_cmd")
+      let g:fauxClip_paste_cmd = isStr ? paste : paste["primary"]
+      let settedCmds += 1
+    endif
+    if !exists("g:fauxClip_paste_primary_cmd")
+      let g:fauxClip_paste_primary_cmd = isStr ? paste : paste["primary"]
+      let settedCmds += 1
+    endif
+  endif
 
-if !exists("g:fauxClip_paste_cmd")
-  let g:fauxClip_paste_cmd = s:fall_to_xclip ? "xclip -o -selection clipboard" : s:paste_alt
-endif
+  if get(g:, "fauxClip_suppress_errors", 1)
+    let null = (executable("clip.exe") && !has("unix")) ? " 2> NUL" : " 2> /dev/null"
+    let g:fauxClip_copy_cmd          .= null
+    let g:fauxClip_paste_cmd         .= null
+    let g:fauxClip_copy_primary_cmd  .= null
+    let g:fauxClip_paste_primary_cmd .= null
+  endif
+endfunction
+call s:init()
 
-if !exists("g:fauxClip_copy_primary_cmd")
-  let g:fauxClip_copy_primary_cmd = s:fall_to_xclip ? "xclip -f -i" : s:copy_alt
-endif
-
-if !exists("g:fauxClip_paste_primary_cmd")
-  let g:fauxClip_paste_primary_cmd = s:fall_to_xclip ? "xclip -o" : s:paste_alt
-endif
-
-if get(g:, "fauxClip_suppress_errors", 1)
-  let s:null = (s:is_clipExe && !has("unix")) ? " 2> NUL" : " 2> /dev/null"
-  let g:fauxClip_copy_cmd          .= s:null
-  let g:fauxClip_paste_cmd         .= s:null
-  let g:fauxClip_copy_primary_cmd  .= s:null
-  let g:fauxClip_paste_primary_cmd .= s:null
-endif
-
-" Functions {{{1
+" Runtime functions {{{
 
 function! s:start(REG) abort
   let s:REG = a:REG
@@ -131,7 +171,9 @@ function! s:CR() abort
         \ . " | call histdel(':', -1)"
 endfunction
 
-" Mappings {{{1
+" }}}
+
+" Mappings {{{
 
 augroup fauxClipCmdWrapper
   autocmd!
@@ -157,7 +199,7 @@ noremap! <C-r><C-r>*  <C-r><C-r>=<SID>paste("*")<CR>
 noremap! <C-r><C-o>*  <C-r><C-o>=<SID>paste("*")<CR>
 inoremap <C-r><C-p>*  <C-r><C-p>=<SID>paste("*")<CR>
 
-" }}}1
+" }}}
 
 let g:loaded_fauxClip = 1
 let &cpo = s:cpo_save | unlet s:cpo_save
