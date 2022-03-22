@@ -14,7 +14,17 @@ function s:init() abort
 
   if settedCmds < 4
     let cmds = {}
-    if executable("xclip")
+    if executable("clip.exe")
+      let cmds = {
+          \   "copy": "clip.exe",
+          \   "paste": "powershell.exe Get-Clipboard",
+          \ }
+    elseif executable("pbcopy")
+      let cmds = {
+            \   "copy": "pbcopy",
+            \   "paste": "pbpaste",
+            \ }
+    elseif executable("xclip")
       let cmds = {
           \   "copy": {
           \     "clipboard": "xclip -f -i -selection clipboard",
@@ -36,16 +46,6 @@ function s:init() abort
           \     "primary": "xclip -o",
           \   }
           \ }
-    elseif executable("clip.exe")
-      let cmds = {
-          \   "copy": "clip.exe",
-          \   "paste": "powershell.exe Get-Clipboard",
-          \ }
-    elseif executable("pbcopy")
-      let cmds = {
-            \   "copy": "pbcopy",
-            \   "paste": "pbpaste",
-            \ }
     else
       echoerr "fauxClip: not all commands are set and could not find any of the default CLI program"
       return
