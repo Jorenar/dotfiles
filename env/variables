@@ -93,6 +93,7 @@ export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 export ICEAUTHORITY="$XDG_CACHE_HOME/ICEauthority"
 export IMAPFILTER_HOME="$XDG_CONFIG_HOME/imapfilter"
 export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
+export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
 export MYSQL_HOME="$XDG_CONFIG_HOME/mysql"
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
@@ -127,6 +128,7 @@ export MAILCAPS="$MAILCAP"   # Mutt, pine
 # Python {{{1
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/config.py"
 export PYTHONUSERBASE="$XDG_LOCAL_HOME"
+export IPYTHONDIR="$XDG_DATA_HOME/ipython"
 
 # Ruby {{{1
 export BUNDLE_USER_CACHE="$XDG_CACHE_HOME/bundle"

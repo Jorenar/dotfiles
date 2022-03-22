@@ -14,6 +14,8 @@ client.focused   #444444 #333333 #FFFFFF #292d2e   #285577
 
 exec --no-startup-id exec i3-msg "workspace 2, workspace 6, workspace 1" # workspace switcheroo
 
+exec --no-startup-id exec dunst
+
 # i3bar {{{1
 
 bar {
