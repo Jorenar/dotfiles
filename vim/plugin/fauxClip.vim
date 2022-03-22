@@ -19,6 +19,7 @@ function s:init() abort
           \   "copy": "clip.exe",
           \   "paste": "powershell.exe Get-Clipboard",
           \ }
+      let cmds["paste"] .= " | sed -Ez 's/\\r//g; $ s/\\n+$//'"
     elseif executable("pbcopy")
       let cmds = {
             \   "copy": "pbcopy",
@@ -65,7 +66,7 @@ function s:init() abort
     let paste = cmds["paste"]
     let isStr = type(paste) == 1
     if !exists("g:fauxClip_paste_cmd")
-      let g:fauxClip_paste_cmd = isStr ? paste : paste["primary"]
+      let g:fauxClip_paste_cmd = isStr ? paste : paste["clipboard"]
       let settedCmds += 1
     endif
     if !exists("g:fauxClip_paste_primary_cmd")
