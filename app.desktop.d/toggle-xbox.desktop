@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Toggle Xbox Controller
+Exec=sudo toggle_xbox
+NoDisplay=false
+Categories=Utility;
+StartupNotify=false
+Terminal=false
