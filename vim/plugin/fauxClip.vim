@@ -130,6 +130,7 @@ function! s:end() abort
   augroup END
   call setreg('"', s:reg[0], s:reg[1])
   unlet! s:reg s:REG
+  redraw
 endfunction
 
 function! s:cmd(cmd, REG) abort range
