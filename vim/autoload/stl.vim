@@ -12,7 +12,7 @@ endfunction
 
 function! stl#ModifBufs() abort
   let cnt = len(filter(getbufinfo(), 'v:val.changed'))
-  return cnt == 0 ? "" : (&mod ? "[+". (cnt > 1 ? cnt : "") ."]" : "[".cnt."]")
+  return (&mod ? "[+". (cnt > 1 ? cnt : "") ."]" : "[".cnt."]")
 endfunction
 
 function! stl#NumOfBufs() abort

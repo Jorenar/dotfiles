@@ -95,7 +95,6 @@ set hidden
 set hlsearch
 set ignorecase
 set incsearch
-set laststatus=2
 set makeprg=Make
 set modeline nomodelineexpr
 set nowrap
@@ -156,10 +155,13 @@ function! MyFoldText() abort
         \ . trim(substitute(getline(v:foldstart), split(&l:fmr, ',')[0].'\d\?', '', '')) . " "
 endfunction
 
+set showtabline=2
+set laststatus=2
 let &statusline = ""
-      \ . "{%{stl#NumOfBufs()}}" . "%{stl#ModifBufs()}" . "  %<%-25.25f "
-      \ . "%y" . '[%{&ff};%{(&fenc == "" ? &enc : &fenc).(&bomb ? ",B" : "")}]'
-      \ . "%5r  [%{stl#IssuesCount()}]    %5l/%L" . ":%c "
+let &stl .= "{%{stl#NumOfBufs()}}" . "%{stl#ModifBufs()}"
+let &stl .= "  %y" . '[%{&ff};%{(&fenc == "" ? &enc : &fenc).(&bomb ? ",B" : "")}]'
+let &stl .= "%5r  [%{stl#IssuesCount()}]  %l/%L" . ":%c  <0x%B>"
+let &stl .= "  |  %<%F "
 
 " PLUGINS {{{1
 
