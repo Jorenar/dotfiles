@@ -488,7 +488,7 @@ augroup TERMINAL_OPTIONS
     autocmd TermClose * let b:term_job_finished = 1 | call feedkeys("\<C-\>\<C-n>")
   else
     if $vimInstanceExists " then don't open nested Vim
-      au BufReadPre * exec 'bd | !printf "\033]51;[\"drop\", \"'. expand('%') . '\"]\007"' | q
+      au BufReadPre * exec 'bd | !printf "\033]51;[\"drop\", \"'. expand('%:p') . '\"]\007"' | q
     else
       let $vimInstanceExists = 1
     endif
