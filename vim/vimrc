@@ -128,6 +128,9 @@ endif
 set path=**,./
 set tags+=.git/tags;
 
+set signcolumn=yes
+set updatetime=250
+
 augroup FORMATOPTIONS
   autocmd!
   autocmd FileType * set fo-=c fo-=r fo-=o " Disable continuation of comments to the next line
@@ -173,6 +176,7 @@ let g:plugins = #{
       \     "jpalardy/vim-slime",
       \     "majutsushi/tagbar",
       \     "mbbill/undotree",
+      \     "mhinz/vim-signify",
       \     "prabirshrestha/vim-lsp",
       \     "puremourning/vimspector",
       \   ],
@@ -438,6 +442,8 @@ nnoremap <F1> :UndotreeToggle<CR>
 
 let g:vimspector_base_dir        = $XDG_DATA_HOME . '/vim/vimspector'
 let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-cpptools' ]
+
+highlight link  SignifySignChange  DiffText
 
 " }}}2
 
