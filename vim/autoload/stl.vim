@@ -4,6 +4,10 @@ function! stl#FileSize() abort
   return printf((i ? "~%.1f" : "%d")." %sB", bytes, units[i])
 endfunction
 
+function! stl#FfAndEnc() abort
+  return &ff.";".(&fenc == "" ? &enc : &fenc).(&bomb ? ",B" : "")
+endfunction
+
 function! stl#IssuesCount() abort
   let errors   = len(filter(getqflist(), 'v:val.type == "E"'))
   let warnings = len(filter(getqflist(), 'v:val.type == "w"'))
@@ -20,3 +24,17 @@ function! stl#NumOfBufs() abort
   let hid = len(filter(getbufinfo({'buflisted':1}), 'empty(v:val.windows)'))
   return hid ? (num-hid)."+".hid : num
 endfunction
+
+if get(g:, "loaded_signify", 0) " VCS stats; requires Signify plugin
+  function! stl#VcsStats() abort
+    let sy = getbufvar(bufnr(), "sy")
+    if empty(sy) | return "" | endif
+    if !has_key(sy, "vcs") | return "" | endif
+    let stats = map(sy.stats, 'v:val < 0 ? 0 : v:val')
+    return printf("  [+%s -%s ~%s]", stats[0], stats[2], stats[1])
+  endfunction
+else
+  function! stl#VcsStats() abort
+    return "Sy: X"
+  endfunction
+endif

@@ -50,8 +50,6 @@ com!                  SudoW            exec 'silent! write !sudo tee % >/dev/nul
 com!                  SyntaxStack      echo join(reverse(map(synstack(line('.'), col('.')), 'synIDattr(v:val,"name")')),' ')
 com! -range           VisSort          sil! keepj <line1>,<line2>call utils#VisSort()
 
-com! -nargs=1 -bang -complete=file  TermEF  call utils#TermEF("<args>")
-
 if has('nvim')
   cnoreabbrev term sp\|term
 endif
@@ -160,16 +158,19 @@ endfunction
 
 set showtabline=2
 set laststatus=2
-let &statusline = ""
-let &stl .= "{%{stl#NumOfBufs()}}" . "%{stl#ModifBufs()}"
-let &stl .= "  %y" . '[%{&ff};%{(&fenc == "" ? &enc : &fenc).(&bomb ? ",B" : "")}]'
-let &stl .= "%5r  [%{stl#IssuesCount()}]  %l/%L" . ":%c  <0x%B>"
-let &stl .= "  |  %<%F "
+set statusline=
+let &stl .= "{%{stl#NumOfBufs()}}"
+let &stl .= "%{stl#ModifBufs()}%r  "
+let &stl .= "%y[%{stl#FfAndEnc()}]  "
+let &stl .= "[%{stl#IssuesCount()}]"
+let &stl .= "%{stl#VcsStats()}"
+let &stl .= "  %l/%L:%c"
+let &stl .= "  |  %<%f "
 
 " PLUGINS {{{1
 
-let g:plugins = #{
-      \   repos: [
+let g:plugins = {
+      \   "repos": [
       \     "ctrlpvim/ctrlp.vim",
       \     "dense-analysis/ale",
       \     "Jorengarenar/miniSnip",
@@ -180,7 +181,7 @@ let g:plugins = #{
       \     "prabirshrestha/vim-lsp",
       \     "puremourning/vimspector",
       \   ],
-      \   files: [
+      \   "files": [
       \     [ "autoload/lsp/ale.vim",  "https://git.io/J1zIG" ],
       \     [ "autoload/repeat.vim",   "https://git.io/JmdpI" ],
       \     [ "plugin/commentary.vim", "https://git.io/JGOEP" ],
@@ -443,6 +444,7 @@ nnoremap <F1> :UndotreeToggle<CR>
 let g:vimspector_base_dir        = $XDG_DATA_HOME . '/vim/vimspector'
 let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-cpptools' ]
 
+let g:signify_sign_change = '~'
 highlight link  SignifySignChange  DiffText
 
 " }}}2
