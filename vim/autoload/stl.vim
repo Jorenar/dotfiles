@@ -35,6 +35,6 @@ if get(g:, "loaded_signify", 0) " VCS stats; requires Signify plugin
   endfunction
 else
   function! stl#VcsStats() abort
-    return "Sy: X"
+    return ""
   endfunction
 endif

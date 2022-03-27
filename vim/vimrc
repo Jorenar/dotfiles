@@ -474,7 +474,7 @@ augroup END
 
 augroup TRIM_TRAILING_WHITESPACE
   autocmd!
-  autocmd BufWritePre * sil! undoj | %s/\v(\s+$|\_s+%$)//e | call histdel("/", -1)
+  autocmd BufWritePre * sil! undoj | sil! keepp keepj %s/\v(\s+$|\_s+%$)//e
 augroup END
 
 augroup TERMINAL_OPTIONS
@@ -490,7 +490,7 @@ augroup TERMINAL_OPTIONS
     autocmd TermClose * let b:term_job_finished = 1 | call feedkeys("\<C-\>\<C-n>")
   else
     if $vimInstanceExists " then don't open nested Vim
-      au BufReadPre * exec 'bd | !printf "\033]51;[\"drop\", \"'. expand('%:p') . '\"]\007"' | q
+      au BufNewFile,BufReadPre * exec 'bd | !printf "\033]51;[\"drop\", \"'. expand('%:p') . '\"]\007"' | q
     else
       let $vimInstanceExists = 1
     endif
