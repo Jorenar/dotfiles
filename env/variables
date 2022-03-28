@@ -128,6 +128,7 @@ export MAILCAPS="$MAILCAP"   # Mutt, pine
 # Python {{{1
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/config.py"
 export PYTHONUSERBASE="$XDG_LOCAL_HOME"
+export PYTHONPYCACHEPREFIX="$XDG_CACHE_HOME/__pycache__"
 export IPYTHONDIR="$XDG_DATA_HOME/ipython"
 
 # Ruby {{{1
