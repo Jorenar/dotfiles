@@ -353,13 +353,14 @@ nmap ss <Plug>Yssurround
 
 " CtrlP {{{2
 
-let g:ctrlp_cache_dir           = $XDG_CACHE_HOME . "/vim/ctrlp"
-let g:ctrlp_types               = [ 'fil', 'buf' ]
+let g:ctrlp_cache_dir  = $XDG_CACHE_HOME . "/vim/ctrlp"
+let g:ctrlp_types      = [ "fil", "buf" ]
+let g:ctrlp_extensions = [ "tag", "line" ]
 
 let g:ctrlp_prompt_mappings = {
-    \ 'PrtExit()':     [ '<Esc>' ],
-    \ 'PrtHistory(1)': [ '<C-f>' ],
-    \ 'ToggleType(1)': [ '<C-p>', '<c-up>' ],
+    \ "PrtExit()":     [ "<Esc>" ],
+    \ "PrtHistory(1)": [ "<C-f>" ],
+    \ "ToggleType(1)": [ "<C-p>", "<C-Up>" ],
     \ }
 
 " Netrw {{{2
