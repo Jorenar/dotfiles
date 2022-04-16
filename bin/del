@@ -4,7 +4,7 @@
 #   Copyright (c) 2009-2011  Robert Rothenberg <robrwo@gmail.com>
 #   Copyright (c)      2022       Jorengarenar <dev@joren.ga>
 
-version="0.5.1"
+version="0.5.2"
 
 progname="$(basename $0)"
 
@@ -143,7 +143,7 @@ trash_file() {
 
     # Use -u (unsafe) option because we cannot mv a directory into a file.
     #   This is technically "unsafe" but mv will ask for confirmation when overwriting.
-    deletedfile="$(mktemp -u "${trashdir}/files/${origname}_XXXXXXXX" )$ext"
+    deletedfile="$(mktemp -u "${trashdir}/files/${origname}_XXXXXXXX")$ext"
     deletedbase="$(basename "${deletedfile}")"
     deletedinfo="$trashdir/info/${deletedbase}.trashinfo"
 
@@ -153,9 +153,9 @@ Path=$(encode "$filename")
 DeletionDate=$(date +"%FT%H:%M:%S")
 END
 
-    mv_opts=
+    mv_opts="-i"
     if [ "$verbose" != 0 ]; then
-        mv_opts="-v"
+        mv_opts="-v $mv_opts"
     fi
 
     # Note that the trashinfo file will have the ownership and
