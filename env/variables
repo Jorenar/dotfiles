@@ -212,6 +212,9 @@ export GTK_IM_MODULE=fcitx
 # less' default options
 export LESS="-FXRS"
 
+# change location of Trash (for shellDel utility)
+export WASTEBASKET="$TMPDIR/Trash"
+
 # Enable GPG agent
 export GPG_AGENT_INFO
 
