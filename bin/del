@@ -4,7 +4,7 @@
 #   Copyright (c) 2009-2011  Robert Rothenberg <robrwo@gmail.com>
 #   Copyright (c)      2022       Jorengarenar <dev@joren.ga>
 
-version="0.5.2"
+version="0.5.3"
 
 progname="$(basename $0)"
 
@@ -99,7 +99,7 @@ get_trashdir() {
         fi
     fi
 
-    if [ "$base" == "$HOME" ]; then
+    if [ "$base" = "$HOME" ]; then
         base="${XDG_DATA_HOME:-$HOME/.local/share}"
         trashdir="$base/Trash"
     fi
@@ -137,7 +137,7 @@ trash_file() {
         origname="dotfile"
     fi
     ext=".${trashname##*.}"
-    if [ "$ext" == ".$trashname" ]; then
+    if [ "$ext" = ".$trashname" ]; then
         ext=""
     fi
 
