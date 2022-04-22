@@ -8,7 +8,7 @@ let s:cpo_save = &cpo | set cpo&vim
 
 function s:init() abort
   let settedCmds = 0
-  for v in [ "copy", "copy_primary", "paste_cmd", "paste_primary" ]
+  for v in [ "copy", "copy_primary", "paste", "paste_primary" ]
     let settedCmds += exists("g:fauxClip_".v."_cmd")
   endfor
 

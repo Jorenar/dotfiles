@@ -4,6 +4,7 @@
 .clangd
 .exrc
 .miniSnip
+.tmp/
 .vimrc
 .vimspector.json
 __pycache__
