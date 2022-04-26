@@ -205,7 +205,7 @@ bindsym $mod+d exec --no-startup-id h2-dmenu-desktop
 
 
 # Multi-screen screenshots with scrot
-bindsym --release Print exec --no-startup-id "mkdir -p ~/temp && scrot ~/temp/screenshot-%Y%m%d_%H%M%S.png"
+bindsym --release Print exec --no-startup-id "mkdir -p $XDG_DOWNLOAD_DIR && scrot $XDG_DOWNLOAD_DIR/screenshot-%Y%m%d_%H%M%S.png"
 
 # OSX-like area selection screenshots
-bindsym --release Shift+Print exec --no-startup-id "mkdir -p ~/temp && scrot -s ~/temp/screenshot-%Y%m%d_%H%M%S.png"
+bindsym --release Shift+Print exec --no-startup-id "mkdir -p $XDG_DOWNLOAD_DIR && scrot -s $XDG_DOWNLOAD_DIR/screenshot-%Y%m%d_%H%M%S.png"
