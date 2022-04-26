@@ -23,7 +23,7 @@ augroup VIMSPECTOR_
 
   autocmd VimLeave *
         \  if filereadable("~/.vimspector.log")
-        \|   call system("mv ~/.vimspector.log " . $XDG_CACHE_HOME."/vim/")
+        \|   call system("mv ~/.vimspector.log " . $XDG_STATE_HOME."/vim/")
         \| endif
 
 augroup END

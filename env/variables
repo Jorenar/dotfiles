@@ -51,10 +51,11 @@ pathmunge() {
 
 # XDG Base Directory {{{1
 
-export XDG_LOCAL_HOME="$HOME/.local" # This sould be one of defaults
+export XDG_LOCAL_HOME="$HOME/.local" # this sould be one of defaults
 
 export XDG_CACHE_HOME="$XDG_LOCAL_HOME/cache"
 export XDG_CONFIG_HOME="$XDG_LOCAL_HOME/config"
+export XDG_STATE_HOME="$XDG_LOCAL_HOME/state"
 export XDG_DATA_HOME="$XDG_LOCAL_HOME/share"
 
 export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-$XDG_LOCAL_HOME/.runtime}" # just in case
@@ -63,7 +64,7 @@ export XDG_AUX_DIR="$XDG_LOCAL_HOME/aux" # auxiliary, local configs
 
 [ -f "$XDG_CONFIG_HOME/user-dirs.dirs" ] && eval "$(sed 's/^[^#].*/export &/g;t;d' $XDG_CONFIG_HOME/user-dirs.dirs)"
 
-export XDG_HISTORY_DIR="$XDG_CACHE_HOME/history"
+export XDG_HISTORY_DIR="$XDG_STATE_HOME/history"
 
 export XDG_INCLUDE_DIR="$XDG_LOCAL_HOME/include"
 export XDG_LIB_DIR="$XDG_LOCAL_HOME/lib"
@@ -90,7 +91,7 @@ export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
 export GRIPHOME="$XDG_CONFIG_HOME/grip"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
-export ICEAUTHORITY="$XDG_CACHE_HOME/ICEauthority"
+export ICEAUTHORITY="$XDG_STATE_HOME/ICEauthority"
 export IMAPFILTER_HOME="$XDG_CONFIG_HOME/imapfilter"
 export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
 export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
