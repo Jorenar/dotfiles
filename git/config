@@ -36,6 +36,8 @@
     trustExitCode = true
 
 [alias]
+    st = status
+
     cloner  = clone --recursive
     clone1  = clone --depth=1
     clone1r = clone --recursive --depth=1

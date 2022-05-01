@@ -4,7 +4,7 @@
 #   Copyright (c) 2009-2011  Robert Rothenberg <robrwo@gmail.com>
 #   Copyright (c)      2022       Jorengarenar <dev@joren.ga>
 
-version="0.5.3"
+version="0.5.4"
 
 progname="$(basename $0)"
 
@@ -173,7 +173,7 @@ END
 can_trash() {
     filename="$1"
 
-    if [ ! -e "$filename" ]; then
+    if [ ! -e "$filename" ] && [ ! -L "$filename" ]; then
         if [ "$interactive" != "force" ]; then
             echo "${progname}: cannot move \`$filename' to trash: No such file or directory" 1>&2
         fi
