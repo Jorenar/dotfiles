@@ -7,6 +7,7 @@ alias cbuild-release='cmake -B build/ -DCMAKE_BUILD_TYPE=Release && cmake --buil
 alias cbuild='cmake --build build/ 2> >(tee build/errors.err >&2)'
 alias cbuild_='cmake -B build/ -DCMAKE_BUILD_TYPE=Debug && cmake --build build/'
 alias cmake_='cmake -B build/ -DCMAKE_BUILD_TYPE=Debug'
+alias del='gio trash'
 alias du='du -h'
 alias grep='grep --color'
 alias i3-exit="i3-msg exit"
