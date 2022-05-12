@@ -16,9 +16,9 @@ function s:init() abort
     let cmds = {}
     if executable("clip.exe")
       let cmds = {
-          \   "copy": "clip.exe",
-          \   "paste": "powershell.exe Get-Clipboard",
-          \ }
+            \   "copy": "clip.exe",
+            \   "paste": "powershell.exe Get-Clipboard",
+            \ }
       let cmds["paste"] .= " | sed -Ez 's/\\r//g; $ s/\\n+$//'"
     elseif executable("pbcopy")
       let cmds = {
@@ -27,28 +27,42 @@ function s:init() abort
             \ }
     elseif executable("xclip")
       let cmds = {
-          \   "copy": {
-          \     "clipboard": "xclip -f -i -selection clipboard",
-          \     "primary": "xclip -f -i",
-          \   },
-          \   "paste": {
-          \     "clipboard": "xclip -o -selection clipboard",
-          \     "primary": "xclip -o",
-          \   }
-          \ }
+            \   "copy": {
+            \     "clipboard": "xclip -f -i -selection clipboard",
+            \     "primary": "xclip -f -i",
+            \   },
+            \   "paste": {
+            \     "clipboard": "xclip -o -selection clipboard",
+            \     "primary": "xclip -o",
+            \   }
+            \ }
     elseif executable("xsel")
       let cmds = {
-          \   "copy": {
-          \     "clipboard": "xsel -i -b",
-          \     "primary": "xsel -i",
-          \   },
-          \   "paste": {
-          \     "clipboard": "xsel -o -b",
-          \     "primary": "xclip -o",
-          \   }
-          \ }
+            \   "copy": {
+            \     "clipboard": "xsel -i -b",
+            \     "primary": "xsel -i",
+            \   },
+            \   "paste": {
+            \     "clipboard": "xsel -o -b",
+            \     "primary": "xclip -o",
+            \   }
+            \ }
+    elseif executable("wl-copy")
+      let cmds = {
+            \   "copy": {
+            \     "clipboard": "wl-copy",
+            \     "primary": "wl-copy --primary",
+            \   },
+            \   "paste": {
+            \     "clipboard": "wl-paste --no-newline",
+            \     "primary": "wl-paste --primary --no-newline",
+            \   }
+            \ }
     else
-      echoerr "fauxClip: not all commands are set and could not find any of the default CLI program"
+      autocmd VimEnter * ++once
+            \  echohl ErrorMsg
+            \|  echo "fauxClip: not all commands are set and could not find any of the defaults"
+            \| echohl None
       return
     endif
 
