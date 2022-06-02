@@ -37,10 +37,12 @@ colorscheme darkness
 com! -range -nargs=+  Align            <line1>,<line2>!column -Lts'<args>' -o'<args>'
 com! -bang            ColorUp          exec "colo " . (<bang>0 ? "darkness" : "colorUp")
 com!                  CountSpell       echo utils#CountSpell()
+com! -nargs=?         Cscope           exec "lcscope find <args>" | lw
 com!                  ExecCurrentLine  normal :.w !sh<CR>
 com! -nargs=1         FillLine         exec "norm! $" | exec "FillToColumn" <q-args> &tw
 com! -nargs=+         FillToColumn     exec {str,r -> "norm! a".repeat(str, (r-col("."))/len(str))}(<f-args>)
-com! -nargs=+         Grep             exec "lvimgrep /".<q-args>."/j **"
+com! -nargs=+         Vimgrep          exec "lvimgrep /".<q-args>."/j **"
+com! -nargs=+         Grep             exec "lgrep -R <args> ."
 com! -nargs=+         GrepRename       exec {a,b -> 'tabe | lv /\C\<' . a . '\>/j ** | ldo s/\C\<' . a . '\>/' . b . '/gc | up'}(<f-args>) | q
 com!                  InstallPlugins   call utils#InstallPlugins()
 com! -nargs=1         SetFormatProg    exec {prg -> 'let [ &l:formatprg, &l:formatexpr ] = [ "'.prg.'", "" ]'}(<args>)
@@ -516,6 +518,8 @@ if has("cscope") && executable("cscope")
   set cscopetag
   set cscopetagorder=0
   set cscopepathcomp=2
+
+  set cscopequickfix=a-,c-,d-,e-,f-,g-,i-,s-,t-
 
   nnoremap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
   nnoremap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>

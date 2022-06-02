@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+projRoot="$(git rev-parse --show-toplevel)"
+gitDir="$(git rev-parse --git-dir)"
+
+namefile="$(mktemp)"
+
+find "$projRoot" \
+    -name '*.[chxsS]' \
+    -o -name '*.cpp' -o -name '*.hpp' \
+    -o -name '*.java' \
+    > "$namefile"
+
+cscope -b -q -i "$namefile" -f "$gitDir/cscope.out"
+rm "$namefile"
+
+# cscope -b -R -f "$(git rev-parse --git-dir)/cscope.out"

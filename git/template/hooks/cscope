@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-
-cscope -b -R -f "$(git rev-parse --git-dir)/cscope.out"
