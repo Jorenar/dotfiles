@@ -2,11 +2,12 @@
 
 # GENERAL {{{1
 
-set $mod Mod4
+set $alt   Mod1
+set $super Mod4
 
 font pango:DejaVu Sans Mono 8
 
-floating_modifier $mod
+floating_modifier $super
 workspace_layout tabbed
 hide_edge_borders smart
 client.unfocused #222222 #222222 #888888 #2e9ef4   #222222
@@ -45,25 +46,25 @@ bar {
 # SHORTCUTS BINDINGS {{{1
 
 # TERMINAL
-bindsym $mod+x exec --no-startup-id ${TERMINAL:-xterm}
+bindsym $super+x exec --no-startup-id ${TERMINAL:-xterm}
 
 # Firefox
-bindsym $mod+w exec firefox
+bindsym $super+w exec firefox
 
 # QuiteRSS
-bindsym $mod+q exec --no-startup-id [ -z "$(xdotool search --class QuiteRss)" ] && exec quiterss || i3-msg \[class="QuiteRss"\] scratchpad show
+bindsym $super+q exec --no-startup-id [ -z "$(xdotool search --class QuiteRss)" ] && exec quiterss || i3-msg \[class="QuiteRss"\] scratchpad show
 
 # aerc
-bindsym $mod+m exec --no-startup-id imapfilter && ${TERMINAL:-xterm} -T aerc aerc && rm -f "${TMPDIR:-/tmp}/aerc.html"
+bindsym $super+m exec --no-startup-id imapfilter && ${TERMINAL:-xterm} -T aerc aerc && rm -f "${TMPDIR:-/tmp}/aerc.html"
 
 # vim-anywhere
-bindsym $mod+v exec --no-startup-id vim-anywhere
+bindsym $super+v exec --no-startup-id vim-anywhere
 
 # passmenu (type password)
-bindsym $mod+p exec --no-startup-id passmenu --type
+bindsym $super+p exec --no-startup-id passmenu --type
 
 # Ranger
-bindsym $mod+r exec --no-startup-id ${TERMINAL:-xterm} -T Ranger ranger
+bindsym $super+r exec --no-startup-id ${TERMINAL:-xterm} -T Ranger ranger
 
 # WINDOWS RULES {{{1
 
@@ -93,74 +94,74 @@ for_window [class="SimpleScreenRecorder"] floating enable
 # Windows {{{2
 
 # kill focused window
-bindsym Mod1+F4 kill
+bindsym $alt+F4 kill
 
 # change focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
+bindsym $super+h focus left
+bindsym $super+j focus down
+bindsym $super+k focus up
+bindsym $super+l focus right
 
 # switch focus to next/prev window
-bindsym Mod1+Tab focus right
-bindsym Mod1+Shift+Tab focus left
+bindsym $alt+Tab focus right
+bindsym $alt+Shift+Tab focus left
 
 # move focused window
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
+bindsym $super+Shift+h move left
+bindsym $super+Shift+j move down
+bindsym $super+Shift+k move up
+bindsym $super+Shift+l move right
 
 # enter fullscreen mode for the focused container
-bindsym $mod+F11 fullscreen toggle
+bindsym $super+F11 fullscreen toggle
 
 # Toggle layout between tabbed/splith
-bindsym $mod+t layout toggle tabbed splith
+bindsym $super+t layout toggle tabbed splith
 
 # toggle tiling / floating
-bindsym $mod+space floating toggle
+bindsym $super+space floating toggle
 
 # focus the parent container
-bindsym $mod+a focus parent
+bindsym $super+a focus parent
 
 # focus the child container
-bindsym $mod+z focus child
+bindsym $super+z focus child
 
 # change focus between tiling / floating windows
-bindsym $mod+f focus mode_toggle
+bindsym $super+f focus mode_toggle
 
 # make the currently focused window a scratchpad
-bindsym $mod+Shift+minus move scratchpad
+bindsym $super+Shift+minus move scratchpad
 
 # show the first scratchpad window
-bindsym $mod+minus [class="^(?!QuiteRss).*$"] scratchpad show
+bindsym $super+minus [class="^(?!QuiteRss).*$"] scratchpad show
 
 # Workspaces {{{2
 
 # switch to next/prev workspace
-bindsym $mod+Tab workspace next
-bindsym $mod+Shift+Tab workspace prev
+bindsym $super+Tab workspace next
+bindsym $super+Shift+Tab workspace prev
 
 # switch to workspace
-bindsym $mod+1 workspace number "1"
-bindsym $mod+2 workspace number "2"
-bindsym $mod+3 workspace number "3"
-bindsym $mod+4 workspace number "4"
-bindsym $mod+5 workspace number "5"
-bindsym $mod+6 workspace number "6"
-bindsym $mod+7 workspace number "7"
-bindsym $mod+8 workspace number "8"
-bindsym $mod+9 workspace number "9"
+bindsym $super+1 workspace number "1"
+bindsym $super+2 workspace number "2"
+bindsym $super+3 workspace number "3"
+bindsym $super+4 workspace number "4"
+bindsym $super+5 workspace number "5"
+bindsym $super+6 workspace number "6"
+bindsym $super+7 workspace number "7"
+bindsym $super+8 workspace number "8"
+bindsym $super+9 workspace number "9"
 
 # move workspace to next output
-bindsym $mod+Mod1+Shift+l move workspace to output right
-bindsym $mod+Mod1+Shift+h move workspace to output left
+bindsym $super+$alt+Shift+l move workspace to output right
+bindsym $super+$alt+Shift+h move workspace to output left
 
 
 # move to workspace via dmenu
 set $dmenu_ws i3-msg -t get_workspaces | jq | awk -F'\\\"' '/name/ { print \$4 }' | sort | dmenu | xargs -i i3-msg
-bindsym $mod+grave exec sh -c "$dmenu_ws workspace {}"
-bindsym Mod1+grave exec sh -c "$dmenu_ws move container to workspace {}"
+bindsym $super+grave exec sh -c "$dmenu_ws workspace {}"
+bindsym $alt+grave exec sh -c "$dmenu_ws move container to workspace {}"
 
 # XF86 keyboard symbols {{{2
 
@@ -190,7 +191,7 @@ bindsym XF86Explorer exec --no-startup-id xterm -e "systemctl suspend"
 # OTHER {{{2
 
 # start dmenu
-bindsym $mod+d exec --no-startup-id h2-dmenu-desktop
+bindsym $super+d exec --no-startup-id h2-dmenu-desktop
 
 
 # Multi-screen screenshots with scrot
