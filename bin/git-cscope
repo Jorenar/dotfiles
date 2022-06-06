@@ -1,15 +1,20 @@
 #!/usr/bin/env sh
 
-projRoot="$(git rev-parse --show-toplevel)"
-gitDir="$(git rev-parse --git-dir)"
+if git rev-parse 2> /dev/null; then
+    projRoot="$(git rev-parse --show-toplevel)"
+    gitDir="$(git rev-parse --git-dir)"
+else
+    projRoot="$PWD"
+    gitDir="$PWD"
+fi
 
 namefile="$(mktemp)"
 
-find "$projRoot" \
-    -name '*.[chxsS]' \
-    -o -name '*.cpp' -o -name '*.hpp' \
-    -o -name '*.java' \
-    > "$namefile"
+find "$projRoot" \( \
+      -name '*.[chxsS]' \
+      -o -name '*.cpp' -o -name '*.hpp' \
+      -o -name '*.java' \
+    \) -exec readlink -f {} \; > "$namefile"
 
 cscope -b -q -i "$namefile" -f "$gitDir/cscope.out"
 rm "$namefile"
