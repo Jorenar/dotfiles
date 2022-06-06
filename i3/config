@@ -97,20 +97,20 @@ for_window [class="SimpleScreenRecorder"] floating enable
 bindsym $alt+F4 kill
 
 # change focus
-bindsym $super+h focus left
-bindsym $super+j focus down
-bindsym $super+k focus up
-bindsym $super+l focus right
+bindsym $alt+h focus left
+bindsym $alt+j focus down
+bindsym $alt+k focus up
+bindsym $alt+l focus right
 
 # switch focus to next/prev window
 bindsym $alt+Tab focus right
 bindsym $alt+Shift+Tab focus left
 
 # move focused window
-bindsym $super+Shift+h move left
-bindsym $super+Shift+j move down
-bindsym $super+Shift+k move up
-bindsym $super+Shift+l move right
+bindsym $alt+Shift+h move left
+bindsym $alt+Shift+j move down
+bindsym $alt+Shift+k move up
+bindsym $alt+Shift+l move right
 
 # enter fullscreen mode for the focused container
 bindsym $super+F11 fullscreen toggle
