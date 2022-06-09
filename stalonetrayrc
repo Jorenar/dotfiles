@@ -1,0 +1,6 @@
+background black
+decorations none
+dockapp_mode simple
+icon_size 16
+parent_bg true
+window_type toolbar

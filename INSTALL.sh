@@ -82,6 +82,7 @@ linking_ "$XDG_CONFIG_HOME" '
     sqliterc            @  sqlite3/sqliterc
     ssh_config          @  ssh/config
     ssr.conf            @  simplescreenrecorder/settings.conf   CP
+    stalonetrayrc       @  stalonetrayrc
     tmux.conf           @  tmux/tmux.conf
     transmission.json   @  transmission/settings.json           CP
     uncrustify/         @  uncrustify

@@ -9,6 +9,7 @@ font pango:DejaVu Sans Mono 8
 
 floating_modifier $super
 workspace_layout tabbed
+default_border pixel 3
 hide_edge_borders smart
 client.unfocused #222222 #222222 #888888 #2e9ef4   #222222
 client.focused   #444444 #333333 #FFFFFF #292d2e   #285577
@@ -31,16 +32,9 @@ bar {
     }
 }
 
-bar {
-    id tray
-    position top
-    output      primary
-    tray_output primary
-    workspace_buttons no
-    mode hide
-    modifier none
-    bindsym button1 bar mode toggle tray
-}
+# stalonetray
+for_window [class="stalonetray"] move position 50ppt 3px
+exec --no-startup-id stalonetray
 
 # SHORTCUTS BINDINGS {{{1
 
@@ -66,8 +60,6 @@ bindsym $super+p exec --no-startup-id passmenu --type
 bindsym $super+r exec --no-startup-id ${TERMINAL:-xterm} -T Ranger ranger
 
 # WINDOWS RULES {{{1
-
-for_window [class="^.*"] border pixel 3
 
 # QuiteRSS
 for_window [class="QuiteRss" instance="quiterss" title="QuiteRSS"] floating enable
