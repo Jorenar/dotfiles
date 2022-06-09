@@ -40,3 +40,7 @@ XTerm*saveLines: 4096
 XTerm*Translations: #override \
         Shift <Key>Up: scroll-back(1) \n\
         Shift <Key>Down: scroll-forw(1)
+
+XTerm*scrollBar: True
+XTerm*rightScrollBar: True
+XTerm*Scrollbar*width: 4
