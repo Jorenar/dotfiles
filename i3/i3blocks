@@ -1,12 +1,6 @@
 color=#BBB
 separator_block_width=20
 
-[tray]
-full_text=#
-command=i3-msg -q bar hidden_state toggle tray
-align=right
-min_width=100
-
 [cpu-temp]
 command=sensors | awk '/Tctl/ {print $2}'
 interval=1
@@ -29,5 +23,11 @@ interval=once
 signal=10
 
 [date]
-command=LC_ALL=C date "+%a, %F %T "
+command=LC_ALL=C date "+%a, %F %T"
 interval=1
+
+[tray]
+full_text=#
+command=i3-msg -q bar mode toggle tray
+align=left
+min_width=15

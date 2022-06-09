@@ -15,7 +15,7 @@ client.focused   #444444 #333333 #FFFFFF #292d2e   #285577
 
 exec --no-startup-id exec i3-msg "workspace 2, workspace 6, workspace 1" # workspace switcheroo
 
-exec --no-startup-id exec dunst
+exec --no-startup-id dunst
 
 # i3bar {{{1
 
@@ -39,8 +39,7 @@ bar {
     workspace_buttons no
     mode hide
     modifier none
-    bindsym button1 bar hidden_state toggle tray
-    bindsym button3 bar mode toggle tray
+    bindsym button1 bar mode toggle tray
 }
 
 # SHORTCUTS BINDINGS {{{1
