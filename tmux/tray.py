@@ -9,7 +9,11 @@ import time
 from threading import Thread
 
 gi.require_version('Gtk', '3.0')
-gi.require_version('AppIndicator3', '0.1')
+try:
+    gi.require_version('AppIndicator3', '0.1')
+except ValueError:
+    exit(0)
+
 from gi.repository import Gtk, AppIndicator3
 
 
