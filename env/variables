@@ -222,6 +222,9 @@ export WINEDEBUG=-all
 # Virtual terminal number (if not set already by PAM)
 export XDG_VTNR="${XDG_VTNR:-$(tty | sed 's/[^0-9]*//g')}"
 
+# Enable touchscreen in Firefox
+export MOZ_USE_XINPUT2=1
+
 # -End- {{{1
 
 [ -f $XDG_AUX_DIR/env_variables ] && . $XDG_AUX_DIR/env_variables # additional, local env_variables

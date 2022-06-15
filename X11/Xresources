@@ -16,7 +16,12 @@ XTerm*preeditType: Root
 XTerm*renderFont: True
 XTerm*utf8: True
 XTerm*utf8Title: True
-XTerm*xftAntialias: true
+XTerm*xftAntialias: True
+
+! Scrollbar
+XTerm*scrollBar: False
+XTerm*rightScrollBar: True
+XTerm*Scrollbar*width: 4
 
 ! Fix the backspace key
 XTerm*backarrowKey: false
@@ -24,10 +29,10 @@ XTerm*ttyModes: erase ^?
 
 ! Copy and paste with clipboard
 XTerm*translations: #override \
-    Ctrl Shift <KeyPress> C: copy-selection(CLIPBOARD) \n\
-    Ctrl Shift <KeyPress> V: insert-selection(CLIPBOARD)
+        Ctrl Shift <KeyPress> C: copy-selection(CLIPBOARD) \n\
+        Ctrl Shift <KeyPress> V: insert-selection(CLIPBOARD)
 
-! Allow selecting email/url by double-click
+! Selecting email/URL by double-click
 XTerm*charClass: 33:48,37-38:48,45-47:48,64:48,58:48,126:48,61:48,63:48,43:48,35:48
 
 ! Colors
@@ -40,7 +45,3 @@ XTerm*saveLines: 4096
 XTerm*Translations: #override \
         Shift <Key>Up: scroll-back(1) \n\
         Shift <Key>Down: scroll-forw(1)
-
-XTerm*scrollBar: True
-XTerm*rightScrollBar: True
-XTerm*Scrollbar*width: 4

@@ -1,6 +1,7 @@
 background black
 decorations none
 dockapp_mode simple
+kludges force_icons_size
 icon_size 16
 parent_bg true
 window_type toolbar

@@ -108,10 +108,14 @@ set smartcase
 set spellsuggest=double
 set splitbelow splitright
 set switchbuf=usetab
-set title
 set undofile
 set vb t_vb=
 set wildmenu wildmode=full
+
+set title
+set titlestring=
+set titlestring+=%t%(\ %M%)%(\ (%{expand(\"%:p:~:.:h\")}/)%)
+set titlestring+=\ \|\ %{$USER}@%{hostname()}:%{substitute(getcwd(),$HOME,'~','')}
 
 set completeopt=menuone,noinsert,noselect
 set omnifunc=syntaxcomplete#Complete
