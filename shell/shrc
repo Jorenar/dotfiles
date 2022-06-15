@@ -1,6 +1,14 @@
 # SHRC #
 # vim: ft=sh
 
+if [ -x "$(command -v tmux)" ] && [ -n "$DISPLAY" ] && [ -z "$TMUX" ]; then
+    if ps -ef | grep tmux | grep -v -q grep; then
+        exec tmux attach \; new-session
+    else
+        exec tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf
+    fi
+fi
+
 # Init {{{1
 
 # Source env variables
