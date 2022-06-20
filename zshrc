@@ -19,6 +19,9 @@ bindkey '^h' backward-delete-char
 bindkey '^w' backward-kill-word
 bindkey '^r' history-incremental-search-backward
 
+# FZF
+source $XDG_CONFIG_HOME/fzf.sh
+
 
 # PROMPT ---------------------
 

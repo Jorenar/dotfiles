@@ -59,6 +59,7 @@ linking_ "$XDG_CONFIG_HOME" '
     env/user-dirs.dirs  @  user-dirs.dirs
     feh/                @  feh
     fish/               @  fish
+    fzf.sh              @  fzf.sh
     gdbinit             @  gdb/init
     git/                @  git
     grip.py             @  grip/grip.py
