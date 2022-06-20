@@ -12,19 +12,10 @@ if ! shopt -oq posix; then
     fi
 fi
 
-# Better autocompletion (like in zsh), but use Shift-Tab
-bind '"\e[Z":menu-complete'
-
-# Magic space
-bind space:magic-space
-
-# C-x C-h to open man page for currently typed command
-bind -x '"\C-x\C-h":__man'
-__man(){ man $(echo $READLINE_LINE | awk '{print $1}'); }
-
 # Enable extended globbing
 shopt -s extglob
 
+# Don't keep duplicates in history
 export HISTCONTROL=ignoreboth:erasedups
 
 # When the shell exits, append to the history file instead of overwriting it

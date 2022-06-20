@@ -1,32 +1,35 @@
 # INPUTRC #
 # vim: fen fdm=marker
 
-# Turn off bell/beep terminal sound
 set bell-style none
 
-# Use Vi mode
 set editing-mode vi
-
-# Show which mode is used right now
 set show-mode-in-prompt on
-
-# Mode indicators
 set vi-ins-mode-string "+"
 set vi-cmd-mode-string ":"
+set keyseq-timeout 50
 
-# NORMAL mode bindings {{{1
+# BINDINGS {{{1
+# NORMAL mode {{{1
 set keymap vi-command
 
-"\ee": emacs-editing-mode
+"k": history-search-backward
+"j": history-search-forward
 
-#  INSERT mode  bindings {{{1
+"z": emacs-editing-mode
+
+# INSERT mode {{{1
 set keymap vi-insert
 
-"\ee": emacs-editing-mode
 Control-l: clear-screen
 TAB: complete
 
-# EMACS "mode" bindings {{{1
+$if Bash
+    "\e[Z": menu-complete
+    Space: magic-space
+$endif
+
+# EMACS "mode" {{{1
 set keymap emacs
 
-"\ee": vi-editing-mode
+"\ez": vi-editing-mode
