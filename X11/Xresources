@@ -5,7 +5,7 @@ XTerm*termName: xterm-256color
 XTerm*decTerminalID: vt340
 XTerm*loginshell: False
 XTerm*cursorBlink: True
-XTerm*metaSendsEscape: True
+XTerm*metaSendsEscape: False
 
 ! Fonts and Encoding
 XTerm*faceName: DejaVu Sans Mono:style=book

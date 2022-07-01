@@ -543,5 +543,4 @@ endif
 
 hi! Dimmer ctermfg=244
 
-set secure
-if filereadable("./.vimrc") | source ./.vimrc | endif
+set secure exrc
