@@ -211,7 +211,7 @@ export XMODIFIERS=@im=fcitx
 export GTK_IM_MODULE=fcitx
 
 # less' default options
-export LESS='--incsearch  --ignore-case --status-column --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=4 --no-init --window=2 '
+export LESS="-FXRS"
 
 # Enable GPG agent
 export GPG_AGENT_INFO
