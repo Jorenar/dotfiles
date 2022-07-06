@@ -96,6 +96,7 @@ set hidden
 set hlsearch
 set ignorecase
 set incsearch
+set keywordprg=:Man
 set makeprg=Make
 set modeline nomodelineexpr
 set nowrap
@@ -193,7 +194,6 @@ let g:plugins = {
       \     [ "autoload/lsp/ale.vim",  "https://git.io/J1zIG" ],
       \     [ "autoload/repeat.vim",   "https://git.io/JmdpI" ],
       \     [ "plugin/commentary.vim", "https://git.io/JGOEP" ],
-      \     [ "plugin/fastfold.vim",   "https://git.io/JIEo6" ],
       \     [ "plugin/surround.vim",   "https://git.io/JLXyW" ],
       \     [ "syntax/tex.vim",        "https://git.io/JYBDH" ],
       \   ]
@@ -507,6 +507,13 @@ augroup TERMINAL_OPTIONS
     endif
   endif
 
+augroup END
+
+augroup FASTFOLD
+  autocmd BufReadPost * setlocal fdm=manual
+  nnoremap <silent> zx :
+        \ set foldmethod=syntax <bar>
+        \ autocmd SafeState * ++once set foldmethod=manual<CR>
 augroup END
 
 if has("cscope") && executable("cscope")
