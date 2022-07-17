@@ -42,7 +42,7 @@ com!                  ExecCurrentLine  normal :.w !sh<CR>
 com! -nargs=1         FillLine         exec "norm! $" | exec "FillToColumn" <q-args> &tw
 com! -nargs=+         FillToColumn     exec {str,r -> "norm! a".repeat(str, (r-col("."))/len(str))}(<f-args>)
 com! -nargs=+         Vimgrep          exec "lvimgrep /".<q-args>."/j **"
-com! -nargs=+         Grep             exec "lgrep -R <args> ."
+com! -nargs=+         Grep             silent! exec "lgrep -R <args> ."
 com! -nargs=+         GrepRename       exec {a,b -> 'tabe | lv /\C\<' . a . '\>/j ** | ldo s/\C\<' . a . '\>/' . b . '/gc | up'}(<f-args>) | q
 com!                  InstallPlugins   call utils#InstallPlugins()
 com! -nargs=1         SetFormatProg    exec {prg -> 'let [ &l:formatprg, &l:formatexpr ] = [ "'.prg.' 2> /dev/null", "" ]'}(<args>)
@@ -71,6 +71,7 @@ nnoremap <Leader>h :nohlsearch<CR>
 nnoremap <Leader>q m"gggqG`"
 nnoremap <Leader>r :exec {o -> {n -> n != "" ? '%s/\C\<' . o . '\>/' . n . '/g' : ''}(input(o." > ", o))}(expand('<cword>'))<CR>
 nnoremap <M-a> :cwindow<CR>
+nnoremap <silent> zx :setl fdm=syntax<CR>zx:setl fdm=manual<CR>
 nnoremap j gj
 nnoremap k gk
 
@@ -481,6 +482,9 @@ augroup OTHER
   " Set fold method to syntax
   autocmd FileType dosini,make,m3u  setlocal foldmethod=syntax
 
+  " Fast fold
+  autocmd BufReadPost * setlocal fdm=manual
+
 augroup END
 
 augroup TRIM_TRAILING_WHITESPACE
@@ -507,13 +511,6 @@ augroup TERMINAL_OPTIONS
     endif
   endif
 
-augroup END
-
-augroup FASTFOLD
-  autocmd BufReadPost * setlocal fdm=manual
-  nnoremap <silent> zx :
-        \ set foldmethod=syntax <bar>
-        \ autocmd SafeState * ++once set foldmethod=manual<CR>
 augroup END
 
 if has("cscope") && executable("cscope")
@@ -547,7 +544,5 @@ if has("cscope") && executable("cscope")
 
   nnoremap <C-\><C-i> :cs find i ^%:t$<CR>
 endif
-
-hi! Dimmer ctermfg=244
 
 set secure exrc

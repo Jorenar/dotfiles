@@ -3,13 +3,13 @@ if &ft !~# '\v<(c|cpp)>' | finish | endif " vim: fdl=1
 " REGIONS {{{1
 " Include guards {{{2
 
-syntax region cIncludeGuarded transparent matchgroup=Dimmer
+syntax region cIncludeGuarded transparent matchgroup=MoreMsg
       \ start = "\v#ifndef \z((.+_H.*_?))\n#define \1"
       \ end   = "\v#endif\ze /[/*] \z1>"
 
 " Extern "C" {{{2
 
-syntax region cExternC transparent matchgroup=Dimmer
+syntax region cExternC transparent matchgroup=MoreMsg
       \ start = '\v#ifdef __cplusplus\nextern "C" \{\n#endif'
       \ end   = '\v#ifdef __cplusplus\n}%(\s*//.*)?\n#endif'
 
