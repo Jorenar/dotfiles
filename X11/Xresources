@@ -8,7 +8,7 @@ XTerm*cursorBlink: True
 XTerm*metaSendsEscape: False
 
 ! Fonts and Encoding
-XTerm*faceName: DejaVu Sans Mono:style=book
+XTerm*faceName: monospace
 XTerm*faceNameDoublesize: WenQuanYi Zen Hei Mono
 XTerm*faceSize: 11
 XTerm*locale: True

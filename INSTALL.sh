@@ -59,6 +59,7 @@ linking_ "$XDG_CONFIG_HOME" '
     env/user-dirs.dirs  @  user-dirs.dirs
     feh/                @  feh
     fish/               @  fish
+    fonts.conf          @  fontconfig/fonts.conf
     fzf.sh              @  fzf.sh
     gdbinit             @  gdb/init
     git/                @  git
