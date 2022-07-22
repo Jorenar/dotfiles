@@ -1,7 +1,7 @@
 # SHRC #
 # vim: ft=sh
 
-if [ -x "$(command -v tmux)" ] && [ -n "$DISPLAY" ] && [ -z "$TMUX" ]; then
+if [ -x "$(command -v tmux)" ] && [ -n "$DISPLAY$WSLENV" ] && [ -z "$TMUX" ]; then
     if ps -ef | grep tmux | grep -v -q grep; then
         exec tmux attach \; new-session
     else
