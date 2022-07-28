@@ -1,14 +1,17 @@
 #!/usr/bin/env -S make -s -f
 
 MAKEFLAGS += -B --no-print-directory
+.PHONY: DEFAULT CMakeLists.txt
+.ONESHELL:
 
 CFLAGS := -Wall -Wextra -pedantic -g -lm
 
-.DEFAULT:
+
+DEFAULT:
 	$(MAKE) $*
 
+
 %.c:
-	$(shell sleep 2)
 	$(CC)  $(CFLAGS) -std=gnu99   $@ -o $(*F)
 
 %.cpp:
@@ -55,3 +58,10 @@ CFLAGS := -Wall -Wextra -pedantic -g -lm
 
 %.sh:
 	shellcheck $@
+
+
+CMakeLists.txt: $(PWD)/CMakeLists.txt
+%/CMakeLists.txt:
+	[ -n "$(*F)" ] && cd $(*F)
+	cmake -B build/ -DCMAKE_BUILD_TYPE=Debug
+	cmake --build build/ 2> >(tee build/errors.err >&2)
