@@ -28,7 +28,7 @@ hi! MatchParen      cterm=NONE            ctermfg=249   ctermbg=240
 hi! MoreMsg         cterm=bold            ctermfg=240   ctermbg=NONE
 hi! NonText         cterm=NONE            ctermfg=240   ctermbg=NONE
 hi! Normal          cterm=NONE            ctermfg=249   ctermbg=16
-hi! Pmenu           cterm=NONE            ctermfg=249   ctermbg=240
+hi! Pmenu           cterm=NONE            ctermfg=249   ctermbg=233
 hi! PmenuSel        cterm=NONE            ctermfg=249   ctermbg=236
 hi! Question        cterm=NONE            ctermfg=9     ctermbg=NONE
 hi! QuickFixLine    cterm=underline       ctermfg=NONE  ctermbg=NONE
