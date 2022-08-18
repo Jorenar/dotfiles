@@ -117,7 +117,11 @@ set switchbuf=usetab
 set ttimeoutlen=10
 set undofile
 set vb t_vb=
-set wildmenu wildmode=full
+set wildmenu wildmode=full wildoptions=
+
+set guioptions=c
+set guicursor=a:block
+let &guifont = has("win32") ? "Consolas:h9:cANSI:qDRAFT" : "DejaVu Sans Mono 11"
 
 set title
 set titlestring=
@@ -131,11 +135,6 @@ set pumheight=20
 set linebreak
 set breakindent
 let &showbreak = "↳  "
-
-if has('nvim')
-  set guicursor=n-v-c-sm-i-r-ci-ve-cr-o:block " setting a:block breaks blinking
-  set wildoptions-=pum " don't use popupmenu for wildmode completion
-endif
 
 set path=**,./
 set tags+=.git/tags;
