@@ -6,23 +6,13 @@
     user = Jorengarenar
 
 [init]
-	defaultBranch = master
+    defaultBranch = master
 
 [filter "lfs"]
     clean    = git-lfs clean -- %f
     process  = git-lfs filter-process
     required = true
     smudge   = git-lfs smudge -- %f
-
-[status]
-    short = true
-
-[log]
-    graph = true
-	abbrevCommit = true
-
-[format]
-	pretty = oneline
 
 [push]
     followTags = true
@@ -36,7 +26,8 @@
     trustExitCode = true
 
 [alias]
-    st = status
+    st = status --short
+    lg = log --oneline --graph --abbrev-commit
 
     cloner  = clone --recursive
     clone1  = clone --depth=1
@@ -44,8 +35,11 @@
 
     change-url = !sh -c 'git remote set-url origin \"$1\"' -
     orphan     = !sh -c 'git checkout --orphan \"$1\" && git rm -rf .' -
-    cscope     = !.git/hooks/cscope
-    ctags      = !.git/hooks/ctags
     del        = !sh -c 'git reset HEAD \"$@\"' -
     fast       = !sh -c 'git add -A && git commit -m \"$1\" && git push' -
     initial    = !sh -c 'git init && git add -A && git commit -m \"Initial commit\" && git remote add origin \"$1\" && git push -u origin master' -
+
+[include]
+    path = ~/.local/aux/git
+
+# vim: ft=gitconfig
