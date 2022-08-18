@@ -7,6 +7,7 @@ command! -nargs=1 -complete=file Vimspector call vimspector#LaunchWithSettings(#
 nnoremap <expr> <F6> exists("g:vimspector_session_windows") ? ":VimspectorReset\<CR>" :
       \ ":Vimspector " . expand('%:p:r') . "\<CR>"
 
+call mkdir(g:vimspector_base_dir, "p")
 let confs = g:vimspector_base_dir . "/configurations"
 if !isdirectory(confs)
   call system("ln -s " . $XDG_CONFIG_HOME."/vim/vimspector" . " " . confs)

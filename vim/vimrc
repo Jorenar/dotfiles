@@ -66,7 +66,8 @@ nnoremap <F3> :set cursorline! cursorcolumn!<CR>
 nnoremap <F7> :w <bar> silent! make %:p <bar> redraw!<CR>
 nnoremap <F8> :if has("nvim") <bar> split <bar> endif <bar> term<CR>
 nnoremap <Leader>= gg=G``
-nnoremap <Leader>b :bnext<CR>
+nnoremap <silent> <Leader>b :bnext<CR>
+nnoremap <silent> <Leader>B :bprev<CR>
 nnoremap <Leader>q m"gggqG`"
 nnoremap <Leader>r :exec {o -> {n -> n != "" ? '%s/\C\<' . o . '\>/' . n . '/g' : ''}(input(o." > ", o))}(expand('<cword>'))<CR>
 nnoremap <M-a> :cwindow<CR>
@@ -74,6 +75,11 @@ nnoremap <silent> <C-l> :nohlsearch<C-r>=has('diff')?'<bar>diffupdate':''<CR><CR
 nnoremap <silent> zx :setl fdm=syntax<CR>zx:setl fdm=manual<CR>
 nnoremap j gj
 nnoremap k gk
+
+vnoremap iz :<C-u>silent! norm! [zjV]zk<CR>
+onoremap iz :<C-u>silent! norm Viz<CR>
+vnoremap az :<C-u>silent! norm! [zV]z<CR>
+onoremap az :<C-u>silent! norm Vaz<CR>
 
 inoremap <expr> <C-o> pumvisible() ? "\<C-n>" : "\<C-o>"
 
@@ -139,12 +145,12 @@ set updatetime=250
 
 augroup FORMATOPTIONS
   autocmd!
-  autocmd FileType * set fo-=c fo-=r fo-=o " Disable continuation of comments to the next line
-  autocmd FileType * set formatoptions+=j  " Remove a comment leader when joining lines
-  autocmd FileType * set formatoptions+=l  " Don't break a line after a one-letter word
-  autocmd FileType * set formatoptions+=n  " Recognize numbered lists
-  autocmd FileType * set formatoptions-=q  " Don't format comments
-  autocmd FileType * set formatoptions-=t  " Don't autowrap text using 'textwidth'
+  autocmd BufWinEnter * set fo-=c fo-=r fo-=o " Disable continuation of comments to the next line
+  autocmd BufWinEnter * set formatoptions+=j  " Remove a comment leader when joining lines
+  autocmd BufWinEnter * set formatoptions+=l  " Don't break a line after a one-letter word
+  autocmd BufWinEnter * set formatoptions+=n  " Recognize numbered lists
+  autocmd BufWinEnter * set formatoptions-=q  " Don't format comments
+  autocmd BufWinEnter * set formatoptions-=t  " Don't autowrap text using 'textwidth'
 augroup END
 
 set cindent
@@ -209,6 +215,7 @@ let g:plugins = {
       \     "mhinz/vim-signify",
       \     "prabirshrestha/vim-lsp",
       \     "puremourning/vimspector",
+      \     "tpope/vim-fugitive",
       \   ],
       \   "files": [
       \     [ "autoload/lsp/ale.vim",  "https://git.io/J1zIG" ],
@@ -260,18 +267,22 @@ function! s:lsp_init() abort
   setlocal omnifunc=lsp#complete
   if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
 
-  nmap <buffer> gd <Plug>(lsp-definition)
-  nmap <buffer> gs <Plug>(lsp-document-symbol-search)
-  nmap <buffer> gS <Plug>(lsp-workspace-symbol-search)
-  nmap <buffer> gr <Plug>(lsp-references)
-  nmap <buffer> gi <Plug>(lsp-implementation)
-  nmap <buffer> <leader>gt <Plug>(lsp-type-definition)
-  nmap <buffer> <leader>R <Plug>(lsp-rename)
-  nmap <buffer> [g <Plug>(lsp-previous-diagnostic)
-  nmap <buffer> ]g <Plug>(lsp-next-diagnostic)
-  nmap <buffer> <leader>k <Plug>(lsp-hover)
-  inoremap <buffer> <expr><C-f> lsp#scroll(+4)
-  inoremap <buffer> <expr><C-d> lsp#scroll(-4)
+  nmap <buffer> <Leader>R <Plug>(lsp-rename)
+
+  nmap <buffer> <Leader>gd <Plug>(lsp-definition)
+  nmap <buffer> <Leader>gs <Plug>(lsp-document-symbol-search)
+  nmap <buffer> <Leader>gS <Plug>(lsp-workspace-symbol-search)
+  nmap <buffer> <Leader>gr <Plug>(lsp-references)
+  nmap <buffer> <Leader>gi <Plug>(lsp-implementation)
+
+  nmap <buffer> <Leader>kk <Plug>(lsp-hover)
+  nmap <buffer> <Leader>kd <Plug>(lsp-peek-declaration)
+  nmap <buffer> <Leader>kg <Plug>(lsp-peek-definition)
+  nmap <buffer> <Leader>ki <Plug>(lsp-peek-implementation)
+  nmap <buffer> <Leader>kt <Plug>(lsp-peek-type-definition)
+
+  nnoremap <buffer> <expr><C-f> lsp#scroll(+4)
+  nnoremap <buffer> <expr><C-d> lsp#scroll(-4)
 endfunction
 
 augroup LSP
@@ -529,5 +540,6 @@ augroup TERMINAL_OPTIONS
   endif
 
 augroup END
+
 
 set secure exrc

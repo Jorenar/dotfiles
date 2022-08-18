@@ -1,3 +1,5 @@
+# vim: ft=gitconfig
+
 [user]
     email = dev@joren.ga
     name = Jorengarenar
@@ -41,5 +43,3 @@
 
 [include]
     path = ~/.local/aux/git
-
-# vim: ft=gitconfig
