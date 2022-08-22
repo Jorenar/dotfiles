@@ -87,7 +87,6 @@ xnoremap # :<C-u>call utils#VSetSearch('?')<CR>?<C-r>=@/<CR><CR>
 xnoremap * :<C-u>call utils#VSetSearch('/')<CR>/<C-r>=@/<CR><CR>
 
 tnoremap <silent> <C-\><C-\> <C-\><C-n>
-tnoremap <silent> <C-\><C-m> <C-\><C-n>:let b:auto_insert = !b:auto_insert<CR>
 
 map gh <nop>
 
