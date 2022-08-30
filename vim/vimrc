@@ -64,14 +64,14 @@ nnoremap <expr> <F4> &ve == "all" ? ":set ve=\<CR>" : ":set ve=all\<CR>"
 nnoremap <F10> :w <bar> make<CR>
 nnoremap <F3> :set cursorline! cursorcolumn!<CR>
 nnoremap <F7> :w <bar> silent! make %:p <bar> redraw!<CR>
-nnoremap <F8> :if has("nvim") <bar> split <bar> endif <bar> term<CR>
 nnoremap <Leader>= gg=G``
-nnoremap <silent> <Leader>b :bnext<CR>
-nnoremap <silent> <Leader>B :bprev<CR>
 nnoremap <Leader>q m"gggqG`"
 nnoremap <Leader>r :exec {o -> {n -> n != "" ? '%s/\C\<' . o . '\>/' . n . '/g' : ''}(input(o." > ", o))}(expand('<cword>'))<CR>
 nnoremap <M-a> :cwindow<CR>
 nnoremap <silent> <C-l> :nohlsearch<C-r>=has('diff')?'<bar>diffupdate':''<CR><CR><C-l>
+nnoremap <silent> <F8> :if has("nvim") <bar> split <bar> endif <bar> term<CR>
+nnoremap <silent> <Leader>b :bnext<CR>
+nnoremap <silent> <Leader>B :bprev<CR>
 nnoremap <silent> zx :setl fdm=syntax<CR>zx:setl fdm=manual<CR>
 nnoremap j gj
 nnoremap k gk
