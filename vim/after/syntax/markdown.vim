@@ -7,3 +7,5 @@ endfor | unlet h
 syn region markdownNested_fold start="```" end="```" keepend transparent fold
 
 syn region markdownFrontMatter start='\%1l---' end='\%>1l---' transparent contains=NONE
+
+syn clear markdownError " I want to be albe to have cursive in the middle of the word
