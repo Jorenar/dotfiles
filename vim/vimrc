@@ -103,6 +103,7 @@ set incsearch
 set keywordprg=:Man
 set makeprg=Make
 set modeline nomodelineexpr
+set mouse=a
 set nowrap
 set number
 set scrolloff=5
@@ -208,10 +209,10 @@ let g:plugins = {
       \     "editorconfig/editorconfig-vim",
       \     "Jorengarenar/miniSnip",
       \     "jpalardy/vim-slime",
-      \     "majutsushi/tagbar",
       \     "mbbill/undotree",
       \     "mhinz/vim-signify",
       \     "prabirshrestha/vim-lsp",
+      \     "preservim/tagbar",
       \     "puremourning/vimspector",
       \     "tpope/vim-fugitive",
       \   ],
@@ -423,6 +424,19 @@ let g:tagbar_sort    = 0
 
 hi! link TagbarNestedKind Comment
 hi! link TagbarType Comment
+
+let g:tagbar_type_vb = #{
+      \   kinds: [
+      \     'T:types',
+      \     's:subroutines',
+      \     'f:functions',
+      \     'E:events',
+      \     'v:variables',
+      \     'c:constants',
+      \     'p:properties',
+      \     'e:enum',
+      \   ]
+      \ }
 
 " vim-slime {{{2
 

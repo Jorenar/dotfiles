@@ -53,6 +53,7 @@ linking_ "$XDG_CONFIG_HOME" '
     ccache.config       @  ccache/config
     chktexrc            @  .chktexrc
     cshrc               @  csh/.cshrc
+    ctags/              @  ctags
     dosbox.conf         @  dosbox/dosbox.conf
     env                 @  env
     env/mimeapps.list   @  mimeapps.list
