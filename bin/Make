@@ -1,13 +1,15 @@
 #!/usr/bin/env -S make -s -f
 
 MAKEFLAGS += -B --no-print-directory
-.PHONY: DEFAULT CMakeLists.txt
+.PHONY: CMakeLists.txt
 .ONESHELL:
 
 CFLAGS := -Wall -Wextra -pedantic -g -lm
 
 
-DEFAULT:
+%:
+	echo "No rule for filetype found; reverting to normal make command:"
+	echo " > " $(MAKE) $*
 	$(MAKE) $*
 
 
@@ -32,6 +34,9 @@ DEFAULT:
 
 %.cs:
 	mcs $@
+
+%.rs:
+	rustc $(*F)
 
 %.java:
 	javac -d $(TMPDIR)/java $@
