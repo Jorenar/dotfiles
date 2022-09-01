@@ -220,6 +220,7 @@ let g:plugins = {
       \     [ "autoload/lsp/ale.vim",  "https://git.io/J1zIG" ],
       \     [ "autoload/repeat.vim",   "https://git.io/JmdpI" ],
       \     [ "plugin/commentary.vim", "https://git.io/JGOEP" ],
+      \     [ "plugin/rsi.vim",        "https://raw.githubusercontent.com/tpope/vim-rsi/master/plugin/rsi.vim" ],
       \     [ "plugin/surround.vim",   "https://git.io/JLXyW" ],
       \     [ "syntax/tex.vim",        "https://git.io/JYBDH" ],
       \   ]
