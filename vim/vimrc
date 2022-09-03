@@ -47,7 +47,6 @@ com! -nargs=+         GrepRename       exec {a,b -> 'tabe | lv /\C\<' . a . '\>/
 com!                  InstallPlugins   call utils#InstallPlugins()
 com! -nargs=1         SetFormatProg    exec {prg -> 'let [ &l:formatprg, &l:formatexpr ] = [ "'.prg.' 2> /dev/null", "" ]'}(<args>)
 com! -range=%         Sort             normal :<line1>,<line2>sort i<CR>
-com!                  SortBlock        normal! vip:sort i<CR>
 com! -nargs=? -bang   Spelling         setlocal spell<bang> spelllang=<args>
 com!                  SudoW            exec 'silent! write !sudo tee % >/dev/null' | edit!
 com!                  SyntaxStack      echo join(reverse(map(synstack(line('.'), col('.')), 'synIDattr(v:val,"name")')),' ')
