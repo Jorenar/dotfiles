@@ -2,61 +2,55 @@
 " Maintainer:  Jorengarenar <https://joren.ga>
 " License:     MIT
 
-if exists('g:loaded_syntaxMarkerFold') | finish | endif
+if exists("g:loaded_syntaxMarkerFold") | finish | endif
 let s:cpo_save = &cpo | set cpo&vim
+
+let s:attr = " matchgroup=Comment transparent fold containedin=ALL"
 
 function! s:genLeveled(lvl) abort
   let l:higherLvls = ""
-  for i in range(a:lvl-1, 0, -1)
-    let l:higherLvls .= " end = '\\ze" . s:op[1:] . i . s:ed
-    let l:higherLvls .= " end = '\\ze" . s:cl[1:] . i . s:ed
+  for l:i in range(a:lvl-1, 0, -1)
+    let l:higherLvls .= " end = ".s:d.'\ze' . s:op[1:] . l:i . s:ed
+    let l:higherLvls .= " end = ".s:d.'\ze' . s:cl[1:] . l:i . s:ed
   endfor
 
-  exec "syn region syntaxMarkerFold" . a:lvl . " matchgroup=Comment transparent fold containedin=ALL"
+  exec "syn region syntaxMarkerFold" . s:attr
         \ "start = " . s:op . a:lvl . s:ed
         \ "end   = " . s:cl . a:lvl . s:ed
-        \ "end   = '\\ze" . s:op[1:] . a:lvl . s:ed
+        \ "end   = " . s:d . '\ze' . s:op[1:] . a:lvl . s:ed
         \ l:higherLvls
-        \ "end   = '\\ze" . s:cl[1:] . s:ed[:1] . "$'"
-
+        \ "end   = " . s:d . '\ze' . s:cl[1:] . s:ed[:1] . '$' . s:d
 endfunction
 
-function! s:init(...) abort
-  let [ m1, m2 ] = split(&l:foldmarker, ",")
+function! s:init() abort
+  let l:comm = split(&l:comments, ',')
+  call map(l:comm, 'substitute(v:val, ".\\{-}:", "", "")')
+  let l:comm = '\%(' . join(l:comm, '\|') . '\)'
 
-  let maxlvl = get(b:, "syntaxMarkerFold_maxlevel", get(g:, "syntaxMarkerFold_maxlevel", 5))
+  let s:d = l:comm !~ "/" ? "/" : "'"   " pattern delimiter
+  let [ l:m1, l:m2 ] = split(&l:foldmarker, ",")
 
-  if a:0 == 0
-    let comm = split(&l:comments, ',')
-    call map(comm, 'substitute(v:val, ".\\{-}:", "", "")')
-    let comm = '\%(' . join(comm, '\|') . '\)'
-  else
-    let comm = a:1
-  endif
+  let s:st = s:d . '\V\s\*' . l:comm . '\.\{-}'
+  let s:op = s:st . l:m1
+  let s:cl = s:st . l:m2
+  let s:ed = '\v(\s.*)?' . s:d
 
-  let s:st = "'\\V\\s\\*" . comm . "\\.\\{-}"
-  let s:op = s:st . m1
-  let s:cl = s:st . m2
-  let s:ed = "\\v(\\s.*)?'"
-
-  exec "syn region syntaxMarkerFold matchgroup=Comment transparent fold containedin=ALL"
+  silent! syn clear syntaxMarkerFold
+  exec "syn region syntaxMarkerFold" . s:attr
         \ "start = " . s:op . s:ed
         \ "end   = " . s:cl . s:ed
 
-  for lvl in range(1, maxlvl)
-    call s:genLeveled(lvl)
+  let l:maxlvl = get(b:, "syntaxMarkerFold_maxlevel", get(g:, "syntaxMarkerFold_maxlevel", 5))
+  for l:lvl in range(1, l:maxlvl)
+    call s:genLeveled(l:lvl)
   endfor
-
 endfunction
 
 augroup syntaxMarkerFold
+  autocmd!
   autocmd Syntax * call s:init()
-  autocmd OptionSet foldmarker
-        \  exec "syn clear syntaxMarkerFold"
-        \| for i in range(1, get(b:, "syntaxMarkerFold_maxlevel", get(g:, "syntaxMarkerFold_maxlevel", 5)))
-        \|   exec "syn clear syntaxMarkerFold".i
-        \| endfor | unlet i
-        \| call s:init()
+  autocmd OptionSet comments call s:init()
+  autocmd OptionSet foldmarker call s:init()
 augroup END
 
 let g:loaded_syntaxMarkerFold = 1
