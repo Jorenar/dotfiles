@@ -10,7 +10,7 @@ set vi-cmd-mode-string ":"
 set keyseq-timeout 50
 
 # BINDINGS {{{1
-# NORMAL mode {{{1
+# vi-command-mode {{{1
 set keymap vi-command
 
 "\e[A": history-search-backward
@@ -18,10 +18,9 @@ set keymap vi-command
 
 "z": emacs-editing-mode
 
-# INSERT mode {{{1
+# vi-editing-mode {{{1
 set keymap vi-insert
 
-Control-l: clear-screen
 TAB: complete
 
 $if Bash
@@ -29,7 +28,12 @@ $if Bash
     Space: magic-space
 $endif
 
-# EMACS "mode" {{{1
-set keymap emacs
-
-"\ez": vi-editing-mode
+"\C-a": beginning-of-line
+"\C-e": end-of-line
+"\C-k": kill-line
+"\C-l": clear-screen
+"\C-n": next-history
+"\C-o": operate-and-get-next
+"\C-p": previous-history
+"\C-w": unix-word-rubout
+"\C-w": vi-unix-word-rubout

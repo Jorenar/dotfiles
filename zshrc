@@ -9,15 +9,9 @@ autoload -Uz compinit && compinit -d "$XDG_CACHE_HOME/zcompdump"
 # Disable "No match found" message
 setopt +o nomatch
 
-# Vi mode
-bindkey -v
-
-bindkey '^P' up-history
-bindkey '^N' down-history
-bindkey '^?' backward-delete-char
-bindkey '^h' backward-delete-char
-bindkey '^w' backward-kill-word
-bindkey '^r' history-incremental-search-backward
+# combine Emacs with vi mode
+bindkey -e
+bindkey -e '\e' vi-cmd-mode
 
 # FZF
 source $XDG_CONFIG_HOME/fzf.sh
@@ -42,7 +36,7 @@ esac
 
 # Display Vi mode
 function zle-line-init zle-keymap-select {
-    PS1="${${KEYMAP/vicmd/:}/(main|viins)/+}${PS1:1}"
+    PS1="${${KEYMAP/vicmd/:}/(main)/@}${PS1:1}"
     zle reset-prompt
 }
 
