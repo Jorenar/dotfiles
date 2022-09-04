@@ -11,3 +11,8 @@ if has("nvim")
 else
   nnoremap <buffer> <F8> :tab term grip --quiet -b %<CR>
 endif
+
+augroup TRIM_TRAILING_WHITESPACE
+  autocmd!
+  autocmd BufWritePre * sil! undoj | sil! keepp keepj %s/\v(\S@<=\s$|(\s\s)@<=\s+|\_s+%$)//e
+augroup END
