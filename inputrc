@@ -37,3 +37,6 @@ $endif
 "\C-p": previous-history
 "\C-w": unix-word-rubout
 "\C-w": vi-unix-word-rubout
+
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
