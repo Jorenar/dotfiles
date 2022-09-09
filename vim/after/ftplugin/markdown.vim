@@ -14,5 +14,5 @@ endif
 
 augroup TRIM_TRAILING_WHITESPACE
   autocmd!
-  autocmd BufWritePre * sil! undoj | sil! keepp keepj %s/\v(\S@<=\s$|(\s\s)@<=\s+|\_s+%$)//e
+  autocmd BufWritePre <buffer> sil! undoj | sil! keepp keepj %s/\v(\S@<=\s$|(\s\s)@<=\s+|\_s+%$)//e
 augroup END
