@@ -1,5 +1,0 @@
---langdef=GDScript
---langmap=GDScript:.gd
---regex-GDScript=/^func[ \t]+([a-zA-Z0-9_]+)/\1/f,function,function definitions/
---regex-GDScript=/^(onready[ \t]+)?var[ \t]+([a-zA-Z0-9_]+)/\2/v,variable,variable definitions/
---regex-GDScript=/^(export[ \t]*(.*)?[ \t]+)?var[ \t]+([a-zA-Z0-9_]+)/\3/v,variable,variable definitions/
