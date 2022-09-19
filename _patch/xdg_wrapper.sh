@@ -91,6 +91,7 @@ progwrap_exec() {
 progwrap_exec $ARGS "$@"
 
 
+#~ adb
 #~ audacity
 #~ bash
 #~ csh
