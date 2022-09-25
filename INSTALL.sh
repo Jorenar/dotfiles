@@ -61,7 +61,6 @@ linking_ "$XDG_CONFIG_HOME" '
     feh/                @  feh
     fish/               @  fish
     fonts.conf          @  fontconfig/fonts.conf
-    fzf.sh              @  fzf.sh
     gdbinit             @  gdb/init
     git/                @  git
     grip.py             @  grip/grip.py
@@ -69,12 +68,14 @@ linking_ "$XDG_CONFIG_HOME" '
     htoprc              @  htop/htoprc                          -w
     i3/                 @  i3
     inputrc             @  readline/inputrc
+    lesskey             @  lesskey
     mailcap             @  mailcap
     mpv/                @  mpv
     muttrc              @  mutt/muttrc
     myclirc             @  mycli/myclirc
     newsboat            @  newsboat/config
     npmrc               @  npm/npmrc
+    pavucontrol.ini     @  pavucontrol.ini                      CP
     polybar             @  polybar/config
     python_config.py    @  python/config.py
     QuiteRss.ini        @  QuiteRss/QuiteRss.ini                CP

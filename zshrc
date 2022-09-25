@@ -13,9 +13,6 @@ setopt +o nomatch
 bindkey -e
 bindkey -e '\e' vi-cmd-mode
 
-# FZF
-source $XDG_CONFIG_HOME/fzf.sh
-
 
 # PROMPT ---------------------
 

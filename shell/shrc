@@ -29,6 +29,8 @@ trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && . $XDG_CONFIG_HOME/shell/logout"
 # Source aliases
 . $XDG_CONFIG_HOME/shell/aliases
 
+# FZF
+source $XDG_CONFIG_HOME/shell/fzf.sh
 
 # PROMPT {{{1
 

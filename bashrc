@@ -42,9 +42,6 @@ __HistR() {
     unset tmp output
 }
 
-# FZF
-source $XDG_CONFIG_HOME/fzf.sh
-
 # Enable extended globbing
 shopt -s extglob
 
