@@ -446,7 +446,7 @@ function! EunuchNewLine(...) abort
   let b:eunuch_chmod_shebang = 1
   let inject = ''
   let detect = 0
-  let ret = empty(getline(2)) ? "" : "\<BS>"
+  let ret = empty(getline(2)) ? "" : "\<C-U>"
   if getline(1) ==# '#!'
     let inject = s:FileTypeInterpreter()
     let detect = !empty(inject) && empty(&filetype)
@@ -481,7 +481,7 @@ function! s:MapCR() abort
   elseif rhs =~? '^<cr>'
     exe 'imap <silent> <CR>' rhs . '<SID>EunuchNewLine'
   elseif empty(rhs)
-    imap <script><silent><expr> <CR> EunuchNewLine("\r")
+    imap <script><silent><expr> <CR> EunuchNewLine("<Bslash>r")
   endif
 endfunction
 call s:MapCR()
