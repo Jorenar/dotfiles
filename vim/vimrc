@@ -208,6 +208,7 @@ let g:plugins = {
       \     "editorconfig/editorconfig-vim",
       \     "Jorengarenar/miniSnip",
       \     "jpalardy/vim-slime",
+      \     "markonm/traces.vim",
       \     "mbbill/undotree",
       \     "mhinz/vim-signify",
       \     "prabirshrestha/vim-lsp",
@@ -477,6 +478,8 @@ tnoremap <F5> <C-\><C-n>:call Slimeify()<CR>a
 " ~ {{{2
 
 let g:EditorConfig_enable_for_new_buf = 1
+
+let g:traces_preview_window = "new"
 
 let g:fastfold_fold_command_suffixes  = [ 'C', 'm', 'M', 'N', 'x', 'X' ]
 let g:fastfold_fold_movement_commands = []
