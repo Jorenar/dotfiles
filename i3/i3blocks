@@ -1,6 +1,10 @@
 color=#BBB
 separator_block_width=20
 
+[todo]
+command=echo "TODO: $(grep -c ^@ ~/.todo || echo 0)"
+interval=3600
+
 [cpu-temp]
 command=sensors | awk '/Tctl/ {print $2}'
 interval=1

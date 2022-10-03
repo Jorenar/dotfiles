@@ -1,8 +1,0 @@
-#!/usr/bin/env sh
-
-mkdir -p "$XDG_DATA_HOME/organizer"
-options="let g:netrw_liststyle=0"
-options="$options | let g:netrw_browse_split = 0"
-options="$options"' | let netrw_list_hide="\\."'
-options="$options | set tabstop=2"
-vim +"$options" "$XDG_DATA_HOME/organizer"

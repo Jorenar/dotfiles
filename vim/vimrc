@@ -525,7 +525,7 @@ augroup OTHER
   autocmd BufReadPost * if line('$') > winheight(0) | setlocal fen | endif
 
   " Set fold method to syntax
-  autocmd FileType dosini,make,m3u  setlocal foldmethod=syntax
+  autocmd FileType dosini,make,m3u,todo  setlocal foldmethod=syntax
 
   " Fast fold
   autocmd BufReadPost * setlocal fdm=manual
