@@ -1,20 +1,18 @@
 #!/usr/bin/env sh
 
-LC_COLLATE=C
-
-opts='-hF -w80 --time-style=iso -I. -I..'
+# Fallback for when https://github.com/Jorengarenar/ls.hidden is not present
 
 printf='/bin/printf'; [ ! -x "$printf" ] && printf='printf'
 
-hide=""
+hide=
 if [ -f .hidden ]; then
-    hide="$(while IFS= read -r line; do
-                [ -n "$line" ] && $printf -- ' --hide=%q' "$line"
-            done < .hidden)"
+    while IFS= read -r line; do
+        [ -n "$line" ] && hide="$($printf -- '%s --hide=%q' "$hide" "$line")"
+    done < .hidden
 fi
 
 for arg in "$@"; do
     args="$args $($printf '%q' "$arg")" # sanitize arguments for eval
 done
 
-eval "ls $opts $hide $args"
+eval "ls $hide $args"

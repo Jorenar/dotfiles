@@ -11,7 +11,7 @@ alias i3-relog="sed -i '/autostartedx/d' '$TMPFLAGS' && [ -n '$DISPLAY' ] && i3-
 alias icanhazip='curl icanhazip.com'
 alias iwd-restart='sudo systemctl restart iwd.service'
 alias less='less -R'
-alias ls='ls.hidden'
+alias ls='ls.hidden -hF -w80 --time-style=iso -I. -I..'
 alias mkdir='mkdir -p'
 alias mnt='udisksctl mount -b'
 alias mount-qemu="mount -t cifs //10.0.2.4/qemu/"
