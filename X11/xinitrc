@@ -1,8 +1,9 @@
 xrandr --auto --dpi 96
 setxbmap pl
 xset -b
-xrdb -load $XDG_CONFIG_HOME/X11/Xresources
+xrdb -load "$XDG_CONFIG_HOME/X11/Xresources"
 setxkbmap -option keypad:pointerkeys
+touch "${XAUTHORITY:-$HOME/.Xauthority}"
 
 if [ -x "$(command -v prime-offload)" ]; then
     echo "GPU $(glxinfo | grep -Fxq 'OpenGL vendor string: NVIDIA Corporation' && echo 'NVIDIA' || echo 'INTEL')" >> "$TMPFLAGS"
