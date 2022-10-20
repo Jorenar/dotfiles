@@ -1,67 +1,50 @@
 #!/usr/bin/env python3
 
-import gi
+import wx
+import wx.adv
+
 import os
-import signal
 import subprocess
-import time
 
-from threading import Thread
-
-gi.require_version('Gtk', '3.0')
-try:
-    gi.require_version('AppIndicator3', '0.1')
-except ValueError:
-    exit(0)
-
-from gi.repository import Gtk, AppIndicator3
+TRAY_TOOLTIP = 'Detached Tmux sessions'
+TRAY_ICON = os.path.dirname(__file__) + '/logo.png'
+TMUX_LS = r"tmux ls -F '#{session_name}: #W | #T' -f '#{?session_attached,0,1}'"
 
 
-class Indicator():
-    tmux_ls = r"tmux ls -F '#{session_name}: #W' -f '#{?session_attached,0,1}'"
-
+class TaskBarIcon(wx.adv.TaskBarIcon):
     def __init__(self):
-        self.indicator = AppIndicator3.Indicator.new(
-            "tmux-tray-indicator",
-            os.path.join(os.path.dirname(__file__), "logo.png"),
-            AppIndicator3.IndicatorCategory.OTHER
-        )
-        self.indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)
+        super(TaskBarIcon, self).__init__()
+        self.SetIcon(wx.Icon(TRAY_ICON), TRAY_TOOLTIP)
+        self.Bind(wx.adv.EVT_TASKBAR_LEFT_DOWN, self.on_left_down)
 
-        self.update = Thread(target=self.update_menu, daemon=True)
-        self.update.start()
+    def on_left_down(self, event):
+        pass
 
-    def create_menu(self):
-        sessions = os.popen(self.tmux_ls).read()
-
-        menu = Gtk.Menu()
-
+    def CreatePopupMenu(self):
+        sessions = os.popen(TMUX_LS).read()
         if not sessions:
-            item = Gtk.MenuItem(label="No detached sessions")
-            menu.append(item)
-        else:
-            for session in sessions.strip().split('\n'):
-                item = Gtk.MenuItem(label=session.strip())
-                item.connect('activate', self.open)
-                menu.append(item)
+            return
 
-        menu.show_all()
-        self.indicator.set_menu(menu)
+        menu = wx.Menu()
+        for session in sessions.strip().split('\n'):
+            label = session.strip()
+            item = wx.MenuItem(menu, -1, label)
+            menu.Bind(wx.EVT_MENU,
+                      lambda _: self.open(label.split(':')[0]),
+                      id=item.GetId())
+            menu.Append(item)
+        return menu
 
-    def update_menu(self):
-        while True:
-            time.sleep(3)
-            self.create_menu()
-
-    def open(self, item):
-        session = item.get_label().split(':')[0]
+    def open(self, session):
         subprocess.Popen(f"xterm -e 'tmux attach -t {session}'",
                          shell=True, start_new_session=True)
 
-    def stop(self, source=None):
-        Gtk.main_quit()
+
+class App(wx.App):
+    def OnInit(self):
+        self.SetTopWindow(wx.Frame(None))
+        TaskBarIcon()
+        return True
 
 
-Indicator()
-signal.signal(signal.SIGINT, signal.SIG_DFL)
-Gtk.main()
+App(False).MainLoop()
