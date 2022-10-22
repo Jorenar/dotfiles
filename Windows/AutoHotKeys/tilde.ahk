@@ -1,0 +1,3 @@
+﻿#NoTrayIcon
++`::
+Send, ~{Space}

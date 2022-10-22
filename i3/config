@@ -57,7 +57,7 @@ bindsym $super+v exec --no-startup-id vim-anywhere
 bindsym $super+p exec --no-startup-id passmenu --type
 
 # Ranger
-bindsym $super+r exec --no-startup-id ${TERMINAL:-xterm} -T Ranger ranger
+bindsym $super+e exec --no-startup-id ${TERMINAL:-xterm} -T Ranger ranger
 
 # WINDOWS RULES {{{1
 
