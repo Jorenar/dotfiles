@@ -18,7 +18,8 @@ XTerm*utf8: True
 XTerm*utf8Title: True
 XTerm*xftAntialias: True
 
-! Scrollbar
+! Scrolling
+XTerm*saveLines: 4096
 XTerm*scrollBar: False
 XTerm*rightScrollBar: True
 XTerm*Scrollbar*width: 4
@@ -40,8 +41,9 @@ XTerm*numColorRegisters: 256
 XTerm*background: black
 XTerm*foreground: grey
 
-! Scrolling
-XTerm*saveLines: 4096
+! Keybinds
 XTerm*Translations: #override \
-        Shift <Key>Up: scroll-back(1) \n\
-        Shift <Key>Down: scroll-forw(1)
+        Shift <Key>Up:    scroll-back(1)    \n\
+        Shift <Key>Down:  scroll-forw(1)    \n\
+        Ctrl  <Key>minus: smaller-vt-font() \n\
+        Ctrl  <Key>plus:  larger-vt-font()
