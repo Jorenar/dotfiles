@@ -23,7 +23,7 @@ augroup VIMSPECTOR_
         \| let &mouse = s:mouse_old
 
   autocmd VimLeave *
-        \  if filereadable("~/.vimspector.log")
+        \  if filereadable($HOME."/.vimspector.log")
         \|   call system("mv ~/.vimspector.log " . $XDG_STATE_HOME."/vim/")
         \| endif
 

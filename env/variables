@@ -139,7 +139,6 @@ export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME/bundle"
 
 # Shells {{{1
 export BASH_COMPLETION_USER_FILE="$XDG_CONFIG_HOME/bash/completion"
-export BASH_DOTDIR="$XDG_CONFIG_HOME/bash"
 export ENV="$XDG_CONFIG_HOME/shell/shrc"  # sh, ksh
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 

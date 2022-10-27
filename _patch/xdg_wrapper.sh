@@ -34,7 +34,7 @@ case "$(basename "$0")" in
         for dir in $(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $SHELL)"); do
             [ -x "$dir/$(basename $SHELL)" ] && SHELL="$dir/$(basename $SHELL)" && break
         done
-        ARGS="-q -x '$XDG_CONFIG_HOME/gdb/init'"
+        ARGS="-q -x $XDG_CONFIG_HOME/gdb/init"
         ;;
     nvidia-settings)
         mkdir -p "$XDG_CONFIG_HOME/nvidia"
