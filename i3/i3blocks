@@ -7,7 +7,7 @@ command=echo "TODO: $(grep -c ^@ ~/.todo || echo 0)"
 interval=once
 
 [rss]
-command=echo "RSS: $(curl -s -F "api_key=$FRESHRSS_API_KEY" "$FRESHRSS_URL/api/fever.php?api&unread_item_ids" | awk -F"," '{print NF-3}')"
+command=echo "RSS: $(curl -s -F "api_key=$FRESHRSS_API_KEY" "$FRESHRSS_URL/api/fever.php?api&unread_item_ids" | sed 's/.*"".*/,,/' | awk -F"," '{print NF-3}')"
 interval=600
 
 [cpu-temp]
