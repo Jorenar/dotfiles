@@ -1,6 +1,11 @@
 " vim: fen fdl=1
 
 " FOLDING {{{1
+" Include guards {{{2
+
+syntax match cppIppIncludeGuards "\v#ifndef .+_H.*_?\n#\s*error.*included.*header.*\n#endif"
+hi! link cppIppIncludeGuards cIncludeGuards
+
 " Multi line constructor {{{2
 
 syntax match cppMultilineConstructor transparent fold '\v^\s*\S+\s*\(.*\)\s*:%(\_s*\S.*,)*\n%(\s*\S.*,)*\_s*\S.*\_s*%(\{\s*\}|\ze^\s*\{)'

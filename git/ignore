@@ -3,6 +3,7 @@
 .ccls-cache
 .clangd
 .exrc
+.gdb_history
 .miniSnip
 .tmp/
 .vimrc

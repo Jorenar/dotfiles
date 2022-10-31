@@ -9,8 +9,8 @@ set tui border-mode normal
 set tui active-border-mode bold
 
 tui new-layout example {-horizontal src 1 asm 1} 2 status 0 cmd 1
-layout example
-focus cmd
+# layout example
+# focus cmd
 
 #set prompt \033[1m(gdb) \033[0m
 

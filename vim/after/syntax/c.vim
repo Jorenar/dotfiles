@@ -1,9 +1,11 @@
 if &ft !~# '\v<(c|cpp)>' | finish | endif " vim: fdl=1
 
-" REGIONS {{{1
+" {{{1
 " Include guards {{{2
 
-syntax region cIncludeGuarded transparent matchgroup=MoreMsg
+hi! link cIncludeGuards MoreMsg
+
+syntax region cIncludeGuarded transparent matchgroup=cIncludeGuards
       \ start = "\v#ifndef \z((.+_H.*_?))\n#define \1"
       \ end   = "\v#endif\ze /[/*] \z1>"
 
@@ -36,8 +38,9 @@ call utils#appendToSynRule("cParen", "fold")
 " Switch's cases {{{2
 
 syntax region cCaseFold transparent fold
-      \ start = "\v%(<case>\s+\S+\s*)@<=:%(\s|$)"
+      \ start = "\v\z(<case>\s+\S+\s*)@<=:%(\s|$)"
       \ start = "\v%(<default>\s*)@<=:"
+      \ end   = "\v\ze\/\/\s\z1"
       \ end   = "\v\n?\ze\n*\s*<%(case|default)>(\s+\S+)?\s*:"
       \ end   = "\v\n?\ze\n*%(\s*//.*\n\s*)+<%(case|default)>%(\s+\S+)?\s*:"
       \ end   = "\v\n?\ze\n+\s*/\*.*\*/\n?\s*<%(case|default)>%(\s+\S+)?\s*:"
@@ -64,10 +67,10 @@ syn region cPragmaRegion start='#pragma region' end='#pragma endregion' fold tra
 
 " Preprocessor '#if' folding {{{2
 
-"syntax region cPreProcFold transparent fold
-"      \ start = "\v#if%(ndef (.+_H.*_?)\n#define \1)@!"
-"      \ skip  = "\v\#endif //\s*(.+_H.*_?)"
-"      \ end   = "#endif"
+syntax region cPreProcFold transparent fold
+      \ start = "\v#if%(ndef (.+_H.*_?)\n#\s*define \1)@!"
+      \ skip  = "\v\#endif //\s*(.+_H.*_?)"
+      \ end   = "#endif"
 
 " Doxygen groups {{{2
 

@@ -45,7 +45,7 @@ bindsym $super+x exec --no-startup-id ${TERMINAL:-xterm}
 bindsym $super+w exec firefox
 
 # QuiteRSS
-bindsym $super+q exec --no-startup-id [ -z "$(xdotool search --class QuiteRss)" ] && exec quiterss || i3-msg \[class="QuiteRss"\] scratchpad show
+# bindsym $super+q exec --no-startup-id [ -z "$(xdotool search --class QuiteRss)" ] && exec quiterss || i3-msg \[class="QuiteRss"\] scratchpad show
 
 # aerc
 bindsym $super+m exec --no-startup-id imapfilter && ${TERMINAL:-xterm} -T aerc aerc && rm -f "${TMPDIR:-/tmp}/aerc.html"

@@ -228,7 +228,10 @@ let g:plugins = {
 
 packadd cfilter
 packadd matchit
+packadd termdebug
 source  $VIMRUNTIME/ftplugin/man.vim
+
+let g:termdebug_wide=1
 
 " ALE {{{2
 
