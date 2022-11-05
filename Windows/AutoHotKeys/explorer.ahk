@@ -1,4 +1,4 @@
 ﻿#NoTrayIcon
 #e::
-Run, %USERPROFILE%\HOME
+Run, %USERPROFILE%
 return

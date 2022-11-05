@@ -1,5 +1,9 @@
 #!/usr/bin/env sh
 
+if grep -Fxqs "freshrss" "$TMPFLAGS"; then
+    return
+fi
+
 [ -z "$FRESHRSS_AUTOSTART" ] && return
 
 if [ -x "$(command -v podman)" ]; then
@@ -17,6 +21,8 @@ mkdir -p "$data_dir"
 mkdir -p "$themes_dir"
 mkdir -p "$extensions_dir"
 
+[ -f "$data_dir/config.php" ] && initialized=1 || initialized=0
+
 podman run -d --restart unless-stopped \
     --log-opt max-size=10m \
     -p 7740:80 \
@@ -26,7 +32,7 @@ podman run -d --restart unless-stopped \
     --name "$name" \
     freshrss/freshrss
 
-if [ ! -f "$data_dir/config.php" ]; then
+if [ "$initialized" = 0 ]; then
     passwd=$(pass other/freshrss)
     sleep 5
     podman exec --user www-data "$name" "cli/do-install.php" --default_user "$USER"
@@ -35,3 +41,5 @@ if [ ! -f "$data_dir/config.php" ]; then
         --password "$passwd" --api_password "$passwd" \
         --no_default_feeds
 fi
+
+echo "freshrss" >> "$TMPFLAGS"
