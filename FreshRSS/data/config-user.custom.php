@@ -30,8 +30,8 @@ return [
     ],
 
     'extensions_enabled' => [
-        'Custom JS' => true,
-        'Custom CSS' => true,
+        'tweaks.js' => true,
+        'tweaks.css' => true,
         'YouTube/PeerTube Video Feed' => true,
     ],
 

@@ -1,0 +1,17 @@
+.tree-bottom {
+  margin-bottom: initial;
+}
+
+#bigMarkAsRead {
+  display: none;
+}
+
+#nav_menu_views {
+  display: none;
+}
+
+.tree-folder.category.all,
+.tree-folder.category.tags
+{
+  display: none;
+}

@@ -3,10 +3,9 @@
 /**
  * Class YouTubeExtension
  *
- * Latest version can be found at https://framagit.org/ImAReplicant/freshrss-youtube
+ * Latest version can be found at https://github.com/kevinpapst/freshrss-youtube
  *
  * @author Kevin Papst
- * @maintainer ImAReplicant
  */
 class YouTubeExtension extends Minz_Extension
 {
@@ -45,7 +44,27 @@ class YouTubeExtension extends Minz_Extension
     public function init()
     {
         $this->registerHook('entry_before_display', array($this, 'embedYouTubeVideo'));
+        $this->registerHook('check_url_before_add', array($this, 'convertYoutubeFeedUrl'));
         $this->registerTranslates();
+    }
+
+    /**
+     * @param string $url
+     * @return string
+     */
+    public function convertYoutubeFeedUrl($url)
+    {
+        $matches = [];
+
+        if (preg_match('#^https?://www\.youtube\.com/channel/([0-9a-zA-Z_-]{6,36})#', $url, $matches) === 1) {
+            return 'https://www.youtube.com/feeds/videos.xml?channel_id=' . $matches[1];
+        }
+
+        if (preg_match('#^https?://www\.youtube\.com/user/([0-9a-zA-Z_-]{6,36})#', $url, $matches) === 1) {
+            return 'https://www.youtube.com/feeds/videos.xml?user=' . $matches[1];
+        }
+
+        return $url;
     }
 
     /**
@@ -104,7 +123,7 @@ class YouTubeExtension extends Minz_Extension
     {
         return $this->showContent;
     }
-
+    
     /**
      * Returns if this extension should use youtube-nocookie.com instead of youtube.com.
      * You have to call loadConfigValues() before this one, otherwise you get default values.
@@ -126,9 +145,9 @@ class YouTubeExtension extends Minz_Extension
     {
         $link = $entry->link();
 
-        if (preg_match('#^https?://www\.youtube\.com/watch\?v=|/w/[0-9a-zA-Z]{22}$#', $link) !== 1) {
-	    return $entry;
-	}
+        if (preg_match('#^https?://www\.youtube\.com/watch\?v=|/videos/watch/[0-9a-f-]{36}$#', $link) !== 1) {
+            return $entry;
+        }
 
         $this->loadConfigValues();
 
@@ -164,20 +183,20 @@ class YouTubeExtension extends Minz_Extension
 
         $html = $this->getHtml($entry, $url);
 
-	return $html;
+        return $html;
     }
 
     /**
-     * Returns an HTML <iframe> for a given PeerTube watch URL
-     *
-     * @param string $link
-     * @return string
-     */
+    * Returns an HTML <iframe> for a given PeerTube watch URL
+    *
+    * @param string $link
+    * @return string
+    */
     public function getHtmlPeerTubeContentForLink($entry, $link)
     {
-	$url = str_replace('/w', '/videos/embed', $link);
+        $url = str_replace('/watch', '/embed', $link);
         $html = $this->getHtml($entry, $url);
-
+        
         return $html;
     }
 
@@ -190,13 +209,13 @@ class YouTubeExtension extends Minz_Extension
     public function getHtml($entry, $url)
     {
         $content = '';
-
+        
         $iframe = '<iframe class="youtube-plugin-video"
-                style="height: ' . $this->height . 'px; width: ' . $this->width . 'px;"
-                width="' . $this->width . '"
-                height="' . $this->height . '"
-                src="' . $url . '"
-                frameborder="0"
+                style="height: ' . $this->height . 'px; width: ' . $this->width . 'px;" 
+                width="' . $this->width . '" 
+                height="' . $this->height . '" 
+                src="' . $url . '" 
+                frameborder="0" 
                 allowFullScreen></iframe>';
 
         if ($this->showContent) {
@@ -211,49 +230,40 @@ class YouTubeExtension extends Minz_Extension
 
                 $titles = $xpath->evaluate("//*[@class='enclosure-title']");
                 $thumbnails = $xpath->evaluate("//*[@class='enclosure-thumbnail']/@src");
+                $descriptions = $xpath->evaluate("//*[@class='enclosure-description']");
 
-		if (stripos($url, 'youtube') !== false){
-		    /* Youtube Description */
-		    $descriptions = $xpath->evaluate("//*[@class='enclosure-description']");
-		} elseif (preg_match('#^/videos/embed/[0-9a-zA-Z]{22}$#', $url) !== 1){
-		    /* Peertube Description */
-		    $descriptions = $xpath->evaluate("//p[not(ancestor::div)]|//ul//li");
-		}
+                $content = '<div class="enclosure">';
 
-		$content = '<div class="enclosure">';
+                // We hide the title so it doesn't appear in the final article, which would be redundant with the RSS article title,
+                // but we keep it in the content anyway, so RSS clients can extract it if needed.
+                if ($titles->length > 0) {
+                    $content .= '<p class="enclosure-title" hidden>' . $titles[0]->nodeValue . '</p>';
+                }
 
-		// We hide the title so it doesn't appear in the final article, which would be redundant with the RSS article title,
-		// but we keep it in the content anyway, so RSS clients can extract it if needed.
-		if ($titles->length > 0) {
-		    $content .= '<p class="enclosure-title" hidden>' . $titles[0]->nodeValue . '</p>';
-		}
+                // We hide the thumbnail so it doesn't appear in the final article, which would be redundant with the YouTube player preview,
+                // but we keep it in the content anyway, so RSS clients can extract it to display a preview where it wants (in article listing,
+                // by example, like with Reeder).
+                if ($thumbnails->length > 0) {
+                    $content .= '<p hidden><img class="enclosure-thumbnail" src="' . $thumbnails[0]->nodeValue . '" alt=""/></p>';
+                }
 
-		// We hide the thumbnail so it doesn't appear in the final article, which would be redundant with the YouTube player preview,
-		// but we keep it in the content anyway, so RSS clients can extract it to display a preview where it wants (in article listing,
-		// by example, like with Reeder).
-		if ($thumbnails->length > 0) {
-		    $content .= '<p hidden><img class="enclosure-thumbnail" src="' . $thumbnails[0]->nodeValue . '" alt=""/></p>';
-		}
+                $content .= $iframe;
 
-		$content .= $iframe;
+                if ($descriptions->length > 0) {
+                    $content .= '<p class="enclosure-description">' . nl2br(htmlentities($descriptions[0]->nodeValue)) . '</p>';
+                }
 
-		if ($descriptions->length > 0) {
-		    foreach($descriptions as $text) {
-			$content .= $text->ownerDocument->saveHTML($text);
-		    }
-		}
+                $content .= "</div>\n";
+            }
+            else {
+                $content = $iframe . $entry->content();
+            }
+        }
+        else {
+            $content = $iframe;
+        }
 
-		$content .= "</div>\n";
-	    }
-	    else {
-		$content = $iframe . $entry->content();
-	    }
-	}
-	else {
-	    $content = $iframe;
-	}
-
-	return $content;
+        return $content;
     }
 
     /**
@@ -263,16 +273,16 @@ class YouTubeExtension extends Minz_Extension
      */
     public function handleConfigureAction()
     {
-	$this->registerTranslates();
+        $this->registerTranslates();
 
-	if (Minz_Request::isPost()) {
-	    FreshRSS_Context::$user_conf->yt_player_height = (int)Minz_Request::param('yt_height', '');
-	    FreshRSS_Context::$user_conf->yt_player_width = (int)Minz_Request::param('yt_width', '');
-	    FreshRSS_Context::$user_conf->yt_show_content = (bool)Minz_Request::param('yt_show_content', 0);
-	    FreshRSS_Context::$user_conf->yt_nocookie = (int)Minz_Request::param('yt_nocookie', 0);
-	    FreshRSS_Context::$user_conf->save();
-	}
+        if (Minz_Request::isPost()) {
+            FreshRSS_Context::$user_conf->yt_player_height = (int)Minz_Request::param('yt_height', '');
+            FreshRSS_Context::$user_conf->yt_player_width = (int)Minz_Request::param('yt_width', '');
+            FreshRSS_Context::$user_conf->yt_show_content = (bool)Minz_Request::param('yt_show_content', 0);
+            FreshRSS_Context::$user_conf->yt_nocookie = (int)Minz_Request::param('yt_nocookie', 0);
+            FreshRSS_Context::$user_conf->save();
+        }
 
-	$this->loadConfigValues();
+        $this->loadConfigValues();
     }
 }
