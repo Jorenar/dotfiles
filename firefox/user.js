@@ -11,6 +11,7 @@ user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 // General prefs
 user_pref("browser.startup.page",          1);
 user_pref("browser.startup.homepage",      "about:home");
+user_pref("browser.tabs.firefox-view",     false);
 user_pref("browser.uiCustomization.state", '{"placements":{"widget-overflow-fixed-list":[],"nav-bar":["back-button","forward-button","stop-reload-button","urlbar-container","downloads-button","bookmarks-menu-button","extension_one-tab_com-browser-action","panorama-tab-groups_example_com-browser-action"],"toolbar-menubar":["menubar-items"],"TabsToolbar":["tabbrowser-tabs","new-tab-button","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action","firefox_tampermonkey_net-browser-action","ublock0_raymondhill_net-browser-action","cookieautodelete_kennydo_com-browser-action","_a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7_-browser-action","find-button","alltabs-button"],"PersonalToolbar":["personal-bookmarks"]},"seen":["developer-button","ublock0_raymondhill_net-browser-action","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action","cookieautodelete_kennydo_com-browser-action","firefox_tampermonkey_net-browser-action","simple-translate_sienori-browser-action","save-to-pocket-button","extension_one-tab_com-browser-action","_a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7_-browser-action","panorama-tab-groups_example_com-browser-action"],"dirtyAreaCache":["nav-bar","toolbar-menubar","TabsToolbar","PersonalToolbar"],"currentVersion":17,"newElementCount":13}');
 
 user_pref("dom.webnotifications.enabled ", false);
