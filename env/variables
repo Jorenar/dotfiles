@@ -3,12 +3,9 @@
 # It is important for this file, to be in the same directory as 'profile' file
 #    (originals, not symlinks)
 
-# ~init {{{1
-
 pathmunge() {
     A=0  # append flag
     E=0  # use `eval` flag
-    H=0  # show help flag
     S=":" # separator
 
     while getopts "aes:" option; do
@@ -49,6 +46,20 @@ pathmunge() {
     unset A S E var new val updated
 }
 
+# basics {{{1
+
+# Name
+export NAME="Jorengarenar"
+
+# HOST
+export HOSTNAME="${HOSTNAME:-$(hostname -s)}"
+
+# Temp dir
+export TMPDIR="${TMPDIR:-/tmp}"
+
+# Virtual terminal number (if not set already by PAM)
+export XDG_VTNR="${XDG_VTNR:-$(tty | sed 's/[^0-9]*//g')}"
+
 # XDG Base Directory {{{1
 
 export XDG_LOCAL_HOME="$HOME/.local" # this sould be one of defaults
@@ -58,11 +69,20 @@ export XDG_CONFIG_HOME="$XDG_LOCAL_HOME/config"
 export XDG_STATE_HOME="$XDG_LOCAL_HOME/state"
 export XDG_DATA_HOME="$XDG_LOCAL_HOME/share"
 
-export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-$XDG_LOCAL_HOME/.runtime}" # just in case
+if [ -z "$XDG_RUNTIME_DIR" ]; then
+    XDG_RUNTIME_DIR="/run/user/$UID"
+    if [ ! -d "$XDG_RUNTIME_DIR" ]; then
+        XDG_RUNTIME_DIR="$TMPDIR/$USER-runtime"
+    fi
+fi
+export XDG_RUNTIME_DIR
+
 
 export XDG_AUX_DIR="$XDG_LOCAL_HOME/aux" # auxiliary, local configs
 
-[ -f "$XDG_CONFIG_HOME/user-dirs.dirs" ] && eval "$(sed 's/^[^#].*/export &/g;t;d' $XDG_CONFIG_HOME/user-dirs.dirs)"
+if [ -f "$XDG_CONFIG_HOME/user-dirs.dirs" ]; then
+    eval "$(sed 's/^[^#].*/export &/g;t;d' $XDG_CONFIG_HOME/user-dirs.dirs)"
+fi
 
 export XDG_HISTORY_DIR="$XDG_STATE_HOME/history"
 
@@ -149,7 +169,7 @@ export XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
 
 # }}}
 
-# Dev {{{1
+# dev {{{1
 
 export VITASDK=/usr/local/vitasdk
 pathmunge "$VITASDK/bin"
@@ -169,8 +189,7 @@ pathmunge "$XDG_LOCAL_HOME/bin/scripts"
 
 pathmunge "$XDG_LOCAL_HOME/bin/_patch"
 
-# General {{{1
-# Default programs {{{2
+# default programs {{{1
 
 export BROWSER=firefox
 export EDITOR=vim
@@ -180,7 +199,7 @@ export SHELL="$(command -v bash)"
 export TERMINAL=xterm
 export VISUAL="$EDITOR"
 
-# Theme {{{2
+# theme {{{1
 
 # GTK theme
 export GTK_THEME="$(grep gtk-theme-name $GTK2_RC_FILES | cut -d'"' -f 2)"
@@ -190,16 +209,7 @@ gtk_theme_rc="$XDG_DATA_HOME/themes/$GTK_THEME/gtk-2.0/gtkrc"
 # Set Qt to use GTK theme
 export QT_QPA_PLATFORMTHEME=gtk2
 
-# OTHER {{{2
-
-# Name
-export NAME="Jorengarenar"
-
-# HOST
-export HOSTNAME="${HOSTNAME:-$(hostname -s)}"
-
-# Temp dir
-export TMPDIR="${TMPDIR:-/tmp}"
+# other {{{1
 
 # File with temporary flags
 export TMPFLAGS="$TMPDIR/flags_$USER"
@@ -218,15 +228,9 @@ export GPG_AGENT_INFO
 # Suppress Wine debug informations
 export WINEDEBUG=-all
 
-# Virtual terminal number (if not set already by PAM)
-export XDG_VTNR="${XDG_VTNR:-$(tty | sed 's/[^0-9]*//g')}"
-
 # Enable touchscreen in Firefox
 export MOZ_USE_XINPUT2=1
 
-# -End- {{{1
+# -end- {{{1
 
-[ -f $XDG_AUX_DIR/env_variables ] && . $XDG_AUX_DIR/env_variables # additional, local env_variables
-
-mkdir -p "$XDG_HISTORY_DIR" # Create history dir
-[ "$XDG_RUNTIME_DIR" = "$XDG_LOCAL_HOME/.runtime" ] && mkdir -p "$XDG_RUNTIME_DIR" # just in case
+[ -f "$XDG_AUX_DIR/env_variables" ] && . "$XDG_AUX_DIR/env_variables" # additional, local env_variables
