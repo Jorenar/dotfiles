@@ -315,10 +315,10 @@ nl_cpp_ldef_brace               = remove   # ignore/add/remove/force
 # Blank line options {{{1
 
 # The number of newlines after '}' of a multi-line function body.
-nl_before_func_body_def         = 2        # unsigned number
+nl_before_func_body_def         = 0        # unsigned number
 
 # The number of newlines after '}' of a multi-line function body.
-nl_after_func_body              = 2        # unsigned number
+nl_after_func_body              = 0        # unsigned number
 
 # Code modifying options (non-whitespace) {{{1
 
