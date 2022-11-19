@@ -1,9 +1,27 @@
+# vim: ft=sh fen
+# {{{
+xresources="$XDG_CONFIG_HOME/X11/Xresources"
+xmodmap="$XDG_CONFIG_HOME/X11/Xmodmap"
+
+exec_session() {
+    echo "$1" | while IFS= read -r line; do
+        [ -x "$(command -v $line)" ] && exec $line
+    done
+}
+# }}}
+
+[ -f "$xresources" ] && xrdb -load "$xresources"
+[ -f "$xmodmap" ] && xmodmap "$xmodmap"
+
 xrandr --auto --dpi 96
-setxbmap pl
+
 xset -b
-xrdb -load "$XDG_CONFIG_HOME/X11/Xresources"
+
+setxkbmap pl
 setxkbmap -option keypad:pointerkeys
+
 touch "${XAUTHORITY:-$HOME/.Xauthority}"
+
 
 if [ -x "$(command -v prime-offload)" ]; then
     echo "GPU $(glxinfo | grep -Fxq 'OpenGL vendor string: NVIDIA Corporation' && echo 'NVIDIA' || echo 'INTEL')" >> "$TMPFLAGS"
@@ -12,4 +30,10 @@ fi
 
 [ -x "$(command -v nvidia-settings)" ] && nvidia-settings --load-config-only
 
-exec i3
+
+exec_session "
+    $DEFAULT_X_SESSION
+    i3
+    xfce4-session
+    gnome-session
+"
