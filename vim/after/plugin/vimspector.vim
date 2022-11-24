@@ -1,5 +1,9 @@
 if !exists('g:loaded_vimpector') | finish | endif
 
+" probably should return to VIMRC if plugin used again
+let g:vimspector_base_dir = $XDG_DATA_HOME . '/vim/vimspector'
+let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-cpptools' ]
+
 " Init {{{1
 
 command! -nargs=1 -complete=file Vimspector call vimspector#LaunchWithSettings(#{PROG: <q-args>})

@@ -213,7 +213,6 @@ let g:plugins = {
       \     "mhinz/vim-signify",
       \     "prabirshrestha/vim-lsp",
       \     "preservim/tagbar",
-      \     "puremourning/vimspector",
       \     "tpope/vim-fugitive",
       \   ],
       \   "files": [
@@ -230,8 +229,6 @@ packadd cfilter
 packadd matchit
 packadd termdebug
 source  $VIMRUNTIME/ftplugin/man.vim
-
-let g:termdebug_wide=1
 
 " ALE {{{2
 
@@ -481,6 +478,8 @@ tnoremap <F5> <C-\><C-n>:call Slimeify()<CR>a
 
 " ~ {{{2
 
+let g:termdebug_wide = 1
+
 let g:EditorConfig_enable_for_new_buf = 1
 
 let g:traces_preview_window = "new"
@@ -501,9 +500,6 @@ let g:miniSnip_extends = {
 
 let g:undotree_SetFocusWhenToggle = 1
 nnoremap <F1> :UndotreeToggle<CR>
-
-let g:vimspector_base_dir        = $XDG_DATA_HOME . '/vim/vimspector'
-let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-cpptools' ]
 
 let g:signify_sign_change = '~'
 highlight link  SignifySignChange  DiffText
