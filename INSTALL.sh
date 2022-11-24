@@ -7,8 +7,6 @@ DIR="$(dirname $(realpath $0))"
 
 . $DIR/env/variables; . $DIR/env/user-dirs.dirs
 
-chmod -R +x bin/
-
 # 1nd argument - file in dotfiles dir
 # 2rd argument - location of link
 # 3th argument - permissions

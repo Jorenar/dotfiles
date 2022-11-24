@@ -20,7 +20,7 @@ CFLAGS := -Wall -Wextra -pedantic -g -lm
 	$(CXX) $(CFLAGS) -std=gnu++14 $@ -o $(*F)
 
 %.latex:
-	latexmk -outdir=$(*F).out.d -pdfxe -interaction=nonstopmode $@ 1>&2
+	latexmk -outdir=$(*F).out.d -pdfxe -pdfxelatex="xelatex --shell-escape %O %S" -interaction=nonstopmode $@ 1>&2
 
 %.nasm:
 	nasm -f elf64 -g $@
