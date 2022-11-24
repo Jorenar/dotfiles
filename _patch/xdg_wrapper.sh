@@ -53,6 +53,9 @@ case "$(basename "$0")" in
     steam)
         HOME="$XDG_DATA_HOME/Steam"
         ;;
+    weechat)
+        chmod -w "$XDG_CONFIG_HOME/weechat"
+        ;;
     *) # FAKEHOME
         HOME="${XDG_FAKEHOME_DIR:-$HOME/.local/.fakehome}"
         ;;
@@ -105,3 +108,4 @@ progwrap_exec $ARGS "$@"
 #~ ssh
 #~ steam
 #~ tcsh
+#~ weechat
