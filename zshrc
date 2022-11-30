@@ -16,22 +16,11 @@ bindkey -e '\e' vi-cmd-mode
 
 # PROMPT ---------------------
 
-# Variable to hold title part of PS1
-PS1_WIN_TITLE="$(echo $PS1 | sed $'s/\007.*//')\007"
-
 # Fix prompt
 setopt PROMPT_SUBST
-PS1=" $(sed -e $'s/.*\007//' -e 's/\x1B\[[0-9;]*[a-zA-Z]/%{&%}/g' <<< $PS1)"
-#    ^ for Vi mode indicator
-
-# Window title
-case $TERM in
-    xterm*|rxvt*|screen*)
-        precmd () {print -Pn "$PS1_WIN_TITLE" }
-        ;;
-esac
 
 # Display Vi mode
+PS1="+$PS1"
 function zle-line-init zle-keymap-select {
     PS1="${${KEYMAP/vicmd/:}/(main)/@}${PS1:1}"
     zle reset-prompt

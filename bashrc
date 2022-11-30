@@ -52,4 +52,4 @@ export HISTCONTROL=ignoreboth:erasedups
 shopt -s histappend
 
 # Fix PROMPT
-PS1='\['"$(sed 's/\x1B\[[0-9;]*[a-zA-Z]/\\001&\\002/g' <<< "$PS1")"
+# PS1='\['"$(sed 's/\x1B\[[0-9;]*[a-zA-Z]/\\001&\\002/g' <<< "$PS1")"

@@ -18,7 +18,7 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
         self.Bind(wx.adv.EVT_TASKBAR_LEFT_DOWN, self.on_left_down)
 
     def on_left_down(self, event):
-        pass
+        self.PopupMenu(self.CreatePopupMenu())
 
     def CreatePopupMenu(self):
         sessions = os.popen(TMUX_LS).read()
