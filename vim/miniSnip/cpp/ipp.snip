@@ -1,3 +1,9 @@
 #ifndef <{!toupper(expand("%:r"))}>_HPP_
 #  error Template implementation file should only be included from corresponding header file
 #endif // <{~1}>_HPP_
+
+#define IPP_TPL template<typename <{}>>
+
+<{+}>
+
+#undef IPP_TPL
