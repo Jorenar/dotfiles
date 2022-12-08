@@ -11,7 +11,7 @@ if ! grep -Fxqs "executed_autostart" "$TMPFLAGS"; then
 
     [ -x "$(command -v fcitx)" ] && fcitx -d
 
-    [ -n "$DISPLAY" ] && xsetroot -solid "#000000" # set background
+    [ -n "$DISPLAY" ] && [ -x "command -v xsetroot" ] && xsetroot -solid "#000000" # set background
 
     echo "executed_autostart" >> "$TMPFLAGS"
 fi
