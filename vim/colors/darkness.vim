@@ -13,6 +13,7 @@ let g:colors_name='darkness'
 
 hi! ColorColumn     cterm=NONE            ctermfg=NONE  ctermbg=233
 hi! Comment         cterm=NONE            ctermfg=240   ctermbg=NONE
+hi! Conceal         cterm=italic          ctermfg=225   ctermbg=NONE
 hi! CursorColumn    cterm=NONE            ctermfg=NONE  ctermbg=234
 hi! CursorLine      cterm=NONE            ctermfg=NONE  ctermbg=234
 hi! CursorLineNr    cterm=NONE            ctermfg=15    ctermbg=NONE
