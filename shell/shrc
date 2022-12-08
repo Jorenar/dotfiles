@@ -1,7 +1,7 @@
 # SHRC #
 # vim: ft=sh
 
-if [ -x "$(command -v tmux)" ] && [ -n "$DISPLAY$WSLENV" ] && [ -z "$TMUX" ]; then
+if [ -x "$(command -v tmux)" ] && [ -n "$DISPLAY" ] && [ -z "$TMUX" ]; then
     if ps -ef | grep tmux | grep -v -q grep; then
         exec tmux attach \; new-session
     else
@@ -37,17 +37,16 @@ trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && . $XDG_CONFIG_HOME/shell/logout"
 PS1=
 
 # - WINDOW TITLE | user@host:pwd
-case $TERM in
-    xterm*|rxvt*|screen*)
-        PS1='\033]0;$USER@$HOSTNAME:$(echo $PWD | sed s,^$HOME,~,)\007'
-        ;;
+case $0 in
+    bash|zsh) ;;
+    *) PS1='\033]0;$USER@$HOSTNAME:$(echo $PWD | sed s,^$HOME,~,)\007' ;;
 esac
 
 # user@host
 PS1="$PS1"'$USER@$HOSTNAME'
 
 # pwd
-PS1="$PS1"' $(echo $PWD | sed -e s,^$HOME,~, -e s,..*/,./, -e s,.\ .,\&/, )'
+PS1="$PS1"' $(echo $PWD | sed -e "s,^$HOME,~," -e "s,..*/,./," -e "s,. .,\&/,")'
 
 # git_branch
 PS1="$PS1\$(git rev-parse --abbrev-ref HEAD 2> /dev/null | sed 's/.*/ &/')"
@@ -57,6 +56,3 @@ PS1="[$PS1]"'$ '
 
 # (shell)
 # PS1='($(basename $0))'"$PS1"
-
-# - PRINT PROMPT
-PS1=$(printf "$PS1")
