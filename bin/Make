@@ -1,4 +1,4 @@
-#!/usr/bin/env -S make -s -f
+#!/usr/bin/env -S make -f
 
 MAKEFLAGS += -B --no-print-directory
 .PHONY: CMakeLists.txt
@@ -6,11 +6,11 @@ MAKEFLAGS += -B --no-print-directory
 
 CFLAGS := -Wall -Wextra -pedantic -g -lm
 
+_:
+	@$(MAKE)
 
 %:
-	echo "No rule for filetype found; reverting to normal make command:"
-	echo " > " $(MAKE) $*
-	$(MAKE) $*
+	@$(MAKE) $*
 
 
 %.c:
