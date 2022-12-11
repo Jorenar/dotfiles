@@ -1,10 +1,11 @@
 #!/usr/bin/env -S make -f
 
-MAKEFLAGS += -B --no-print-directory
-.PHONY: CMakeLists.txt
+MAKEFLAGS += --no-print-directory
+.PHONY: _ PHONY
 .ONESHELL:
 
 CFLAGS := -Wall -Wextra -pedantic -g -lm
+
 
 _:
 	@$(MAKE)
@@ -13,60 +14,59 @@ _:
 	@$(MAKE) $*
 
 
-%.c:
+%.c: PHONY
 	$(CC)  $(CFLAGS) -std=gnu99   $@ -o $(*F)
 
-%.cpp:
+%.cpp: PHONY
 	$(CXX) $(CFLAGS) -std=gnu++14 $@ -o $(*F)
 
-%.latex:
+%.latex: PHONY
 	latexmk -outdir=$(*F).out.d -pdfxe -pdfxelatex="xelatex --shell-escape %O %S" -interaction=nonstopmode $@ 1>&2
 
-%.nasm:
+%.nasm: PHONY
 	nasm -f elf64 -g $@
 	ld -g -o $(*F) $(*F).o
 	$(RM) $(*F).o
 
-%.asm:
+%.asm: PHONY
 	$(AS) -o $(*F).o $@
 	ld -s -o $(*F) $(*F).o
 	$(RM) $(*F).o
 
-%.cs:
+%.cs: PHONY
 	mcs $@
 
-%.rs:
+%.rs: PHONY
 	rustc $(*F)
 
-%.java:
+%.java: PHONY
 	javac -d $(TMPDIR)/java $@
 	jar cvfe $(*F).jar $(*F) -C $(TMPDIR)/java .
 
-%.cobol %.cob %.cbl:
+%.cobol %.cob %.cbl: PHONY
 	cobc -d -O -x -o $(*F) $@
 
-%.go:
+%.go: PHONY
 	go build
 
-%.html:
+%.html: PHONY
 	tidy -quiet -errors --gnu-emacs yes $@
 
-%.xhtml:
+%.xhtml: PHONY
 	tidy -asxhtml -quiet -errors --gnu-emacs yes $@
 
-%.ada:
+%.ada: PHONY
 	gnatmake $@
 	gnatclean -c $@
 
-%.py:
+%.py: PHONY
 	python $@
 
-%.sh:
+%.sh: PHONY
 	shellcheck $@
 
 
-CMakeLists.txt: $(PWD)/CMakeLists.txt
-%/CMakeLists.txt:
+CMakeLists.txt: PHONY
 	[ -n "$(*F)" ] && cd $(*F)
 	cmake -B build/ -DCMAKE_BUILD_TYPE=Debug
 	cmake --build build/ 2> >(tee build/errors.err >&2)
