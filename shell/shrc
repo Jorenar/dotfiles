@@ -36,12 +36,6 @@ trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && . $XDG_CONFIG_HOME/shell/logout"
 
 PS1=
 
-# - WINDOW TITLE | user@host:pwd
-case $0 in
-    *bash|*zsh) ;;
-    *) PS1='\033]0;$USER@$HOSTNAME:$(echo $PWD | sed s,^$HOME,~,)\007' ;;
-esac
-
 # user@host
 PS1="$PS1"'$USER@$HOSTNAME'
 
@@ -56,3 +50,8 @@ PS1="[$PS1]"'$ '
 
 # (shell)
 # PS1='($(basename $0))'"$PS1"
+
+# - WINDOW TITLE | user@host:pwd
+[ -z "$BASH_VERSION" ] && \
+    PS1=$(printf \
+        '\033]0;$USER@$HOSTNAME:$(echo $PWD | sed s,^$HOME,~,)\007'"$PS1")
