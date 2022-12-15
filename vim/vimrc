@@ -71,7 +71,7 @@ nnoremap <silent> <C-l> :nohlsearch<C-r>=has('diff')?'<bar>diffupdate':''<CR><CR
 nnoremap <silent> <F8> :if has("nvim") <bar> split <bar> endif <bar> term<CR>
 nnoremap <silent> <Leader>b :bnext<CR>
 nnoremap <silent> <Leader>B :bprev<CR>
-nnoremap <silent> <Leader>w :call wrapAtPopup#toggle()<CR>
+nnoremap <silent> <Leader>w :<C-u>call softWrapLineAtCol#toggle(v:count ? v:count : &tw)<CR>
 nnoremap j gj
 nnoremap k gk
 
