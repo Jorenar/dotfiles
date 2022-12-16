@@ -70,6 +70,7 @@ function! s:interations() abort
     if col('$') != len_old
       let h = 0
       if s:line < line('$')
+        call win_execute(s:id, "redraw")
         let h = s:slineHeight(s:id)
 
         call prop_clear(s:line, s:line, { "type": "SWLAC_padding" })
