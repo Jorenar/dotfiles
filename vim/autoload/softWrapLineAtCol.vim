@@ -1,8 +1,8 @@
-hi SoftWrapLineAtCol_Cursor ctermfg=bg ctermbg=fg
-hi SoftWrapLineAtCol_Hidden ctermfg=bg ctermbg=bg
-let s:cursorRefreshCmd = "match SoftWrapLineAtCol_Cursor '\\%.c\\%.l' | redraw"
+hi SWLAC_cursor ctermfg=bg ctermbg=fg
+hi SWLAC_hidden ctermfg=bg ctermbg=bg
+let s:cursorRefreshCmd = "match SWLAC_cursor '\\%.c\\%.l' | redraw"
 
-call prop_type_add("softWrapLineAtCol", { "highlight": "SoftWrapLineAtCol_Hidden" })
+call prop_type_add("SWLAC_padding", { "highlight": "SWLAC_hidden" })
 
 augroup SOFT_WRAP_LINE_AT_COL
   autocmd!
@@ -17,7 +17,7 @@ function! s:cleanUp(...)
   autocmd! SOFT_WRAP_LINE_AT_COL
 
   3match none
-  call prop_clear(s:line, s:line, { "type": "softWrapLineAtCol" })
+  call prop_clear(s:line, s:line, { "type": "SWLAC_padding" })
   redraw | echo
 
   unlet s:id s:line s:pos s:wincol s:stop s:tw
@@ -34,7 +34,6 @@ function! s:popup() abort
         \   "col": s:wincol,
         \   "firstline": s:line,
         \   "maxwidth": s:tw + 5,
-        \   "maxheight": 2,
         \   "highlight": "Normal",
         \   "scrollbar": 0,
         \   "callback": "s:cleanUp",
@@ -53,29 +52,14 @@ function! s:popup() abort
         \   "event": "TextChangedI",
         \   "group": "SOFT_WRAP_LINE_AT_COL",
         \ }])
-
-  3match SoftWrapLineAtCol_Hidden /\%.l/
-
-  echohl MoreMsg
-  echo "-- WRAP LINE AT" (s:tw == &tw ? "&textwidth" : "COLUMN ".s:tw)  "--"
-  echohl None
 endfunction
 
-function! s:height() abort
-  let l:id = popup_create(getline(s:line), {
-        \   "line": 'cursor',
-        \   "col": s:wincol,
-        \   "maxwidth": s:tw + 5,
-        \   "scrollbar": 0,
-        \   "highlight": "SoftWrapLineAtCol_Hidden",
-        \   "visible": 0,
-        \ })
-  call setwinvar(l:id, "&lbr", &lbr)
-  call setwinvar(l:id, "&bri", &bri)
-  call win_execute(l:id, "redraw")
-  let h = winheight(l:id)
-  call popup_close(l:id)
-  return h
+function! s:slineHeight(winid) abort
+  let h = screenpos(a:winid, s:line, col('$', a:winid)).row
+  if h
+    let h -= screenpos(a:winid, s:line, 1).row
+  endif
+  return h + 1
 endfunction
 
 function! s:interations() abort
@@ -84,29 +68,27 @@ function! s:interations() abort
 
   while line('.', s:id) == s:line && col('$') > s:tw * 1.1 && !s:stop
     if col('$') != len_old
-      let h = s:height()
-      call popup_move(s:id, { "maxheight": h })
+      let h = 0
+      if s:line < line('$')
+        let h = s:slineHeight(s:id)
 
-      call prop_clear(s:line, s:line, { "type": "softWrapLineAtCol" })
-      if line('$') >= s:line+1
-        let h -= screenpos(0, s:line+1, 0).row - screenpos(0, s:line, 0).row
+        call prop_clear(s:line, s:line, { "type": "SWLAC_padding" })
+        for i in range(h - s:slineHeight(0))
+          call prop_add(s:line, 0, {
+                \   "type": "SWLAC_padding",
+                \   "text_align": "below",
+                \   "text": " ",
+                \ })
+        endfor
       endif
-      for i in range(h)
-        call prop_add(s:line, 0, {
-              \   "type": "softWrapLineAtCol",
-              \   "text_align": "below",
-              \   "text": " ",
-              \ })
-      endfor
+
+      call popup_move(s:id, { "maxheight": h })
       let len_old = col('$')
     endif
 
     call win_execute(s:id, s:cursorRefreshCmd)
 
-    let c = 0
-    while type(c) == v:t_number
-      let c = getcharstr(0)
-    endwhile
+    let c = getcharstr()
 
     if c == "\<Esc>"
       let s:pos = 0 " don't change position in original window
@@ -125,7 +107,17 @@ endfunction
 function! softWrapLineAtCol#toggle(width)
   if !exists("s:id")
     let s:tw = a:width
+
+    if col('$') < s:tw * 1.1 | return | endif
+
     call s:popup()
+
+    3match SWLAC_hidden /\%.l/
+
+    echohl MoreMsg
+    echo "-- WRAP LINE AT" (s:tw == &tw ? "&textwidth" : "COLUMN ".s:tw)  "--"
+    echohl None
+
     call s:interations()
   endif
   let s:stop = 1
