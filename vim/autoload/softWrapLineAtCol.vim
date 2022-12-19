@@ -1,6 +1,6 @@
 hi SWLAC_cursor ctermfg=bg ctermbg=fg
 hi SWLAC_hidden ctermfg=bg ctermbg=bg
-let s:cursorRefreshCmd = "match SWLAC_cursor '\\%.c\\%.l' | redraw"
+let s:cursorRefreshCmd = "match SWLAC_cursor '\\%.c' | redraw"
 
 call prop_type_add("SWLAC_padding", { "highlight": "SWLAC_hidden" })
 
@@ -20,11 +20,14 @@ function! s:cleanUp(...)
   call prop_clear(s:line, s:line, { "type": "SWLAC_padding" })
   redraw | echo
 
+  let &t_ve = s:t_ve
+
   unlet s:id s:line s:pos s:wincol s:stop s:tw
 endfunction
 
 function! s:popup() abort
   let s:line = line('.')
+  let [ s:t_ve, &t_ve ] = [ &t_ve, "" ]
 
   let wininfo = getwininfo(win_getid())[0]
   let s:wincol = wininfo.wincol + wininfo.textoff
@@ -49,7 +52,21 @@ function! s:popup() abort
   call autocmd_add([{
         \   "bufnr": bufnr(),
         \   "cmd": s:cursorRefreshCmd,
-        \   "event": "TextChangedI",
+        \   "event": [ "TextChangedI", "CursorMovedI", "InsertEnter" ],
+        \   "group": "SOFT_WRAP_LINE_AT_COL",
+        \ }])
+
+  call autocmd_add([{
+        \   "bufnr": bufnr(),
+        \   "cmd": "let &t_ve = s:t_ve",
+        \   "event": [ "CmdlineEnter" ],
+        \   "group": "SOFT_WRAP_LINE_AT_COL",
+        \ }])
+
+  call autocmd_add([{
+        \   "bufnr": bufnr(),
+        \   "cmd": "let &t_ve = ''",
+        \   "event": [ "CmdlineLeave" ],
         \   "group": "SOFT_WRAP_LINE_AT_COL",
         \ }])
 endfunction
@@ -65,6 +82,11 @@ endfunction
 function! s:interations() abort
   let s:stop = 0
   let len_old = 0
+
+  if line('.') != s:line
+    let s:pos = 0
+    return 0
+  endif
 
   while line('.', s:id) == s:line && col('$') > s:tw * 1.1 && !s:stop
     if col('$') != len_old
@@ -97,30 +119,41 @@ function! s:interations() abort
     endif
 
     if c =~ "[:?/]"
-      continue
+      return c
     endif
 
     let c = escape(c, '\')
     sil! call win_execute(s:id, "call feedkeys('" . c . "', 'cx!')")
   endwhile
+
+  return 0
 endfunction
 
 function! softWrapLineAtCol#toggle(width)
-  if !exists("s:id")
-    let s:tw = a:width
-
-    if col('$') < s:tw * 1.1 | return | endif
-
-    call s:popup()
-
-    3match SWLAC_hidden /\%.l/
-
-    echohl MoreMsg
-    echo "-- WRAP LINE AT" (s:tw == &tw ? "&textwidth" : "COLUMN ".s:tw)  "--"
-    echohl None
-
-    call s:interations()
+  if exists("s:id")
+    let s:stop = 1
+    return
   endif
-  let s:stop = 1
+
+  let s:tw = a:width
+
+  if col('$') < s:tw * 1.1 | return | endif
+
+  call s:popup()
+
+  3match SWLAC_hidden /\%.l/
+
+  echohl MoreMsg
+  echo "-- WRAP LINE AT" (s:tw == &tw ? "&textwidth" : "COLUMN ".s:tw)  "--"
+  echohl None
+
+  while 1
+    let c = s:interations()
+    if type(c) == v:t_number
+      break
+    endif
+    call feedkeys(c, 'cx!')
+  endwhile
+
   call popup_close(s:id)
 endfunction
