@@ -1,6 +1,10 @@
 hi SWLAC_cursor ctermfg=bg ctermbg=fg
 hi SWLAC_hidden ctermfg=bg ctermbg=bg
+
 let s:cursorRefreshCmd = "match SWLAC_cursor '\\%.c' | redraw"
+
+let s:cursorState = 1
+let s:cursorBlinkTime = 0
 
 call prop_type_add("SWLAC_padding", { "highlight": "SWLAC_hidden" })
 
@@ -16,27 +20,25 @@ function! s:cleanUp(...)
 
   autocmd! SOFT_WRAP_LINE_AT_COL
 
-  3match none
+  call win_execute(s:parentWinId, "2match none")
   call prop_clear(s:line, s:line, { "type": "SWLAC_padding" })
   redraw | echo
 
-  let &t_ve = s:t_ve
-
-  unlet s:id s:line s:pos s:wincol s:stop s:tw
+  unlet s:id s:parentWinId s:line s:pos s:stop s:tw s:t_ve
 endfunction
 
 function! s:popup() abort
   let s:line = line('.')
-  let [ s:t_ve, &t_ve ] = [ &t_ve, "" ]
+  let s:t_ve = &t_ve
+  let s:parentWinId = win_getid()
 
-  let wininfo = getwininfo(win_getid())[0]
-  let s:wincol = wininfo.wincol + wininfo.textoff
+  let wininfo = getwininfo(s:parentWinId)[0]
 
   let s:id = popup_create(bufnr(), {
         \   "line": 'cursor',
-        \   "col": s:wincol,
+        \   "col": wininfo.wincol + wininfo.textoff,
         \   "firstline": s:line,
-        \   "maxwidth": s:tw + 5,
+        \   "maxwidth": min([s:tw + 5, wininfo.width - wininfo.textoff]),
         \   "highlight": "Normal",
         \   "scrollbar": 0,
         \   "callback": "s:cleanUp",
@@ -58,75 +60,99 @@ function! s:popup() abort
 
   call autocmd_add([{
         \   "bufnr": bufnr(),
-        \   "cmd": "let &t_ve = s:t_ve",
-        \   "event": [ "CmdlineEnter" ],
+        \   "cmd":  "let &t_ve = col('.') >= col('$') ? s:t_ve : ''",
+        \   "event": [ "InsertEnter", "CursorMovedI" ],
         \   "group": "SOFT_WRAP_LINE_AT_COL",
         \ }])
 
   call autocmd_add([{
         \   "bufnr": bufnr(),
-        \   "cmd": "let &t_ve = ''",
-        \   "event": [ "CmdlineLeave" ],
+        \   "cmd": "let &t_ve = s:t_ve",
+        \   "event": [ "InsertLeave" ],
         \   "group": "SOFT_WRAP_LINE_AT_COL",
         \ }])
 endfunction
 
+function! s:cursorBlink(f) abort
+  if !s:cursorState || a:f
+    hi SWLAC_cursor ctermfg=bg ctermbg=fg
+  else
+    hi SWLAC_cursor ctermfg=fg ctermbg=bg
+  endif
+  let s:cursorState = !s:cursorState + a:f
+endfunction
+
 function! s:slineHeight(winid) abort
   let h = screenpos(a:winid, s:line, col('$', a:winid)).row
-  if h
+  if h >= 1
     let h -= screenpos(a:winid, s:line, 1).row
   endif
   return h + 1
+endfunction
+
+function! s:redoHeight() abort
+  let h = 0
+  if s:line < line('$')
+    call win_execute(s:id, "redraw")
+    let h = s:slineHeight(s:id)
+
+    call prop_clear(s:line, s:line, { "type": "SWLAC_padding" })
+    for i in range(h - s:slineHeight(s:parentWinId))
+      call prop_add(s:line, 0, {
+            \   "type": "SWLAC_padding",
+            \   "text_align": "below",
+            \   "text": " ",
+            \ })
+    endfor
+  endif
+
+  call popup_move(s:id, { "maxheight": h })
+endfunction
+
+function! s:getChar() abort
+  while 1
+    let c = getcharstr(0)
+    if !empty(c)
+      call s:cursorBlink(1)
+      return c
+    endif
+
+    if localtime() - s:cursorBlinkTime >= 1
+      call s:cursorBlink(0)
+      call win_execute(s:id, s:cursorRefreshCmd)
+      let s:cursorBlinkTime = localtime()
+    endif
+  endwhile
 endfunction
 
 function! s:interations() abort
   let s:stop = 0
   let len_old = 0
 
-  if line('.') != s:line
+  if line('.') != s:line || win_getid() != s:parentWinId
     let s:pos = 0
     return 0
   endif
 
-  while line('.', s:id) == s:line && col('$') > s:tw * 1.1 && !s:stop
+  while line('.', s:id) == s:line && col('$', s:id) > s:tw * 1.1 && !s:stop
     if col('$') != len_old
-      let h = 0
-      if s:line < line('$')
-        call win_execute(s:id, "redraw")
-        let h = s:slineHeight(s:id)
-
-        call prop_clear(s:line, s:line, { "type": "SWLAC_padding" })
-        for i in range(h - s:slineHeight(0))
-          call prop_add(s:line, 0, {
-                \   "type": "SWLAC_padding",
-                \   "text_align": "below",
-                \   "text": " ",
-                \ })
-        endfor
-      endif
-
-      call popup_move(s:id, { "maxheight": h })
+      call s:redoHeight()
       let len_old = col('$')
     endif
 
-    call win_execute(s:id, s:cursorRefreshCmd)
+    silent! call win_execute(s:id, s:cursorRefreshCmd)
 
-    let c = getcharstr()
+    let c = s:getChar()
 
     if c == "\<Esc>"
       let s:pos = 0 " don't change position in original window
-      break
-    endif
-
-    if c =~ "[:?/]"
+      return 0
+    elseif c =~ "[:?/]"
       return c
+    else
+      sil! call win_execute(s:id, "call feedkeys('" . escape(c, '\') . "', 'cx!')")
     endif
-
-    let c = escape(c, '\')
-    sil! call win_execute(s:id, "call feedkeys('" . c . "', 'cx!')")
   endwhile
-
-  return 0
 endfunction
 
 function! softWrapLineAtCol#toggle(width)
@@ -141,7 +167,7 @@ function! softWrapLineAtCol#toggle(width)
 
   call s:popup()
 
-  3match SWLAC_hidden /\%.l/
+  2match SWLAC_hidden /\%.l/
 
   echohl MoreMsg
   echo "-- WRAP LINE AT" (s:tw == &tw ? "&textwidth" : "COLUMN ".s:tw)  "--"
