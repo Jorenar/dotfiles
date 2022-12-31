@@ -6,7 +6,7 @@ fi
 
 [ -z "$FRESHRSS_AUTOSTART" ] && return
 
-if [ -x "$(command -v podman)" ]; then
+if [ ! -x "$(command -v podman)" ]; then
     echo "podman not installed"
     return
 fi
