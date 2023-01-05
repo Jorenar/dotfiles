@@ -232,10 +232,11 @@ source  $VIMRUNTIME/ftplugin/man.vim
 
 " ALE {{{2
 
-let g:ale_disable_lsp      = 1
-let g:ale_echo_msg_format  = '[%linter%]: %s'
-let g:ale_set_quickfix     = 1
-let g:ale_set_signs        = 0
+let g:ale_disable_lsp = 1
+let g:ale_echo_msg_format = '[%linter%]: %s'
+let g:ale_set_quickfix = 1
+let g:ale_set_signs = 0
+let g:ale_virtualtext_cursor = 0
 
 hi! link ALEError   Error
 hi! link ALEWarning WarningMsg
@@ -255,9 +256,10 @@ augroup END
 
 " vim-lsp {{{2
 
-let g:lsp_diagnostics_highlights_enabled     = 1
 let g:lsp_diagnostics_highlights_delay       = 0
+let g:lsp_diagnostics_highlights_enabled     = 1
 let g:lsp_diagnostics_signs_enabled          = 0
+let g:lsp_diagnostics_virtual_text_enabled   = 0
 let g:lsp_document_code_action_signs_enabled = 0
 
 hi! link LspErrorHighlight   Error
