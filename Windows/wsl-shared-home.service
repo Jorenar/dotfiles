@@ -1,0 +1,13 @@
+# Remember to also edit /etc/passwd!
+
+[Unit]
+Description=Mount $HOME from default distro as /mnt/wsl/home
+
+[Service]
+Type=simple
+ExecStartPre=mkdir -p /mnt/wsl/home
+ExecStart=/mnt/c/windows/system32/wsl.exe -u root mount --bind  /home/$USER  /mnt/wsl/home
+#                                                               ^ set correct path here!
+
+[Install]
+WantedBy=multi-user.target
