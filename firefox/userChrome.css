@@ -46,3 +46,23 @@ menupopup {
 #contentAreaContextMenu #context-navigation {
   display: none !important;
 }
+
+.urlbarView-row[dynamicType="onboardTabToSearch"] {
+  display: none;
+}
+
+#tabbrowser-tabs {
+  border-inline-start: initial !important;
+}
+
+#BMB_bookmarksPopup menuitem .menu-iconic-left {
+  visibility: hidden;
+  position: relative;
+}
+
+#BMB_bookmarksPopup menuitem .menu-iconic-left:after {
+  content: url("chrome://browser/skin/bookmark.svg");
+  visibility: visible;
+  position: absolute;
+  left: 0;
+}

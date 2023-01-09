@@ -3,9 +3,9 @@
 xresources="$XDG_CONFIG_HOME/X11/Xresources"
 xmodmap="$XDG_CONFIG_HOME/X11/Xmodmap"
 
-exec_session() {
+find_session() {
     echo "$1" | while IFS= read -r line; do
-        [ -x "$(command -v $line)" ] && exec $line
+        [ -x "$(command -v $line)" ] && echo "$line" && return
     done
 }
 # }}}
@@ -31,9 +31,9 @@ fi
 [ -x "$(command -v nvidia-settings)" ] && nvidia-settings --load-config-only
 
 
-exec_session "
+exec $(find_session "
     $DEFAULT_X_SESSION
     i3
     xfce4-session
     gnome-session
-"
+")
