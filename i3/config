@@ -44,9 +44,6 @@ bindsym $super+x exec --no-startup-id ${TERMINAL:-xterm}
 # Firefox
 bindsym $super+w exec firefox
 
-# QuiteRSS
-bindsym $super+q exec --no-startup-id [ -z "$(xdotool search --class QuiteRss)" ] && exec quiterss || i3-msg \[class="QuiteRss"\] scratchpad show
-
 # aerc
 bindsym $super+m exec --no-startup-id imapfilter && ${TERMINAL:-xterm} -T aerc aerc && rm -f "${TMPDIR:-/tmp}/aerc.html"
 
@@ -60,11 +57,6 @@ bindsym $super+p exec --no-startup-id passmenu --type
 bindsym $super+e exec --no-startup-id ${TERMINAL:-xterm} -T Ranger ranger
 
 # WINDOWS RULES {{{1
-
-# QuiteRSS
-for_window [class="QuiteRss" instance="quiterss" title="QuiteRSS"] floating enable
-for_window [class="QuiteRss" instance="quiterss" title="QuiteRSS"] move position 80px 50px
-for_window [class="QuiteRss" instance="quiterss" title="QuiteRSS"] move scratchpad
 
 # KanjiTomo
 for_window [class="kanjitomo-reader-Launcher" title="KanjiTomo"] floating enable
@@ -125,7 +117,7 @@ bindsym $super+f focus mode_toggle
 bindsym $super+Shift+minus move scratchpad
 
 # show the first scratchpad window
-bindsym $super+minus [class="^(?!QuiteRss).*$"] scratchpad show
+bindsym $super+minus scratchpad show
 
 # Workspaces {{{2
 

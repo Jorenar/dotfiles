@@ -1,14 +1,8 @@
 #!/usr/bin/env sh
 
-if grep -Fxqs "freshrss" "$TMPFLAGS"; then
-    return
-fi
-
-[ -z "$FRESHRSS_AUTOSTART" ] && return
-
 if [ ! -x "$(command -v podman)" ]; then
     echo "podman not installed"
-    return
+    exit
 fi
 
 name="FreshRSS"
@@ -41,5 +35,3 @@ if [ "$initialized" = 0 ]; then
         --password "$passwd" --api_password "$passwd" \
         --no_default_feeds
 fi
-
-echo "freshrss" >> "$TMPFLAGS"

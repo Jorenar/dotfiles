@@ -1,0 +1,59 @@
+app:
+  publicUrl: ${COMMAFEED_URL}
+
+  refreshIntervalMinutes: 10
+
+  backgroundThreads: 3
+  databaseUpdateThreads: 1
+
+  allowRegistrations: false
+  createDemoAccount: false
+
+  heavyLoad: false
+  pubsubhubbub: false
+  imageProxyEnabled: false
+
+  cache: noop
+  queryTimeout: 0
+  keepStatusDays: 0
+  maxFeedCapacity: 500
+
+database:
+  driverClass: org.h2.Driver
+  url: jdbc:h2:${XDG_DATA_HOME}/commafeed/db
+  user: sa
+  password: sa
+  properties:
+    charSet: UTF-8
+  validationQuery: "/* CommaFeed Health Check */ SELECT 1"
+  minSize: 1
+  maxSize: 50
+  maxConnectionAge: 30m
+
+server:
+  applicationConnectors:
+    - type: http
+      port: 8082
+  adminConnectors:
+    - type: http
+      port: 8084
+
+logging:
+  level: WARN
+  loggers:
+    com.commafeed: INFO
+    liquibase: INFO
+    io.dropwizard.server.ServerFactory: INFO
+    org.hibernate.orm.deprecation: "OFF"
+  appenders:
+    - type: console
+    - type: file
+      currentLogFilename: ${XDG_STATE_HOME}/commafeed.log
+      threshold: ALL
+      archive: false
+      archivedLogFilenamePattern: log/commafeed-%d.log
+      archivedFileCount: 5
+      timeZone: UTC
+
+session:
+  path: ${XDG_DATA_HOME}/commafeed/sessions
