@@ -108,6 +108,7 @@ set number
 set scrolloff=5
 set sessionoptions=blank,buffers,folds,tabpages,winsize
 set shortmess+=I
+set shortmess-=S
 set showcmd
 set smartcase
 set spellsuggest=double,5

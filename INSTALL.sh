@@ -3,9 +3,9 @@
 # Init {{{1
 
 force_flag=$1
-DIR="$(dirname $(realpath $0))"
+DIR="$(dirname "$(realpath "$0")")"
 
-. $DIR/env/variables; . $DIR/env/user-dirs.dirs
+. "$DIR"/env/variables; . "$DIR"/env/user-dirs.dirs
 
 # 1nd argument - file in dotfiles dir
 # 2rd argument - location of link
@@ -13,18 +13,18 @@ DIR="$(dirname $(realpath $0))"
 linking() {
 
     if [ "$force_flag" = "-f" ] && [ -e "$2" ]; then
-        mkdir -p $HOME/dotfiles.old/
+        mkdir -p "$HOME/dotfiles.old/"
         mv "$2" "$HOME/dotfiles.old/"
         echo "Moved file $2 to directory $HOME/dotfiles.old/"
     fi
 
-    if [ ! -e $2 ]; then
-        mkdir -p "$(dirname $2)"
+    if [ ! -e "$2" ]; then
+        mkdir -p "$(dirname "$2")"
         if [ "$3" = "CP" ]; then
-            cp -r $DIR/$1 $2
+            cp -r "$DIR/$1" "$2"
             mod="$4"
         else
-            ln -sf $DIR/$1 $2
+            ln -sf "$DIR/$1" "$2"
             mod="$3"
         fi
     fi
