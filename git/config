@@ -27,11 +27,19 @@
     prompt = false
     trustExitCode = true
 
+[color "diff-highlight"]
+    oldNormal = red bold
+    oldHighlight = red bold 52
+    newNormal = green bold
+    newHighlight = green bold 22
+
 [pager]
-    # diff-highlight is script provided by git that shows word-by-word diff
-    log  = perl $GIT_PATH_TO_DIFF_HIGHLIGHT | less
-    show = perl $GIT_PATH_TO_DIFF_HIGHLIGHT | less
-    diff = perl $GIT_PATH_TO_DIFF_HIGHLIGHT | less
+    log  = diff-highlight | less
+    show = diff-highlight | less
+    diff = diff-highlight | less
+
+[interactive]
+    diffFilter = diff-highlight
 
 [alias]
     st = status --short
