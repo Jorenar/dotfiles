@@ -1,5 +1,8 @@
 " vim: fen fdl=1
 
+syn clear cErrInBracket
+syn match cErrInBracket display contained "[);}]\|<%\|%>"
+
 " FOLDING {{{1
 " .ipp include guard {{{2
 

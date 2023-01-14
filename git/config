@@ -27,6 +27,12 @@
     prompt = false
     trustExitCode = true
 
+[pager]
+    # diff-highlight is script provided by git that shows word-by-word diff
+    log  = perl $GIT_PATH_TO_DIFF_HIGHLIGHT | less
+    show = perl $GIT_PATH_TO_DIFF_HIGHLIGHT | less
+    diff = perl $GIT_PATH_TO_DIFF_HIGHLIGHT | less
+
 [alias]
     st = status --short
     lg = log --oneline --graph --abbrev-commit

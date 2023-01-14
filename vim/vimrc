@@ -95,6 +95,7 @@ set backspace=indent,eol,start
 set backup
 set colorcolumn=+1,+21,+31
 set complete+=kspell
+set diffopt=internal,filler,closeoff,indent-heuristic,algorithm:histogram
 set hidden
 set hlsearch
 set ignorecase
@@ -115,6 +116,7 @@ set spellsuggest=double,5
 set splitbelow splitright
 set switchbuf=usetab
 set ttimeoutlen=10
+set ttymouse=xterm2
 set undofile
 set vb t_vb=
 set wildmenu wildmode=full wildoptions=

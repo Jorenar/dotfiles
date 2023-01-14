@@ -183,6 +183,8 @@ export DEVKITPPC="$DEVKITPRO/devkitPPC"
 pathmunge /usr/lib/ccache/bin
 pathmunge $XDG_DATA_HOME/gem/ruby/*/bin
 
+export GIT_PATH_TO_DIFF_HIGHLIGHT="$(find /usr/share/git -name diff-highlight -type f)"
+
 # PATH {{{1
 
 pathmunge "$XDG_LOCAL_HOME/bin"
