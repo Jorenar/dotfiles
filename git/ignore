@@ -8,6 +8,7 @@
 .tmp/
 .vimrc
 .vimspector.json
+*.orig
 __pycache__
 a.out
 build/
