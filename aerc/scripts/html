@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+sed 's@content=\("\)text/html; charset=@charset=\1@' | elinks -dump
