@@ -34,7 +34,7 @@ colorscheme darkness
 
 " COMMANDS {{{1
 
-com! -range -nargs=+  Align            <line1>,<line2>!column -Lts'<args>' -o'<args>'
+com! -range -nargs=+  Align            <line1>,<line2>!column -Lts<args> -o<args>
 com! -bang            ColorUp          exec "colo " . (<bang>0 ? "darkness" : "colorUp")
 com!                  CountSpell       echo utils#CountSpell()
 com! -nargs=?         Cscope           exec "lcscope find <args>" | lw
@@ -146,6 +146,8 @@ set tags+=.git/tags;
 
 set signcolumn=yes
 set updatetime=250
+
+let g:diff_translations = 0
 
 augroup FORMATOPTIONS
   autocmd!
@@ -535,6 +537,15 @@ augroup OTHER
   " Set fold method to syntax
   autocmd FileType dosini,make,m3u,todo  setlocal foldmethod=syntax
 
+augroup END
+
+augroup MERGETOOL
+  autocmd!
+  if join(argv()) =~ '.*_LOCAL_.*_BASE_.*_REMOTE_.*'
+    autocmd BufReadPost  *_LOCAL_*   setl stl=\ LOCAL
+    autocmd BufReadPost  *_BASE_*    setl stl=\ BASE
+    autocmd BufReadPost  *_REMOTE_*  setl stl=\ REMOTE
+  endif
 augroup END
 
 augroup TRIM_TRAILING_WHITESPACE
