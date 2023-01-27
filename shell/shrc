@@ -34,7 +34,7 @@ trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && . $XDG_CONFIG_HOME/shell/logout"
 
 # PROMPT {{{1
 
-PS1='\001\033[32m\002$\001\033[0m\002 '
+PS1='\001\033[36m\002$\001\033[0m\002 '
 
 if [ -z "$TMUX" ]; then
 
