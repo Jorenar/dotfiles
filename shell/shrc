@@ -34,24 +34,32 @@ trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && . $XDG_CONFIG_HOME/shell/logout"
 
 # PROMPT {{{1
 
-PS1=
+PS1='\001\033[32m\002$\001\033[0m\002 '
 
-# user@host
-PS1="$PS1"'$USER@$HOSTNAME'
+if [ -z "$TMUX" ]; then
 
-# pwd
-PS1="$PS1"' $(echo $PWD | sed -e "s,^$HOME,~," -e "s,..*/,./," -e "s,. .,\&/,")'
+    # \n
+    PS1='\n'"$PS1"
 
-# git_branch
-PS1="$PS1\$(git rev-parse --abbrev-ref HEAD 2> /dev/null | sed 's/.*/ &/')"
+    # ]
+    PS1=']'"$PS1"
 
-# $
-PS1="[$PS1]"'$ '
+    # git_branch
+    PS1="\$(git rev-parse --abbrev-ref HEAD 2> /dev/null | sed 's/.*/ &/')""$PS1"
 
-# (shell)
-# PS1='($(basename $0))'"$PS1"
+    # pwd
+    PS1='$(echo $PWD | sed -e "s,^$HOME,~," -e "s,..*/,./," -e "s,. .,\&/,")'"$PS1"
 
-# - WINDOW TITLE | user@host:pwd
-[ -z "$BASH_VERSION" ] && \
-    PS1=$(printf \
-        '\033]0;$USER@$HOSTNAME:$(echo $PWD | sed s,^$HOME,~,)\007'"$PS1")
+    # user@host
+    PS1='$USER@$HOSTNAME '"$PS1"
+
+    # [
+    PS1='['"$PS1"
+
+    # (shell)
+    PS1='($(basename $0))'"$PS1"
+
+fi
+
+# WINDOW TITLE | user@host:pwd
+PS1=$(printf '\001\033]0;$USER@$HOSTNAME:$(echo $PWD | sed s,^$HOME,~,)\007\002'"$PS1")
