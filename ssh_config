@@ -1,6 +1,6 @@
 Host *
     Compression yes
-    Include ~/.local/aux/ssh
+    Include ~/.local/.dotfiles/.host/ssh
 
 Host aur.archlinux.org
     IdentityFile ~/.local/share/ssh/aur

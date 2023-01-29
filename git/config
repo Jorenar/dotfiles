@@ -56,4 +56,4 @@
     initial    = !sh -c 'git init && git add -A && git commit -m \"Initial commit\" && git remote add origin \"$1\" && git push -u origin master' -
 
 [include]
-    path = ~/.local/aux/git
+    path = ~/.local/.dotfiles/.host/git

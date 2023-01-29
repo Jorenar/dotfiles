@@ -78,8 +78,6 @@ fi
 export XDG_RUNTIME_DIR
 
 
-export XDG_AUX_DIR="$XDG_LOCAL_HOME/aux" # auxiliary, local configs
-
 if [ -f "$XDG_CONFIG_HOME/user-dirs.dirs" ]; then
     eval "$(sed 's/^[^#].*/export &/g;t;d' $XDG_CONFIG_HOME/user-dirs.dirs)"
 fi
@@ -235,6 +233,8 @@ export WINEDEBUG=-all
 # Enable touchscreen in Firefox
 export MOZ_USE_XINPUT2=1
 
-# -end- {{{1
+# HOSTDOTS {{{1
 
-[ -f "$XDG_AUX_DIR/env_variables" ] && . "$XDG_AUX_DIR/env_variables" # additional, local env_variables
+export HOSTDOTS="${HOSTDOTS:-$XDG_LOCAL_HOME/.dotfiles/.host}"
+
+[ -f "$HOSTDOTS/env_variables" ] && . "$HOSTDOTS/env_variables"

@@ -30,7 +30,7 @@ trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && . $XDG_CONFIG_HOME/shell/logout"
 . $XDG_CONFIG_HOME/shell/fzf.sh
 
 # Source local additional shell config
-[ -f $XDG_AUX_DIR/shell ] && . $XDG_AUX_DIR/shell
+[ -f $HOSTDOTS/shell ] && . $HOSTDOTS/shell
 
 # PROMPT {{{1
 
