@@ -183,6 +183,8 @@ export DEVKITPPC="$DEVKITPRO/devkitPPC"
 pathmunge /usr/lib/ccache/bin
 pathmunge $XDG_DATA_HOME/gem/ruby/*/bin
 
+pathmunge C_INCLUDE_PATH "$XDG_LOCAL_HOME/lib/include"
+
 # PATH {{{1
 
 pathmunge "$XDG_LOCAL_HOME/bin"
