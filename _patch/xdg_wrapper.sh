@@ -57,7 +57,7 @@ case "$(basename "$0")" in
         chmod -w "$XDG_CONFIG_HOME/weechat"
         ;;
     *) # FAKEHOME
-        HOME="${XDG_FAKEHOME_DIR:-$HOME/.local/.fakehome}"
+        HOME="$HOME/.local/.fakehome"
         ;;
 esac
 

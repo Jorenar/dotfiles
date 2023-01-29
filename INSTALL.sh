@@ -109,12 +109,12 @@ linking_ "$XDG_DATA_HOME" '
 
 '
 
-linking  bin/         $XDG_LOCAL_HOME/bin/scripts
+linking  bin/         $HOME/.local/bin/scripts
 linking  templates/   $XDG_TEMPLATES_DIR
 
 # "PATCHING" {{{1
 
-patch_dir="$XDG_LOCAL_HOME/bin/_patch"
+patch_dir="$HOME/.local/bin/_patch"
 find "$patch_dir" -type l -delete # clean old symlinks to wrappers
 
 prompt_sudo="$(sudo -nv 2>&1)"

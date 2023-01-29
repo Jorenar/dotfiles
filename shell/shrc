@@ -18,7 +18,7 @@ fi
 export HISTSIZE=5000
 
 # Restore OLDPWD
-[ -f "$XDG_HISTORY_DIR/oldpwd" ] && . "$XDG_HISTORY_DIR/oldpwd"
+[ -f "$HISTORY_DIR/oldpwd" ] && . "$HISTORY_DIR/oldpwd"
 
 # Logout
 trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && . $XDG_CONFIG_HOME/shell/logout" EXIT

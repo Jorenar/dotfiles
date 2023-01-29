@@ -1,4 +1,4 @@
 # LOGOUT SCRIPT #
 # vim: ft=sh
 
-echo "OLDPWD='$PWD'" > "$XDG_HISTORY_DIR/oldpwd"
+echo "OLDPWD='$PWD'" > "$HISTORY_DIR/oldpwd"

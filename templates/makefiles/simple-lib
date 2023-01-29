@@ -28,14 +28,5 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(basename $@)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
-install:
-	@mkdir -p $(XDG_LIB_DIR)/c $(XDG_INCLUDE_DIR)/c
-	install $(LIB) $(XDG_LIB_DIR)/c/$(LIBFILENAME)
-	rm -rf $(XDG_INCLUDE_DIR)/c/$(LIBNAME) && cp -r $(INCLDIR) $(XDG_INCLUDE_DIR)/c/$(LIBNAME)
-
-uninstall:
-	rm $(XDG_LIB_DIR)/c/$(LIBFILENAME)
-	rm -rf $(XDG_INCLUDE_DIR)/c/$(LIBNAME)
-
 clean:
 	rm -rf build
