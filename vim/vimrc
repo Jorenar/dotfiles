@@ -41,9 +41,9 @@ com! -nargs=?         Cscope           exec "lcscope find <args>" | lw
 com!                  ExecCurrentLine  normal :.w !sh<CR>
 com! -nargs=1         FillLine         exec "norm! $" | exec "FillToColumn" <q-args> &tw
 com! -nargs=+         FillToColumn     exec {str,r -> "norm! a".repeat(str, (r-col("."))/len(str))}(<f-args>)
-com! -nargs=+         Vimgrep          exec "lvimgrep /".<q-args>."/j **"
-com! -nargs=+         Grep             silent! exec "lgrep -R <args> ."
-com! -nargs=+         GrepRename       exec {a,b -> 'tabe | lv /\C\<' . a . '\>/j ** | ldo s/\C\<' . a . '\>/' . b . '/gc | up'}(<f-args>) | q
+com! -nargs=+         Vimgrep          exec "vimgrep /".<q-args>."/j **"
+com! -nargs=+         Grep             silent! exec "grep -R <args> ."
+com! -nargs=+         GrepRename       exec {a,b -> 'tabe | lv /\C\<' . a . '\>/j ** | cdo s/\C\<' . a . '\>/' . b . '/gc | up'}(<f-args>) | q
 com!                  InstallPlugins   call utils#InstallPlugins()
 com! -nargs=1         SetFormatProg    exec {prg -> 'let [ &l:formatprg, &l:formatexpr ] = [ "'.prg.' 2> /dev/null", "" ]'}(<args>)
 com! -range=%         Sort             normal :<line1>,<line2>sort i<CR>
@@ -237,8 +237,6 @@ source  $VIMRUNTIME/ftplugin/man.vim
 
 let g:ale_disable_lsp = 1
 let g:ale_echo_msg_format = '[%linter%]: %s'
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
 let g:ale_set_signs = 0
 let g:ale_virtualtext_cursor = 0
 

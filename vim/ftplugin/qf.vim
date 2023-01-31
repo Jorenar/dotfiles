@@ -1,14 +1,19 @@
-wincmd J " QuickFix window below other windows
 setlocal nocursorline nocursorcolumn
 setlocal nonumber
-setlocal wrap
+setlocal nowrap
 
-if getwininfo(win_getid())[0]['quickfix']
-  noremap <buffer> g- :colder<CR>
-  noremap <buffer> g+ :cnewer<CR>
-else
+let w:is_loclist = getwininfo(win_getid())[0]['loclist']
+
+if !w:is_loclist
+  wincmd J
+endif
+
+if w:is_loclist
   noremap <buffer> g- :lolder<CR>
   noremap <buffer> g+ :lnewer<CR>
+else
+  noremap <buffer> g- :colder<CR>
+  noremap <buffer> g+ :cnewer<CR>
 endif
 
 " Quit QuickFix window along with source file window
