@@ -93,9 +93,10 @@ map gh <nop>
 
 set backspace=indent,eol,start
 set backup
-set colorcolumn=+1,+21,+31
+set colorcolumn=+1
 set complete+=kspell
 set diffopt=internal,filler,closeoff,indent-heuristic,algorithm:histogram
+set fillchars+=vert:│
 set hidden
 set hlsearch
 set ignorecase
