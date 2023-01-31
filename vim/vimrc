@@ -176,16 +176,11 @@ function! MyFoldText() abort
         \ . trim(substitute(getline(v:foldstart), split(&l:fmr, ',')[0].'\d\?', '', '')) . " "
 endfunction
 
-set showtabline=2
 set laststatus=2
-set statusline=
-let &stl .= "{%{stl#NumOfBufs()}}"
-let &stl .= "%{stl#ModifBufs()}%r  "
-let &stl .= "%y[%{stl#FfAndEnc()}]  "
-let &stl .= "[%{stl#IssuesCount()}]"
-let &stl .= "%{stl#VcsStats()}"
-let &stl .= "  %l/%L:%c"
-let &stl .= "  |  %<%f "
+set statusline=%!lines#StatusLine()
+
+set showtabline=2
+set tabline=%!lines#TabLine()
 
 if has("cscope") && executable("cscope")
   let db = findfile("cscope.out", ".git;")
