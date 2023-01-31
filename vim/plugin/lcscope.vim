@@ -5,24 +5,33 @@
 if exists('g:loaded_lcscope') | finish | endif
 let s:cpo_save = &cpo | set cpo&vim
 
+function! s:lcscope() abort
+  copen
+  let [ s:ch_old, &ch ] = [ &cmdheight, 2 ]
+  let s:list = getqflist()
+  call setloclist(s:winid, s:list)
+  call setloclist(s:winid, [], 'a', { "title": w:quickfix_title })
+  if s:ccl | cclose | endif
+  if len(s:list) == 1 | lclose | else | lopen | endif
+
+  autocmd CursorMoved * ++once
+        \   call setqflist([], 'r', {"title": ""})
+        \ | silent! colder
+        \ | let &ch = s:ch_old
+        \ | echo
+
+endfunction
+
 augroup LCSCOPE
   autocmd!
 
-  autocmd QuickFixCmdPre [^l]cscope
-        \ let s:ccl = empty(filter(getwininfo(), 'v:val.quickfix && !v:val.loclist'))
+  autocmd QuickFixCmdPre cscope
+        \   let s:winid = win_getid()
+        \ | let s:ccl = empty(filter(getwininfo(), 'v:val.quickfix && !v:val.loclist'))
 
-  autocmd QuickFixCmdPost [^l]cscope
-        \ | copen
-        \ | let s:qfcs = { "list": getqflist(), "title": w:quickfix_title }
-        \ | wincmd p
-        \ | silent! colder
-        \ | if s:ccl | cclose | endif
-        \ | call setloclist(0, s:qfcs.list)
-        \ | call setloclist(0, [], 'a', { "title": s:qfcs.title })
-        \ | lopen
-        \ | unlet s:ccl s:qfcs
+  autocmd QuickFixCmdPost cscope call s:lcscope()
 
 augroup END
 
 let g:loaded_lcscope = 1
-let &cpo = s:cpo_save | unlet s:cpo_save "
+let &cpo = s:cpo_save | unlet s:cpo_save
