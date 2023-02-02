@@ -1,0 +1,31 @@
+#!/usr/bin/env sh
+
+projRoot="$PWD"
+if git rev-parse 2> /dev/null; then
+    projRoot="$(git rev-parse --show-toplevel)"
+fi
+tagsDir="$projRoot/.tags"
+
+cd "$projRoot"
+mkdir -p "$tagsDir"
+
+if [ -x "$(command -v ctags)" ]; then
+    ctags -R --tag-relative=yes -f "$tagsDir/tags"
+fi
+
+if [ -x "$(command -v cscope)" ]; then
+    namefile="$(mktemp)"
+
+    find "$projRoot" \( \
+        -name '*.[chxsS]' \
+        -o -name '*.cpp' -o -name '*.hpp' \
+        -o -name '*.java' \
+        \) -exec readlink -f {} \; > "$namefile"
+
+    cscope -c -b -q -i "$namefile" -f "$tagsDir/cscope.out"
+    rm "$namefile"
+fi
+
+if [ -x "$(command -v gtags)" ]; then
+    gtags $tagsDir
+fi
