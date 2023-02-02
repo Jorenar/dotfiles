@@ -46,7 +46,21 @@ pathmunge() {
     unset A S E var new val updated
 }
 
-# XDG Base Directory {{{
+# basics {{{1
+
+# Name
+export NAME="Jorengarenar"
+
+# HOST
+export HOSTNAME="${HOSTNAME:-$(hostname -s)}"
+
+# Temp dir
+export TMPDIR="${TMPDIR:-/tmp}"
+
+# Virtual terminal number (if not set already by PAM)
+export XDG_VTNR="${XDG_VTNR:-$(tty | sed 's/[^0-9]*//g')}"
+
+# XDG Base Directory {{{1
 
 export XDG_CACHE_HOME="$HOME/.local/cache"
 export XDG_CONFIG_HOME="$HOME/.local/config"
@@ -65,22 +79,7 @@ if [ -f "$XDG_CONFIG_HOME/user-dirs.dirs" ]; then
     eval "$(sed 's/^[^#].*/export &/g;t;d' $XDG_CONFIG_HOME/user-dirs.dirs)"
 fi
 
-# }}}
-
-# basics {{{1
-
-# Name
-export NAME="Jorengarenar"
-
-# HOST
-export HOSTNAME="${HOSTNAME:-$(hostname -s)}"
-
-# Temp dir
-export TMPDIR="${TMPDIR:-/tmp}"
-
-# Virtual terminal number (if not set already by PAM)
-export XDG_VTNR="${XDG_VTNR:-$(tty | sed 's/[^0-9]*//g')}"
-
+# relocating dirs and files {{{1
 
 # history dir
 export HISTORY_DIR="$XDG_STATE_HOME/history"
@@ -88,7 +87,6 @@ export HISTORY_DIR="$XDG_STATE_HOME/history"
 # host specific dotfiles dir
 export HOSTDOTS="${HOSTDOTS:-$HOME/.local/.dotfiles/.host}"
 
-# relocating dirs and files {{{1
 # ~history {{{2
 export HISTFILE="$HISTORY_DIR/shell"
 export LESSHISTFILE=-
