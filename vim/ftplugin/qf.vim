@@ -1,4 +1,5 @@
 setlocal nocursorline nocursorcolumn
+setlocal colorcolumn=
 setlocal nonumber
 setlocal nowrap
 
@@ -18,3 +19,6 @@ endif
 
 " Quit QuickFix window along with source file window
 autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix" | q | endif
+
+let qf_disable_statusline = 1
+setlocal stl=\ %t\ [%l/%L]%=%{w:quickfix_title}\  " comm to prevent trimming space
