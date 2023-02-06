@@ -5,6 +5,8 @@ setlocal foldmethod=syntax
 setlocal tabstop=2
 setlocal comments+=s1:/*,mb:*,ex:*/,://
 
+let g:ale_html_tidy_options = "--drop-empty-elements 0"
+
 let g:php_html_shitwidth = &l:sw ? &l:sw : &l:ts
 
 compiler tidy

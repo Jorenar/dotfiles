@@ -1,5 +1,5 @@
 hi SWLAC_cursor ctermfg=bg ctermbg=fg
-hi SWLAC_hidden ctermfg=bg ctermbg=bg
+hi SWLAC_hidden ctermfg=bg ctermbg=bg cterm=NONE
 
 let s:cursorRefreshCmd = "match SWLAC_cursor '\\%.c' | redraw"
 

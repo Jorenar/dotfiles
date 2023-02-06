@@ -195,6 +195,7 @@ let g:plugins = {
       \     "editorconfig/editorconfig-vim",
       \     "Jorengarenar/miniSnip",
       \     "jpalardy/vim-slime",
+      \     "junegunn/gv.vim",
       \     "markonm/traces.vim",
       \     "mbbill/undotree",
       \     "mhinz/vim-signify",
@@ -248,6 +249,9 @@ let g:lsp_diagnostics_signs_enabled          = 0
 let g:lsp_diagnostics_virtual_text_enabled   = 0
 let g:lsp_document_code_action_signs_enabled = 0
 
+let g:lsp_log_verbose = 0
+let g:lsp_log_file = $XDG_STATE_HOME . "/vim/lsp.log"
+
 hi! link LspErrorHighlight   Error
 hi! link LspWarningHighlight WarningMsg
 
@@ -289,6 +293,16 @@ augroup LSP
           \       "-D LSP",
           \     ] },
           \   },
+          \   allowlist: [ "c", "cpp", "objc", "objcpp" ],
+          \ })
+  elseif executable('clangd')
+    au User lsp_setup call lsp#register_server(#{
+          \   name: "clangd",
+          \   cmd: ["clangd",
+          \     "--query-driver=/usr/bin/gcc",
+          \     "--background-index",
+          \     "--clang-tidy",
+          \   ],
           \   allowlist: [ "c", "cpp", "objc", "objcpp" ],
           \ })
   endif
@@ -349,6 +363,7 @@ augroup LSP
           \   name: "Deno",
           \   cmd: [ "deno", "lsp" ],
           \   initialization_options: #{
+          \     config: $XDG_CONFIG_HOME . "/deno.json",
           \     enable: v:true,
           \     unstable: v:true,
           \     lint: v:true,

@@ -43,6 +43,10 @@ menupopup {
   padding-bottom: 4px !important;
 }
 
+#unified-extensions-button {
+  display: none !important;
+}
+
 #contentAreaContextMenu #context-navigation {
   display: none !important;
 }
