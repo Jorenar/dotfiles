@@ -47,21 +47,29 @@ function! s:get_parent(Callback, data) dict abort
   call a:Callback('failure')
 endfunction
 
+function! s:collapse_setter(_, data) dict abort
+  let l:self.collapseState = empty(a:data) ? "none" : "collapsed"
+endfunction
+
 function! s:get_tree_item(Callback, data) dict abort
-  let l:item = {}
-  let l:collapseState = 'collapsed'
   if has_key(a:data, "request")
     let l:item = a:data.request.params.item
-    let l:collapseState = "expanded"
+    let l:self.collapseState = 'expanded'
   else
     let l:item = a:data[l:self.callDirection]
+    call l:self.set_collapse({ l:self.callDirection: l:item })
+    sleep 1m
   endif
 
   let l:tree_item = {
         \   'label': l:item.name,
         \   'command': function('s:hierarchy_treeitem_command', [l:item]),
-        \   'collapsibleState': l:collapseState,
+        \   'collapsibleState': l:self.collapseState,
         \ }
+
+  " Reset 'collapseState' to safe 'collapsed', bc it may linger
+  let l:self.collapseState = 'collapsed'
+
   call a:Callback('success', l:tree_item)
 endfunction
 
@@ -79,7 +87,9 @@ function! s:handle_tree(bufnr, method, data) abort
         \   'getChildren': function('s:get_children'),
         \   'getParent': function('s:get_parent'),
         \   'getTreeItem': function('s:get_tree_item'),
+        \   'collapse_handler': function('s:collapse_setter')
         \ }
+  let l:provider.set_collapse = function('s:get_children', [l:provider.collapse_handler])
 
   " Create new buffer in a vertical split
   topleft 50vnew
