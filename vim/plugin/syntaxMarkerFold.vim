@@ -48,7 +48,7 @@ endfunction
 
 augroup syntaxMarkerFold
   autocmd!
-  autocmd Syntax * call s:init()
+  autocmd Syntax *\v\c(off)@<! call s:init()
   autocmd OptionSet comments call s:init()
   autocmd OptionSet foldmarker call s:init()
 augroup END
