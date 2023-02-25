@@ -9,6 +9,7 @@ config
 configs
 counterintuitive
 dealbreaker
+deduplicated
 dotfile
 dotfiles
 downloadables
@@ -20,6 +21,7 @@ joren
 Jorengarenar
 JS
 keypress
+kramdown
 microcontrollers
 MSVC
 MySQL

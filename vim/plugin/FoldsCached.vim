@@ -4,6 +4,10 @@
 if exists('g:loaded_FoldsCached') | finish | endif
 let s:cpo_save = &cpo | set cpo&vim
 
+if empty($XDG_CACHE_HOME)
+  let $XDG_CACHE_HOME  = $HOME."/.cache"
+endif
+
 function! FoldsCached(mk) abort
   if !exists("b:FoldsCached_fdm") | return | endif
   if b:FoldsCached_fdm !~ '\v(syntax|expr)' | return | endif
