@@ -29,8 +29,11 @@ if !has('nvim') | set viminfofile=$XDG_STATE_HOME/vim/viminfo | endif
 set nocompatible
 filetype plugin indent on
 syntax enable
-silent! helptags ALL " genereate help tags
+set backup undofile
 colorscheme darkness
+
+" Open file at the last known position
+autocmd BufReadPost * if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit' | exec "norm! g`\"" | endif
 
 " COMMANDS {{{1
 
@@ -89,34 +92,33 @@ map gh <nop>
 
 " OPTIONS {{{1
 
-set backspace=indent,eol,start
-set backup
-set colorcolumn=+1
-set complete+=kspell
-set diffopt=internal,filler,closeoff,indent-heuristic,algorithm:histogram
-set fillchars+=vert:│
-set hidden
-set hlsearch
-set ignorecase
-set incsearch
 set keywordprg=:Man
 set makeprg=Make
 set modeline nomodelineexpr
-set nowrap
 set number
 set scrolloff=5
 set sessionoptions=blank,buffers,folds,tabpages,winsize
-set shortmess+=I
-set shortmess-=S
-set showcmd
-set smartcase
+set shortmess+=I shortmess-=S
 set spellsuggest=double,5
 set splitbelow splitright
-set switchbuf=usetab
 set ttimeoutlen=10
-set undofile
 set vb t_vb=
 set wildmenu wildmode=full wildoptions=
+set updatetime=250
+
+set colorcolumn=+1
+set fillchars+=vert:│
+
+set hidden
+set switchbuf=usetab
+
+set diffopt=internal,filler,closeoff,indent-heuristic,algorithm:histogram
+let g:diff_translations = 0
+
+set hlsearch
+set ignorecase
+set incsearch
+set smartcase
 
 set mouse=a
 silent! set ttymouse=sgr
@@ -124,6 +126,8 @@ silent! set ttymouse=sgr
 set list
 set listchars=tab:<\ >,trail:_
 set listchars+=extends:>,precedes:<
+hi! ListCharsTabs ctermfg=235
+call matchadd("ListCharsTabs", '\t')
 
 set guioptions=c
 set guicursor=a:block
@@ -134,10 +138,12 @@ set titlestring=
 set titlestring+=%t%(\ %M%)%(\ (%{expand(\"%:p:~:.:h\")}/)%)
 set titlestring+=\ \|\ %{$USER}@%{hostname()}:%{substitute(getcwd(),$HOME,'~','')}
 
+set complete+=kspell
 set completeopt=menuone,noinsert,noselect
 set omnifunc=syntaxcomplete#Complete
 set pumheight=20
 
+set nowrap
 set linebreak
 set breakindent
 let &showbreak = "↳  "
@@ -145,15 +151,23 @@ let &showbreak = "↳  "
 set path=**,./
 set tags+=.tags/tags;
 
-set cscopetag
-set cscopetagorder=0
-set cscopepathcomp=2
-set cscopequickfix=a-,c-,d-,e-,f-,g-,i-,s-,t-
+set backspace=indent,eol,start
+set cindent
+set expandtab
+set shiftround
+set shiftwidth=0   " If 0, then uses value of 'tabstop'
+set softtabstop=-1 " If negative, then uses 'shiftwidth' (which can use 'tabstop')
+set tabstop=4
+set textwidth=79
 
+set showcmd
 set signcolumn=yes
-set updatetime=250
 
-let g:diff_translations = 0
+set laststatus=2
+set statusline=%!lines#StatusLine()
+
+set showtabline=2
+set tabline=%!lines#TabLine()
 
 augroup FORMATOPTIONS
   autocmd!
@@ -165,28 +179,32 @@ augroup FORMATOPTIONS
   autocmd BufWinEnter * set formatoptions-=t  " Don't autowrap text using 'textwidth'
 augroup END
 
-set cindent
-set expandtab
-set shiftround
-set shiftwidth=0   " If 0, then uses value of 'tabstop'
-set softtabstop=-1 " If negative, then uses 'shiftwidth' (which can use 'tabstop')
-set tabstop=4
-set textwidth=79
-
+" folds {{{
 set foldmethod=indent
 set foldtext=MyFoldText()
 set nofoldenable
+
+" If file has more lines than window height, then fold it
+autocmd BufReadPost * if line('$') > winheight(0) | setlocal fen | endif
 
 function! MyFoldText() abort
   return "+-" . v:folddashes . " " . printf("%3d", v:foldend - v:foldstart + 1) . " lines: "
         \ . trim(substitute(getline(v:foldstart), split(&l:fmr, ',')[0].'\d\?', '', '')) . " "
 endfunction
+" }}}
 
-set laststatus=2
-set statusline=%!lines#StatusLine()
+" terminal {{{
+exec 'autocmd '.(has("nvim") ? "TermOpen" : "TerminalOpen").' *'
+      \ . ' setlocal stl=%#StatusLineTerm#\ %{expand(\"%:t\")} '
 
-set showtabline=2
-set tabline=%!lines#TabLine()
+if has('nvim') " sanitize Neovim :terminal
+  autocmd TermOpen  * startinsert
+  autocmd TermOpen  * set nonumber
+  autocmd TermClose * call feedkeys("\<C-\>\<C-n>")
+endif
+" }}}
+
+autocmd FileType *\v(help|man)@<! set syntax=OFF
 
 " PLUGINS {{{1
 
@@ -517,34 +535,13 @@ highlight link  SignifySignChange  DiffText
 " ~ {{{1
 
 if has("cscope") && (executable("cscope") || executable("gtags-cscope"))
+  set cscopetag
+  set cscopetagorder=0
+  set cscopepathcomp=2
+  set cscopequickfix=a-,c-,d-,e-,f-,g-,i-,s-,t-
+
   call cscope#init()
 endif
-
-augroup OTHER
-  autocmd!
-
-  " Open file at the last known position
-  autocmd BufReadPost * if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit' | exec "norm! g`\"" | endif
-
-  " Automatically open QuickFix
-  autocmd QuickFixCmdPost [^l]* nested cwindow
-  autocmd QuickFixCmdPost    l* nested lwindow
-
-  " Undo if filter shell command returned an error
-  autocmd ShellFilterPost * if v:shell_error | undo | endif
-
-  " If file has more lines than window height, then fold it
-  autocmd BufReadPost * if line('$') > winheight(0) | setlocal fen | endif
-
-  " Set fold method to syntax
-  autocmd FileType dosini,make,m3u,todo  setlocal foldmethod=syntax
-
-augroup END
-
-augroup SYNTAX_OFF
-  autocmd!
-  autocmd FileType *\v(help|man|markdown)@<! set syntax=OFF
-augroup END
 
 augroup MERGETOOL
   autocmd!
@@ -560,23 +557,31 @@ augroup TRIM_TRAILING_WHITESPACE
   autocmd BufWritePre * sil! undoj | sil! keepp keepj %s/\v(\s+$|\_s+%$)//e
 augroup END
 
-augroup TERMINAL_OPTIONS
+augroup NO_NESTED_VIM
   autocmd!
 
-  execute 'autocmd '.(has("nvim") ? "TermOpen" : "TerminalOpen").' *'
-        \ . ' setlocal stl=%#StatusLineTerm#\ %{expand(\"%:t\")} '
-
-  if has('nvim') " sanitize Neovim :terminal
-    autocmd TermOpen  * startinsert
-    autocmd TermOpen  * set nonumber
-    autocmd TermClose * call feedkeys("\<C-\>\<C-n>")
-  else
-    if $vimInstanceExists " then don't open nested Vim
-      au BufNewFile,BufReadPre * exec 'bd | !printf "\033]51;[\"drop\", \"'. expand('%:p') . '\"]\007"' | q
-    endif
-    let $vimInstanceExists = 1
+  if !has("nvim") && $vimInstanceExists
+    au BufNewFile,BufReadPre * exec 'bd | !printf "\033]51;[\"drop\", \"'. expand('%:p') . '\"]\007"' | q
   endif
+  let $vimInstanceExists = 1
 
 augroup END
+
+augroup OTHER
+  autocmd!
+
+  " Automatically open QuickFix
+  autocmd QuickFixCmdPost [^l]* nested cwindow
+  autocmd QuickFixCmdPost    l* nested lwindow
+
+  " Undo if filter shell command returned an error
+  autocmd ShellFilterPost * if v:shell_error | undo | endif
+
+  " Set fold method to syntax
+  autocmd FileType dosini,make,m3u,todo  setlocal foldmethod=syntax
+
+augroup END
+
+silent! helptags ALL
 
 set secure exrc
