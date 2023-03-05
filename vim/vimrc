@@ -567,6 +567,12 @@ augroup NO_NESTED_VIM
 
 augroup END
 
+augroup VISUALBLOCK_NOSTARTOFLINE
+  autocmd!
+  exec "autocmd ModeChanged *:\<C-v> let g:sol_old = &sol | set nosol"
+  exec "autocmd ModeChanged \<C-v>:* let &startofline = g:sol_old"
+augroup END
+
 augroup OTHER
   autocmd!
 
