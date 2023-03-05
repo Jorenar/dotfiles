@@ -60,7 +60,7 @@ linking_ "$XDG_CONFIG_HOME" '
     feh/                @  feh
     fish/               @  fish
     fonts.conf          @  fontconfig/fonts.conf
-    gdbinit             @  gdb/init
+    gdbinit             @  gdb/gdbinit
     git/                @  git
     grip.py             @  grip/grip.py
     gtkrc-2.0           @  gtk-2.0/gtkrc
