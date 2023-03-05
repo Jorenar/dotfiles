@@ -121,6 +121,7 @@ set incsearch
 set smartcase
 
 set mouse=a
+set mousemodel=popup_setpos
 silent! set ttymouse=sgr
 
 set list
@@ -298,6 +299,12 @@ function! s:lsp_init() abort
 
   nnoremap <buffer> <expr><C-f> lsp#scroll(+4)
   nnoremap <buffer> <expr><C-d> lsp#scroll(-4)
+
+  nnoremenu PopUp.LSP :Lsp
+  nnoremenu PopUp.\ \ Hover       :LspHover<CR>
+  nnoremenu PopUp.\ \ Definition  :LspDefinition<CR>
+  nnoremenu PopUp.\ \ Declaration :LspDeclaration<CR>
+  nnoremenu PopUp.\ \ Call\ Tree  :LspCallHierarchyIncomingTree<CR>
 endfunction
 
 augroup LSP
