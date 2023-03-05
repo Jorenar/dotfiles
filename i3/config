@@ -174,7 +174,7 @@ bindsym $super+l exec --no-startup-id xterm -e "systemctl suspend"
 # OTHER {{{2
 
 # start dmenu
-bindsym $super+d exec --no-startup-id h2-dmenu-desktop
+bindsym $super+d exec --no-startup-id dmenu_run
 
 
 # Multi-screen screenshots with scrot

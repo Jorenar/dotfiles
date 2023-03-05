@@ -205,7 +205,7 @@ if has('nvim') " sanitize Neovim :terminal
 endif
 " }}}
 
-autocmd FileType *\v(help|man)@<! set syntax=OFF
+autocmd FileType *\v(help|man|markdown)@<! silent! set syntax=OFF
 
 " PLUGINS {{{1
 
