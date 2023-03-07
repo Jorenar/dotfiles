@@ -1,7 +1,7 @@
 # SHRC #
 # vim: ft=sh
 
-if [ -x "$(command -v tmux)" ] && [ -n "$DISPLAY" ] && [ -z "$TMUX" ]; then
+if [ -x "$(command -v tmux)" ] && [ -n "$DISPLAY" ] && [ -z "$TMUX" ] && [ -z "$SSH_CLIENT" ]; then
     if ps -ef | grep tmux | grep -v -q grep; then
         exec tmux attach \; new-session
     else
@@ -34,32 +34,34 @@ trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && . $XDG_CONFIG_HOME/shell/logout"
 
 # PROMPT {{{1
 
-PS1='\001\033[36m\002$\001\033[0m\002 '
+PS1=
 
-if [ -z "$TMUX" ]; then
+## jump to bottom
+PS1='\001\033[s\033[1;$((LINES-1))r\033[$LINES;1f\002'
 
-    # \n
-    PS1='\n'"$PS1"
+# (shell)
+PS1="$PS1"'($(basename $0))'
 
-    # ]
-    PS1=']'"$PS1"
+# [
+PS1="$PS1"'['
 
-    # git_branch
-    PS1="\$(git rev-parse --abbrev-ref HEAD 2> /dev/null | sed 's/.*/ &/')""$PS1"
+# user@host
+PS1="$PS1"' $USER@$HOSTNAME  '
 
-    # pwd
-    PS1='$(echo $PWD | sed -e "s,^$HOME,~," -e "s,..*/,./," -e "s,. .,\&/,")'"$PS1"
+# pwd
+PS1="$PS1"'$(echo $PWD | sed "s,^$HOME\(\/\|$\),~,") '
 
-    # user@host
-    PS1='$USER@$HOSTNAME '"$PS1"
+# git_branch
+PS1="$PS1""\$(git rev-parse --abbrev-ref HEAD 2> /dev/null | sed 's/.*/ & /')"
 
-    # [
-    PS1='['"$PS1"
+# ]
+PS1="$PS1"']'
 
-    # (shell)
-    PS1='($(basename $0))'"$PS1"
+## return to current line
+PS1="$PS1"'\001\033[K\033[u\002'
 
-fi
+# $
+PS1="$PS1"'\001\033[36m\002$\001\033[0m\002 '
 
-# WINDOW TITLE | user@host:pwd
-PS1=$(printf '\001\033]0;$USER@$HOSTNAME:$(echo $PWD | sed s,^$HOME,~,)\007\002'"$PS1")
+# WINTITLE: user@host:pwd
+PS1="$(printf '\001\033]0;$USER@$HOSTNAME:$(echo $PWD | sed s,^$HOME,~,)\007\002'"$PS1")"
