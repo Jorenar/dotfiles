@@ -1,5 +1,4 @@
-# SHRC #
-# vim: ft=sh
+#!sh
 
 if [ -x "$(command -v tmux)" ] && [ -n "$DISPLAY" ] && [ -z "$TMUX" ] && [ -z "$SSH_CLIENT" ]; then
     if ps -ef | grep tmux | grep -v -q grep; then
@@ -9,7 +8,7 @@ if [ -x "$(command -v tmux)" ] && [ -n "$DISPLAY" ] && [ -z "$TMUX" ] && [ -z "$
     fi
 fi
 
-# Init {{{1
+# Init ------------------------------------------------------------------------
 
 # Source env variables
 . $XDG_CONFIG_HOME/env/variables
@@ -32,24 +31,34 @@ trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && . $XDG_CONFIG_HOME/shell/logout"
 # Source local additional shell config
 [ -f $HOSTDOTS/shell ] && . $HOSTDOTS/shell
 
-# PROMPT {{{1
+
+# PROMPT ----------------------------------------------------------------------
 
 PS1=
 
-## jump to bottom
-PS1='\001\033[s\033[1;$((LINES-1))r\033[$LINES;1f\002'
+# statusline {{{
+PS1="$PS1"'\001'
+
+## set scroll region and jump to bottom of the screen
+PS1='\033[s\033[1;$((LINES-1))r\033[$LINES;1f'
+
+# set color
+PS1="$PS1"'\001\033[38;5;101m\002'
 
 # (shell)
 PS1="$PS1"'($(basename $0))'
 
+# number of jobs
+PS1="$PS1"'[J:$(jobs | wc -l)]'
+
 # [
-PS1="$PS1"'['
+PS1="$PS1"'  ['
 
 # user@host
 PS1="$PS1"' $USER@$HOSTNAME  '
 
 # pwd
-PS1="$PS1"'$(echo $PWD | sed "s,^$HOME\(\/\|$\),~,") '
+PS1="$PS1"'$(echo $PWD | sed "s,^$HOME\(\/\|$\),~/,") '
 
 # git_branch
 PS1="$PS1""\$(git rev-parse --abbrev-ref HEAD 2> /dev/null | sed 's/.*/ & /')"
@@ -57,11 +66,20 @@ PS1="$PS1""\$(git rev-parse --abbrev-ref HEAD 2> /dev/null | sed 's/.*/ & /')"
 # ]
 PS1="$PS1"']'
 
-## return to current line
-PS1="$PS1"'\001\033[K\033[u\002'
+# tmux windows list
+[ -n "$TMUX" ] && PS1="$PS1"'  [ $(tmux list-windows -F "#{E:window-status-format}" | tr "\n" " ")]'
+
+# return to prompt
+PS1="$PS1"'\033[K\033[u'
+
+PS1="$PS1"'\002'
+# }}}
+
+# WINTITLE: user@host:pwd
+PS1="$PS1"'\001\033]0;$USER@$HOSTNAME:$(echo $PWD | sed s,^$HOME,~,)\007\002'
 
 # $
 PS1="$PS1"'\001\033[36m\002$\001\033[0m\002 '
 
-# WINTITLE: user@host:pwd
-PS1="$(printf '\001\033]0;$USER@$HOSTNAME:$(echo $PWD | sed s,^$HOME,~,)\007\002'"$PS1")"
+# eval PS1
+PS1="$(printf "$PS1")"
