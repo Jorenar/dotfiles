@@ -1,5 +1,8 @@
 # vim: ft=sh
 
+# shellcheck disable=SC2142  # Aliases can't use positional parameters. Use a function.
+
+
 alias amixer-save='mkdir -p $XDG_DATA_HOME/alsa && alsactl --file $XDG_DATA_HOME/alsa/asound.state store'
 alias ap1='sudo create_ap wlan0 wlan0 x I_love_BASH' # semi open WiFi network
 alias cal='cal -m'
@@ -29,11 +32,13 @@ alias umnt='udisksctl unmount -b'
 alias update_aur_files='updpkgsums && makepkg --printsrcinfo > .SRCINFO'
 alias vi='vim --clean -u DEFAULTS -U NONE -i NONE'
 alias wacom-map-output="xsetwacom set \$(xsetwacom list | awk '/stylus/ {print \$8}') MapToOutput 1920x1080+0+0"
+alias which='command -v'
 alias wine-lnk='wine C:\\windows\\command\\start.exe /Unix'
 alias yay-autoremove='yay -Rns $(yay -Qtdq)'
 alias yt-mp3='youtube-dl --extract-audio --audio-format mp3'
 
-alias cheat='sh -c '\''curl cheat.sh/$1'\'' _'
-alias find_='sh -c '\''find $@ 2>&1 | grep -v "Permission denied" >&2'\'' _'
-alias which='sh -c '\''command -v $1'\'' _'
-alias wttr='sh -c '\''curl wttr.in/$1'\'' _'
+
+alias transmission='_f() { transmission-cli "$@" && gio trash "$@"; }; _f ./*.torrent'
+alias cheat='_f(){ curl cheat.sh/$1; }; _f'
+alias find_='_f(){ find $@ 2>&1 | grep -v "Permission denied" >&2; }; _f'
+alias wttr='_f(){ curl wttr.in/$1; }; _f'

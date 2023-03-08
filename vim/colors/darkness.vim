@@ -11,7 +11,7 @@ let g:colors_name='darkness'
 
 " HIGHLIGHTS ------------------------------------------------------------------
 
-hi! ColorColumn     cterm=NONE            ctermfg=NONE  ctermbg=232
+hi! ColorColumn     cterm=NONE            ctermfg=NONE  ctermbg=233
 hi! Comment         cterm=NONE            ctermfg=240   ctermbg=NONE
 hi! Conceal         cterm=italic          ctermfg=225   ctermbg=NONE
 hi! CursorColumn    cterm=NONE            ctermfg=NONE  ctermbg=233
