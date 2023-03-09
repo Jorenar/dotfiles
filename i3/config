@@ -24,7 +24,7 @@ bar {
     id top
     position top
     font pango: DejaVu Sans Mono 9
-    status_command i3blocks -c $XDG_CONFIG_HOME/i3/i3blocks
+    status_command stalonetray & exec i3blocks -c $XDG_CONFIG_HOME/i3/i3blocks
     tray_output none
     colors {
         focused_workspace  #333333 #222222 #FFFFFF
@@ -32,9 +32,7 @@ bar {
     }
 }
 
-# stalonetray
 for_window [class="stalonetray"] move position 50ppt 2px
-exec --no-startup-id stalonetray
 
 # SHORTCUTS BINDINGS {{{1
 
