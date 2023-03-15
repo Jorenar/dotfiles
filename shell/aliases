@@ -28,6 +28,7 @@ alias rm="echo Use 'del', or the full path i.e. '/bin/rm'"
 alias sshd-start='sudo systemctl start sshd'
 alias sshd-stop='sudo systemctl stop sshd'
 alias suspend='systemctl suspend'
+alias transmission='transmission-daemon -T -w $XDG_DOWNLOAD_DIR -c $XDG_DOWNLOAD_DIR'
 alias umnt='udisksctl unmount -b'
 alias update_aur_files='updpkgsums && makepkg --printsrcinfo > .SRCINFO'
 alias vi='vim --clean -u DEFAULTS -U NONE -i NONE'
@@ -38,7 +39,6 @@ alias yay-autoremove='yay -Rns $(yay -Qtdq)'
 alias yt-mp3='youtube-dl --extract-audio --audio-format mp3'
 
 
-alias transmission='_f() { transmission-cli "$@" && gio trash "$@"; }; _f ./*.torrent'
 alias cheat='_f(){ curl cheat.sh/$1; }; _f'
 alias find_='_f(){ find $@ 2>&1 | grep -v "Permission denied" >&2; }; _f'
 alias wttr='_f(){ curl wttr.in/$1; }; _f'

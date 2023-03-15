@@ -88,7 +88,7 @@ linking_ "$XDG_CONFIG_HOME" '
     stalonetrayrc       @  stalonetrayrc
     tigrc               @  tig/config
     tmux/               @  tmux
-    transmission.json   @  transmission/settings.json           CP
+    transmission.json   @  transmission-daemon/settings.json    CP
     uncrustify/         @  uncrustify
     vim/                @  vim
     weechat/            @  weechat                              -w
