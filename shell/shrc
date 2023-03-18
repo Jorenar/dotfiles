@@ -34,12 +34,16 @@ trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && . $XDG_CONFIG_HOME/shell/logout"
 
 # PROMPT ----------------------------------------------------------------------
 
+[ "$(basename "$0")" = "bash" ] && isBash=1 || isBash=
+
 PS1=
 
 # statusline {{{
 
+PS1="$PS1"'\001'
+
 ## save cursor position and jump to the top of the screen
-PS1='\001\033[s\033[1;1H\002\001'
+[ -n "$isBash" ] && PS1="$PS1"'\033[s\033[1;1f'
 
 # set bg color
 PS1="$PS1"'\033[48;5;234m'
@@ -69,28 +73,27 @@ PS1="$PS1"']'
 [ -n "$TMUX" ] && PS1="$PS1"'  [ $(tmux list-windows -F "#{E:window-status-format}" | tr "\n" " ")]'
 
 # return to prompt
-PS1="$PS1"'\002\001\033[K\033[0m\033[u\002'
+if [ -n "$isBash" ]; then
+    PS1="$PS1"'\033[K\033[0m\033[u'
+else
+    PS1="$PS1"'\n'
+fi
 
-PS1="$PS1"''
+PS1="$PS1"'\002'
 # }}}
 
 # WINTITLE: user@host:pwd
 PS1="$PS1"'\001\033]0;$USER@$HOSTNAME:$(echo $PWD | sed s,^$HOME,~,)\007\002'
-
-# newline
-case "$(basename $0)" in
-    bash)
-        __new_line_ps1 () {
-            IFS='[;' read -p $'\033[6n' -d R -rs _ y _ _
-            [ "$y" -eq 1 ] && printf "\n\033[0m"
-        }
-        PS1="$PS1"'$(__new_line_ps1)'
-        ;;
-    *) PS1="$PS1"'\n' ;;
-esac
 
 # $
 PS1="$PS1"'\001\033[36m\002$\001\033[0m\002 '
 
 # eval PS1
 PS1="$(printf "$PS1")"
+
+if [ -n "$isBash" ]; then
+    echo # just to move first prompt to new line
+    __cls () { printf '\033[2;1H\033[0J'; }
+    bind -x '"\C-l": __cls'
+    unset isBash
+fi
