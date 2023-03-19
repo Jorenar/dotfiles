@@ -1,0 +1,9 @@
+$(wildcard $(SRCDIR)/*.ipp):
+	$(CXX) -include $(@:%.ipp=%.hpp) -x c++-header $@
+
+compile_commands.json:
+	@ $(MAKE) --always-make --dry-run build $(SRCDIR)/*.ipp \
+		| grep -wE -e '$(CC)' -e '$(CXX)' \
+		| grep -w -e '\-c' -e '\-x' \
+		| jq -nR '[inputs|{directory:"'$$PWD'", command:., file: match(" [^ ]+$$").string[1:]}]' \
+		> compile_commands.json
