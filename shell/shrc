@@ -32,68 +32,26 @@ trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && . $XDG_CONFIG_HOME/shell/logout"
 [ -f $HOSTDOTS/shell ] && . $HOSTDOTS/shell
 
 
-# PROMPT ----------------------------------------------------------------------
+# PROMPT
 
-[ "$(basename "$0")" = "bash" ] && isBash=1 || isBash=
+PS1='$(_ps1)'
+_ps1 () {
+    printf '\001\033]0;%s@%s:%s\007\002' \
+        "$USER"  "$(uname -n)"  "$(echo "$PWD" | sed "s,^$HOME,~,")"
 
-PS1=
+    if [ -z "$SHORT_PROMPT" ]; then
+        printf "\001\033[38;5;240m\002"
+        printf '(%s){%d}  [ %s@%s  %s %s]' \
+            "$(ps -p "$$" -o comm='')" \
+            "$(jobs | wc -l)" \
+            "$USER" \
+            "$(uname -n)" \
+            "$(echo $PWD | sed "s,^$HOME\(\/\|$\),~/,")" \
+            "$(git rev-parse --abbrev-ref HEAD 2> /dev/null | sed "s/.*/ & /")"
+        [ -n "$TMUX" ] && printf '  [ %s]' "$(tmux list-windows -F "#{E:window-status-format}" | tr "\n" " ")"
+        printf "\001\033[0m\002"
+        printf "\n"
+    fi
 
-# statusline {{{
-
-PS1="$PS1"'\001'
-
-## save cursor position and jump to the top of the screen
-[ -n "$isBash" ] && PS1="$PS1"'\033[s\033[1;1f'
-
-# set bg color
-PS1="$PS1"'\033[48;5;234m'
-
-# (shell)
-PS1="$PS1"'($(basename $0))'
-
-# number of jobs
-PS1="$PS1"'[J:$(jobs | wc -l)]'
-
-# [
-PS1="$PS1"'  ['
-
-# user@host
-PS1="$PS1"' $USER@$HOSTNAME  '
-
-# pwd
-PS1="$PS1"'$(echo $PWD | sed "s,^$HOME\(\/\|$\),~/,") '
-
-# git_branch
-PS1="$PS1""\$(git rev-parse --abbrev-ref HEAD 2> /dev/null | sed 's/.*/ & /')"
-
-# ]
-PS1="$PS1"']'
-
-# tmux windows list
-[ -n "$TMUX" ] && PS1="$PS1"'  [ $(tmux list-windows -F "#{E:window-status-format}" | tr "\n" " ")]'
-
-# return to prompt
-if [ -n "$isBash" ]; then
-    PS1="$PS1"'\033[K\033[0m\033[u'
-else
-    PS1="$PS1"'\n'
-fi
-
-PS1="$PS1"'\002'
-# }}}
-
-# WINTITLE: user@host:pwd
-PS1="$PS1"'\001\033]0;$USER@$HOSTNAME:$(echo $PWD | sed s,^$HOME,~,)\007\002'
-
-# $
-PS1="$PS1"'\001\033[36m\002$\001\033[0m\002 '
-
-# eval PS1
-PS1="$(printf "$PS1")"
-
-if [ -n "$isBash" ]; then
-    echo # just to move first prompt to new line
-    __cls () { printf '\033[2;1H\033[0J'; }
-    bind -x '"\C-l": __cls'
-    unset isBash
-fi
+    printf '\001\033[36m\002$\001\033[0m\002 '
+}
