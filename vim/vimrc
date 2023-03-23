@@ -159,7 +159,7 @@ set shiftround
 set shiftwidth=0   " If 0, then uses value of 'tabstop'
 set softtabstop=-1 " If negative, then uses 'shiftwidth' (which can use 'tabstop')
 set tabstop=4
-set textwidth=79
+set textwidth=80
 
 set showcmd
 set signcolumn=yes
