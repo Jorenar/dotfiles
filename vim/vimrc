@@ -189,8 +189,8 @@ set nofoldenable
 autocmd BufReadPost * if line('$') > winheight(0) | setlocal fen | endif
 
 function! MyFoldText() abort
-  return "+-" . v:folddashes . " " . printf("%3d", v:foldend - v:foldstart + 1) . " lines: "
-        \ . trim(substitute(getline(v:foldstart), split(&l:fmr, ',')[0].'\d\?', '', '')) . " "
+  return substitute(getline(v:foldstart), split(&l:fmr, ',')[0].'\d\?', '', '')
+        \ . "  +-" . v:folddashes . " " . (v:foldend - v:foldstart + 1) . " lines "
 endfunction
 " }}}
 
