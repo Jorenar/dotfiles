@@ -1,0 +1,21 @@
+{
+  "settingsVersion": "1.67.6",
+  "exclusionRules": [],
+  "filterLinkHints": false,
+  "waitForEnterForFilteredHints": true,
+  "hideHud": false,
+  "keyMappings": "map  +t      moveTabRight\nmap  -t      moveTabLeft\nmap  <a-t>   duplicateTab\nmap  <c-e>   scrollPageDown\nmap  <c-y>   scrollPageUp\nmap  g$      scrollToLeft\nmap  g+      goForward\nmap  g-      goBack\nmap  g0      scrollToRight\nmap  g<Tab>  visitPreviousTab\nmap  yY      LinkHints.activateModeToCopyLinkUrl\n\nunmap <<\nunmap <a-m>\nunmap <a-p>\nunmap >>\nunmap ^\nunmap d\nunmap gu\nunmap gU\nunmap H\nunmap J\nunmap K\nunmap L\nunmap o\nunmap p\nunmap P\nunmap r\nunmap t\nunmap u\nunmap x\nunmap X\nunmap yf\nunmap yt\nunmap yy\nunmap zH\nunmap zL",
+  "linkHintCharacters": "wrypadglzcm",
+  "linkHintNumbers": "0123456789",
+  "newTabUrl": "about:newtab",
+  "nextPatterns": "next,more,newer,>,›,→,»,≫,>>",
+  "previousPatterns": "prev,previous,back,older,<,‹,←,«,≪,<<",
+  "regexFindMode": true,
+  "ignoreKeyboardLayout": false,
+  "scrollStepSize": 60,
+  "smoothScroll": true,
+  "grabBackFocus": false,
+  "searchEngines": "",
+  "searchUrl": "https://duckduckgo.com/?q=",
+  "userDefinedLinkHintCss": "/* linkhint boxes */\ndiv > .vimiumHintMarker {\n  background: yellow !important;\n  border: none !important;\n}\n\n/* linkhint text */\ndiv > .vimiumHintMarker span {\n  color: black !important;\n  font-size: 10px !important;\n}\n\ndiv > .vimiumHintMarker > .matchingCharacter {\n  color: red !important;\n}"
+}
