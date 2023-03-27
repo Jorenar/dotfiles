@@ -189,8 +189,14 @@ set nofoldenable
 autocmd BufReadPost * if line('$') > winheight(0) | setlocal fen | endif
 
 function! MyFoldText() abort
-  return substitute(getline(v:foldstart), split(&l:fmr, ',')[0].'\d\?', '', '')
-        \ . "  +-" . v:folddashes . " " . (v:foldend - v:foldstart + 1) . " lines "
+  let line = getline(v:foldstart)
+  let line = substitute(line, split(&l:fmr, ',')[0].'\d\?', '', '')
+  let line = trim(line, " \t\r\n", 2)
+  let line = strchars(line) > &tw/2 ? line[:(&tw/2)] . "..." : line
+  let fd = repeat(v:folddashes, 2)
+  let pad = &tw - strchars(line) - len(fd)
+
+  return printf("%s  +%s %*.d lines ", line, fd, pad, v:foldend - v:foldstart + 1)
 endfunction
 " }}}
 
@@ -205,7 +211,11 @@ if has('nvim') " sanitize Neovim :terminal
 endif
 " }}}
 
-autocmd FileType *\v(help|man|markdown)@<! silent! set syntax=OFF
+let g:syntax_off_exceptions = [ "help", "man", "markdown", "tex" ]
+autocmd FileType *
+      \   if index(g:syntax_off_exceptions, &ft) < 0
+      \ |   silent! setlocal syntax=OFF
+      \ | endif
 
 " PLUGINS {{{1
 
