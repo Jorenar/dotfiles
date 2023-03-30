@@ -291,7 +291,12 @@ com! LspCallHierarchyOutgoingTree  call lsp#call_hierarchy_tree#show(v:true)
 
 function! s:lsp_init() abort
   setlocal omnifunc=lsp#complete
-  if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+
+  function! LspTagFunc(pattern, flags, info) abort
+    let l:kinds = { "definition": "f/v", "declaration": "x", "implementation": "i", "type definition": "t" }
+    return map(lsp#tag#tagfunc(a:pattern, a:flags, a:info), {_,v -> extend(v, { "kind": l:kinds[v["kind"]] })})
+  endfunction
+  setlocal tagfunc=LspTagFunc
 
   nmap <buffer> <Leader>R <Plug>(lsp-rename)
 
