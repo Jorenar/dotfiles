@@ -221,6 +221,7 @@ autocmd FileType *
 
 let g:plugins = {
       \   "repos": [
+      \     "chrisbra/NrrwRgn",
       \     "ctrlpvim/ctrlp.vim",
       \     "dense-analysis/ale",
       \     "editorconfig/editorconfig-vim",
@@ -292,12 +293,6 @@ com! LspCallHierarchyOutgoingTree  call lsp#call_hierarchy_tree#show(v:true)
 function! s:lsp_init() abort
   setlocal omnifunc=lsp#complete
 
-  function! LspTagFunc(pattern, flags, info) abort
-    let l:kinds = { "definition": "f/v", "declaration": "x", "implementation": "i", "type definition": "t" }
-    return map(lsp#tag#tagfunc(a:pattern, a:flags, a:info), {_,v -> extend(v, { "kind": l:kinds[v["kind"]] })})
-  endfunction
-  setlocal tagfunc=LspTagFunc
-
   nmap <buffer> <Leader>R <Plug>(lsp-rename)
 
   nmap <buffer> <Leader>gd <Plug>(lsp-definition)
@@ -315,11 +310,13 @@ function! s:lsp_init() abort
   nnoremap <buffer> <expr><C-f> lsp#scroll(+4)
   nnoremap <buffer> <expr><C-d> lsp#scroll(-4)
 
-  nnoremenu PopUp.LSP :Lsp
-  nnoremenu PopUp.\ \ Hover       :LspHover<CR>
-  nnoremenu PopUp.\ \ Definition  :LspDefinition<CR>
-  nnoremenu PopUp.\ \ Declaration :LspDeclaration<CR>
-  nnoremenu PopUp.\ \ Call\ Tree  :LspCallHierarchyIncomingTree<CR>
+  nnoremenu PopUp.LSP :popup ]LSP<CR>
+  nnoremenu ]LSP.Hover       <Plug>(lsp-hover)
+  nnoremenu ]LSP.Call\ Tree  :LspCallHierarchyIncomingTree<CR>
+  nnoremenu ]LSP.[Peek]\ Definition  <Plug>(lsp-peek-definition)
+  nnoremenu ]LSP.[Peek]\ Declaration <Plug>(lsp-peek-declaration)
+  nnoremenu ]LSP.[Jump]\ Definition  <Plug>(lsp-definition)
+  nnoremenu ]LSP.[Jump]\ Declaration <Plug>(lsp-declaration)
 endfunction
 
 augroup LSP
@@ -555,6 +552,12 @@ highlight link  SignifySignChange  DiffText
 " }}}2
 
 " ~ {{{1
+
+nnoremenu PopUp.[gd] gd
+nnoremenu PopUp.:call :popup ]call<CR>
+nnoremenu ]call.popup_clear() :call popup_clear()<CR>
+
+nnoremenu PopUp.:grep :silent! grep -RIw <cword> .<CR>
 
 if has("cscope") && (executable("cscope") || executable("gtags-cscope"))
   set cscopetag

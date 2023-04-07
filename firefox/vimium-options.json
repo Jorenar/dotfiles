@@ -2,6 +2,10 @@
   "settingsVersion": "1.67.6",
   "exclusionRules": [
     {
+      "pattern": "*duckduckgo.com*",
+      "passKeys": "/"
+    },
+    {
       "pattern": "*youtube.com*",
       "passKeys": "f"
     }
