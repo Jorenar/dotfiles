@@ -327,13 +327,15 @@ augroup LSP
     au User lsp_setup call lsp#register_server(#{
           \   name: "ccls",
           \   cmd: [ "ccls" ],
-          \   root_uri: {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), "compile_commands.json"))},
+          \   root_uri: {-> lsp#utils#path_to_uri(
+          \     lsp#utils#find_nearest_parent_file_directory(
+          \       lsp#utils#get_buffer_path(),
+          \       [ "compile_commands.json", ".ccls", ".git/" ]
+          \     )
+          \   )},
           \   initialization_options: #{
           \     cache: #{ directory: "/tmp/ccls-cache" },
-          \     clang: #{ extraArgs: [
-          \       "--gcc-toolchain=/usr",
-          \       "-D LSP",
-          \     ] },
+          \     clang: #{ extraArgs: [ "--gcc-toolchain=/usr" ] },
           \   },
           \   allowlist: [ "c", "cpp", "objc", "objcpp" ],
           \ })
