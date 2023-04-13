@@ -6,6 +6,6 @@ setlocal path+=/usr/include/**
 let c_curly_error  = 1
 let c_space_errors = 1
 
-SetFormatProg "uncrustify --l C base kr mb"
+SetFormatProg "uncrustify -l C -c " . $XDG_CONFIG_HOME."/uncrustify/langs/c.cfg"
 
 compiler gcc

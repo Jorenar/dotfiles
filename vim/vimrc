@@ -180,6 +180,8 @@ augroup FORMATOPTIONS
   autocmd BufWinEnter * set formatoptions-=t  " Don't autowrap text using 'textwidth'
 augroup END
 
+let g:filetype_cfg = "conf"
+
 " folds {{{
 set foldmethod=indent
 set foldtext=MyFoldText()
@@ -211,7 +213,7 @@ if has('nvim') " sanitize Neovim :terminal
 endif
 " }}}
 
-let g:syntax_off_exceptions = [ "help", "man", "markdown", "tex" ]
+let g:syntax_off_exceptions = [ "help", "man", "markdown", "qf", "tex" ]
 autocmd FileType *
       \   if index(g:syntax_off_exceptions, &ft) < 0
       \ |   silent! setlocal syntax=OFF
@@ -611,7 +613,7 @@ augroup OTHER
   autocmd ShellFilterPost * if v:shell_error | undo | endif
 
   " Set fold method to syntax
-  autocmd FileType dosini,make,m3u,todo  setlocal foldmethod=syntax
+  autocmd FileType conf,dosini,make,m3u,todo  setlocal foldmethod=syntax
 
 augroup END
 

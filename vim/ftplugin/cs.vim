@@ -1,3 +1,3 @@
-SetFormatProg "uncrustify --l CS base allman mb"
+SetFormatProg "uncrustify -l CS -c " . $XDG_CONFIG_HOME."/uncrustify/langs/cs.cfg"
 
 setlocal foldmethod=syntax
