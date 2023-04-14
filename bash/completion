@@ -1,0 +1,32 @@
+# vim: ft=sh
+
+if [ -z "$(type -t _ssh_configfile)" ]; then
+    _ssh_configfile ()
+    {
+        # orginal body {{{
+        set -- "${words[@]}";
+        while (($# > 0)); do
+            if [[ $1 == -F* ]]; then
+                if ((${#1} > 2)); then
+                    configfile="$(dequote "${1:2}")";
+                else
+                    shift;
+                    [[ -n ${1-} ]] && configfile="$(dequote "$1")";
+                fi;
+                break;
+            fi;
+            shift;
+        done
+        # }}}
+
+        if [ -z "$configfile" ]; then
+            if [ -e "$HOME/.ssh/config" ]; then
+                configfile="$HOME/.ssh/config"
+            elif [ -e "${XDG_CONFIG_HOME:-$HOME/.config}"/ssh/config ]; then
+                configfile="${XDG_CONFIG_HOME:-$HOME/.config}"/ssh/config
+            fi
+        fi
+    }
+
+    readonly -f _ssh_configfile
+fi

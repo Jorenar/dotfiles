@@ -47,7 +47,7 @@ linking_ "$XDG_CONFIG_HOME" '
 
     aerc/               @  aerc
     asoundrc            @  alsa/asoundrc
-    bashrc              @  bash/bashrc
+    bash/               @  bash
     ccache.config       @  ccache/config
     chktexrc            @  .chktexrc
     commafeed.yml       @  commafeed.yml
