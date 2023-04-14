@@ -125,12 +125,12 @@ fi
 # xdg_wrapper.sh {{{2
 sed -n -e 's/^#~ //p' "$DIR/_patch/xdg_wrapper.sh" | while IFS= read -r exe; do
     exe="$(echo $exe | cut -f1 -d'#')"
-    [ -x "$(command -v $exe)" ] && linking  _patch/xdg_wrapper.sh  $patch_dir/$exe
+    [ -x "$(command -v $exe)" ] && linking  _patch/xdg_wrapper.sh  $patch_dir/xdg/$exe
 done
 chmod u+x $DIR/_patch/xdg_wrapper.sh
 
 # /etc/profile.d/xdg_profile.sh {{{2
-if [ $hasSudo ] && [ ! -f /etc/profile.d/xdg_profile.sh ]; then
+if [ -n "$hasSudo" ] && [ ! -f /etc/profile.d/xdg_profile.sh ]; then
     printf "Install root patches for XDG support for 'profile' file? [y/N] "
     read -r REPLY
     if [ "$REPLY" = "y" ] || [ "$REPLY" = "Y" ]; then
@@ -140,7 +140,7 @@ fi
 [ ! -f /etc/profile.d/xdg_profile.sh ] && linking  env/profile  $HOME/.profile
 
 # pam_environment {{{2
-if [ $hasSudo ] && ! grep -q "XDG_CONFIG_HOME" /etc/security/pam_env.conf; then
+if [ -n "$hasSudo" ] && ! grep -q "XDG_CONFIG_HOME" /etc/security/pam_env.conf; then
     printf 'Append XDG variables to /etc/security/pam_env.conf? [y/N] '
     read -r REPLY
     if [ "$REPLY" = "y" ] || [ "$REPLY" = "Y" ]; then
@@ -148,6 +148,9 @@ if [ $hasSudo ] && ! grep -q "XDG_CONFIG_HOME" /etc/security/pam_env.conf; then
     fi
 fi
 grep -q "XDG_CONFIG_HOME" /etc/security/pam_env.conf || linking  env/pam  $HOME/.pam_environment
+
+# ssh_autopass.sh {{{2
+linking  _patch/ssh_autopass.sh  $patch_dir/ssh
 
 # ~ {{{2
 

@@ -187,6 +187,7 @@ pathmunge "$HOME/.local/bin/AppImages"
 pathmunge "$HOME/.local/bin/scripts"
 
 pathmunge "$HOME/.local/bin/_patch"
+pathmunge "$HOME/.local/bin/_patch/xdg"
 
 # default programs {{{1
 
