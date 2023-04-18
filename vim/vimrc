@@ -583,7 +583,11 @@ augroup END
 
 augroup TRIM_TRAILING_WHITESPACE
   autocmd!
-  autocmd BufWritePre * sil! undoj | sil! keepp keepj %s/\v(\s+$|\_s+%$)//e
+  let g:trim_ws_exceptions = ["markdown", "whitespace"]
+  autocmd BufWritePre *
+        \   if index(g:trim_ws_exceptions, &ft) < 0
+        \ |   sil! undoj | sil! keepp keepj %s/\v(\s+$|\_s+%$)//e
+        \ | endif
 augroup END
 
 augroup NO_NESTED_VIM
