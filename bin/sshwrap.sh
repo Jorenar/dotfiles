@@ -2,9 +2,6 @@
 
 #shellcheck disable=SC2089,SC2090,SC2155
 
-# Remove directory with wrapper from PATH (to prevent cyclical execution)
-PATH="$(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)" | paste -sd:)"
-
 wrapcmd="$1"
 shift
 
@@ -13,7 +10,7 @@ if [ -z "$(command -v expect)" ]; then
     exec $wrapcmd "$@"
 fi
 
-if [ "$(basename "$0")" = "scp" ]; then
+if [ "$wrapcmd" = "scp" ]; then
     host="$(echo "$@" | tr ' ' '\n' | grep : | cut -d: -f1)"
     conf="$(ssh -G "$host")"
 else
@@ -42,12 +39,6 @@ user="$(get_param user)"
 user_prompt="$(get_var USER_PROMPT)"
 
 
-pass=
-if [ -n "$pass_cmd" ]; then
-    pass="$($pass_cmd)"
-fi
-
-
 expect_body=
 
 if [ -n "$user" ] && [ -n "$user_prompt" ]; then
@@ -57,8 +48,9 @@ if [ -n "$user" ] && [ -n "$user_prompt" ]; then
     "
 fi
 
-if [ -n "$pass" ]; then
+if [ -n "$pass_cmd" ]; then
     expect_body="$expect_body
+        set pass [exec $pass_cmd]
         expect {
     "
     if [ "$prog" = "ssh" ] || [ "$prog" = "scp" ]; then
@@ -70,7 +62,10 @@ if [ -n "$pass" ]; then
         "
     fi
     expect_body="$expect_body
-            \"$pass_prompt\" { send -- \"$pass\\r\" }
+            \"$pass_prompt\" {
+                send -- \"\$pass\"
+                send -- \"\\r\"
+            }
         }
     "
 fi
