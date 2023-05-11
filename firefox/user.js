@@ -27,6 +27,7 @@ user_pref("browser.aboutConfig.showWarning", false);
 user_pref("browser.ctrlTab.recentlyUsedOrder", false);
 user_pref("browser.download.useDownloadDir",   false);
 user_pref("browser.urlbar.suggest.topsites",   false);
+user_pref("browser.urlbar.trimURLs",           false);
 user_pref("general.autoScroll",                true);
 user_pref("media.eme.enabled",                 true);   // enable DRM
 

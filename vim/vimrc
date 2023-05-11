@@ -196,7 +196,7 @@ function! MyFoldText() abort
   let line = trim(line, " \t\r\n", 2)
   let line = strchars(line) > &tw/2 ? line[:(&tw/2)] . "..." : line
   let fd = repeat(v:folddashes, 2)
-  let pad = &tw - strchars(line) - len(fd)
+  let pad = &tw - strdisplaywidth(line) - len(fd)
 
   return printf("%s  +%s %*.d lines ", line, fd, pad, v:foldend - v:foldstart + 1)
 endfunction
@@ -213,7 +213,7 @@ if has('nvim') " sanitize Neovim :terminal
 endif
 " }}}
 
-let g:syntax_off_exceptions = [ "help", "man", "markdown", "qf", "tex" ]
+let g:syntax_off_exceptions = [ "help", "man", "markdown", "qf", "tex", "tagbar" ]
 autocmd FileType *
       \   if index(g:syntax_off_exceptions, &ft) < 0
       \ |   silent! setlocal syntax=OFF
@@ -231,6 +231,7 @@ let g:plugins = {
       \     "jpalardy/vim-slime",
       \     "junegunn/gv.vim",
       \     "markonm/traces.vim",
+      \     "MattesGroeger/vim-bookmarks",
       \     "mbbill/undotree",
       \     "mhinz/vim-signify",
       \     "prabirshrestha/vim-lsp",
@@ -489,6 +490,24 @@ let g:tagbar_type_vb = #{
       \   ]
       \ }
 
+" vim-bookmarks {{{2
+
+let g:bookmark_auto_save_file = $XDG_STATE_HOME . "/vim/bookmarks"
+let g:bookmark_disable_ctrlp = 1
+let g:bookmark_display_annotation = 1
+let g:bookmark_no_default_key_mappings = 1
+
+nmap <Leader>mm  <Plug>BookmarkToggle
+nmap <Leader>mi  <Plug>BookmarkAnnotate
+nmap <Leader>ma  <Plug>BookmarkShowAll
+nmap <Leader>mj  <Plug>BookmarkNext
+nmap <Leader>mk  <Plug>BookmarkPrev
+nmap <Leader>mc  <Plug>BookmarkClear
+nmap <Leader>mx  <Plug>BookmarkClearAll
+nmap <Leader>mkk <Plug>BookmarkMoveUp
+nmap <Leader>mjj <Plug>BookmarkMoveDown
+nmap <Leader>mg  <Plug>BookmarkMoveToLine
+
 " vim-slime {{{2
 
 let g:slime_dont_ask_default = 1
@@ -532,11 +551,6 @@ let g:termdebug_wide = 1
 let g:EditorConfig_enable_for_new_buf = 1
 
 let g:traces_preview_window = "new"
-
-let g:fastfold_fold_command_suffixes  = [ 'C', 'm', 'M', 'N', 'x', 'X' ]
-let g:fastfold_fold_movement_commands = []
-let g:fastfold_minlines = 0
-let g:fastfold_savehook = 0
 
 let g:miniSnip_extends = {
       \   "arduino"  : [ "cpp", "c" ],

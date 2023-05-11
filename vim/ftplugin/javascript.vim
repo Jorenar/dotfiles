@@ -5,4 +5,4 @@ setlocal tabstop=2
 
 autocmd Syntax <buffer> setlocal foldtext=MyFoldText()
 
-SetFormatProg "deno fmt --options-indent-width 2"
+SetFormatProg "deno fmt --indent-width 2 -"
