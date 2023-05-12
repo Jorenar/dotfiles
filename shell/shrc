@@ -14,7 +14,7 @@ fi
 . $XDG_CONFIG_HOME/env/variables
 
 # History size
-export HISTSIZE=5000
+export HISTSIZE=
 
 # Restore OLDPWD
 [ -f "$HISTORY_DIR/oldpwd" ] && . "$HISTORY_DIR/oldpwd"
