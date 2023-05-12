@@ -2,3 +2,9 @@
 # vim: ft=sh
 
 echo "OLDPWD='$PWD'" > "$HISTORY_DIR/oldpwd"
+
+perm_hist="${HISTFILE:-$HOME/.history}__perm"
+if [ -e "$perm_hist" ]; then
+    head -$(wc -l < "$perm_hist") "$HISTFILE" | diff - "$perm_hist" >/dev/null 2>&1
+    [ $? -ne 0 ] && cat "$perm_hist" "$HISTFILE" | tee "$HISTFILE" > /dev/null
+fi
