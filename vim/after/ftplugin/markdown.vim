@@ -14,5 +14,4 @@ else
   nnoremap <buffer> <F8> :tab term grip --quiet -b %<CR>
 endif
 
-" trim trailing whitespace
-autocmd BufWritePre <buffer> sil! undoj | sil! keepp keepj %s/\v(\S@<=\s$|(\s\s)@<=\s+$|\_s+%$)//e
+let g:trimWhitespace_pattern = '\v(\S\zs\s|\s\s\zs\s+)$'
