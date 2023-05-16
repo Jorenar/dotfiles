@@ -24,7 +24,7 @@ let s:diff_cmd = s:getVar("diff_binary")
 function! s:TrimWhitespace() abort
   if !s:getVar('enabled') | return | endif
 
-  let l:changes = []
+  let l:changes = ""
 
   if !filereadable(expand('%'))
     let l:changes = "1,".line('$')
