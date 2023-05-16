@@ -11,7 +11,7 @@ endfunction
 
 
 let s:enabled  = 1
-let s:at_eof   = 1
+let s:nl_eof   = 1
 let s:pattern  = '\s\+$'
 
 let s:diff_binary = executable("diff.exe") ? "diff.exe" : "command diff"
@@ -37,16 +37,17 @@ function! s:TrimWhitespace() abort
     redir END
   endif
 
+  let l:changes = split(l:changes)
   if empty(l:changes) | return | endif
 
   let l:pos = getpos('.')
 
   let l:fmt_eol = 'keepp keepj %s s/' . s:getVar("pattern") . '//e'
-  for l:range in split(l:changes)
+  for l:range in l:changes
     silent execute printf(l:fmt_eol, l:range)
   endfor
 
-  if s:getVar('at_eof') && split(l:range, ',')[1] >= line('$')
+  if s:getVar('nl_eof') && split(l:range, ',')[1] >= line('$')
     silent execute 'keepp keepj %s/\n\+\%$//e'
   endif
 

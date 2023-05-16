@@ -278,6 +278,8 @@ augroup END
 
 " vim-lsp {{{2
 
+let g:lsp_use_native_client                  = 1
+
 let g:lsp_diagnostics_highlights_delay       = 0
 let g:lsp_diagnostics_highlights_enabled     = 1
 let g:lsp_diagnostics_signs_enabled          = 0
