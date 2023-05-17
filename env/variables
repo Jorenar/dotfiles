@@ -214,9 +214,6 @@ export QT_QPA_PLATFORMTHEME=gtk2
 
 # other {{{1
 
-# File with temporary flags
-export TMPFLAGS="$TMPDIR/flags_$USER"
-
 # Japanese input
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
