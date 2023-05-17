@@ -43,7 +43,7 @@ bindsym $super+x exec --no-startup-id ${TERMINAL:-xterm}
 bindsym $super+w exec firefox
 
 # aerc
-bindsym $super+m exec --no-startup-id imapfilter && ${TERMINAL:-xterm} -T aerc aerc && rm -f "${TMPDIR:-/tmp}/aerc.html"
+bindsym $super+m exec --no-startup-id ${TERMINAL:-xterm} -T aerc aerc && rm -f "${TMPDIR:-/tmp}/aerc.html"
 
 # vim-anywhere
 bindsym $super+v exec --no-startup-id vim-anywhere
