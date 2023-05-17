@@ -502,12 +502,10 @@ let g:bookmark_no_default_key_mappings = 1
 nmap <Leader>mm  <Plug>BookmarkToggle
 nmap <Leader>mi  <Plug>BookmarkAnnotate
 nmap <Leader>ma  <Plug>BookmarkShowAll
-nmap <Leader>mj  <Plug>BookmarkNext
-nmap <Leader>mk  <Plug>BookmarkPrev
-nmap <Leader>mc  <Plug>BookmarkClear
-nmap <Leader>mx  <Plug>BookmarkClearAll
-nmap <Leader>mkk <Plug>BookmarkMoveUp
-nmap <Leader>mjj <Plug>BookmarkMoveDown
+nmap <Leader>m[  <Plug>BookmarkPrev
+nmap <Leader>m]  <Plug>BookmarkNext
+nmap <Leader>mk  <Plug>BookmarkMoveUp
+nmap <Leader>mj  <Plug>BookmarkMoveDown
 nmap <Leader>mg  <Plug>BookmarkMoveToLine
 
 " vim-slime {{{2

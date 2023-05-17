@@ -8,7 +8,7 @@ perm_hist="$HOSTDOTS/sh_history.perm"
 if [ -e "$perm_hist" ]; then
     temp="$(mktemp)"
     if [ -e "$temp" ]; then
-        grep -v -F -f "$HISTFILE" "$perm_hist" | cat - $HISTFILE > "$temp"
+        grep -v -F -x -f "$HISTFILE" "$perm_hist" | cat - $HISTFILE > "$temp"
         if [ "$(wc -l < $temp)" -gt "$(wc -l < $HISTFILE)" ]; then
             mv $temp $HISTFILE
         else

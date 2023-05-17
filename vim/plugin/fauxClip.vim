@@ -96,6 +96,8 @@ function s:init() abort
     let g:fauxClip_copy_primary_cmd  .= null
     let g:fauxClip_paste_primary_cmd .= null
   endif
+
+  let s:tmux_reg = get(g:, "fauxClip_tmux_reg", '&')
 endfunction
 call s:init()
 
@@ -123,8 +125,10 @@ endfunction
 function! s:yank(content) abort
   if s:REG == "+"
     call system(g:fauxClip_copy_cmd, a:content)
-  else
+  elseif s:REG == "*"
     call system(g:fauxClip_copy_primary_cmd, a:content)
+  elseif s:REG == s:tmux_reg
+    call system("tmux load-buffer -", a:content)
   endif
 
   call s:end()
@@ -133,8 +137,10 @@ endfunction
 function! s:paste(REG) abort
   if a:REG == "+"
     return system(g:fauxClip_paste_cmd)
-  else
+  elseif s:REG == "*"
     return system(g:fauxClip_paste_primary_cmd)
+  elseif s:REG == s:tmux_reg
+    return system("tmux save-buffer -")
   endif
 endfunction
 
@@ -174,7 +180,7 @@ function! s:restore_CR() abort
 endfunction
 
 function! s:cmd_pattern() abort
-  return '\v%(%(^|\|)\s*%(\%|\d\,\d|' . "'\\<\\,'\\>" . ')?\s*)@<=(y%[ank]|d%[elete]|pu%[t]!?)\s*([+*])'
+  return '\v%(%(^|\|)\s*%(\%|\d\,\d|' . "'\\<\\,'\\>" . ')?\s*)@<=(y%[ank]|d%[elete]|pu%[t]!?)\s*([+*'.s:tmux_reg.'])'
 endfunction
 
 function! s:CR() abort
@@ -199,21 +205,15 @@ augroup fauxClipCmdWrapper
         \| elseif exists('g:CR_old') | call <SID>restore_CR() | endif
 augroup END
 
-nnoremap <expr> "* <SID>start("*")
-nnoremap <expr> "+ <SID>start("+")
+for r in [ '*', '+', s:tmux_reg ]
+  exec 'nnoremap <expr> "'.r '<SID>start("'.r.'")'
+  exec 'vnoremap <expr> "'.r '<SID>start("'.r.'")'
 
-vnoremap <expr> "* <SID>start("*")
-vnoremap <expr> "+ <SID>start("+")
-
-noremap! <C-r>+       <C-r>=<SID>paste("+")<CR>
-noremap! <C-r><C-r>+  <C-r><C-r>=<SID>paste("+")<CR>
-noremap! <C-r><C-o>+  <C-r><C-o>=<SID>paste("+")<CR>
-inoremap <C-r><C-p>+  <C-r><C-p>=<SID>paste("+")<CR>
-
-noremap! <C-r>*       <C-r>=<SID>paste("*")<CR>
-noremap! <C-r><C-r>*  <C-r><C-r>=<SID>paste("*")<CR>
-noremap! <C-r><C-o>*  <C-r><C-o>=<SID>paste("*")<CR>
-inoremap <C-r><C-p>*  <C-r><C-p>=<SID>paste("*")<CR>
+  exec 'noremap! <C-r>'.r       '<C-r>=<SID>paste("'.r.'")<CR>'
+  exec 'noremap! <C-r><C-r>'.r  '<C-r><C-r>=<SID>paste("'.r.'")<CR>'
+  exec 'noremap! <C-r><C-o>'.r  '<C-r><C-o>=<SID>paste("'.r.'")<CR>'
+  exec 'inoremap <C-r><C-p>'.r  '<C-r><C-p>=<SID>paste("'.r.'")<CR>'
+endfor | unlet r
 
 " }}}
 
