@@ -10,8 +10,8 @@ if ! shopt -oq posix; then
     elif [ -f /etc/bash_completion ]; then
         source /etc/bash_completion
     fi
+    shopt -u progcomp
 fi
-shopt -s progcomp
 
 # Search history with Vim
 bind -m vi-command -x '"\C-r": __HistR'
