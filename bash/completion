@@ -30,3 +30,6 @@ if [ -z "$(type -t _ssh_configfile)" ]; then
 
     readonly -f _ssh_configfile
 fi
+
+# prevents \$ when completing path with variables
+alias compopt='compopt -o noquote'
