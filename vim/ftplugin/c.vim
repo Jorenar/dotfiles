@@ -1,4 +1,4 @@
-setlocal cinoptions=g0,N-s,t0,(0,u0,U0,j1,ws,Ws,m1,J1,#0,:0
+setlocal cinoptions=g0,N-s,t0,(0,u0,U0,j1,ws,Ws,m1,#0,:0,L-1
 setlocal complete-=i " Scanning included files when ^n is troublesome
 setlocal foldmethod=syntax
 setlocal path+=/usr/include/**

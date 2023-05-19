@@ -42,7 +42,7 @@ com! -bang            ColorUp          set syntax=ON | exec "colo " . (<bang>0 ?
 com!                  CountSpell       echo utils#CountSpell()
 com!                  ExecCurrentLine  normal :.w !sh<CR>
 com! -nargs=1         FillLine         exec "norm! $" | exec "FillToColumn" <q-args> &tw
-com! -nargs=+         FillToColumn     exec {str,r -> "norm! a".repeat(str, (r-col("."))/len(str))}(<f-args>)
+com! -nargs=+         FillToColumn     exec {str,r -> "norm! a".repeat(str, (r-col(".")+1)/len(str))}(<f-args>)
 com! -nargs=+         Grep             silent! exec "grep -R <args> ."
 com! -nargs=+         GrepRename       exec {a,b -> 'tabe | lv /\C\<' . a . '\>/j ** | cdo s/\C\<' . a . '\>/' . b . '/gc | up'}(<f-args>) | q
 com!                  InstallPlugins   call utils#InstallPlugins()

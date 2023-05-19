@@ -14,4 +14,4 @@ else
   nnoremap <buffer> <F8> :tab term grip --quiet -b %<CR>
 endif
 
-let g:trimWhitespace_pattern = '\v(\S\zs\s|\s\s\zs\s+)$'
+let b:trimWhitespace_pattern = '\v(\S\zs\s|\s\s\zs\s+)$'

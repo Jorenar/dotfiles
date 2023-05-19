@@ -137,9 +137,9 @@ endfunction
 function! s:paste(REG) abort
   if a:REG == "+"
     return system(g:fauxClip_paste_cmd)
-  elseif s:REG == "*"
+  elseif a:REG == "*"
     return system(g:fauxClip_paste_primary_cmd)
-  elseif s:REG == s:tmux_reg
+  elseif a:REG == s:tmux_reg
     return system("tmux save-buffer -")
   endif
 endfunction
