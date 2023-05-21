@@ -75,6 +75,7 @@ nnoremap <silent> <Leader>B :bprev<CR>
 nnoremap <silent> <Leader>w :<C-u>call softWrapLineAtCol#toggle(v:count ? v:count : &tw)<CR>
 nnoremap j gj
 nnoremap k gk
+nnoremap L <cmd>echoerr "No LSP server running for this buffer"<CR>
 
 vnoremap iz :<C-u>silent! norm! [zjV]zk<CR>
 onoremap iz :<C-u>silent! norm Viz<CR>
@@ -298,19 +299,22 @@ com! LspCallHierarchyOutgoingTree  call lsp#call_hierarchy_tree#show(v:true)
 function! s:lsp_init() abort
   setlocal omnifunc=lsp#complete
 
-  nmap <buffer> <Leader>R <Plug>(lsp-rename)
+  nnoremap <buffer> L <nop>
 
-  nmap <buffer> <Leader>gd <Plug>(lsp-definition)
-  nmap <buffer> <Leader>gs <Plug>(lsp-document-symbol-search)
-  nmap <buffer> <Leader>gS <Plug>(lsp-workspace-symbol-search)
-  nmap <buffer> <Leader>gr <Plug>(lsp-references)
-  nmap <buffer> <Leader>gi <Plug>(lsp-implementation)
+  nmap <buffer> LK <Plug>(lsp-hover)
+  nmap <buffer> LR <Plug>(lsp-rename)
 
-  nmap <buffer> <Leader>kk <Plug>(lsp-hover)
-  nmap <buffer> <Leader>kd <Plug>(lsp-peek-declaration)
-  nmap <buffer> <Leader>kg <Plug>(lsp-peek-definition)
-  nmap <buffer> <Leader>ki <Plug>(lsp-peek-implementation)
-  nmap <buffer> <Leader>kt <Plug>(lsp-peek-type-definition)
+  nmap <buffer> Lgg <Plug>(lsp-definition)
+  nmap <buffer> Lgd <Plug>(lsp-declaration)
+  nmap <buffer> Lgs <Plug>(lsp-document-symbol-search)
+  nmap <buffer> LgS <Plug>(lsp-workspace-symbol-search)
+  nmap <buffer> Lgr <Plug>(lsp-references)
+  nmap <buffer> Lgi <Plug>(lsp-implementation)
+
+  nmap <buffer> Lkg <Plug>(lsp-peek-definition)
+  nmap <buffer> Lkd <Plug>(lsp-peek-declaration)
+  nmap <buffer> Lki <Plug>(lsp-peek-implementation)
+  nmap <buffer> Lkt <Plug>(lsp-peek-type-definition)
 
   nnoremap <buffer> <expr><C-f> lsp#scroll(+4)
   nnoremap <buffer> <expr><C-d> lsp#scroll(-4)
