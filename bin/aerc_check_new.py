@@ -26,11 +26,14 @@ for section in config.sections():
     passcmd = config[section]["source-cred-cmd"]
     passwd = os.popen(passcmd).read().strip()
 
-    box = imaplib.IMAP4_SSL(host, port)
-    box.login(user, passwd)
-    box.select()
-    _, ids = box.search(None, 'UNSEEN')
-    box.logout()
-    count.append(str(len(ids[0].split())))
+    try:
+        box = imaplib.IMAP4_SSL(host, port)
+        box.login(user, passwd)
+        box.select()
+        _, ids = box.search(None, 'UNSEEN')
+        box.logout()
+        count.append(str(len(ids[0].split())))
+    except imaplib.IMAP4.error:
+        count.append("x")
 
 print(",".join(count))

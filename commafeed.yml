@@ -48,7 +48,7 @@ logging:
   appenders:
     - type: console
     - type: file
-      currentLogFilename: ${XDG_STATE_HOME}/commafeed.log
+      currentLogFilename: "${XDG_STATE_HOME}/commafeed.log"
       threshold: ALL
       archive: false
       archivedLogFilenamePattern: log/commafeed-%d.log

@@ -49,7 +49,6 @@ com!                  InstallPlugins   call utils#InstallPlugins()
 com! -nargs=1         SetFormatProg    exec {prg -> 'let [ &l:formatprg, &l:formatexpr ] = [ "'.prg.' 2> /dev/null", "" ]'}(<args>)
 com! -range=%         Sort             normal :<line1>,<line2>sort i<CR>
 com! -nargs=?         Spelling         if empty("<args>") | setl spell! | else | setl spell spelllang=<args> | endif
-com!                  SudoW            exec 'silent! write !sudo tee % >/dev/null' | edit!
 com!                  SyntaxStack      echo join(reverse(map(synstack(line('.'), col('.')), 'synIDattr(v:val,"name")')),' ')
 com! -nargs=+         Vimgrep          exec "vimgrep /".<q-args>."/j **"
 com! -range           VisSort          sil! keepj <line1>,<line2>call utils#VisSort()
