@@ -93,6 +93,8 @@ function! s:handle_tree(bufnr, method, data) abort
 
   " Create new buffer in a vertical split
   topleft 50vnew
+  vertical resize 50
+  setlocal winfixwidth
   call lsp#disable_diagnostics_for_buffer() " and disable diagnostics in it
   let &l:stl = " " . (a:method =~ 'incoming' ? "Incoming" : "Outgoing") . " Calls"
 

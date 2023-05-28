@@ -1,8 +1,6 @@
 # PROFILE #
 # vim: ft=sh
 
-# ENV VARIABLES
-
 if [ -n "$profile_xdg" ]; then
     t="$profile_xdg"
 elif [ -n "$BASH_VERSION" ]; then
@@ -16,12 +14,21 @@ elif [ -x "$(command -v lsof)" ]; then
 else
     t="$HOME/.local/config/env/profile"
 fi
-
 . "$(dirname $(realpath $t))/variables"; unset t
 
-# AUTOSTART
-for script in $XDG_CONFIG_HOME/env/autostart/*.sh; do
-    . "$script"
-done
+
+if [ ! -d "$XDG_RUNTIME_DIR" ]; then
+    mkdir -p -m 0700 "$XDG_RUNTIME_DIR" # ought to be '/tmp/user-runtime'
+fi
+if [ "$(stat -c '%a' "$XDG_RUNTIME_DIR")" != 700 ]; then
+    echo "\$XDG_RUNTIME_DIR: permissions problem with $XDG_RUNTIME_DIR:" >&2
+    ls -ld "$XDG_RUNTIME_DIR" >&2
+    export XDG_RUNTIME_DIR="$(mktemp -d "$TMPDIR/$USER"-runtime-XXXXXX)"
+    echo "Set \$XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR" >&2
+fi
+
+
+mkdir -p "$HISTORY_DIR"
+
 
 exec $SHELL

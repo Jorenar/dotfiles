@@ -42,17 +42,11 @@ bindsym $super+x exec --no-startup-id ${TERMINAL:-xterm}
 # Firefox
 bindsym $super+w exec firefox
 
-# aerc
-bindsym $super+m exec --no-startup-id ${TERMINAL:-xterm} -T aerc aerc && rm -f "${TMPDIR:-/tmp}/aerc.html"
-
 # vim-anywhere
 bindsym $super+v exec --no-startup-id vim-anywhere
 
 # passmenu (type password)
 bindsym $super+p exec --no-startup-id passmenu --type
-
-# Ranger
-bindsym $super+e exec --no-startup-id ${TERMINAL:-xterm} -T Ranger ranger
 
 # WINDOWS RULES {{{1
 

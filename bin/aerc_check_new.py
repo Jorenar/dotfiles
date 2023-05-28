@@ -3,6 +3,7 @@
 
 import os
 import imaplib
+import subprocess
 import configparser
 
 config = configparser.ConfigParser(interpolation=None)
@@ -24,7 +25,12 @@ for section in config.sections():
     port = 993 if len(source) == 1 else source[1]
 
     passcmd = config[section]["source-cred-cmd"]
-    passwd = os.popen(passcmd).read().strip()
+    passwd = None
+    try:
+        passwd = subprocess.check_output(passcmd, shell=True, timeout=1)
+        passwd = passwd.decode("UTF-8").strip()
+    except subprocess.TimeoutExpired:
+        continue
 
     try:
         box = imaplib.IMAP4_SSL(host, port)
