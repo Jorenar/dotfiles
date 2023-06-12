@@ -298,7 +298,7 @@ com! LspCallHierarchyOutgoingTree  call lsp#call_hierarchy_tree#show(v:true)
 function! s:lsp_init() abort
   setlocal omnifunc=lsp#complete
 
-  nnoremap <buffer> L <nop>
+  nnoremap <buffer> L <cmd>call input()<CR>
 
   nmap <buffer> LK <Plug>(lsp-hover)
   nmap <buffer> LR <Plug>(lsp-rename)
@@ -315,8 +315,8 @@ function! s:lsp_init() abort
   nmap <buffer> Lki <Plug>(lsp-peek-implementation)
   nmap <buffer> Lkt <Plug>(lsp-peek-type-definition)
 
-  nnoremap <buffer> <expr><C-f> lsp#scroll(+4)
-  nnoremap <buffer> <expr><C-d> lsp#scroll(-4)
+  nnoremap <buffer> <expr> <C-f> lsp#scroll(+4)
+  nnoremap <buffer> <expr> <C-d> lsp#scroll(-4)
 
   nnoremenu PopUp.LSP :popup ]LSP<CR>
   nnoremenu ]LSP.Hover       <Plug>(lsp-hover)
@@ -610,8 +610,8 @@ augroup END
 
 augroup VISUALBLOCK_NOSTARTOFLINE
   autocmd!
-  exec "autocmd ModeChanged *:\<C-v> let g:sol_old = &sol | set nosol"
-  exec "autocmd ModeChanged \<C-v>:* let &startofline = g:sol_old"
+  silent! exec "autocmd ModeChanged *:\<C-v> let g:sol_old = &sol | set nosol"
+  silent! exec "autocmd ModeChanged \<C-v>:* let &startofline = g:sol_old"
 augroup END
 
 augroup OTHER
