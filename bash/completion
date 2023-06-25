@@ -32,4 +32,4 @@ if [ -z "$(type -t _ssh_configfile)" ]; then
 fi
 
 # prevents \$ when completing path with variables
-alias compopt='compopt -o noquote'
+# alias compopt='compopt -o noquote'
