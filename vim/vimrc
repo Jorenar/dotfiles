@@ -285,6 +285,7 @@ let g:lsp_diagnostics_highlights_enabled     = 1
 let g:lsp_diagnostics_signs_enabled          = 0
 let g:lsp_diagnostics_virtual_text_enabled   = 0
 let g:lsp_document_code_action_signs_enabled = 0
+let g:lsp_text_edit_enabled                  = 0
 
 let g:lsp_log_verbose = 0
 let g:lsp_log_file = $XDG_STATE_HOME . "/vim/lsp.log"
@@ -379,7 +380,6 @@ augroup LSP
     au User lsp_setup call lsp#register_server(#{
           \   name: "sqls",
           \   cmd: [ "sqls" ],
-          \   command: "sqls",
           \   workspace_config: #{
           \     sqls: #{
           \       connections: [
@@ -430,6 +430,14 @@ augroup LSP
           \     },
           \   },
           \   allowlist: [ "javascript", "typescript" ],
+          \ })
+  endif
+
+  if executable("openscad-lsp")
+    au User lsp_setup call lsp#register_server(#{
+          \   name: "openscad-LSP",
+          \   cmd: [ "openscad-lsp", "--stdio" ],
+          \   allowlist: [ "openscad" ],
           \ })
   endif
 
