@@ -214,7 +214,7 @@ gtk_theme_rc="$XDG_DATA_HOME/themes/$GTK_THEME/gtk-2.0/gtkrc"
 [ -f "$gtk_theme_rc" ] && export GTK2_RC_FILES="$GTK2_RC_FILES:$gtk_theme_rc"; unset gtk_theme_rc
 
 # Set Qt to use GTK theme
-export QT_QPA_PLATFORMTHEME=gtk2
+export QT_QPA_PLATFORMTHEME=qt5gtk2
 
 # other {{{1
 
