@@ -14,7 +14,19 @@ function s:init() abort
 
   if settedCmds < 4
     let cmds = {}
-    if executable("clip.exe")
+    if $WSL2_GUI_APPS_ENABLED && (executable("xclip") || executable("xsel"))
+      if executable("xclip")
+        let cmds = {
+              \   "copy": "xclip -f -i -selection clipboard",
+              \   "paste": "xclip -o -selection clipboard",
+              \ }
+      elseif executable("xsel")
+      let cmds = {
+            \   "copy": "xsel -i -b",
+            \   "paste": "xsel -o -b",
+            \ }
+      endif
+    elseif executable("clip.exe")
       let cmds = {
             \   "copy": "clip.exe",
             \   "paste": "powershell.exe Get-Clipboard",
