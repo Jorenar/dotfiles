@@ -109,7 +109,7 @@ function s:init() abort
     let g:fauxClip_paste_primary_cmd .= null
   endif
 
-  let s:tmux_reg = get(g:, "fauxClip_tmux_reg", '&')
+  let s:tmux_reg = get(g:, "fauxClip_tmux_reg", ']')
 endfunction
 call s:init()
 

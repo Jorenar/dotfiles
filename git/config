@@ -54,6 +54,7 @@
     del        = !sh -c 'git reset HEAD \"$@\"' -
     fast       = !sh -c 'git add -A && git commit -m \"$1\" && git push' -
     initial    = !sh -c 'git init && git add -A && git commit -m \"Initial commit\" && git remote add origin \"$1\" && git push -u origin master' -
+    prune-branches = !git remote prune origin && git branch -vv | awk '/: gone]/ {print $1}' | xargs -r git branch -d
 
 [include]
     path = ~/.local/.dotfiles/.host/git

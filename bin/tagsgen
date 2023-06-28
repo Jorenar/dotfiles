@@ -6,6 +6,8 @@ if git rev-parse 2> /dev/null; then
 fi
 tagsDir="$projRoot/.tags"
 
+searchDir="${1:-$projRoot}"
+
 cd "$projRoot"
 mkdir -p "$tagsDir"
 
@@ -16,7 +18,7 @@ fi
 if [ -x "$(command -v cscope)" ]; then
     namefile="$(mktemp)"
 
-    find "$projRoot" \( \
+    find "$searchDir" \( \
         -name '*.[chxsS]' \
         -o -name '*.cpp' -o -name '*.hpp' \
         -o -name '*.java' \
