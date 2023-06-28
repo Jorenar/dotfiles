@@ -192,7 +192,7 @@ function! s:restore_CR() abort
 endfunction
 
 function! s:cmd_pattern() abort
-  return '\v%(%(^|\|)\s*%(\%|\d\,\d|' . "'\\<\\,'\\>" . ')?\s*)@<=(y%[ank]|d%[elete]|pu%[t]!?)\s*([+*'.s:tmux_reg.'])'
+  return '\v%(%(^|\|)\s*%(\%|\d\,\d|' . "'\\<\\,'\\>" . ')?\s*)@<=(y%[ank]|d%[elete]|pu%[t]!?)\s*(['.s:tmux_reg.'+*])'
 endfunction
 
 function! s:CR() abort
