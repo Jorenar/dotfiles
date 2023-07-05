@@ -21,10 +21,10 @@ function s:init() abort
               \   "paste": "xclip -o -selection clipboard",
               \ }
       elseif executable("xsel")
-      let cmds = {
-            \   "copy": "xsel -i -b",
-            \   "paste": "xsel -o -b",
-            \ }
+        let cmds = {
+              \   "copy": "xsel -i -b",
+              \   "paste": "xsel -o -b",
+              \ }
       endif
     elseif executable("clip.exe")
       let cmds = {

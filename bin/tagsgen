@@ -8,7 +8,7 @@ tagsDir="$projRoot/.tags"
 
 searchDir="${1:-$projRoot}"
 
-cd "$projRoot"
+cd "$projRoot" || exit 1
 mkdir -p "$tagsDir"
 
 if [ -x "$(command -v ctags)" ]; then
