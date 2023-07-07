@@ -3,6 +3,10 @@
   display: none !important;
 }
 
+#navigator-toolbox:-moz-lwtheme {
+  background-color: black !important;
+}
+
 #BMB_searchBookmarks,
 #BMB_bookmarksToolbar,     #BMB_bookmarksToolbar     + menuseparator,
 #BMB_viewBookmarksSidebar, #BMB_viewBookmarksSidebar + menuseparator,

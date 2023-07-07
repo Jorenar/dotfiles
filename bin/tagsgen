@@ -16,16 +16,13 @@ if [ -x "$(command -v ctags)" ]; then
 fi
 
 if [ -x "$(command -v cscope)" ]; then
-    namefile="$(mktemp)"
-
     find "$searchDir" \( \
         -name '*.[chxsS]' \
         -o -name '*.cpp' -o -name '*.hpp' \
         -o -name '*.java' \
-        \) -exec readlink -f {} \; > "$namefile"
+        \) -exec readlink -f {} \; > "$tagsDir/ctags.files"
 
-    cscope -c -b -q -i "$namefile" -f "$tagsDir/cscope.out"
-    rm "$namefile"
+    cscope -U -c -b -q -f "$tagsDir/cscope.out"
 fi
 
 if [ -x "$(command -v gtags)" ]; then

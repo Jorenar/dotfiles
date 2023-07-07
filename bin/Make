@@ -65,6 +65,9 @@ _:
 %.sh: PHONY
 	shellcheck $@
 
+%.scad: PHONY
+	openscad -o $(*F).stl $@
+
 
 CMakeLists.txt: PHONY
 	[ -n "$(*F)" ] && cd $(*F)
