@@ -180,8 +180,9 @@ pathmunge "$XDG_DATA_HOME"/gem/ruby/*/bin
 
 pathmunge C_INCLUDE_PATH "$HOME/.local/lib/include"
 
-export ASAN_OPTIONS="abort_on_error=1:halt_on_error=1"
-export UBSAN_OPTIONS="abort_on_error=1:halt_on_error=1"
+for v in ASAN_OPTIONS UBSAN_OPTIONS TSAN_OPTIONS; do
+    export "$v"="abort_on_error=1:halt_on_error=1"
+done
 
 for p in "$PYTHONUSERBASE"/lib/python3*/site-packages; do
     pathmunge PYTHONPATH "$p"
