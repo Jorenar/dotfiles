@@ -60,6 +60,8 @@ endif
 " MAPPINGS {{{1
 
 nnoremap ' `
+nnoremap <expr> <C-e> utils#scroll_cursor_popup(1) ? "<Esc>" : "<C-e>"
+nnoremap <expr> <C-y> utils#scroll_cursor_popup(-1) ? "<Esc>" : "<C-y>"
 nnoremap <expr> <F4> &ve == "all" ? ":set ve=\<CR>" : ":set ve=all\<CR>"
 nnoremap <F10> :w <bar> make<CR>
 nnoremap <F3> :set cursorline! cursorcolumn!<CR>
@@ -192,6 +194,7 @@ autocmd BufReadPost * if line('$') > winheight(0) | setlocal fen | endif
 
 function! MyFoldText() abort
   let line = getline(v:foldstart)
+  let line = substitute(line, '\t', repeat(' ', &ts), 'g')
   let line = substitute(line, split(&l:fmr, ',')[0].'\d\?', '', '')
   let line = trim(line, " \t\r\n", 2)
   let line = strchars(line) > &tw/2 ? line[:(&tw/2)] . "..." : line
@@ -310,14 +313,12 @@ function! s:lsp_init() abort
   nmap <buffer> LgS <Plug>(lsp-workspace-symbol-search)
   nmap <buffer> Lgr <Plug>(lsp-references)
   nmap <buffer> Lgi <Plug>(lsp-implementation)
+  nmap <buffer> Lgt <Plug>(lsp-type-definition)
 
   nmap <buffer> Lkg <Plug>(lsp-peek-definition)
   nmap <buffer> Lkd <Plug>(lsp-peek-declaration)
   nmap <buffer> Lki <Plug>(lsp-peek-implementation)
   nmap <buffer> Lkt <Plug>(lsp-peek-type-definition)
-
-  nnoremap <buffer> <expr> <C-f> lsp#scroll(+4)
-  nnoremap <buffer> <expr> <C-d> lsp#scroll(-4)
 
   nnoremenu PopUp.LSP :popup ]LSP<CR>
   nnoremenu ]LSP.Hover       <Plug>(lsp-hover)

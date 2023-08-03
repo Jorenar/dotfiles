@@ -104,3 +104,23 @@ function! utils#TermEF(cmd) abort
 
   setlocal switchbuf=usetab
 endfunction
+
+function! utils#scroll_cursor_popup(count) abort
+  let srow = screenrow()
+  let scol = screencol()
+
+  for r in range(srow-2, srow+2)
+    for c in range(scol-2, scol+2)
+      let winid = popup_locate(r, c)
+      if winid != 0
+        let pp = popup_getpos(winid)
+        call popup_setoptions(winid, {
+              \   'firstline' : pp.firstline + a:count
+              \ })
+        return 1
+      endif
+    endfor
+  endfor
+
+  return 0
+endfunction
