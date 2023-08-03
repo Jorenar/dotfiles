@@ -242,12 +242,13 @@ let g:plugins = {
       \     "tpope/vim-fugitive",
       \   ],
       \   "files": [
-      \     [ "autoload/lsp/ale.vim",  "github.com/rhysd/vim-lsp-ale/raw/master/autoload/lsp/ale.vim" ],
-      \     [ "autoload/repeat.vim",   "github.com/tpope/vim-repeat/raw/master/autoload/repeat.vim" ],
-      \     [ "plugin/commentary.vim", "github.com/tpope/vim-commentary/raw/master/plugin/commentary.vim" ],
-      \     [ "plugin/eunuch.vim",     "github.com/tpope/vim-eunuch/raw/master/plugin/eunuch.vim" ],
-      \     [ "plugin/rsi.vim",        "github.com/tpope/vim-rsi/raw/master/plugin/rsi.vim" ],
-      \     [ "plugin/surround.vim",   "github.com/tpope/vim-surround/raw/master/plugin/surround.vim" ],
+      \     [ "autoload/lsp/ale.vim",      "github.com/rhysd/vim-lsp-ale/raw/master/autoload/lsp/ale.vim" ],
+      \     [ "autoload/repeat.vim",       "github.com/tpope/vim-repeat/raw/master/autoload/repeat.vim" ],
+      \     [ "plugin/commentary.vim",     "github.com/tpope/vim-commentary/raw/master/plugin/commentary.vim" ],
+      \     [ "plugin/eunuch.vim",         "github.com/tpope/vim-eunuch/raw/master/plugin/eunuch.vim" ],
+      \     [ "plugin/rsi.vim",            "github.com/tpope/vim-rsi/raw/master/plugin/rsi.vim" ],
+      \     [ "plugin/surround.vim",       "github.com/tpope/vim-surround/raw/master/plugin/surround.vim" ],
+      \     [ "plugin/tmux_navigator.vim", "github.com/christoomey/vim-tmux-navigator/raw/master/plugin/tmux_navigator.vim" ],
       \   ]
       \ }
 
@@ -519,6 +520,15 @@ nmap <Leader>m]  <Plug>BookmarkNext
 nmap <Leader>mk  <Plug>BookmarkMoveUp
 nmap <Leader>mj  <Plug>BookmarkMoveDown
 nmap <Leader>mg  <Plug>BookmarkMoveToLine
+
+" Vim Tmux Navigator {{{2
+
+let g:tmux_navigator_no_mappings = 1
+
+noremap <silent> <C-w>h  <Cmd>TmuxNavigateLeft<CR>
+noremap <silent> <C-w>j  <Cmd>TmuxNavigateDown<CR>
+noremap <silent> <C-w>k  <Cmd>TmuxNavigateUp<CR>
+noremap <silent> <C-w>l  <Cmd>TmuxNavigateRight<CR>
 
 " vim-slime {{{2
 
