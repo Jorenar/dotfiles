@@ -46,6 +46,7 @@
     {
         "defaults":
         {
+            "bellStyle": "none",
             "colorScheme": "Tango Dark",
             "cursorShape": "filledBox",
             "experimental.retroTerminalEffect": false,
