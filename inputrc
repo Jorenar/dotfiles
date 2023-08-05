@@ -35,7 +35,7 @@ $endif
 "\C-n": next-history
 "\C-o": operate-and-get-next
 "\C-p": previous-history
-"\C-h": unix-word-rubout
+"\C-h": vi-unix-word-rubout
 
 "\e[1~": beginning-of-line
 "\e[4~": end-of-line
