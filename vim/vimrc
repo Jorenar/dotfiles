@@ -456,7 +456,7 @@ nmap ds <Plug>Dsurround
 nmap cs <Plug>Csurround
 nmap ss <Plug>Yssurround
 
-" CtrlP {{{2
+" CtrlP (+ FZF) {{{2
 
 let g:ctrlp_cache_dir  = $XDG_CACHE_HOME . "/vim/ctrlp"
 let g:ctrlp_types      = [ "fil", "buf" ]
@@ -467,6 +467,22 @@ let g:ctrlp_prompt_mappings = {
       \ "PrtHistory(1)": [ "<C-f>" ],
       \ "ToggleType(1)": [ "<C-p>", "<C-Up>" ],
       \ }
+
+if executable("fzf")
+  if index(g:ctrlp_types, "fil") >= 0
+    let g:ctrlp_map = ''
+    call remove(g:ctrlp_types, index(g:ctrlp_types, "fil"))
+    nnoremap <C-p> <Cmd>FZF<CR>
+  endif
+
+  let g:fzf_layout = { 'down': '10' }
+
+  augroup FZF
+    autocmd!
+    autocmd FileType fzf setl laststatus=0 | au BufLeave <buffer> setl ls=2
+    autocmd FileType fzf tmap <buffer> <C-p> <C-c><Cmd>sleep 1m<CR><Cmd>CtrlP<CR>
+  augroup END
+endif
 
 " Netrw {{{2
 
