@@ -289,6 +289,7 @@ let g:lsp_diagnostics_highlights_enabled     = 1
 let g:lsp_diagnostics_signs_enabled          = 0
 let g:lsp_diagnostics_virtual_text_enabled   = 0
 let g:lsp_document_code_action_signs_enabled = 0
+let g:lsp_document_symbol_detail             = 1
 let g:lsp_text_edit_enabled                  = 0
 
 let g:lsp_log_verbose = 0
