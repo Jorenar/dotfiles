@@ -458,9 +458,11 @@ nmap ss <Plug>Yssurround
 
 " CtrlP (+ FZF) {{{2
 
-let g:ctrlp_cache_dir  = $XDG_CACHE_HOME . "/vim/ctrlp"
-let g:ctrlp_types      = [ "fil", "buf" ]
-let g:ctrlp_extensions = [ "tag", "line" ]
+let g:ctrlp_cache_dir     = $XDG_CACHE_HOME . "/vim/ctrlp"
+let g:ctrlp_types         = [ "fil", "buf", "mru" ]
+let g:ctrlp_extensions    = [ "tag", "line" ]
+let g:ctrlp_mruf_relative = 1
+let g:ctrlp_mruf_exclude  = '/tmp/.*\|/temp/.*'
 
 let g:ctrlp_prompt_mappings = {
       \ "PrtExit()":     [ "<Esc>" ],
