@@ -463,6 +463,7 @@ let g:ctrlp_types         = [ "fil", "buf", "mru" ]
 let g:ctrlp_extensions    = [ "tag", "line" ]
 let g:ctrlp_mruf_relative = 1
 let g:ctrlp_mruf_exclude  = '/tmp/.*\|/temp/.*'
+let g:ctrlp_map           = '<C-p><C-p>'
 
 let g:ctrlp_prompt_mappings = {
       \ "PrtExit()":     [ "<Esc>" ],
@@ -470,11 +471,16 @@ let g:ctrlp_prompt_mappings = {
       \ "ToggleType(1)": [ "<C-p>", "<C-Up>" ],
       \ }
 
+nnoremap <C-p><C-b> <Cmd>CtrlPBuf<CR>
+nnoremap <C-p><C-l> <Cmd>CtrlPLine<CR>
+nnoremap <C-p><C-m> <Cmd>CtrlPMRU<CR>
+nnoremap <C-p><C-t> <Cmd>CtrlPTag<CR>
+
 if executable("fzf")
   if index(g:ctrlp_types, "fil") >= 0
-    let g:ctrlp_map = ''
     call remove(g:ctrlp_types, index(g:ctrlp_types, "fil"))
-    nnoremap <C-p> <Cmd>FZF<CR>
+    exec "nnoremap" g:ctrlp_map "<Cmd>FZF<CR>"
+    let g:ctrlp_map = ''
   endif
 
   let g:fzf_layout = { 'down': '10' }
