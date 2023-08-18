@@ -179,6 +179,12 @@ if hasSudo && ! grep -q "XDG_CONFIG_HOME" /etc/security/pam_env.conf; then
 fi
 # }}}
 
+# DCONF_PROFILE {{{
+#   prevents creating ~/.dconf
+DCONF_PROFILE="$XDG_CONFIG_HOME/dconf/user"
+mkdir -p "$(dirname "$DCONF_PROFILE")" && \
+    touch "$DCONF_PROFILE"
+# }}}
 
-mkdir -p "$(dirname "$DCONF_PROFILE")" && touch "$DCONF_PROFILE" # prevents creating ~/.dconf
+mkdir -p "$HISTORY_DIR"
 mkdir -p "$XDG_DATA_HOME"/alsa

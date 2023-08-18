@@ -28,7 +28,4 @@ if [ "$(stat -c '%a' "$XDG_RUNTIME_DIR")" != 700 ]; then
 fi
 
 
-mkdir -p "$HISTORY_DIR"
-
-
 exec $SHELL
