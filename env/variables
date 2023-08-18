@@ -196,6 +196,12 @@ pathmunge "$HOME/.local/bin/scripts"
 pathmunge "$HOME/.local/bin/_patch"
 pathmunge "$HOME/.local/bin/_patch/xdg"
 
+if [ -n "$WSL_DISTRO_NAME" ]; then
+    pathmunge "/mnt/c/Windows/System32"
+    pathmunge "/mnt/c/Windows/System32/Wbem"
+    pathmunge "/mnt/c/Windows/System32/WindowsPowerShell/v1.0"
+fi
+
 # default programs {{{1
 
 export BROWSER=firefox
