@@ -81,19 +81,19 @@ bindsym $super+m mode "mouse"
 mode "mouse" {
     bindsym $super+m mode "default"
 
-    bindsym Up      exec --no-startup-id "xdotool mousemove_relative -- 0 -15"
-    bindsym Down    exec --no-startup-id "xdotool mousemove_relative 0 15"
-    bindsym Right   exec --no-startup-id "xdotool mousemove_relative 15 0"
-    bindsym Left    exec --no-startup-id "xdotool mousemove_relative -- -15 0"
+    bindsym h exec --no-startup-id "xdotool mousemove_relative -- -15 0"
+    bindsym j exec --no-startup-id "xdotool mousemove_relative 0 15"
+    bindsym k exec --no-startup-id "xdotool mousemove_relative -- 0 -15"
+    bindsym l exec --no-startup-id "xdotool mousemove_relative 15 0"
 
-    bindsym Control+Up      exec --no-startup-id "xdotool mousemove_relative -- 0 -45"
-    bindsym Control+Down    exec --no-startup-id "xdotool mousemove_relative 0 45"
-    bindsym Control+Right   exec --no-startup-id "xdotool mousemove_relative 45 0"
-    bindsym Control+Left    exec --no-startup-id "xdotool mousemove_relative -- -45 0"
+    bindsym Control+h  exec --no-startup-id "xdotool mousemove_relative -- -45 0"
+    bindsym Control+j  exec --no-startup-id "xdotool mousemove_relative 0 45"
+    bindsym Control+k  exec --no-startup-id "xdotool mousemove_relative -- 0 -45"
+    bindsym Control+l  exec --no-startup-id "xdotool mousemove_relative 45 0"
 
-    bindsym Delete  exec --no-startup-id "xdotool click 1"
-    bindsym End     exec --no-startup-id "xdotool click 2"
-    bindsym Next    exec --no-startup-id "xdotool click 3"
+    bindsym n  exec --no-startup-id "xdotool click 1"
+    bindsym m  exec --no-startup-id "xdotool click 2"
+    bindsym p  exec --no-startup-id "xdotool click 3"
 }
 
 bindsym $super+l exec --no-startup-id xterm -e "systemctl suspend"
