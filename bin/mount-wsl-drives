@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+wmic.exe logicaldisk get name | sed '1d;s/\s*//g' | while read -r drive; do
+    [ -z "$drive" ] && continue
+    dir="$(echo "${drive%:*}" | tr '[:upper:]' '[:lower:]')"
+    dir="/mnt/$dir"
+    [ -d "$dir" ] && [ -n "$(ls -A "$dir")" ] && continue
+    echo "$drive"
+    sudo mkdir -p "$dir" || continue
+    sudo mount -t drvfs "$drive" "$dir"
+done
