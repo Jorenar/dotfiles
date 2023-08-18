@@ -190,11 +190,12 @@ done
 # PATH {{{1
 
 pathmunge "$HOME/.local/bin"
-pathmunge "$HOME/.local/bin/AppImages"
-pathmunge "$HOME/.local/bin/scripts"
 
-pathmunge "$HOME/.local/bin/_patch"
-pathmunge "$HOME/.local/bin/_patch/xdg"
+for opt in "$HOME"/.local/opt/*/bin; do
+    pathmunge "$opt"
+done
+
+pathmunge "$HOME/.local/.dotfiles/bin"
 
 if [ -n "$WSL_DISTRO_NAME" ]; then
     pathmunge "/mnt/c/Windows/System32"

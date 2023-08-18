@@ -115,32 +115,33 @@ linking  templates/   $XDG_TEMPLATES_DIR
 
 # "PATCHING" {{{1
 
-patch_dir="$HOME/.local/bin/_patch"
-find "$patch_dir" -type l -delete # clean old symlinks to wrappers
-
 prompt_sudo="$(sudo -nv 2>&1)"
 if [ $? -eq 0 ] || echo "$prompt_sudo" | grep -q '^sudo: a password'; then
     hasSudo=1
 fi
 
 # xdg_wrapper.sh {{{2
-sed -n -e 's/^#~ //p' "$DIR/_patch/xdg_wrapper.sh" | while IFS= read -r exe; do
-    exe="$(echo $exe | cut -f1 -d'#')"
-    [ -x "$(command -v $exe)" ] && linking  _patch/xdg_wrapper.sh  $patch_dir/xdg/$exe
+
+patch_dir="$HOME/.local/opt/xdg.wrappers/bin"
+mkdir -p "$patch_dir"
+find "$patch_dir" -type l -delete # clean old symlinks to wrappers
+
+sed -n -e 's/^#~ //p' "$DIR/bin/xdg_wrapper.sh" | while IFS= read -r exe; do
+    exe="$(echo "$exe" | cut -f1 -d'#')"
+    [ -x "$(command -v "$exe")" ] && linking  bin/xdg_wrapper.sh  "$patch_dir/$exe"
 done
-chmod u+x $DIR/_patch/xdg_wrapper.sh
 
 # /etc/profile.d/xdg_profile.sh {{{2
 if [ -n "$hasSudo" ] && [ ! -f /etc/profile.d/xdg_profile.sh ]; then
     printf "Install root patches for XDG support for 'profile' file? [y/N] "
     read -r REPLY
     if [ "$REPLY" = "y" ] || [ "$REPLY" = "Y" ]; then
-        sudo install -Dm644 $DIR/_patch/xdg_profile.sh /etc/profile.d/xdg_profile.sh
+        sudo install -Dm644 $DIR/env/xdg_profile.sh /etc/profile.d/xdg_profile.sh
     fi
 fi
 [ ! -f /etc/profile.d/xdg_profile.sh ] && linking  env/profile  $HOME/.profile
 
-# pam_environment {{{2
+# PAM {{{2
 if [ -n "$hasSudo" ] && ! grep -q "XDG_CONFIG_HOME" /etc/security/pam_env.conf; then
     printf 'Append XDG variables to /etc/security/pam_env.conf? [y/N] '
     read -r REPLY
@@ -149,9 +150,6 @@ if [ -n "$hasSudo" ] && ! grep -q "XDG_CONFIG_HOME" /etc/security/pam_env.conf; 
     fi
 fi
 grep -q "XDG_CONFIG_HOME" /etc/security/pam_env.conf || linking  env/pam  $HOME/.pam_environment
-
-# ssh_autopass.sh {{{2
-linking  _patch/ssh_autopass.sh  $patch_dir/ssh
 
 # ~ {{{2
 
