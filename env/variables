@@ -243,4 +243,4 @@ export MOZ_USE_XINPUT2=1
 
 # HOSTDOTS {{{1
 
-[ -f "$HOSTDOTS/env_variables" ] && . "$HOSTDOTS/env_variables"
+[ -f "$HOSTDOTS/env/variables" ] && . "$HOSTDOTS/env/variables"

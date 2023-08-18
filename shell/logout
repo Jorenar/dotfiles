@@ -4,7 +4,7 @@ echo "OLDPWD='$PWD'" > "$HISTORY_DIR/oldpwd"
 
 
 HISTFILE="${HISTFILE:-$HOME/.sh_history}"
-perm_hist="$HOSTDOTS/sh_history.perm"
+perm_hist="$HOSTDOTS/shell/history.perm"
 if [ -e "$perm_hist" ]; then
     temp="$(mktemp)"
     if [ -e "$temp" ]; then

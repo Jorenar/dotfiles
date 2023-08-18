@@ -51,4 +51,4 @@
     prune-branches = !git remote prune origin && git branch -vv | awk '/: gone]/ {print $1}' | xargs -r git branch -d
 
 [include]
-    path = ~/.local/.dotfiles/.host/git
+    path = ~/.local/.dotfiles/.host/git/config

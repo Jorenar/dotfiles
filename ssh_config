@@ -3,7 +3,7 @@
 Host *
     IdentityFile ${XDG_DATA_HOME}/ssh/id_rsa
     UserKnownHostsFile ${XDG_DATA_HOME}/ssh/known_hosts
-    Include ~/.local/.dotfiles/.host/ssh
+    Include ~/.local/.dotfiles/.host/ssh/config
 
 Host *
     Compression yes
