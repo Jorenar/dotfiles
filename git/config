@@ -45,15 +45,9 @@
     st = status --short
     lg = log --oneline --graph --abbrev-commit
 
-    cloner  = clone --recursive
-    clone1  = clone --depth=1
-    clone1r = clone --recursive --depth=1
-
-    change-url = !sh -c 'git remote set-url origin \"$1\"' -
-    orphan     = !sh -c 'git checkout --orphan \"$1\" && git rm -rf .' -
-    del        = !sh -c 'git reset HEAD \"$@\"' -
-    fast       = !sh -c 'git add -A && git commit -m \"$1\" && git push' -
-    fast-init  = !sh -c 'git init && git commit --allow-empty --allow-empty-message -m \"\" && git remote add origin \"$1\" && git push -u origin master' -
+    change-url     = !sh -c 'git remote set-url origin \"$1\"' -
+    fast-init      = !sh -c 'git init && git commit --allow-empty --allow-empty-message -m \"\" && [ -n \"$1\" ] && git remote add origin \"$1\" && git push -u origin master' -
+    orphan         = !sh -c 'git checkout --orphan \"$1\" && git rm -rf .' -
     prune-branches = !git remote prune origin && git branch -vv | awk '/: gone]/ {print $1}' | xargs -r git branch -d
 
 [include]
