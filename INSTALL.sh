@@ -20,7 +20,8 @@ abspath () (
 )
 
 hasSudo () (
-    sudo -l -U "$USER" | grep -q '(ALL) ALL'
+    prompt_sudo="$(sudo -nv 2>&1)"
+    [ $? -eq 0 ] || echo "$prompt_sudo" | grep -q '^sudo: a password'
 )
 
 # }}}
