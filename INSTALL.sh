@@ -1,49 +1,79 @@
 #!/usr/bin/env sh
 
-# Init {{{1
 
-force_flag=$1
-DIR="$(dirname "$(realpath "$0")")"
+[ "$1" = "-f" ] && gf_force=1 || gf_force=0
 
-. "$DIR"/env/variables; . "$DIR"/env/user-dirs.dirs
+# helpers {{{
 
-# 1nd argument - file in dotfiles dir
-# 2rd argument - location of link
-# 3th argument - permissions
-linking() {
-
-    if [ "$force_flag" = "-f" ] && [ -e "$2" ]; then
-        mkdir -p "$HOME/dotfiles.old/"
-        mv "$2" "$HOME/dotfiles.old/"
-        echo "Moved file $2 to directory $HOME/dotfiles.old/"
+abspath () (
+    if [ -d "$1" ]; then
+        cd "$1" && pwd
+    elif [ -f "$1" ]; then
+        case "$1" in
+            /*)  echo "$1" ;;
+            */*) echo "$(cd "$(dirname "$1")" && pwd)/$(basename "$1")" ;;
+            *)   echo "$PWD/$1" ;;
+        esac
+    else
+        >&2 echo "abspath() is unable to operate on not exisiting paths"
     fi
+)
 
-    if [ ! -e "$2" ]; then
-        mkdir -p "$(dirname "$2")"
-        if [ "$3" = "CP" ]; then
-            cp -r "$DIR/$1" "$2"
-            mod="$4"
-        else
-            ln -sf "$DIR/$1" "$2"
-            mod="$3"
+hasSudo () (
+    sudo -l -U "$USER" | grep -q '(ALL) ALL'
+)
+
+# }}}
+
+
+cd "$(dirname "$(abspath "$0")")" || exit 1
+
+. env/variables
+. env/user-dirs.dirs
+
+
+install () (
+    src="$(abspath "$1")"
+    op="$2"
+    dest="$3"
+    mode="$4"
+
+    action=
+    case "$op" in
+        '@') action="ln -sf" ;;
+        '>') action="cp -r" ;;
+        *) return ;;
+    esac
+
+
+    if [ "$gf_force" -eq 1 ] && [ -e "$dest" ]; then
+        if mkdir -p "$HOME/dotfiles.old/"; then
+            mv "$dest" "$HOME/dotfiles.old/" && \
+                echo "Moved file '$dest' to directory '$HOME/dotfiles.old/'"
         fi
     fi
 
-    [ -n "$mod" ] && chmod "$mod" "$2"
+    if [ ! -e "$dest" ]; then
+        mkdir -p "$(dirname "$dest")"
+        sh -c "$action '$src' '$dest'"
 
-}
+        [ -n "$mode" ] && chmod "$mode" "$dest"
+    fi
+)
 
-# 1nd argument - prefix
-# 2rd argument - list
-linking_() {
-    echo "$2" | while IFS= read -r line; do
-        [ -n "$line" ] && linking $(echo "$line" | sed "s,@\s*,$1/,")
+install_bulk () (
+    prefix="$1"
+    fmt="%s %s $prefix/%s %s"
+
+    while read -r line; do
+        # shellcheck disable=SC2059,SC2086
+        [ -n "$line" ] && install $(printf "$fmt" $line)
     done
-}
+)
 
-# MAIN {{{1
 
-linking_ "$XDG_CONFIG_HOME" '
+
+install_bulk "$XDG_CONFIG_HOME" << EOL
 
     aerc/               @  aerc
     asoundrc            @  alsa/asoundrc
@@ -75,21 +105,21 @@ linking_ "$XDG_CONFIG_HOME" '
     newsboat            @  newsboat/config
     npmrc               @  npm/npmrc
     OpenSCAD.conf       @  OpenSCAD/OpenSCAD.conf               -w
-    pavucontrol.ini     @  pavucontrol.ini                      CP
+    pavucontrol.ini     >  pavucontrol.ini
     polybar             @  polybar/config
     python_config.py    @  python/config.py
-    QuiteRss.ini        @  QuiteRss/QuiteRss.ini                CP
+    QuiteRss.ini        >  QuiteRss/QuiteRss.ini
     ranger.conf         @  ranger/rc.conf
     Renviron            @  R/Renviron
     shell/              @  shell
     spicy_settings      @  spicy/settings
     sqliterc            @  sqlite3/sqliterc
     ssh_config          @  ssh/config
-    ssr.conf            @  simplescreenrecorder/settings.conf   CP
+    ssr.conf            >  simplescreenrecorder/settings.conf
     stalonetrayrc       @  stalonetrayrc
     tigrc               @  tig/config
     tmux/               @  tmux
-    transmission.json   @  transmission-daemon/settings.json    CP
+    transmission.json   >  transmission-daemon/settings.json
     uncrustify/         @  uncrustify
     vim/                @  vim
     weechat/            @  weechat                              -w
@@ -97,9 +127,9 @@ linking_ "$XDG_CONFIG_HOME" '
     zathurarc           @  zathura/zathurarc
     zshrc               @  zsh/.zshrc
 
-'
+EOL
 
-linking_ "$XDG_DATA_HOME" '
+install_bulk "$XDG_DATA_HOME" << EOL
 
     app.desktop.d/           @  applications/custom
     firefox/user.js          @  firefox/user.js
@@ -108,50 +138,46 @@ linking_ "$XDG_DATA_HOME" '
     fonts/                   @  fonts
     themes/                  @  themes
 
-'
+EOL
 
-linking  bin/         $HOME/.local/bin/scripts
-linking  templates/   $XDG_TEMPLATES_DIR
+install  templates/  @  "$XDG_TEMPLATES_DIR"
 
-# "PATCHING" {{{1
 
-prompt_sudo="$(sudo -nv 2>&1)"
-if [ $? -eq 0 ] || echo "$prompt_sudo" | grep -q '^sudo: a password'; then
-    hasSudo=1
-fi
-
-# xdg_wrapper.sh {{{2
-
-patch_dir="$HOME/.local/opt/xdg.wrappers/bin"
-mkdir -p "$patch_dir"
-find "$patch_dir" -type l -delete # clean old symlinks to wrappers
-
-sed -n -e 's/^#~ //p' "$DIR/bin/xdg_wrapper.sh" | while IFS= read -r exe; do
-    exe="$(echo "$exe" | cut -f1 -d'#')"
-    [ -x "$(command -v "$exe")" ] && linking  bin/xdg_wrapper.sh  "$patch_dir/$exe"
+# xdg_wrapper.sh {{{
+sed -n -e 's/^#~ //p' "bin/xdg_wrapper.sh" | while IFS= read -r exe; do
+    if [ -x "$(command -v "$exe")" ]; then
+        install  bin/xdg_wrapper.sh  @  "$HOME/.local/opt/xdg.wrappers/bin/$exe"
+    fi
 done
+# }}}
 
-# /etc/profile.d/xdg_profile.sh {{{2
-if [ -n "$hasSudo" ] && [ ! -f /etc/profile.d/xdg_profile.sh ]; then
+# /etc/profile.d/xdg_profile.sh {{{
+etc_profile_d_xdg="/etc/profile.d/xdg_profile.sh"
+if hasSudo && [ ! -f "$etc_profile_d_xdg" ]; then
     printf "Install root patches for XDG support for 'profile' file? [y/N] "
-    read -r REPLY
-    if [ "$REPLY" = "y" ] || [ "$REPLY" = "Y" ]; then
-        sudo install -Dm644 $DIR/env/xdg_profile.sh /etc/profile.d/xdg_profile.sh
-    fi
+    read -r reply
+    case "$reply" in
+        y|Y|yes)
+            sudo ln -sf "$PWD"/env/xdg_profile.sh  "$etc_profile_d_xdg"
+            chmod 644 "$etc_profile_d_xdg"
+            ;;
+    esac
 fi
-[ ! -f /etc/profile.d/xdg_profile.sh ] && linking  env/profile  $HOME/.profile
+[ ! -f "$etc_profile_d_xdg" ] &&  install  env/profile @ "$HOME"/.profile
+# }}}
 
-# PAM {{{2
-if [ -n "$hasSudo" ] && ! grep -q "XDG_CONFIG_HOME" /etc/security/pam_env.conf; then
+# PAM {{{
+if hasSudo && ! grep -q "XDG_CONFIG_HOME" /etc/security/pam_env.conf; then
     printf 'Append XDG variables to /etc/security/pam_env.conf? [y/N] '
-    read -r REPLY
-    if [ "$REPLY" = "y" ] || [ "$REPLY" = "Y" ]; then
-        sudo tee -a /etc/security/pam_env.conf < $DIR/env/pam > /dev/null
-    fi
+    read -r reply
+    case "$reply" in
+        y|Y|yes)
+            sudo tee -a /etc/security/pam_env.conf < env/pam > /dev/null
+            ;;
+    esac
 fi
-grep -q "XDG_CONFIG_HOME" /etc/security/pam_env.conf || linking  env/pam  $HOME/.pam_environment
+# }}}
 
-# ~ {{{2
 
-mkdir -p "$(dirname $DCONF_PROFILE)" && touch "$DCONF_PROFILE" # prevents creating ~/.dconf
-mkdir -p $XDG_DATA_HOME/alsa
+mkdir -p "$(dirname "$DCONF_PROFILE")" && touch "$DCONF_PROFILE" # prevents creating ~/.dconf
+mkdir -p "$XDG_DATA_HOME"/alsa
