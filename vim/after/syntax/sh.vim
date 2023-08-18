@@ -1,6 +1,8 @@
 " vim: fdm=marker
 
 call utils#appendToSynRule("shSingleQuote", "fold")
+call utils#appendToSynRule("shDoubleQuote", "fold")
+call utils#appendToSynRule("shHereDoc",     "fold")
 
 " Embedding languages {{{1
 
