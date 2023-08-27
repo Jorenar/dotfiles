@@ -38,6 +38,7 @@ alias yt-mp3='youtube-dl --extract-audio --audio-format mp3'
 
 alias ssh='sshwrap.sh ssh'
 alias scp='sshwrap.sh scp'
+alias sshfs='sshwrap.sh sshfs'
 
 alias cheat='_f(){ curl cheat.sh/$1; }; _f'
 alias find_='_f(){ find $@ 2>&1 | grep -v "Permission denied" >&2; }; _f'
