@@ -1,3 +1,3 @@
 ﻿#NoTrayIcon
-#x::
+^!t::
 Run, wt.exe

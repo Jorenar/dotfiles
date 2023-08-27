@@ -37,7 +37,7 @@ for_window [class="stalonetray"] move position 50ppt 2px
 # SHORTCUTS BINDINGS {{{1
 
 # TERMINAL
-bindsym $super+x exec --no-startup-id ${TERMINAL:-xterm}
+bindsym Ctrl+$alt+t exec --no-startup-id ${TERMINAL:-xterm}
 
 # Firefox
 bindsym $super+w exec firefox

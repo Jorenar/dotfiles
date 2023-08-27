@@ -88,6 +88,8 @@ inoremap <expr> <C-o> pumvisible() ? "\<C-n>" : "\<C-o>"
 xnoremap # :<C-u>call utils#VSetSearch('?')<CR>?<C-r>=@/<CR><CR>
 xnoremap * :<C-u>call utils#VSetSearch('/')<CR>/<C-r>=@/<CR><CR>
 
+cnoremap <C-h> <C-w>
+
 tnoremap <silent> <C-\><C-\> <C-\><C-n>
 
 map gh <nop>
