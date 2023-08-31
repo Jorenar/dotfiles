@@ -85,7 +85,7 @@ fi
 export HISTORY_DIR="$XDG_STATE_HOME/history"
 
 # host specific dotfiles dir
-export HOSTDOTS="${HOSTDOTS:-$HOME/.local/.hostdots}"
+export HOSTDOTS="${HOSTDOTS:-$HOME/.local/opt/dotfiles.host}"
 
 # ~history {{{2
 export HISTFILE="$HISTORY_DIR/shell"
@@ -194,7 +194,9 @@ for opt in "$HOME"/.local/opt/*/bin; do
     pathmunge "$opt"
 done
 
-pathmunge "$HOME/.local/.dotfiles/bin"
+for opt in "$HOME"/.local/opt/*/*/bin; do
+    pathmunge "$opt"
+done
 
 if [ -n "$WSL_DISTRO_NAME" ]; then
     pathmunge "/mnt/c/Windows/System32"
