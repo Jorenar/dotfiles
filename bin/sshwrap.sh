@@ -92,7 +92,8 @@ EOB
 expect_body="$(gen_expect_body)"
 
 if [ -z "$expect_body" ]; then
-    exec "$prog" "$args" "$@"
+    # shellcheck disable=SC2086
+    exec "$prog" $args "$@"
 fi
 
 expect_body="$(cat << EOB
