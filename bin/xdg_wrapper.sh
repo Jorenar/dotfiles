@@ -8,7 +8,8 @@ EXE="$(basename "$0")"
 case "$EXE" in
     bash)
         ARGS="--rcfile $XDG_CONFIG_HOME/bash/bashrc"
-        for dir in $(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)"); do
+        for dir in $(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname "$0")"); do
+            # shellcheck disable=SC2086
             [ -x "$dir/$EXE" ] && exec "$dir/$EXE" $ARGS "$@"
         done
         ;;
@@ -17,7 +18,7 @@ case "$EXE" in
         ;;
     firefox)
         ARGS="--profile $XDG_DATA_HOME/firefox"
-        { while kill -0 $$ 2> /dev/null; do rm -rf $HOME/.mozilla; done; } &
+        { while kill -0 $$ 2> /dev/null; do rm -rf "$HOME"/.mozilla; done; } &
         ;;
     nvidia-settings)
         mkdir -p "$XDG_CONFIG_HOME/nvidia"
@@ -32,11 +33,15 @@ case "$EXE" in
     steam)
         HOME="$XDG_DATA_HOME/Steam"
         ;;
+    telnet)
+        HOME="$XDG_CONFIG_HOME"
+        ;;
 esac
 
 # Remove directory with wrapper from PATH (to prevent cyclical execution)
-PATH="$(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname $0)" | paste -sd:)"
+PATH="$(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname "$0")" | paste -sd:)"
 
+# shellcheck disable=SC2086
 exec "$EXE" $ARGS "$@"
 
 
@@ -48,3 +53,4 @@ exec "$EXE" $ARGS "$@"
 #~ sqlite3
 #~ ssh
 #~ steam
+#~ telnet

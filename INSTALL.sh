@@ -118,6 +118,7 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     ssh_config          @  ssh/config
     ssr.conf            >  simplescreenrecorder/settings.conf
     stalonetrayrc       @  stalonetrayrc
+    telnetrc            @  .telnetrc
     tigrc               @  tig/config
     tmux/               @  tmux
     transmission.json   >  transmission-daemon/settings.json
