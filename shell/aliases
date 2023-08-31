@@ -44,6 +44,7 @@ alias cheat='_f(){ curl cheat.sh/$1; }; _f'
 alias find_='_f(){ find $@ 2>&1 | grep -v "Permission denied" >&2; }; _f'
 alias wttr='_f(){ curl wttr.in/$1; }; _f'
 
+alias pdf2img='_f(){ convert -density 192 "$1" -quality 100 -alpha remove "$2" }; _f'
 
 alias _history_cleanup="sed -E '/^\\s*($(tr -d '\n' << EOL
 .
