@@ -70,3 +70,5 @@ user_pref("devtools.editor.autoclosebrackets", false);
 user_pref("devtools.editor.detectindentation", true);
 user_pref("devtools.editor.enableCodeFolding", true);
 user_pref("devtools.editor.autocomplete",      true);
+
+user_pref("security.fileuri.strict_origin_policy", true); // if 'false', allows fetching local files
