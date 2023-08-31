@@ -557,6 +557,11 @@ noremap <silent> <C-w>j  <Cmd>TmuxNavigateDown<CR>
 noremap <silent> <C-w>k  <Cmd>TmuxNavigateUp<CR>
 noremap <silent> <C-w>l  <Cmd>TmuxNavigateRight<CR>
 
+noremap <silent> <C-w><C-h>  <Cmd>TmuxNavigateLeft<CR>
+noremap <silent> <C-w><C-j>  <Cmd>TmuxNavigateDown<CR>
+noremap <silent> <C-w><C-k>  <Cmd>TmuxNavigateUp<CR>
+noremap <silent> <C-w><C-l>  <Cmd>TmuxNavigateRight<CR>
+
 " vim-slime {{{2
 
 let g:slime_dont_ask_default = 1
