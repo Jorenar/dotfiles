@@ -46,6 +46,7 @@ com! -nargs=+         FillToColumn     exec {str,r -> "norm! a".repeat(str, (r-c
 com! -nargs=+         Grep             silent! exec "grep -R <args> ."
 com! -nargs=+         GrepRename       exec {a,b -> 'tabe | lv /\C\<' . a . '\>/j ** | cdo s/\C\<' . a . '\>/' . b . '/gc | up'}(<f-args>) | q
 com!                  InstallPlugins   call utils#InstallPlugins()
+com!                  JumpNextDiffAdd  call utils#JumpToDiffAdd()
 com! -nargs=1         SetFormatProg    exec {prg -> 'let [ &l:formatprg, &l:formatexpr ] = [ "'.prg.' 2> /dev/null", "" ]'}(<args>)
 com! -range=%         Sort             normal :<line1>,<line2>sort i<CR>
 com! -nargs=?         Spelling         if empty("<args>") | setl spell! | else | setl spell spelllang=<args> | endif

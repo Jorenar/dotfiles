@@ -124,3 +124,11 @@ function! utils#scroll_cursor_popup(count) abort
 
   return 0
 endfunction
+
+function! utils#JumpToDiffAdd() abort
+  while search('^.*', 'w') > 0
+    if synIDattr(diff_hlID(line('.'), col('.')), 'name') is# 'DiffAdd'
+      break
+    endif
+  endwhile
+endfunction
