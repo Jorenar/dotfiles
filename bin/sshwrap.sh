@@ -104,12 +104,9 @@ expect_body="$(cat << EOB
 EOB
 )"
 
-case "$0" in
-    bash|ksh)
-        # shellcheck disable=SC3038
-        exec -a "$prog" expect -c "$expect_body"
-        ;;
-    *)
-        exec expect -c "$expect_body"
-        ;;
-esac
+if [ -n "$BASH_VERSION" ] || [ -n "$TMOUT" ]; then
+    # shellcheck disable=SC3038
+    exec -a "$prog" expect -c "$expect_body"
+else
+    exec expect -c "$expect_body"
+fi
