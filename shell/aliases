@@ -22,7 +22,7 @@ alias pass='EDITOR="vim -u NONE" pass'
 alias php-server='php -S 0.0.0.0:8000'
 alias python-server='python -m http.server 8000'
 alias qmv='command qmv -v -f "do"'
-alias rm="echo Use 'del', or the full path i.e. '/bin/rm'"
+alias rm="rm -i"
 alias sshd-start='sudo systemctl start sshd'
 alias sshd-stop='sudo systemctl stop sshd'
 alias suspend='sudo systemctl suspend'

@@ -12,7 +12,7 @@ if [ -e "$perm_hist" ]; then
         if [ "$(wc -l < "$temp")" -gt "$(wc -l < "$HISTFILE")" ]; then
             mv "$temp" "$HISTFILE"
         else
-            rm "$temp"
+            command rm "$temp"
         fi
     fi
 fi
