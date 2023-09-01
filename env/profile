@@ -25,4 +25,6 @@ if [ "$(stat -c '%a' "$XDG_RUNTIME_DIR")" != 700 ]; then
 fi
 
 
-exec "$SHELL"
+case "$-" in
+    *i*) exec "$SHELL" ;;
+esac

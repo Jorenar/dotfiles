@@ -1,24 +1,21 @@
 #!/usr/bin/env sh
 
-case "$-" in
-    *i*) ;;
-    *)
-        while [ -x "$(command -v tmux)" ]; do
-            [ -n "$TMUX" ] && break
-            [ -z "$DISPLAY" ] && break
-            [ -n "$SSH_CLIENT" ] && break
+if [ "$#" -eq 0 ]; then
+    while [ -x "$(command -v tmux)" ]; do
+        [ -n "$TMUX" ] && break
+        [ -z "$DISPLAY" ] && break
+        [ -n "$SSH_CLIENT" ] && break
 
-            # shellcheck disable=SC2093
-            exec tmux -S "$XDG_RUNTIME_DIR"/tmux $(
-                if ps -ef | grep tmux | grep -v -q grep; then
-                    echo attach \; new-session
-                else
-                    echo "-f $XDG_CONFIG_HOME/tmux/tmux.conf"
-                fi
-            )
-        done
-        ;;
-esac
+        # shellcheck disable=SC2093
+        exec tmux -S "$XDG_RUNTIME_DIR"/tmux $(
+            if ps -ef | grep tmux | grep -v -q grep; then
+                echo attach \; new-session
+            else
+                echo "-f $XDG_CONFIG_HOME/tmux/tmux.conf"
+            fi
+        )
+    done
+fi
 
 if [ -x "$(command -v bash)" ]; then
     exec bash --rcfile "$XDG_CONFIG_HOME"/bash/bashrc "$@"
