@@ -1,7 +1,7 @@
 #!sh
 
 # Source env variables
-. $XDG_CONFIG_HOME/env/variables
+. "$XDG_CONFIG_HOME"/env/variables
 
 # History size
 export HISTSIZE=
@@ -10,16 +10,16 @@ export HISTSIZE=
 [ -f "$HISTORY_DIR/oldpwd" ] && . "$HISTORY_DIR/oldpwd"
 
 # Logout
-trap "[ -f "$XDG_CONFIG_HOME/shell/logout" ] && . $XDG_CONFIG_HOME/shell/logout" EXIT
+trap '[ -f "$XDG_CONFIG_HOME"/shell/logout ] && . "$XDG_CONFIG_HOME"/shell/logout' EXIT
 
 # Source aliases
-. $XDG_CONFIG_HOME/shell/aliases
+. "$XDG_CONFIG_HOME"/shell/aliases
 
 # FZF
-. $XDG_CONFIG_HOME/shell/fzf.sh
+. "$XDG_CONFIG_HOME"/shell/fzf.sh
 
 # Source local additional shell config
-[ -f $HOSTDOTS/shell/shrc ] && . $HOSTDOTS/shell/shrc
+[ -f "$HOSTDOTS"/shell/shrc ] && . "$HOSTDOTS"/shell/shrc
 
 
 # PROMPT
@@ -36,7 +36,7 @@ _ps1 () {
             "$(jobs | wc -l)" \
             "$USER" \
             "$(uname -n)" \
-            "$(echo $PWD | sed "s,^$HOME\(\/\|$\),~/,")" \
+            "$(echo "$PWD" | sed "s,^$HOME\(\/\|$\),~/,")" \
             "$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1 /')"
         # [ -n "$TMUX" ] && printf '  [ %s]' "$(tmux list-windows -F "#{E:window-status-format}" | tr "\n" " ")"
         printf "\001\033[0m\002"

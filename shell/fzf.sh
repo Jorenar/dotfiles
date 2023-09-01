@@ -1,3 +1,5 @@
+# shellcheck disable=SC1090
+
 if [ ! -x "$(command -v fzf)" ]; then
     return
 fi
