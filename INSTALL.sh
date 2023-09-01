@@ -19,11 +19,6 @@ abspath () (
     fi
 )
 
-hasSudo () (
-    prompt_sudo="$(sudo -nv 2>&1)"
-    [ $? -eq 0 ] || echo "$prompt_sudo" | grep -q '^sudo: a password'
-)
-
 # }}}
 
 
@@ -73,6 +68,9 @@ install_bulk () (
 )
 
 
+
+install  env/profile  @  "$HOME"/.profile
+install  templates/   @  "$XDG_TEMPLATES_DIR"
 
 install_bulk "$XDG_CONFIG_HOME" << EOL
 
@@ -142,8 +140,6 @@ install_bulk "$XDG_DATA_HOME" << EOL
 
 EOL
 
-install  templates/  @  "$XDG_TEMPLATES_DIR"
-
 
 # xdg_wrapper.sh {{{
 sed -n -e 's/^#~ //p' "bin/xdg_wrapper.sh" | while IFS= read -r exe; do
@@ -153,35 +149,8 @@ sed -n -e 's/^#~ //p' "bin/xdg_wrapper.sh" | while IFS= read -r exe; do
 done
 # }}}
 
-# /etc/profile.d/xdg_profile.sh {{{
-etc_profile_d_xdg="/etc/profile.d/xdg_profile.sh"
-if hasSudo && [ ! -f "$etc_profile_d_xdg" ]; then
-    printf "Install root patches for XDG support for 'profile' file? [y/N] "
-    read -r reply
-    case "$reply" in
-        y|Y|yes)
-            sudo ln -sf "$PWD"/env/xdg_profile.sh  "$etc_profile_d_xdg"
-            chmod 644 "$etc_profile_d_xdg"
-            ;;
-    esac
-fi
-[ ! -f "$etc_profile_d_xdg" ] &&  install  env/profile @ "$HOME"/.profile
-# }}}
-
-# PAM {{{
-if hasSudo && ! grep -q "XDG_CONFIG_HOME" /etc/security/pam_env.conf; then
-    printf 'Append XDG variables to /etc/security/pam_env.conf? [y/N] '
-    read -r reply
-    case "$reply" in
-        y|Y|yes)
-            sudo tee -a /etc/security/pam_env.conf < env/pam > /dev/null
-            ;;
-    esac
-fi
-# }}}
-
 # DCONF_PROFILE {{{
-#   prevents creating ~/.dconf
+#   prevents creation of ~/.dconf
 DCONF_PROFILE="$XDG_CONFIG_HOME/dconf/user"
 mkdir -p "$(dirname "$DCONF_PROFILE")" && \
     touch "$DCONF_PROFILE"
