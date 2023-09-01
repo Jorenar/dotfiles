@@ -210,7 +210,7 @@ export BROWSER=firefox
 export EDITOR=vim
 export MANPAGER="vim -M +MANPAGER -"
 export PAGER="less"
-export SHELL="$(command -v bash)"
+export SHELL="$(command -v launch_shell.sh)"
 export TERMINAL=xterm
 export VISUAL="$EDITOR"
 

@@ -1,15 +1,5 @@
 #!sh
 
-if [ -x "$(command -v tmux)" ] && [ -n "$DISPLAY" ] && [ -z "$TMUX" ] && [ -z "$SSH_CLIENT" ]; then
-    if ps -ef | grep tmux | grep -v -q grep; then
-        exec tmux attach \; new-session
-    else
-        exec tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf
-    fi
-fi
-
-# Init ------------------------------------------------------------------------
-
 # Source env variables
 . $XDG_CONFIG_HOME/env/variables
 
