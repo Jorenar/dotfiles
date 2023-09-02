@@ -28,6 +28,9 @@ fi
 case "$-" in
     *i*)
         export SHELL="$(command -v launch_shell.sh)"
-        [ -n "$SSH_CLIENT" ] && exec "$SHELL"
+        case "$(tty)" in
+            *tty*) ;;
+            *) exec "$SHELL" ;;
+        esac
         ;;
 esac

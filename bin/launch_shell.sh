@@ -28,6 +28,7 @@ e () {
     fi
 }
 
+e "$LAUNCH_SHELL" "$@"
 e bash --rcfile "$XDG_CONFIG_HOME"/bash/bashrc "$@"
 e zsh "$@"
 e ksh "$@"
