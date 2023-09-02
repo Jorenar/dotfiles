@@ -125,7 +125,7 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     weechat/            @  weechat                              -w
     X11/                @  X11
     zathurarc           @  zathura/zathurarc
-    zshrc               @  zsh/.zshrc
+    zsh                 @  zsh
 
 EOL
 
