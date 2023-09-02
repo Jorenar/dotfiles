@@ -44,6 +44,7 @@ __HistR() {
 
 # Enable extended globbing
 shopt -s extglob
+shopt -s nullglob
 
 # Don't keep duplicates in history
 export HISTCONTROL=ignoreboth:erasedups

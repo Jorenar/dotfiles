@@ -174,7 +174,9 @@ export DEVKITARM="$DEVKITPRO/devkitARM"
 export DEVKITPPC="$DEVKITPRO/devkitPPC"
 
 pathmunge /usr/lib/ccache/bin
-pathmunge "$XDG_DATA_HOME"/gem/ruby/*/bin
+for r in "$XDG_DATA_HOME"/gem/ruby/*/bin; do
+    [ -d "$r" ] && pathmunge "$r"
+done
 
 pathmunge C_INCLUDE_PATH "$HOME/.local/lib/include"
 
@@ -183,19 +185,15 @@ for v in ASAN_OPTIONS UBSAN_OPTIONS TSAN_OPTIONS; do
 done
 
 for p in "$PYTHONUSERBASE"/lib/python3*/site-packages; do
-    pathmunge PYTHONPATH "$p"
+    [ -d "$p" ] && pathmunge PYTHONPATH "$p"
 done
 
 # PATH {{{1
 
 pathmunge "$HOME/.local/bin"
 
-for opt in "$HOME"/.local/opt/*/bin; do
-    pathmunge "$opt"
-done
-
-for opt in "$HOME"/.local/opt/*/*/bin; do
-    pathmunge "$opt"
+for opt in "$HOME"/.local/opt/*/bin "$HOME"/.local/opt/*/*/bin; do
+    [ -d "$opt" ] && pathmunge "$opt"
 done
 
 if [ -n "$WSL_DISTRO_NAME" ]; then

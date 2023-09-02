@@ -1,6 +1,7 @@
 # ZSHRC #
 
 # Source basic shell config
+setopt NULL_GLOB
 source $XDG_CONFIG_HOME/shell/shrc
 
 # Enable completion (+ separate path for .zcompdump file)
