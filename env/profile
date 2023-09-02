@@ -28,6 +28,6 @@ fi
 case "$-" in
     *i*)
         export SHELL="$(command -v launch_shell.sh)"
-        exec "$SHELL"
+        [ -n "$SSH_CLIENT" ] && exec "$SHELL"
         ;;
 esac

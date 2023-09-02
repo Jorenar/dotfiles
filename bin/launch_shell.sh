@@ -23,7 +23,7 @@ fi
 e () {
     sh="$(command -v "$1")" && shift
     if [ -x "$sh" ]; then
-        [ -n "$DISPLAY" ] && export SHELL="$sh"
+        export SHELL="$sh"
         exec "$sh" "$@"
     fi
 }
