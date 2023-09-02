@@ -6,9 +6,12 @@ if [ "$#" -eq 0 ]; then
         [ -z "$DISPLAY" ] && break
         [ -n "$SSH_CLIENT" ] && break
 
+        # shellcheck disable=SC2155
+        export SHELL="$(command -v "$0")"
+
         # shellcheck disable=SC2093
         exec tmux -S "$XDG_RUNTIME_DIR"/tmux $(
-            if ps -ef | grep tmux | grep -v -q grep; then
+            if ps -ef | grep -v grep | grep -q tmux; then
                 echo attach \; new-session
             else
                 echo "-f $XDG_CONFIG_HOME/tmux/tmux.conf"
@@ -17,24 +20,18 @@ if [ "$#" -eq 0 ]; then
     done
 fi
 
-if [ -x "$(command -v bash)" ]; then
-    exec bash --rcfile "$XDG_CONFIG_HOME"/bash/bashrc "$@"
-fi
+e () {
+    sh="$(command -v "$1")" && shift
+    if [ -x "$sh" ]; then
+        export SHELL="$sh"
+        exec "$sh" "$@"
+    fi
+}
 
-if [ -x "$(command -v zsh)" ]; then
-    exec zsh "$@"
-fi
-
-if [ -x "$(command -v ksh)" ]; then
-    exec ksh "$@"
-fi
-
-if [ -x "$(command -v tcsh)" ]; then
-    exec tcsh "$@"
-fi
-
-if [ -x "$(command -v fish)" ]; then
-    exec fish "$@"
-fi
+e bash --rcfile "$XDG_CONFIG_HOME"/bash/bashrc "$@"
+e zsh "$@"
+e ksh "$@"
+e tcsh "$@"
+e fish "$@"
 
 exec sh "$@"
