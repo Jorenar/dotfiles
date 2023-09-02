@@ -21,9 +21,10 @@ if [ "$#" -eq 0 ]; then
 fi
 
 e () {
-    sh="$(command -v "$1")" && shift
-    if [ -x "$sh" ]; then
-        export SHELL="$sh"
+    sh="$1" && shift
+    bin="$(command -v "$sh")"
+    if [ -x "$bin" ]; then
+        export SHELL="$bin"
         exec "$sh" "$@"
     fi
 }
