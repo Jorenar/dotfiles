@@ -26,5 +26,8 @@ fi
 
 
 case "$-" in
-    *i*) export SHELL="$(command -v launch_shell.sh)" ;;
+    *i*)
+        export SHELL="$(command -v launch_shell.sh)"
+        exec "$SHELL"
+        ;;
 esac
