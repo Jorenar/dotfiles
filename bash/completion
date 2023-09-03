@@ -31,5 +31,11 @@ if [ -z "$(type -t _ssh_configfile)" ]; then
     readonly -f _ssh_configfile
 fi
 
+if [ -x "$(command -v podman)" ]; then
+    complete -W "$(
+        podman images --format='{{.Repository}}' | awk -F'/' '{ print $NF }'
+    )" podrun
+fi
+
 # prevents \$ when completing path with variables
 # alias compopt='compopt -o noquote'

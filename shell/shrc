@@ -27,14 +27,14 @@ trap '[ -f "$XDG_CONFIG_HOME"/shell/logout ] && . "$XDG_CONFIG_HOME"/shell/logou
 PS1='$(_ps1)'
 _ps1 () {
     printf '\001\033]0;%s@%s:%s\007\002' \
-        "$USER"  "$(uname -n)"  "$(echo "$PWD" | sed "s,^$HOME,~,")"
+        "$(id -un)"  "$(uname -n)"  "$(echo "$PWD" | sed "s,^$HOME,~,")"
 
     if [ -z "$SHORT_PROMPT" ]; then
         printf "\001\033[38;5;240m\002"
         printf '(%s){%d}  [ %s@%s  %s %s]' \
             "$(ps -p "$$" -o comm='')" \
             "$(jobs | wc -l)" \
-            "$USER" \
+            "$(id -un)" \
             "$(uname -n)" \
             "$(echo "$PWD" | sed "s,^$HOME\(\/\|$\),~/,")" \
             "$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1 /')"
