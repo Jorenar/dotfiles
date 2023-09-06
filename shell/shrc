@@ -1,28 +1,10 @@
 #!sh
 
-# Source env variables
 . "$XDG_CONFIG_HOME"/env/variables
-
-# History size
 export HISTSIZE=
 
-# Restore OLDPWD
-[ -f "$HISTORY_DIR/oldpwd" ] && . "$HISTORY_DIR/oldpwd"
-
-# Logout
-trap '[ -f "$XDG_CONFIG_HOME"/shell/logout ] && . "$XDG_CONFIG_HOME"/shell/logout' EXIT
-
-# Source aliases
 . "$XDG_CONFIG_HOME"/shell/aliases
-
-# FZF
 . "$XDG_CONFIG_HOME"/shell/fzf.sh
-
-# Source local additional shell config
-[ -f "$HOSTDOTS"/shell/shrc ] && . "$HOSTDOTS"/shell/shrc
-
-
-# PROMPT
 
 PS1='$(_ps1)'
 _ps1 () {
@@ -45,3 +27,13 @@ _ps1 () {
 
     printf '\001\033[36m\002$\001\033[0m\002 '
 }
+
+# shellcheck disable=SC1090,SC2154
+trap '
+    lg="$XDG_CONFIG_HOME"/shell/logout
+    [ -f "$lg" ] && . "$lg"
+' EXIT
+
+[ -f "$HOSTDOTS"/shell/shrc ] && . "$HOSTDOTS"/shell/shrc
+
+[ -f "$HISTORY_DIR/oldpwd" ] && . "$HISTORY_DIR/oldpwd"

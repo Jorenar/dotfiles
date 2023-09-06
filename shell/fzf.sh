@@ -1,8 +1,6 @@
 # shellcheck disable=SC1090
 
-if [ ! -x "$(command -v fzf)" ]; then
-    return
-fi
+[ ! -x "$(command -v fzf)" ] && return
 
 s="" # shell
 [ -n "$BASH" ]     && s="bash"
