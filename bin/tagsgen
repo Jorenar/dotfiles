@@ -4,7 +4,7 @@ projRoot="$PWD"
 if git rev-parse 2> /dev/null; then
     projRoot="$(git rev-parse --show-toplevel)"
 fi
-tagsDir="$projRoot/.tags"
+tagsDir="$projRoot"/.tags
 
 searchDir="${1:-$projRoot}"
 
@@ -12,7 +12,7 @@ cd "$projRoot" || exit 1
 mkdir -p "$tagsDir"
 
 if [ -x "$(command -v ctags)" ]; then
-    ctags -R --tag-relative=yes -f "$tagsDir/tags"
+    ctags -R --tag-relative=yes -f "$tagsDir"/tags
 fi
 
 if [ -x "$(command -v cscope)" ]; then
@@ -20,11 +20,11 @@ if [ -x "$(command -v cscope)" ]; then
         -name '*.[chxsS]' \
         -o -name '*.cpp' -o -name '*.hpp' \
         -o -name '*.java' \
-        \) -exec readlink -f {} \; > "$tagsDir/ctags.files"
+        \) -exec readlink -f {} \; > "$tagsDir"/cscope.files
 
-    cscope -U -c -b -q -f "$tagsDir/cscope.out"
+    cscope -U -c -b -q -i "$tagsDir"/cscope.files -f "$tagsDir"/cscope.out
 fi
 
 if [ -x "$(command -v gtags)" ]; then
-    gtags $tagsDir
+    gtags "$tagsDir"
 fi
