@@ -4,7 +4,8 @@
 .tmp/
 __pycache__
 a.out
-build.log
+build*.log
+build.log.d
 build/
 errors.err
 node_modules
