@@ -13,7 +13,6 @@ alias mount-qemu="mount -t cifs //10.0.2.4/qemu/"
 alias pass='EDITOR="vim -u NONE" pass'
 alias php-server='php -S 0.0.0.0:8000'
 alias python-server='python -m http.server 8000'
-alias qmv='command qmv -v -f "do"'
 alias rm="rm -i"
 alias suspend='sudo systemctl suspend'
 alias transmission='transmission-daemon -T -w $XDG_DOWNLOAD_DIR -c $XDG_DOWNLOAD_DIR'
@@ -41,7 +40,7 @@ alias _history_cleanup="sed -E '/^\\s*($(tr -d '\n' << EOL
 |fg|jobs|htop
 |sh|bash|dash|zsh|ksh
 |git|git (st|log|diff|open|add -A)
-|vi|vim|make|qmv|feh
+|vi|vim|make|vmv|feh
 |cal|wttr|bc|bc -l
 |yay
 EOL
