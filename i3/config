@@ -161,7 +161,7 @@ bindsym $super+8 workspace number "8"
 bindsym $super+9 workspace number "9"
 
 # move to workspace via dmenu
-set $dmenu_ws i3-msg -t get_workspaces | jq | awk -F'\\\"' '/name/ { print \$4 }' | sort | dmenu | xargs -i i3-msg
+set $dmenu_ws i3-msg -t get_workspaces | tr ',' '\n' | awk -F'\\\"' '/name/ { print \$4 }' | sort | dmenu | xargs -i i3-msg
 bindsym $super+grave exec sh -c "$dmenu_ws workspace {}"
 bindsym $alt+grave exec sh -c "$dmenu_ws move container to workspace {}"
 

@@ -1,3 +1,9 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
-sed 's@content=\("\)text/html; charset=@charset=\1@' | elinks -dump
+exec w3m \
+    -I UTF-8 \
+    -T text/html \
+    -cols $(tput cols) \
+    -dump \
+    -o display_image=false \
+    -o display_link_number=true
