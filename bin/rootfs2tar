@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-tar -vzcpf rootfs.tar.gz --exclude=./rootfs.tar.gz \
+tar -vzcpf rootfs.tar.gz --xattrs --exclude=./rootfs.tar.gz \
     --exclude=/boot \
     --exclude=/dev  \
     --exclude=/mnt  \
