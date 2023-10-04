@@ -1,5 +1,9 @@
 #!/usr/bin/env sh
 
+# SPDX-License-Identifier:  MIT
+# Copyright 2023 Jorengarenar
+
+
 die () {
     >&2 echo "Error:" "$@"
     exit 1
@@ -13,8 +17,9 @@ ls_flags=
 
 usage () {
     cat << EOU
-Usage: vmv [OPTION]... [FILE]...
+Usage: vmv [OPTION...] [FILE...]
 
+Options:
     -A    do not ignore entries starting with .
           (but do not list implied . and ..)
     -h    Display this message and exit
@@ -40,7 +45,8 @@ out="$dir/out"
 temp="$dir/temp"
 
 trap '{
-    rm -r "$dir"/*
+    rm "$dir"/*
+    rmdir "$dir"
     rmdir "$TMPDIR" 2> /dev/null
 }' EXIT
 
@@ -54,7 +60,7 @@ else
 fi
 
 cp "$in" "$out"
-"${EDITOR:-vi}" "$out" || exit 1
+"${VISUAL:-${EDITOR:-vi}}" "$out" || exit 1
 
 
 if [ "$(wc -l < "$in")" != "$(wc -l < "$out")" ]; then
@@ -72,8 +78,10 @@ suffix="vmv_temp"
 
 paste "$in" "$out" | while read -r src dst; do
     [ "$src" = "$dst" ] && continue
-    mv "$src" "$dst"."$suffix"
-    echo "$dst"."$suffix" >> "$temp"
+    dst="$dst"."$suffix"
+    mkdir -p "$(eval dirname -- "$dst")"
+    eval mv "$src" "$dst"
+    echo "$dst" >> "$temp"
 done
 
 [ ! -s "$temp" ] && exit
@@ -81,8 +89,8 @@ done
 while read -r file; do
     dst="${file%."$suffix"}"
     if [ -e "$dst" ]; then
-         warn "Destination '$dst' already exists, keeping as '$file'"
-         continue
+        warn "Destination '$dst' already exists, keeping as '$file'"
+        continue
     fi
-    mv "$file" "$dst"
+    eval mv "$file" "$dst"
 done < "$temp"
