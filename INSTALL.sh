@@ -111,6 +111,7 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     ranger.conf         @  ranger/rc.conf
     Renviron            @  R/Renviron
     shell/              @  shell
+    shellcheckrc        @  shellcheckrc
     spicy_settings      @  spicy/settings
     sqliterc            @  sqlite3/sqliterc
     ssh_config          @  ssh/config

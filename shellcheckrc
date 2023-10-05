@@ -1,0 +1,11 @@
+shell=sh
+
+enable=avoid-nullary-conditions  # Suggest explicitly using -n in `[ $var ]`
+enable=deprecate-which           # Suggest `command -v` instead of `which`
+
+disable=SC1091  # Can't follow non-constant source. Use a directive to specify location
+disable=SC2009  # Consider using `pgrep` instead of grepping `ps` output
+disable=SC2024  # `sudo` doesn't affect redirects. Use `..| sudo tee file`
+disable=SC2025  # Make sure all escape sequences are enclosed in `\[..\]` to prevent line wrapping issues
+disable=SC2046  # Quote this to prevent word splitting
+disable=SC2181  # Check exit code directly with e.g. `if mycmd;`, not indirectly with `$?`
