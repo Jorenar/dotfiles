@@ -2,13 +2,16 @@
 .cache
 .gdb_history
 .tmp/
-__pycache__
 a.out
 build*.log
 build.log.d
 build/
 errors.err
 node_modules
+
+venv
+.venv
+__pycache__
 
 .ccls
 .ccls-cache
