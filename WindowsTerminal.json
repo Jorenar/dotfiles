@@ -1,81 +1,253 @@
 {
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions":
+    "actions": 
     [
         {
-            "command":
+            "command": 
             {
                 "action": "copy",
                 "singleLine": false
-            }
+            },
+            "keys": "ctrl+shift+c"
         },
         {
-            "command": "paste"
+            "command": "paste",
+            "keys": "ctrl+shift+v"
         },
         {
-            "command": "find",
+            "command": "unbound",
+            "keys": "ctrl+shift+p"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+shift+w"
+        },
+        {
+            "command": "unbound",
+            "keys": "enter"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+insert"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+shift+d"
+        },
+        {
+            "command": "unbound",
             "keys": "ctrl+shift+f"
         },
         {
-            "command":
-            {
-                "action": "splitPane",
-                "split": "auto",
-                "splitMode": "duplicate"
-            },
-            "keys": "alt+shift+d"
+            "command": "unbound",
+            "keys": "alt+down"
         },
         {
             "command": "unbound",
-            "keys": "ctrl+v"
+            "keys": "alt+left"
         },
         {
             "command": "unbound",
-            "keys": "ctrl+c"
+            "keys": "alt+right"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+alt+left"
+        },
+        {
+            "command": "unbound",
+            "keys": "alt+up"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+shift+t"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+shift+1"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+shift+2"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+shift+3"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+shift+4"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+shift+5"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+shift+6"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+shift+7"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+shift+8"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+shift+9"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+shift+n"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+tab"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+alt+comma"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+shift+space"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+shift+comma"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+comma"
+        },
+        {
+            "command": "unbound",
+            "keys": "shift+insert"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+shift+tab"
+        },
+        {
+            "command": "unbound",
+            "keys": "alt+shift+down"
+        },
+        {
+            "command": "unbound",
+            "keys": "alt+shift+left"
+        },
+        {
+            "command": "unbound",
+            "keys": "alt+shift+right"
+        },
+        {
+            "command": "unbound",
+            "keys": "alt+shift+up"
+        },
+        {
+            "command": "unbound",
+            "keys": "win+sc(41)"
+        },
+        {
+            "command": "unbound",
+            "keys": "alt+shift+minus"
+        },
+        {
+            "command": "unbound",
+            "keys": "alt+shift+plus"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+alt+1"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+alt+2"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+alt+3"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+alt+4"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+alt+5"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+alt+6"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+alt+7"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+alt+8"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+alt+9"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+shift+m"
+        },
+        {
+            "command": "unbound",
+            "keys": "alt+enter"
         }
     ],
-    "alwaysShowNotificationIcon": false,
-    "copyFormatting": "none",
+    "alwaysShowTabs": false,
     "copyOnSelect": false,
-    "defaultProfile": "Ubuntu",
+    "defaultProfile": "{00000000-0000-0000-0000-000000000000}",
     "disableAnimations": true,
-    "focusFollowMouse": true,
+    "disabledProfileSources": 
+    [
+        "Windows.Terminal.Wsl",
+        "Windows.Terminal.Azure",
+        "Windows.Terminal.PowershellCore",
+        "Windows.Terminal.SSH"
+    ],
     "launchMode": "maximized",
-    "profiles":
-    {
-        "defaults":
+    "newTabMenu": 
+    [
         {
-            "bellStyle": "none",
+            "type": "remainingProfiles"
+        }
+    ],
+    "profiles": 
+    {
+        "defaults": 
+        {
+            "adjustIndistinguishableColors": "always",
             "colorScheme": "Tango Dark",
             "cursorShape": "filledBox",
-            "experimental.retroTerminalEffect": false,
-            "font":
+            "font": 
             {
                 "face": "Consolas",
-                "size": 11
+                "size": 11.0
             }
         },
-        "list":
+        "list": 
         [
             {
-                "name": "PowerShell",
-                "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-                "icon": "%AppData%\\wt_icons\\PowerShell.png",
-                "hidden": false
-            },
-            {
-                "name": "CMD.EXE",
-                "commandline": "%SystemRoot%\\System32\\cmd.exe",
-                "icon": "%AppData%\\wt_icons\\CMD.png",
-                "hidden": false
+                "commandline": "C:\\windows\\system32\\wsl.exe --cd ~",
+                "guid": "{00000000-0000-0000-0000-000000000000}",
+                "hidden": false,
+                "name": "WSL"
             }
         ]
     },
-    "schemes":
+    "schemes": 
     [
         {
-            "name": "Campbell",
             "background": "#0C0C0C",
             "black": "#0C0C0C",
             "blue": "#0037DA",
@@ -91,6 +263,7 @@
             "cyan": "#3A96DD",
             "foreground": "#CCCCCC",
             "green": "#13A10E",
+            "name": "Campbell",
             "purple": "#881798",
             "red": "#C50F1F",
             "selectionBackground": "#FFFFFF",
@@ -98,7 +271,6 @@
             "yellow": "#C19C00"
         },
         {
-            "name": "Campbell Powershell",
             "background": "#012456",
             "black": "#0C0C0C",
             "blue": "#0037DA",
@@ -114,6 +286,7 @@
             "cyan": "#3A96DD",
             "foreground": "#CCCCCC",
             "green": "#13A10E",
+            "name": "Campbell Powershell",
             "purple": "#881798",
             "red": "#C50F1F",
             "selectionBackground": "#FFFFFF",
@@ -121,7 +294,6 @@
             "yellow": "#C19C00"
         },
         {
-            "name": "One Half Dark",
             "background": "#282C34",
             "black": "#282C34",
             "blue": "#61AFEF",
@@ -137,6 +309,7 @@
             "cyan": "#56B6C2",
             "foreground": "#DCDFE4",
             "green": "#98C379",
+            "name": "One Half Dark",
             "purple": "#C678DD",
             "red": "#E06C75",
             "selectionBackground": "#FFFFFF",
@@ -144,7 +317,6 @@
             "yellow": "#E5C07B"
         },
         {
-            "name": "One Half Light",
             "background": "#FAFAFA",
             "black": "#383A42",
             "blue": "#0184BC",
@@ -160,6 +332,7 @@
             "cyan": "#0997B3",
             "foreground": "#383A42",
             "green": "#50A14F",
+            "name": "One Half Light",
             "purple": "#A626A4",
             "red": "#E45649",
             "selectionBackground": "#FFFFFF",
@@ -167,7 +340,6 @@
             "yellow": "#C18301"
         },
         {
-            "name": "Solarized Dark",
             "background": "#002B36",
             "black": "#002B36",
             "blue": "#268BD2",
@@ -183,6 +355,7 @@
             "cyan": "#2AA198",
             "foreground": "#839496",
             "green": "#859900",
+            "name": "Solarized Dark",
             "purple": "#D33682",
             "red": "#DC322F",
             "selectionBackground": "#FFFFFF",
@@ -190,7 +363,6 @@
             "yellow": "#B58900"
         },
         {
-            "name": "Solarized Light",
             "background": "#FDF6E3",
             "black": "#002B36",
             "blue": "#268BD2",
@@ -206,6 +378,7 @@
             "cyan": "#2AA198",
             "foreground": "#657B83",
             "green": "#859900",
+            "name": "Solarized Light",
             "purple": "#D33682",
             "red": "#DC322F",
             "selectionBackground": "#FFFFFF",
@@ -213,7 +386,6 @@
             "yellow": "#B58900"
         },
         {
-            "name": "Tango Dark",
             "background": "#000000",
             "black": "#000000",
             "blue": "#3465A4",
@@ -229,6 +401,7 @@
             "cyan": "#06989A",
             "foreground": "#D3D7CF",
             "green": "#4E9A06",
+            "name": "Tango Dark",
             "purple": "#75507B",
             "red": "#CC0000",
             "selectionBackground": "#FFFFFF",
@@ -236,7 +409,6 @@
             "yellow": "#C4A000"
         },
         {
-            "name": "Tango Light",
             "background": "#FFFFFF",
             "black": "#000000",
             "blue": "#3465A4",
@@ -252,6 +424,7 @@
             "cyan": "#06989A",
             "foreground": "#555753",
             "green": "#4E9A06",
+            "name": "Tango Light",
             "purple": "#75507B",
             "red": "#CC0000",
             "selectionBackground": "#FFFFFF",
@@ -259,7 +432,6 @@
             "yellow": "#C4A000"
         },
         {
-            "name": "Vintage",
             "background": "#000000",
             "black": "#000000",
             "blue": "#000080",
@@ -275,6 +447,7 @@
             "cyan": "#008080",
             "foreground": "#C0C0C0",
             "green": "#008000",
+            "name": "Vintage",
             "purple": "#800080",
             "red": "#800000",
             "selectionBackground": "#FFFFFF",
@@ -282,6 +455,52 @@
             "yellow": "#808000"
         }
     ],
+    "showTabsInTitlebar": false,
     "tabWidthMode": "titleLength",
+    "themes": 
+    [
+        {
+            "name": "legacyDark",
+            "tab": 
+            {
+                "background": null,
+                "showCloseButton": "always",
+                "unfocusedBackground": null
+            },
+            "window": 
+            {
+                "applicationTheme": "dark",
+                "useMica": false
+            }
+        },
+        {
+            "name": "legacyLight",
+            "tab": 
+            {
+                "background": null,
+                "showCloseButton": "always",
+                "unfocusedBackground": null
+            },
+            "window": 
+            {
+                "applicationTheme": "light",
+                "useMica": false
+            }
+        },
+        {
+            "name": "legacySystem",
+            "tab": 
+            {
+                "background": null,
+                "showCloseButton": "always",
+                "unfocusedBackground": null
+            },
+            "window": 
+            {
+                "applicationTheme": "system",
+                "useMica": false
+            }
+        }
+    ],
     "trimPaste": false
 }
