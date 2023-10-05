@@ -12,6 +12,7 @@ alias mnt='udisksctl mount -b'
 alias mount-qemu="mount -t cifs //10.0.2.4/qemu/"
 alias pass='EDITOR="vim -u NONE" pass'
 alias php-server='php -S 0.0.0.0:8000'
+alias py3venv='[ ! -d .venv ] && python3 -m venv --prompt venv .venv; . .venv/bin/activate'
 alias python-server='python -m http.server 8000'
 alias rm="rm -i"
 alias suspend='sudo systemctl suspend'
