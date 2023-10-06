@@ -1,0 +1,5 @@
+[system-distro-env]
+;
+;start menu integration (Linux app in Windows start menu)
+WESTON_RDP_APPLIST=true
+WESTON_RDP_DISABLE_APPLIST=true
