@@ -227,6 +227,7 @@
         "defaults": 
         {
             "adjustIndistinguishableColors": "always",
+            "bellStyle": "none",
             "colorScheme": "Tango Dark",
             "cursorShape": "filledBox",
             "font": 
