@@ -67,6 +67,6 @@ trap '
     [ -f "$lg" ] && . "$lg"
 ' EXIT
 
-[ -f "$HOSTDOTS"/sh/Shrc ] && . "$HOSTDOTS"/sh/shrc
+[ -f "$HOSTDOTS"/sh/shrc ] && . "$HOSTDOTS"/sh/shrc
 
 [ -f "$HISTORY_DIR/oldpwd" ] && . "$HISTORY_DIR/oldpwd"
