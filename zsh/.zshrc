@@ -2,7 +2,7 @@
 
 # Source basic shell config
 setopt NULL_GLOB
-source "${ENV:-$XDG_CONFIG_HOME/shell/shrc}"
+source "${ENV:-$XDG_CONFIG_HOME/sh/shrc}"
 
 # Enable completion (+ separate path for .zcompdump file)
 autoload -Uz compinit && compinit -d "$XDG_CACHE_HOME/zcompdump"

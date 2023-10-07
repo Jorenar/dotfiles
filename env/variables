@@ -158,7 +158,7 @@ export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME/bundle"
 
 #  Shells {{{2
 export BASH_COMPLETION_USER_FILE="$XDG_CONFIG_HOME/bash/completion"
-export ENV="$XDG_CONFIG_HOME/shell/shrc"  # sh, ksh
+export ENV="$XDG_CONFIG_HOME/sh/shrc"  # sh, ksh
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 
 #  X11 {{{2

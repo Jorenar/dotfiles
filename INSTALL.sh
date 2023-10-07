@@ -110,7 +110,7 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     QuiteRss.ini        >  QuiteRss/QuiteRss.ini
     ranger.conf         @  ranger/rc.conf
     Renviron            @  R/Renviron
-    shell/              @  shell
+    sh/                 @  sh
     shellcheckrc        @  shellcheckrc
     spicy_settings      @  spicy/settings
     sqliterc            @  sqlite3/sqliterc
