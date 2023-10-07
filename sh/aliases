@@ -8,7 +8,6 @@ alias del='gio trash'
 alias ls='ls.hidden -hF -w80 --time-style=iso -I. -I..'
 alias mnt='udisksctl mount -b'
 alias pass='EDITOR="vim -u NONE" pass'
-alias py3venv='{ [ -e .venv/bin/activate ] || python3 -m venv --prompt "py3:venv:${PWD##*/}" .venv; } && . .venv/bin/activate'
 alias rm="rm -i"
 alias suspend='sudo systemctl suspend'
 alias umnt='udisksctl unmount -b'
