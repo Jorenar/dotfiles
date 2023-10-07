@@ -15,17 +15,10 @@ bindkey -e
 bindkey -e '\e' vi-cmd-mode
 
 
-# PROMPT ---------------------
-
-# Fix prompt
-setopt PROMPT_SUBST
-
-# Display Vi mode
-PS1="+$PS1"
+# Display Vi mode in prompt
 function zle-line-init zle-keymap-select {
-    PS1="${${KEYMAP/vicmd/:}/(main)/@}${PS1:1}"
+    PS1="$(_ps1 | sed "s/^.*\\$/${${KEYMAP/vicmd/:}/(main)/@}&/")"
     zle reset-prompt
 }
-
 zle -N zle-line-init
 zle -N zle-keymap-select

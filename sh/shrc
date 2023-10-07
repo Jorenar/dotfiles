@@ -5,36 +5,7 @@ export HISTSIZE=
 
 . "$XDG_CONFIG_HOME"/sh/aliases
 . "$XDG_CONFIG_HOME"/sh/fzf.sh
-
-PS1='$(_ps1)'
-_ps1 () {
-    printf '\001\033]0;%s@%s:%s\007\002' \
-        "$(id -un)"  "$(uname -n)"  "$(echo "$PWD" | sed "s,^$HOME,~,")"
-
-    _ps1_os_name () {
-        case "$(uname -s)" in
-            Linux)
-                [ -n "$WSL_DISTRO_NAME" ] && echo "$WSL_DISTRO_NAME" && return
-                awk -F= '$1=="ID" { gsub(/"/, "", $2); print $2 }' /etc/*release
-                ;;
-            *) uname -s ;;
-        esac
-    }
-
-    printf "\001\033[38;5;240m\002"
-    printf '[%s]  [%s %d]  [ %s@%s  %s %s]' \
-        "$(_ps1_os_name)" \
-        "$(ps -p "$$" -o comm='' 2> /dev/null || echo "$0")" \
-        "$(jobs | wc -l)" \
-        "$(id -un)" \
-        "$(uname -n)" \
-        "$(echo "$PWD" | sed "s,^$HOME\(\/\|$\),~/,")" \
-        "$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1 /')"
-    printf "\001\033[0m\002"
-    printf "\n"
-
-    printf '\001\033[36m\002$\001\033[0m\002 '
-}
+. "$XDG_CONFIG_HOME"/sh/prompt.sh
 
 sh << 'EOF' # permanent history entries
     HISTFILE="${HISTFILE:-$HOME/.sh_history}"
