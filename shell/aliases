@@ -21,16 +21,3 @@ alias wsl.exe='wsl.exe --cd "~"'
 alias ssh='sshwrap.sh ssh'
 alias scp='sshwrap.sh scp'
 alias sshfs='sshwrap.sh sshfs -o reconnect'
-
-alias _history_cleanup="sed -E '/^\\s*($(tr -d '\n' << EOL
-.
-|cd|cd -|cd \.|cd (\.\.\/)*\.\.
-|ls|ls -(a|l|al)|sl
-|fg|jobs|htop
-|sh|bash|dash|zsh|ksh
-|git|git (st|log|diff|open|add -A)
-|vi|vim|make|vmv|feh
-|cal|wttr|bc|bc -l
-|yay
-EOL
-))\\s*\$/d'"' -i $HISTFILE'
