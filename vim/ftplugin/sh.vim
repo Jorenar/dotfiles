@@ -1,4 +1,4 @@
-let g:sh_fold_enabled = 5
+let g:sh_fold_enabled = 7
 setlocal foldmethod=syntax
 
 setlocal iskeyword+=-
