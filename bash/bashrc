@@ -1,7 +1,6 @@
 # BASHRC #
 
-# Source basic shell config
-source "$XDG_CONFIG_HOME/shell/shrc"
+source "$ENV"
 
 # Enable programmable completion features
 if ! shopt -oq posix; then
