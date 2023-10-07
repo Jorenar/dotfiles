@@ -80,7 +80,6 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     ccache.config       @  ccache/config
     chktexrc            @  .chktexrc
     commafeed.yml       @  commafeed.yml
-    cshrc               @  csh/.cshrc
     ctags/              @  ctags
     dosbox.conf         @  dosbox/dosbox.conf
     env                 @  env
