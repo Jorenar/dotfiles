@@ -1,18 +1,3 @@
 # vim: ft=sh
 
 echo "OLDPWD='$PWD'" > "$HISTORY_DIR/oldpwd"
-
-
-HISTFILE="${HISTFILE:-$HOME/.sh_history}"
-perm_hist="$HOSTDOTS/shell/history.perm"
-if [ -e "$perm_hist" ]; then
-    temp="$(mktemp)"
-    if [ -e "$temp" ]; then
-        grep -v -F -x -f "$HISTFILE" "$perm_hist" | cat - "$HISTFILE" > "$temp"
-        if [ "$(wc -l < "$temp")" -gt "$(wc -l < "$HISTFILE")" ]; then
-            mv "$temp" "$HISTFILE"
-        else
-            command rm "$temp"
-        fi
-    fi
-fi

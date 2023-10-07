@@ -36,6 +36,31 @@ _ps1 () {
     printf '\001\033[36m\002$\001\033[0m\002 '
 }
 
+sh << 'EOF' # permanent history entries
+    HISTFILE="${HISTFILE:-$HOME/.sh_history}"
+    touch "$HISTFILE"
+
+    perm="$(mktemp)" || exit $?
+    trap 'rm "$perm"' EXIT
+
+    _append_to_perm_from () {
+        file="$1"/shell/history.perm
+        [ -s "$file" ] && cat "$file" >> "$perm";
+    }
+    _append_to_perm_from "$XDG_CONFIG_HOME"
+    _append_to_perm_from "$HOSTDOTS"
+    [ ! -s "$perm" ] && exit
+
+    temp="$(mktemp)" || exit $?
+    grep -v -F -x -f "$HISTFILE" "$perm" | cat - "$HISTFILE" > "$temp"
+
+    if [ "$(wc -l < "$temp")" -gt "$(wc -l < "$HISTFILE")" ]; then
+        mv "$temp" "$HISTFILE"
+    else
+        rm "$temp"
+    fi
+EOF
+
 # shellcheck disable=SC1090,SC2154
 trap '
     lg="$XDG_CONFIG_HOME"/shell/logout
