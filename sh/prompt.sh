@@ -1,12 +1,16 @@
 #!sh
 
-if [ -e /usr/share/git/completion/git-prompt.sh ]; then
-    GIT_PS1_SHOWDIRTYSTATE=yes
-    GIT_PS1_SHOWSTASHSTATE=yes
-    GIT_PS1_SHOWUNTRACKEDFILES=yes
-    GIT_PS1_SHOWCONFLICTSTATE=yes
-    . /usr/share/git/completion/git-prompt.sh
-else
+if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
+    if [ -e /usr/share/git/completion/git-prompt.sh ]; then
+        GIT_PS1_SHOWDIRTYSTATE=yes
+        GIT_PS1_SHOWSTASHSTATE=yes
+        GIT_PS1_SHOWUNTRACKEDFILES=yes
+        GIT_PS1_SHOWCONFLICTSTATE=yes
+        . /usr/share/git/completion/git-prompt.sh
+    fi
+fi
+
+if ! type __git_ps1 > /dev/null 2>&1; then
     __git_ps1 () {
         b="$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
         # shellcheck disable=SC2059
