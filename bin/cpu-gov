@@ -1,21 +1,23 @@
 #!/usr/bin/env sh
 
-case "$1" in
-    f) sudo cpupower frequency-set -g performance ;;
-    s) sudo cpupower frequency-set -g powersave ;;
-    o) sudo cpupower frequency-set -g ondemand ;;
-    t)
-        if [ "$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)" = "powersave" ]; then
-            GOV="performance"
-        else
-            GOV="powersave"
-        fi
+get_gov () {
+    cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+}
 
-        if [ -x "$(command -v cpupower)" ]; then
-            sudo cpupower frequency-set -g $GOV
+set_gov () {
+    echo "$1" | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+}
+
+case "$1" in
+    f) set_gov performance ;;
+    s) set_gov powersave ;;
+    o) set_gov ondemand ;;
+    t)
+        if [ "$(get_gov)" = "powersave" ]; then
+            set_gov performance
         else
-            echo $GOV | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+            set_gov powersave
         fi
         ;;
-    p|*) cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor ;;
+    p|*) get_gov ;;
 esac
