@@ -32,9 +32,14 @@ if [ -z "$(type -t _ssh_configfile)" ]; then
 fi
 
 if [ -x "$(command -v podman)" ]; then
-    complete -W "$(
-        podman images --format='{{.Repository}}' | awk -F'/' '{ print $NF }'
-    )" podrun
+    _podrun () {
+        mapfile -t COMPREPLY < <(
+            compgen -W "$(
+                podman images --format='{{.Repository}}' | awk -F'/' '{ print $NF }'
+            )" -- "${COMP_WORDS[COMP_CWORD]}"
+        )
+    }
+    complete -F _podrun podrun
 fi
 
 _wsl_exe () {
