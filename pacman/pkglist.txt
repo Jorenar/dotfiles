@@ -1,6 +1,6 @@
 # vim: ft=conf
 # $ cut -d# -f1 pkglist.txt | sudo pacman -S --needed -
-# Remember to review and (un)comment out before install!
+# Remember to review and (un)comment out as necessary before install!
 
 base
 linux
@@ -8,8 +8,13 @@ linux-firmware
 posix-user-portability
 sudo
 
-# amd-ucode
-# nvidia
+# Either:
+#   amd-ucode
+#   intel-ucode
+
+# Uncomment if Nvidia GPU:
+#   nvidia
+#   nvidia-settings
 
 bash
 bash-completion
@@ -33,10 +38,13 @@ unzip
 zip
 
 aerc
+curlftpfs
 imagemagick
 ranger
+sshfs
 testdisk
 transmission-cli
+udisks2
 urlscan
 w3m
 
@@ -48,12 +56,14 @@ ctags
 deno
 doxygen
 gdb
+graphviz
 jedi-language-server
 jq
 jre-openjdk
 multilib-devel
 nasm
 openscad
+python
 radare2
 shellcheck
 strace
@@ -66,6 +76,13 @@ valgrind
 podman
 wine
 
+xclip
+xdotool
+xorg-server
+xorg-xinit
+xorg-xrandr
+xterm
+
 dmenu
 dunst
 elementary-icon-theme
@@ -75,25 +92,13 @@ i3blocks
 qt5ct
 scrot
 stalonetray
+
+ttf-dejavu
 wqy-zenhei
-xclip
-xdotool
-xf86-input-wacom
-xorg-server
-xorg-xinit
-xorg-xrandr
-xterm
 
 alsa-utils
 pavucontrol
 pipewire-pulse
-
-android-file-transfer
-curlftpfs
-gphoto2
-ifuse
-sshfs
-udisks2
 
 dosbox
 feh
@@ -102,7 +107,9 @@ libreoffice-still
 mpv
 simple-scan
 steam
+yt-dlp
 zathura
+zathura-pdf-mupdf
 
 audacity
 gimp
@@ -112,3 +119,29 @@ shotcut
 bluez
 bluez-utils
 ethtool
+
+libvirt
+qemu-desktop
+virt-install
+virt-viewer
+
+# ifuse                     # fuse fs to access contents of an iPhone/iPad
+# gphoto2                   # digital camera download and access program
+# android-file-transfer
+# heimdall                  # tool suite used to flash ROMs onto Galaxy devices
+# scrcpy                    # display and control Android device
+# xf86-input-wacom
+
+
+# AUR --------------------------------------------------------------------------
+
+# yay-bin
+
+# ccls-git
+# compiledb
+# cura-bin
+# imapfilter
+# openscad-lsp-git
+# qt5gtk2
+# saleae-logic2
+# simplescreenrecorder
