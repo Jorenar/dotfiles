@@ -2,7 +2,7 @@
 # shellcheck disable=SC1090,SC2174,SC2155
 
 . "$( # source <dotfiles>/env/variables
-    t="$(file "$HOME"/.profile | awk '{ print $NF }')"
+    t="$(ls -dl "$HOME"/.profile)"; t="${t#*"$t"-> }"
 
     [ -f "$t" ] && vars="$(dirname "$t")"/variables || vars=
     [ ! -f "$vars" ] && vars="$HOME/.local/config/env/variables"
