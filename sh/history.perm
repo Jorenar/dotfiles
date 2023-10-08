@@ -3,10 +3,12 @@ curl icanhazip.com
 curl wttr.in/
 mount -t cifs //10.0.2.4/qemu/
 pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'
+pacman -Qttdq # packages which are optionally required by another package
 php -S 0.0.0.0:8000 # PHP server
 python -m http.server 8000
 sh -c 'find $@ 2>&1 | grep -v "Permission denied" >&2' -
 sudo dd bs=4M oflag=direct status=progress if=ISO of=DEV
+sudo usermod -a -G groupname username # add user to group
 transmission-daemon -T -w "$XDG_DOWNLOAD_DIR" -c "$XDG_DOWNLOAD_DIR"
 updpkgsums && makepkg --printsrcinfo > .SRCINFO # update AUR files
 xsetwacom set "$(xsetwacom list | awk '/stylus/ {print $8}')" MapToOutput 1920x1080+0+0
