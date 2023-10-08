@@ -13,6 +13,6 @@ set prompt = "$prompt\n%{\e[36m%}%%%{\e[0m%} "
 set autolist = ambiguous
 set complete = enhance
 
-foreach line ("`sed -E -e '/^\s*#/d' -e 's/(alias .*)=/\1 /g;t;d' $XDG_CONFIG_HOME/sh/aliases`")
+foreach line ("`sed -e 's/=/ /' $XDG_CONFIG_HOME/sh/aliases`")
     eval $line
 end
