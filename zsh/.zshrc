@@ -6,6 +6,7 @@ source "${ENV:-$XDG_CONFIG_HOME/sh/shrc}"
 
 # Enable completion (+ separate path for .zcompdump file)
 autoload -Uz compinit && compinit -d "$XDG_CACHE_HOME/zcompdump"
+setopt NO_AUTOLIST BASH_AUTOLIST NO_MENUCOMPLETE
 unsetopt ALWAYS_LAST_PROMPT
 
 # Disable "No match found" message
