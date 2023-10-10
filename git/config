@@ -44,6 +44,7 @@
 [alias]
     st = status --short
     lg = log --oneline --graph --abbrev-commit
+    ls = !sh -c 'cd ${GIT_PREFIX:-.} && ls $@ -d $(git ls-tree HEAD | sed "s/^.*\\\t//")' -
 
     change-url     = !sh -c 'git remote set-url origin \"$1\"' -
     fast-init      = !sh -c 'git init && git commit --allow-empty --allow-empty-message -m \"\" && [ -n \"$1\" ] && git remote add origin \"$1\" && git push -u origin master' -
