@@ -27,7 +27,7 @@ fi
 
 case "$-" in
     *i*)
-        export SHELL="$(command -v launch_shell.sh)"
+        export SHELL="$(command -v myshell.sh)"
         case "$(tty)" in
             *tty*) ;;
             *) exec "$SHELL" ;;
