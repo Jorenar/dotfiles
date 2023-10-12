@@ -234,7 +234,8 @@
             {
                 "face": "Consolas",
                 "size": 11.0
-            }
+            },
+            "intenseTextStyle": "bold"
         },
         "list": 
         [
