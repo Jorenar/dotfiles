@@ -21,13 +21,16 @@ bash-completion
 dash
 expect
 fzf
-git
 htop
 openssh
 pass
 rsync
 tmux
 vim
+
+git
+# git-lfs
+# git-annex
 
 man-db
 man-pages
