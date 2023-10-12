@@ -30,7 +30,7 @@ set nocompatible
 filetype plugin indent on
 syntax enable
 set backup undofile
-colorscheme darkness
+colorscheme minimal
 
 " Open file at the last known position
 autocmd BufReadPost * if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit' | exec "norm! g`\"" | endif
@@ -38,7 +38,6 @@ autocmd BufReadPost * if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~#
 " COMMANDS {{{1
 
 com! -range -nargs=+  Align            <line1>,<line2>!column -Lts<args> -o<args>
-com! -bang            ColorUp          set syntax=ON | exec "colo " . (<bang>0 ? "darkness" : "colorUp")
 com!                  CountSpell       echo utils#CountSpell()
 com!                  ExecCurrentLine  normal :.w !sh<CR>
 com! -nargs=1         FillLine         exec "norm! $" | exec "FillToColumn" <q-args> &tw
@@ -679,6 +678,9 @@ augroup OTHER
 
   " Set fold method to syntax
   autocmd FileType conf,dosini,make,m3u,todo  setlocal foldmethod=syntax
+
+  " Highlight TODO even with syntax=OFF
+  autocmd FileType * call matchadd("Todo", "TODO")
 
 augroup END
 

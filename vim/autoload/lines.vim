@@ -14,6 +14,8 @@ endfunction
 
 function! lines#StatusLine() abort
   return ' '
+      \ . "%{g:actual_curwin == win_getid() ? '>' : ' '}"
+      \ . ' '
       \ . "[%{&mod ? '+' : (&ma ? '=' : '-')}]%r"
       \ . "  "
       \ . "%y"
