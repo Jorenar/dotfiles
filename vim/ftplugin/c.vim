@@ -3,6 +3,7 @@ setlocal complete-=i " Scanning included files when ^n is troublesome
 setlocal foldmethod=syntax
 setlocal path+=/usr/include/**
 
+let c_no_if0       = 1
 let c_curly_error  = 1
 let c_space_errors = 1
 
