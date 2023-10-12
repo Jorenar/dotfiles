@@ -28,7 +28,7 @@ hi! CursorColumn     NONE  ctermbg=233
 hi! Pmenu            NONE  ctermbg=233
 hi! PmenuSel         NONE  cterm=reverse
 
-hi! Folded           NONE  cterm=italic
+hi! Folded           NONE  cterm=bold,italic
 hi! MatchParen       NONE  cterm=bold ctermfg=LightYellow
 hi! NonText          NONE  ctermfg=DarkGray
 hi! QuickFixLine     NONE  cterm=underline
