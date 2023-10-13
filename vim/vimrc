@@ -344,6 +344,9 @@ function! s:lsp_init() abort
   nmap <buffer> Lgi <Plug>(lsp-implementation)
   nmap <buffer> Lgt <Plug>(lsp-type-definition)
 
+  nmap <buffer> Lgci <Plug>(lsp-call-hierarchy-incoming)
+  nmap <buffer> Lgco <Plug>(lsp-call-hierarchy-outgoing)
+
   nmap <buffer> Lkg <Plug>(lsp-peek-definition)
   nmap <buffer> Lkd <Plug>(lsp-peek-declaration)
   nmap <buffer> Lki <Plug>(lsp-peek-implementation)
