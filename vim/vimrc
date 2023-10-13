@@ -251,33 +251,22 @@ autocmd FileType *
 
 " PLUGINS {{{1
 
-let g:plugins = {
-      \   "repos": [
-      \     "chrisbra/NrrwRgn",
-      \     "ctrlpvim/ctrlp.vim",
-      \     "dense-analysis/ale",
-      \     "editorconfig/editorconfig-vim",
-      \     "Jorengarenar/miniSnip",
-      \     "jpalardy/vim-slime",
-      \     "junegunn/gv.vim",
-      \     "markonm/traces.vim",
-      \     "MattesGroeger/vim-bookmarks",
-      \     "mbbill/undotree",
-      \     "mhinz/vim-signify",
-      \     "prabirshrestha/vim-lsp",
-      \     "preservim/tagbar",
-      \     "tpope/vim-fugitive",
-      \   ],
-      \   "files": [
-      \     [ "autoload/lsp/ale.vim",      "github.com/rhysd/vim-lsp-ale/raw/master/autoload/lsp/ale.vim" ],
-      \     [ "autoload/repeat.vim",       "github.com/tpope/vim-repeat/raw/master/autoload/repeat.vim" ],
-      \     [ "plugin/commentary.vim",     "github.com/tpope/vim-commentary/raw/master/plugin/commentary.vim" ],
-      \     [ "plugin/eunuch.vim",         "github.com/tpope/vim-eunuch/raw/master/plugin/eunuch.vim" ],
-      \     [ "plugin/rsi.vim",            "github.com/tpope/vim-rsi/raw/master/plugin/rsi.vim" ],
-      \     [ "plugin/surround.vim",       "github.com/tpope/vim-surround/raw/master/plugin/surround.vim" ],
-      \     [ "plugin/tmux_navigator.vim", "github.com/christoomey/vim-tmux-navigator/raw/master/plugin/tmux_navigator.vim" ],
-      \   ]
-      \ }
+let g:plugins = [
+      \   "chrisbra/NrrwRgn",
+      \   "ctrlpvim/ctrlp.vim",
+      \   "dense-analysis/ale",
+      \   "editorconfig/editorconfig-vim",
+      \   "Jorengarenar/miniSnip",
+      \   "jpalardy/vim-slime",
+      \   "junegunn/gv.vim",
+      \   "markonm/traces.vim",
+      \   "MattesGroeger/vim-bookmarks",
+      \   "mbbill/undotree",
+      \   "mhinz/vim-signify",
+      \   "prabirshrestha/vim-lsp",
+      \   "preservim/tagbar",
+      \   "tpope/vim-fugitive",
+      \ ]
 
 packadd cfilter
 packadd matchit

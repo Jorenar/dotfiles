@@ -54,16 +54,11 @@ function! utils#InstallPlugins() abort
   silent! call mkdir(dir, 'p')
   call system("git init ".dir)
 
-  for plugin in g:plugins.repos
+  for plugin in g:plugins
     echo "repo: ".plugin
     call system("git -C ".dir." submodule add --depth=1 https://github.com/".plugin)
   endfor
   call system("git -C ".dir." submodule update --recursive --remote")
-
-  for f in g:plugins.files
-    echo "file: ".f[0]
-    call system("curl -o ".substitute(&rtp, ",.*", "", "")."/".f[0]." -L ".f[1])
-  endfor
 
   silent! helptags ALL
   echo "Plugins installed"
