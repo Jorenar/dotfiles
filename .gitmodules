@@ -10,6 +10,10 @@
 	path = vim/pack/extern/start/indent-sh.vim
 	url = https://github.com/Clavelito/indent-sh.vim.git
 	shallow = true
+[submodule "vim/pack/extern/start/textobj-word-column.vim"]
+	path = vim/pack/extern/start/textobj-word-column.vim
+	url = https://github.com/coderifous/textobj-word-column.vim.git
+	shallow = true
 [submodule "vim/pack/extern/start/vim-commentary"]
 	path = vim/pack/extern/start/vim-commentary
 	url = https://github.com/tpope/vim-commentary.git
