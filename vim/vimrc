@@ -84,6 +84,10 @@ onoremap az :<C-u>silent! norm Vaz<CR>
 
 inoremap <expr> <C-o> pumvisible() ? "\<C-n>" : "\<C-o>"
 
+xnoremap I <Cmd>call utils#VisInsert('i')<CR>
+xnoremap A <Cmd>call utils#VisInsert('a')<CR>
+xnoremap c <Cmd>call utils#VisInsert('gvxi')<CR>
+
 xnoremap # :<C-u>call utils#VSetSearch('?')<CR>?<C-r>=@/<CR><CR>
 xnoremap * :<C-u>call utils#VSetSearch('/')<CR>/<C-r>=@/<CR><CR>
 
@@ -468,11 +472,11 @@ augroup END
 
 let g:surround_no_mappings = 1
 
-xmap s  <Plug>VSurround
-nmap s  <Plug>Ysurround
-nmap ds <Plug>Dsurround
-nmap cs <Plug>Csurround
-nmap ss <Plug>Yssurround
+" xmap s  <Plug>VSurround
+" nmap s  <Plug>Ysurround
+" nmap ds <Plug>Dsurround
+" nmap cs <Plug>Csurround
+" nmap ss <Plug>Yssurround
 
 " CtrlP (+ FZF) {{{2
 

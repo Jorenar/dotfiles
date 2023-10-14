@@ -139,3 +139,21 @@ function! utils#ColorDemo() abort  " preview of Vim 256 colors
     let num -= 1
   endwhile
 endfunction
+
+function! utils#VisInsert(mode) abort
+  if a:mode == ""
+    let [line_start, column_start] = getpos("'<")[1:2]
+    let [line_end, column_end] = getpos("'>")[1:2]
+    for l in range(line_start+1, line_end)
+      call setpos('.', [0, l, column_start, 0])
+      norm! .
+    endfor
+    call setpos('.', [0, line_start, column_start, 0])
+
+    return
+  endif
+
+  exec "norm! \<Esc>`<"
+  autocmd InsertLeave * ++once call utils#VisInsert('')
+  call feedkeys(a:mode)
+endfunction
