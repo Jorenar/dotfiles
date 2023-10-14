@@ -254,7 +254,6 @@ let g:plugins = [
       \   "chrisbra/NrrwRgn",
       \   "ctrlpvim/ctrlp.vim",
       \   "dense-analysis/ale",
-      \   "editorconfig/editorconfig-vim",
       \   "Jorengarenar/miniSnip",
       \   "jpalardy/vim-slime",
       \   "junegunn/gv.vim",
@@ -270,6 +269,7 @@ let g:plugins = [
 packadd cfilter
 packadd matchit
 packadd termdebug
+packadd editorconfig
 source  $VIMRUNTIME/ftplugin/man.vim
 
 " ALE {{{2
