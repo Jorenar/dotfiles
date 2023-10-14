@@ -44,7 +44,6 @@ com! -nargs=1         FillLine         exec "norm! $" | exec "FillToColumn" <q-a
 com! -nargs=+         FillToColumn     exec {str,r -> "norm! a".repeat(str, (r-col(".")+1)/len(str))}(<f-args>)
 com! -nargs=+         Grep             silent! exec "grep -R <args> ."
 com! -nargs=+         GrepRename       exec {a,b -> 'tabe | lv /\C\<' . a . '\>/j ** | cdo s/\C\<' . a . '\>/' . b . '/gc | up'}(<f-args>) | q
-com!                  InstallPlugins   call utils#InstallPlugins()
 com!                  JumpNextDiffAdd  call utils#JumpToDiffAdd()
 com! -nargs=1         SetFormatProg    exec {prg -> 'let [ &l:formatprg, &l:formatexpr ] = [ "'.prg.' 2> /dev/null", "" ]'}(<args>)
 com! -range=%         Sort             normal :<line1>,<line2>sort i<CR>
@@ -253,22 +252,6 @@ autocmd FileType *
       \ | endif
 
 " PLUGINS {{{1
-
-let g:plugins = [
-      \   "chrisbra/NrrwRgn",
-      \   "ctrlpvim/ctrlp.vim",
-      \   "dense-analysis/ale",
-      \   "Jorengarenar/miniSnip",
-      \   "jpalardy/vim-slime",
-      \   "junegunn/gv.vim",
-      \   "markonm/traces.vim",
-      \   "MattesGroeger/vim-bookmarks",
-      \   "mbbill/undotree",
-      \   "mhinz/vim-signify",
-      \   "prabirshrestha/vim-lsp",
-      \   "preservim/tagbar",
-      \   "tpope/vim-fugitive",
-      \ ]
 
 packadd cfilter
 packadd matchit

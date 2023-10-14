@@ -49,21 +49,6 @@ function! utils#VisSort() range abort " sorts based on visual-block selected por
   let @a = old_a
 endfun
 
-function! utils#InstallPlugins() abort
-  let dir = substitute(&packpath, ",.*", "", "")."/pack/plugins/start/"
-  silent! call mkdir(dir, 'p')
-  call system("git init ".dir)
-
-  for plugin in g:plugins
-    echo "repo: ".plugin
-    call system("git -C ".dir." submodule add --depth=1 https://github.com/".plugin)
-  endfor
-  call system("git -C ".dir." submodule update --recursive --remote")
-
-  silent! helptags ALL
-  echo "Plugins installed"
-endfunction
-
 function! utils#VSetSearch(cmdtype) abort " search for selected text, forwards or backwards
   let temp = @s
   norm! gv"sy

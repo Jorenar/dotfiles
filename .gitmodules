@@ -1,3 +1,11 @@
+[submodule "vim/pack/extern/start/ale"]
+	path = vim/pack/extern/start/ale
+	url = https://github.com/dense-analysis/ale.git
+	shallow = true
+[submodule "vim/pack/extern/start/ctrlp.vim"]
+	path = vim/pack/extern/start/ctrlp.vim
+	url = https://github.com/ctrlpvim/ctrlp.vim.git
+	shallow = true
 [submodule "vim/pack/extern/start/fauxClip"]
 	path = vim/pack/extern/start/fauxClip
 	url = https://github.com/Jorengarenar/fauxClip.git
@@ -6,13 +14,41 @@
 	path = vim/pack/extern/start/GuiTermColors.vim
 	url = https://github.com/Jorengarenar/GuiTermColors.vim.git
 	shallow = true
+[submodule "vim/pack/extern/start/gv.vim"]
+	path = vim/pack/extern/start/gv.vim
+	url = https://github.com/junegunn/gv.vim.git
+	shallow = true
 [submodule "vim/pack/extern/start/indent-sh.vim"]
 	path = vim/pack/extern/start/indent-sh.vim
 	url = https://github.com/Clavelito/indent-sh.vim.git
 	shallow = true
+[submodule "vim/pack/extern/start/miniSnip"]
+	path = vim/pack/extern/start/miniSnip
+	url = https://github.com/Jorengarenar/miniSnip.git
+	shallow = true
+[submodule "vim/pack/extern/start/NrrwRgn"]
+	path = vim/pack/extern/start/NrrwRgn
+	url = https://github.com/chrisbra/NrrwRgn.git
+	shallow = true
+[submodule "vim/pack/extern/start/tagbar"]
+	path = vim/pack/extern/start/tagbar
+	url = https://github.com/preservim/tagbar.git
+	shallow = true
 [submodule "vim/pack/extern/start/textobj-word-column.vim"]
 	path = vim/pack/extern/start/textobj-word-column.vim
 	url = https://github.com/coderifous/textobj-word-column.vim.git
+	shallow = true
+[submodule "vim/pack/extern/start/traces.vim"]
+	path = vim/pack/extern/start/traces.vim
+	url = https://github.com/markonm/traces.vim.git
+	shallow = true
+[submodule "vim/pack/extern/start/undotree"]
+	path = vim/pack/extern/start/undotree
+	url = https://github.com/mbbill/undotree.git
+	shallow = true
+[submodule "vim/pack/extern/start/vim-bookmarks"]
+	path = vim/pack/extern/start/vim-bookmarks
+	url = https://github.com/MattesGroeger/vim-bookmarks.git
 	shallow = true
 [submodule "vim/pack/extern/start/vim-commentary"]
 	path = vim/pack/extern/start/vim-commentary
@@ -21,6 +57,14 @@
 [submodule "vim/pack/extern/start/vim-eunuch"]
 	path = vim/pack/extern/start/vim-eunuch
 	url = https://github.com/tpope/vim-eunuch.git
+	shallow = true
+[submodule "vim/pack/extern/start/vim-fugitive"]
+	path = vim/pack/extern/start/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+	shallow = true
+[submodule "vim/pack/extern/start/vim-lsp"]
+	path = vim/pack/extern/start/vim-lsp
+	url = https://github.com/prabirshrestha/vim-lsp.git
 	shallow = true
 [submodule "vim/pack/extern/start/vim-lsp-ale"]
 	path = vim/pack/extern/start/vim-lsp-ale
@@ -33,6 +77,14 @@
 [submodule "vim/pack/extern/start/vim-rsi"]
 	path = vim/pack/extern/start/vim-rsi
 	url = https://github.com/tpope/vim-rsi.git
+	shallow = true
+[submodule "vim/pack/extern/start/vim-signify"]
+	path = vim/pack/extern/start/vim-signify
+	url = https://github.com/mhinz/vim-signify.git
+	shallow = true
+[submodule "vim/pack/extern/start/vim-slime"]
+	path = vim/pack/extern/start/vim-slime
+	url = https://github.com/jpalardy/vim-slime.git
 	shallow = true
 [submodule "vim/pack/extern/start/vim-SQL-UPPER"]
 	path = vim/pack/extern/start/vim-SQL-UPPER
