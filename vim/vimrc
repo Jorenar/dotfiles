@@ -455,11 +455,11 @@ augroup END
 
 let g:surround_no_mappings = 1
 
-" xmap s  <Plug>VSurround
-" nmap s  <Plug>Ysurround
-" nmap ds <Plug>Dsurround
-" nmap cs <Plug>Csurround
-" nmap ss <Plug>Yssurround
+xmap s  <Plug>VSurround
+nmap s  <Plug>Ysurround
+nmap ds <Plug>Dsurround
+nmap cs <Plug>Csurround
+nmap ss <Plug>Yssurround
 
 " CtrlP (+ FZF) {{{2
 
