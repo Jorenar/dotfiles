@@ -30,6 +30,10 @@
 	path = vim/pack/extern/start/vim-rsi
 	url = https://github.com/tpope/vim-rsi.git
 	shallow = true
+[submodule "vim/pack/extern/start/vim-SQL-UPPER"]
+	path = vim/pack/extern/start/vim-SQL-UPPER
+	url = https://github.com/Jorengarenar/vim-SQL-UPPER.git
+	shallow = true
 [submodule "vim/pack/extern/start/vim-surround"]
 	path = vim/pack/extern/start/vim-surround
 	url = https://github.com/tpope/vim-surround.git
