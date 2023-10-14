@@ -1,36 +1,48 @@
 [submodule "vim/pack/extern/start/fauxClip"]
 	path = vim/pack/extern/start/fauxClip
 	url = https://github.com/Jorengarenar/fauxClip.git
+	shallow = true
 [submodule "vim/pack/extern/start/GuiTermColors.vim"]
 	path = vim/pack/extern/start/GuiTermColors.vim
 	url = https://github.com/Jorengarenar/GuiTermColors.vim.git
+	shallow = true
 [submodule "vim/pack/extern/start/indent-sh.vim"]
 	path = vim/pack/extern/start/indent-sh.vim
 	url = https://github.com/Clavelito/indent-sh.vim.git
+	shallow = true
 [submodule "vim/pack/extern/start/vim-commentary"]
 	path = vim/pack/extern/start/vim-commentary
 	url = https://github.com/tpope/vim-commentary.git
+	shallow = true
 [submodule "vim/pack/extern/start/vim-eunuch"]
 	path = vim/pack/extern/start/vim-eunuch
 	url = https://github.com/tpope/vim-eunuch.git
+	shallow = true
 [submodule "vim/pack/extern/start/vim-lsp-ale"]
 	path = vim/pack/extern/start/vim-lsp-ale
 	url = https://github.com/rhysd/vim-lsp-ale.git
+	shallow = true
 [submodule "vim/pack/extern/start/vim-repeat"]
 	path = vim/pack/extern/start/vim-repeat
 	url = https://github.com/tpope/vim-repeat.git
+	shallow = true
 [submodule "vim/pack/extern/start/vim-rsi"]
 	path = vim/pack/extern/start/vim-rsi
 	url = https://github.com/tpope/vim-rsi.git
+	shallow = true
 [submodule "vim/pack/extern/start/vim-surround"]
 	path = vim/pack/extern/start/vim-surround
 	url = https://github.com/tpope/vim-surround.git
+	shallow = true
 [submodule "vim/pack/extern/start/vim-syntaxMarkerFold"]
 	path = vim/pack/extern/start/vim-syntaxMarkerFold
 	url = https://github.com/Jorengarenar/vim-syntaxMarkerFold.git
+	shallow = true
 [submodule "vim/pack/extern/start/vim-tex-syntax"]
 	path = vim/pack/extern/start/vim-tex-syntax
 	url = https://github.com/gi1242/vim-tex-syntax.git
+	shallow = true
 [submodule "vim/pack/extern/start/vim-tmux-navigator"]
 	path = vim/pack/extern/start/vim-tmux-navigator
 	url = https://github.com/christoomey/vim-tmux-navigator.git
+	shallow = true
