@@ -2,7 +2,6 @@ let g:tex_fold_enabled = 1
 setlocal foldmethod=syntax
 setlocal tabstop=3
 setlocal textwidth=90
-setlocal spell
 
 compiler tex
 

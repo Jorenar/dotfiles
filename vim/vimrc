@@ -245,11 +245,7 @@ if has('nvim') " sanitize Neovim :terminal
 endif
 " }}}
 
-let g:syntax_off_exceptions = [ "help", "man", "markdown", "qf", "tex" ]
-autocmd FileType *
-      \   if index(g:syntax_off_exceptions, &ft) < 0
-      \ |   silent! setlocal syntax=OFF
-      \ | endif
+autocmd FileType * silent! setlocal syntax=OFF
 
 " PLUGINS {{{1
 
