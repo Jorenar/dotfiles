@@ -26,3 +26,6 @@ if !w:is_loclist
   setlocal stl+=%{w:quickfix_title}
 endif
 setlocal stl+=\  " comm to prevent trimming space
+
+call matchadd("Error",      '^\s*\zs\[E]\ze ')
+call matchadd("WarningMsg", '^\s*\zs\[W]\ze ')
