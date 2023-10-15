@@ -105,7 +105,7 @@ set keywordprg=:Man
 set makeprg=Make
 set modeline nomodelineexpr
 set number
-set quickfixtextfunc=custom#texts#MyQuickFixTextFunc
+set quickfixtextfunc=custom#texts#QuickFixTextFunc
 set scrolloff=5
 set sessionoptions=blank,buffers,folds,tabpages,winsize
 set shortmess+=I shortmess-=S
