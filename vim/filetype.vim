@@ -5,7 +5,6 @@ augroup filetypedetect
   let g:filetype_cfg = "conf"
   let g:c_syntax_for_h = 1
 
-  au! BufRead,BufNewFile *.m3u       setf m3u
   au! BufRead,BufNewFile *.snippets  setf snippets
   au! BufRead,BufNewFile ~/.todo     setf todo
   au! BufRead,BufNewFile LICENSE     setf LICENSE
