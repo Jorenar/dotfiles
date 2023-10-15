@@ -1,4 +1,4 @@
-function! lines#VcsStats() abort " VCS stats; requires Signify plugin
+function! s:VcsStats() abort " VCS stats; requires Signify plugin
   let sy = getbufvar(bufnr(), "sy")
   if empty(sy) | return "" | endif
   if !has_key(sy, "vcs") | return "" | endif
@@ -6,13 +6,13 @@ function! lines#VcsStats() abort " VCS stats; requires Signify plugin
   return printf("  [+%s -%s ~%s]", stats[0], stats[2], stats[1])
 endfunction
 
-function! lines#IssuesCount() abort
+function! s:IssuesCount() abort
   let errors   = len(filter(getloclist(0), 'v:val.type == "E"'))
   let warnings = len(filter(getloclist(0), 'v:val.type == "w"'))
   return errors."E ".warnings."w"
 endfunction
 
-function! lines#StatusLine() abort
+function! custom#lines#StatusLine() abort
   return ' '
       \ . "%{g:actual_curwin == win_getid() ? '>' : ' '}"
       \ . ' '
@@ -21,15 +21,15 @@ function! lines#StatusLine() abort
       \ . "%y"
       \ . "[".&ff.";".(&fenc == "" ? &enc : &fenc).(&bomb ? ",B" : "")."]"
       \ . "  "
-      \ . "[%{lines#IssuesCount()}]"
-      \ . "%{lines#VcsStats()}"
+      \ . "[%{".expand("<SID>")."IssuesCount()}]"
+      \ . "%{".expand("<SID>")."VcsStats()}"
       \ . "  "
       \ . "%l/%L:%c"
       \ . "  |  "
       \ . "%<%f "
 endfunction
 
-function! lines#TabLine() abort
+function! custom#lines#TabLine() abort
   let l:tabline = ''
 
   for i in range(1, tabpagenr('$'))

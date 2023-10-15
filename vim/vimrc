@@ -27,9 +27,12 @@ if !has('nvim') | set viminfofile=$XDG_STATE_HOME/vim/viminfo | endif
 " BASICS {{{1
 
 set nocompatible
-filetype plugin indent on
-syntax enable
 set backup undofile
+filetype plugin indent on
+
+syntax enable
+autocmd FileType * silent! setlocal syntax=OFF
+
 colorscheme minimal
 
 " Open file at the last known position
@@ -102,15 +105,16 @@ set keywordprg=:Man
 set makeprg=Make
 set modeline nomodelineexpr
 set number
+set quickfixtextfunc=custom#texts#MyQuickFixTextFunc
 set scrolloff=5
 set sessionoptions=blank,buffers,folds,tabpages,winsize
 set shortmess+=I shortmess-=S
 set spellsuggest=double,5
 set splitbelow splitright
 set ttimeoutlen=10
+set updatetime=250
 set vb t_vb=
 set wildmenu wildmode=full wildoptions=
-set updatetime=250
 
 set colorcolumn=+1
 set fillchars+=vert:│
@@ -171,10 +175,16 @@ set showcmd
 set signcolumn=yes
 
 set laststatus=2
-set statusline=%!lines#StatusLine()
+set statusline=%!custom#lines#StatusLine()
 
 set showtabline=2
-set tabline=%!lines#TabLine()
+set tabline=%!custom#lines#TabLine()
+
+set foldcolumn=2
+set foldmethod=indent
+set foldtext=custom#texts#FoldText()
+set nofoldenable
+autocmd BufReadPost * if line('$') > winheight(0) | setlocal fen | endif
 
 augroup FORMATOPTIONS
   autocmd!
@@ -186,64 +196,18 @@ augroup FORMATOPTIONS
   autocmd BufWinEnter * set formatoptions-=t  " Don't autowrap text using 'textwidth'
 augroup END
 
-set quickfixtextfunc=MyQuickFixTextFunc
-function! MyQuickFixTextFunc(info) abort
-  let qfl = a:info.quickfix
-        \ ? getqflist({'id': a:info.id, 'items': 0}).items
-        \ : getloclist(a:info.winid, {'id': a:info.id, 'items': 0}).items
+augroup TERMINAL_OPTIONS
+  autocmd!
 
-  let items = []
+  exec 'autocmd '.(has("nvim") ? "TermOpen" : "TerminalOpen").' *'
+        \ . ' setlocal stl=%#StatusLineTerm#\ %{expand(\"%:t\")} '
 
-  let pad = 0
-  for idx in range(a:info.start_idx - 1, a:info.end_idx - 1)
-    let e = qfl[idx]
-    let f = fnamemodify(bufname(e.bufnr), ':p:.')
-    let t = empty(e.type) ? '' : ' ['.e.type.']'
-    let p = printf('%s %s:%d:%d', t, f, e.lnum, e.col)
-    call add(items, [ p, e.text ])
-    let pad = len(p) > pad ? len(p) : pad
-  endfor
-
-  return map(items, 'printf("%-*s  %s", pad, v:val[0], v:val[1])')
-endfunction
-
-" folds {{{
-set foldcolumn=2
-set foldmethod=indent
-set foldtext=MyFoldText()
-set nofoldenable
-
-" If file has more lines than window height, then fold it
-autocmd BufReadPost * if line('$') > winheight(0) | setlocal fen | endif
-
-function! MyFoldText() abort
-  let w = float2nr(&tw/2.5)
-
-  let line = getline(v:foldstart)
-  let line = substitute(line, '\t', repeat(' ', &ts), 'g')
-  let line = substitute(line, split(&l:fmr, ',')[0].'\d\?', '', '')
-  let line = trim(line, " \t\r\n", 2)
-  let line = strchars(line)-3 > w ? line[:w] . "..." : line
-
-  return printf("%s  +%s %d lines ",
-        \ line,
-        \ repeat(v:folddashes, 2),
-        \ v:foldend - v:foldstart + 1)
-endfunction
-" }}}
-
-" terminal {{{
-exec 'autocmd '.(has("nvim") ? "TermOpen" : "TerminalOpen").' *'
-      \ . ' setlocal stl=%#StatusLineTerm#\ %{expand(\"%:t\")} '
-
-if has('nvim') " sanitize Neovim :terminal
-  autocmd TermOpen  * startinsert
-  autocmd TermOpen  * set nonumber
-  autocmd TermClose * call feedkeys("\<C-\>\<C-n>")
-endif
-" }}}
-
-autocmd FileType * silent! setlocal syntax=OFF
+  if has('nvim') " sanitize Neovim :terminal
+    autocmd TermOpen  * startinsert
+    autocmd TermOpen  * set nonumber
+    autocmd TermClose * call feedkeys("\<C-\>\<C-n>")
+  endif
+augroup END
 
 " PLUGINS {{{1
 
