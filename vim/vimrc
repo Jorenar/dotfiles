@@ -186,8 +186,6 @@ augroup FORMATOPTIONS
   autocmd BufWinEnter * set formatoptions-=t  " Don't autowrap text using 'textwidth'
 augroup END
 
-let g:filetype_cfg = "conf"
-
 set quickfixtextfunc=MyQuickFixTextFunc
 function! MyQuickFixTextFunc(info) abort
   let qfl = a:info.quickfix
