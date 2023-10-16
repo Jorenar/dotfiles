@@ -26,9 +26,9 @@ function! custom#texts#QuickFixTextFunc(info) abort
     let f = fnamemodify(bufname(e.bufnr), ':p:.')
     let t = empty(e.type) ? '' : ' ['.e.type.']'
     let p = printf('%s %s:%d:%d', t, f, e.lnum, e.col)
-    call add(items, [ p, e.text ])
+    call add(items, [ p, trim(e.text) ])
     let pad = len(p) > pad ? len(p) : pad
   endfor
 
-  return map(items, 'printf("%-*s  %s", pad, v:val[0], v:val[1])')
+  return map(items, 'printf("%-*s | %s", pad, v:val[0], v:val[1])')
 endfunction
