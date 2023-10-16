@@ -272,19 +272,19 @@ function! s:lsp_init() abort
 
   nmap <buffer> Lgg <Plug>(lsp-definition)
   nmap <buffer> Lgd <Plug>(lsp-declaration)
-  nmap <buffer> Lgs <Plug>(lsp-document-symbol-search)
-  nmap <buffer> LgS <Plug>(lsp-workspace-symbol-search)
-  nmap <buffer> Lgr <Plug>(lsp-references)
   nmap <buffer> Lgi <Plug>(lsp-implementation)
   nmap <buffer> Lgt <Plug>(lsp-type-definition)
-
-  nmap <buffer> Lgci <Plug>(lsp-call-hierarchy-incoming)
-  nmap <buffer> Lgco <Plug>(lsp-call-hierarchy-outgoing)
 
   nmap <buffer> Lkg <Plug>(lsp-peek-definition)
   nmap <buffer> Lkd <Plug>(lsp-peek-declaration)
   nmap <buffer> Lki <Plug>(lsp-peek-implementation)
   nmap <buffer> Lkt <Plug>(lsp-peek-type-definition)
+
+  nmap <buffer> Lfr <Plug>(lsp-references)
+  nmap <buffer> Lfs <Plug>(lsp-document-symbol-search)
+  nmap <buffer> LfS <Plug>(lsp-workspace-symbol-search)
+  nmap <buffer> Lfi <Plug>(lsp-call-hierarchy-incoming)
+  nmap <buffer> Lfo <Plug>(lsp-call-hierarchy-outgoing)
 
   nnoremenu PopUp.LSP :popup ]LSP<CR>
   nnoremenu ]LSP.Hover       <Plug>(lsp-hover)
