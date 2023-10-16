@@ -77,7 +77,6 @@ nnoremap <silent> <Leader>b :bnext<CR>
 nnoremap <silent> <Leader>B :bprev<CR>
 nnoremap j gj
 nnoremap k gk
-nnoremap L <cmd>echoerr "No LSP server running for this buffer"<CR>
 
 vnoremap iz :<C-u>silent! norm! [zjV]zk<CR>
 onoremap iz :<C-u>silent! norm Viz<CR>
@@ -261,10 +260,12 @@ hi! link LspWarningHighlight WarningMsg
 com! LspCallHierarchyIncomingTree  call lsp#call_hierarchy_tree#show(v:false)
 com! LspCallHierarchyOutgoingTree  call lsp#call_hierarchy_tree#show(v:true)
 
+nnoremap L <Cmd>call inputsecret("No LSP server running for this buffer ")<CR>
+
 function! s:lsp_init() abort
   setlocal omnifunc=lsp#complete
 
-  nnoremap <buffer> L <cmd>call input()<CR>
+  nnoremap <buffer> L <Cmd>exec {l -> empty(l) ? '' : 'norm L'.l}(input("L"))<CR>
 
   nmap <buffer> LK <Plug>(lsp-hover)
   nmap <buffer> LR <Plug>(lsp-rename)
