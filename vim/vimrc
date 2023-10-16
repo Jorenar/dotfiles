@@ -137,7 +137,7 @@ set list
 set listchars=tab:<\ >,trail:_
 set listchars+=extends:>,precedes:<
 hi! ListCharsTabs ctermfg=235
-autocmd BufWinEnter * call matchadd("ListCharsTabs", '\t')
+autocmd VimEnter,WinNew * call matchadd("ListCharsTabs", '\t')
 
 set guioptions=c
 set guicursor=a:block
