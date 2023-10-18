@@ -20,15 +20,31 @@ function! custom#texts#QuickFixTextFunc(info) abort
 
   let items = []
 
-  let pad = 0
+  let pad_p = 0
+  let pad_t = 0
+
   for idx in range(a:info.start_idx - 1, a:info.end_idx - 1)
     let e = qfl[idx]
-    let f = fnamemodify(bufname(e.bufnr), ':p:.')
+
     let t = empty(e.type) ? '' : ' ['.e.type.']'
-    let p = printf('%s %s:%d:%d', t, f, e.lnum, e.col)
-    call add(items, [ p, trim(e.text) ])
-    let pad = len(p) > pad ? len(p) : pad
+    let f = fnamemodify(bufname(e.bufnr), ':p:.')
+    let T = e.text
+
+    let p = ""
+    if !empty(f) && e.lnum && e.col
+      let p = printf('%s:%d:%d  ', f, e.lnum, e.col)
+      let T = trim(T)
+    endif
+
+    call add(items, [ t, p, T ])
+
+    let pad_t = len(t) > pad_t ? len(t) : pad_t
+    let pad_p = len(p) > pad_p ? len(p) : pad_p
   endfor
 
-  return map(items, 'printf("%-*s | %s", pad, v:val[0], v:val[1])')
+  return map(items,
+        \ 'printf("%-*s %-*s %s",
+        \         pad_t, v:val[0],
+        \         pad_p, v:val[1],
+        \         v:val[2])')
 endfunction

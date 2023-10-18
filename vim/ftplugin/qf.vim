@@ -28,4 +28,6 @@ endif
 setlocal stl+=\  " comm to prevent trimming space
 
 call matchadd("Error",      '^\s*\zs\[E]\ze ')
-call matchadd("WarningMsg", '^\s*\zs\[W]\ze ')
+call matchadd("WarningMsg", '\c^\s*\zs\[W]\ze ')
+call matchadd("Error",      '\cerror')
+call matchadd("WarningMsg", '\cwarning')
