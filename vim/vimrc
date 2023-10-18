@@ -45,7 +45,6 @@ com!                  CountSpell       echo utils#CountSpell()
 com!                  ExecCurrentLine  normal :.w !sh<CR>
 com! -nargs=1         FillLine         exec "norm! $" | exec "FillToColumn" <q-args> &tw
 com! -nargs=+         FillToColumn     exec {str,r -> "norm! a".repeat(str, (r-col(".")+1)/len(str))}(<f-args>)
-com! -nargs=+         Grep             silent! exec "grep -R <args> ."
 com! -nargs=+         GrepRename       exec {a,b -> 'tabe | lv /\C\<' . a . '\>/j ** | cdo s/\C\<' . a . '\>/' . b . '/gc | up'}(<f-args>) | q
 com!                  JumpNextDiffAdd  call utils#JumpToDiffAdd()
 com! -nargs=1         SetFormatProg    exec {prg -> 'let [ &l:formatprg, &l:formatexpr ] = [ "'.prg.' 2> /dev/null", "" ]'}(<args>)
@@ -65,9 +64,7 @@ nnoremap ' `
 nnoremap <expr> <C-e> utils#scroll_cursor_popup(1) ? "<Esc>" : "<C-e>"
 nnoremap <expr> <C-y> utils#scroll_cursor_popup(-1) ? "<Esc>" : "<C-y>"
 nnoremap <expr> <F4> &ve == "all" ? ":set ve=\<CR>" : ":set ve=all\<CR>"
-nnoremap <F10> :w <bar> make<CR>
 nnoremap <F3> :set cursorline! cursorcolumn!<CR>
-nnoremap <F7> :w <bar> silent! make %:p <bar> redraw!<CR>
 nnoremap <Leader>= gg=G``
 nnoremap <Leader>q m"gggqG`"
 nnoremap <Leader>r :exec {o -> {n -> n != "" ? '%s/\C\<' . o . '\>/' . n . '/g' : ''}(input(o." > ", o))}(expand('<cword>'))<CR>
@@ -559,6 +556,15 @@ com! -nargs=+ -bang  Slime  call slime#send(<q-args> . (<bang>0 ? "" : "\r"))
 
 noremap  <F5> :SlimeSend<CR>
 tnoremap <F5> <C-\><C-n>:call Slimeify()<CR>a
+
+" asyncrun.vim {{{2
+
+let g:asyncrun_open = 10
+
+nnoremap <F7> <Cmd>w <bar> AsyncRun -program=make %:p<CR>
+nnoremap <F10> <Cmd>w <bar> AsyncRun -program=make<CR>
+
+autocmd User AsyncRunStop copen | wincmd p
 
 " ~ {{{2
 
