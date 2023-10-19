@@ -9,6 +9,7 @@ alias ls='ls.hidden -hF -w80 --time-style=iso -I. -I..'
 alias mnt='udisksctl mount -b'
 alias pass='EDITOR="vim -u NONE" pass'
 alias rm="rm -i"
+alias sshfs='sshfs -o reconnect'
 alias suspend='sudo systemctl suspend'
 alias umnt='udisksctl unmount -b'
 alias which='command -v'
@@ -16,7 +17,3 @@ alias wine-lnk='wine C:\\windows\\command\\start.exe /Unix'
 
 alias powershell.exe='powershell.exe -NoLogo'
 alias wsl.exe='wsl.exe --cd "~"'
-
-alias ssh='sshwrap.sh ssh'
-alias scp='sshwrap.sh scp'
-alias sshfs='sshwrap.sh sshfs -o reconnect'
