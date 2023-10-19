@@ -566,7 +566,7 @@ nnoremap <F10> <Cmd>w <bar> AsyncRun -program=make<CR>
 
 autocmd User AsyncRunStop copen | wincmd p
 
-command! Make -nargs=? Make AsyncRun -program=make <args>
+command! -nargs=? Make AsyncRun -program=make <args>
 
 " ~ {{{2
 
