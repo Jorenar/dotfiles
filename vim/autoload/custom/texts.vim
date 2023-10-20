@@ -31,8 +31,9 @@ function! custom#texts#QuickFixTextFunc(info) abort
     let T = e.text
 
     let p = ""
-    if !empty(f) && e.lnum && e.col
-      let p = printf('%s:%d:%d  ', f, e.lnum, e.col)
+    if !empty(f) && e.lnum
+      let p = printf('%s:%d  ', f, e.lnum)
+      let p = e.col ? printf('%s:%d  ', p, e.col) : p."  "
       let T = trim(T)
     endif
 
