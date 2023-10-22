@@ -110,3 +110,7 @@
 	path = vim/pack/extern/start/vim-tmux-navigator
 	url = https://github.com/christoomey/vim-tmux-navigator.git
 	shallow = true
+[submodule "vim/pack/extern/start/VisInsert.vim"]
+	path = vim/pack/extern/start/VisInsert.vim
+	url = https://github.com/Jorengarenar/VisInsert.vim.git
+	shallow = true

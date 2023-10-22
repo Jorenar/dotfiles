@@ -82,10 +82,6 @@ onoremap az :<C-u>silent! norm Vaz<CR>
 
 inoremap <expr> <C-o> pumvisible() ? "\<C-n>" : "\<C-o>"
 
-xnoremap I <Cmd>call utils#VisInsert('i')<CR>
-xnoremap A <Cmd>call utils#VisInsert('a')<CR>
-xnoremap c <Cmd>call utils#VisInsert('gvxi')<CR>
-
 xnoremap # :<C-u>call utils#VSetSearch('?')<CR>?<C-r>=@/<CR><CR>
 xnoremap * :<C-u>call utils#VSetSearch('/')<CR>/<C-r>=@/<CR><CR>
 
