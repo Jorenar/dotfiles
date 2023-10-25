@@ -23,6 +23,8 @@ function! custom#texts#QuickFixTextFunc(info) abort
   let pad_p = 0
   let pad_t = 0
 
+  let prev = [ "", "", 0, 0 ]
+
   for idx in range(a:info.start_idx - 1, a:info.end_idx - 1)
     let e = qfl[idx]
 
@@ -32,9 +34,14 @@ function! custom#texts#QuickFixTextFunc(info) abort
 
     let p = ""
     if !empty(f) && e.lnum
-      let p = printf('%s:%d  ', f, e.lnum)
-      let p = e.col ? printf('%s:%d  ', p, e.col) : p."  "
-      let T = trim(T)
+      if [ t, f, e.lnum, e.col ] == prev
+        let t = ""
+      else
+        let p = printf('%s:%d', f, e.lnum)
+        let p = e.col ? printf('%s:%d  ', p, e.col) : p."  "
+        let T = trim(T)
+        let prev = [ t, f, e.lnum, e.col ]
+      endif
     endif
 
     call add(items, [ t, p, T ])

@@ -6,10 +6,38 @@ function! s:VcsStats() abort " VCS stats; requires Signify plugin
   return printf("  [+%s -%s ~%s]", stats[0], stats[2], stats[1])
 endfunction
 
+function! s:CmpIssues(i1, i2) abort
+  let F = {nr -> fnamemodify(bufname(nr), ':p:.')}
+  let f1 = F(a:i1.bufnr)
+  let f2 = F(a:i2.bufnr)
+  if f1 != f2
+    return f1 > f2 ? 1 : -1
+  endif
+
+  let lnum1 = a:i1.lnum
+  let lnum2 = a:i2.lnum
+  if lnum1 != lnum2
+    return lnum1 > lnum2 ? 1 : -1
+  endif
+
+  let col1 = a:i1.col
+  let col2 = a:i2.col
+  if col1 != col2
+    return col1 > col2 ? 1 : -1
+  endif
+
+  return 0
+endfunction
+
+function! s:GetQfCount(type) abort
+  let issues = getloclist(0)
+  let issues = filter(issues, 'v:val.type == "'.a:type.'"')
+  let issues = uniq(issues, function("<SID>CmpIssues"))
+  return len(issues).a:type
+endfunction
+
 function! s:IssuesCount() abort
-  let errors   = len(filter(getloclist(0), 'v:val.type == "E"'))
-  let warnings = len(filter(getloclist(0), 'v:val.type == "w"'))
-  return errors."E ".warnings."w"
+  return s:GetQfCount("E")." ".s:GetQfCount("w")
 endfunction
 
 function! custom#lines#StatusLine() abort
