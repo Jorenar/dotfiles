@@ -219,18 +219,7 @@ let g:ale_virtualtext_cursor = 0
 hi! link ALEError   Error
 hi! link ALEWarning WarningMsg
 
-nnoremap <F2> :ALEToggle<CR>
-
-augroup LSP_ALE
-  autocmd!
-  autocmd User lsp_buffer_enabled
-        \  call lsp#ale#enable()
-        \| let b:ale_linters = get(b:, "ale_linters", []) + [ 'vim-lsp' ]
-        \| ALELint
-
-  let g:lsp_ale_diagnostics_severity = 'information'
-  let g:lsp_ale_auto_enable_linter   = 0
-augroup END
+let g:lsp_ale_diagnostics_severity = 'information'
 
 " vim-lsp {{{2
 
