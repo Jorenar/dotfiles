@@ -73,4 +73,4 @@ _:
 CMakeLists.txt: PHONY
 	[ -n "$(*F)" ] && cd $(*F)
 	cmake -B build/ -DCMAKE_BUILD_TYPE=Debug
-	cmake --build build/ 2> >(tee build/errors.err >&2)
+	cmake --build build/ 2>&1 | tee build/errors.err
