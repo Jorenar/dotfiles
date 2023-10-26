@@ -69,6 +69,7 @@ nnoremap <expr> <C-e> utils#misc#scroll_cursor_popup(1) ? "<Esc>" : "<C-e>"
 nnoremap <expr> <C-y> utils#misc#scroll_cursor_popup(-1) ? "<Esc>" : "<C-y>"
 nnoremap <F3> <Cmd>set cursorline! cursorcolumn!<CR>
 nnoremap <F4> <Cmd>let &ve = (&ve == "all" ? "" : "all")<CR>
+nnoremap <F8> <Cmd>term<CR>
 nnoremap <Leader>= gg=G``
 nnoremap <Leader>b <Cmd>bnext<CR>
 nnoremap <Leader>q m"gggqG`"
@@ -445,13 +446,9 @@ tnoremap <F5> <C-\><C-n>:call Slimeify()<CR>a
 " asyncrun.vim {{{2
 
 let g:asyncrun_open = 10
-
-nnoremap <F7> <Cmd>w <bar> AsyncRun -program=make %:p<CR>
-nnoremap <F10> <Cmd>w <bar> AsyncRun -program=make<CR>
-
-autocmd User AsyncRunStop copen | wincmd p
-
 command! -nargs=? Make AsyncRun -program=make <args>
+nnoremap <F7> <Cmd>w <bar> Make %:p<CR>
+autocmd User AsyncRunStop copen | wincmd p
 
 " ~ {{{2
 

@@ -44,6 +44,14 @@ if executable("texlab")
         \ })
 endif
 
+if executable("digestif")
+  au User lsp_setup call lsp#register_server(#{
+        \   name: "Digestif",
+        \   cmd: [ "digestif" ],
+        \   allowlist: [ "tex" ],
+        \ })
+endif
+
 if executable("sqls")
   au User lsp_setup call lsp#register_server(#{
         \   name: "sqls",
