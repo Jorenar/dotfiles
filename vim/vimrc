@@ -633,9 +633,6 @@ augroup OTHER
   " Undo if filter shell command returned an error
   autocmd ShellFilterPost * if v:shell_error | undo | endif
 
-  " Set fold method to syntax
-  autocmd FileType dosini,make  setlocal foldmethod=syntax
-
   " Highlight TODO even with syntax=OFF
   autocmd FileType * call matchadd("Todo", "TODO")
 
