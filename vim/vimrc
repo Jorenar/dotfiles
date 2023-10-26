@@ -133,10 +133,6 @@ set listchars+=extends:>,precedes:<
 hi! ListCharsTabs ctermfg=235
 autocmd VimEnter,WinNew * call matchadd("ListCharsTabs", '\t')
 
-set guioptions=c
-set guicursor=a:block
-let &guifont = has("win32") ? "Consolas:h11:cANSI:qDRAFT" : "DejaVu Sans Mono 11"
-
 set title
 set titlestring=
 set titlestring+=%t%(\ %M%)%(\ (%{expand(\"%:p:~:.:h\")}/)%)
@@ -210,6 +206,12 @@ if has("cscope") && (executable("cscope") || executable("gtags-cscope"))
 
   packadd cscope_init
 endif
+
+augroup VISUALBLOCK_NOSTARTOFLINE
+  autocmd!
+  silent! exec "autocmd ModeChanged *:\<C-v> let g:sol_old = &sol | set nosol"
+  silent! exec "autocmd ModeChanged \<C-v>:* let &startofline = g:sol_old"
+augroup END
 
 " PLUGINS {{{1
 
@@ -601,12 +603,6 @@ augroup NO_NESTED_VIM
   endif
   let $vimInstanceExists = 1
 
-augroup END
-
-augroup VISUALBLOCK_NOSTARTOFLINE
-  autocmd!
-  silent! exec "autocmd ModeChanged *:\<C-v> let g:sol_old = &sol | set nosol"
-  silent! exec "autocmd ModeChanged \<C-v>:* let &startofline = g:sol_old"
 augroup END
 
 augroup OTHER
