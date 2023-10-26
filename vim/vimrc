@@ -64,17 +64,16 @@ com! -range    VisSort   sil! keepj <line1>,<line2>call utils#misc#VisSort()
 " MAPPINGS {{{1
 
 nnoremap ' `
+nnoremap <C-l> :nohlsearch<C-r>=has('diff')?'<bar>diffupdate':''<CR><CR><C-l>
 nnoremap <expr> <C-e> utils#misc#scroll_cursor_popup(1) ? "<Esc>" : "<C-e>"
 nnoremap <expr> <C-y> utils#misc#scroll_cursor_popup(-1) ? "<Esc>" : "<C-y>"
-nnoremap <expr> <F4> &ve == "all" ? ":set ve=\<CR>" : ":set ve=all\<CR>"
-nnoremap <F3> :set cursorline! cursorcolumn!<CR>
+nnoremap <F3> <Cmd>set cursorline! cursorcolumn!<CR>
+nnoremap <F4> <Cmd>let &ve = (&ve == "all" ? "" : "all")<CR>
+nnoremap <F8> :if has("nvim") <bar> split <bar> endif <bar> term<CR>
 nnoremap <Leader>= gg=G``
+nnoremap <Leader>b <Cmd>bnext<CR>
 nnoremap <Leader>q m"gggqG`"
 nnoremap <Leader>r :exec {o -> {n -> n != "" ? '%s/\C\<' . o . '\>/' . n . '/g' : ''}(input(o." > ", o))}(expand('<cword>'))<CR>
-nnoremap <silent> <C-l> :nohlsearch<C-r>=has('diff')?'<bar>diffupdate':''<CR><CR><C-l>
-nnoremap <silent> <F8> :if has("nvim") <bar> split <bar> endif <bar> term<CR>
-nnoremap <silent> <Leader>b :bnext<CR>
-nnoremap <silent> <Leader>B :bprev<CR>
 nnoremap [C  <Cmd>call utils#motion#jump_DiffAdd(-1)<CR>
 nnoremap ]C  <Cmd>call utils#motion#jump_DiffAdd(1)<CR>
 nnoremap j gj
