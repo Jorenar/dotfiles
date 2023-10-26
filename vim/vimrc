@@ -642,4 +642,8 @@ augroup END
 
 silent! helptags ALL
 
+if has("gui_running")
+  runtime! gvimrc
+endif
+
 set secure exrc

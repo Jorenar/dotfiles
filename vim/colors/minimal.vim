@@ -3,11 +3,13 @@ highlight clear
 if exists('syntax on') | syntax reset | endif
 let g:colors_name='minimal'
 
-hi! CursorLineNr     NONE
-hi! SignColumn       NONE
-hi! TabLine          NONE
-hi! TabLineFill      NONE
-hi! VertSplit        NONE
+sil! hi! Normal NONE guifg=Gray guibg=Black
+
+sil! hi! CursorLineNr  NONE
+sil! hi! SignColumn    NONE
+sil! hi! TabLine       NONE
+sil! hi! TabLineFill   NONE
+sil! hi! VertSplit     NONE
 
 hi! DiffAdd          NONE  ctermfg=DarkGreen
 hi! DiffChange       NONE  ctermfg=White
