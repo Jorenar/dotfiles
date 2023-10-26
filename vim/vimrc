@@ -170,7 +170,7 @@ set showcmd
 set signcolumn=yes
 
 set laststatus=2
-autocmd VimEnter,WinNew *
+autocmd VimEnter,BufWinEnter *
       \  if &bt != "terminal"
       \|   setlocal statusline=%!utils#lines#StatusLine()
       \| endif

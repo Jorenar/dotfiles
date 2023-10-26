@@ -9,6 +9,7 @@ pacman -Qttdq # packages which are optionally required by another package
 php -S 0.0.0.0:8000 # PHP server
 python3 -m http.server 8000
 python3 -m venv .venv && . .venv/bin/activate
+sh -c 'convert $@ sixel:-' -
 sh -c 'find $@ 2>&1 | grep -v "Permission denied" >&2' -
 sh -c 'mkdir ~/.ssh && ssh-copy-id -i $XDG_DATA_HOME/ssh/id_rsa.pub "$@" && rmdir ~/.ssh -
 sudo dd bs=4M oflag=direct status=progress if=ISO of=DEV
