@@ -2,7 +2,7 @@
 " Compiler:     TeX
 
 if exists("current_compiler") | finish | endif
-let current_compiler = "cobc"
+let current_compiler = "tex"
 let s:cpo_save = &cpo | set cpo&vim
 
 " Value errorformat are taken from vim help, see :help errorformat-LaTeX, with
