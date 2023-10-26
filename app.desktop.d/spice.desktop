@@ -1,5 +1,0 @@
-[Desktop Entry]
-Name=Spice
-Exec=spicy --uri=%u
-Terminal=false
-Type=Application
