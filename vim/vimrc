@@ -32,11 +32,27 @@ filetype plugin indent on
 
 syntax enable
 autocmd FileType * silent! setlocal syntax=OFF
+autocmd FileType * call matchadd("Todo", "TODO")
 
 colorscheme minimal
 
 " Open file at the last known position
 autocmd BufReadPost * if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit' | exec "norm! g`\"" | endif
+
+" Automatically open QuickFix
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
+
+" Undo if filter shell command returned an error
+autocmd ShellFilterPost * if v:shell_error | undo | endif
+
+augroup NO_NESTED_VIM
+  autocmd!
+  if !has("nvim") && $vimInstanceExists
+    au BufNewFile,BufReadPre * exec 'bd | !printf "\033]51;[\"drop\", \"'. expand('%:p') . '\"]\007"' | q
+  endif
+  let $vimInstanceExists = 1
+augroup END
 
 " COMMANDS {{{1
 
@@ -199,6 +215,15 @@ augroup VISUALBLOCK_NOSTARTOFLINE
   autocmd!
   silent! exec "autocmd ModeChanged *:\<C-v> let g:sol_old = &sol | set nosol"
   silent! exec "autocmd ModeChanged \<C-v>:* let &startofline = g:sol_old"
+augroup END
+
+augroup MERGETOOL
+  autocmd!
+  if join(argv()) =~ '.*_LOCAL_.*_BASE_.*_REMOTE_.*'
+    autocmd BufReadPost  *_LOCAL_*   setl stl=\ LOCAL
+    autocmd BufReadPost  *_BASE_*    setl stl=\ BASE
+    autocmd BufReadPost  *_REMOTE_*  setl stl=\ REMOTE
+  endif
 augroup END
 
 " PLUGINS {{{1
@@ -463,44 +488,6 @@ highlight link  SignifySignChange  DiffText
 
 " ~ {{{1
 
-augroup MERGETOOL
-  autocmd!
-  if join(argv()) =~ '.*_LOCAL_.*_BASE_.*_REMOTE_.*'
-    autocmd BufReadPost  *_LOCAL_*   setl stl=\ LOCAL
-    autocmd BufReadPost  *_BASE_*    setl stl=\ BASE
-    autocmd BufReadPost  *_REMOTE_*  setl stl=\ REMOTE
-  endif
-augroup END
-
-augroup NO_NESTED_VIM
-  autocmd!
-
-  if !has("nvim") && $vimInstanceExists
-    au BufNewFile,BufReadPre * exec 'bd | !printf "\033]51;[\"drop\", \"'. expand('%:p') . '\"]\007"' | q
-  endif
-  let $vimInstanceExists = 1
-
-augroup END
-
-augroup OTHER
-  autocmd!
-
-  " Automatically open QuickFix
-  autocmd QuickFixCmdPost [^l]* nested cwindow
-  autocmd QuickFixCmdPost    l* nested lwindow
-
-  " Undo if filter shell command returned an error
-  autocmd ShellFilterPost * if v:shell_error | undo | endif
-
-  " Highlight TODO even with syntax=OFF
-  autocmd FileType * call matchadd("Todo", "TODO")
-
-augroup END
-
+if has("gui_running") | runtime! gvimrc | endif
 silent! helptags ALL
-
-if has("gui_running")
-  runtime! gvimrc
-endif
-
 set secure exrc
