@@ -19,6 +19,12 @@
 [push]
     followTags = true
 
+[remote "origin"]
+    fetch = +refs/notes/*:refs/notes/*
+
+[notes]
+    displayRef = refs/notes/*
+
 [merge]
     tool = vimdiff
     conflictstyle = diff3
