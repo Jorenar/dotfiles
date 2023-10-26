@@ -32,15 +32,3 @@ function! utils#misc#scroll_cursor_popup(count) abort
 
   return 0
 endfunction
-
-function! utils#misc#ColorDemo() abort  " preview of Vim 256 colors
-  20 vnew
-  setlocal nonumber buftype=nofile bufhidden=hide noswapfile statusline=\ Color\ demo
-  let num = 255
-  while num >= 0
-    execute 'hi col_'.num.' ctermbg='.num.' ctermfg='.num
-    execute 'syn match col_'.num.' "='.printf("%3d", num).'" containedIn=ALL'
-    call append(0, ' '.printf("%3d", num).'  ='.printf("%3d", num))
-    let num -= 1
-  endwhile
-endfunction
