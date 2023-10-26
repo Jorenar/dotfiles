@@ -5,6 +5,8 @@ setlocal textwidth=90
 
 nnoremap <buffer> <F8> :sil! call system("zathura ".expand('%:t:r').".pdf &")<CR>
 
+let b:ale_linters_ignore = [ 'lacheck' ]
+
 let g:tex_fold_envs = ""
       \ ." algorithm"
       \ ." align"
