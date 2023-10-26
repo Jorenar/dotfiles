@@ -1,13 +1,4 @@
-function! utils#appendToSynRule(group, addition) abort
-  let rule = execute("silent syntax list " . a:group)
-  let type = rule =~ "\<match\>" ? "match" : "region"
-  exec "silent syntax clear" a:group
-  let args = matchstr(rule, '\v.*<xxx\s+%(match>)?\zs.+\ze%(<links to .*|$)')
-  let args = substitute(args, '\_s\+', ' ', 'g')
-  exec "silent syntax" type a:group args a:addition
-endfunction
-
-function! utils#VisSort() range abort " sorts based on visual-block selected portion of the lines
+function! utils#misc#VisSort() range abort " sorts based on visual-block selected portion of the lines
   if visualmode() != "\<C-v>"
     exec "sil! ".a:firstline.",".a:lastline."sort i"
     return
@@ -22,14 +13,7 @@ function! utils#VisSort() range abort " sorts based on visual-block selected por
   let @a = old_a
 endfun
 
-function! utils#VSetSearch(cmdtype) abort " search for selected text, forwards or backwards
-  let temp = @s
-  norm! gv"sy
-  let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
-  let @s = temp
-endfunction
-
-function! utils#scroll_cursor_popup(count) abort
+function! utils#misc#scroll_cursor_popup(count) abort
   let srow = screenrow()
   let scol = screencol()
 
@@ -49,15 +33,7 @@ function! utils#scroll_cursor_popup(count) abort
   return 0
 endfunction
 
-function! utils#JumpToDiffAdd() abort
-  while search('^.*', 'w') > 0
-    if synIDattr(diff_hlID(line('.'), col('.')), 'name') is# 'DiffAdd'
-      break
-    endif
-  endwhile
-endfunction
-
-function! utils#ColorDemo() abort  " preview of Vim 256 colors
+function! utils#misc#ColorDemo() abort  " preview of Vim 256 colors
   20 vnew
   setlocal nonumber buftype=nofile bufhidden=hide noswapfile statusline=\ Color\ demo
   let num = 255

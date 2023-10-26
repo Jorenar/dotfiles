@@ -1,1 +1,1 @@
-call utils#appendToSynRule("texArgsPreamble", "fold")
+call utils#syntax#rule_append("texArgsPreamble", "fold")

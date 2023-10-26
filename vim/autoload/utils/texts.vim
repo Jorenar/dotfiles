@@ -1,4 +1,4 @@
-function! custom#texts#FoldText() abort
+function! utils#texts#FoldText() abort
   let w = float2nr(&tw/2.5)
 
   let line = getline(v:foldstart)
@@ -13,7 +13,7 @@ function! custom#texts#FoldText() abort
         \ v:foldend - v:foldstart + 1)
 endfunction
 
-function! custom#texts#QuickFixTextFunc(info) abort
+function! utils#texts#QuickFixTextFunc(info) abort
   let qfl = a:info.quickfix
         \ ? getqflist({'id': a:info.id, 'items': 0}).items
         \ : getloclist(a:info.winid, {'id': a:info.id, 'items': 0}).items

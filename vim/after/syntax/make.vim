@@ -1,5 +1,5 @@
 
-call utils#appendToSynRule("makeDefine", "fold")
+call utils#syntax#rule_append("makeDefine", "fold")
 
 syn clear makePreCondit
 syn region makeIfElse transparent fold matchgroup=makePreCondit

@@ -1,4 +1,4 @@
-call utils#appendToSynRule("vimOperParen", "fold")
+call utils#syntax#rule_append("vimOperParen", "fold")
 
 " https://vim.fandom.com/wiki/Syntax_folding_of_Vim_scripts#Syntax_definitions {{{1
 

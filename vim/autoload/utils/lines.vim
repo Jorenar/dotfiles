@@ -40,7 +40,7 @@ function! s:IssuesCount() abort
   return s:GetQfCount("E")." ".s:GetQfCount("w")
 endfunction
 
-function! custom#lines#StatusLine() abort
+function! utils#lines#StatusLine() abort
   return ' '
       \ . "%{g:actual_curwin == win_getid() ? '>' : ' '}"
       \ . ' '
@@ -57,7 +57,7 @@ function! custom#lines#StatusLine() abort
       \ . "%<%f "
 endfunction
 
-function! custom#lines#TabLine() abort
+function! utils#lines#TabLine() abort
   let l:tabline = ''
 
   for i in range(1, tabpagenr('$'))

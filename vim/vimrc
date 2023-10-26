@@ -46,13 +46,12 @@ com!                  ExecCurrentLine  normal :.w !sh<CR>
 com! -nargs=1         FillLine         exec "norm! $" | exec "FillToColumn" <q-args> &tw
 com! -nargs=+         FillToColumn     exec {str,r -> "norm! a".repeat(str, (r-col(".")+1)/len(str))}(<f-args>)
 com! -nargs=+         GrepRename       exec {a,b -> 'tabe | lv /\C\<' . a . '\>/j ** | cdo s/\C\<' . a . '\>/' . b . '/gc | up'}(<f-args>) | q
-com!                  JumpNextDiffAdd  call utils#JumpToDiffAdd()
 com! -nargs=1         SetFormatProg    exec {prg -> 'let [ &l:formatprg, &l:formatexpr ] = [ "'.prg.' 2> /dev/null", "" ]'}(<args>)
 com! -range=%         Sort             normal :<line1>,<line2>sort i<CR>
 com! -nargs=?         Spelling         if empty("<args>") | setl spell! | else | setl spell spelllang=<args> | endif
 com!                  SyntaxStack      echo join(reverse(map(synstack(line('.'), col('.')), 'synIDattr(v:val,"name")')),' ')
 com! -nargs=+         Vimgrep          exec "vimgrep /".<q-args>."/j **"
-com! -range           VisSort          sil! keepj <line1>,<line2>call utils#VisSort()
+com! -range           VisSort          sil! keepj <line1>,<line2>call utils#misc#VisSort()
 
 if has('nvim')
   cnoreabbrev term sp\|term
@@ -61,8 +60,8 @@ endif
 " MAPPINGS {{{1
 
 nnoremap ' `
-nnoremap <expr> <C-e> utils#scroll_cursor_popup(1) ? "<Esc>" : "<C-e>"
-nnoremap <expr> <C-y> utils#scroll_cursor_popup(-1) ? "<Esc>" : "<C-y>"
+nnoremap <expr> <C-e> utils#misc#scroll_cursor_popup(1) ? "<Esc>" : "<C-e>"
+nnoremap <expr> <C-y> utils#misc#scroll_cursor_popup(-1) ? "<Esc>" : "<C-y>"
 nnoremap <expr> <F4> &ve == "all" ? ":set ve=\<CR>" : ":set ve=all\<CR>"
 nnoremap <F3> :set cursorline! cursorcolumn!<CR>
 nnoremap <Leader>= gg=G``
@@ -72,6 +71,8 @@ nnoremap <silent> <C-l> :nohlsearch<C-r>=has('diff')?'<bar>diffupdate':''<CR><CR
 nnoremap <silent> <F8> :if has("nvim") <bar> split <bar> endif <bar> term<CR>
 nnoremap <silent> <Leader>b :bnext<CR>
 nnoremap <silent> <Leader>B :bprev<CR>
+nnoremap [C  <Cmd>call utils#motion#jump_DiffAdd(-1)<CR>
+nnoremap ]C  <Cmd>call utils#motion#jump_DiffAdd(1)<CR>
 nnoremap j gj
 nnoremap k gk
 
@@ -82,8 +83,8 @@ onoremap az :<C-u>silent! norm Vaz<CR>
 
 inoremap <expr> <C-o> pumvisible() ? "\<C-n>" : "\<C-o>"
 
-xnoremap # :<C-u>call utils#VSetSearch('?')<CR>?<C-r>=@/<CR><CR>
-xnoremap * :<C-u>call utils#VSetSearch('/')<CR>/<C-r>=@/<CR><CR>
+xnoremap # :<C-u>call utils#motion#VSetSearch('?')<CR>?<C-r>=@/<CR><CR>
+xnoremap * :<C-u>call utils#motion#VSetSearch('/')<CR>/<C-r>=@/<CR><CR>
 
 cnoremap <C-h> <C-w>
 
@@ -97,7 +98,7 @@ set keywordprg=:Man
 set makeprg=Make
 set modeline nomodelineexpr
 set number
-set quickfixtextfunc=custom#texts#QuickFixTextFunc
+set quickfixtextfunc=utils#texts#QuickFixTextFunc
 set scrolloff=5
 set sessionoptions=blank,buffers,folds,tabpages,winsize
 set shortmess+=I shortmess-=S
@@ -167,14 +168,14 @@ set showcmd
 set signcolumn=yes
 
 set laststatus=2
-set statusline=%!custom#lines#StatusLine()
+set statusline=%!utils#lines#StatusLine()
 
 set showtabline=2
-set tabline=%!custom#lines#TabLine()
+set tabline=%!utils#lines#TabLine()
 
 set foldcolumn=2
 set foldmethod=indent
-set foldtext=custom#texts#FoldText()
+set foldtext=utils#texts#FoldText()
 set nofoldenable
 autocmd BufReadPost * if line('$') > winheight(0) | setlocal fen | endif
 
