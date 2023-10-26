@@ -1,0 +1,11 @@
+" vim: ft=vim
+
+set guicursor=a:block
+
+autocmd TermOpen * setlocal stl=%#StatusLineTerm#\ %f
+autocmd TermOpen * setlocal nonumber
+
+autocmd TermOpen * exec "e # | sb" bufnr()
+      \| autocmd WinResized * ++once wincmd j | call feedkeys("A")
+
+autocmd TermClose * call feedkeys("\<C-\>\<C-n>")

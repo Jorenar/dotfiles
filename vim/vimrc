@@ -69,7 +69,6 @@ nnoremap <expr> <C-e> utils#misc#scroll_cursor_popup(1) ? "<Esc>" : "<C-e>"
 nnoremap <expr> <C-y> utils#misc#scroll_cursor_popup(-1) ? "<Esc>" : "<C-y>"
 nnoremap <F3> <Cmd>set cursorline! cursorcolumn!<CR>
 nnoremap <F4> <Cmd>let &ve = (&ve == "all" ? "" : "all")<CR>
-nnoremap <F8> :if has("nvim") <bar> split <bar> endif <bar> term<CR>
 nnoremap <Leader>= gg=G``
 nnoremap <Leader>b <Cmd>bnext<CR>
 nnoremap <Leader>q m"gggqG`"
@@ -193,20 +192,6 @@ augroup FORMATOPTIONS
   autocmd BufWinEnter * set formatoptions+=n  " Recognize numbered lists
   autocmd BufWinEnter * set formatoptions-=q  " Don't format comments
   autocmd BufWinEnter * set formatoptions-=t  " Don't autowrap text using 'textwidth'
-augroup END
-
-augroup TERMINAL_OPTIONS
-  autocmd!
-
-  exec 'autocmd '.(has("nvim") ? "TermOpen" : "TerminalOpen").' *'
-        \ . ' setlocal stl=%#StatusLineTerm#\ %{expand(\"%:t\")} '
-
-  if has('nvim') " sanitize Neovim :terminal
-    autocmd TermOpen * setlocal nonumber
-    autocmd TermOpen * exec "e # | sb" bufnr()
-          \| autocmd WinResized * ++once wincmd j | call feedkeys("A")
-    autocmd TermClose * call feedkeys("\<C-\>\<C-n>")
-  endif
 augroup END
 
 if has("cscope") && (executable("cscope") || executable("gtags-cscope"))
@@ -495,6 +480,11 @@ highlight link  SignifySignChange  DiffText
 
 " ~ {{{1
 
-if has("gui_running") | runtime! gvimrc | endif
+if has("nvim")
+  runtime! init.nvim
+elseif has("gui_running")
+  runtime! gvimrc
+endif
+
 silent! helptags ALL
 set secure exrc
