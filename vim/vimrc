@@ -171,10 +171,8 @@ set showcmd
 set signcolumn=yes
 
 set laststatus=2
-autocmd VimEnter,BufWinEnter *
-      \  if &bt != "terminal"
-      \|   setlocal statusline=%!utils#lines#StatusLine()
-      \| endif
+set statusline=%!utils#lines#StatusLine()
+sil! autocmd TerminalOpen * setl stl=\ %f
 
 set showtabline=2
 set tabline=%!utils#lines#TabLine()
@@ -224,7 +222,7 @@ augroup END
 packadd cfilter
 packadd matchit
 packadd termdebug
-packadd editorconfig
+sil! packadd editorconfig
 source  $VIMRUNTIME/ftplugin/man.vim
 
 " ALE {{{2
