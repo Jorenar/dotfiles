@@ -8,6 +8,11 @@ Neovim's issue #1496: [:! (bang) and system() are not interactive](https://githu
 "spitzensparken blinkenlichten" - basically the opposite of monochromatic theme
 
 
+*SyntaxStack*
+    com! SyntaxStack  echo join(reverse(map(synstack(line('.'), col('.')), 'synIDattr(v:val,"name")')),' ')
+
+*GrepRename*
+    com! -nargs=+  GrepRename  exec {a,b -> 'tabe | lv /\C\<' . a . '\>/j ** | cdo s/\C\<' . a . '\>/' . b . '/gc | up'}(<f-args>) | q
 
 
  vim:tw=78:ft=help:
