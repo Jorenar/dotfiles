@@ -202,6 +202,15 @@ augroup TERMINAL_OPTIONS
   endif
 augroup END
 
+if has("cscope") && (executable("cscope") || executable("gtags-cscope"))
+  set cscopetag
+  set cscopetagorder=0
+  set cscopepathcomp=2
+  set cscopequickfix=a-,c-,d-,e-,f-,g-,i-,s-,t-
+
+  packadd cscope_init
+endif
+
 " PLUGINS {{{1
 
 packadd cfilter
@@ -588,15 +597,6 @@ nnoremenu PopUp.:call :popup ]call<CR>
 nnoremenu ]call.popup_clear() :call popup_clear()<CR>
 
 nnoremenu PopUp.:grep :silent! grep -RIw <cword> .<CR>
-
-if has("cscope") && (executable("cscope") || executable("gtags-cscope"))
-  set cscopetag
-  set cscopetagorder=0
-  set cscopepathcomp=2
-  set cscopequickfix=a-,c-,d-,e-,f-,g-,i-,s-,t-
-
-  call cscope#init()
-endif
 
 augroup MERGETOOL
   autocmd!
