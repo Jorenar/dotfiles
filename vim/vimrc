@@ -99,6 +99,7 @@ map gh <nop>
 
 set keywordprg=:Man
 set makeprg=Make
+
 set modeline nomodelineexpr
 set number
 set quickfixtextfunc=utils#texts#QuickFixTextFunc
@@ -110,7 +111,13 @@ set splitbelow splitright
 set ttimeoutlen=10
 set updatetime=250
 set visualbell t_vb=
-set wildmenu wildmode=full wildoptions=
+
+set path=**,./
+set tags+=.tags/tags;
+
+set wildmenu
+set wildmode=full
+set wildoptions=
 
 set colorcolumn=+1
 set fillchars+=vert:│
@@ -150,9 +157,6 @@ set nowrap
 set linebreak
 set breakindent
 let &showbreak = "↳  "
-
-set path=**,./
-set tags+=.tags/tags;
 
 set backspace=indent,eol,start
 set cindent
@@ -195,8 +199,9 @@ augroup TERMINAL_OPTIONS
         \ . ' setlocal stl=%#StatusLineTerm#\ %{expand(\"%:t\")} '
 
   if has('nvim') " sanitize Neovim :terminal
-    autocmd TermOpen  * startinsert
-    autocmd TermOpen  * set nonumber
+    autocmd TermOpen * setlocal nonumber
+    autocmd TermOpen * exec "e # | sb" bufnr()
+          \| autocmd WinResized * ++once wincmd j | call feedkeys("A")
     autocmd TermClose * call feedkeys("\<C-\>\<C-n>")
   endif
 augroup END
