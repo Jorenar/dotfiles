@@ -1,4 +1,4 @@
-function! s:init() abort
+function! utils#cscope#init() abort
   let [ csverb_old, &cscopeverbose ] = [ &cscopeverbose, 0 ]
 
   let l:dbpath = fnamemodify(finddir(".tags", ";"), ":p")
@@ -28,5 +28,3 @@ function! s:init() abort
 
   let &cscopeverbose = csverb_old
 endfunction
-
-call s:init()

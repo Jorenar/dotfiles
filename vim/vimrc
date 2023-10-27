@@ -198,8 +198,7 @@ if has("cscope") && (executable("cscope") || executable("gtags-cscope"))
   set cscopetagorder=0
   set cscopepathcomp=2
   set cscopequickfix=a-,c-,d-,e-,f-,g-,i-,s-,t-
-
-  packadd! cscope_init
+  autocmd VimEnter * call utils#cscope#init()
 endif
 
 augroup VISUALBLOCK_NOSTARTOFLINE
