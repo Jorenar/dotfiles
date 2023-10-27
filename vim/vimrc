@@ -67,11 +67,8 @@ nnoremap <F3> <Cmd>set cursorline! cursorcolumn!<CR>
 nnoremap <F4> <Cmd>let &ve = (&ve == "all" ? "" : "all")<CR>
 nnoremap <F8> <Cmd>term<CR>
 nnoremap <Leader>= gg=G``
-nnoremap <Leader>b <Cmd>bnext<CR>
 nnoremap <Leader>q m"gggqG`"
 nnoremap <Leader>r :exec {o -> {n -> n != "" ? '%s/\C\<' . o . '\>/' . n . '/g' : ''}(input(o." > ", o))}(expand('<cword>'))<CR>
-nnoremap [C  <Cmd>call utils#motion#jump_DiffAdd(-1)<CR>
-nnoremap ]C  <Cmd>call utils#motion#jump_DiffAdd(1)<CR>
 nnoremap j gj
 nnoremap k gk
 
@@ -82,12 +79,7 @@ onoremap az :<C-u>silent! norm Vaz<CR>
 
 inoremap <expr> <C-o> pumvisible() ? "\<C-n>" : "\<C-o>"
 
-xnoremap # :<C-u>call utils#motion#VSetSearch('?')<CR>?<C-r>=@/<CR><CR>
-xnoremap * :<C-u>call utils#motion#VSetSearch('/')<CR>/<C-r>=@/<CR><CR>
-
 cnoremap <C-h> <C-w>
-
-tnoremap <silent> <C-\><C-\> <C-\><C-n>
 
 map gh <nop>
 
