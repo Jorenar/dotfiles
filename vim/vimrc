@@ -407,39 +407,18 @@ noremap <silent> <C-w><C-l>  <Cmd>TmuxNavigateRight<CR>
 
 " vim-slime {{{2
 
-let g:slime_dont_ask_default = 1
 let g:slime_no_mappings = 1
 let g:slime_paste_file = tempname()
 
-if has("nvim")
-  let g:slime_target = "neovim"
-elseif has("terminal")
-  let g:slime_target = "vimterminal"
-elseif executable("tmux")
-  let g:slime_target = "tmux"
-elseif !empty($DISPLAY)
-  let g:slime_target = "x11"
-endif
+let g:slime_target =
+      \ has("nvim") ? "neovim" :
+      \ has("terminal") ? "vimterminal" :
+      \ executable("tmux") ? "tmux" :
+      \ !empty($DISPLAY) ? "x11" :
+      \ ""
 
-function! Slimeify()
-  let g:slime_default_config = get(g:, "slime_default_config", {})
-
-  let foo = {
-        \   "vimterminal": [ "bufnr", "bufnr()"  ],
-        \   "neovim":      [ "jobid", "&channel" ],
-        \ }
-
-  let st = get(g:, "slime_target", "")
-  if has_key(foo, st)
-    let [ target, y ] = foo[st]
-    let g:slime_default_config[target] = eval(y)
-  endif
-endfunction
-
+noremap <F5> :SlimeSend<CR>
 com! -nargs=+ -bang  Slime  call slime#send(<q-args> . (<bang>0 ? "" : "\r"))
-
-noremap  <F5> :SlimeSend<CR>
-tnoremap <F5> <C-\><C-n>:call Slimeify()<CR>a
 
 " asyncrun.vim {{{2
 
