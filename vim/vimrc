@@ -199,7 +199,7 @@ if has("cscope") && (executable("cscope") || executable("gtags-cscope"))
   set cscopepathcomp=2
   set cscopequickfix=a-,c-,d-,e-,f-,g-,i-,s-,t-
 
-  packadd cscope_init
+  packadd! cscope_init
 endif
 
 augroup VISUALBLOCK_NOSTARTOFLINE
@@ -219,11 +219,12 @@ augroup END
 
 " PLUGINS {{{1
 
-packadd cfilter
-packadd matchit
-packadd termdebug
-sil! packadd editorconfig
-source  $VIMRUNTIME/ftplugin/man.vim
+sil! packadd! cfilter
+sil! packadd! editorconfig
+sil! packadd! matchit
+sil! packadd! termdebug
+
+source $VIMRUNTIME/ftplugin/man.vim
 
 " ALE {{{2
 
@@ -463,5 +464,4 @@ elseif has("gui_running")
   runtime! gvimrc
 endif
 
-silent! helptags ALL
 set secure exrc
