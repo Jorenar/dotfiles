@@ -450,6 +450,9 @@ autocmd User AsyncRunStop copen | wincmd p
 
 " ~ {{{2
 
+let g:vimball_home = split(&rtp,',')[0].'/pack/vimball/start/vimball'
+let g:vimball_mkdir = "mkdir -p"
+
 let g:termdebug_wide = 1
 
 let g:EditorConfig_enable_for_new_buf = 1
