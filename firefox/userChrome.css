@@ -30,7 +30,7 @@
   background-image: none !important;
 }
 
-.tab-background[selected="true"] {
+tab[selected="true"] .tab-background {
   background-color: var(--toolbar-bgcolor) !important;
 }
 
