@@ -417,8 +417,14 @@ autocmd User AsyncRunStop copen | wincmd p
 
 " ~ {{{2
 
-let g:vimball_home = split(&rtp,',')[0].'/pack/vimball/start/vimball'
-let g:vimball_mkdir = "mkdir -p"
+au VimEnter * com! -bang UseVimball
+      \ let d = printf("%s/%s/%s",
+      \                split(&rtp,',')[0].'/pack/vimball',
+      \                <bang>0 ? "start" : "opt",
+      \                expand('%:t:r:r'))
+      \ | call mkdir(d, 'p')
+      \ | call vimball#Vimball(1, d)
+      \ | unlet d
 
 let g:termdebug_wide = 1
 
