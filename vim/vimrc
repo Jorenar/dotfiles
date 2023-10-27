@@ -46,13 +46,9 @@ autocmd QuickFixCmdPost    l* nested lwindow
 " Undo if filter shell command returned an error
 autocmd ShellFilterPost * if v:shell_error | undo | endif
 
-augroup NO_NESTED_VIM
-  autocmd!
-  if !has("nvim") && $vimInstanceExists
-    au BufNewFile,BufReadPre * exec 'bd | !printf "\033]51;[\"drop\", \"'. expand('%:p') . '\"]\007"' | q
-  endif
-  let $vimInstanceExists = 1
-augroup END
+if $VIM_TERMINAL  " then don't nest
+  exec '!printf "\033]51;[\"drop\", \"%:p\"]\007"' | quit!
+endif
 
 " COMMANDS {{{1
 
