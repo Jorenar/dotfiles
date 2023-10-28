@@ -72,11 +72,6 @@ nnoremap <Leader>r :exec {o -> {n -> n != "" ? '%s/\C\<' . o . '\>/' . n . '/g' 
 nnoremap j gj
 nnoremap k gk
 
-vnoremap iz :<C-u>silent! norm! [zjV]zk<CR>
-onoremap iz :<C-u>silent! norm Viz<CR>
-vnoremap az :<C-u>silent! norm! [zV]z<CR>
-onoremap az :<C-u>silent! norm Vaz<CR>
-
 inoremap <expr> <C-o> pumvisible() ? "\<C-n>" : "\<C-o>"
 
 cnoremap <C-h> <C-w>
