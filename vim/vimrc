@@ -1,4 +1,4 @@
-" XDG support {{{1
+" XDG Base Directory {{{
 
 if empty($MYVIMRC) | let $MYVIMRC = expand('<sfile>:p') | endif
 
@@ -24,101 +24,42 @@ set viewdir=$XDG_STATE_HOME/vim/view     | call mkdir(&viewdir,   'p', 0700)
 
 if !has('nvim') | set viminfofile=$XDG_STATE_HOME/vim/viminfo | endif
 
-" BASICS {{{1
+" }}}
 
 set nocompatible
 set backup undofile
 filetype plugin indent on
-
-syntax enable
-autocmd FileType * silent! setlocal syntax=OFF
-autocmd FileType * call matchadd("Todo", "TODO")
-
 colorscheme minimal
 
-" Open file at the last known position
-autocmd BufReadPost * if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit' | exec "norm! g`\"" | endif
-
-" Automatically open QuickFix
-autocmd QuickFixCmdPost [^l]* nested cwindow
-autocmd QuickFixCmdPost    l* nested lwindow
-
-" Undo if filter shell command returned an error
-autocmd ShellFilterPost * if v:shell_error | undo | endif
+"   startup {{{1
 
 if $VIM_TERMINAL  " then don't nest
   exec '!printf "\033]51;[\"drop\", \"%:p\"]\007"' | quit!
 endif
 
-" COMMANDS {{{1
+" Open file at the last known position
+autocmd BufReadPost * if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit' | exec "norm! g`\"" | endif
 
-com! -nargs=+  FillLine  exec {str,r -> "norm! a".repeat(str, (r-col(".")+1)/len(str))}(<f-args>, &tw)
-com! -range=%  Sort      normal :<line1>,<line2>sort i<CR>
-com! -nargs=?  Spelling  if empty("<args>") | setl spell! | else | setl spell spelllang=<args> | endif
-com! -range    VisSort   sil! keepj <line1>,<line2>call utils#misc#VisSort()
+"   syntax {{{1
 
-" MAPPINGS {{{1
+syntax enable
+autocmd FileType * silent! setlocal syntax=OFF
+autocmd FileType * call matchadd("Todo", "TODO")
 
-nnoremap ' `
-nnoremap <C-l> :nohlsearch<C-r>=has('diff')?'<bar>diffupdate':''<CR><CR><C-l>
-nnoremap <expr> <C-e> utils#misc#scroll_cursor_popup(1) ? "<Esc>" : "<C-e>"
-nnoremap <expr> <C-y> utils#misc#scroll_cursor_popup(-1) ? "<Esc>" : "<C-y>"
-nnoremap <F3> <Cmd>set cursorline! cursorcolumn!<CR>
-nnoremap <F4> <Cmd>let &ve = (&ve == "all" ? "" : "all")<CR>
-nnoremap <F8> <Cmd>term<CR>
-nnoremap <Leader>= gg=G``
-nnoremap <Leader>q m"gggqG`"
-nnoremap <Leader>r :exec {o -> {n -> n != "" ? '%s/\C\<' . o . '\>/' . n . '/g' : ''}(input(o." > ", o))}(expand('<cword>'))<CR>
-nnoremap j gj
-nnoremap k gk
-
-inoremap <expr> <C-o> pumvisible() ? "\<C-n>" : "\<C-o>"
-
-cnoremap <C-h> <C-w>
-
-map gh <nop>
-
-" OPTIONS {{{1
-
-set keywordprg=:Man
-set makeprg=Make
-
-set modeline nomodelineexpr
-set number
-set quickfixtextfunc=utils#texts#QuickFixTextFunc
-set scrolloff=5
-set sessionoptions=blank,buffers,folds,tabpages,winsize
-set shortmess+=I shortmess-=S
-set spellsuggest=double,5
-set splitbelow splitright
-set ttimeoutlen=10
-set updatetime=250
-set visualbell t_vb=
-
-set path=**,./
-set tags+=.tags/tags;
-
-set wildmenu
-set wildmode=full
-set wildoptions=
-
-set colorcolumn=+1
-set fillchars+=vert:│
-
-set hidden
-set switchbuf=usetab
-
-set diffopt=internal,filler,closeoff,indent-heuristic,algorithm:histogram
-let g:diff_translations = 0
+"   search {{{1
 
 set hlsearch
 set ignorecase
 set incsearch
 set smartcase
 
+"   mouse {{{1
+
 set mouse=a
 set mousemodel=popup_setpos
 silent! set ttymouse=sgr
+
+"   listchars {{{1
 
 set list
 set listchars=tab:<\ >,trail:_
@@ -126,20 +67,111 @@ set listchars+=extends:>,precedes:<
 hi! ListCharsTabs ctermfg=235
 autocmd VimEnter,WinNew * call matchadd("ListCharsTabs", '\t')
 
+"   window title {{{1
+
 set title
 set titlestring=
 set titlestring+=%t%(\ %M%)%(\ (%{expand(\"%:p:~:.:h\")}/)%)
 set titlestring+=\ \|\ %{$USER}@%{hostname()}:%{substitute(getcwd(),$HOME,'~','')}
+
+"   completion {{{1
 
 set complete+=kspell
 set completeopt=menuone,noinsert,noselect
 set omnifunc=syntaxcomplete#Complete
 set pumheight=20
 
+inoremap <expr> <C-o> pumvisible() ? "\<C-n>" : "\<C-o>"
+
+"   command line {{{1
+
+set showcmd
+set wildmenu wildmode=full wildoptions=
+cnoremap <C-h> <C-w>
+
+"   wrap {{{1
+
 set nowrap
 set linebreak
 set breakindent
 let &showbreak = "↳  "
+
+"   status/tab line {{{1
+
+set showtabline=2
+set tabline=%!utils#lines#TabLine()
+
+set laststatus=2
+set statusline=%!utils#lines#StatusLine()
+sil! autocmd TerminalOpen * setl stl=\ %f
+
+if join(argv()) =~ '.*_LOCAL_.*_BASE_.*_REMOTE_.*'
+  autocmd BufReadPost  *_LOCAL_*   setl stl=\ LOCAL
+  autocmd BufReadPost  *_BASE_*    setl stl=\ BASE
+  autocmd BufReadPost  *_REMOTE_*  setl stl=\ REMOTE
+endif
+
+"   cscope {{{1
+
+if has("cscope") && (executable("cscope") || executable("gtags-cscope"))
+  set cscopetag
+  set cscopetagorder=0
+  set cscopepathcomp=2
+  set cscopequickfix=a-,c-,d-,e-,f-,g-,i-,s-,t-
+  autocmd VimEnter * call utils#cscope#init()
+endif
+
+"   UI misc {{{1
+
+set colorcolumn=+1
+set fillchars+=vert:│
+set number
+set shortmess+=I shortmess-=S
+set signcolumn=yes
+set splitbelow splitright
+set virtualedit=all
+set visualbell t_vb=
+
+nnoremap <C-l> :nohlsearch<C-r>=has('diff')?'<bar>diffupdate':''<CR><CR><C-l>
+nnoremap <F3> <Cmd>set cursorline! cursorcolumn!<CR>
+
+"   QuickFix {{{1
+
+set quickfixtextfunc=utils#texts#QuickFixTextFunc
+
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
+
+"   diff {{{1
+
+set diffopt=internal,filler,closeoff,indent-heuristic,algorithm:histogram
+let g:diff_translations = 0
+
+"   spelling {{{1
+
+set spellsuggest=double,5
+com! -nargs=?  Spelling  if empty("<args>") | setl spell! | else | setl spell spelllang=<args> | endif
+
+"   motion {{{1
+
+set scrolloff=5
+
+nnoremap ' `
+nnoremap j gj
+nnoremap k gk
+
+nnoremap <expr> <C-e> utils#misc#scroll_cursor_popup(v:count1) ? "<Esc>" : "<C-e>"
+nnoremap <expr> <C-y> utils#misc#scroll_cursor_popup(-v:count1) ? "<Esc>" : "<C-y>"
+
+"   folds {{{1
+
+set foldcolumn=2
+set foldmethod=indent
+set foldtext=utils#texts#FoldText()
+set nofoldenable
+autocmd BufReadPost * if line('$') > winheight(0) | setlocal fen | endif
+
+"   formatting {{{1
 
 set backspace=indent,eol,start
 set cindent
@@ -150,39 +182,42 @@ set softtabstop=-1 " If negative, then uses 'shiftwidth' (which can use 'tabstop
 set tabstop=4
 set textwidth=80
 
-set showcmd
-set signcolumn=yes
+command! -nargs=1  SetFormatProg
+      \ exec {prg -> 'let [ &l:fp, &l:fex ] = [ "'.prg.' 2> /dev/null", "" ]'}(<args>)
 
-set laststatus=2
-set statusline=%!utils#lines#StatusLine()
-sil! autocmd TerminalOpen * setl stl=\ %f
+nnoremap <Leader>= gg=G``
+nnoremap <Leader>q m"gggqG`"
 
-set showtabline=2
-set tabline=%!utils#lines#TabLine()
+autocmd BufWinEnter * set fo-=c fo-=r fo-=o " Disable continuation of comments to the next line
+autocmd BufWinEnter * set formatoptions+=j  " Remove a comment leader when joining lines
+autocmd BufWinEnter * set formatoptions+=l  " Don't break a line after a one-letter word
+autocmd BufWinEnter * set formatoptions+=n  " Recognize numbered lists
+autocmd BufWinEnter * set formatoptions-=q  " Don't format comments
+autocmd BufWinEnter * set formatoptions-=t  " Don't autowrap text using 'textwidth'
 
-set foldcolumn=2
-set foldmethod=indent
-set foldtext=utils#texts#FoldText()
-set nofoldenable
-autocmd BufReadPost * if line('$') > winheight(0) | setlocal fen | endif
+"   ~ {{{1
 
-augroup FORMATOPTIONS
-  autocmd!
-  autocmd BufWinEnter * set fo-=c fo-=r fo-=o " Disable continuation of comments to the next line
-  autocmd BufWinEnter * set formatoptions+=j  " Remove a comment leader when joining lines
-  autocmd BufWinEnter * set formatoptions+=l  " Don't break a line after a one-letter word
-  autocmd BufWinEnter * set formatoptions+=n  " Recognize numbered lists
-  autocmd BufWinEnter * set formatoptions-=q  " Don't format comments
-  autocmd BufWinEnter * set formatoptions-=t  " Don't autowrap text using 'textwidth'
-augroup END
+set modeline nomodelineexpr
+set sessionoptions=blank,buffers,folds,tabpages,winsize
+set ttimeoutlen=10
 
-if has("cscope") && (executable("cscope") || executable("gtags-cscope"))
-  set cscopetag
-  set cscopetagorder=0
-  set cscopepathcomp=2
-  set cscopequickfix=a-,c-,d-,e-,f-,g-,i-,s-,t-
-  autocmd VimEnter * call utils#cscope#init()
-endif
+set path=**,./
+set tags+=.tags/tags;
+
+set hidden
+set switchbuf=usetab
+
+com! -range=%  Sort     normal :<line1>,<line2>sort i<CR>
+com! -range    VisSort  sil! keepj <line1>,<line2>call utils#misc#VisSort()
+
+com! -nargs=+  FillLine  exec {str,r -> "norm! a".repeat(str, (r-col(".")+1)/len(str))}(<f-args>, &tw)
+
+set makeprg=Make
+nnoremap <F8> <Cmd>term<CR>
+
+nnoremap <Leader>r <Cmd>exec {o -> {n -> n != "" ? '%s/\C\<' . o . '\>/' . n . '/g' : ''}(input(o." > ", o))}(expand('<cword>'))<CR>
+
+map gh <nop>
 
 augroup VISUALBLOCK_NOSTARTOFLINE
   autocmd!
@@ -190,16 +225,12 @@ augroup VISUALBLOCK_NOSTARTOFLINE
   silent! exec "autocmd ModeChanged \<C-v>:* let &startofline = g:sol_old"
 augroup END
 
-augroup MERGETOOL
-  autocmd!
-  if join(argv()) =~ '.*_LOCAL_.*_BASE_.*_REMOTE_.*'
-    autocmd BufReadPost  *_LOCAL_*   setl stl=\ LOCAL
-    autocmd BufReadPost  *_BASE_*    setl stl=\ BASE
-    autocmd BufReadPost  *_REMOTE_*  setl stl=\ REMOTE
-  endif
-augroup END
+" Undo if filter shell command returned an error
+autocmd ShellFilterPost * if v:shell_error | undo | endif
 
-" PLUGINS {{{1
+" }}}1
+
+"   packadd {{{1
 
 sil! packadd! cfilter
 sil! packadd! editorconfig
@@ -208,7 +239,7 @@ sil! packadd! termdebug
 
 source $VIMRUNTIME/ftplugin/man.vim
 
-" ALE {{{2
+"   ALE {{{1
 
 let g:ale_disable_lsp = 1
 let g:ale_echo_msg_format = '[%linter%]: %s'
@@ -220,7 +251,7 @@ hi! link ALEWarning WarningMsg
 
 let g:lsp_ale_diagnostics_severity = 'information'
 
-" vim-lsp {{{2
+"   vim-lsp {{{1
 
 let g:lsp_use_native_client                  = 1
 
@@ -274,7 +305,7 @@ augroup LSP
   runtime! lsp-servers.vim
 augroup END
 
-" Surround {{{2
+"   Surround {{{1
 
 let g:surround_no_mappings = 1
 
@@ -284,7 +315,7 @@ nmap ds <Plug>Dsurround
 nmap cs <Plug>Csurround
 nmap ss <Plug>Yssurround
 
-" CtrlP (+ FZF) {{{2
+"   CtrlP (+ FZF) {{{1
 
 let g:ctrlp_cache_dir     = $XDG_CACHE_HOME . "/vim/ctrlp"
 let g:ctrlp_types         = [ "fil", "buf", "mru" ]
@@ -320,7 +351,7 @@ if executable("fzf")
   augroup END
 endif
 
-" Netrw {{{2
+"   Netrw {{{1
 
 let g:netrw_banner       = 0    " do not display info on the top of window
 let g:netrw_liststyle    = 3    " tree-view
@@ -334,7 +365,7 @@ augroup NETRW_CONF
   autocmd filetype netrw setlocal statusline=%f
 augroup END
 
-" Tagbar {{{2
+"   Tagbar {{{1
 
 nnoremap <Leader>t :Tagbar<CR>
 
@@ -358,7 +389,7 @@ let g:tagbar_type_vb = #{
       \   ]
       \ }
 
-" vim-bookmarks {{{2
+"   vim-bookmarks {{{1
 
 let g:bookmark_auto_save_file = $XDG_STATE_HOME . "/vim/bookmarks"
 let g:bookmark_disable_ctrlp = 1
@@ -374,7 +405,7 @@ nmap <Leader>mk  <Plug>BookmarkMoveUp
 nmap <Leader>mj  <Plug>BookmarkMoveDown
 nmap <Leader>mg  <Plug>BookmarkMoveToLine
 
-" Vim Tmux Navigator {{{2
+"   Vim Tmux Navigator {{{1
 
 let g:tmux_navigator_no_mappings = 1
 
@@ -388,7 +419,13 @@ noremap <silent> <C-w><C-j>  <Cmd>TmuxNavigateDown<CR>
 noremap <silent> <C-w><C-k>  <Cmd>TmuxNavigateUp<CR>
 noremap <silent> <C-w><C-l>  <Cmd>TmuxNavigateRight<CR>
 
-" vim-slime {{{2
+"   Signify {{{1
+
+set updatetime=250
+let g:signify_sign_change = '~'
+highlight link  SignifySignChange  DiffText
+
+"   vim-slime {{{1
 
 let g:slime_no_mappings = 1
 let g:slime_paste_file = tempname()
@@ -403,14 +440,14 @@ let g:slime_target =
 noremap <F5> :SlimeSend<CR>
 com! -nargs=+ -bang  Slime  call slime#send(<q-args> . (<bang>0 ? "" : "\r"))
 
-" asyncrun.vim {{{2
+"   asyncrun.vim {{{1
 
 let g:asyncrun_open = 10
 command! -nargs=? Make AsyncRun -program=make <args>
 nnoremap <F7> <Cmd>w <bar> Make %:p<CR>
 autocmd User AsyncRunStop copen | wincmd p
 
-" ~ {{{2
+"   ~ {{{1
 
 au VimEnter * com! -bang UseVimball
       \ let d = printf("%s/%s/%s",
@@ -421,10 +458,10 @@ au VimEnter * com! -bang UseVimball
       \ | call vimball#Vimball(1, d)
       \ | unlet d
 
+set keywordprg=:Man
+
 let g:termdebug_wide = 1
-
 let g:EditorConfig_enable_for_new_buf = 1
-
 let g:traces_preview_window = "new"
 
 let g:miniSnip_extends = {
@@ -439,12 +476,7 @@ let g:miniSnip_extends = {
 let g:undotree_SetFocusWhenToggle = 1
 nnoremap <F1> :UndotreeToggle<CR>
 
-let g:signify_sign_change = '~'
-highlight link  SignifySignChange  DiffText
-
-" }}}2
-
-" ~ {{{1
+" }}}1
 
 if has("nvim")
   runtime! init.nvim
