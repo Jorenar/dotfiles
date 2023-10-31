@@ -13,6 +13,7 @@ deduplicated
 dotfile
 dotfiles
 downloadables
+filetype
 hoc
 innumerous
 Jagiellonian
@@ -27,9 +28,12 @@ MSVC
 MySQL
 Neovim
 overfocus
+POSIX
 RegEx
 roguelike
 SQLite
+stderr
+stdout
 steampunk
 TODO
 VimL
@@ -37,4 +41,5 @@ VLA
 VLA's
 VLAs
 whitespace
+www
 Łukasiewicz

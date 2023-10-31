@@ -330,7 +330,7 @@ let g:ctrlp_prompt_mappings = {
       \ "ToggleType(1)": [ "<C-p>", "<C-Up>" ],
       \ }
 
-nnoremap <C-p><C-b> <Cmd>CtrlPBuf<CR>
+nnoremap <C-p><C-b> <Cmd>CtrlPBuffer<CR>
 nnoremap <C-p><C-l> <Cmd>CtrlPLine<CR>
 nnoremap <C-p><C-m> <Cmd>CtrlPMRU<CR>
 nnoremap <C-p><C-t> <Cmd>CtrlPTag<CR>
