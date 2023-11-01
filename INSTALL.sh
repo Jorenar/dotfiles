@@ -81,6 +81,7 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     chktexrc            @  .chktexrc
     commafeed.yml       @  commafeed.yml
     ctags/              @  ctags
+    deno.json           @  deno.json
     dosbox.conf         @  dosbox/dosbox.conf
     env                 @  env
     env/mimeapps.list   @  mimeapps.list
