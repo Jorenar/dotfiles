@@ -1,6 +1,5 @@
 #!sh
 
-. "$XDG_CONFIG_HOME"/env/variables
 export HISTSIZE=
 
 . "$XDG_CONFIG_HOME"/sh/aliases
