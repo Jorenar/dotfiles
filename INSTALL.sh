@@ -37,7 +37,7 @@ install () (
     action=
     case "$op" in
         '@') action="ln -sf" ;;
-        '>') action="cp -r" ;;
+        '%') action="cp -r" ;;
         *) return ;;
     esac
 
@@ -69,7 +69,7 @@ install_bulk () (
 
 
 
-install  env/profile  >  "$HOME"/.profile
+install  env/profile  %  "$HOME"/.profile
 install  templates/   @  "$XDG_TEMPLATES_DIR"
 
 install_bulk "$XDG_CONFIG_HOME" << EOL
@@ -104,10 +104,10 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     newsboat            @  newsboat/config
     npmrc               @  npm/npmrc
     OpenSCAD.conf       @  OpenSCAD/OpenSCAD.conf               -w
-    pavucontrol.ini     >  pavucontrol.ini
+    pavucontrol.ini     %  pavucontrol.ini
     polybar             @  polybar/config
     python_config.py    @  python/config.py
-    QuiteRss.ini        >  QuiteRss/QuiteRss.ini
+    QuiteRss.ini        %  QuiteRss/QuiteRss.ini
     ranger.conf         @  ranger/rc.conf
     Renviron            @  R/Renviron
     sh/                 @  sh
@@ -115,12 +115,12 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     spicy_settings      @  spicy/settings
     sqliterc            @  sqlite3/sqliterc
     ssh_config          @  ssh/config
-    ssr.conf            >  simplescreenrecorder/settings.conf
+    ssr.conf            %  simplescreenrecorder/settings.conf
     stalonetrayrc       @  stalonetrayrc
     telnetrc            @  .telnetrc
     tigrc               @  tig/config
     tmux/               @  tmux
-    transmission.json   >  transmission-daemon/settings.json
+    transmission.json   %  transmission-daemon/settings.json
     uncrustify/         @  uncrustify
     vim/                @  vim
     weechat/            @  weechat                              -w
