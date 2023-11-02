@@ -14,7 +14,7 @@ if [ "$#" -eq 0 ]; then
             if ps -ef | grep -v grep | grep -q tmux; then
                 echo attach \; new-session
             else
-                echo "-f $XDG_CONFIG_HOME/tmux/tmux.conf"
+                echo "-f ${TMUX_CONF:-$XDG_CONFIG_HOME/tmux/tmux.conf}"
             fi
         )
     done

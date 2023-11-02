@@ -21,7 +21,7 @@ case "$EXE" in
         ARGS="-init $XDG_CONFIG_HOME/sqlite3/sqliterc"
         ;;
     ssh|scp)
-        ARGS="-F $XDG_CONFIG_HOME/ssh/config"
+        ARGS="-F ${SSH_CONFIG:-$XDG_CONFIG_HOME/ssh/config}"
         ;;
     steam)
         HOME="$XDG_DATA_HOME/Steam"
