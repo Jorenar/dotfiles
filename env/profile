@@ -1,4 +1,4 @@
-#!sh ~/.profile
+# ~/.profile
 
 . "$HOME"/.local/config/env/variables
 export SHELL="$(command -v myshell.sh)"
