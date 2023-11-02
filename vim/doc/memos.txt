@@ -14,5 +14,7 @@ Neovim's issue #1496: [:! (bang) and system() are not interactive](https://githu
 *GrepRename*
     com! -nargs=+  GrepRename  exec {a,b -> 'tabe | lv /\C\<' . a . '\>/j ** | cdo s/\C\<' . a . '\>/' . b . '/gc | up'}(<f-args>) | q
 
+LSP diagnostics for all buffers
+    :LspDocumentDiagnostics --ui=quickfix --servers=vim,efm --buffers=* --exclude-buffers=1,2
 
  vim:tw=78:ft=help:
