@@ -1,18 +1,7 @@
-#!sh
-# shellcheck disable=SC1090,SC2174,SC2155
+#!sh ~/.profile
 
-. "$( # source <dotfiles>/env/variables
-    t="$(ls -dl "$HOME"/.profile)"; t="${t#*"$t"-> }"
-
-    [ -f "$t" ] && vars="$(dirname "$t")"/variables || vars=
-    [ ! -f "$vars" ] && vars="$HOME/.local/config/env/variables"
-    [ ! -f "$vars" ] && vars="$HOME/.local/config/env_variables"
-    [ ! -f "$vars" ] && vars="$HOME/.config/env/variables"
-    [ ! -f "$vars" ] && vars="$HOME/.config/env_variables"
-    [ ! -f "$vars" ] && vars="/dev/null"
-
-    echo "$vars"
-)"
+. "$HOME"/.local/config/env/variables
+export SHELL="$(command -v myshell.sh)"
 
 if [ ! -d "$XDG_RUNTIME_DIR" ]; then
     mkdir -p -m 0700 "$XDG_RUNTIME_DIR" # ought to be '/tmp/user-runtime'
@@ -24,13 +13,4 @@ if [ "$(stat -c '%a' "$XDG_RUNTIME_DIR")" != 700 ]; then
     echo "Set \$XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR" >&2
 fi
 
-
-case "$-" in
-    *i*)
-        export SHELL="$(command -v myshell.sh)"
-        case "$(tty)" in
-            *tty*) ;;
-            *) exec "$SHELL" ;;
-        esac
-        ;;
-esac
+# ------------------------------------------------------------------------------

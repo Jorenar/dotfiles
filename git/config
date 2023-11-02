@@ -56,6 +56,3 @@
     fast-init      = !sh -c 'git init && git commit --allow-empty --allow-empty-message -m \"\" && [ -n \"$1\" ] && git remote add origin \"$1\" && git push -u origin master' -
     orphan         = !sh -c 'git checkout --orphan \"$1\" && git rm -rf .' -
     prune-branches = !git remote prune origin && git branch -vv | awk '/: gone]/ {print $1}' | xargs -r git branch -d
-
-[include]
-    path = ~/.local/opt/dotfiles.host/git/config

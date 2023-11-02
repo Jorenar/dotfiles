@@ -69,7 +69,7 @@ install_bulk () (
 
 
 
-install  env/profile  @  "$HOME"/.profile
+install  env/profile  >  "$HOME"/.profile
 install  templates/   @  "$XDG_TEMPLATES_DIR"
 
 install_bulk "$XDG_CONFIG_HOME" << EOL
