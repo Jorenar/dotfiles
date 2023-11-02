@@ -1,6 +1,7 @@
 #!sh
 
 export HISTSIZE=
+export HISTFILE="$HISTORY_DIR/$(basename "$SHELL")"
 
 . "$XDG_CONFIG_HOME"/sh/aliases
 . "$XDG_CONFIG_HOME"/sh/fzf.sh
