@@ -1,12 +1,17 @@
 # vim: ft=sshconfig
 
-Host *
-    IdentityFile ${XDG_DATA_HOME}/ssh/id_rsa
-    UserKnownHostsFile ${XDG_DATA_HOME}/ssh/known_hosts
-    Include ~/.local/opt/dotfiles.host/ssh/config
+IdentityFile ${XDG_DATA_HOME}/ssh/id_rsa
+# IdentityFile ${XDG_DATA_HOME}/ssh/id_ecdsa
+# IdentityFile ${XDG_DATA_HOME}/ssh/id_ecdsa_sk
+# IdentityFile ${XDG_DATA_HOME}/ssh/id_ed25519
+# IdentityFile ${XDG_DATA_HOME}/ssh/id_ed25519_sk
+# IdentityFile ${XDG_DATA_HOME}/ssh/id_xmss
+# IdentityFile ${XDG_DATA_HOME}/ssh/id_dsa
 
-Host *
-    Compression yes
+UpdateHostKeys yes
+UserKnownHostsFile ${XDG_DATA_HOME}/ssh/known_hosts ${XDG_DATA_HOME}/ssh/known_hosts2
+
+Compression yes
 
 Host aur.archlinux.org
     IdentityFile ${XDG_DATA_HOME}/ssh/aur
