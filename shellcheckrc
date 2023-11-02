@@ -9,4 +9,6 @@ disable=SC2009  # Consider using `pgrep` instead of grepping `ps` output
 disable=SC2024  # `sudo` doesn't affect redirects. Use `..| sudo tee file`
 disable=SC2025  # Make sure all escape sequences are enclosed in `\[..\]` to prevent line wrapping issues
 disable=SC2046  # Quote this to prevent word splitting
+disable=SC2155  # Declare and assign separately to avoid masking return values.
+disable=SC2174  # When used with -p, -m only applies to the deepest directory
 disable=SC2181  # Check exit code directly with e.g. `if mycmd;`, not indirectly with `$?`
