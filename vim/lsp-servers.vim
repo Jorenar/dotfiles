@@ -9,7 +9,6 @@ if executable("ccls")
         \     )
         \   )},
         \   initialization_options: #{
-        \     cache: #{ directory: "/tmp/ccls-cache" },
         \     clang: #{ extraArgs: [ "--gcc-toolchain=/usr" ] },
         \   },
         \   allowlist: [ "c", "cpp", "objc", "objcpp" ],

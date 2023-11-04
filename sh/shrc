@@ -15,7 +15,7 @@ sh << 'EOF' # permanent history entries
     trap 'rm "$perm"' EXIT
 
     IFS=:
-    for file in $${SH_HIST_PERM:-"$XDG_CONFIG_HOME"/sh/history.perm}; do
+    for file in ${SH_HIST_PERM:-"$XDG_CONFIG_HOME"/sh/history.perm}; do
         [ -s "$file" ] && cat "$file" >> "$perm";
     done
     [ ! -s "$perm" ] && exit

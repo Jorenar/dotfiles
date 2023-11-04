@@ -68,7 +68,8 @@ debug: CFLAGS += \
 debug: CFLAGS += \
 	-Wcast-qual \
 	-Wcast-align \
-	-Wdouble-promotion
+	-Wdouble-promotion \
+	-Wuseless-cast
 debug: CFLAGS += \
 	-Wlogical-op \
 	-Wfloat-equal
