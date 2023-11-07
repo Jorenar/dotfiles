@@ -10,8 +10,8 @@ function! s:CmpIssues(i1, i2) abort
   let F = {nr -> fnamemodify(bufname(nr), ':p:.')}
   let f1 = F(a:i1.bufnr)
   let f2 = F(a:i2.bufnr)
-  if f1 != f2
-    return f1 > f2 ? 1 : -1
+  if f1 !=# f2
+    return f1 ># f2 ? 1 : -1
   endif
 
   let lnum1 = a:i1.lnum

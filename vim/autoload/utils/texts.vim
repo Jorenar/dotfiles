@@ -34,13 +34,16 @@ function! utils#texts#QuickFixTextFunc(info) abort
 
     let p = ""
     if !empty(f) && e.lnum
-      if [ t, f, e.lnum, e.col ] == prev
+      if [ t, f, e.lnum, e.col ] ==# prev[:-2]
         let t = ""
+        if T ==# prev[-1]
+          let T = trim(T)
+        endif
       else
         let p = printf('%s:%d', f, e.lnum)
         let p = e.col ? printf('%s:%d  ', p, e.col) : p."  "
+        let prev = [ t, f, e.lnum, e.col, T ]
         let T = trim(T)
-        let prev = [ t, f, e.lnum, e.col ]
       endif
     endif
 
