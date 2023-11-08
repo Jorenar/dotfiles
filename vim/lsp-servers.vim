@@ -13,9 +13,7 @@ if executable("ccls")
         \   },
         \   allowlist: [ "c", "cpp", "objc", "objcpp" ],
         \ })
-endif
-
-if executable('clangd')
+elseif executable('clangd')
   au User lsp_setup call lsp#register_server(#{
         \   name: "clangd",
         \   cmd: ["clangd",
