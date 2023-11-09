@@ -71,6 +71,17 @@ _:
 
 
 CMakeLists.txt: PHONY
-	[ -n "$(*F)" ] && cd $(*F)
-	cmake -B build/ -DCMAKE_BUILD_TYPE=Debug
-	cmake --build build/ 2>&1 | tee build/errors.err
+	@ [ -n "$(*F)" ] && cd $(*F)
+	static=
+	if [ $(STATIC) ]; then
+		static="$$static"' -DCMAKE_FIND_LIBRARY_SUFFIXES=".a"'
+		static="$$static"' -DBUILD_SHARED_LIBS=OFF'
+		static="$$static"' -DCMAKE_EXE_LINKER_FLAGS="-static"'
+	fi
+	if [ $(BUILD_TYPE) ]; then
+		cmake -B build/ -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $$static
+		cmake --build build/ --config $(BUILD_TYPE)
+	else
+		cmake -B build/ -DCMAKE_BUILD_TYPE=Debug $$static
+		cmake --build build/ 2>&1 | tee build/errors.err
+	fi
