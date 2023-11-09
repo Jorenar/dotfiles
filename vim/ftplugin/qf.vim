@@ -17,6 +17,8 @@ else
   noremap <buffer> g+ :cnewer<CR>
 endif
 
+command! -buffer  Sort  call utils#qf#sort('utils#qf#cmp')
+
 " Quit QuickFix window along with source file window
 autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix" | q | endif
 

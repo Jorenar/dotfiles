@@ -7,26 +7,7 @@ function! s:VcsStats() abort " VCS stats; requires Signify plugin
 endfunction
 
 function! s:CmpIssues(i1, i2) abort
-  let F = {nr -> fnamemodify(bufname(nr), ':p:.')}
-  let f1 = F(a:i1.bufnr)
-  let f2 = F(a:i2.bufnr)
-  if f1 !=# f2
-    return f1 ># f2 ? 1 : -1
-  endif
-
-  let lnum1 = a:i1.lnum
-  let lnum2 = a:i2.lnum
-  if lnum1 != lnum2
-    return lnum1 > lnum2 ? 1 : -1
-  endif
-
-  let col1 = a:i1.col
-  let col2 = a:i2.col
-  if col1 != col2
-    return col1 > col2 ? 1 : -1
-  endif
-
-  return 0
+  return utils#qf#cmp(a:i1, a:i2, 0)
 endfunction
 
 function! s:GetQfCount(type) abort
