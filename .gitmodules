@@ -1,149 +1,149 @@
-[submodule "vim/pack/extern/start/ale"]
+[submodule "ale"]
 	path = config/vim/pack/extern/start/ale
 	url = https://github.com/dense-analysis/ale.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/asyncrun.vim"]
+[submodule "asyncrun.vim"]
 	path = config/vim/pack/extern/start/asyncrun.vim
 	url = https://github.com/skywind3000/asyncrun.vim.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/ctrlp.vim"]
+[submodule "ctrlp.vim"]
 	path = config/vim/pack/extern/start/ctrlp.vim
 	url = https://github.com/ctrlpvim/ctrlp.vim.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/fauxClip"]
+[submodule "fauxClip"]
 	path = config/vim/pack/extern/start/fauxClip
 	url = https://github.com/Jorengarenar/fauxClip.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/GuiTermColors.vim"]
+[submodule "GuiTermColors.vim"]
 	path = config/vim/pack/extern/start/GuiTermColors.vim
 	url = https://github.com/Jorengarenar/GuiTermColors.vim.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/gv.vim"]
+[submodule "gv.vim"]
 	path = config/vim/pack/extern/start/gv.vim
 	url = https://github.com/junegunn/gv.vim.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/indent-sh.vim"]
+[submodule "indent-sh.vim"]
 	path = config/vim/pack/extern/start/indent-sh.vim
 	url = https://github.com/Clavelito/indent-sh.vim.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/miniSnip"]
+[submodule "miniSnip"]
 	path = config/vim/pack/extern/start/miniSnip
 	url = https://github.com/Jorengarenar/miniSnip.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/NrrwRgn"]
+[submodule "NrrwRgn"]
 	path = config/vim/pack/extern/start/NrrwRgn
 	url = https://github.com/chrisbra/NrrwRgn.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/tagbar"]
+[submodule "tagbar"]
 	path = config/vim/pack/extern/start/tagbar
 	url = https://github.com/preservim/tagbar.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/textobj-word-column.vim"]
+[submodule "textobj-word-column.vim"]
 	path = config/vim/pack/extern/start/textobj-word-column.vim
 	url = https://github.com/coderifous/textobj-word-column.vim.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/traces.vim"]
+[submodule "traces.vim"]
 	path = config/vim/pack/extern/start/traces.vim
 	url = https://github.com/markonm/traces.vim.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/undotree"]
+[submodule "undotree"]
 	path = config/vim/pack/extern/start/undotree
 	url = https://github.com/mbbill/undotree.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/vim-bookmarks"]
+[submodule "vim-bookmarks"]
 	path = config/vim/pack/extern/start/vim-bookmarks
 	url = https://github.com/MattesGroeger/vim-bookmarks.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/vim-commentary"]
+[submodule "vim-commentary"]
 	path = config/vim/pack/extern/start/vim-commentary
 	url = https://github.com/tpope/vim-commentary.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/vim-eunuch"]
+[submodule "vim-eunuch"]
 	path = config/vim/pack/extern/start/vim-eunuch
 	url = https://github.com/tpope/vim-eunuch.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/vim-fugitive"]
+[submodule "vim-fugitive"]
 	path = config/vim/pack/extern/start/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/vim-lsp"]
+[submodule "vim-lsp"]
 	path = config/vim/pack/extern/start/vim-lsp
 	url = https://github.com/prabirshrestha/vim-lsp.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/vim-lsp-ale"]
+[submodule "vim-lsp-ale"]
 	path = config/vim/pack/extern/start/vim-lsp-ale
 	url = https://github.com/rhysd/vim-lsp-ale.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/vim-qf"]
+[submodule "vim-qf"]
 	path = config/vim/pack/extern/start/vim-qf
 	url = https://github.com/romainl/vim-qf.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/vim-repeat"]
+[submodule "vim-repeat"]
 	path = config/vim/pack/extern/start/vim-repeat
 	url = https://github.com/tpope/vim-repeat.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/vim-rsi"]
+[submodule "vim-rsi"]
 	path = config/vim/pack/extern/start/vim-rsi
 	url = https://github.com/tpope/vim-rsi.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/vim-signify"]
+[submodule "vim-signify"]
 	path = config/vim/pack/extern/start/vim-signify
 	url = https://github.com/mhinz/vim-signify.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/vim-slime"]
+[submodule "vim-slime"]
 	path = config/vim/pack/extern/start/vim-slime
 	url = https://github.com/jpalardy/vim-slime.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/vim-SQL-UPPER"]
+[submodule "vim-SQL-UPPER"]
 	path = config/vim/pack/extern/start/vim-SQL-UPPER
 	url = https://github.com/Jorengarenar/vim-SQL-UPPER.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/vim-surround"]
+[submodule "vim-surround"]
 	path = config/vim/pack/extern/start/vim-surround
 	url = https://github.com/tpope/vim-surround.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/vim-syntaxMarkerFold"]
+[submodule "vim-syntaxMarkerFold"]
 	path = config/vim/pack/extern/start/vim-syntaxMarkerFold
 	url = https://github.com/Jorengarenar/vim-syntaxMarkerFold.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/vim-tex-syntax"]
+[submodule "vim-tex-syntax"]
 	path = config/vim/pack/extern/start/vim-tex-syntax
 	url = https://github.com/gi1242/vim-tex-syntax.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/vim-tmux-navigator"]
+[submodule "vim-tmux-navigator"]
 	path = config/vim/pack/extern/start/vim-tmux-navigator
 	url = https://github.com/christoomey/vim-tmux-navigator.git
 	shallow = true
 	ignore = all
-[submodule "vim/pack/extern/start/VisInsert.vim"]
+[submodule "VisInsert.vim"]
 	path = config/vim/pack/extern/start/VisInsert.vim
 	url = https://github.com/Jorengarenar/VisInsert.vim.git
 	shallow = true
