@@ -93,6 +93,11 @@
 	url = https://github.com/rhysd/vim-lsp-ale.git
 	shallow = true
 	ignore = all
+[submodule "vim/pack/extern/start/vim-qf"]
+	path = vim/pack/extern/start/vim-qf
+	url = https://github.com/romainl/vim-qf.git
+	shallow = true
+	ignore = all
 [submodule "vim/pack/extern/start/vim-repeat"]
 	path = vim/pack/extern/start/vim-repeat
 	url = https://github.com/tpope/vim-repeat.git

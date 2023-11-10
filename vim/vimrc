@@ -135,13 +135,6 @@ set visualbell t_vb=
 nnoremap <C-l> :nohlsearch<C-r>=has('diff')?'<bar>diffupdate':''<CR><CR><C-l>
 nnoremap <F3> <Cmd>set cursorline! cursorcolumn!<CR>
 
-"   QuickFix {{{1
-
-set quickfixtextfunc=utils#texts#QuickFixTextFunc
-
-autocmd QuickFixCmdPost [^l]* nested cwindow
-autocmd QuickFixCmdPost    l* nested lwindow
-
 "   diff {{{1
 
 set diffopt=internal,filler,closeoff,indent-heuristic,algorithm:histogram
@@ -196,6 +189,8 @@ autocmd BufWinEnter * set formatoptions-=q  " Don't format comments
 autocmd BufWinEnter * set formatoptions-=t  " Don't autowrap text using 'textwidth'
 
 "   ~ {{{1
+
+set quickfixtextfunc=utils#texts#QuickFixTextFunc
 
 set modeline nomodelineexpr
 set sessionoptions=blank,buffers,folds,tabpages,winsize
@@ -472,6 +467,9 @@ let g:miniSnip_extends = {
 
 let g:undotree_SetFocusWhenToggle = 1
 nnoremap <F1> :UndotreeToggle<CR>
+
+let g:qf_mapping_ack_style = 1
+let g:qf_loclist_window_bottom = 0
 
 " }}}1
 
