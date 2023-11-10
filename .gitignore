@@ -1,9 +1,10 @@
-aerc/accounts.conf
 fonts/.uuid
-vim/doc/tags
-vim/pack/test
-vim/spell/*.spl
 
-weechat/irc.conf
-weechat/relay.conf
-weechat/sec.conf
+config/aerc/accounts.conf
+config/vim/doc/tags
+config/vim/pack/test
+config/vim/spell/*.spl
+
+config/weechat/irc.conf
+config/weechat/relay.conf
+config/weechat/sec.conf
