@@ -6,14 +6,10 @@ function! s:VcsStats() abort " VCS stats; requires Signify plugin
   return printf("  [+%s -%s ~%s]", stats[0], stats[2], stats[1])
 endfunction
 
-function! s:CmpIssues(i1, i2) abort
-  return utils#qf#cmp(a:i1, a:i2, 0)
-endfunction
-
 function! s:GetQfCount(type) abort
   let issues = getloclist(0)
   let issues = filter(issues, 'v:val.type == "'.a:type.'"')
-  let issues = uniq(issues, function("<SID>CmpIssues"))
+  let issues = uniq(issues, {i1,i2 -> QfQoL#cmp(i1, i2, 'T')})
   return len(issues).a:type
 endfunction
 
