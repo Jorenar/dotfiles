@@ -1,3 +1,8 @@
 set guioptions=c
 set guicursor=a:block
 let &guifont = has("win32") ? "Consolas:h11:cANSI:qDRAFT" : "DejaVu Sans Mono 11"
+
+nnoremap <C-S-v> "+p
+vnoremap <C-S-v> "+p
+inoremap <C-S-v> <C-r>+
+cnoremap <C-S-v> <C-r>+
