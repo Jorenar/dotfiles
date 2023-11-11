@@ -155,5 +155,11 @@
 
 # extern {{{1
 
+[submodule "vmv"]
+	path = extern/vmv
+	url = https://github.com/Jorengarenar/vmv.git
+	shallow = true
+	ignore = all
+
 # ~ {{{1
 #
