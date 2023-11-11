@@ -69,6 +69,9 @@ _:
 %.scad: PHONY
 	openscad -o $(*F).stl $@
 
+%.cast: PHONY
+	agg $@ $(*F).gif
+
 
 CMakeLists.txt: PHONY
 	@ [ -n "$(*F)" ] && cd $(*F)
