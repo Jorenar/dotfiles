@@ -1,18 +1,1 @@
-#!/usr/bin/env sh
-
-# Fallback for when https://github.com/Jorengarenar/ls.hidden is not present
-
-printf='/bin/printf'; [ ! -x "$printf" ] && printf='printf'
-
-hide=
-if [ -f .hidden ]; then
-    while IFS= read -r line; do
-        [ -n "$line" ] && hide="$($printf -- '%s --hide=%q' "$hide" "$line")"
-    done < .hidden
-fi
-
-for arg in "$@"; do
-    args="$args $($printf '%q' "$arg")" # sanitize arguments for eval
-done
-
-eval "ls $hide $args"
+../extern/ls.hidden/ls.hidden

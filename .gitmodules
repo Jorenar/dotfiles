@@ -155,6 +155,11 @@
 
 # extern {{{1
 
+[submodule "ls.hidden"]
+	path = extern/ls.hidden
+	url = https://github.com/Jorengarenar/ls.hidden.git
+	shallow = true
+	ignore = all
 [submodule "vmv"]
 	path = extern/vmv
 	url = https://github.com/Jorengarenar/vmv.git
