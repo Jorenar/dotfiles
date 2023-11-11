@@ -155,6 +155,11 @@
 
 # extern {{{1
 
+[submodule "git-open"]
+	path = extern/git-open
+	url = https://github.com/paulirish/git-open.git
+	shallow = true
+	ignore = all
 [submodule "ls.hidden"]
 	path = extern/ls.hidden
 	url = https://github.com/Jorengarenar/ls.hidden.git
