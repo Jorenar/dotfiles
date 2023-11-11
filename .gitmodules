@@ -165,6 +165,11 @@
 	url = https://github.com/Jorengarenar/ls.hidden.git
 	shallow = true
 	ignore = all
+[submodule "lsix"]
+	path = extern/lsix
+	url = https://github.com/hackerb9/lsix.git
+	shallow = true
+	ignore = all
 [submodule "vmv"]
 	path = extern/vmv
 	url = https://github.com/Jorengarenar/vmv.git
