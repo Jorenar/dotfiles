@@ -1,3 +1,7 @@
+# vim: noet
+
+# Vim plugins {{{1
+
 [submodule "ale"]
 	path = config/vim/pack/extern/start/ale
 	url = https://github.com/dense-analysis/ale.git
@@ -148,3 +152,8 @@
 	url = https://github.com/Jorengarenar/VisInsert.vim.git
 	shallow = true
 	ignore = all
+
+# extern {{{1
+
+# ~ {{{1
+#
