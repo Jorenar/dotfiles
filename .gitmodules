@@ -160,6 +160,11 @@
 	url = https://github.com/paulirish/git-open.git
 	shallow = true
 	ignore = all
+[submodule "h2-dmenu-desktop"]
+	path = extern/h2-dmenu-desktop
+	url = https://github.com/Jorengarenar/h2-dmenu-desktop.git
+	shallow = true
+	ignore = all
 [submodule "ls.hidden"]
 	path = extern/ls.hidden
 	url = https://github.com/Jorengarenar/ls.hidden.git
