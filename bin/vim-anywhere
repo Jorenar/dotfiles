@@ -1,11 +1,7 @@
 #!/usr/bin/env sh
 
 mkdir -p /tmp/vim-anywhere
-
 file="$(mktemp -p /tmp/vim-anywhere)"
-
-xclip -o -selection clipboard > $file
-
+xclip -o -selection clipboard > "$file"
 $TERMINAL -e "vim $file"
-
-xclip -i -selection clipboard < $file
+xclip -i -selection clipboard < "$file"

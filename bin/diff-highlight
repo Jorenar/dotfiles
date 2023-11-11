@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
-GIT_CONTRIB_DIR=${GIT_CONTRIB_DIR:-/usr/share/git}
+GIT_CONTRIB_DIR="${GIT_CONTRIB_DIR:-/usr/share/git}"
 
-dh="$(find $GIT_CONTRIB_DIR -name diff-highlight -type f 2> /dev/null)"
+dh="$(find "$GIT_CONTRIB_DIR" -name diff-highlight -type f 2> /dev/null)"
 
 if [ -n "$dh" ]; then
     exec $dh

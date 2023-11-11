@@ -138,8 +138,8 @@ install_bulk "$XDG_DATA_HOME" << EOL
 
     misc/desktop_entries/  @  applications/custom
 
-    fonts/          @  fonts
-    themes/         @  themes
+    fonts/   @  fonts
+    themes/  @  themes
 
 EOL
 
