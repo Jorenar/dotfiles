@@ -48,6 +48,7 @@
     diffFilter = diff-highlight
 
 [alias]
+    a = !sh -c 'cd -- ${GIT_PREFIX:-.} && git add -- "$@" && git status --short' --
     st = status --short
     lg = log --oneline --graph --abbrev-commit
     ls = !sh -c 'cd ${GIT_PREFIX:-.} && ls $@ -d $(git ls-tree HEAD | sed "s/^.*\\\t//")' -
