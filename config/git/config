@@ -54,6 +54,7 @@
     ls = !sh -c 'cd ${GIT_PREFIX:-.} && ls $@ -d $(git ls-tree HEAD | sed "s/^.*\\\t//")' -
 
     unstage = restore --staged
+    submodule-update = submodule update --init --recursive --remote
 
     change-url     = !sh -c 'git remote set-url origin \"$1\"' -
     fast-init      = !sh -c 'git init && git commit --allow-empty --allow-empty-message -m \"\" && [ -n \"$1\" ] && git remote add origin \"$1\" && git push -u origin master' -
