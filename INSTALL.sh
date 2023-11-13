@@ -43,7 +43,7 @@ install () (
 
 
     if [ "$gf_force" -eq 1 ] && [ -e "$dest" ]; then
-        old="$HOME/dotfiles.old/$src"
+        old="$HOME/dotfiles.old/$dest"
         if mkdir -p "$(dirname "$old")"; then
             mv "$dest" "$old" && echo "Moved file '$dest' to directory '$old'"
         fi

@@ -210,7 +210,7 @@ com! -nargs=+  FillLine  exec {str,r -> "norm! a".repeat(str, (r-col(".")+1)/len
 set makeprg=Make
 nnoremap <F8> <Cmd>term<CR>
 
-nnoremap <Leader>r <Cmd>exec {o -> {n -> n != "" ? '%s/\C\<' . o . '\>/' . n . '/g' : ''}(input(o." > ", o))}(expand('<cword>'))<CR>
+nnoremap <Leader>r :<C-u>%s/\C\<<C-r>=expand('<cword>')<CR>\>/<C-r>=expand('<cword>')<CR>/g<Left><Left>
 
 map gh <nop>
 
@@ -255,7 +255,6 @@ let g:lsp_diagnostics_highlights_enabled     = 1
 let g:lsp_diagnostics_signs_enabled          = 0
 let g:lsp_diagnostics_virtual_text_enabled   = 0
 let g:lsp_document_code_action_signs_enabled = 0
-let g:lsp_document_symbol_detail             = 1
 let g:lsp_text_edit_enabled                  = 0
 
 let g:lsp_log_verbose = 0

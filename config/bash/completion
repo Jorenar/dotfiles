@@ -58,5 +58,7 @@ _wsl_exe () {
 }
 complete -F _wsl_exe wsl.exe
 
+_git_a () { _git_add; }
+
 # prevents \$ when completing path with variables
 # alias compopt='compopt -o noquote'
