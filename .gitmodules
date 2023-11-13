@@ -87,6 +87,11 @@
 	url = https://github.com/tpope/vim-fugitive.git
 	shallow = true
 	ignore = all
+[submodule "vim-fugitive-blame-ext"]
+	path = config/vim/pack/extern/start/vim-fugitive-blame-ext
+	url = https://github.com/tommcdo/vim-fugitive-blame-ext.git
+	shallow = true
+	ignore = all
 [submodule "vim-lsp"]
 	path = config/vim/pack/extern/start/vim-lsp
 	url = https://github.com/prabirshrestha/vim-lsp.git
