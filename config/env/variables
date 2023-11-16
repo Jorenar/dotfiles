@@ -233,3 +233,6 @@ export WINEDEBUG="-all"
 
 # Enable touchscreen in Firefox
 export MOZ_USE_XINPUT2=1
+
+# fzf ctrl-t options
+export FZF_CTRL_T_OPTS="--preview '(cat {} || tree {}) 2> /dev/null | head -200'"

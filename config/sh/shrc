@@ -4,8 +4,12 @@ export HISTSIZE=
 export HISTFILE="$HISTORY_DIR/$(basename "$SHELL")"
 
 . "$XDG_CONFIG_HOME"/sh/aliases
-. "$XDG_CONFIG_HOME"/sh/fzf.sh
 . "$XDG_CONFIG_HOME"/sh/prompt.sh
+
+k="key-bindings.$(basename "${BASH}${ZSH_NAME}")"
+for d in /usr/share/fzf /usr/share/fzf/* /usr/share/*/fzf/*; do
+    [ -f "$d/$k" ] && . "$d/$k" && break
+done; unset k
 
 sh << 'EOF' # permanent history entries
     HISTFILE="${HISTFILE:-$HOME/.sh_history}"
