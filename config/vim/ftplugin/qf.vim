@@ -21,7 +21,7 @@ let qf_disable_statusline = 1
 let &l:stl = ' '
       \ . (w:QfQoL_isLocList ? '[loclist]' : '[globlist]')
       \ . '  %l/%L%='
-      \ . (w:QfQoL_isLocList ? '' : w:quickfix_title)
+      \ . (w:QfQoL_isLocList ? '' : get(w:, 'quickfix_title', '')
       \ . ' '
 
 call matchadd("Error",      '^\s*\zs\[E]\ze ')
