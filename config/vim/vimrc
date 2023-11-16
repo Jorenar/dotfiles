@@ -212,6 +212,15 @@ nnoremap <F8> <Cmd>term<CR>
 
 nnoremap <Leader>r :<C-u>%s/\C\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
 
+nnoremap <expr> Q {r ->
+      \   ':let @'.r.' = "'
+      \     . '<C-r><C-r>='
+      \       . 'substitute(getreg('. "'".r."'" .'),'
+      \       .             "'\"', '\\\\\"', 'g')"
+      \     . '<CR>'
+      \   .'"'
+      \ }(nr2char(getchar()))
+
 map gh <nop>
 
 augroup VISUALBLOCK_NOSTARTOFLINE
