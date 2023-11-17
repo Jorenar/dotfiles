@@ -1,6 +1,9 @@
 #!/usr/bin/env sh
 
 check_ignored_submodules () {
+    [ ! -f .gitmodules ] && return
+    grep -q '^\s*ignore\s*=\s*all\s*$' .gitmodules || return
+
     ignored_submodules="$(mktemp)"
     trap 'rm "$ignored_submodules"' EXIT
 
