@@ -49,7 +49,7 @@
     diffFilter = diff-highlight
 
 [core]
-    hooksPath = ~/.local/config/git/hooks
+    hooksPath = ~/.local/config/git/hooks/_wrapper
 
 [alias]
     a = !sh -c 'cd -- ${GIT_PREFIX:-.} && git add -- "$@" && git status --short' --

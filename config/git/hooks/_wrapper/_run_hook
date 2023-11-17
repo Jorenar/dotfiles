@@ -1,0 +1,57 @@
+#!/usr/bin/env sh
+
+# HOOKS  |
+#$   awk '/^#~/ {print $2}' "$0" | xargs -n1 ln -s "$0"; exit
+#~ applypatch-msg
+#~ commit-msg
+#~ fsmonitor-watchman
+#~ p4-changelist
+#~ p4-post-changelist
+#~ p4-pre-submit
+#~ p4-prepare-changelist
+#~ post-applypatch
+#~ post-checkout
+#~ post-commit
+#~ post-index-change
+#~ post-merge
+#~ post-receive
+#~ post-rewrite
+#~ post-update
+#~ pre-applypatch
+#~ pre-auto-gc
+#~ pre-commit
+#~ pre-merge-commit
+#~ pre-push
+#~ pre-rebase
+#~ pre-receive
+#~ prepare-commit-msg
+#~ proc-receive
+#~ push-to-checkout
+#~ reference-transaction
+#~ sendemail-validate
+#~ update
+
+hook_name="$(basename "$0")"
+repo_root="$(git rev-parse --show-toplevel)"
+
+hook="$(dirname "$0")"/../"$hook_name"
+if [ -x "$hook" ]; then
+    "$hook" "$@" || exit $?
+fi
+
+hook="$repo_root"/.githooks/"$hook_name"
+if [ -x "$hook" ]; then
+    printf 'Do you want to run versioned %s githook? [y/N] ' "$hook_name"
+    exec < /dev/tty
+    read -r yn
+    case "$yn" in
+        y|Y|yes|YES|Yes)
+            "$hook" "$@" || exit $?
+            ;;
+    esac
+fi
+
+hook="$repo_root"/.git/hooks/"$hook_name"
+if [ -x "$hook" ]; then
+    "$hook" "$@" || exit $?
+fi

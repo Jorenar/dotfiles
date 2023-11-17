@@ -33,6 +33,3 @@ check_ignored_submodules () {
 }
 
 check_ignored_submodules
-
-# --------------------------------------------------
-"$(dirname "$0")"/_run_local_hook "$(basename "$0")"
