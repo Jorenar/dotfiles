@@ -1,0 +1,38 @@
+#!/usr/bin/env sh
+
+check_ignored_submodules () {
+    ignored_submodules="$(mktemp)"
+    trap 'rm "$ignored_submodules"' EXIT
+
+    git config -f .gitmodules --get-regex 'submodule\..*\.ignore' \
+        | grep ' all$' \
+        | sed 's/\.ignore all$/.path/' \
+        | xargs -n 1 git config -f .gitmodules --get \
+            > "$ignored_submodules"
+
+    staged_ignored_submodules="$(
+        git status --porcelain \
+            | awk '/^M/ { print $2 }' \
+            | grep -F -f "$ignored_submodules"
+    )"
+    if [ $? -eq 0 ]; then
+        echo "The following submodules are configured to 'ignore=all':"
+        echo "$staged_ignored_submodules" | sed 's/^/\t/'
+        printf '%s' "Are you sure you want to add them? [y/N] "
+
+        exec < /dev/tty
+        read -r yn
+        case "$yn" in
+            y|Y|yes|YES|Yes) ;;
+            *)
+                echo "Aborting commit"
+                exit 1
+                ;;
+        esac
+    fi
+}
+
+check_ignored_submodules
+
+# --------------------------------------------------
+"$(dirname "$0")"/_run_local_hook "$(basename "$0")"
