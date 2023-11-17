@@ -5,6 +5,8 @@
 
 Neovim's issue #1496: [:! (bang) and system() are not interactive](https://github.com/neovim/neovim/issues/1496)
 
+Hofstadter's law: _It always takes longer than you expect, even when you take into account Hofstadter's Law._
+
 "spitzensparken blinkenlichten" - basically the opposite of monochromatic theme
 
 
@@ -16,5 +18,10 @@ Neovim's issue #1496: [:! (bang) and system() are not interactive](https://githu
 
 LSP diagnostics for all buffers
     :LspDocumentDiagnostics --ui=quickfix --servers=vim,efm --buffers=* --exclude-buffers=1,2
+
+Keyboard combinations:
+    Alt + m = µ
+    Alt + 7 = §
+    Alt + Shift + q = Ω
 
  vim:tw=78:ft=help:
