@@ -1,3 +1,4 @@
+syn sync clear makeCommandSync  " for syntaxMarkerFold
 
 call utils#syntax#rule_append("makeDefine", "fold")
 
