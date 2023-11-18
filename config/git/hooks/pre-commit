@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
 check_ignored_submodules () {
-    [ ! -f .gitmodules ] && return
-    grep -q '^\s*ignore\s*=\s*all\s*$' .gitmodules || return
+    [ ! -f .gitmodules ] && return 0
+    grep -q '^\s*ignore\s*=\s*all\s*$' .gitmodules || return 0
 
     ignored_submodules="$(mktemp)"
     trap 'rm "$ignored_submodules"' EXIT
@@ -26,7 +26,7 @@ check_ignored_submodules () {
         exec < /dev/tty
         read -r yn
         case "$yn" in
-            y|Y|yes|YES|Yes) ;;
+            y|Y|yes|YES|Yes) return 0 ;;
             *)
                 echo "Aborting commit"
                 exit 1

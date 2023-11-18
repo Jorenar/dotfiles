@@ -22,10 +22,12 @@ check_git_fmt_diff () {
                 exec < /dev/tty
                 read -r yn
                 case "$yn" in
-                    y|Y|yes|YES|Yes) exit 0 ;;
+                    y|Y|yes|YES|Yes) ;;
+                    *)
+                        echo "Aborting push"
+                        exit 1
+                        ;;
                 esac
-
-                exit 1
             fi
         fi
     done
