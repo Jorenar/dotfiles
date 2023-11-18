@@ -48,6 +48,9 @@
 [interactive]
     diffFilter = diff-highlight
 
+[log]
+    date = iso
+
 [core]
     hooksPath = ~/.local/config/git/hooks/_wrapper
 
