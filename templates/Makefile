@@ -97,6 +97,7 @@ dev: CFLAGS += \
 	-Walloca \
 	-Werror=vla-larger-than=0
 dev: CFLAGS += \
+	-Werror=parentheses \
 	-Werror=missing-braces \
 	-Werror=misleading-indentation
 dev: CFLAGS += \
