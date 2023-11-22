@@ -1,5 +1,121 @@
 #!/usr/bin/env sh
 
+repo_root="$(git rev-parse --show-toplevel)"
+hook_name="$(basename "$0")"
+
+v_hooks_dir="$repo_root"/.githooks # important: no trailing slash!
+v_hook="$v_hooks_dir"/"$hook_name"
+
+versioned_hook_cache_if_run () {
+    obj="${1:-$hook_name}"
+    val="$2"
+
+    key="versioned-hooks.$USER.$obj"
+
+    if [ -z "$val" ]; then
+        if [ "$obj" = "all" ]; then
+            obj="$v_hooks_dir"
+        else
+            obj="$v_hook"
+        fi
+        val="$(git ls-tree --format='%(objectname)' HEAD "$obj")"
+    fi
+
+    git config --local "$key" "$val"
+}
+
+versioned_hook_run () {
+    v_hooks_dir="$repo_root"/.githooks # important: no trailing slash!
+    v_hook="$v_hooks_dir"/"$hook_name"
+
+    if [ ! -x "$v_hook" ]; then
+        return 0
+    fi
+
+    key="versioned-hooks.'$USER'"
+
+    yn=y
+    while true; do
+        all_val="$(git config --get "$key".all 2> /dev/null)"
+        hook_val="$(git config --get "$key"."$hook_name" 2> /dev/null)"
+
+        [ "$all_val" = "never" ] && return 0
+        [ "$hook_val" = "never" ] && return 0
+
+        [ "$all_val" = "always" ] && break
+        [ "$hook_val" = "always" ] && break
+
+        dir_hash="$(git ls-tree --format='%(objectname)' HEAD "$v_hooks_dir")"
+        [ -n "$all_val" ] && [ "$dir_hash" = "$all_val" ] && break
+
+        hook_hash="$(git ls-tree --format='%(objectname)' HEAD "$v_hook")"
+        [ -n "$hook_val" ] && [ "$hook_hash" = "$hook_val" ] && break
+
+        yn= && break
+    done
+
+
+    while true; do
+        case "$yn" in
+            y|n|h|H|d|D|x|X|q) break ;;
+            '?')
+                cat << EOF
+y - run this hook
+n - don't run this versioned hook
+N - never run this versioned hook
+h - always run this versioned hook until its SHA1 changes
+H - always run this versioned hook
+d - always run all versioned hooks until SHA1 of any of them changes
+D - always run all versioned hooks
+q - abort operation
+? - print this help
+EOF
+                ;;
+            '') ;;
+            *) >&2 echo "Wrong option" ;;
+        esac
+        printf 'Run versioned %s githook? [y,n,h,H,d,D,q,?] ' "$hook_name"
+        exec < /dev/tty
+        read -r yn
+    done
+
+    case "$yn" in
+        h) versioned_hook_cache_if_run "$hook_name" ;;
+        H) versioned_hook_cache_if_run "$hook_name" always ;;
+        d) versioned_hook_cache_if_run all ;;
+        D) versioned_hook_cache_if_run all always ;;
+        N) versioned_hook_cache_if_run "$hook_name" never ;;
+    esac
+
+    case "$yn" in
+        n) ;;
+        q) echo "Aborting..."; exit 1 ;;
+        *) "$v_hook" "$@" || exit $?  ;;
+    esac
+
+    return 0
+}
+
+if [ "$1" = "WRAPPER" ]; then
+    if [ "$2" = "--cache-if-run" ]; then
+        versioned_hook_cache_if_run "$3" "$4"
+    fi
+    exit
+fi
+
+hook="$(dirname "$0")"/../"$hook_name"
+if [ -x "$hook" ]; then
+    "$hook" "$@" || exit $?
+fi
+
+versioned_hook_run "$@"
+
+hook="$repo_root"/.git/hooks/"$hook_name"
+if [ -x "$hook" ]; then
+    "$hook" "$@" || exit $?
+fi
+
+
 # HOOKS  |
 #$   awk '/^#~/ {print $2}' "$0" | xargs -n1 ln -s "$0"; exit
 #~ applypatch-msg
@@ -30,28 +146,3 @@
 #~ reference-transaction
 #~ sendemail-validate
 #~ update
-
-hook_name="$(basename "$0")"
-repo_root="$(git rev-parse --show-toplevel)"
-
-hook="$(dirname "$0")"/../"$hook_name"
-if [ -x "$hook" ]; then
-    "$hook" "$@" || exit $?
-fi
-
-hook="$repo_root"/.githooks/"$hook_name"
-if [ -x "$hook" ]; then
-    printf 'Do you want to run versioned %s githook? [y/N] ' "$hook_name"
-    exec < /dev/tty
-    read -r yn
-    case "$yn" in
-        y|Y|yes|YES|Yes)
-            "$hook" "$@" || exit $?
-            ;;
-    esac
-fi
-
-hook="$repo_root"/.git/hooks/"$hook_name"
-if [ -x "$hook" ]; then
-    "$hook" "$@" || exit $?
-fi
