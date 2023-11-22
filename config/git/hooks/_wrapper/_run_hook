@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-conf_key="versioned-hooks.user=$USER"
+conf_key="versioned-hooks.USER=$USER"
 
 repo_root="$(git rev-parse --show-toplevel)"
 hook_name="$(basename "$0")"

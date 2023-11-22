@@ -22,13 +22,13 @@ BINDIR   := $(BUILD)/bin
 DEPSDIR  := $(BUILD)/deps
 DUMPDIR  := $(BUILD)/dump
 
-CFLAGS   :=
-CPPFLAGS :=
+override CFLAGS   +=
+override CPPFLAGS +=
 
-LDFLAGS  :=
-LDLIBS   :=
+override LDFLAGS  +=
+override LDLIBS   +=
 
-SANS := address bounds leak signed-integer-overflow undefined unreachable
+override SANS += address bounds leak signed-integer-overflow undefined unreachable
 
 LIBS :=
 
