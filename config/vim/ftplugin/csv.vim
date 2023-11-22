@@ -8,4 +8,6 @@ vim.current.buffer.options['vartabstop'] = ','.join(str(max(ls) + 3) for ls in z
 EOPYTHON
 endfun
 
-call <SID>TabsLineUp()
+" call <SID>TabsLineUp()
+
+setlocal noexpandtab
