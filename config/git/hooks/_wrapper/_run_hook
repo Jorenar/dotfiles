@@ -1,30 +1,26 @@
 #!/usr/bin/env sh
 
+conf_key="versioned-hooks.user=$USER"
+
 repo_root="$(git rev-parse --show-toplevel)"
 hook_name="$(basename "$0")"
 
 v_hooks_dir="$repo_root"/.githooks # important: no trailing slash!
 v_hook="$v_hooks_dir"/"$hook_name"
 
-versioned_hook_cache_if_run () {
+versioned_hook__save_hash () {
     obj="${1:-$hook_name}"
     val="$2"
 
-    key="versioned-hooks.$USER.$obj"
-
     if [ -z "$val" ]; then
-        if [ "$obj" = "all" ]; then
-            obj="$v_hooks_dir"
-        else
-            obj="$v_hook"
-        fi
-        val="$(git ls-tree --format='%(objectname)' HEAD "$obj")"
+        [ "$obj" = "all" ] && fobj="$v_hooks_dir" || fobj="$v_hook"
+        val="$(git ls-tree --format='%(objectname)' HEAD "$fobj")"
     fi
 
-    git config --local "$key" "$val"
+    git config --local "$conf_key"."$obj" "$val"
 }
 
-versioned_hook_run () {
+versioned_hook__try_running () {
     v_hooks_dir="$repo_root"/.githooks # important: no trailing slash!
     v_hook="$v_hooks_dir"/"$hook_name"
 
@@ -32,18 +28,17 @@ versioned_hook_run () {
         return 0
     fi
 
-    key="versioned-hooks.'$USER'"
 
-    yn=y
+    yn="y"
     while true; do
-        all_val="$(git config --get "$key".all 2> /dev/null)"
-        hook_val="$(git config --get "$key"."$hook_name" 2> /dev/null)"
+        all_val="$(git config --get "$conf_key".all 2> /dev/null)"
+        hook_val="$(git config --get "$conf_key"."$hook_name" 2> /dev/null)"
 
-        [ "$all_val" = "never" ] && return 0
-        [ "$hook_val" = "never" ] && return 0
+        [ "$all_val" = "0" ] && return 0
+        [ "$hook_val" = "0" ] && return 0
 
-        [ "$all_val" = "always" ] && break
-        [ "$hook_val" = "always" ] && break
+        [ "$all_val" = "*" ] && break
+        [ "$hook_val" = "*" ] && break
 
         dir_hash="$(git ls-tree --format='%(objectname)' HEAD "$v_hooks_dir")"
         [ -n "$all_val" ] && [ "$dir_hash" = "$all_val" ] && break
@@ -65,8 +60,8 @@ n - don't run this versioned hook
 N - never run this versioned hook
 h - always run this versioned hook until its SHA1 changes
 H - always run this versioned hook
-d - always run all versioned hooks until SHA1 of any of them changes
-D - always run all versioned hooks
+d - always run ALL versioned hooks until SHA1 of any of them changes
+D - always run ALL versioned hooks
 q - abort operation
 ? - print this help
 EOF
@@ -80,11 +75,11 @@ EOF
     done
 
     case "$yn" in
-        h) versioned_hook_cache_if_run "$hook_name" ;;
-        H) versioned_hook_cache_if_run "$hook_name" always ;;
-        d) versioned_hook_cache_if_run all ;;
-        D) versioned_hook_cache_if_run all always ;;
-        N) versioned_hook_cache_if_run "$hook_name" never ;;
+        h) versioned_hook__save_hash "$hook_name" ;;
+        H) versioned_hook__save_hash "$hook_name" '*' ;;
+        d) versioned_hook__save_hash all ;;
+        D) versioned_hook__save_hash all '*' ;;
+        N) versioned_hook__save_hash "$hook_name" 0 ;;
     esac
 
     case "$yn" in
@@ -96,53 +91,43 @@ EOF
     return 0
 }
 
-if [ "$1" = "WRAPPER" ]; then
-    if [ "$2" = "--cache-if-run" ]; then
-        versioned_hook_cache_if_run "$3" "$4"
+run_hooks () {
+    hook="$(dirname "$0")"/../"$hook_name"
+    if [ -x "$hook" ]; then
+        "$hook" "$@" || exit $?
     fi
+
+    versioned_hook__try_running "$@"
+
+    hook="$repo_root"/.git/hooks/"$hook_name"
+    if [ -x "$hook" ]; then
+        "$hook" "$@" || exit $?
+    fi
+}
+
+wrapper () {
+    while :; do
+        case "$1" in
+            --save-hash)
+                versioned_hook__save_hash "$2" "$3"
+                shift 2
+                ;;
+            --generate-symlinks)
+                man githooks | grep '^   [^ ]\+' | xargs -n1 ln -s "$0"
+                ;;
+            -?*)
+                printf 'WARN: Unknown option (ignored): %s\n' "$1" >&2
+                ;;
+            *) break ;;
+        esac
+        shift
+    done
+}
+
+if [ "$(basename "$0")" = "_run_hook" ] || [ "$1" = "WRAPPER" ]; then
+    [ "$1" = "WRAPPER" ] && shift
+    wrapper "$@"
     exit
 fi
 
-hook="$(dirname "$0")"/../"$hook_name"
-if [ -x "$hook" ]; then
-    "$hook" "$@" || exit $?
-fi
-
-versioned_hook_run "$@"
-
-hook="$repo_root"/.git/hooks/"$hook_name"
-if [ -x "$hook" ]; then
-    "$hook" "$@" || exit $?
-fi
-
-
-# HOOKS  |
-#$   awk '/^#~/ {print $2}' "$0" | xargs -n1 ln -s "$0"; exit
-#~ applypatch-msg
-#~ commit-msg
-#~ fsmonitor-watchman
-#~ p4-changelist
-#~ p4-post-changelist
-#~ p4-pre-submit
-#~ p4-prepare-changelist
-#~ post-applypatch
-#~ post-checkout
-#~ post-commit
-#~ post-index-change
-#~ post-merge
-#~ post-receive
-#~ post-rewrite
-#~ post-update
-#~ pre-applypatch
-#~ pre-auto-gc
-#~ pre-commit
-#~ pre-merge-commit
-#~ pre-push
-#~ pre-rebase
-#~ pre-receive
-#~ prepare-commit-msg
-#~ proc-receive
-#~ push-to-checkout
-#~ reference-transaction
-#~ sendemail-validate
-#~ update
+run_hooks "$@"
