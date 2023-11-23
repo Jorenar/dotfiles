@@ -68,6 +68,9 @@ install_bulk () (
 )
 
 
+if [ "$XDG_CONFIG_HOME" != "$HOME"/.config ]; then
+    install  "$XDG_CONFIG_HOME"  @  "$HOME"/.config
+fi
 
 install  config/env/profile  %  "$HOME"/.profile
 install  templates/          @  "$XDG_TEMPLATES_DIR"
