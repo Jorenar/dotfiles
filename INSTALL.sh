@@ -3,7 +3,11 @@
 
 [ "$1" = "-f" ] && gf_force=1 || gf_force=0
 
-# helpers {{{
+
+. config/profile.d/10-pathmunge.sh
+. config/profile.d/20-variables.sh
+. config/user-dirs.dirs
+
 
 abspath () (
     if [ -d "$1" ]; then
@@ -18,15 +22,6 @@ abspath () (
         >&2 echo "abspath() is unable to operate on not exisiting paths"
     fi
 )
-
-# }}}
-
-
-cd "$(dirname "$(abspath "$0")")" || exit 1
-
-. config/env/variables
-. config/env/user-dirs.dirs
-
 
 install () (
     src="$1"
@@ -68,12 +63,25 @@ install_bulk () (
 )
 
 
+[ ! -s "$HOME"/.profile ] && cat > "$HOME"/.profile << 'EOF'
+# ~/.profile
+
+for profile in "$HOME"/.local/config/profile.d/*.sh; do
+    . "$profile"
+done
+
+export SHELL="$(command -v myshell.sh)"
+
+# ------------------------------------------------------------------------------
+EOF
+
+
 if [ "$XDG_CONFIG_HOME" != "$HOME"/.config ]; then
+    mkdir -p "$XDG_CONFIG_HOME"
     install  "$XDG_CONFIG_HOME"  @  "$HOME"/.config
 fi
 
-install  config/env/profile  %  "$HOME"/.profile
-install  templates/          @  "$XDG_TEMPLATES_DIR"
+install  templates/  @  "$XDG_TEMPLATES_DIR"
 
 install_bulk "$XDG_CONFIG_HOME" << EOL
 
@@ -87,7 +95,6 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     config/ctags/              @  ctags
     config/deno.json           @  deno.json
     config/dosbox.conf         @  dosbox/dosbox.conf
-    config/env                 @  env
     config/feh/                @  feh
     config/fish/               @  fish
     config/fonts.conf          @  fontconfig/fonts.conf
@@ -109,6 +116,7 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     config/OpenSCAD.conf       @  OpenSCAD/OpenSCAD.conf               -w
     config/pavucontrol.ini     %  pavucontrol.ini
     config/polybar             @  polybar/config
+    config/profile.d           @  profile.d
     config/python_config.py    @  python/config.py
     config/QuiteRss.ini        %  QuiteRss/QuiteRss.ini
     config/ranger.conf         @  ranger/rc.conf

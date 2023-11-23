@@ -1,78 +1,17 @@
-# vim: ft=sh
-
-# shellcheck disable=SC2155
-
-pathmunge() {
-    A=0  # append flag
-    E=0  # use `eval` flag
-    S=":" # separator
-
-    while getopts "aes:" option; do
-        case $option in
-            a) A=1         ;;
-            e) E=1         ;;
-            s) S="$OPTARG" ;;
-        esac
-    done
-
-    shift $((OPTIND - 1))
-    unset option OPTARG
-
-    if [ -z "$2" ]; then
-        var='PATH'
-        new="$1"
-    else
-        var="$1"
-        new="$2"
-    fi
-
-    eval val="\$$var"
-
-    case "$S$val$S" in
-        *"$S$new$S"*) ;;
-        "$S$S") updated="$new" ;;
-        *) [ "$A" = "0" ] && updated="$new$S$val" || updated="$val$S$new" ;;
-    esac
-
-    if [ -n "$updated" ]; then
-        if [ "$E" = "0" ]; then
-            export "$var"="$updated"
-        else
-            eval "$var='$updated'"
-        fi
-    fi
-
-    unset A S E var new val updated
-}
-
 # basics {{{1
 
-# Name
-export NAME="Jorengarenar"
-
-# HOST
 export HOSTNAME="${HOSTNAME:-$(uname -n)}"
-
-# Temp dir
 export TMPDIR="${TMPDIR:-/tmp}"
 
 # Virtual terminal number (if not set already by PAM)
 export XDG_VTNR="${XDG_VTNR:-$(tty | sed 's/[^0-9]*//g')}"
 
-# XDG Base Directory {{{1
+# XDG dirs {{{1
 
 export XDG_CACHE_HOME="$HOME/.local/cache"
 export XDG_CONFIG_HOME="$HOME/.local/config"
 export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_DATA_HOME="$HOME/.local/share"
-
-if [ -z "$XDG_RUNTIME_DIR" ]; then
-    XDG_RUNTIME_DIR="/run/user/$(id -u)"
-fi
-if [ ! -d "$XDG_RUNTIME_DIR" ]; then
-    XDG_RUNTIME_DIR="$TMPDIR/$USER-runtime"
-fi
-export XDG_RUNTIME_DIR
 
 if [ -f "$XDG_CONFIG_HOME"/user-dirs.dirs ]; then
     eval "$(sed 's/^[^#].*/export &/g;t;d' "$XDG_CONFIG_HOME"/user-dirs.dirs)"
@@ -80,7 +19,6 @@ fi
 
 # relocating dirs and files {{{1
 
-# history dir
 export HISTORY_DIR="$XDG_STATE_HOME/history"
 
 #  ~history {{{2
@@ -155,9 +93,18 @@ export ENV="$XDG_CONFIG_HOME/sh/shrc"  # sh, ksh
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 
 #  X11 {{{2
-export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+export XAUTHORITY="${XAUTHORITY:-"$XDG_RUNTIME_DIR/Xauthority"}"
 export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
 export XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
+
+# default programs {{{1
+
+export BROWSER="firefox"
+export EDITOR="vim"
+export MANPAGER="vim -M +MANPAGER -"
+export PAGER="less"
+export TERMINAL="xterm"
+export VISUAL="$EDITOR"
 
 # dev {{{1
 
@@ -196,43 +143,34 @@ if [ -n "$WSL_DISTRO_NAME" ]; then
     pathmunge "/mnt/c/Windows/System32/WindowsPowerShell/v1.0"
 fi
 
-# default programs {{{1
-
-export BROWSER="firefox"
-export EDITOR="vim"
-export MANPAGER="vim -M +MANPAGER -"
-export PAGER="less"
-export TERMINAL="xterm"
-export VISUAL="$EDITOR"
-
 # theme {{{1
 
 # GTK theme
-export GTK_THEME="$(grep gtk-theme-name "$GTK2_RC_FILES" | cut -d'"' -f 2)"
-gtk_theme_rc="$XDG_DATA_HOME/themes/$GTK_THEME/gtk-2.0/gtkrc"
-[ -f "$gtk_theme_rc" ] && export GTK2_RC_FILES="$GTK2_RC_FILES:$gtk_theme_rc"; unset gtk_theme_rc
+if [ -r "$GTK2_RC_FILES" ]; then
+    export GTK_THEME="$(grep gtk-theme-name "$GTK2_RC_FILES" | cut -d'"' -f 2)"
+
+    gtk_theme_rc="$XDG_DATA_HOME/themes/$GTK_THEME/gtk-2.0/gtkrc"
+    [ -f "$gtk_theme_rc" ] && \
+        export GTK2_RC_FILES="$GTK2_RC_FILES:$gtk_theme_rc"
+    unset gtk_theme_rc
+fi
 
 # Set Qt to use GTK theme
 export QT_QPA_PLATFORMTHEME=qt5gtk2
 
-# other {{{1
+# options {{{1
+
+export MOZ_USE_XINPUT2=1 # enable touchscreen in Firefox
+export WINEDEBUG="-all" # suppress Wine debug informations
+export LESS="-FXRS"
+export FZF_CTRL_T_OPTS="--preview '(cat {} || tree {}) 2> /dev/null | head -200'"
+
+# ~ {{{1
 
 # Japanese input
 export QT_IM_MODULE="fcitx"
 export XMODIFIERS="@im=fcitx"
 export GTK_IM_MODULE="fcitx"
 
-# less' default options
-export LESS="-FXRS"
-
 # Enable GPG agent
 export GPG_AGENT_INFO
-
-# Suppress Wine debug informations
-export WINEDEBUG="-all"
-
-# Enable touchscreen in Firefox
-export MOZ_USE_XINPUT2=1
-
-# fzf ctrl-t options
-export FZF_CTRL_T_OPTS="--preview '(cat {} || tree {}) 2> /dev/null | head -200'"
