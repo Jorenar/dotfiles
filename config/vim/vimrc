@@ -302,7 +302,6 @@ endfunction
 augroup LSP
   autocmd!
   autocmd User lsp_buffer_enabled call s:lsp_init()
-  runtime! lsp-servers.vim
 augroup END
 
 "   Surround {{{1
