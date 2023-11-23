@@ -88,9 +88,6 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     config/deno.json           @  deno.json
     config/dosbox.conf         @  dosbox/dosbox.conf
     config/env                 @  env
-    config/env/mimeapps.list   @  mimeapps.list
-    config/env/user-dirs.conf  @  user-dirs.conf
-    config/env/user-dirs.dirs  @  user-dirs.dirs
     config/feh/                @  feh
     config/fish/               @  fish
     config/fonts.conf          @  fontconfig/fonts.conf
@@ -103,6 +100,7 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     config/inputrc             @  readline/inputrc
     config/lesskey             @  lesskey
     config/mailcap             @  mailcap
+    config/mimeapps.list       @  mimeapps.list
     config/mpv/                @  mpv
     config/muttrc              @  mutt/muttrc
     config/myclirc             @  mycli/myclirc
@@ -127,6 +125,8 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     config/tmux/               @  tmux
     config/transmission.json   %  transmission-daemon/settings.json
     config/uncrustify/         @  uncrustify
+    config/user-dirs.conf      @  user-dirs.conf
+    config/user-dirs.dirs      @  user-dirs.dirs
     config/vim/                @  vim
     config/weechat/            @  weechat                              -w
     config/X11/                @  X11
