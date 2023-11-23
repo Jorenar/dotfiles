@@ -1,9 +1,0 @@
-
-XDG_CONFIG_HOME  DEFAULT="@{HOME}/.local/config"
-XDG_DATA_HOME    DEFAULT="@{HOME}/.local/share"
-XDG_STATE_HOME   DEFAULT="@{HOME}/.local/state"
-XDG_CACHE_HOME   DEFAULT="@{HOME}/.local/cache"
-
-ZDOTDIR          DEFAULT="${XDG_CONFIG_HOME}/zsh"
-
-XAUTHORITY       DEFAULT="${XDG_RUNTIME_DIR}/Xauthority"
