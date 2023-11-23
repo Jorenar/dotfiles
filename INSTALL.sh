@@ -89,6 +89,7 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     config/dosbox.conf         @  dosbox/dosbox.conf
     config/env                 @  env
     config/env/mimeapps.list   @  mimeapps.list
+    config/env/user-dirs.conf  @  user-dirs.conf
     config/env/user-dirs.dirs  @  user-dirs.dirs
     config/feh/                @  feh
     config/fish/               @  fish
