@@ -185,6 +185,11 @@
 	url = https://github.com/hackerb9/lsix.git
 	shallow = true
 	ignore = all
+[submodule "pathmunge.sh"]
+	path = extern/pathmunge.sh
+	url = https://github.com/Jorengarenar/pathmunge.sh.git
+	shallow = true
+	ignore = all
 [submodule "vmv"]
 	path = extern/vmv
 	url = https://github.com/Jorengarenar/vmv.git

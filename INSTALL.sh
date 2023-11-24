@@ -3,8 +3,12 @@
 
 [ "$1" = "-f" ] && gf_force=1 || gf_force=0
 
+if [ -x "$(command -v git)" ]; then
+    echo "Updating Git submodules"
+    git submodule update --init --recursive --remote
+fi
 
-. config/profile.d/10-pathmunge.sh
+. extern/pathmunge.sh/pathmunge.sh
 . config/profile.d/20-variables.sh
 . config/user-dirs.dirs
 
