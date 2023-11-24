@@ -5,7 +5,6 @@
 
 alias cheat="sh -c 'curl cheat.sh/\$1' -"
 alias del='gio trash'
-alias ls='ls.hidden -hF -w80 --time-style=iso -I. -I..'
 alias mnt='udisksctl mount -b'
 alias pass='EDITOR=vi pass'
 alias rm="rm -i"
@@ -17,3 +16,9 @@ alias wine-lnk='wine C:\\windows\\command\\start.exe /Unix'
 
 alias powershell.exe='powershell.exe -NoLogo'
 alias wsl.exe='wsl.exe --cd "~"'
+
+alias ls="$(
+    printf '%s %s' \
+        'ls.hidden -hF -w80 --time-style=iso -I. -I..' \
+        '$([ "$PWD" = "$HOME" ] && echo "-I.config -I.local -I.profile")'
+)"

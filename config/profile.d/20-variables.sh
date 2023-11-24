@@ -116,6 +116,8 @@ export DEVKITARM="$DEVKITPRO/devkitARM"
 export DEVKITPPC="$DEVKITPRO/devkitPPC"
 
 pathmunge "/usr/lib/ccache/bin"
+
+export C_INCLUDE_PATH
 pathmunge C_INCLUDE_PATH "$HOME/.local/lib/include"
 for v in ASAN_OPTIONS UBSAN_OPTIONS TSAN_OPTIONS; do
     export "$v"="abort_on_error=1:halt_on_error=1"

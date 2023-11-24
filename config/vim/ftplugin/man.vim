@@ -8,3 +8,4 @@ endif
 
 setlocal laststatus=1
 setlocal stl=\ %f
+setlocal ruler

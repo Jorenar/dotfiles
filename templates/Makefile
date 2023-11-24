@@ -101,6 +101,7 @@ dev: CFLAGS += \
 	-Werror=missing-braces \
 	-Werror=misleading-indentation
 dev: CFLAGS += \
+	-g \
 	-fno-omit-frame-pointer \
 	-fsanitize=$(subst $(eval) ,$(shell echo ","),$(SANS))
 dev: build

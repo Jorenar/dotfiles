@@ -1,4 +1,5 @@
 *.orig
+*.plist
 .cache
 .gdb_history
 .tmp/
