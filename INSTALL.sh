@@ -105,7 +105,7 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     config/gdbinit             @  gdb/gdbinit
     config/git/                @  git
     config/grip.py             @  grip/grip.py
-    config/gtkrc-2.0           @  gtk-2.0/gtkrc
+    config/gtk3-settings.ini   @  gtk-3.0/settings.ini
     config/htoprc              @  htop/htoprc                          -w
     config/i3/                 @  i3
     config/inputrc             @  readline/inputrc
@@ -155,8 +155,7 @@ install_bulk "$XDG_DATA_HOME" << EOL
 
     misc/desktop_entries/  @  applications/custom
 
-    fonts/   @  fonts
-    themes/  @  themes
+    fonts/  @  fonts
 
 EOL
 
