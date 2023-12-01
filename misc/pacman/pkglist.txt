@@ -100,7 +100,7 @@ ttf-dejavu
 wqy-zenhei
 
 alsa-utils
-pavucontrol
+pulsemixer
 pipewire-pulse
 
 dosbox
