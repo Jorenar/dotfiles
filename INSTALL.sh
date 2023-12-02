@@ -115,8 +115,6 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     config/newsboat            @  newsboat/config
     config/npmrc               @  npm/npmrc
     config/OpenSCAD.conf       @  OpenSCAD/OpenSCAD.conf               -w
-    config/pavucontrol.ini     %  pavucontrol.ini
-    config/polybar             @  polybar/config
     config/profile.d           @  profile.d
     config/python_config.py    @  python/config.py
     config/QuiteRss.ini        %  QuiteRss/QuiteRss.ini
