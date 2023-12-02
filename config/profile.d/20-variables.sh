@@ -69,12 +69,7 @@ export GOPATH="$XDG_DATA_HOME/go"
 
 #  Python {{{2
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/config.py"
-export PYTHONUSERBASE="$HOME/.local"
 export PYTHONPYCACHEPREFIX="$XDG_CACHE_HOME/__pycache__"
-export IPYTHONDIR="$XDG_DATA_HOME/ipython"
-
-#  pipx {{{2
-export PIPX_HOME="$HOME"/.local/opt/pipx
 export PIPX_BIN_DIR="$PIPX_HOME"/bin
 
 #  Ruby {{{2
@@ -120,10 +115,6 @@ done
 
 for r in "$XDG_DATA_HOME"/gem/ruby/*/bin; do
     [ -d "$r" ] && pathmunge "$r"
-done
-
-for p in "$PYTHONUSERBASE"/lib/python3*/site-packages; do
-    [ -d "$p" ] && pathmunge PYTHONPATH "$p"
 done
 
 # PATH {{{1
