@@ -91,7 +91,7 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
 
     config/aerc/               @  aerc
     config/bash/               @  bash
-    config/ccache.config       @  ccache/config
+    config/ccache.conf         @  ccache/ccache.conf
     config/chktexrc            @  .chktexrc
     config/commafeed.yml       @  commafeed.yml
     config/ctags/              @  ctags

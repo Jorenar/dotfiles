@@ -17,10 +17,7 @@ if [ -f "$XDG_CONFIG_HOME"/user-dirs.dirs ]; then
     eval "$(sed 's/^[^#].*/export &/g;t;d' "$XDG_CONFIG_HOME"/user-dirs.dirs)"
 fi
 
-# relocating dirs and files {{{1
-#  ~history {{{2
 
-export CARGO_HOME="$XDG_DATA_HOME/cargo"
 export CHKTEXRC="$XDG_CONFIG_HOME"
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
@@ -36,40 +33,14 @@ export VIMINIT="so $XDG_CONFIG_HOME/vim/vimrc"
 export W3M_DIR="$XDG_DATA_HOME/w3m"
 export WINEPREFIX="$XDG_DATA_HOME/wine"
 
-#  Arduino {{{2
-export ARDUINO_DIRECTORIES_DATA="$XDG_DATA_HOME/arduino"
-export ARDUINO_DIRECTORIES_DOWNLOADS="$XDG_CACHE_HOME/arduino"
-export ARDUINO_DIRECTORIES_USER="$HOME/.local/lib/arduino" # just treat it as directory for libraries
-
-#  Ccache {{{2
-export CCACHE_CONFIGPATH="$XDG_CONFIG_HOME/ccache/config"
-export CCACHE_DIR="$XDG_CACHE_HOME/ccache"
-
-#  Emscripten {{{2
-export EM_CACHE="$XDG_CACHE_HOME/emscripten"
-export EM_CONFIG="$XDG_CONFIG_HOME/emscripten"
-
-#  Golang {{{2
-export GOBIN="$HOME/.local/bin"
-export GOPATH="$XDG_DATA_HOME/go"
-
-#  Python {{{2
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/config.py"
 export PYTHONPYCACHEPREFIX="$XDG_CACHE_HOME/__pycache__"
 export PIPX_BIN_DIR="$PIPX_HOME"/bin
 
-#  Ruby {{{2
-export BUNDLE_USER_CACHE="$XDG_CACHE_HOME/bundle"
-export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME/bundle"
-export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME/bundle"
-
-#  Shells {{{2
 export BASH_COMPLETION_USER_FILE="$XDG_CONFIG_HOME/bash/completion"
 export ENV="$XDG_CONFIG_HOME/sh/shrc"  # sh, ksh
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 
-#  X11 {{{2
-export XAUTHORITY="${XAUTHORITY:-"$XDG_RUNTIME_DIR/Xauthority"}"
 export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
 export XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
 
@@ -84,23 +55,13 @@ export VISUAL="$EDITOR"
 
 # dev {{{1
 
-export VITASDK="/usr/local/vitasdk"
-pathmunge "$VITASDK/bin"
-
-export DEVKITPRO="/opt/devkitpro"
-export DEVKITARM="$DEVKITPRO/devkitARM"
-export DEVKITPPC="$DEVKITPRO/devkitPPC"
-
 pathmunge "/usr/lib/ccache/bin"
 
 export C_INCLUDE_PATH
 pathmunge C_INCLUDE_PATH "$HOME/.local/lib/include"
+
 for v in ASAN_OPTIONS UBSAN_OPTIONS TSAN_OPTIONS; do
     export "$v"="abort_on_error=1:halt_on_error=1"
-done
-
-for r in "$XDG_DATA_HOME"/gem/ruby/*/bin; do
-    [ -d "$r" ] && pathmunge "$r"
 done
 
 # PATH {{{1
@@ -119,18 +80,9 @@ fi
 
 # options {{{1
 
-export MOZ_USE_XINPUT2=1 # enable touchscreen in Firefox
-export WINEDEBUG="-all" # suppress Wine debug informations
+export FZF_CTRL_T_OPTS="--preview '(cat {} || tree {}) 2> /dev/null | head -200'"
+export GPG_AGENT_INFO # enable GPG agent
 export LESS="-FXRS"
 export LESSHISTFILE=-
-export FZF_CTRL_T_OPTS="--preview '(cat {} || tree {}) 2> /dev/null | head -200'"
-
-# ~ {{{1
-
-# Japanese input
-export QT_IM_MODULE="fcitx"
-export XMODIFIERS="@im=fcitx"
-export GTK_IM_MODULE="fcitx"
-
-# Enable GPG agent
-export GPG_AGENT_INFO
+export MOZ_USE_XINPUT2=1 # enable touchscreen in Firefox
+export WINEDEBUG="-all" # suppress Wine debug informations
