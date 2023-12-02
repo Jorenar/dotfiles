@@ -117,7 +117,6 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     config/ranger.conf         @  ranger/rc.conf
     config/sh/                 @  sh
     config/shellcheckrc        @  shellcheckrc
-    config/spicy_settings      @  spicy/settings
     config/sqliterc            @  sqlite3/sqliterc
     config/ssh_config          @  ssh/config
     config/ssr.conf            %  simplescreenrecorder/settings.conf
