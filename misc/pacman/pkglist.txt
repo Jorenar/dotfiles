@@ -147,4 +147,3 @@ virt-viewer
 # imapfilter
 # openscad-lsp-git
 # saleae-logic2
-# simplescreenrecorder

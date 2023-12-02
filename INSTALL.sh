@@ -118,7 +118,6 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     config/shellcheckrc        @  shellcheckrc
     config/sqliterc            @  sqlite3/sqliterc
     config/ssh_config          @  ssh/config
-    config/ssr.conf            %  simplescreenrecorder/settings.conf
     config/stalonetrayrc       @  stalonetrayrc
     config/telnetrc            @  .telnetrc
     config/tmux/               @  tmux

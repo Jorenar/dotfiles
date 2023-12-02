@@ -65,9 +65,6 @@ for_window [class="^Gimp$" title=" ? GIMP$"] floating disabled
 for_window [class="^Gimp$" title="Tool Options$"] floating enable
 for_window [class="^Gimp$" title="^Quit GIMP$"] floating enable
 
-# SimpleScreenRecorder
-for_window [class="SimpleScreenRecorder"] floating enable
-
 # BINDINGS {{{1
 
 # Multi-screen screenshots with scrot
