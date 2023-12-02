@@ -1,0 +1,19 @@
+while :; do
+    case "$1" in
+        -h|-\?|--help)
+            show_help
+            exit
+            ;;
+        --)
+            shift
+            break
+            ;;
+        -?*)
+            >&2 printf 'WARN: Unknown option (ignored): %s\n' "$1"
+            ;;
+        *)               # Default case: No more options, so break out of the loop.
+            break
+    esac
+
+    shift
+done
