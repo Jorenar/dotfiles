@@ -42,12 +42,13 @@ zip
 
 aerc
 curlftpfs
+gvfs
 imagemagick
+mutt
 ranger
 sshfs
 testdisk
 transmission-cli
-udisks2
 urlscan
 w3m
 
