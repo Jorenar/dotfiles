@@ -6,7 +6,3 @@ config/asciinema/install-id
 config/vim/doc/tags
 config/vim/pack/test
 config/vim/spell/*.spl
-
-config/weechat/irc.conf
-config/weechat/relay.conf
-config/weechat/sec.conf

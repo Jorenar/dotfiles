@@ -128,7 +128,6 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     config/user-dirs.conf      @  user-dirs.conf
     config/user-dirs.dirs      @  user-dirs.dirs
     config/vim/                @  vim
-    config/weechat/            @  weechat                              -w
     config/X11/                @  X11
     config/zathurarc           @  zathura/zathurarc
     config/zsh                 @  zsh
