@@ -114,7 +114,6 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     config/OpenSCAD.conf       @  OpenSCAD/OpenSCAD.conf               -w
     config/profile.d           @  profile.d
     config/python_config.py    @  python/config.py
-    config/QuiteRss.ini        %  QuiteRss/QuiteRss.ini
     config/ranger.conf         @  ranger/rc.conf
     config/sh/                 @  sh
     config/shellcheckrc        @  shellcheckrc
