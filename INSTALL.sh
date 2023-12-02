@@ -116,7 +116,6 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     config/python_config.py    @  python/config.py
     config/QuiteRss.ini        %  QuiteRss/QuiteRss.ini
     config/ranger.conf         @  ranger/rc.conf
-    config/Renviron            @  R/Renviron
     config/sh/                 @  sh
     config/shellcheckrc        @  shellcheckrc
     config/spicy_settings      @  spicy/settings

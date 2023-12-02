@@ -1,3 +1,0 @@
-R_PROFILE_USER = ${XDG_CONFIG_HOME}/r/.Rprofile
-R_LIBS_USER = ${HOME}/.local/lib/r
-R_HISTFILE = ${HISTORY_DIR}/r.Rhistory
