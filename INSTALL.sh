@@ -100,7 +100,6 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     config/deno.json           @  deno.json
     config/dosbox.conf         @  dosbox/dosbox.conf
     config/feh/                @  feh
-    config/fish/               @  fish
     config/fonts.conf          @  fontconfig/fonts.conf
     config/gdbinit             @  gdb/gdbinit
     config/git/                @  git
