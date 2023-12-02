@@ -1,3 +1,0 @@
-[record]
-command = bash --rcfile ${XDG_CONFIG_HOME}/asciinema/bashrc
-idle_time_limit = 2

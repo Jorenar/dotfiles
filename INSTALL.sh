@@ -90,7 +90,6 @@ install  templates/  @  "$XDG_TEMPLATES_DIR"
 install_bulk "$XDG_CONFIG_HOME" << EOL
 
     config/aerc/               @  aerc
-    config/asciinema/          @  asciinema
     config/bash/               @  bash
     config/ccache.config       @  ccache/config
     config/chktexrc            @  .chktexrc
