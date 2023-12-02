@@ -67,6 +67,7 @@ multilib-devel
 nasm
 openscad
 python
+python-pipx
 radare2
 shellcheck
 strace
@@ -145,6 +146,5 @@ virt-viewer
 # cura-bin
 # imapfilter
 # openscad-lsp-git
-# qt5gtk2
 # saleae-logic2
 # simplescreenrecorder

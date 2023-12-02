@@ -81,6 +81,10 @@ export PYTHONUSERBASE="$HOME/.local"
 export PYTHONPYCACHEPREFIX="$XDG_CACHE_HOME/__pycache__"
 export IPYTHONDIR="$XDG_DATA_HOME/ipython"
 
+#  pipx {{{2
+export PIPX_HOME="$HOME"/.local/opt/pipx
+export PIPX_BIN_DIR="$PIPX_HOME"/bin
+
 #  Ruby {{{2
 export BUNDLE_USER_CACHE="$XDG_CACHE_HOME/bundle"
 export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME/bundle"
