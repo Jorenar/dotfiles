@@ -23,7 +23,6 @@ export HISTORY_DIR="$XDG_STATE_HOME/history"
 
 #  ~history {{{2
 export LESSHISTFILE=-
-export MYCLI_HISTFILE="$HISTORY_DIR/mycli"
 export MYSQL_HISTFILE="$HISTORY_DIR/mysql"
 export NODE_REPL_HISTORY="$HISTORY_DIR/node_repl_history"
 export SQLITE_HISTORY="$HISTORY_DIR/sqlite"
