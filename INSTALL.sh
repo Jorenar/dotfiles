@@ -110,7 +110,6 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     config/mimeapps.list       @  mimeapps.list
     config/mpv/                @  mpv
     config/muttrc              @  mutt/muttrc
-    config/newsboat            @  newsboat/config
     config/OpenSCAD.conf       @  OpenSCAD/OpenSCAD.conf               -w
     config/profile.d           @  profile.d
     config/python_config.py    @  python/config.py
