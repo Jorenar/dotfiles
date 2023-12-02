@@ -31,7 +31,7 @@ command=[ "$(rfkill list bluetooth | awk '/Soft/ {print $3}')" = "no" ] && echo 
 interval=15
 
 [volume]
-command=echo $(amixer sget Master | awk -F"[][]" '/dB/ { print $4 " " $6 }' | sed -e 's/on//g' -e 's/off/[X]/g')
+command=echo "vol: $(pulsemixer --get-volume | cut -d' ' -f1)% $(test "$(pulsemixer --get-mute)" -eq 1 && echo '[X]')"
 interval=once
 signal=10
 

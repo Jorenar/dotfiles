@@ -165,9 +165,9 @@ bindsym $alt+grave exec sh -c "$dmenu_ws move container to workspace {}"
 # XF86 keyboard symbols {{{2
 
 # Audio controls
-bindsym XF86AudioLowerVolume exec amixer -q set Master 1dB- unmute
-bindsym XF86AudioMute        exec amixer -q set Master toggle
-bindsym XF86AudioRaiseVolume exec amixer -q set Master 1dB+ unmute
+bindsym XF86AudioLowerVolume exec pulsemixer --unmute --change-volume -1
+bindsym XF86AudioMute        exec pulsemixer --toggle-mute
+bindsym XF86AudioRaiseVolume exec pulsemixer --unmute --change-volume +1
 
 ## Send signal to change i3blocks
 bindsym --release XF86AudioLowerVolume exec pkill -SIGRTMIN+10 i3blocks

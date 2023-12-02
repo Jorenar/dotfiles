@@ -1,4 +1,4 @@
-# vim: ft=conf
+# vim: cms=#\ %s
 # $ cut -d# -f1 pkglist.txt | sudo pacman -S --needed -
 # Remember to review and (un)comment out as necessary before install!
 
@@ -89,18 +89,14 @@ xterm
 
 dmenu
 dunst
-elementary-icon-theme
-gtk-engine-murrine
 i3-wm
 i3blocks
-qt5ct
 scrot
 stalonetray
 
 ttf-dejavu
 wqy-zenhei
 
-alsa-utils
 pulsemixer
 pipewire-pulse
 
@@ -115,14 +111,14 @@ yt-dlp
 zathura
 zathura-pdf-mupdf
 
-audacity
-gimp
-inkscape
-shotcut
+# audacity
+# gimp
+# inkscape
+# shotcut
 
-bluez
-bluez-utils
-ethtool
+# bluez
+# bluez-utils
+# ethtool
 
 libvirt
 qemu-desktop
