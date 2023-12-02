@@ -1,6 +1,6 @@
 # vim: ft=sh
 
-echo "OLDPWD='$PWD'" > "$HISTORY_DIR/oldpwd"
+echo "OLDPWD='$PWD'" > "$XDG_STATE_HOME/OLDPWD"
 
 
 sed -E '/^\s*('"$(tr -d '\n' << 'EOF'

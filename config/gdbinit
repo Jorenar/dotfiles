@@ -18,8 +18,7 @@ set history save on
 
 python
 import os
-if 'HISTORY_DIR' in os.environ:
-    gdb.execute('set history filename ' + os.environ['HISTORY_DIR'] + '/gdb')
-end
+histfile = os.path.join(os.environ["XDG_STATE_HOME"], "gdb_history")
+gdb.execute('set history filename ' + histfile)
 
 # vim: ft=gdb

@@ -18,33 +18,19 @@ if [ -f "$XDG_CONFIG_HOME"/user-dirs.dirs ]; then
 fi
 
 # relocating dirs and files {{{1
-
-export HISTORY_DIR="$XDG_STATE_HOME/history"
-
 #  ~history {{{2
-export LESSHISTFILE=-
-export MYSQL_HISTFILE="$HISTORY_DIR/mysql"
-export NODE_REPL_HISTORY="$HISTORY_DIR/node_repl_history"
-export SQLITE_HISTORY="$HISTORY_DIR/sqlite"
-
-#  ~misc {{{2
 
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
 export CHKTEXRC="$XDG_CONFIG_HOME"
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
-export ELECTRUMDIR="$XDG_DATA_HOME/electrum"
-export ELINKS_CONFDIR="$XDG_CONFIG_HOME/elinks"
-export GIT_TEMPLATE_DIR="$XDG_CONFIG_HOME/git/template"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
 export ICEAUTHORITY="$XDG_STATE_HOME/ICEauthority"
 export IMAPFILTER_HOME="$XDG_CONFIG_HOME/imapfilter"
 export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
-export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
-export MYSQL_HOME="$XDG_CONFIG_HOME/mysql"
-export NUGET_PACKAGES="$XDG_CACHE_HOME/NuGetPackages"
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
 export RANDFILE="$XDG_CACHE_HOME/rnd"
+export SQLITE_HISTORY="$XDG_STATE_HOME/sqlite_history"
 export TEXMFHOME="$HOME/.local/lib/texmf"
 export VIMINIT="so $XDG_CONFIG_HOME/vim/vimrc"
 export W3M_DIR="$XDG_DATA_HOME/w3m"
@@ -136,6 +122,7 @@ fi
 export MOZ_USE_XINPUT2=1 # enable touchscreen in Firefox
 export WINEDEBUG="-all" # suppress Wine debug informations
 export LESS="-FXRS"
+export LESSHISTFILE=-
 export FZF_CTRL_T_OPTS="--preview '(cat {} || tree {}) 2> /dev/null | head -200'"
 
 # ~ {{{1

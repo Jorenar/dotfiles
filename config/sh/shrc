@@ -1,7 +1,7 @@
 #!sh
 
 export HISTSIZE=
-export HISTFILE="$HISTORY_DIR/$(basename "$SHELL")"
+export HISTFILE="$XDG_STATE_HOME/$(basename "$SHELL")_history"
 
 . "$XDG_CONFIG_HOME"/sh/aliases
 . "$XDG_CONFIG_HOME"/sh/prompt.sh
@@ -40,4 +40,4 @@ trap '
     [ -f "$lg" ] && . "$lg"
 ' EXIT
 
-[ -f "$HISTORY_DIR/oldpwd" ] && . "$HISTORY_DIR/oldpwd"
+[ -f "$XDG_STATE_HOME/OLDPWD" ] && . "$XDG_STATE_HOME/OLDPWD"

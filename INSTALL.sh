@@ -157,5 +157,3 @@ dcONF_PROFILE="$XDG_CONFIG_HOME/dconf/user"
 mkdir -p "$(dirname "$DCONF_PROFILE")" && \
     touch "$DCONF_PROFILE"
 # }}}
-
-mkdir -p "$HISTORY_DIR"

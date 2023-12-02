@@ -17,9 +17,6 @@ case "$EXE" in
         mkdir -p "$XDG_CONFIG_HOME/nvidia"
         ARGS="--config=$XDG_CONFIG_HOME/nvidia/rc.conf"
         ;;
-    sqlite3)
-        ARGS="-init $XDG_CONFIG_HOME/sqlite3/sqliterc"
-        ;;
     ssh|scp)
         ARGS="-F ${SSH_CONFIG:-$XDG_CONFIG_HOME/ssh/config}"
         ;;
@@ -42,7 +39,6 @@ exec "$EXE" $ARGS "$@"
 #~ firefox
 #~ nvidia-settings
 #~ scp
-#~ sqlite3
 #~ ssh
 #~ steam
 #~ telnet
