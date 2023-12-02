@@ -107,7 +107,6 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     config/i3/                 @  i3
     config/inputrc             @  readline/inputrc
     config/lesskey             @  lesskey
-    config/mimeapps.list       @  mimeapps.list
     config/mpv/                @  mpv
     config/muttrc              @  mutt/muttrc
     config/OpenSCAD.conf       @  OpenSCAD/OpenSCAD.conf               -w
