@@ -102,7 +102,6 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     config/fonts.conf          @  fontconfig/fonts.conf
     config/gdbinit             @  gdb/gdbinit
     config/git/                @  git
-    config/grip.py             @  grip/grip.py
     config/gtk3-settings.ini   @  gtk-3.0/settings.ini
     config/htoprc              @  htop/htoprc                          -w
     config/i3/                 @  i3

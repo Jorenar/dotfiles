@@ -38,7 +38,6 @@ export ELINKS_CONFDIR="$XDG_CONFIG_HOME/elinks"
 export GIT_TEMPLATE_DIR="$XDG_CONFIG_HOME/git/template"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
-export GRIPHOME="$XDG_CONFIG_HOME/grip"
 export ICEAUTHORITY="$XDG_STATE_HOME/ICEauthority"
 export IMAPFILTER_HOME="$XDG_CONFIG_HOME/imapfilter"
 export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
