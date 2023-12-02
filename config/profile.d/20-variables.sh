@@ -70,10 +70,6 @@ export EM_CONFIG="$XDG_CONFIG_HOME/emscripten"
 export GOBIN="$HOME/.local/bin"
 export GOPATH="$XDG_DATA_HOME/go"
 
-#  mailcap {{{2
-export MAILCAP="$XDG_CONFIG_HOME/mailcap" # elinks, w3m
-export MAILCAPS="$MAILCAP"   # Mutt, pine
-
 #  Python {{{2
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/config.py"
 export PYTHONUSERBASE="$HOME/.local"
