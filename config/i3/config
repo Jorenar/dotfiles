@@ -48,6 +48,9 @@ bindsym $super+v exec --no-startup-id vim-anywhere
 # passmenu (type password)
 bindsym $super+p exec --no-startup-id passmenu --type
 
+# dmenu
+bindsym $super+r exec --no-startup-id dmenu_path | dmenu | sh
+
 # WINDOWS RULES {{{1
 
 # KanjiTomo
@@ -66,9 +69,6 @@ for_window [class="^Gimp$" title="^Quit GIMP$"] floating enable
 for_window [class="SimpleScreenRecorder"] floating enable
 
 # BINDINGS {{{1
-
-# start dmenu
-bindsym --release Super_L exec --no-startup-id h2-dmenu-desktop
 
 # Multi-screen screenshots with scrot
 bindsym --release Print exec --no-startup-id "mkdir -p $XDG_DOWNLOAD_DIR && scrot $XDG_DOWNLOAD_DIR/screenshot-%Y%m%d_%H%M%S.png"
