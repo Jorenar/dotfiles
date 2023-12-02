@@ -1,7 +1,0 @@
-[Desktop Entry]
-Type=Application
-Encoding=UTF-8
-Name=NVIDIA Settings
-Comment=Configure NVIDIA X Server Settings
-Exec=nvidia-settings
-Icon=/usr/share/pixmaps/nvidia-settings.png

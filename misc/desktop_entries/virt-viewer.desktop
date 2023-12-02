@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=Virt Viewer
-Exec=virt-viewer %u
-Type=Application
-Terminal=false
-MimeType=x-scheme-handler/spice;x-scheme-handler/spice+unix;x-scheme-handler/spice+tls;application/x-virt-viewer;
-StartupNotify=true
-Categories=GTK;Network;RemoteAccess;
-Icon=virt-viewer
