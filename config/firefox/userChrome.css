@@ -38,11 +38,6 @@ tab[selected="true"] .tab-background {
   background-color: #333 !important;
 }
 
-menupopup {
-  --panel-background: #333 !important;
-  --panel-border-color: #222 !important;
-}
-
 .bookmark-item, .openintabs-menuitem {
   padding-top: 4px !important;
   padding-bottom: 4px !important;
