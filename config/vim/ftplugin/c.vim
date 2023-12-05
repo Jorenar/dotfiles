@@ -10,3 +10,6 @@ let c_space_errors = 1
 SetFormatProg "uncrustify -l C -c " . $XDG_CONFIG_HOME."/uncrustify/langs/c.cfg"
 
 compiler gcc
+
+let b:ale_c_clangtidy_extra_options =
+      \ '--checks=-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling'
