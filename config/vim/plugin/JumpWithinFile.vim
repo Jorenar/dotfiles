@@ -20,7 +20,7 @@ function! JumpWithinFile(back, forw) abort
   endwhile
 endfunction
 
-let g:JumpWithinFile = get(g:, "JumpWithinFile", 1)
+let g:JumpWithinFile = get(g:, "JumpWithinFile", 0)
 
 nnoremap <expr> <C-o>
       \   g:JumpWithinFile

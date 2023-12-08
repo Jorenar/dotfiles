@@ -5,8 +5,13 @@
 base
 linux
 linux-firmware
-posix-user-portability
 sudo
+
+posix
+posix-c-development
+posix-software-development
+posix-user-portability
+posix-xsi
 
 # Either:
 #   amd-ucode

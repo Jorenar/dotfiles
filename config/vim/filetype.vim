@@ -8,11 +8,11 @@ augroup filetypedetect
   au! BufRead,BufNewFile ~/.todo     setf todo
   au! BufRead,BufNewFile LICENSE     setf LICENSE
 
-  au! BufRead,BufNewFile *.conf
-        \   if search('^\[\a\+\]')
-        \ |   setf dosini
-        \ | else
-        \ |   setf conf
-        \ | endif
+  " au! FileType conf
+  "       \   if search('^\[\a\+\]')
+  "       \ |   setf dosini
+  "       \ | else
+  "       \ |   setf conf
+  "       \ | endif
 
 augroup END
