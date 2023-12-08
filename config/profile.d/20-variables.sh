@@ -85,4 +85,5 @@ export GPG_AGENT_INFO # enable GPG agent
 export LESS="-FXRS"
 export LESSHISTFILE=-
 export MOZ_USE_XINPUT2=1 # enable touchscreen in Firefox
+export QT_QPA_PLATFORMTHEME=qt5ct
 export WINEDEBUG="-all" # suppress Wine debug informations

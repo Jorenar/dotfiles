@@ -100,6 +100,8 @@ i3blocks
 scrot
 stalonetray
 
+qt5ct
+
 ttf-dejavu
 wqy-zenhei
 

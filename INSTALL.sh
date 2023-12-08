@@ -111,6 +111,7 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     config/OpenSCAD.conf       @  OpenSCAD/OpenSCAD.conf               -w
     config/profile.d           @  profile.d
     config/python_config.py    @  python/config.py
+    config/qt5ct.conf          @  qt5ct/qt5ct.conf                     -w
     config/ranger.conf         @  ranger/rc.conf
     config/sh/                 @  sh
     config/shellcheckrc        @  shellcheckrc
@@ -153,7 +154,7 @@ done
 
 # DCONF_PROFILE {{{
 #   prevents creation of ~/.dconf
-dcONF_PROFILE="$XDG_CONFIG_HOME/dconf/user"
+DCONF_PROFILE="$XDG_CONFIG_HOME/dconf/user"
 mkdir -p "$(dirname "$DCONF_PROFILE")" && \
     touch "$DCONF_PROFILE"
 # }}}
