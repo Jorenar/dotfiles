@@ -6,20 +6,30 @@ set wrap=100
 set smart_wrap
 set markers = no
 
+set menu_scroll
+set pager_index_lines = 5
+
 set display_filter = \
   "sed -r \"s/^Date:(.*)/date +'Date: %a, %Y-%m-%d %H:%M:%S %z' -d '\\1'/e\""
 
 color hdrdefault cyan default
 
-bind attach,pager g noop
-bind attach,pager f noop
+bind attach,index,pager g noop
+bind attach,index,pager f noop
+
+bind index  J   next-entry
+bind index  K   previous-entry
+bind index  j   next-entry
+bind index  k   previous-entry
+bind index  gg  first-entry
+bind index  G   last-entry
 
 bind pager  j   next-line
 bind pager  k   previous-line
-bind pager  g   top
+bind pager  gg  top
 bind pager  G   bottom
 
 # macro index V :unset\ wait_key<Enter>v|cat<Enter>qq
 
-macro pager q ix
-push <Enter>
+# macro pager q ix
+# push <Enter>
