@@ -462,6 +462,7 @@ set keywordprg=:Man
 let g:abolish_save_file = $XDG_DATA_HOME."/vim/abolish.vim"
 let g:EditorConfig_enable_for_new_buf = 1
 let g:termdebug_wide = 1
+let g:traces_abolish_integration = 1
 let g:traces_preview_window = "10new"
 
 let g:miniSnip_extends = {
