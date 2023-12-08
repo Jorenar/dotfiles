@@ -67,6 +67,11 @@
 	url = https://github.com/mbbill/undotree.git
 	shallow = true
 	ignore = all
+[submodule "vim-abolish"]
+	path = config/vim/pack/extern/start/vim-abolish
+	url = https://github.com/tpope/vim-abolish.git
+	shallow = true
+	ignore = all
 [submodule "vim-bookmarks"]
 	path = config/vim/pack/extern/start/vim-bookmarks
 	url = https://github.com/MattesGroeger/vim-bookmarks.git

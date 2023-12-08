@@ -459,9 +459,10 @@ au VimEnter * com! -bang UseVimball
 
 set keywordprg=:Man
 
-let g:termdebug_wide = 1
+let g:abolish_save_file = $XDG_DATA_HOME."/vim/abolish.vim"
 let g:EditorConfig_enable_for_new_buf = 1
-let g:traces_preview_window = "new"
+let g:termdebug_wide = 1
+let g:traces_preview_window = "10new"
 
 let g:miniSnip_extends = {
       \   "arduino"  : [ "cpp", "c" ],
