@@ -1,15 +1,14 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
-id="$(xinput --list | awk -F'[^0-9]*' '/AT Translated Set 2 keyboard/ {printf $3}')"
+id="$(xinput | awk -F'[^0-9]*' '/AT Translated Set 2 keyboard/ {printf $3}')"
 
-if ! grep -Fxqs "keyboard_disabled" "$TMPFLAGS"; then
-    notify-send  "Disabling Keyboard" \ "OFF - Keyboard disconnected";
+if [ "$(xinput list-props "$id" | awk '/Device Enabled/ { print $4 }')" -eq 1 ]
+then
+    notify-send  "Disabling Keyboard"
     echo "disable keyboard"
     xinput disable "$id"
-    echo 'keyboard_disabled' > "$TMPFLAGS"
 else
-    notify-send  "Enabling keyboard" \ "ON - Keyboard connected";
+    notify-send  "Enabling keyboard"
     echo "enable keyboard"
     xinput enable "$id"
-    sed -i '/keyboard_disabled/d' "$TMPFLAGS"
 fi
