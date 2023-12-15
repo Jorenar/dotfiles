@@ -46,7 +46,7 @@ endfunction
 
 augroup FOLDS_CACHED
   autocmd!
-  autocmd FileType * let b:FoldsCached_fdm = &fdm |
+  autocmd BufWinEnter * let b:FoldsCached_fdm = &fdm |
         \ if &fdm =~ '\v(syntax|expr)' | setl fdm=manual | endif
 
   autocmd BufReadPost ?* call FoldsCached(0)
