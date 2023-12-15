@@ -7,24 +7,18 @@ import subprocess
 import configparser
 
 config = configparser.ConfigParser(interpolation=None)
-config.read(os.path.join(os.environ["XDG_CONFIG_HOME"], "aerc", "accounts.conf"))
+config.read(os.path.join(os.environ["XDG_CONFIG_HOME"], "check_imap.ini"))
 
 count = []
 for section in config.sections():
-    source = config[section]["source"]
-    scheme, source = source.split("://")
+    acc = config[section]
 
-    if not scheme.startswith("imap"):
-        continue
+    user = acc["user"]
+    host = acc["host"]
 
-    user, source = source.split('@')
-    user = user.replace('%40', '@')
-    source = source.split(':')
+    port = acc["port"] if "port" in acc else 993
 
-    host = source[0]
-    port = 993 if len(source) == 1 else source[1]
-
-    passcmd = config[section]["source-cred-cmd"]
+    passcmd = acc["passcmd"]
     passwd = None
     try:
         passwd = subprocess.check_output(passcmd, shell=True, timeout=1)
