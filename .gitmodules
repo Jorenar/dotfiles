@@ -22,11 +22,6 @@
 	url = https://github.com/Jorengarenar/fauxClip.git
 	shallow = true
 	ignore = all
-[submodule "GuiTermColors.vim"]
-	path = config/vim/pack/extern/start/GuiTermColors.vim
-	url = https://github.com/Jorengarenar/GuiTermColors.vim.git
-	shallow = true
-	ignore = all
 [submodule "gv.vim"]
 	path = config/vim/pack/extern/start/gv.vim
 	url = https://github.com/junegunn/gv.vim.git
