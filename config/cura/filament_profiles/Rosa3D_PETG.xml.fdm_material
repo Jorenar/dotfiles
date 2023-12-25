@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fdmmaterial xmlns="http://www.ultimaker.com/material" version="1.3">
+  <metadata>
+    <name>
+      <brand>Rosa 3D</brand>
+      <material>PETG</material>
+      <color>Generic</color>
+    </name>
+    <description>
+      The PET-G Standard filament by ROSA3D offers easy printing which is comparable to PLA.
+      It is dedicated to users dealing with both amateur and professional 3D printing.
+
+      The details made using PET-G Standard are characterised by great precision, adhesion to the bed, no odour, and low moulding shrinkage.
+
+      Printouts from PET-G Standard feature strong chemical resistance.
+      They can be subjected to sandblasting, drilling, sawing, sanding, cutting or painting without damage to their integral structure.
+
+      The PET-G Standard filament is manufactured from food-grade materials.
+      However, in case of products that come into contact with food, certification lies with the manufacturer of the final product.
+    </description>
+    <version>1</version>
+    <GUID>5706bb91-39b1-4002-b1c7-2634200f6d8e</GUID>
+  </metadata>
+  <properties>
+    <diameter>1.75</diameter>
+    <density>1.29</density>
+  </properties>
+  <settings>
+    <setting key="print temperature">235.0</setting>
+    <setting key="print cooling">95.0</setting>
+    <setting key="heated bed temperature">70.0</setting>
+  </settings>
+</fdmmaterial>
