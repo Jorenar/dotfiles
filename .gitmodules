@@ -162,11 +162,6 @@
 	url = https://github.com/paulirish/git-open.git
 	shallow = true
 	ignore = all
-[submodule "ls.hidden"]
-	path = extern/ls.hidden
-	url = https://github.com/Jorengarenar/ls.hidden.git
-	shallow = true
-	ignore = all
 [submodule "lsix"]
 	path = extern/lsix
 	url = https://github.com/hackerb9/lsix.git
