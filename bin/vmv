@@ -1,1 +1,99 @@
-../extern/vmv/vmv
+#!/usr/bin/env sh
+
+# SPDX-License-Identifier:  MIT
+# Copyright 2023 Jorengarenar
+
+
+die () {
+    >&2 echo "Error:" "$@"
+    exit 1
+}
+
+warn () {
+    >&2 echo "Warning:" "$@"
+}
+
+ls_flags=
+
+usage () {
+    cat << EOU
+Usage: vmv [OPTION...] [FILE...]
+
+Options:
+    -A    do not ignore entries starting with .
+          (but do not list implied . and ..)
+    -h    Display this message and exit
+EOU
+    exit
+}
+
+while getopts "Ah" option; do
+    case $option in
+        A) ls_flags="$ls_flags -A" ;;
+        h) usage ;;
+        *) ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+export TMPDIR="${TMPDIR:-/tmp}/vmv"
+mkdir -p "$TMPDIR"
+
+dir="$(mktemp -d)"
+in="$dir/in"
+out="$dir/out"
+temp="$dir/temp"
+
+trap '{
+    rm "$dir"/*
+    rmdir "$dir"
+    rmdir "$TMPDIR" 2> /dev/null
+}' EXIT
+
+if [ $# -ne 0 ]; then
+    for f in "$@"; do
+        echo "$f" >> "$in"
+    done
+else
+    # shellcheck disable=SC2086
+    ls -1 $ls_flags > "$in"
+fi
+
+cp "$in" "$out"
+"${VISUAL:-${EDITOR:-vi}}" "$out" || exit 1
+
+
+if [ "$(wc -l < "$in")" != "$(wc -l < "$out")" ]; then
+    die "Number of files changed. Did you delete a line by accident? Aborting"
+fi
+
+if [ "$(sort -u "$out" | wc -l)" != "$(wc -l < "$out")" ]; then
+    die "Name clashes. Aborting
+  Duplicates:
+$(uniq -d "$out" | sed 's/^/    /')"
+fi
+
+
+suffix="vmv_temp"
+
+IFS='	'
+
+paste "$in" "$out" | while read -r src dst; do
+    [ "$src" = "$dst" ] && continue
+    dst="$(echo "$dst" | sed "s,^~,$HOME,")"
+    dst="$dst"."$suffix"
+    mkdir -p "$(dirname -- "$dst")"
+    mv "$src" "$dst"
+    echo "$dst" >> "$temp"
+done
+
+[ ! -s "$temp" ] && exit
+
+while read -r file; do
+    dst="${file%."$suffix"}"
+    if [ -e "$dst" ]; then
+        warn "Destination '$dst' already exists, keeping as '$file'"
+        continue
+    fi
+    mv "$file" "$dst"
+done < "$temp"

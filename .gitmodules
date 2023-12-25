@@ -190,11 +190,3 @@
 	url = https://github.com/Jorengarenar/pathmunge.sh.git
 	shallow = true
 	ignore = all
-[submodule "vmv"]
-	path = extern/vmv
-	url = https://github.com/Jorengarenar/vmv.git
-	shallow = true
-	ignore = all
-
-# ~ {{{1
-#
