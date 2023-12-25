@@ -23,6 +23,8 @@ Jorengarenar
 JS
 keypress
 kramdown
+memleak
+memleaks
 microcontrollers
 MSVC
 MySQL
@@ -36,7 +38,9 @@ SQLite
 stderr
 stdout
 steampunk
+taggable
 TODO
+unaddressable
 VimL
 VLA
 VLA
@@ -45,4 +49,6 @@ VLAs
 WG14
 whitespace
 www
+youngling
+younglings
 Łukasiewicz
