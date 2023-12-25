@@ -1,0 +1,92 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier:  MIT
+# Copyright 2023 Jorengarenar
+
+dir="/"
+out="rootfs.tar.gz"
+
+sudo=
+tar_args=
+
+f_exclude=0
+excludes=
+exclude_list="$(cat << EOE
+  ./boot
+  ./dev/*
+  ./media/*
+  ./mnt/*
+  ./proc/*
+  ./run/*
+  ./sys/*
+  ./tmp/*
+  ./tmp/.*
+  '*/cache/*'
+  '*/cache/.*'
+  '*/.cache/*'
+  '*/.cache/.*'
+  '*/log/*'
+  '*/log/.*'
+  '*/.log/*'
+  '*/.log/.*'
+  '*/tmp/*'
+  '*/tmp/.*'
+  '*/.tmp/*'
+  '*/.tmp/.*'
+EOE
+)"
+
+usage () {
+    cat << EOU
+Usage: rootfs2tar [OPTION...]
+
+Options:
+    -h         display this message and exit
+    -C DIR     change to directory DIR (default: '/')
+    -f FILE    use FILE as output (default: './rootfs.tar.gz')
+    -s         use sudo to archive and change tarball ownership back to \$USER
+               (useful when \$USER lacks permissions to read some system files)
+    -e         run with --exclude arguments
+    -E FILE    file containing list of patterns for '--exclude=' flag
+    -x ARGS    additional arguments passed to tar (default: '')
+                 example:
+                   $ rootfs2tar -x '-h --exclude=./home --exclude-vcs'
+
+Default list for '--exlude=' (when run with -e, but without -E option):
+$exclude_list
+
+EOU
+    exit
+}
+
+while getopts "hC:f:seE:x:" option; do
+    case "$option" in
+        h) usage ;;
+        C) dir="$OPTARG" ;;
+        f) out="$OPTARG" ;;
+        s) sudo="sudo" ;;
+        e) f_exclude=1 ;;
+        E) exclude_list="$(cat "$OPTARG")" || exit 1 ;;
+        x) tar_args="$OPTARG" ;;
+        *) exit 1 ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+if [ $f_exclude -eq 1 ]; then
+    excludes="$(echo "$exclude_list" | sed 's/^\s*/--exclude=/')"
+fi
+
+# shellcheck disable=SC2086
+eval $sudo tar \
+    -vzcp --xattrs  \
+    -C "$dir" \
+    -f "$out" \
+    --xform 's:^./::' --show-stored-names \
+    --exclude="$out"  \
+    $excludes \
+    $tar_args \
+    . || exit 1
+
+if [ -n "$sudo" ] && [ -s "$out" ]; then
+    sudo chown "$USER:$USER" "$out"
+fi
