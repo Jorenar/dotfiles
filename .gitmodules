@@ -157,14 +157,6 @@
 	url = https://github.com/christoomey/vim-tmux-navigator.git
 	shallow = true
 	ignore = all
-[submodule "VisInsert.vim"]
-	path = config/vim/pack/extern/start/VisInsert.vim
-	url = https://github.com/Jorengarenar/VisInsert.vim.git
-	shallow = true
-	ignore = all
-
-# extern {{{1
-
 [submodule "git-diff-blame"]
 	path = extern/git-diff-blame
 	url = https://github.com/dmnd/git-diff-blame.git
