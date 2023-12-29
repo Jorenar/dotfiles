@@ -108,13 +108,11 @@ wqy-zenhei
 pulsemixer
 pipewire-pulse
 
-dosbox
 feh
 firefox
 libreoffice-still
 mpv
 simple-scan
-steam
 yt-dlp
 zathura
 zathura-pdf-mupdf
