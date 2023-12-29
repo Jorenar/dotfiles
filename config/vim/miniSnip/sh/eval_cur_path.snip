@@ -1,0 +1,21 @@
+? Determine the path to a sourced shell script from within the script
+current_file_path () {
+	# usage: eval "$(current_file_path)"
+
+	if [ -n "$BASH_VERSION" ]; then
+		t='${BASH_SOURCE[0]}'
+	elif [ -n "$ZSH_VERSION" ]; then
+		t='${(%):-%x}'
+		# t="${funcfiletrace[1]%:*}"
+	elif [ -n "$TMOUT" ]; then
+		t='${.sh.file}'
+	elif [ -x "$(command -v lsof)" ]; then
+		t="$(lsof -p $$ -Fn0 | tail -1 | tr -d '\0')"
+		t="${t#n}"
+	else
+		>&2 echo "current_file_path: unable to determine path"
+		return 1
+	fi
+
+	echo "echo \"$t\""
+}

@@ -1,0 +1,5 @@
+? Function to resolve symlink a POSIX way
+resolve_symlink () {
+	t="$(ls -dl "$1")"
+	echo "${t#*"$t"-> }"
+}
