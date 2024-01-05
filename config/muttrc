@@ -8,6 +8,7 @@ set markers = no
 
 set menu_scroll
 set pager_index_lines = 5
+set sort = reverse-date
 
 set display_filter = \
   "sed -r \"s/^Date:(.*)/date +'Date: %a, %Y-%m-%d %H:%M:%S %z' -d '\\1'/e\""

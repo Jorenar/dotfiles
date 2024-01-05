@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-# tee "${TMPDIR:-/tmp}/aerc.html"
-# $BROWSER "${TMPDIR:-/tmp}/aerc.html" & disown
-
-$BROWSER "data:text/html;base64,$(base64 -w 0 <&0)" & disown

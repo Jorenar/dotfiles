@@ -1,0 +1,4 @@
+X-Mailer: aerc {{version}}
+
+On {{dateFormat (.OriginalDate | toLocal) "2006-01-02 15:04 MST"}}, {{(index .OriginalFrom 0).Name}} <{{(index .OriginalFrom 0).Address}}> wrote:
+{{trimSignature .OriginalText | quote}}

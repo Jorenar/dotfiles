@@ -42,6 +42,9 @@ bindsym Ctrl+$alt+t exec --no-startup-id ${TERMINAL:-xterm}
 # Firefox
 bindsym $super+w exec firefox
 
+# aerc
+bindsym Ctrl+$alt+m exec --no-startup-id ${TERMINAL:-xterm} -T aerc aerc
+
 # vim-anywhere
 bindsym $super+v exec --no-startup-id vim-anywhere
 

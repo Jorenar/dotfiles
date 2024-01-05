@@ -11,8 +11,8 @@ command=echo "RSS: $(curl $COMMAFEED_URL/rest/category/unreadCount?apiKey=$COMMA
 interval=300
 
 [email]
-command=imapfilter > /dev/null; echo "Email: $(aerc_check_new.py)"
-interval=300
+command=echo "Email: $(for d in $(awk '/^Path / { print $2 }' $XDG_CONFIG_HOME/isyncrc); do sh -c 'find '"$d"'INBOX -type f -not \( -name "*S" -o -name ".*" \)' | wc -l; done | paste -sd "," -)"
+interval=90
 
 [cpu-temp]
 command=sensors | awk '/Tctl/ {print $2}'
@@ -31,7 +31,7 @@ command=[ "$(rfkill list bluetooth | awk '/Soft/ {print $3}')" = "no" ] && echo 
 interval=15
 
 [volume]
-command=echo "vol: $(pulsemixer --get-volume | cut -d' ' -f1)% $(test "$(pulsemixer --get-mute)" -eq 1 && echo '[X]')"
+command=echo "vol: $(pulsemixer --get-volume | cut -d' ' -f1)%$(test "$(pulsemixer --get-mute)" -eq 1 && echo ' [X]')"
 interval=once
 signal=10
 

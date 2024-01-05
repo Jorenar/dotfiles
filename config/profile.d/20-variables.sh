@@ -61,8 +61,11 @@ export C_INCLUDE_PATH
 pathmunge C_INCLUDE_PATH "$HOME/.local/lib/include"
 
 for v in ASAN_OPTIONS UBSAN_OPTIONS TSAN_OPTIONS; do
-    export "$v"="abort_on_error=1:halt_on_error=1"
+    pathmunge "$v" "abort_on_error=1"
+    pathmunge "$v" "halt_on_error=1"
 done
+
+pathmunge ASAN_OPTIONS detect_stack_use_after_return=1
 
 # PATH {{{1
 
