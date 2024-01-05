@@ -118,6 +118,7 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     config/sqliterc            @  sqlite3/sqliterc
     config/ssh_config          @  ssh/config
     config/stalonetrayrc       @  stalonetrayrc
+    config/systemd/            @  systemd
     config/telnetrc            @  .telnetrc
     config/tmux/               @  tmux
     config/transmission.json   %  transmission-daemon/settings.json

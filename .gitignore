@@ -5,3 +5,5 @@ config/aerc/accounts.conf
 config/vim/doc/tags
 config/vim/pack/test
 config/vim/spell/*.spl
+
+config/systemd/user/*.wants

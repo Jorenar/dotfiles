@@ -1,0 +1,10 @@
+[Unit]
+Description=CommaFeed
+
+[Service]
+Type=simple
+RemainAfterExit=yes
+ExecStart=java -jar %h/.local/opt/java.jar.d/commafeed.jar server ${XDG_CONFIG_HOME}/commafeed.yml
+
+[Install]
+WantedBy=default.target
