@@ -1,7 +1,5 @@
 # vim: noet
 
-# Vim plugins {{{1
-
 [submodule "ale"]
 	path = config/vim/pack/extern/start/ale
 	url = https://github.com/dense-analysis/ale.git
@@ -152,6 +150,12 @@
 	url = https://github.com/christoomey/vim-tmux-navigator.git
 	shallow = true
 	ignore = all
+[submodule "wrapwidth"]
+	path = config/vim/pack/extern/start/wrapwidth
+	url = https://github.com/rickhowe/wrapwidth.git
+	shallow = true
+	ignore = all
+
 [submodule "git-diff-blame"]
 	path = extern/git-diff-blame
 	url = https://github.com/dmnd/git-diff-blame.git
