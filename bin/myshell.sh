@@ -4,7 +4,7 @@ if [ "$#" -eq 0 ]; then
     while [ -x "$(command -v tmux)" ]; do
         [ -n "$TMUX" ] && break
         [ -z "$DISPLAY" ] && break
-        [ -n "$SSH_CLIENT" ] && break
+        # [ -n "$SSH_CLIENT" ] && break
 
         # shellcheck disable=SC2155
         export SHELL="$(command -v "$0")"
