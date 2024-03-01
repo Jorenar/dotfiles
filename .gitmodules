@@ -152,7 +152,7 @@
 	ignore = all
 [submodule "wrapwidth"]
 	path = config/vim/pack/extern/start/wrapwidth
-	url = https://github.com/rickhowe/wrapwidth.git
+	url = https://github.com/Jorengarenar/wrapwidth.git
 	shallow = true
 	ignore = all
 

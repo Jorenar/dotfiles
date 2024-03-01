@@ -14,7 +14,7 @@ syn region vimFoldWhile
       \ skip=+"\%(\\"\|[^"]\)\{-}\%("\|$\)\|'[^']\{-}'+ "comment to fix highlight on wiki'
 
 syn region vimFoldFor
-      \ start="\v<for>%(\s*\n\s*\\)?\s*.+%(\s*\n\s*\\\s*)?\s*<in>"
+      \ start="\v(<for>%(\s*\n\s*\\)?\s*.+%(\s*\n\s*\\\s*)?\s*<in>)@<=."
       \ end="\<endfo\%[r]\>"
       \ transparent fold
       \ keepend extend

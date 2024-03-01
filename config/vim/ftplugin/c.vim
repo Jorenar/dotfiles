@@ -11,5 +11,7 @@ SetFormatProg "uncrustify -l C -c " . $XDG_CONFIG_HOME."/uncrustify/langs/c.cfg"
 
 compiler gcc
 
+let b:ale_c_clangcheck_options =
+      \ ' --extra-arg=-Xclang --extra-arg=-analyzer-output=text --extra-arg=-fno-color-diagnostics'
 let b:ale_c_clangtidy_extra_options =
       \ '--checks=-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling'

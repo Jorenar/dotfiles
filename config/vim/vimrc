@@ -482,8 +482,8 @@ let g:qf_mapping_ack_style = 1
 let g:qf_loclist_window_bottom = 0
 
 let g:wrapwidth_hl = "Ignore"
+let g:wrapwidth_TextChangedI = 1
 autocmd BufWinEnter * exec "Wrapwidth" (&tw - 1)
-autocmd TextChangedI * if exists("b:wrapwidth") | Wrapwidth! | endif
 
 " }}}1
 
