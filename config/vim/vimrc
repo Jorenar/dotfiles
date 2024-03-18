@@ -129,7 +129,7 @@ set number
 set shortmess+=I shortmess-=S
 set signcolumn=yes
 set splitbelow splitright
-set virtualedit=all
+set virtualedit=block
 set visualbell t_vb=
 
 nnoremap <C-l> :nohlsearch<C-r>=has('diff')?'<bar>diffupdate':''<CR><CR><C-l>
