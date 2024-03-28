@@ -3,6 +3,7 @@ setl fo+=w
 setl textwidth=71
 setl colorcolumn=+2
 setl nomodeline
+setl noexpandtab
 autocmd BufWinEnter <buffer> ++once setlocal syntax=mail
 
 let b:trimWhitespace_pattern = ' \zs\s\+$'
