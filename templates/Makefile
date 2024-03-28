@@ -1,15 +1,12 @@
 # SPDX-License-Identifier:  MIT
-# Copyright 2023 Jorengarenar
+# Copyright 2023-2024 Jorengarenar
 # Makefile dialect: GNU
 
 # ~ ----------------------------------------------------------------------- {{{1
 
-.PHONY: default dev debug build clean stderr compile_commands.json
+.PHONY: regular dev debug build clean stderr scan-build compile_commands.json
 
-define cache_target
-	@ echo "$@" > $(BUILD)/.target
-	@ $(if $(filter $@,default),$(RM) $(BUILD)/.target)
-endef
+cache_build = @ echo "$@:" > $(BUILD)/.target
 
 # VARS -------------------------------------------------------------------- {{{1
 
@@ -22,6 +19,8 @@ BINDIR   := $(BUILD)/bin
 DEPSDIR  := $(BUILD)/deps
 DUMPDIR  := $(BUILD)/dump
 
+LIBS :=
+
 override CFLAGS   +=
 override CPPFLAGS +=
 
@@ -30,7 +29,8 @@ override LDLIBS   +=
 
 override SANS += address bounds leak signed-integer-overflow undefined unreachable
 
-LIBS :=
+SRCS := $(wildcard $(SRCDIR)/*.c)
+OBJS := $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 
 ifneq ($(LIBS),)
 	CFLAGS   += $(shell pkg-config --cflags-only-other $(LIBS))
@@ -39,30 +39,30 @@ ifneq ($(LIBS),)
 	LDLIBS   += $(shell pkg-config --libs-only-l $(LIBS))
 endif
 
-SRCS := $(wildcard $(SRCDIR)/*.c)
-OBJS := $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
-
 # BUILDS ------------------------------------------------------------------ {{{1
 
-ifneq ($(wildcard $(BUILD)/.target),)
+-include $(BUILD)/.target
 
-default: $(shell cat $(BUILD)/.target)
 
-else
+regular: CFLAGS += -O2 -flto -DNDEBUG
+regular: LDFLAGS += -s -flto
+regular: build
+	$(cache_build)
 
-default: CFLAGS += -O2 -flto -DNDEBUG
-default: LDFLAGS += -s -flto
-default: build
-	$(cache_target)
 
-endif
+native: CFLAGS += -march=native -mtune=native
+native: regular
+	$(cache_build)
 
 
 dev: CFLAGS += \
 	-O3 -flto \
 	-march=native -mtune=native
 dev: CFLAGS += \
-	-Wall -Wextra -pedantic
+	-Wall -Wextra \
+	-fanalyzer
+dev: CFLAGS += \
+	-pedantic # -pedantic-errors
 dev: CFLAGS += \
 	-Wcast-qual \
 	-Wcast-align \
@@ -105,7 +105,7 @@ dev: CFLAGS += \
 	-fno-omit-frame-pointer \
 	-fsanitize=$(subst $(eval) ,$(shell echo ","),$(SANS))
 dev: build
-	$(cache_target)
+	$(cache_build)
 
 
 debug: CFLAGS += \
@@ -115,11 +115,11 @@ debug: CFLAGS += \
 	-masm=intel -fverbose-asm \
 	-save-temps -dumpbase $(DUMPDIR)/$(*F)
 debug: build
-	$(cache_target)
+	$(cache_build)
 
 
 build: $(BINDIR)/$(EXE)
-	$(cache_target)
+
 
 # RULES ------------------------------------------------------------------- {{{1
 
@@ -147,6 +147,10 @@ clean:
 stderr:
 	$(MAKE) $(filter-out $@,$(MAKECMDGOALS)) 2> $(BUILD)/stderr.log
 	@ false
+
+scan-build:
+	@mkdir -p $(BUILD)/scan-build
+	scan-build -o $(BUILD)/scan-build $(MAKE) $(filter-out $@,$(MAKECMDGOALS))
 
 compile_commands.json:
 	@ $(MAKE) --always-make --dry-run dev \
