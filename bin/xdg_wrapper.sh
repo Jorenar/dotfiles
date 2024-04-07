@@ -18,7 +18,11 @@ case "$EXE" in
         ARGS="--config=$XDG_CONFIG_HOME/nvidia/rc.conf"
         ;;
     ssh|scp)
-        ARGS="-F ${SSH_CONFIG:-$XDG_CONFIG_HOME/ssh/config}"
+        if [ ! -e "$HOME/.ssh/config" ]; then
+            if [ -e "$XDG_CONFIG_HOME/ssh/config" ]; then
+                ARGS="-F $XDG_CONFIG_HOME/ssh/config"
+            fi
+        fi
         ;;
     steam)
         HOME="$XDG_DATA_HOME/Steam"
