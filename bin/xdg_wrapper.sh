@@ -30,6 +30,9 @@ case "$EXE" in
     telnet)
         HOME="$XDG_CONFIG_HOME"
         ;;
+    xsane)
+        HOME="$XDG_DATA_HOME"
+        ;;
 esac
 
 # Remove directory with wrapper from PATH (to prevent cyclical execution)
@@ -46,3 +49,4 @@ exec "$EXE" $ARGS "$@"
 #~ ssh
 #~ steam
 #~ telnet
+#~ xsane
