@@ -31,9 +31,13 @@ export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
 export RANDFILE="$XDG_CACHE_HOME/rnd"
 export SQLITE_HISTORY="$XDG_STATE_HOME/sqlite_history"
 export TEXMFHOME="$HOME/.local/lib/texmf"
-export VIMINIT="so $XDG_CONFIG_HOME/vim/vimrc"
 export W3M_DIR="$XDG_DATA_HOME/w3m"
 export WINEPREFIX="$XDG_DATA_HOME/wine"
+
+if [ -x "$(command -v vim)" ]; then
+    [ "$(vim --clean -es +'exec "!echo" has("patch-9.1.0327")' +q)" = 0 ] && \
+        export VIMINIT="so $XDG_CONFIG_HOME/vim/vimrc"
+fi
 
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/config.py"
 export PYTHONPYCACHEPREFIX="$XDG_CACHE_HOME/__pycache__"
