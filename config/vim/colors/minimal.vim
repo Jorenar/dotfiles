@@ -41,3 +41,4 @@ hi! WildMenu         NONE  cterm=reverse
 
 hi! link FoldColumn  NonText
 hi! link LineNr      NonText
+hi! link Whitespace  SpecialKey
