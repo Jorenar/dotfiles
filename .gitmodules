@@ -156,6 +156,12 @@
 	shallow = true
 	ignore = all
 
+[submodule "plenary.nvim"]
+	path = config/nvim/pack/extern/start/plenary.nvim
+	url = https://github.com/nvim-lua/plenary.nvim.git
+	shallow = true
+	ignore = all
+
 [submodule "git-diff-blame"]
 	path = extern/git-diff-blame
 	url = https://github.com/dmnd/git-diff-blame.git
