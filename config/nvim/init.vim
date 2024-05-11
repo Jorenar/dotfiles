@@ -9,7 +9,7 @@ if empty($XDG_STATE_HOME)  | let $XDG_STATE_HOME  = $HOME."/.local/state" | endi
 
 function! s:InjectVimXdgPaths(var, xdg, ...) abort
   let dir = get(a:, 1, '')
-  let pat = a:xdg.'/nvim'.dir
+  let pat = a:xdg.'/nvim'.(a:xdg == $XDG_DATA_HOME ? "/site" : '').dir
   let sub = a:xdg.'/vim'.dir
   let sub = (dir == '/after') ? (sub . ',' . pat) : (pat . ',' . sub)
   let pat = pat . '\v(/)@!'
