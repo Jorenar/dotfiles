@@ -1,5 +1,6 @@
 set background=dark
 highlight clear
+if has('nvim') | runtime! colors/vim.lua | endif
 if exists('syntax on') | syntax reset | endif
 let g:colors_name='minimal'
 
