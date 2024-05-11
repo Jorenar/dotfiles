@@ -2,10 +2,29 @@
 
 set guicursor=a:block
 
-autocmd TermOpen * setlocal stl=%#StatusLineTerm#\ %f
-autocmd TermOpen * setlocal nonumber
+function! s:NormalizeTerm() abort
+  setlocal stl=%#StatusLineTerm#\ %f
+  setlocal nonumber
+  setlocal foldcolumn=0
+  setlocal signcolumn=no
 
-autocmd TermOpen * exec "e # | sb" bufnr()
-      \| autocmd WinResized * ++once wincmd j | call feedkeys("A")
+  if histget(':', -1) =~# '\v<%(vert%[ical]|hor%[izontal])\s+te%[rminal]>'
+    startinsert
+  else
+    exec "e # | sb" bufnr()
+    autocmd WinResized * ++once wincmd j | call feedkeys("A")
+  endif
+endfunction
 
+autocmd TermOpen * call s:NormalizeTerm()
 autocmd TermClose * call feedkeys("\<C-\>\<C-n>")
+
+tnoremap <silent> <C-w>h  <Cmd>TmuxNavigateLeft<CR>
+tnoremap <silent> <C-w>j  <Cmd>TmuxNavigateDown<CR>
+tnoremap <silent> <C-w>k  <Cmd>TmuxNavigateUp<CR>
+tnoremap <silent> <C-w>l  <Cmd>TmuxNavigateRight<CR>
+
+tnoremap <silent> <C-w><C-h>  <Cmd>TmuxNavigateLeft<CR>
+tnoremap <silent> <C-w><C-j>  <Cmd>TmuxNavigateDown<CR>
+tnoremap <silent> <C-w><C-k>  <Cmd>TmuxNavigateUp<CR>
+tnoremap <silent> <C-w><C-l>  <Cmd>TmuxNavigateRight<CR>
