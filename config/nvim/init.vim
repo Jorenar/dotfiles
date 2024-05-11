@@ -65,3 +65,6 @@ tnoremap <silent> <C-w><C-l>  <Cmd>TmuxNavigateRight<CR>
 
 set backupdir-=.
 set guicursor=a:block
+set startofline
+
+let g:ale_use_neovim_diagnostics_api = 0
