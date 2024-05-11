@@ -110,6 +110,7 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     config/mpv/                @  mpv
     config/muttrc              @  mutt/muttrc
     config/npmrc               @  npm/npmrc
+    config/nvim/               @  nvim
     config/OpenSCAD.conf       @  OpenSCAD/OpenSCAD.conf               -w
     config/profile.d           @  profile.d
     config/python_config.py    @  python/config.py
