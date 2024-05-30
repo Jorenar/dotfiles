@@ -1,5 +1,6 @@
 analyzability
 aVLA
+c'mon
 C11
 C17
 C23
@@ -41,6 +42,7 @@ overfocus
 POSIX
 RegEx
 roguelike
+se
 SQLite
 stderr
 stdout
