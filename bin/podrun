@@ -1,14 +1,15 @@
 #!/usr/bin/env sh
 
-container="$1"
-ref="${container##*/}"
+img="$1"
+ref="${img##*/}"
 ref="${ref%:*}"
 
 exec podman run -it --rm \
     --net=host \
-    --hostname "$ref.podman.$(hostname -s)" \
+    --hostname "$ref.$(hostname -s)" \
     -e "HOME" -v "$HOME:$HOME" \
     -e "DISPLAY" -v "/tmp/.X11-unix/:/tmp/.X11-unix/" \
     -v "/:/mnt/host" -w "$PWD" \
-    "$container" \
-    /bin/sh -li
+    --entrypoint sh \
+    "$img" \
+    -li -c 'myshell.sh'

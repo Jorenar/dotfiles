@@ -18,11 +18,23 @@ if ! type __git_ps1 > /dev/null 2>&1; then
     }
 fi
 
+_ps1_container () {
+    ret=
+    if [ -f /run/.containerenv ]; then
+        ret="podman"
+    elif [ -f /.dockerenv ] || [ -f /run/.dockerenv ]; then
+        ret="docker"
+    fi
+    [ -n "$ret" ] && echo " | $ret"
+}
+
 _ps1_os_name () {
     case "$(uname -s)" in
         Linux)
             [ -n "$WSL_DISTRO_NAME" ] && echo "$WSL_DISTRO_NAME" && return
-            awk -F= '$1=="ID" { gsub(/"/, "", $2); print $2 }' /etc/*release
+            printf '%s%s' \
+                "$(awk -F= '$1=="ID" { gsub(/"/, "", $2); print $2 }' /etc/*release)" \
+                "$(_ps1_container)"
             ;;
         *) uname -s ;;
     esac
