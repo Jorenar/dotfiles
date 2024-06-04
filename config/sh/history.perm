@@ -9,6 +9,7 @@ pacman -Qo /path/to/file
 pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'
 pacman -Qttdq # packages which are optionally required by another package
 php -S 0.0.0.0:8000 # PHP server
+podman pull $(podman images --format='{{.Repository}}' | tr '\n' ' ')
 python3 -m http.server 8000
 python3 -m venv .venv && . .venv/bin/activate
 sh -c 'convert $@ sixel:-' -

@@ -12,4 +12,4 @@ exec podman run -it --rm \
     -v "/:/mnt/host" -w "$PWD" \
     --entrypoint sh \
     "$img" \
-    -li -c 'myshell.sh'
+    -li
