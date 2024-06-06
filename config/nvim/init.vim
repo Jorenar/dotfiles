@@ -34,21 +34,10 @@ so $XDG_CONFIG_HOME/vim/vimrc
 
 " :terminal {{{
 
-function! s:NormalizeTerm() abort
-  setlocal stl=%#StatusLineTerm#\ %f
-  setlocal nonumber
-  setlocal foldcolumn=0
-  setlocal signcolumn=no
+lua require('vimterm').setup({})
 
-  if histget(':', -1) =~# '\v<%(vert%[ical]|hor%[izontal])\s+te%[rminal]>'
-    startinsert
-  else
-    exec "e # | sb" bufnr()
-    autocmd WinResized * ++once wincmd j | call feedkeys("A")
-  endif
-endfunction
-
-autocmd TermOpen * call s:NormalizeTerm()
+autocmd TermOpen * setl nonu fdc=0 scl=no
+autocmd TermOpen * setl stl=%#StatusLineTerm#\ %f
 autocmd TermClose * call feedkeys("\<C-\>\<C-n>")
 
 tnoremap <silent> <C-w>h  <Cmd>TmuxNavigateLeft<CR>

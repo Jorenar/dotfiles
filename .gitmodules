@@ -161,6 +161,11 @@
 	url = https://github.com/nvim-lua/plenary.nvim.git
 	shallow = true
 	ignore = all
+[submodule "vimterm.nvim"]
+	path = config/nvim/pack/extern/start/vimterm.nvim
+	url = https://github.com/VioletJewel/vimterm.nvim.git
+	shallow = true
+	ignore = all
 
 [submodule "git-diff-blame"]
 	path = extern/git-diff-blame
