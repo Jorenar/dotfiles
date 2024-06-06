@@ -40,16 +40,6 @@ autocmd TermOpen * setl nonu fdc=0 scl=no
 autocmd TermOpen * setl stl=%#StatusLineTerm#\ %f
 autocmd TermClose * call feedkeys("\<C-\>\<C-n>")
 
-tnoremap <silent> <C-w>h  <Cmd>TmuxNavigateLeft<CR>
-tnoremap <silent> <C-w>j  <Cmd>TmuxNavigateDown<CR>
-tnoremap <silent> <C-w>k  <Cmd>TmuxNavigateUp<CR>
-tnoremap <silent> <C-w>l  <Cmd>TmuxNavigateRight<CR>
-
-tnoremap <silent> <C-w><C-h>  <Cmd>TmuxNavigateLeft<CR>
-tnoremap <silent> <C-w><C-j>  <Cmd>TmuxNavigateDown<CR>
-tnoremap <silent> <C-w><C-k>  <Cmd>TmuxNavigateUp<CR>
-tnoremap <silent> <C-w><C-l>  <Cmd>TmuxNavigateRight<CR>
-
 " }}}
 
 set backupdir-=.
