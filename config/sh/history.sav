@@ -1,3 +1,4 @@
+alias ALIAS | sed -e 's/^alias [^=]\+=//' -e "s/'//g"
 convert -density 192 PDF -quality 100 -alpha remove IMG
 curl icanhazip.com
 curl wttr.in/
@@ -16,6 +17,7 @@ sh -c 'convert $@ sixel:-' -
 sh -c 'find $@ 2>&1 | grep -v "Permission denied" >&2' -
 sh -c 'mkdir ~/.ssh && ssh-copy-id -i $XDG_DATA_HOME/ssh/id_rsa.pub "$@" && rmdir ~/.ssh -
 sudo dd bs=4M oflag=direct status=progress if=ISO of=DEV
+sudo sh -c 'apt update && apt upgrade && apt autoclean && apt autoremove'
 sudo usermod -a -G groupname username # add user to group
 transmission-daemon -T -w "$XDG_DOWNLOAD_DIR" -c "$XDG_DOWNLOAD_DIR"
 updpkgsums && makepkg --printsrcinfo > .SRCINFO # update AUR files
