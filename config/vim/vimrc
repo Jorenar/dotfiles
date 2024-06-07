@@ -210,6 +210,8 @@ com! -range    VisSort  sil! keepj <line1>,<line2>call utils#misc#VisSort()
 
 com! -nargs=+  FillLine  exec {str,r -> "norm! a".repeat(str, (r-col(".")+1)/len(str))}(<f-args>, &tw)
 
+set grepprg=grep\ -n
+
 set makeprg=Make
 nnoremap <F8> <Cmd>term<CR>
 
@@ -455,7 +457,8 @@ com! -nargs=+ -bang  Slime  call slime#send(<q-args> . (<bang>0 ? "" : "\r"))
 "   asyncrun.vim {{{1
 
 let g:asyncrun_open = 10
-command! -nargs=? Make AsyncRun -program=make <args>
+command! -nargs=? Grep AsyncRun -program=grep @ <args>
+command! -nargs=? Make AsyncRun -program=make @ <args>
 nnoremap <F7> <Cmd>w <bar> Make %:p<CR>
 autocmd User AsyncRunStop copen | wincmd p
 

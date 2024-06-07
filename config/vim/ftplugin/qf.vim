@@ -15,6 +15,8 @@ command! -buffer -nargs=*  Sort
 
 setlocal nocursorline nocursorcolumn
 setlocal colorcolumn=
+setlocal signcolumn=no
+setlocal foldcolumn=0
 autocmd BufReadPost <buffer> ++once setlocal nonumber
 
 let qf_disable_statusline = 1
