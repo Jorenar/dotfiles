@@ -21,7 +21,7 @@ _:
 	$(CXX) $(CFLAGS) -std=gnu++14 $@ -o $(*F)
 
 %.latex: PHONY
-	tectonic $@
+	tectonic --synctex $@
 	# latexmk -outdir=$(*F).out.d -pdfxe -pdfxelatex="xelatex --shell-escape %O %S" -interaction=nonstopmode $@ 1>&2
 
 %.nasm: PHONY

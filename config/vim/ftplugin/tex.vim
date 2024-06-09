@@ -3,8 +3,6 @@ setlocal foldmethod=syntax
 setlocal tabstop=3
 setlocal textwidth=90
 
-nnoremap <buffer> <F8> :sil! call system("zathura ".expand('%:t:r').".pdf &")<CR>
-
 let b:ale_linters_ignore = [ 'lacheck' ]
 
 let g:tex_fold_envs = ""
@@ -23,3 +21,13 @@ let g:tex_fold_envs = ""
       \ ." tcolorbox"
       \ ." tikzpicture"
       \ ." verbatim"
+
+
+nnoremap <buffer> <F8> <Cmd>sil! call system(
+      \ 'zathura'
+      \ ." ". '-x "nvr --remote +%{line} %{input}"'
+      \ ." ". '--synctex-forward'
+      \ ." ". line('.') . ':' . col('.') . ':' . expand('%:p')
+      \ ." ". expand('%:p:r') . '.pdf'
+      \ ." ". '&'
+      \ )<CR>

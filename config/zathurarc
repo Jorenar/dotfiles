@@ -2,6 +2,9 @@
 
 # GENERAL ---------------------------------------------------------------------
 
+# Set database backend
+set database sqlite
+
 # Open document in fit-width mode by default
 set adjust-open "best-fit"
 
