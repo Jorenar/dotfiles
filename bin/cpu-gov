@@ -12,6 +12,7 @@ case "$1" in
     f) set_gov performance ;;
     s) set_gov powersave ;;
     o) set_gov ondemand ;;
+    c) set_gov conservative ;;
     t)
         if [ "$(get_gov)" = "powersave" ]; then
             set_gov performance

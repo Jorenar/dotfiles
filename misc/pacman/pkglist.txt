@@ -119,10 +119,10 @@ yt-dlp
 zathura
 zathura-pdf-mupdf
 
-# audacity
 # gimp
 # inkscape
 # shotcut
+# tenacity
 
 # bluez
 # bluez-utils

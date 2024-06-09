@@ -213,7 +213,7 @@ com! -nargs=+  FillLine  exec {str,r -> "norm! a".repeat(str, (r-col(".")+1)/len
 set grepprg=grep\ -n
 
 set makeprg=Make
-nnoremap <F8> <Cmd>term<CR>
+nnoremap <F8> <Cmd>hor term<CR>
 
 nnoremap <Leader>r :<C-u>%s/\C\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
 
