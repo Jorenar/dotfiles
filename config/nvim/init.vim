@@ -5,6 +5,19 @@ if empty($XDG_DATA_HOME)   | let $XDG_DATA_HOME   = $HOME."/.local/share" | endi
 if empty($XDG_STATE_HOME)  | let $XDG_STATE_HOME  = $HOME."/.local/state" | endif
 " }}}
 
+" $VIM/vimfiles {{{
+if executable('vim')
+  let s:VIM = trim(system('env -i vim --clean -es +"!echo \$VIM" +q'))
+  if !v:shell_error
+    let &rtp = substitute(&rtp,
+          \ $VIMRUNTIME.'\>',
+          \ s:VIM.'/vimfiles' . ',&,' . s:VIM.'/vimfiles/after',
+          \ '')
+  endif
+  unlet s:VIM
+endif
+" }}}
+
 " Source Vim config {{{
 
 function! s:InjectVimXdgPaths(var, xdg, ...) abort
