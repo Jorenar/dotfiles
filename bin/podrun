@@ -1,15 +1,46 @@
 #!/usr/bin/env sh
 
-img="$1"
+if [ ! -x "$(command -v podman)" ]; then
+    >&2 echo "$(basename "$0"):" "error:" "podman not found"
+    exit 1
+fi
+
+img="$1"; shift
 ref="${img##*/}"
 ref="${ref%:*}"
 
-exec podman run -it --rm \
-    --net=host \
-    --hostname "$ref.$(hostname -s)" \
-    -e "HOME" -v "$HOME:$HOME" \
-    -e "DISPLAY" -v "/tmp/.X11-unix/:/tmp/.X11-unix/" \
-    -v "/:/mnt/host" -w "$PWD" \
-    --entrypoint sh \
-    "$img" \
-    -li
+esceval() {
+    printf '%s\n' "$1" | sed "s/'/'\\\\''/g; 1 s/^/'/; $ s/$/'/"
+}
+
+alias exec_podman='
+    exec \
+        podman run -it --rm \
+            --net host \
+            -h "$ref.$(hostname -s)" \
+            -e HOME -v "$HOME:$HOME" \
+            -v "/etc/localtime:/etc/localtime:ro" \
+            -e DISPLAY -v "/tmp/.X11-unix/:/tmp/.X11-unix/" \
+            -v "/:/mnt/host" \
+            -v "$PWD:$PWD" -w "$PWD" \
+            --entrypoint sh \
+            "$img" \
+'
+
+if [ $# -eq 0 ]; then
+    exec_podman -li
+else
+    args=
+    while :; do
+        [ $# -eq 0 ] && break
+        # shellcheck disable=SC1003
+        case "$1" in
+            \*|*\ *|*'$'*|*\'*|*\"*|*'\'*|'')
+                args="$args$(esceval "$1") "
+                ;;
+            *) args="$args$1 " ;;
+        esac
+        shift
+    done
+    exec_podman -c "$args"
+fi
