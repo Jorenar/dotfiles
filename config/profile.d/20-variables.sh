@@ -61,6 +61,7 @@ export VISUAL="$EDITOR"
 
 # dev {{{1
 
+pathmunge "/usr/lib/ccache"
 pathmunge "/usr/lib/ccache/bin"
 
 export C_INCLUDE_PATH
