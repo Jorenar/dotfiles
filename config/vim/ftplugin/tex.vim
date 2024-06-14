@@ -27,7 +27,7 @@ nnoremap <buffer> <F8> <Cmd>sil! call system(
       \ 'zathura'
       \ ." ". '-x "nvr --remote +%{line} %{input}"'
       \ ." ". '--synctex-forward'
-      \ ." ". line('.') . ':' . col('.') . ':' . expand('%:p')
-      \ ." ". expand('%:p:r') . '.pdf'
+      \ ." ". line('.') . ':' . col('.') . ':' . shellescape(expand('%:p'))
+      \ ." ". shellescape(expand('%:p:r')) . '.pdf'
       \ ." ". '&'
       \ )<CR>
