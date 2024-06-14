@@ -1,5 +1,5 @@
 " trimWhitespace
-" Maintainer:  Jorengarenar <https://joren.ga>
+" Author: Jorengarenar
 
 if exists('g:loaded_trimWhitespace') | finish | endif
 let s:cpo_save = &cpo | set cpo&vim
@@ -9,17 +9,45 @@ function! s:getVar(var) abort
   return get(b:, var, get(g:, var, eval('s:'.a:var)))
 endfunction
 
-
+" Default values for variables
 let s:enabled  = 1
 let s:nl_eof   = 1
 let s:pattern  = '\s\+$'
 
-let s:diff_binary = executable("diff.exe") ? "diff.exe" : "command diff"
-" !! GNU diff required !!
-let s:diff_cmd = s:getVar("diff_binary")
-      \ . ' --unchanged-group-format="" --old-group-format=""'
-      \ . ' --new-group-format="%dF,%dL " --changed-group-format="%dF,%dL " '
 
+function! s:NumsToRanges(list)
+  let ranges = []
+  let [ range_start, range_end ] = [ a:list[0], a:list[0] ]
+
+  for l in a:list[1:]
+    if l != range_end + 1
+      let ranges += [ range_start . ',' . range_end ]
+      let range_start = l
+    endif
+    let range_end = l
+  endfor
+  let ranges += [ range_start . ',' . range_end ]
+
+  return ranges
+endfunction
+
+function! s:GetChanges() abort
+  tab split
+  vnew | set buftype=nofile | read ++edit # | 0 delete _
+  windo diffthis
+
+  wincmd p
+  let [ dip_old, &dip ] = [ &diffopt, '' ]
+  let diff_lines = range(1, line('$'))->filter({_, v ->
+        \   diff_hlID(v, 1)->synIDattr('name') =~# 'Diff*'
+        \ })
+  let &dip = dip_old
+
+  wincmd p
+  bdelete | quit
+
+  return empty(diff_lines) ? [] : s:NumsToRanges(diff_lines)
+endfunction
 
 function! s:TrimWhitespace() abort
   if !s:getVar('enabled') | return | endif
@@ -27,17 +55,11 @@ function! s:TrimWhitespace() abort
   let l:changes = ""
 
   if !filereadable(expand('%'))
-    let l:changes = "1,".line('$')
+    let l:changes = [ '1,'.line('$') ]
   elseif &modified
-    redir => l:changes
-    silent! echo system(
-          \   s:diff_cmd . ' ' . shellescape(expand('%')) . ' -',
-          \   join(getline(1, line('$')), "\n") . "\n"
-          \ )
-    redir END
+    let l:changes = s:GetChanges()
   endif
 
-  let l:changes = split(l:changes)
   if empty(l:changes) | return | endif
 
   let l:pos = getpos('.')
