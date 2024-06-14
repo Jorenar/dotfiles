@@ -32,6 +32,7 @@ function! s:NumsToRanges(list)
 endfunction
 
 function! s:GetChanges() abort
+  let gT = (tabpagenr() != tabpagenr('$'))
   tab split
   vnew | set buftype=nofile | read ++edit # | 0 delete _
   windo diffthis
@@ -44,7 +45,8 @@ function! s:GetChanges() abort
   let &dip = dip_old
 
   wincmd p
-  bdelete | quit
+  bdelete | tabclose
+  if gT | tabprevious | endif
 
   return empty(diff_lines) ? [] : s:NumsToRanges(diff_lines)
 endfunction
