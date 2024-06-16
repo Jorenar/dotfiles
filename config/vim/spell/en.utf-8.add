@@ -1,5 +1,4 @@
 analyzability
-aVLA
 c'mon
 C11
 C17
@@ -8,7 +7,6 @@ C89
 C99
 CMake
 config
-configs
 counterargue
 counterargued
 counterintuitive
@@ -16,7 +14,6 @@ dealbreaker
 deduplicated
 destandardizing
 dotfile
-dotfiles
 downloadables
 filetype
 hoc
@@ -31,14 +28,15 @@ keypress
 kramdown
 larum
 memleak
-memleaks
 microcontrollers
 MSVC
 MySQL
+namespace
 nauseam
 Neovim
 nomen
 overfocus
+Polska
 POSIX
 RegEx
 roguelike
@@ -52,7 +50,6 @@ TODO
 unaddressable
 VimL
 VLA
-VLA
 VLA's
 VLAs
 WG14
@@ -60,5 +57,4 @@ whitespace
 www
 xD
 youngling
-younglings
 Łukasiewicz

@@ -30,6 +30,9 @@ case "$EXE" in
     telnet)
         HOME="$XDG_CONFIG_HOME"
         ;;
+    vale)
+        ARGS="--config $XDG_CONFIG_HOME/vale/vale.ini"
+        ;;
     xsane)
         HOME="$XDG_DATA_HOME"
         ;;
@@ -49,4 +52,5 @@ exec "$EXE" $ARGS "$@"
 #~ ssh
 #~ steam
 #~ telnet
+#~ vale
 #~ xsane

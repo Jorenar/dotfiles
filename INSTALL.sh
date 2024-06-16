@@ -128,6 +128,7 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     config/uncrustify/         @  uncrustify
     config/user-dirs.conf      @  user-dirs.conf
     config/user-dirs.dirs      @  user-dirs.dirs
+    config/vale/               @  vale
     config/vim/                @  vim
     config/X11/                @  X11
     config/zathurarc           @  zathura/zathurarc
