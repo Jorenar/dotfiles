@@ -33,9 +33,9 @@ endfunction
 
 function! s:GetChanges() abort
   let gT = (tabpagenr() != tabpagenr('$'))
-  tab split
-  vnew | set buftype=nofile | read ++edit # | 0 delete _
-  windo diffthis
+  sil! tab split
+  sil! vnew | set buftype=nofile | sil! read ++edit # | sil! 0 delete _
+  sil! windo diffthis
 
   wincmd p
   let [ dip_old, &dip ] = [ &diffopt, '' ]
