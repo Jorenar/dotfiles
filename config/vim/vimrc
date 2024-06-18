@@ -156,8 +156,10 @@ nnoremap ' `
 noremap j gj
 noremap k gk
 
-nnoremap <expr> <C-e> utils#misc#scroll_cursor_popup(v:count1) ? "<Esc>" : "<C-e>"
-nnoremap <expr> <C-y> utils#misc#scroll_cursor_popup(-v:count1) ? "<Esc>" : "<C-y>"
+if !has('nvim')
+  nnoremap <expr> <C-e> utils#misc#scroll_cursor_popup(v:count1) ? "<Esc>" : "<C-e>"
+  nnoremap <expr> <C-y> utils#misc#scroll_cursor_popup(-v:count1) ? "<Esc>" : "<C-y>"
+endif
 
 "   folds {{{1
 
