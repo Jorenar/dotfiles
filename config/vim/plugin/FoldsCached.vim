@@ -55,6 +55,10 @@ augroup END
 
 function! UpdateFolds() abort
   if exists("b:FoldsCached_fdm") && b:FoldsCached_fdm != &fdm
+    if &fdm != "manual"
+      let b:FoldsCached_fdm = &fdm
+    endif
+
     let l:syn_old = &syntax
     if b:FoldsCached_fdm == "syntax" && &syntax ==? "off"
       setl syntax=ON
