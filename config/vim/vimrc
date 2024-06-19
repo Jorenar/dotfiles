@@ -464,6 +464,44 @@ command! -nargs=? Make AsyncRun -program=make @ <args>
 nnoremap <F7> <Cmd>w <bar> Make %:p<CR>
 autocmd User AsyncRunStop copen | wincmd p
 
+"   conflict-marker.vim {{{1
+
+let g:conflict_marker_highlight_group = 'SpecialKey'
+
+function! s:ConflictMarker_init() abort
+  autocmd BufReadPre,BufWinEnter <buffer> ++once setlocal fdm=syntax
+
+  exec 'syntax region ConflictMarker_NoConflict containedin=ALL'
+        \  'start=/\%^\%(' .g:conflict_marker_begin . '\)\@<!/'
+        \  'start=/\%(' . g:conflict_marker_end . '\_.\{-}\n\)\@<=/'
+        \  'end=/' . g:conflict_marker_begin . '\&/'
+        \  'end=/\%$/'
+
+  hi link ConflictMarkerFoo NonText
+  autocmd BufWinEnter <buffer> ++once
+        \   for v in ['begin', 'common_ancestors', 'end']
+        \ |   call matchadd('ConflictMarkerFoo', g:conflict_marker_{v}.' \zs.*')
+        \ | endfor
+
+  autocmd BufWinEnter <buffer> ++once
+        \ call utils#syntax#rule_append(
+        \   'ConflictMarkerOurs',
+        \   'end=/'.g:conflict_marker_common_ancestors.'\&/'
+        \ )
+
+  autocmd BufWinEnter <buffer> ++once
+        \ syn match ConflictMarker_Fold /.*/ transparent fold
+
+endfunction
+
+augroup MY_CONFLICT_MARKER_DETECT
+  autocmd!
+  autocmd BufReadPost,FileChangedShellPost,ShellFilterPost,StdinReadPost *
+        \   if conflict_marker#detect#markers()
+        \ |   call s:ConflictMarker_init()
+        \ | endif
+augroup END
+
 "   ~ {{{1
 
 au VimEnter * com! -bang UseVimball
