@@ -55,6 +55,12 @@ autocmd TermClose * call feedkeys("\<C-\>\<C-n>")
 
 " }}}
 
+lua require("flatten").setup({
+      \   window = {
+      \     open = "split"
+      \   }
+      \ })
+
 set backupdir-=.
 set guicursor=a:block
 set startofline

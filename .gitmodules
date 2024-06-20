@@ -161,6 +161,11 @@
 	shallow = true
 	ignore = all
 
+[submodule "flatten.nvim"]
+	path = config/nvim/pack/extern/start/flatten.nvim
+	url = https://github.com/willothy/flatten.nvim.git
+	shallow = true
+	ignore = all
 [submodule "plenary.nvim"]
 	path = config/nvim/pack/extern/start/plenary.nvim
 	url = https://github.com/nvim-lua/plenary.nvim.git
