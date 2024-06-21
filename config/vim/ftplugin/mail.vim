@@ -5,7 +5,7 @@ setl nomodeline
 setl noexpandtab
 setl foldmethod=syntax
 
-if executable("vale")
+if !executable("vale")
   setl spell
 endif
 
