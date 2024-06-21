@@ -54,7 +54,7 @@ export XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
 
 export BROWSER="firefox"
 export EDITOR="vim"
-export MANPAGER="vim +'%s/‐/-/g' +MANPAGER -"
+export MANPAGER="vim +'sil! %s/‐/-/g' +MANPAGER -"
 export PAGER="less"
 export TERMINAL="xterm"
 export VISUAL="$EDITOR"
