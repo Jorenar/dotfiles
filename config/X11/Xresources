@@ -4,7 +4,7 @@
 XTerm*termName: xterm-256color
 XTerm*decTerminalID: vt340
 XTerm*loginshell: False
-XTerm*cursorBlink: Never
+XTerm*cursorBlink: True
 XTerm*metaSendsEscape: False
 
 ! Fonts and Encoding
