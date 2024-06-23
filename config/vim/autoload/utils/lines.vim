@@ -14,7 +14,7 @@ function! s:GetQfCount(type) abort
 endfunction
 
 function! s:IssuesCount() abort
-  return s:GetQfCount("E")." ".s:GetQfCount("w")
+  return s:GetQfCount("E")." ".s:GetQfCount("w")." ".s:GetQfCount("I")
 endfunction
 
 function! utils#lines#StatusLine() abort
