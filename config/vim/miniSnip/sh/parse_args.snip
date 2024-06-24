@@ -3,17 +3,11 @@ parse_args () {
 
 	eval "i$$=0"
 	to_restore () {
-		for __ in "$@"; do  # "__" as a name to avoid clashes
-			eval "i$$=\$((i$$ + 1))"
-			_ () { # same here case here
-				eval "$(printf '%s="$%s"' "$1" '__')"
-				RESTORE_ARGS_CMD="$(
-					printf '%s "$%s"' "$RESTORE_ARGS_CMD" "$1"
-				)"
-			} && _ "$(
-				printf '_parsed_arg_to_restore_%d_%d' \
-					"$$"  "$(eval echo "\$i$$")"
-			)"
+		for __ in "$@"; do
+			eval "i$$=\$((i$$ + 1))" && _ () {
+				eval "$1"='"$__"'
+				RESTORE_ARGS_CMD="$RESTORE_ARGS_CMD \"\${$1}\""
+			} && eval _ "_arg2rstr_$$_\${i$$}"
 		done && unset -f _ && unset __
 	}
 
@@ -23,7 +17,22 @@ parse_args () {
 				show_help
 				exit 0
 				;;
+
 			-?*)
+				# an example of how to handle options
+				case "$1" in
+					-R|--recursive) shift; continue ;;
+					--*) ;; # other --option, skip
+					-*R*) # a cluster, extract and check more
+						o="$(printf '%s' "$1" | tr -d 'R')"
+						shift && set -- "$o" "$@"
+						;;
+				esac
+
+				case "$1" in
+					*) ;;
+				esac
+
 				>&2 printf 'WARN: Unknown option (ignored): %s\n' "$1"
 				;;
 			*)
