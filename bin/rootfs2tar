@@ -88,5 +88,5 @@ eval $sudo tar \
     . || exit 1
 
 if [ -n "$sudo" ] && [ -s "$out" ]; then
-    sudo chown "$USER:$USER" "$out"
+    sudo chown "$(id -un):$(id -un)" "$out"
 fi

@@ -64,7 +64,7 @@ if executable("sqls")
         \         #{
         \           driver: "mysql",
         \           proto:  "unix",
-        \           user:   empty($SQLS_MYSQL_USER) ? $USER : $SQLS_MYSQL_USER,
+        \           user:   empty($SQLS_MYSQL_USER) ? $LOGNAME : $SQLS_MYSQL_USER,
         \           passwd: $SQLS_MYSQL_PASSWD,
         \           path:   "/run/mysqld/mysqld.sock",
         \           dbName: $SQLS_MYSQL_DB,
