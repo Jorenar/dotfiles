@@ -60,5 +60,6 @@ complete -F _wsl_exe wsl.exe
 
 _git_a () { _git_add; }
 
-# prevents \$ when completing path with variables
-# alias compopt='compopt -o noquote'
+if [ -x "$(command -v register-python-argcomplete)" ]; then
+    eval "$(register-python-argcomplete pipx)"
+fi
