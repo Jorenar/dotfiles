@@ -41,7 +41,10 @@ fi
 
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/config.py"
 export PYTHONPYCACHEPREFIX="$XDG_CACHE_HOME/__pycache__"
-export PIPX_BIN_DIR="$HOME"/.local/opt/pipx/bin
+
+export PIPX_HOME="$HOME"/.local/opt/pipx
+export PIPX_BIN_DIR="$PIPX_HOME"/bin
+export PIPX_MAN_DIR="$PIPX_HOME"/man
 
 export BASH_COMPLETION_USER_FILE="$XDG_CONFIG_HOME/bash/completion"
 export ENV="$XDG_CONFIG_HOME/sh/shrc"  # sh, ksh
