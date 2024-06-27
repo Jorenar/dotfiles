@@ -2,7 +2,7 @@
 
 if [ "$#" -eq 0 ]; then
     while [ -x "$(command -v tmux)" ]; do
-        [ -n "$TMUX" ] && break
+        [ -n "${TMUX+x}" ] && break
         [ -z "$DISPLAY" ] && break
         # [ -n "$SSH_CLIENT" ] && break
 
