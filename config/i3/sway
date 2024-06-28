@@ -1,0 +1,4 @@
+include $XDG_CONFIG_HOME/i3/config
+
+hide_edge_borders --i3 smart
+output * bg #000000 solid_color

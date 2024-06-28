@@ -105,6 +105,7 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     config/gtk3-settings.ini   @  gtk-3.0/settings.ini
     config/htoprc              @  htop/htoprc                          -w
     config/i3/                 @  i3
+    config/i3/sway             @  sway/config
     config/inputrc             @  readline/inputrc
     config/lesskey             @  lesskey
     config/mpv/                @  mpv
