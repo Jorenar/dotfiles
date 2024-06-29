@@ -131,6 +131,7 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     config/user-dirs.dirs      @  user-dirs.dirs
     config/vale/               @  vale
     config/vim/                @  vim
+    config/waybar/             @  waybar
     config/X11/                @  X11
     config/zathurarc           @  zathura/zathurarc
     config/zsh                 @  zsh

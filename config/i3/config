@@ -21,10 +21,10 @@ exec --no-startup-id dunst
 # i3bar {{{1
 
 bar {
-    id top
     position top
     font pango: DejaVu Sans Mono 9
-    status_command stalonetray & exec i3blocks -c $XDG_CONFIG_HOME/i3/i3blocks
+    status_command [ -n "$WAYLAND_DISPLAY" ] && kill -9 $PPID; \
+        stalonetray & exec i3blocks -c $XDG_CONFIG_HOME/i3/i3blocks
     tray_output none
     colors {
         focused_workspace  #333333 #222222 #FFFFFF

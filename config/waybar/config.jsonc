@@ -1,0 +1,80 @@
+// -*- mode: jsonc -*-
+{
+    "spacing": 20,
+
+    "modules-left": [
+        "sway/workspaces",
+        "sway/mode",
+        "sway/scratchpad",
+        "sway/window"
+    ],
+    "modules-center": [
+        "tray"
+    ],
+    "modules-right": [
+        "custom/todo",
+        "custom/rss",
+        "custom/email",
+        "custom/cpu-temp",
+        "custom/cpu-freq",
+        "wireplumber",
+        "clock"
+    ],
+
+    "sway/window": {
+      "max-length": 50
+    },
+    "sway/scratchpad": {
+        "format": "~{count}",
+        "show-empty": false,
+        "tooltip": true,
+        "tooltip-format": "{app}: {title}"
+    },
+    "tray": {
+        "spacing": 10
+    },
+
+    "custom/todo": {
+        "format": "TODO: {}",
+        "return-type": "text",
+        "exec": "grep -c ^@ ~/.todo || echo 0"
+    },
+    "custom/rss": {
+        "format": "RSS: {}",
+        "return-type": "text",
+        "interval": 300,
+        "exec": "$XDG_CONFIG_HOME/waybar/bin/commafeed.sh",
+        "on-click": "$XDG_CONFIG_HOME/waybar/bin/commafeed.sh"
+    },
+    "custom/email": {
+        "format": "Email: {}",
+        "return-type": "text",
+        "interval": 90,
+        "exec": "$XDG_CONFIG_HOME/waybar/bin/emails.sh",
+        "on-click": "$XDG_CONFIG_HOME/waybar/bin/emails.sh"
+    },
+    "custom/cpu-freq": {
+        "format": "{} MHz",
+        "return-type": "text",
+        "interval": 2,
+        "exec": "lscpu -e=MHz | sort -r | sed '2q;d' | cut -d. -f1"
+    },
+    "custom/cpu-temp": {
+        "format": "{}",
+        "return-type": "text",
+        "interval": 1,
+        "exec": "sensors | awk '/Tctl/ {print $2}'"
+    },
+    "wireplumber": {
+      "format": "♪ {volume}%",
+      "format-muted": "[♪X] {volume}%",
+      "on-click": "$TERMINAL pulsemixer",
+      "max-volume": 150,
+      "scroll-step": 1
+    },
+    "clock": {
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "interval": 1,
+        "format": "{:%a, %F %T} "
+    }
+}
