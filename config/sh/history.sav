@@ -2,6 +2,7 @@ alias ALIAS | sed -e 's/^alias [^=]\+=//' -e "s/'//g"
 convert -density 192 PDF -quality 100 -alpha remove IMG
 curl icanhazip.com
 curl wttr.in/
+exec sway --unsupported-gpu -D noscanout
 git hook run update -- WRAPPER --save-hash all '*'
 git reset --hard $(git rev-list --max-parents=0 --abbrev-commit HEAD)
 git submodule update --init --recursive --remote

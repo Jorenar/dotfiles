@@ -11,8 +11,12 @@ floating_modifier $super
 workspace_layout tabbed
 default_border pixel 3
 hide_edge_borders smart
-client.unfocused #222222 #222222 #888888 #2e9ef4   #222222
-client.focused   #444444 #333333 #FFFFFF #292d2e   #285577
+
+# class                 border  backgr. text    indicator child_border
+client.focused          #1c1c1c #1c1c1c #ffffff #2e9ef4   #777777
+client.focused_inactive #1c1c1c #1c1c1c #888888 #484e50   #444444
+client.unfocused        #1c1c1c #000000 #999999 #292d2e   #222222
+client.background       #ffffff
 
 exec --no-startup-id exec i3-msg "workspace 2, workspace 6, workspace 1" # workspace switcheroo
 
