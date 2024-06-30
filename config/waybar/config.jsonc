@@ -43,15 +43,15 @@
         "format": "RSS: {}",
         "return-type": "text",
         "interval": 300,
-        "exec": "$XDG_CONFIG_HOME/waybar/bin/commafeed.sh",
-        "on-click": "$XDG_CONFIG_HOME/waybar/bin/commafeed.sh"
+        "exec": "$XDG_CONFIG_HOME/i3/bin/commafeed.sh",
+        "on-click": "$XDG_CONFIG_HOME/i3/bin/commafeed.sh"
     },
     "custom/email": {
         "format": "Email: {}",
         "return-type": "text",
         "interval": 90,
-        "exec": "$XDG_CONFIG_HOME/waybar/bin/emails.sh",
-        "on-click": "$XDG_CONFIG_HOME/waybar/bin/emails.sh"
+        "exec": "$XDG_CONFIG_HOME/i3/bin/emails.sh",
+        "on-click": "$XDG_CONFIG_HOME/i3/bin/emails.sh"
     },
     "custom/cpu-freq": {
         "format": "{} MHz",

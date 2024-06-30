@@ -113,6 +113,7 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     config/npmrc               @  npm/npmrc
     config/nvim/               @  nvim
     config/OpenSCAD.conf       @  OpenSCAD/OpenSCAD.conf               -w
+    config/polybar/            @  polybar
     config/profile.d           @  profile.d
     config/python_config.py    @  python/config.py
     config/qt5ct               @  qt5ct                                -w
