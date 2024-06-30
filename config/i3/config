@@ -22,21 +22,10 @@ exec --no-startup-id exec i3-msg "workspace 2, workspace 6, workspace 1" # works
 
 exec --no-startup-id dunst
 
-# i3bar {{{1
-
 bar {
     position top
-    font pango: DejaVu Sans Mono 9
-    status_command [ -n "$WAYLAND_DISPLAY" ] && kill -9 $PPID; \
-        stalonetray & exec i3blocks -c $XDG_CONFIG_HOME/i3/i3blocks
-    tray_output none
-    colors {
-        focused_workspace  #333333 #222222 #FFFFFF
-        inactive_workspace #000000 #000000 #AAAAAA
-    }
+    i3bar_command $XDG_CONFIG_HOME/polybar/launch.sh
 }
-
-for_window [class="stalonetray"] move position 50ppt 2px
 
 # SHORTCUTS BINDINGS {{{1
 

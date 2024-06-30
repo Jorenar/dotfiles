@@ -97,9 +97,8 @@ xterm
 dmenu
 dunst
 i3-wm
-i3blocks
+polybar
 scrot
-stalonetray
 
 qt5ct
 
