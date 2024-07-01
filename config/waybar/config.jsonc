@@ -1,6 +1,6 @@
 // -*- mode: jsonc -*-
 {
-    "spacing": 20,
+    "spacing": 15,
 
     "modules-left": [
         "sway/workspaces",
@@ -68,7 +68,8 @@
     "wireplumber": {
       "format": "♪ {volume}%",
       "format-muted": "[♪X] {volume}%",
-      "on-click": "$TERMINAL pulsemixer",
+      "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+      "on-click-right": "$TERMINAL pulsemixer",
       "max-volume": 150,
       "scroll-step": 1
     },

@@ -28,3 +28,7 @@ window#waybar {
   font-style: italic;
   padding: 2px;
 }
+
+#wireplumber.muted {
+  color: #666;
+}
