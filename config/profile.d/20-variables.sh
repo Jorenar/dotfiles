@@ -46,13 +46,16 @@ export PIPX_HOME="$HOME"/.local/opt/pipx
 export PIPX_BIN_DIR="$PIPX_HOME"/bin
 export PIPX_MAN_DIR="$PIPX_HOME"/man
 
-export BASH_COMPLETION_USER_FILE="$XDG_CONFIG_HOME/bash/completion"
-export ENV="$XDG_CONFIG_HOME/sh/shrc"  # sh, ksh
-export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
-
 export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
 export XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
 export XENVIRONMENT="$XDG_CONFIG_HOME/X11/Xresources"
+
+export ENV="$XDG_CONFIG_HOME/sh/shrc"  # sh, ksh
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+
+pathmunge BASH_COMPLETION_USER_DIR "$XDG_DATA_HOME/bash-completion"
+pathmunge BASH_COMPLETION_USER_DIR "$XDG_CONFIG_HOME/bash-completion"
+pathmunge BASH_COMPLETION_USER_DIR "$XDG_CONFIG_HOME/bash/bash-completion"
 
 # default programs {{{1
 

@@ -1,0 +1,17 @@
+# vim: ft=bash
+
+_wsl_exe () {
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+    case "$prev" in
+        -d|-t)
+            mapfile -t COMPREPLY < <(
+                compgen -W "$(
+                    wsl.exe -l -q | tr -d '\0' | tr -d '\r'
+                )" -- "$cur"
+            )
+            ;;
+    esac
+}
+complete -F _wsl_exe wsl.exe

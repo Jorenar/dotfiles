@@ -1,4 +1,4 @@
-# vim: ft=sh
+# vim: ft=bash
 
 if [ -z "$(type -t _ssh_configfile)" ]; then
     _ssh_configfile ()
@@ -29,37 +29,4 @@ if [ -z "$(type -t _ssh_configfile)" ]; then
     }
 
     readonly -f _ssh_configfile
-fi
-
-if [ -x "$(command -v podman)" ]; then
-    _podrun () {
-        mapfile -t COMPREPLY < <(
-            compgen -W "$(
-                podman images --format='{{.Repository}}' | awk -F'/' '{ print $NF }'
-            )" -- "${COMP_WORDS[COMP_CWORD]}"
-        )
-    }
-    complete -F _podrun podrun
-fi
-
-_wsl_exe () {
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    prev="${COMP_WORDS[COMP_CWORD-1]}"
-
-    case "$prev" in
-        -d|-t)
-            mapfile -t COMPREPLY < <(
-                compgen -W "$(
-                    wsl.exe -l -q | tr -d '\0' | tr -d '\r'
-                )" -- "$cur"
-            )
-            ;;
-    esac
-}
-complete -F _wsl_exe wsl.exe
-
-_git_a () { _git_add; }
-
-if [ -x "$(command -v register-python-argcomplete)" ]; then
-    eval "$(register-python-argcomplete pipx)"
 fi

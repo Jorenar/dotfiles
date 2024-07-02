@@ -1,0 +1,1 @@
+_git_a () { _git_add; }
