@@ -35,7 +35,7 @@ if bufname("%") =~# 'aerc-'
 
     augroup AERC_INTEGRATION
       autocmd!
-      autocmd ModeChanged * silent !aerc :toggle-key-passthrough
+      " autocmd ModeChanged * silent !aerc :toggle-key-passthrough
       autocmd VimLeavePre * silent !aerc :close
     augroup END
   endif
