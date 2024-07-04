@@ -1,7 +1,7 @@
 #!sh
 
 export HISTSIZE=
-export HISTFILE="$XDG_STATE_HOME/$(basename "$SHELL")_history"
+export HISTFILE="$XDG_STATE_HOME/$(basename -- "${0#-*}")_history"
 
 . "$XDG_CONFIG_HOME"/sh/aliases
 . "$XDG_CONFIG_HOME"/sh/prompt.sh
