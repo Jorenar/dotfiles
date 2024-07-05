@@ -502,6 +502,16 @@ augroup MY_CONFLICT_MARKER_DETECT
         \ | endif
 augroup END
 
+"   vim-visual-multi {{{1
+
+let g:VM_maps = {
+      \   "Undo": 'u',
+      \   "Redo": '<C-r>',
+      \ }
+
+hi! VM_Mono NONE ctermbg=magenta
+hi! link VM_Insert VM_Mono
+
 "   ~ {{{1
 
 au VimEnter * com! -bang UseVimball

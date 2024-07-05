@@ -155,6 +155,11 @@
 	url = https://github.com/christoomey/vim-tmux-navigator.git
 	shallow = true
 	ignore = all
+[submodule "vim-visual-multi"]
+	path = config/vim/pack/extern/start/vim-visual-multi
+	url = https://github.com/mg979/vim-visual-multi.git
+	shallow = true
+	ignore = all
 [submodule "wrapwidth"]
 	path = config/vim/pack/extern/start/wrapwidth
 	url = https://github.com/rickhowe/wrapwidth.git
