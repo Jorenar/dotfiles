@@ -1,0 +1,14 @@
+include $XDG_CONFIG_HOME/i3/common.conf
+
+bar {
+    position top
+    swaybar_command waybar
+}
+
+hide_edge_borders --i3 smart
+output * bg #000000 solid_color
+
+for_window [shell="xwayland"] title_format "[X11] %title"
+
+bindsym --release Print exec --no-startup-id grim
+bindsym --release Shift+Print exec --no-startup-id slurp | grim -g -

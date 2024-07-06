@@ -22,7 +22,13 @@
     ],
 
     "sway/window": {
-      "max-length": 50
+      "max-length": 50,
+      "format": "{shell}@@{title}",
+      "rewrite": {
+        "(xdg_shell)@@(.*)": "$2",
+        "(xwayland)@@(.*)": "[X11] $2",
+        "@@": ""
+      }
     },
     "sway/scratchpad": {
         "format": "~{count}",
