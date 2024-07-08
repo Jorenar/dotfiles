@@ -4,8 +4,9 @@ curl icanhazip.com
 curl wttr.in/
 exec sway --unsupported-gpu -D noscanout
 git hook run update -- WRAPPER --save-hash all '*'
-git reset --hard $(git rev-list --max-parents=0 --abbrev-commit HEAD)
+git reset --hard $(git rev-list --max-parents=0 --abbrev-commit HEAD) # reset to initial
 git submodule update --init --recursive --remote
+gpg --quick-gen-key "KEY NAME" default default never
 mount -t cifs //10.0.2.4/qemu/
 pacman -Qo /path/to/file
 pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'
