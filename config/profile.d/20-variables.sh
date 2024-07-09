@@ -53,6 +53,9 @@ export XENVIRONMENT="$XDG_CONFIG_HOME/X11/Xresources"
 export ENV="$XDG_CONFIG_HOME/sh/shrc"  # sh, ksh
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 
+export BASH_COMPLETION_USER_DIR
+export BASH_COMPLETION_USER_FILE="$XDG_CONFIG_HOME/bash/bash-completion/bash_completion"
+
 pathmunge BASH_COMPLETION_USER_DIR "$XDG_DATA_HOME/bash-completion"
 pathmunge BASH_COMPLETION_USER_DIR "$XDG_CONFIG_HOME/bash-completion"
 pathmunge BASH_COMPLETION_USER_DIR "$XDG_CONFIG_HOME/bash/bash-completion"
@@ -75,6 +78,7 @@ export C_INCLUDE_PATH
 pathmunge C_INCLUDE_PATH "$HOME/.local/lib/include"
 
 for v in ASAN_OPTIONS UBSAN_OPTIONS TSAN_OPTIONS; do
+    export "${v?}"
     pathmunge "$v" "abort_on_error=1"
     pathmunge "$v" "halt_on_error=1"
 done
