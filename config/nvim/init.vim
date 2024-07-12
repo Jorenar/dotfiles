@@ -65,4 +65,6 @@ set backupdir-=.
 set guicursor=a:block
 set startofline
 
+autocmd! nvim_swapfile
+
 let g:ale_use_neovim_diagnostics_api = 0
