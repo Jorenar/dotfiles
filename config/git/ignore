@@ -1,6 +1,7 @@
 *.orig
 *.plist
 *.synctex.gz
+*:Zone.Identifier
 .cache
 .gdb_history
 .tmp/
