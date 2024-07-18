@@ -65,6 +65,8 @@ set backupdir-=.
 set guicursor=a:block
 set startofline
 
+let &grepformat = "%f:%l:%m,%f:%l%m,%f  %l%m"
+
 autocmd! nvim_swapfile
 
 let g:ale_use_neovim_diagnostics_api = 0
