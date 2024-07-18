@@ -55,6 +55,7 @@ user_pref("browser.pagethumbnails.capturing_disabled",  true);
 user_pref("datareporting.healthreport.service.enabled", false);
 user_pref("datareporting.healthreport.uploadEnabled",   false);
 user_pref("datareporting.policy.dataSubmissionEnabled", false);
+user_pref("dom.private-attribution.submission.enabled", false);
 user_pref("network.cookie.cookieBehavior",              3);
 user_pref("network.cookie.thirdparty.sessionOnly",      true);
 user_pref("privacy.donottrackheader.enabled",           true);
