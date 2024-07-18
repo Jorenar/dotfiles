@@ -43,7 +43,9 @@
     "custom/todo": {
         "format": "TODO: {}",
         "return-type": "text",
-        "exec": "grep -c ^@ ~/.todo || echo 0"
+        "interval": 5,
+        "exec": "grep -c ^@ ~/.todo || echo 0",
+        "on-click": "grep -c ^@ ~/.todo || echo 0"
     },
     "custom/rss": {
         "format": "RSS: {}",
