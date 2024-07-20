@@ -3,24 +3,24 @@
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 
-EXE="$(basename "$0")"
+exe="$(basename "$0")"
 
-case "$EXE" in
+case "$exe" in
     dosbox)
-        ARGS="-conf $XDG_CONFIG_HOME/dosbox/dosbox.conf"
+        set -- "-conf" "$XDG_CONFIG_HOME/dosbox/dosbox.conf" "$@"
         ;;
     firefox)
-        ARGS="--profile $XDG_DATA_HOME/firefox"
+        set -- "--profile" "$XDG_DATA_HOME/firefox" "$@"
         { while kill -0 $$ 2> /dev/null; do rm -rf "$HOME"/.mozilla; done; } &
         ;;
     nvidia-settings)
         mkdir -p "$XDG_CONFIG_HOME/nvidia"
-        ARGS="--config=$XDG_CONFIG_HOME/nvidia/rc.conf"
+        set -- "--config=$XDG_CONFIG_HOME/nvidia/rc.conf" "$@"
         ;;
     ssh|scp)
         if [ ! -e "$HOME/.ssh/config" ]; then
             if [ -e "$XDG_CONFIG_HOME/ssh/config" ]; then
-                ARGS="-F $XDG_CONFIG_HOME/ssh/config"
+                set -- "-F" "$XDG_CONFIG_HOME/ssh/config" "$@"
             fi
         fi
         ;;
@@ -31,7 +31,7 @@ case "$EXE" in
         HOME="$XDG_CONFIG_HOME"
         ;;
     vale)
-        ARGS="--config $XDG_CONFIG_HOME/vale/vale.ini"
+        set -- "--config" "$XDG_CONFIG_HOME/vale/vale.ini" "$@"
         ;;
     xsane)
         HOME="$XDG_DATA_HOME"
@@ -41,8 +41,7 @@ esac
 # Remove directory with wrapper from PATH (to prevent cyclical execution)
 PATH="$(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname "$0")" | paste -sd:)"
 
-# shellcheck disable=SC2086
-exec "$EXE" $ARGS "$@"
+exec "$exe" "$@"
 
 
 #~ dosbox
