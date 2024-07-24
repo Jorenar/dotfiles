@@ -1,5 +1,7 @@
 #!sh
 
+export GPG_TTY="$(tty)"
+
 export HISTSIZE=
 export HISTFILE="$XDG_STATE_HOME/$(basename -- "${0#-*}")_history"
 

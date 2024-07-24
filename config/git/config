@@ -4,8 +4,8 @@
     email = jorengarenar@outlook.com
     name = Jorengarenar
 
-[github]
-    user = Jorengarenar
+[credential]
+    helper = pass
 
 [init]
     defaultBranch = master
