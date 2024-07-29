@@ -31,7 +31,6 @@ install () (
     src="$1"
     op="$2"
     dest="$3"
-    mode="$4"
 
     action=
     case "$op" in
@@ -51,18 +50,16 @@ install () (
     if [ ! -e "$dest" ]; then
         mkdir -p "$(dirname "$dest")"
         sh -c "$action '$(abspath "$src")' '$dest'"
-
-        [ -n "$mode" ] && chmod "$mode" "$dest"
     fi
 )
 
 install_bulk () (
     prefix="$1"
-    fmt="%s %s $prefix/%s %s"
-
-    while read -r line; do
-        # shellcheck disable=SC2059,SC2086
-        [ -n "$line" ] && install $(printf "$fmt" $line)
+    while read -r src op dest; do
+        [ -z "$src" ] && continue
+        [ -z "$op" ] && op='@'
+        [ -z "$dest" ] && dest="$(basename "$src")"
+        install "$src" "$op" "$prefix/$dest"
     done
 )
 
@@ -89,53 +86,54 @@ install  templates/  @  "$XDG_TEMPLATES_DIR"
 
 install_bulk "$XDG_CONFIG_HOME" << EOL
 
-    config/aerc/               @  aerc
-    config/bash/               @  bash
-    config/ccache.conf         @  ccache/ccache.conf
-    config/chktexrc            @  .chktexrc
-    config/commafeed.yml       @  commafeed.yml
-    config/ctags/              @  ctags
-    config/deno.json           @  deno.json
-    config/dosbox.conf         @  dosbox/dosbox.conf
-    config/feh/                @  feh
-    config/fonts.conf          @  fontconfig/fonts.conf
-    config/gdbinit             @  gdb/gdbinit
-    config/git/                @  git
-    config/grip/               @  grip
-    config/gtk3-settings.ini   @  gtk-3.0/settings.ini
-    config/htoprc              @  htop/htoprc                          -w
-    config/i3/                 @  i3
-    config/inputrc             @  readline/inputrc
-    config/lesskey             @  lesskey
-    config/mpv/                @  mpv
-    config/muttrc              @  mutt/muttrc
-    config/npmrc               @  npm/npmrc
-    config/nvim/               @  nvim
-    config/OpenSCAD.conf       @  OpenSCAD/OpenSCAD.conf               -w
-    config/polybar/            @  polybar
-    config/profile.d           @  profile.d
-    config/python_config.py    @  python/config.py
-    config/qt5ct               @  qt5ct                                -w
-    config/ranger.conf         @  ranger/rc.conf
-    config/sh/                 @  sh
-    config/shellcheckrc        @  shellcheckrc
-    config/sqliterc            @  sqlite3/sqliterc
-    config/ssh_config          @  ssh/config
-    config/stalonetrayrc       @  stalonetrayrc
-    config/sway                @  sway
-    config/systemd/            @  systemd
-    config/telnetrc            @  .telnetrc
-    config/tmux/               @  tmux
-    config/transmission.json   %  transmission-daemon/settings.json
-    config/uncrustify/         @  uncrustify
-    config/user-dirs.conf      @  user-dirs.conf
-    config/user-dirs.dirs      @  user-dirs.dirs
-    config/vale/               @  vale
-    config/vim/                @  vim
-    config/waybar/             @  waybar
-    config/X11/                @  X11
-    config/zathurarc           @  zathura/zathurarc
-    config/zsh                 @  zsh
+    config/aerc/
+    config/bash/
+    config/ccache/
+    config/chktexrc  @  .chktexrc
+    config/commafeed.yml
+    config/ctags/
+    config/deno.json
+    config/dosbox/
+    config/feh/
+    config/fontconfig/
+    config/gdb/
+    config/git/
+    config/grip/
+    config/gtk-3.0/settings.ini  @  gtk-3.0/settings.ini
+    config/htop/
+    config/i3/
+    config/lesskey
+    config/mpv/
+    config/mutt/
+    config/npm/
+    config/nvim/
+    config/OpenSCAD/
+    config/polybar/
+    config/powershell/
+    config/profile.d/
+    config/python/
+    config/qt5ct/
+    config/ranger/
+    config/readline/
+    config/sh/
+    config/shellcheckrc
+    config/sqlite3/
+    config/ssh/
+    config/stalonetrayrc
+    config/sway/
+    config/systemd/
+    config/telnetrc  @  .telnetrc
+    config/tmux/
+    config/transmission.json  %  transmission-daemon/settings.json
+    config/uncrustify/
+    config/user-dirs.conf
+    config/user-dirs.dirs
+    config/vale/
+    config/vim/
+    config/waybar/
+    config/X11/
+    config/zathura/
+    config/zsh/
 
 EOL
 
@@ -150,6 +148,11 @@ install_bulk "$XDG_DATA_HOME" << EOL
     fonts/  @  fonts
 
 EOL
+
+chmod -R -w \
+    config/htop/htoprc \
+    config/OpenSCAD/OpenSCAD.conf \
+    config/qt5ct
 
 
 # xdg_wrapper.sh {{{

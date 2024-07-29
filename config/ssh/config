@@ -1,5 +1,3 @@
-# vim: ft=sshconfig
-
 IdentityFile ${XDG_DATA_HOME}/ssh/id_rsa
 # IdentityFile ${XDG_DATA_HOME}/ssh/id_ecdsa
 # IdentityFile ${XDG_DATA_HOME}/ssh/id_ecdsa_sk
