@@ -1,13 +1,18 @@
 #!sh
 
 if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
-    if [ -e /usr/share/git/completion/git-prompt.sh ]; then
+    g=
+    [ ! -e "$g" ] && g="/usr/share/git/completion/git-prompt.sh"
+    [ ! -e "$g" ] && g="/usr/lib/git-core/git-sh-prompt"
+
+    if [ -e "$g" ]; then
         GIT_PS1_SHOWDIRTYSTATE=yes
         GIT_PS1_SHOWSTASHSTATE=yes
         GIT_PS1_SHOWUNTRACKEDFILES=yes
         GIT_PS1_SHOWCONFLICTSTATE=yes
-        . /usr/share/git/completion/git-prompt.sh
+        . "$g"
     fi
+    unset g
 fi
 
 if ! type __git_ps1 > /dev/null 2>&1; then
