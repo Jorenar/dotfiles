@@ -12,9 +12,3 @@ nnoremap <buffer> <F8> <Cmd>call system($BROWSER.' '.shellescape(expand("%:p")).
 SetFormatProg "tidy -q -w -i --show-warnings 0 --show-errors 0 --tidy-mark no"
 
 let g:ale_html_tidy_options = "--drop-empty-elements 0"
-call ale#linter#Define(&ft, {
-      \   'name': 'vale',
-      \   'executable': 'vale',
-      \   'command': 'vale --output=JSON %t',
-      \   'callback': 'ale#handlers#vale#Handle',
-      \})

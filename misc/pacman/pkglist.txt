@@ -81,6 +81,7 @@ tectonic
 texlab
 tidy
 uncrustify
+vale
 valgrind
 visidata
 

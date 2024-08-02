@@ -139,6 +139,8 @@ EOL
 
 install_bulk "$XDG_DATA_HOME" << EOL
 
+    config/vale/config/  @  vale/styles/config
+
     config/firefox/user.js          @  firefox/user.js
     config/firefox/userChrome.css   @  firefox/chrome/userChrome.css
     config/firefox/userContent.css  @  firefox/chrome/userContent.css
