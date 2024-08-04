@@ -1,12 +1,13 @@
 # vim: ft=sh
 
-if [ -x "$(command -v podman)" ]; then
-    _podrun () {
-        mapfile -t COMPREPLY < <(
-            compgen -W "$(
-                podman images --format='{{.Repository}}' | awk -F'/' '{ print $NF }'
-            )" -- "${COMP_WORDS[COMP_CWORD]}"
-        )
-    }
-    complete -F _podrun podrun
-fi
+[ ! -x "$(command -v podman)" ] && return
+
+_podrun () {
+    mapfile -t COMPREPLY < <(
+        compgen -W "$(
+            podman images --format='{{.Repository}}:{{.Tag}}' | \
+                awk -F'/' '{ print $NF }'
+        )" -- "${COMP_WORDS[COMP_CWORD]}"
+    )
+}
+complete -F _podrun podrun
