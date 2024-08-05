@@ -1,3 +1,5 @@
+" Vale {{{
+
 " Supported filetypes taken from:
 "   https://vale.sh/docs/topics/scoping/#code-1
 " (and from format associations in .vale.ini file)
@@ -52,3 +54,5 @@ call map(s:vale_fts,
       \ )
 
 unlet s:vale_fts
+
+" }}}

@@ -383,19 +383,6 @@ let g:tagbar_ctags_options = [ findfile('ctags.cnf', &rtp) ]
 hi! link TagbarNestedKind Comment
 hi! link TagbarType Comment
 
-let g:tagbar_type_vb = #{
-      \   kinds: [
-      \     'T:types',
-      \     's:subroutines',
-      \     'f:functions',
-      \     'E:events',
-      \     'v:variables',
-      \     'c:constants',
-      \     'p:properties',
-      \     'e:enum',
-      \   ]
-      \ }
-
 "   vim-bookmarks {{{1
 
 let g:bookmark_auto_save_file = $XDG_STATE_HOME . "/vim/bookmarks"
@@ -549,6 +536,8 @@ let g:qf_mapping_ack_style = 1
 let g:qf_loclist_window_bottom = 0
 
 " }}}1
+
+runtime! vimrc.d/*
 
 if has("gui_running")
   runtime! gvimrc
