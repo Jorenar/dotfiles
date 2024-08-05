@@ -1,0 +1,4 @@
+--langdef=Gradle
+--langmap=Gradle:.gradle
+--regex-Gradle=/^[ \t]*task[ \t]+([a-zA-Z0-9]+)/\1/t,task/
+--regex-Gradle=/^[ \t]*def[ \t]+([a-zA-Z0-9_]+\([A-Za-z0-9 _,]*\))[ \t]+/\1/m,method/
