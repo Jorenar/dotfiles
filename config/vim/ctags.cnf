@@ -1,1 +1,2 @@
 --extras=-q
+--python-kinds=-F

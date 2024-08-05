@@ -378,7 +378,7 @@ nnoremap <Leader>t :Tagbar<CR>
 
 let g:tagbar_sort = 0
 let g:tagbar_compact = 1
-let g:tagbar_ctags_options = [ split(&rtp,",")[0].'/ctags.cnf' ]
+let g:tagbar_ctags_options = [ findfile('ctags.cnf', &rtp) ]
 
 hi! link TagbarNestedKind Comment
 hi! link TagbarType Comment
