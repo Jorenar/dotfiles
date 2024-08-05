@@ -5,7 +5,7 @@
     name = Jorengarenar
 
 [credential]
-    helper = pass
+    helper = pass --no-erase
 
 [init]
     defaultBranch = master
