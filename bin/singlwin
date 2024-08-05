@@ -1,0 +1,128 @@
+#!/usr/bin/env sh
+
+g_exe=
+g_class=
+g_i3=false
+g_i3_ws_node=
+
+if ! command -v xprop > /dev/null; then
+    exit 1
+fi
+
+xdotool="xdotool"
+if [ -n "$WAYLAND_DISPLAY" ]; then
+    if command -v ydotool > /dev/null; then
+        xdotool="ydotool"
+    fi
+fi
+if ! command -v "$xdotool" > /dev/null; then
+    exit 1
+fi
+
+usage () {
+    e="$(basename "$0")"
+    cat << EOF
+Usage: $e [OPTION]... -- PROG [ARGS]...
+
+Options:
+  -h, -?, --help  show this help message and exit
+  -c, --class     specify the class name of the window to search for
+  --i3            use with i3 or sway window manager to filter by workspace
+
+Arguments:
+  PROG  the command to execute if no matching window is found
+  ARGS  additional arguments to pass to the executable
+
+Examples:
+  $e --class myapp -- myapp --arg1 --arg2
+  $e --i3 --class myapp -- myapp
+  $e -c '^[Xx][Tt]erm$' -- xterm
+EOF
+}
+
+cmp_args () {
+    test "$(printf '%s\n' "$@")" = "$(:
+        read -r line
+        echo "$line" | \
+            cut -d= -f2 | \
+            sed 's/[{}]//g' | \
+            awk -F', ' '{ for (i=1; i<=NF; i++) print $i }' | \
+            sed -e 's/^ *//;s/ *$//;s/^"\(.*\)"$/\1/' -e '1d'
+    )"
+}
+
+main () {
+    for id in $("$xdotool" search --class "$g_class"); do
+        if [ -n "$g_i3_ws_node" ]; then
+            test -z "$(
+                echo "$g_i3_ws_node" | jq -r "
+                .. | objects | select(.window == $id) | length > 0
+                "
+            )" && continue
+        fi
+        if xprop -id "$id" | grep WM_COMMAND | cmp_args "$@"; then
+            exec "$xdotool" windowactivate "$id"
+        fi
+    done
+
+    exec "$g_exe" "$@"
+}
+
+# parse args {{{
+
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+        -h|-\?|--help)
+            usage
+            exit
+            ;;
+        -c|--class)
+            g_class="$2"
+            shift
+            ;;
+        --i3)
+            g_i3=true
+            ;;
+        --)
+            shift
+            break
+            ;;
+        -?*)
+            >&2 printf 'WARN: Unknown option (ignored): %s\n' "$1"
+            ;;
+        *) ;;
+    esac
+    shift
+done
+
+if [ "$#" -le 0 ]; then
+    >&2 echo "nothing provided to execute"
+    exit 1
+fi
+
+g_exe="$1"
+if ! command -v "$g_exe" > /dev/null; then
+    >&2 echo ''
+    exit 1
+fi
+shift
+
+if [ -z "$g_class" ]; then
+    g_class="$(basename "$g_exe")"
+fi
+
+if [ "$g_i3" = true ]; then
+    g_i3_ws_node="$(:
+        i3msg="$(test -n "$WAYLAND_DISPLAY" && echo "swaymsg" || echo "i3-msg")"
+        $i3msg -t get_tree | jq -r "
+        .. | objects | select(.id == $(
+            $i3msg -t get_workspaces | jq -r '.[] | select(.focused) | .id'
+            )
+        )
+        "
+    )"
+fi
+
+# }}}
+
+main "$@"
