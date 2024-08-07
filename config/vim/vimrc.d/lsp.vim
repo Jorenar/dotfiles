@@ -114,3 +114,17 @@ if executable("openscad-lsp")
         \   allowlist: [ "openscad" ],
         \ })
 endif
+
+if executable('asm-lsp')
+  au User lsp_setup call lsp#register_server(#{
+        \   name: 'asm-lsp',
+        \   root_uri: {-> lsp#utils#path_to_uri(
+        \     lsp#utils#find_nearest_parent_file_directory(
+        \       lsp#utils#get_buffer_path(),
+        \       [ ".git/" ]
+        \     )
+        \   )},
+        \   cmd: [ 'asm-lsp' ],
+        \   allowlist: [ 'asm', 'nasm' ],
+        \ })
+endif
