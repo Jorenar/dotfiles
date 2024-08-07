@@ -1,4 +1,14 @@
-if executable("ccls")
+if executable('clangd')
+  au User lsp_setup call lsp#register_server(#{
+        \   name: "clangd",
+        \   cmd: ["clangd",
+        \     "--query-driver=/usr/bin/gcc",
+        \     "--background-index",
+        \     "--clang-tidy",
+        \   ],
+        \   allowlist: [ "c", "cpp", "objc", "objcpp" ],
+        \ })
+elseif executable('ccls')
   au User lsp_setup call lsp#register_server(#{
         \   name: "ccls",
         \   cmd: [ "ccls" ],
@@ -12,16 +22,6 @@ if executable("ccls")
         \     cache: #{ directory: $XDG_CACHE_HOME."/ccls-cache" },
         \     clang: #{ extraArgs: [ "--gcc-toolchain=/usr" ] },
         \   },
-        \   allowlist: [ "c", "cpp", "objc", "objcpp" ],
-        \ })
-elseif executable('clangd')
-  au User lsp_setup call lsp#register_server(#{
-        \   name: "clangd",
-        \   cmd: ["clangd",
-        \     "--query-driver=/usr/bin/gcc",
-        \     "--background-index",
-        \     "--clang-tidy",
-        \   ],
         \   allowlist: [ "c", "cpp", "objc", "objcpp" ],
         \ })
 endif
