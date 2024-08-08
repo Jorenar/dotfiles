@@ -37,20 +37,17 @@ augroup LSP_SERVERS
   autocmd!
   autocmd User lsp_server_init call s:on_lsp_server_init()
 
-  if executable('clangd')
+  if executable('asm-lsp')
     au User lsp_setup call lsp#register_server(#{
-          \   name: 'clangd',
-          \   cmd: ['clangd',
-          \     '--header-insertion-decorators=false',
-          \     '--background-index',
-          \   ],
+          \   name: 'asm-lsp',
+          \   cmd: [ 'asm-lsp' ],
           \   root_uri: {-> lsp#utils#path_to_uri(
           \     lsp#utils#find_nearest_parent_file_directory(
           \       lsp#utils#get_buffer_path(),
-          \       [ 'compile_commands.json', '.clangd', '.git/' ]
+          \       [ '.git/' ]
           \     )
           \   )},
-          \   allowlist: [ 'c', 'cpp', 'objc', 'objcpp' ],
+          \   allowlist: [ 'asm', 'nasm' ],
           \ })
   endif
 
@@ -72,19 +69,43 @@ augroup LSP_SERVERS
           \ })
   endif
 
-  if executable('jedi-language-server')
+  if executable('clangd')
     au User lsp_setup call lsp#register_server(#{
-          \   name: 'Jedi',
-          \   cmd: [ 'jedi-language-server' ],
-          \   allowlist: [ 'python' ],
+          \   name: 'clangd',
+          \   cmd: ['clangd',
+          \     '--header-insertion-decorators=false',
+          \     '--background-index',
+          \   ],
+          \   root_uri: {-> lsp#utils#path_to_uri(
+          \     lsp#utils#find_nearest_parent_file_directory(
+          \       lsp#utils#get_buffer_path(),
+          \       [ 'compile_commands.json', '.clangd', '.git/' ]
+          \     )
+          \   )},
+          \   allowlist: [ 'c', 'cpp', 'objc', 'objcpp' ],
           \ })
   endif
 
-  if executable('texlab')
+  if executable('deno')
     au User lsp_setup call lsp#register_server(#{
-          \   name: 'TexLab',
-          \   cmd: [ 'texlab' ],
-          \   allowlist: [ 'tex' ],
+          \   name: 'Deno',
+          \   cmd: [ 'deno', 'lsp' ],
+          \   initialization_options: #{
+          \     config: $XDG_CONFIG_HOME . '/deno.json',
+          \     enable: v:true,
+          \     unstable: v:true,
+          \     lint: v:true,
+          \     codeLens: #{
+          \       implementations: v:true,
+          \       references: v:true,
+          \       referencesAllFunctions: v:true,
+          \       test: v:true,
+          \     },
+          \     suggest: #{
+          \       names: v:true,
+          \     },
+          \   },
+          \   allowlist: [ 'javascript', 'typescript' ],
           \ })
   endif
 
@@ -93,6 +114,30 @@ augroup LSP_SERVERS
           \   name: 'Digestif',
           \   cmd: [ 'digestif' ],
           \   allowlist: [ 'tex' ],
+          \ })
+  endif
+
+  if executable('jdtls')
+    au User lsp_setup call lsp#register_server(#{
+          \   name: 'Eclipse JDT Language Server',
+          \   cmd: [ 'jdtls' ],
+          \   allowlist: [ 'java' ],
+          \ })
+  endif
+
+  if executable('jedi-language-server')
+    au User lsp_setup call lsp#register_server(#{
+          \   name: 'Jedi',
+          \   cmd: [ 'jedi-language-server' ],
+          \   allowlist: [ 'python' ],
+          \ })
+  endif
+
+  if executable('openscad-lsp')
+    au User lsp_setup call lsp#register_server(#{
+          \   name: 'openscad-LSP',
+          \   cmd: [ 'openscad-lsp', '--stdio' ],
+          \   allowlist: [ 'openscad' ],
           \ })
   endif
 
@@ -122,63 +167,18 @@ augroup LSP_SERVERS
           \ })
   endif
 
-  if executable('jdtls')
+  if executable('texlab')
     au User lsp_setup call lsp#register_server(#{
-          \   name: 'Eclipse JDT Language Server',
-          \   cmd: [ 'jdtls' ],
-          \   allowlist: [ 'java' ],
-          \ })
-  endif
-
-  if executable('deno')
-    au User lsp_setup call lsp#register_server(#{
-          \   name: 'Deno',
-          \   cmd: [ 'deno', 'lsp' ],
-          \   initialization_options: #{
-          \     config: $XDG_CONFIG_HOME . '/deno.json',
-          \     enable: v:true,
-          \     unstable: v:true,
-          \     lint: v:true,
-          \     codeLens: #{
-          \       implementations: v:true,
-          \       references: v:true,
-          \       referencesAllFunctions: v:true,
-          \       test: v:true,
-          \     },
-          \     suggest: #{
-          \       names: v:true,
-          \     },
-          \   },
-          \   allowlist: [ 'javascript', 'typescript' ],
-          \ })
-  endif
-
-  if executable('openscad-lsp')
-    au User lsp_setup call lsp#register_server(#{
-          \   name: 'openscad-LSP',
-          \   cmd: [ 'openscad-lsp', '--stdio' ],
-          \   allowlist: [ 'openscad' ],
-          \ })
-  endif
-
-  if executable('asm-lsp')
-    au User lsp_setup call lsp#register_server(#{
-          \   name: 'asm-lsp',
-          \   cmd: [ 'asm-lsp' ],
-          \   root_uri: {-> lsp#utils#path_to_uri(
-          \     lsp#utils#find_nearest_parent_file_directory(
-          \       lsp#utils#get_buffer_path(),
-          \       [ '.git/' ]
-          \     )
-          \   )},
-          \   allowlist: [ 'asm', 'nasm' ],
+          \   name: 'TexLab',
+          \   cmd: [ 'texlab' ],
+          \   allowlist: [ 'tex' ],
           \ })
   endif
 
   if executable('vim-language-server')
     autocmd User lsp_setup call lsp#register_server(#{
           \   name: 'VimScript Language Server',
-          \   cmd: ['vim-language-server', '--stdio'],
+          \   cmd: [ 'vim-language-server', '--stdio' ],
           \   initialization_options: #{
           \     vimruntime: $VIMRUNTIME,
           \     runtimepath: &rtp,
