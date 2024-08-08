@@ -128,3 +128,15 @@ if executable('asm-lsp')
         \   allowlist: [ 'asm', 'nasm' ],
         \ })
 endif
+
+if executable('vim-language-server')
+  autocmd User lsp_setup call lsp#register_server(#{
+        \   name: 'VimScript Language Server',
+        \   cmd: ['vim-language-server', '--stdio'],
+        \   initialization_options: #{
+        \     vimruntime: $VIMRUNTIME,
+        \     runtimepath: &rtp,
+        \   },
+        \   allowlist: [ 'vim' ],
+        \ })
+endif
