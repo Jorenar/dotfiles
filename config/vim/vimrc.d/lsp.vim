@@ -1,21 +1,53 @@
 " vim: fdl=1
 
+" handlers {{{
+" {{{1
+
+function! s:on_lsp_server_init() abort
+  let l:servers = lsp#get_allowed_servers()
+
+  if index(l:servers, 'ccls') >= 0 || index(l:servers, 'clangd') >= 0
+    call s:ccls_clangd_combo()
+  endif
+endfunction
+
+function! s:ccls_clangd_combo() abort
+  let l:clangd = lsp#get_server_capabilities('clangd')
+  let l:ccls = lsp#get_server_capabilities('ccls')
+
+  if empty(l:ccls) || empty(l:clangd)
+    return
+  endif
+
+  let l:ccls = extend(l:ccls, #{
+        \   callHierarchyProvider: v:false,
+        \   declarationProvider: v:false,
+        \   definitionProvider: v:false,
+        \   hoverProvider: v:false,
+        \   implementationProvider: v:false,
+        \   referencesProvider: v:false,
+        \   typeDefinitionProvider: v:false,
+        \ })
+  call remove(l:clangd, 'completionProvider')
+endfunction
+
+" }}}
+
 augroup LSP_SERVERS
   autocmd!
+  autocmd User lsp_server_init call s:on_lsp_server_init()
 
   if executable('clangd')
     au User lsp_setup call lsp#register_server(#{
           \   name: 'clangd',
           \   cmd: ['clangd',
           \     '--header-insertion-decorators=false',
-          \     '--query-driver=/usr/bin/gcc',
           \     '--background-index',
-          \     '--clang-tidy',
           \   ],
           \   root_uri: {-> lsp#utils#path_to_uri(
           \     lsp#utils#find_nearest_parent_file_directory(
           \       lsp#utils#get_buffer_path(),
-          \       [ 'compile_commands.json', '.git/' ]
+          \       [ 'compile_commands.json', '.clangd', '.git/' ]
           \     )
           \   )},
           \   allowlist: [ 'c', 'cpp', 'objc', 'objcpp' ],

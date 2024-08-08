@@ -90,6 +90,7 @@ install_bulk "$XDG_CONFIG_HOME" << EOL
     config/bash/
     config/ccache/
     config/chktexrc  @  .chktexrc
+    config/clangd/
     config/commafeed.yml
     config/ctags/
     config/deno.json
