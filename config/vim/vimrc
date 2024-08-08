@@ -252,6 +252,8 @@ source $VIMRUNTIME/ftplugin/man.vim
 
 "   ALE {{{1
 
+let g:lsp_ale_auto_config_ale = 0
+
 let g:ale_disable_lsp = 1
 let g:ale_echo_msg_format = '[%linter%]: %s'
 let g:ale_set_signs = 0
@@ -265,14 +267,16 @@ hi! link ALEWarning WarningMsg
 
 "   vim-lsp {{{1
 
-let g:lsp_use_native_client                  = 1
+let g:lsp_ale_auto_config_vim_lsp = 0
 
 let g:lsp_diagnostics_highlights_delay       = 0
 let g:lsp_diagnostics_highlights_enabled     = 1
 let g:lsp_diagnostics_signs_enabled          = 0
 let g:lsp_diagnostics_virtual_text_enabled   = 0
 let g:lsp_document_code_action_signs_enabled = 0
+let g:lsp_show_message_log_level             = 'info'
 let g:lsp_text_edit_enabled                  = 0
+let g:lsp_use_native_client                  = 1
 
 let g:lsp_log_verbose = 0
 let g:lsp_log_file = $XDG_STATE_HOME . "/vim/lsp.log"
@@ -289,6 +293,8 @@ function! s:lsp_init() abort
 
   nmap <buffer> LK <Plug>(lsp-hover)
   nmap <buffer> LR <Plug>(lsp-rename)
+
+  nmap <buffer> Lca <plug>(lsp-code-action-float)
 
   nmap <buffer> Lgg <Plug>(lsp-definition)
   nmap <buffer> Lgd <Plug>(lsp-declaration)
