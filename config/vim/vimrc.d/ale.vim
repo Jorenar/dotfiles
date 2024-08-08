@@ -12,6 +12,7 @@ let s:vale_fts = #{
       \   css: '.css',
       \   dosini: '.ini',
       \   expect: '.exp',
+      \   gitcommit: '.txt',
       \   gitconfig: '.ini',
       \   go: '.go',
       \   groovy: '.groovy',
