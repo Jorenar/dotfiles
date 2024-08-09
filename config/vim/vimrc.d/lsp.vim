@@ -58,6 +58,14 @@ function! s:sonarlint_handler(x) abort
   endif
 endfunction
 
+function! s:sqls_handler(x) abort
+  let l:lines = a:x['response']['result']
+  if empty(l:lines) | return | endif
+  new | setlocal buftype=nofile
+  call setline(1, split(l:lines, "\n"))
+  " call lsp#ui#vim#output#preview(a:x['server'], l:lines, {})
+endfunction
+
 " }}}
 
 augroup LSP_SERVERS
@@ -207,7 +215,14 @@ augroup LSP_SERVERS
   if executable('sqls')
     au User lsp_setup call lsp#register_server(#{
           \   name: 'sqls',
-          \   cmd: [ 'sqls' ],
+          \   cmd: {->
+          \     [ 'sqls' ]
+          \     + { yml ->
+          \          empty(yml) ? [] : [ '-config', yml ]
+          \       }(lsp#utils#find_nearest_parent_file(
+          \           lsp#utils#get_buffer_path(), '.sqls.yml'
+          \        ))
+          \   },
           \   workspace_config: #{
           \     sqls: #{
           \       connections: [
@@ -215,19 +230,19 @@ augroup LSP_SERVERS
           \           driver: 'sqlite3',
           \           dataSourceName: $SQLS_SQLITE_DB,
           \         },
-          \         #{
-          \           driver: 'mysql',
-          \           proto:  'unix',
-          \           user:   empty($SQLS_MYSQL_USER) ? $LOGNAME : $SQLS_MYSQL_USER,
-          \           passwd: $SQLS_MYSQL_PASSWD,
-          \           path:   '/run/mysqld/mysqld.sock',
-          \           dbName: $SQLS_MYSQL_DB,
-          \         },
           \       ],
           \     },
           \   },
           \   allowlist: [ 'sql' ]
           \ })
+
+    au User lsp_setup call lsp#callbag#pipe(
+          \   lsp#stream(),
+          \   lsp#callbag#filter({x ->
+          \     x->get('request', {})->get('params', {})->get('command', '') =~# '\v(executeQuery|show)'
+          \   }),
+          \   lsp#callbag#subscribe({ 'next':{x->s:sqls_handler(x)} }),
+          \ )
   endif
 
   if executable('texlab')
