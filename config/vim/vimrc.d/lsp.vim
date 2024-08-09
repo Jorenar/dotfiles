@@ -31,6 +31,33 @@ function! s:ccls_clangd_combo() abort
   call remove(l:clangd, 'completionProvider')
 endfunction
 
+function! s:sonarlint_handler(x) abort
+  const l:type = has_key(a:x, 'request') ? 'request' : 'response'
+  const l:method = substitute(a:x[l:type]['method'], '^sonarlint/', '', '')
+
+  let l:res = {}
+
+  if has_key(a:x[l:type], 'id')
+    let l:res.id = a:x[l:type]['id']
+  endif
+
+  if l:type ==# 'request'
+    let l:res.result = v:null
+  endif
+
+  if l:method ==# 'shouldAnalyseFile'
+    let l:res.result = { 'shouldBeAnalysed': v:true }
+  elseif l:method ==# 'isIgnoredByScm'
+    let l:res.result = v:false
+  elseif l:method ==# 'showRuleDescription'
+    call lsp#ui#vim#output#preview(a:x['server'], prettyprint#prettyprint(a:x), {})
+  endif
+
+  if l:res != {}
+    call lsp#send_request(a:x['server'], l:res)
+  endif
+endfunction
+
 " }}}
 
 augroup LSP_SERVERS
@@ -139,6 +166,42 @@ augroup LSP_SERVERS
           \   cmd: [ 'openscad-lsp', '--stdio' ],
           \   allowlist: [ 'openscad' ],
           \ })
+  endif
+
+  if executable('sonarlint-ls')
+    let g:lsp_use_native_client = 0
+
+    au User lsp_setup call lsp#register_server(#{
+          \   name: 'SonarLint',
+          \   cmd: [
+          \     'sonarlint-ls', '-stdio',
+          \   ] + [ '-analyzers' ]
+          \     + split(glob('/usr/share/java/sonarlint-ls/analyzers/*')),
+          \   root_uri: {-> lsp#utils#path_to_uri('.')},
+          \   initialization_options: #{
+          \     productKey: 'vim-lsp',
+          \   },
+          \   workspace_config: [
+          \     #{
+          \       disableTelemetry: v:true,
+          \       pathToCompileCommands:
+          \         lsp#utils#find_nearest_parent_file(
+          \           lsp#utils#get_buffer_path(),
+          \           'compile_commands.json'
+          \         ),
+          \       rules: {},
+          \     },
+          \   ],
+          \   allowlist: [ 'c', 'cpp', 'go', 'javascript', 'php', 'python' ],
+          \ })
+
+    au User lsp_setup call lsp#callbag#pipe(
+          \   lsp#stream(),
+          \   lsp#callbag#filter({x ->
+          \     x->get('request', x->get('response', {}))->get('method', '') =~# 'sonarlint/'
+          \   }),
+          \   lsp#callbag#subscribe({ 'next':{x->s:sonarlint_handler(x)} }),
+          \ )
   endif
 
   if executable('sqls')
