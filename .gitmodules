@@ -20,6 +20,11 @@
 	url = https://github.com/ctrlpvim/ctrlp.vim.git
 	shallow = true
 	ignore = all
+[submodule "EmacsModeline.vim"]
+	path = config/vim/pack/extern/start/EmacsModeline.vim
+	url = https://github.com/Jorengarenar/EmacsModeline.vim.git
+	shallow = true
+	ignore = all
 [submodule "fauxClip"]
 	path = config/vim/pack/extern/start/fauxClip
 	url = https://github.com/Jorengarenar/fauxClip.git
