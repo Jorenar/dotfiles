@@ -105,6 +105,11 @@
 	url = https://github.com/rhysd/vim-lsp-ale.git
 	shallow = true
 	ignore = all
+[submodule "vim-prettyprint"]
+	path = config/vim/pack/extern/start/vim-prettyprint
+	url = https://github.com/thinca/vim-prettyprint.git
+	shallow = true
+	ignore = all
 [submodule "vim-qf"]
 	path = config/vim/pack/extern/start/vim-qf
 	url = https://github.com/romainl/vim-qf.git
