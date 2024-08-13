@@ -12,4 +12,4 @@ fi
 
 COMMIT=$(git rev-parse "$1") || exit 1
 git commit --fixup "$COMMIT" || exit 1
-EDITOR=true VISUAL=true git rebase -i --autosquash "$COMMIT~1"
+EDITOR=true VISUAL=true git rebase -i --committer-date-is-author-date --autosquash "$COMMIT~1"

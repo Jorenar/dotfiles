@@ -55,7 +55,7 @@ versioned_hook__try_running () {
             y|n|h|H|a|A|x|X|q) break ;;
             '?')
                 cat << EOF
-y - run this hook
+y - run this versioned hook
 n - don't run this versioned hook
 N - never run this versioned hook
 h - always run this versioned hook until its SHA1 changes

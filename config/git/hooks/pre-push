@@ -30,6 +30,8 @@ check_git_fmt_diff () {
                 esac
             fi
         fi
+
+        break
     done
 }
 

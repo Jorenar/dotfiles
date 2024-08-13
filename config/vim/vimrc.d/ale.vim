@@ -17,6 +17,7 @@ let s:vale_fts = #{
       \   go: '.go',
       \   groovy: '.groovy',
       \   haskell: '.hs',
+      \   help: '.txt',
       \   html: '.html',
       \   java: '.java',
       \   javascript: '.js',
