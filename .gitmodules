@@ -197,6 +197,11 @@
 	url = https://github.com/dmnd/git-diff-blame.git
 	shallow = true
 	ignore = all
+[submodule "git-fmt-diff"]
+	path = extern/git-fmt-diff
+	url = https://github.com/Jorengarenar/git-fmt-diff.git
+	shallow = true
+	ignore = all
 [submodule "git-open"]
 	path = extern/git-open
 	url = https://github.com/paulirish/git-open.git
