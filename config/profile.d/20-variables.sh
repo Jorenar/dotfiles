@@ -108,6 +108,12 @@ export MOZ_USE_XINPUT2=1 # enable touchscreen in Firefox
 export QT_QPA_PLATFORMTHEME=qt5ct
 export WINEDEBUG="-all" # suppress Wine debug informations
 
+export WSLENV
+pathmunge WSLENV "TMUX"
+
 # shell history, the same set in shrc
 export HISTSIZE=
 export HISTFILE="$XDG_STATE_HOME/$(basename -- "${0#-*}")_history"
+
+export SH_HIST_SAV
+pathmunge "$XDG_CONFIG_HOME/sh/history.sav"
