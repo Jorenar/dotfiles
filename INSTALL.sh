@@ -65,15 +65,11 @@ install_bulk () (
 
 
 [ ! -s "$HOME"/.profile ] && cat > "$HOME"/.profile << 'EOF'
-# ~/.profile
+# ex: filetype=sh
 
-for profile in "$HOME"/.local/config/profile.d/*.sh; do
-    . "$profile"
-done
-
+for p in "$HOME"/.local/config/profile.d/*.sh; do . "$p"; done
 export SHELL="$(command -v myshell.sh)"
-
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------
 EOF
 
 
