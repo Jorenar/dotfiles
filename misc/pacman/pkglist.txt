@@ -150,4 +150,5 @@ virt-viewer
 # cura-bin
 # imapfilter
 # openscad-lsp-git
+# rr-bin
 # saleae-logic2
