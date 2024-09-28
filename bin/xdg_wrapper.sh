@@ -5,6 +5,9 @@ XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 
 exe="$(basename "$0")"
 
+# Remove directory with wrapper from PATH (to prevent cyclical execution)
+PATH="$(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname "$0")" | paste -sd:)"
+
 case "$exe" in
     dosbox)
         set -- "-conf" "$XDG_CONFIG_HOME/dosbox/dosbox.conf" "$@"
@@ -23,6 +26,8 @@ case "$exe" in
                 set -- "-F" "$XDG_CONFIG_HOME/ssh/config" "$@"
             fi
         fi
+        controlpath="$(ssh -G "$@" | awk '/^controlpath / { print $2 }')"
+        [ -n "$controlpath" ] && mkdir -p "$(dirname "$controlpath")"
         ;;
     steam)
         HOME="$XDG_DATA_HOME/Steam"
@@ -34,9 +39,6 @@ case "$exe" in
         HOME="$XDG_DATA_HOME"
         ;;
 esac
-
-# Remove directory with wrapper from PATH (to prevent cyclical execution)
-PATH="$(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname "$0")" | paste -sd:)"
 
 exec "$exe" "$@"
 
