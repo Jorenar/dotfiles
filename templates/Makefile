@@ -14,6 +14,7 @@ EXE := $(notdir $(CURDIR))
 
 SRCDIR   := src
 BUILD    := build
+EXTERN   := extern
 OBJDIR   := $(BUILD)/obj
 BINDIR   := $(BUILD)/bin
 DEPSDIR  := $(BUILD)/deps
@@ -21,13 +22,13 @@ DUMPDIR  := $(BUILD)/dump
 
 LIBS :=
 
-override CFLAGS   +=
-override CPPFLAGS +=
+CFLAGS   +=
+CPPFLAGS +=
 
-override LDFLAGS  +=
-override LDLIBS   +=
+LDFLAGS  +=
+LDLIBS   +=
 
-override SANS += address bounds leak signed-integer-overflow undefined unreachable
+SANS += address bounds leak signed-integer-overflow undefined unreachable
 
 SRCS := $(wildcard $(SRCDIR)/*.c)
 OBJS := $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
@@ -132,7 +133,12 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(DUMPDIR)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ -c $<
 
-$(DEPSDIR)/%.d: $(SRCDIR)/%.c
+# $(OBJDIR)/%.o: $(SRCS)
+# 	@mkdir -p $(OBJDIR)
+# 	@mkdir -p $(DUMPDIR)
+# 	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ -c $(filter %/$(notdir $(@:.o=.c)),$(SRCS))
+
+$(DEPSDIR)/%.o.d: $(SRCDIR)/%.c
 	@mkdir -p $(DEPSDIR)
 	@ $(CC) $(CPPFLAGS) -M $< -MT $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $<) > $@
 
