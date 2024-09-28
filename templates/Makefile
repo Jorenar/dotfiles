@@ -151,6 +151,7 @@ clean:
 	$(RM) -r $(BUILD)
 
 stderr:
+	@mkdir -p $(BUILD)
 	$(MAKE) $(filter-out $@,$(MAKECMDGOALS)) 2> $(BUILD)/stderr.log
 	@ false
 
