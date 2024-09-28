@@ -192,6 +192,12 @@
 	shallow = true
 	ignore = all
 
+[submodule "tmux-matryoshka"]
+	path = config/tmux/plugins/tmux-matryoshka
+	url = https://github.com/niqodea/tmux-matryoshka.git
+	shallow = true
+	ignore = all
+
 [submodule "git-diff-blame"]
 	path = extern/git-diff-blame
 	url = https://github.com/dmnd/git-diff-blame.git
