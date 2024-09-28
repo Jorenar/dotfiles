@@ -405,30 +405,6 @@ nmap <Leader>mk  <Plug>BookmarkMoveUp
 nmap <Leader>mj  <Plug>BookmarkMoveDown
 nmap <Leader>mg  <Plug>BookmarkMoveToLine
 
-"   Vim Tmux Navigator {{{1
-
-let g:tmux_navigator_no_mappings = 1
-
-noremap <silent> <C-w>h  <Cmd>TmuxNavigateLeft<CR>
-noremap <silent> <C-w>j  <Cmd>TmuxNavigateDown<CR>
-noremap <silent> <C-w>k  <Cmd>TmuxNavigateUp<CR>
-noremap <silent> <C-w>l  <Cmd>TmuxNavigateRight<CR>
-
-noremap <silent> <C-w><C-h>  <Cmd>TmuxNavigateLeft<CR>
-noremap <silent> <C-w><C-j>  <Cmd>TmuxNavigateDown<CR>
-noremap <silent> <C-w><C-k>  <Cmd>TmuxNavigateUp<CR>
-noremap <silent> <C-w><C-l>  <Cmd>TmuxNavigateRight<CR>
-
-tnoremap <silent> <C-w>h  <Cmd>TmuxNavigateLeft<CR>
-tnoremap <silent> <C-w>j  <Cmd>TmuxNavigateDown<CR>
-tnoremap <silent> <C-w>k  <Cmd>TmuxNavigateUp<CR>
-tnoremap <silent> <C-w>l  <Cmd>TmuxNavigateRight<CR>
-
-tnoremap <silent> <C-w><C-h>  <Cmd>TmuxNavigateLeft<CR>
-tnoremap <silent> <C-w><C-j>  <Cmd>TmuxNavigateDown<CR>
-tnoremap <silent> <C-w><C-k>  <Cmd>TmuxNavigateUp<CR>
-tnoremap <silent> <C-w><C-l>  <Cmd>TmuxNavigateRight<CR>
-
 "   Signify {{{1
 
 set updatetime=250

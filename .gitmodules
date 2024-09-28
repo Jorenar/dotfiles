@@ -160,11 +160,6 @@
 	url = https://github.com/gi1242/vim-tex-syntax.git
 	shallow = true
 	ignore = all
-[submodule "vim-tmux-navigator"]
-	path = config/vim/pack/extern/start/vim-tmux-navigator
-	url = https://github.com/christoomey/vim-tmux-navigator.git
-	shallow = true
-	ignore = all
 [submodule "vim-visual-multi"]
 	path = config/vim/pack/extern/start/vim-visual-multi
 	url = https://github.com/mg979/vim-visual-multi.git
