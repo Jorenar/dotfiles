@@ -32,6 +32,7 @@ pass
 rsync
 tmux
 vim
+xterm
 
 git
 # git-lfs
@@ -49,57 +50,78 @@ aerc
 curlftpfs
 gvfs
 imagemagick
-mutt
+isync
+python-pipx
 ranger
+squashfs-tools
 sshfs
+termshark
 testdisk
+tigervnc
 transmission-cli
-urlscan
+udisks2
+visidata
 w3m
+yad
 
-autopep8
 ccache
 cmake
-cscope
-ctags
-deno
 doxygen
-gdb
 graphviz
-jedi-language-server
 jq
 jre-openjdk
 multilib-devel
 nasm
 openscad
 python
-python-pipx
-radare2
-shellcheck
-strace
 tectonic
-texlab
+
+gdb
+strace
+radare2
+
+cscope
+ctags
+
 tidy
+autopep8
 uncrustify
+
+vint
 vale
 valgrind
-visidata
+shellcheck
 
+ccls
+deno
+jedi-language-server
+sqls
+texlab
+vim-language-server
+
+fuse-overlayfs
 podman
+podman-docker
 wine
 
+i3-wm
+polybar
+scrot
 xclip
 xdotool
 xorg-server
 xorg-xinit
 xorg-xrandr
-xterm
+
+# sway
+# waybar
+# grim
+# slurp
+# wdisplays
+# ydotool
 
 dmenu
 dunst
-i3-wm
-polybar
-scrot
 
 qt5ct
 
@@ -121,6 +143,7 @@ zathura-pdf-mupdf
 
 # gimp
 # inkscape
+# obs-studio
 # shotcut
 # tenacity
 
@@ -145,10 +168,11 @@ virt-viewer
 
 # yay-bin
 
-# ccls-git
 # compiledb
 # cura-bin
+# cyrus-sasl-xoauth2-git
 # imapfilter
 # openscad-lsp-git
 # rr-bin
 # saleae-logic2
+# tor-browser-bin
