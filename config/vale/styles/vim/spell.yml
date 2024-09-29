@@ -1,0 +1,8 @@
+extends: spelling
+message: "Did you really mean '%s'?"
+level: error
+ignore:
+  - vim/spelldump/english.txt
+  - vim/spelldump/polish.txt
+  - vim/spell/en.utf-8.add
+  - vim/spell/pl.utf-8.add
