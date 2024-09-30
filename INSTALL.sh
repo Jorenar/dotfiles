@@ -82,55 +82,20 @@ install  templates/  @  "$XDG_TEMPLATES_DIR"
 
 install_bulk "$XDG_CONFIG_HOME" << EOL
 
-    config/aerc/
-    config/bash/
-    config/ccache/
-    config/chktexrc  @  .chktexrc
-    config/clangd/
-    config/commafeed.yml
-    config/ctags/
-    config/deno.json
-    config/dosbox/
-    config/feh/
-    config/fontconfig/
-    config/gdb/
-    config/git/
-    config/grip/
+    $(
+        command ls -d -1 config/* \
+            | grep -F -v \
+                -e chktexrc \
+                -e firefox \
+                -e gtk-3.0 \
+                -e telnetrc \
+                -e transmission.json
+    )
+
+    config/chktexrc              @  .chktexrc
     config/gtk-3.0/settings.ini  @  gtk-3.0/settings.ini
-    config/htop/
-    config/i3/
-    config/lesskey
-    config/mpv/
-    config/mutt/
-    config/npm/
-    config/nvim/
-    config/OpenSCAD/
-    config/polybar/
-    config/powershell/
-    config/profile.d/
-    config/python/
-    config/qt5ct/
-    config/ranger/
-    config/readline/
-    config/sh/
-    config/shellcheckrc
-    config/sqlite3/
-    config/ssh/
-    config/stalonetrayrc
-    config/sway/
-    config/systemd/
-    config/telnetrc  @  .telnetrc
-    config/tmux/
-    config/transmission.json  %  transmission-daemon/settings.json
-    config/uncrustify/
-    config/user-dirs.conf
-    config/user-dirs.dirs
-    config/vale/
-    config/vim/
-    config/waybar/
-    config/X11/
-    config/zathura/
-    config/zsh/
+    config/telnetrc              @  .telnetrc
+    config/transmission.json     %  transmission-daemon/settings.json
 
 EOL
 
