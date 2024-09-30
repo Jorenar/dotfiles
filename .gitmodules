@@ -22,7 +22,7 @@
 	ignore = all
 [submodule "fauxClip"]
 	path = config/vim/pack/extern/start/fauxClip
-	url = https://github.com/Jorengarenar/fauxClip.git
+	url = https://github.com/Jorenar/fauxClip.git
 	shallow = true
 	ignore = all
 [submodule "gv.vim"]
@@ -37,7 +37,7 @@
 	ignore = all
 [submodule "miniSnip"]
 	path = config/vim/pack/extern/start/miniSnip
-	url = https://github.com/Jorengarenar/miniSnip.git
+	url = https://github.com/Jorenar/miniSnip.git
 	shallow = true
 	ignore = all
 [submodule "NrrwRgn"]
@@ -82,7 +82,7 @@
 	ignore = all
 [submodule "vim-emacsModeline"]
 	path = config/vim/pack/extern/start/vim-emacsModeline
-	url = https://github.com/Jorengarenar/vim-emacsModeline.git
+	url = https://github.com/Jorenar/vim-emacsModeline.git
 	shallow = true
 	ignore = all
 [submodule "vim-eunuch"]
@@ -142,7 +142,7 @@
 	ignore = all
 [submodule "vim-SQL-UPPER"]
 	path = config/vim/pack/extern/start/vim-SQL-UPPER
-	url = https://github.com/Jorengarenar/vim-SQL-UPPER.git
+	url = https://github.com/Jorenar/vim-SQL-UPPER.git
 	shallow = true
 	ignore = all
 [submodule "vim-surround"]
@@ -152,7 +152,7 @@
 	ignore = all
 [submodule "vim-syntaxMarkerFold"]
 	path = config/vim/pack/extern/start/vim-syntaxMarkerFold
-	url = https://github.com/Jorengarenar/vim-syntaxMarkerFold.git
+	url = https://github.com/Jorenar/vim-syntaxMarkerFold.git
 	shallow = true
 	ignore = all
 [submodule "vim-tex-syntax"]
@@ -200,7 +200,7 @@
 	ignore = all
 [submodule "git-fmt-diff"]
 	path = extern/git-fmt-diff
-	url = https://github.com/Jorengarenar/git-fmt-diff.git
+	url = https://github.com/Jorenar/git-fmt-diff.git
 	shallow = true
 	ignore = all
 [submodule "git-open"]
@@ -210,7 +210,7 @@
 	ignore = all
 [submodule "ls.hidden"]
 	path = extern/ls.hidden
-	url = https://github.com/Jorengarenar/ls.hidden.git
+	url = https://github.com/Jorenar/ls.hidden.git
 	shallow = true
 	ignore = all
 [submodule "lsix"]
@@ -220,6 +220,6 @@
 	ignore = all
 [submodule "pathmunge.sh"]
 	path = extern/pathmunge.sh
-	url = https://github.com/Jorengarenar/pathmunge.sh.git
+	url = https://github.com/Jorenar/pathmunge.sh.git
 	shallow = true
 	ignore = all
