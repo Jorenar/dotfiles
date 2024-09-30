@@ -117,13 +117,7 @@ chmod -R -w \
     config/qt5ct
 
 
-# xdg_wrapper.sh {{{
-sed -n -e 's/^#~ //p' "bin/xdg_wrapper.sh" | while IFS= read -r exe; do
-    if [ -x "$(command -v "$exe")" ]; then
-        install  bin/xdg_wrapper.sh  @  "$HOME/.local/opt/xdg.wrappers/bin/$exe"
-    fi
-done
-# }}}
+./bin/xdg_wrapper.sh --install
 
 # DCONF_PROFILE {{{
 #   prevents creation of ~/.dconf

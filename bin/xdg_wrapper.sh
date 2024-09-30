@@ -5,6 +5,19 @@ export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 
 exe="$(basename "$0")"
 
+if [ "$exe" = "xdg_wrapper.sh" ]; then
+    case "$1" in
+        --install)
+            dir="$HOME/.local/opt/xdg_wrappers/bin"
+            mkdir -p "$dir"
+            sed -n -e 's/^#~ //p' "$0" | while IFS= read -r bin; do
+                [ -x "$(command -v "$bin")" ] && ln -sf "$0" "$dir/$bin"
+            done
+            ;;
+    esac
+    exit
+fi
+
 # Remove directory with wrapper from PATH (to prevent cyclical execution)
 PATH="$(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname "$0")" | paste -sd:)"
 
