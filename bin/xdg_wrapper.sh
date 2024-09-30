@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
-XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
-XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 
 exe="$(basename "$0")"
 
@@ -38,6 +38,11 @@ case "$exe" in
     xsane)
         HOME="$XDG_DATA_HOME"
         ;;
+    zoom)
+        HOME="$XDG_DATA_HOME"
+        XDG_CONFIG_HOME="$HOME/.zoom"
+        mkdir -p "$XDG_CONFIG_HOME"
+        ;;
 esac
 
 exec "$exe" "$@"
@@ -51,3 +56,4 @@ exec "$exe" "$@"
 #~ steam
 #~ telnet
 #~ xsane
+#~ zoom
