@@ -5,7 +5,6 @@ get_gov () {
 }
 
 set_gov () {
-    printf 'Setting governor: '
     echo "$1" | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
 }
 

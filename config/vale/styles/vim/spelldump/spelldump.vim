@@ -14,6 +14,7 @@ function! Spelldump(langs) abort
   for l:lang in keys(a:langs)
     let &spelllang = l:lang
     spelldump
+    silent! %substitute,/\d\+$,,
     exec 'wq!' a:langs[l:lang]
   endfor
 endfunction
