@@ -85,6 +85,10 @@ done
 
 pathmunge ASAN_OPTIONS detect_stack_use_after_return=1
 
+
+export PYTHONPATH
+pathmunge PYTHONPATH "$HOME/.local/lib/python/site-packages/"
+
 # PATH {{{1
 
 pathmunge "$HOME/.local/bin"
