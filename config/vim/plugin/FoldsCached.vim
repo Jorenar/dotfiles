@@ -1,5 +1,5 @@
 " FoldsCached
-" Author:  Jorengarenar
+" Author:  Jorenar
 
 if exists('g:loaded_FoldsCached') | finish | endif
 let s:cpo_save = &cpo | set cpo&vim

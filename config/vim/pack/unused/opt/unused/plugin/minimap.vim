@@ -1,5 +1,5 @@
 " Minimap
-" Author:  Jorengarenar <https://joren.ga>
+" Author:  Jorenar
 " License: MIT
 
 if exists('g:loaded_minimap') | finish | endif

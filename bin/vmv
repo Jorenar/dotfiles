@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # SPDX-License-Identifier:  MIT
-# Copyright 2023 Jorengarenar
+# Copyright 2023-2024 Jorenar
 
 
 die () {

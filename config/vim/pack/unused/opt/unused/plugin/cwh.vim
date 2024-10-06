@@ -1,5 +1,5 @@
 " cwh.vim - continuous windows hopping
-" Maintainer:  Jorengarenar <dev@joren.ga>
+" Maintainer:  Jorenar
 
 if exists('g:loaded_cwh') | finish | endif
 let s:cpo_save = &cpo | set cpo&vim

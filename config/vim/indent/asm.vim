@@ -1,6 +1,6 @@
 " Vim indent file
 " Language: Assembly
-" Author:   Jorengarenar <joren.ga>
+" Author:   Jorenar
 
 if exists("b:did_indent")
   finish

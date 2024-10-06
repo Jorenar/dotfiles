@@ -1,5 +1,5 @@
 " VisInsert
-" Author:  Jorengarenar
+" Author:  Jorenar
 " License: MIT
 
 if exists('g:loaded_VisInsert') | finish | endif

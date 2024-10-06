@@ -1,5 +1,5 @@
 " GuiTermColors.vim
-" Maintainer:  Jorengarenar <https://joren.ga>
+" Maintainer:  Jorenar
 
 if exists('g:loaded_GuiTermColors') | finish | endif
 let s:cpo_save = &cpo | set cpo&vim

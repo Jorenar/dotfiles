@@ -1,6 +1,6 @@
 #!/usr/bin/env -S vim -u
 
-" Author:  Jorengarenar
+" Author:  Jorenar
 " License: MIT
 
 " BASICS {{{1

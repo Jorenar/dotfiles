@@ -1,5 +1,5 @@
 " blockdiff
-" Author:  Jorengarenar
+" Author:  Jorenar
 " License: MIT
 
 if exists('g:loaded_blockdiff') | finish | endif

@@ -1,5 +1,5 @@
 " trimWhitespace
-" Author: Jorengarenar
+" Author: Jorenar
 
 if exists('g:loaded_trimWhitespace') | finish | endif
 let s:cpo_save = &cpo | set cpo&vim

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier:  MIT
-# Copyright 2023-2024 Jorengarenar
+# Copyright 2023-2024 Jorenar
 # Makefile dialect: GNU
 
 # ~ ----------------------------------------------------------------------- {{{1

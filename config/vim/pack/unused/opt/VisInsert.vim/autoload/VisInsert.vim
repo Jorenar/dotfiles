@@ -1,5 +1,5 @@
 " VisInsert
-" Author:  Jorengarenar
+" Author:  Jorenar
 " License: MIT
 
 function! s:repeat() abort
