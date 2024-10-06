@@ -1,4 +1,5 @@
 analyzability
+Artifactory
 async
 automata
 Bcc
@@ -55,12 +56,14 @@ memleak
 metaprogramming
 microcontrollers
 mimetype
+minimalize
 MSVC
 MySQL
 namespace
 nauseam
 Neovim
 nomen
+nullability
 overfocus
 plaintext
 Polska
@@ -75,6 +78,7 @@ scrollbar
 se
 SQLite
 stderr
+stdin
 stdout
 steampunk
 submenu

@@ -1,4 +1,4 @@
-#ifndef <{`!toupper(expand("%:r"))}>_<{!toupper(expand("%:e"))}>_
+#ifndef <{`!substitute(toupper(expand("%:r")), '/', '_', 'g')}>_<{!toupper(expand("%:e"))}>_
 #define <{~1}>_<{~2}>_
 
 <{}>
