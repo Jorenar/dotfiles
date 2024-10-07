@@ -18,7 +18,7 @@ if [ -f "$XDG_CONFIG_HOME"/user-dirs.dirs ]; then
 fi
 
 
-export CHKTEXRC="$XDG_CONFIG_HOME"
+export CHKTEXRC="$XDG_CONFIG_HOME/chktex"
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
