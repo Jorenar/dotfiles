@@ -1,7 +1,7 @@
 # vim: ft=gitconfig
 
 [user]
-    email = jorengarenar@outlook.com
+    email = dev@jorenar.com
     name = Jorenar
 
 [credential]
