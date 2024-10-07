@@ -46,7 +46,7 @@ case "$exe" in
         HOME="$XDG_DATA_HOME/Steam"
         ;;
     telnet)
-        HOME="$XDG_CONFIG_HOME"
+        HOME="$XDG_CONFIG_HOME/telnet"
         ;;
     xsane)
         HOME="$XDG_DATA_HOME"
