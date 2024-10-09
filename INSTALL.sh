@@ -89,7 +89,7 @@ install  fonts/                 @  "$XDG_DATA_HOME"/fonts
 install  misc/desktop_entries/  @  "$XDG_DATA_HOME"/applications/custom
 install  templates/             @  "$XDG_TEMPLATES_DIR"
 
-./bin/xdg_wrapper.sh --install
+xdg_wrapper.sh --install
 
 chmod -R -w \
     config/htop/htoprc \
