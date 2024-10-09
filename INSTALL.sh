@@ -53,20 +53,8 @@ install () (
     fi
 )
 
-install_bulk () (
-    prefix="$1"
-    while read -r src op dest; do
-        [ -z "$src" ] && continue
-        [ -z "$op" ] && op='@'
-        [ -z "$dest" ] && dest="$(basename "$src")"
-        install "$src" "$op" "$prefix/$dest"
-    done
-)
-
 
 [ ! -s "$HOME"/.profile ] && cat > "$HOME"/.profile << 'EOF'
-# ex: filetype=sh
-
 for p in "$HOME"/.local/config/profile.d/*.sh; do . "$p"; done
 export SHELL="$(command -v myshell.sh)"
 # ------------------------------------------------------------
@@ -78,50 +66,35 @@ if [ "$XDG_CONFIG_HOME" != "$HOME"/.config ]; then
     install  "$XDG_CONFIG_HOME"  @  "$HOME"/.config
 fi
 
-install  templates/  @  "$XDG_TEMPLATES_DIR"
+for c in config/*; do
+    case "$c" in
+        */firefox)
+            install  "$c"/user.js          @  "$XDG_DATA_HOME"/firefox/user.js
+            install  "$c"/userChrome.css   @  "$XDG_DATA_HOME"/firefox/chrome/userChrome.css
+            install  "$c"/userContent.css  @  "$XDG_DATA_HOME"/firefox/chrome/userContent.css
+            ;;
+        */gtk-3.0)
+            install  "$c"/settings.ini  @  "$XDG_CONFIG_HOME"/gtk-3.0/settings.ini
+            ;;
+        */transmission.json)
+            install  config/transmission.json  %  "$XDG_CONFIG_HOME"/transmission-daemon/settings.json
+            ;;
+        *)
+            install  "$c"  @  "$XDG_CONFIG_HOME"/"$(basename "$c")"
+            ;;
+    esac
+done
 
-install_bulk "$XDG_CONFIG_HOME" << EOL
+install  fonts/                 @  "$XDG_DATA_HOME"/fonts
+install  misc/desktop_entries/  @  "$XDG_DATA_HOME"/applications/custom
+install  templates/             @  "$XDG_TEMPLATES_DIR"
 
-    $(
-        command ls -d -1 config/* \
-            | grep -F -v \
-                -e chktexrc \
-                -e firefox \
-                -e gtk-3.0 \
-                -e telnetrc \
-                -e transmission.json
-    )
-
-    config/chktexrc              @  .chktexrc
-    config/gtk-3.0/settings.ini  @  gtk-3.0/settings.ini
-    config/telnetrc              @  .telnetrc
-    config/transmission.json     %  transmission-daemon/settings.json
-
-EOL
-
-install_bulk "$XDG_DATA_HOME" << EOL
-
-    config/firefox/user.js          @  firefox/user.js
-    config/firefox/userChrome.css   @  firefox/chrome/userChrome.css
-    config/firefox/userContent.css  @  firefox/chrome/userContent.css
-
-    misc/desktop_entries/  @  applications/custom
-
-    fonts/  @  fonts
-
-EOL
+./bin/xdg_wrapper.sh --install
 
 chmod -R -w \
     config/htop/htoprc \
     config/OpenSCAD/OpenSCAD.conf \
     config/qt5ct
 
-
-./bin/xdg_wrapper.sh --install
-
-# DCONF_PROFILE {{{
-#   prevents creation of ~/.dconf
-DCONF_PROFILE="$XDG_CONFIG_HOME/dconf/user"
-mkdir -p "$(dirname "$DCONF_PROFILE")" && \
-    touch "$DCONF_PROFILE"
-# }}}
+# prevents creation of ~/.dconf:
+sh -c 'mkdir -p "$1" && touch "$1"/user' - "$XDG_CONFIG_HOME/dconf"
