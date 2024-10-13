@@ -15,13 +15,15 @@ let b:trimWhitespace_pattern = ' \zs\s\+$'
 
 autocmd BufWinEnter <buffer> ++once setlocal syntax=mail
 
+let b:ale_enabled = &modifiable && !&readonly
 
 if bufname("%") =~# 'aerc-'
   function! AercEx() abort
     silent !xdotool key alt+Delete
     redraw!
   endfunction
-  nnoremap <Leader>: :<C-u>call AercEx()
+  nnoremap <Leader>: :<C-u>call AercEx()<Esc>
+  autocmd CmdlineChanged * if getcmdline() =~ 'call AercEx' | call AercEx() | endif
 
   nnoremap gt <Cmd>silent !aerc :next-tab<CR><Cmd>redraw!<CR>
   nnoremap gT <Cmd>silent !aerc :prev-tab<CR><Cmd>redraw!<CR>

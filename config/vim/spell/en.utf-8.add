@@ -30,6 +30,7 @@ Doxygen
 dupa
 env
 filetype
+GDScript
 goto
 hoc
 inclusivity
@@ -47,6 +48,7 @@ kramdown
 larum
 linebreak
 loopback
+Lua
 lvalue
 madlad
 madlads
@@ -64,6 +66,7 @@ nauseam
 Neovim
 nomen
 nullability
+OCaml
 overfocus
 plaintext
 Polska
@@ -83,6 +86,7 @@ stdout
 steampunk
 submenu
 taggable
+Tcl
 TODO
 toolchain
 unaddressable
