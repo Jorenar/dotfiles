@@ -152,6 +152,23 @@ augroup LSP_SERVERS
           \ })
   endif
 
+  if filereadable($XDG_DATA_HOME.'/java/groovy-language-server-all.jar') && executable('java')
+    au User lsp_setup call lsp#register_server(#{
+          \   name: 'Groovy Language Server',
+          \   cmd: [
+          \     'java', '-jar',
+          \     $XDG_DATA_HOME.'/java/groovy-language-server-all.jar'
+          \   ],
+          \   root_uri: {-> lsp#utils#path_to_uri(
+          \     lsp#utils#find_nearest_parent_file_directory(
+          \       lsp#utils#get_buffer_path(),
+          \       [ 'Jenkinsfile', '.git/' ]
+          \     )
+          \   )},
+          \   allowlist: [ 'groovy' ],
+          \ })
+  endif
+
   if executable('jdtls')
     au User lsp_setup call lsp#register_server(#{
           \   name: 'Eclipse JDT Language Server',
