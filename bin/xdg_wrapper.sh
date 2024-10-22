@@ -39,7 +39,7 @@ case "$exe" in
                 set -- "-F" "$XDG_CONFIG_HOME/ssh/config" "$@"
             fi
         fi
-        controlpath="$(ssh -G "$@" | awk '/^controlpath / { print $2 }')"
+        controlpath="$(ssh -G '*' | awk '/^controlpath / { print $2 }')"
         [ -n "$controlpath" ] && mkdir -p "$(dirname "$controlpath")"
         ;;
     steam)

@@ -11,7 +11,7 @@ UserKnownHostsFile ${XDG_DATA_HOME}/ssh/known_hosts ${XDG_DATA_HOME}/ssh/known_h
 
 Compression yes
 
-ControlMaster auto
+# ControlMaster auto
 ControlPath ${XDG_RUNTIME_DIR}/ssh/%C
 ControlPersist 3600
 
