@@ -171,6 +171,11 @@
 	shallow = true
 	ignore = all
 
+[submodule "cscope_maps.nvim"]
+	path = config/nvim/pack/extern/start/cscope_maps.nvim
+	url = https://github.com/dhananjaylatkar/cscope_maps.nvim.git
+	shallow = true
+	ignore = all
 [submodule "flatten.nvim"]
 	path = config/nvim/pack/extern/start/flatten.nvim
 	url = https://github.com/willothy/flatten.nvim.git

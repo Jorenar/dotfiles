@@ -61,6 +61,8 @@ lua require("flatten").setup({
       \   }
       \ })
 
+lua require("cscope_maps").setup()
+
 set backupdir-=.
 set guicursor=a:block
 set startofline
