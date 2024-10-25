@@ -93,7 +93,12 @@ pathmunge PYTHONPATH "$HOME/.local/lib/python/site-packages/"
 
 pathmunge "$HOME/.local/bin"
 
-for opt in "$HOME"/.local/opt/*/bin "$HOME"/.local/opt/*/*/bin; do
+for opt in "$HOME"/.local/opt/*/bin; do
+    [ -d "$opt" ] && pathmunge "$opt"
+done
+
+for opt in "$HOME"/.local/opt/*/*/bin; do
+    [ -d "$opt"/../bin ] && continue
     [ -d "$opt" ] && pathmunge "$opt"
 done
 
