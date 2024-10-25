@@ -48,8 +48,6 @@ user_pref("browser.newtabpage.activity-stream.feeds.snippets",           false);
 user_pref("browser.newtabpage.activity-stream.feeds.topsites",           false);
 user_pref("browser.newtabpage.activity-stream.showSearch",               true);
 
-user_pref("browser.chrome.toolbar_tips", false);
-
 // Privacy and telemery
 user_pref("browser.pagethumbnails.capturing_disabled",  true);
 user_pref("datareporting.healthreport.service.enabled", false);
