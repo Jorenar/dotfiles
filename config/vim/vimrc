@@ -74,7 +74,7 @@ autocmd VimEnter,WinNew * call matchadd("ListCharsTabs", '\t')
 set title
 set titlestring=
 set titlestring+=%t%(\ %M%)%(\ (%{expand(\"%:p:~:.:h\")}/)%)
-set titlestring+=\ \|\ %{system('id\ -un')}@%{hostname()}:%{substitute(getcwd(),$HOME,'~','')}
+let &titlestring .= ' | '.system('id -un').'@'.hostname().":%{substitute(getcwd(),$HOME,'~','')}"
 
 "   completion {{{1
 
