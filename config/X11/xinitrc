@@ -24,6 +24,7 @@ setxkbmap -option keypad:pointerkeys
 
 touch "${XAUTHORITY:-$HOME/.Xauthority}"
 
+xset s off -dpms
 
 if [ -x "$(command -v prime-offload)" ]; then
     echo "GPU $(glxinfo | grep -Fxq 'OpenGL vendor string: NVIDIA Corporation' && echo 'NVIDIA' || echo 'INTEL')" >> "$TMPFLAGS"
