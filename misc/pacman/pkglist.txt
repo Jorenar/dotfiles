@@ -47,10 +47,12 @@ unzip
 zip
 
 aerc
+isync
+msmtp
+
 curlftpfs
 gvfs
 imagemagick
-isync
 python-pipx
 ranger
 squashfs-tools
