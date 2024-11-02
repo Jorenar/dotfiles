@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+PATH="$(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname "$0")" | paste -sd:)"
+
+die () {
+    >&2 printf '%s: error: %s\n' "$(basename "$0")" "$@"
+    exit 1
+}
+
+if [ ! -x "$(command -v pass)" ]; then
+    die 'pass not installed'
+fi
+
+if [ ! -x "$(command -v wl-copy)" ]; then
+    unset WAYLAND_DISPLAY
+fi
+
+pass "$@"
