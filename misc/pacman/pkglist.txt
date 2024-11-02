@@ -118,8 +118,8 @@ xorg-xrandr
 # sway
 # waybar
 # grim
+# nwg-displays
 # slurp
-# wdisplays
 # ydotool
 
 dmenu

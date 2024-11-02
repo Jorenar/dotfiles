@@ -13,6 +13,7 @@ bindsym --release Print exec --no-startup-id "scrot screenshot-%Y%m%d_%H%M%S.png
 # OSX-like area selection screenshots
 bindsym --release Shift+Print exec --no-startup-id "scrot -s screenshot-%Y%m%d_%H%M%S.png"
 
+exec --no-startup-id exec i3-msg "workspace 2, workspace 6, workspace 1" # workspace switcheroo
 
 bindsym $super+m mode "mouse"
 
@@ -33,3 +34,8 @@ mode "mouse" {
     bindsym m  exec --no-startup-id "xdotool click 2"
     bindsym p  exec --no-startup-id "xdotool click 3"
 }
+
+# move to workspace via dmenu
+set $dmenu_ws i3-msg -t get_workspaces | tr '{' '\\n' | awk -F'\\\"' '/name/ { print \$8 }' | sort | dmenu | xargs -i i3-msg
+bindsym $super+grave exec sh -c "$dmenu_ws workspace {}"
+bindsym $alt+grave exec sh -c "$dmenu_ws move container to workspace {}"
