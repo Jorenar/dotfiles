@@ -1,0 +1,59 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: MIT
+# Copyright 2024 Jorenar
+
+# Rewrite of passmenu in POSIX shell
+# Accepts dmenu/xdotool on Xwayland
+
+die () {
+    >&2 printf '%s: error: %s\n' "$(basename "$0")" "$@"
+    exit 1
+}
+
+dmenu=
+xdotool=
+typeit=0
+
+if [ "$1" = "--type" ]; then
+    typeit=1
+    shift
+fi
+
+if [ -z "$DISPLAY$WAYLAND_DISPLAY" ]; then
+    die 'no Wayland or X11 display detected'
+fi
+
+[ -x "$(command -v dmenu)" ]   && dmenu="dmenu"
+[ -x "$(command -v xdotool)" ] && xdotool="xdotool type --clearmodifiers --file -"
+
+if [ -n "$WAYLAND_DISPLAY" ]; then
+    [ -x "$(command -v dmenu-wl)" ] && dmenu="dmenu-wl"
+    [ -x "$(command -v ydotool)" ]  && xdotool="ydotool type --file -"
+fi
+
+if [ -z "$dmenu" ]; then
+    die 'no dmenu detected'
+fi
+
+if [ -z "$xdotool" ] && [ "$typeit" -eq 1 ]; then
+    if [ -n "$WAYLAND_DISPLAY" ]; then
+        die 'no ydotool detected'
+    fi
+    die 'no xdotool detected'
+fi
+
+cred="$(
+    cd "${PASSWORD_STORE_DIR:-"$HOME"/.password-store}" || exit 1
+    find . -name '*.gpg' ! -name '.*' |\
+        sed -e 's,\./,,' -e 's/\.gpg$//' |\
+        sort |\
+        dmenu "$@"
+)" || die 'something went wrong'
+
+[ -z "$cred" ] && exit
+
+if [ "$typeit" -eq 0 ]; then
+    pass show -c "$cred" 2> /dev/null
+else
+    pass show "$cred" | { IFS= read -r pass; printf '%s' "$pass"; } | $xdotool
+fi
