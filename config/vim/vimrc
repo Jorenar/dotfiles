@@ -239,6 +239,9 @@ augroup END
 " Undo if filter shell command returned an error
 autocmd ShellFilterPost * if v:shell_error | undo | endif
 
+" Don't automatically copy anything to system clipboard
+set clipboard=
+
 " }}}1
 
 "   packadd {{{1
