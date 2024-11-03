@@ -21,6 +21,9 @@
         "clock"
     ],
 
+    "sway/workspaces": {
+      "enable-bar-scroll": true
+    },
     "sway/window": {
       "max-length": 50,
       "format": "{shell}@@{title}",
