@@ -1,5 +1,9 @@
 include $XDG_CONFIG_HOME/i3/common.conf
 
+input * {
+    xkb_layout "pl"
+}
+
 bar {
     position top
     swaybar_command waybar
@@ -21,3 +25,5 @@ bindsym $alt+grave exec sh -c "$dmenu_ws move container to workspace {}"
 
 include ./outputs
 include ./workspaces
+
+exec --no-startup-id exec swaymsg "workspace 1"
