@@ -28,6 +28,7 @@ abspath () (
 )
 
 install () (
+    echo "$@"
     src="$1"
     op="$2"
     dest="$3"
@@ -85,6 +86,7 @@ for c in config/*; do
     esac
 done
 
+install  extern/klipmenu/       @  "$HOME"/.local/opt/klipmenu
 install  fonts/                 @  "$XDG_DATA_HOME"/fonts
 install  misc/desktop_entries/  @  "$XDG_DATA_HOME"/applications/custom
 install  templates/             @  "$XDG_TEMPLATES_DIR"

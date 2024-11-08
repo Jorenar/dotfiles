@@ -213,6 +213,11 @@
 	url = https://github.com/paulirish/git-open.git
 	shallow = true
 	ignore = all
+[submodule "klipmenu"]
+	path = extern/klipmenu
+	url = https://github.com/Jorenar/klipmenu.git
+	shallow = true
+	ignore = all
 [submodule "ls.hidden"]
 	path = extern/ls.hidden
 	url = https://github.com/Jorenar/ls.hidden.git

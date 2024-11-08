@@ -11,6 +11,21 @@ if [ ! -x "$(command -v pass)" ]; then
     die 'pass not installed'
 fi
 
+clip=0
+for a in "$@"; do
+    case "$a" in
+        -c|--clip) clip=1 ;;
+    esac
+done
+if [ "$clip" -eq 1 ] && [ -x "$(command -v klipmenu)" ]; then
+    if [ "$(klipctl status)" = "enabled" ]; then
+        trap '{ sleep 1; klipctl enable; } &' EXIT HUP INT
+    fi
+    if ! klipctl disable 1>&2; then
+        die 'was unable to disable klipmenu'
+    fi
+fi
+
 if [ ! -x "$(command -v wl-copy)" ]; then
     unset WAYLAND_DISPLAY
 fi
