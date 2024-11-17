@@ -1,4 +1,7 @@
 X-Mailer: aerc {{version}}
 
+{{.Signature}}
 On {{dateFormat (.OriginalDate | toLocal) "2006-01-02 15:04 MST"}}, {{(index .OriginalFrom 0).Name}} <{{(index .OriginalFrom 0).Address}}> wrote:
-{{trimSignature .OriginalText | quote}}
+{{if eq .OriginalMIMEType "text/plain"}}{{.OriginalText | quote}}
+{{else}}{{exec "/usr/lib/aerc/filters/html-unsafe" .OriginalText | quote}}
+{{end}}
