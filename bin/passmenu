@@ -28,7 +28,11 @@ fi
 
 if [ -n "$WAYLAND_DISPLAY" ]; then
     [ -x "$(command -v dmenu-wl)" ] && dmenu="dmenu-wl"
-    [ -x "$(command -v ydotool)" ]  && xdotool="ydotool type --file -"
+    if [ -x $(command -v wtype) ]; then
+        xdotool="wtype -"
+    elif [ -x "$(command -v ydotool)" ]; then
+        xdotool="ydotool type --file -"
+    fi
 fi
 
 if [ -z "$dmenu" ]; then
