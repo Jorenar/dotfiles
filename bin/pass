@@ -22,7 +22,10 @@ if [ "$clip" -eq 1 ] && [ -x "$(command -v klipmenu)" ]; then
         trap '{ sleep 1; klipctl enable; } &' EXIT HUP INT
     fi
     if ! klipctl disable 1>&2; then
-        die 'was unable to disable klipmenu'
+        case "$(klipctl status)" in
+            disabled|off) ;;
+            *) die 'was unable to disable klipmenu' ;;
+        esac
     fi
 fi
 
