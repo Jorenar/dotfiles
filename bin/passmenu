@@ -41,7 +41,7 @@ fi
 
 if [ -z "$xdotool" ] && [ "$typeit" -eq 1 ]; then
     if [ -n "$WAYLAND_DISPLAY" ]; then
-        die 'no ydotool detected'
+        die 'no wtype nor ydotool detected'
     fi
     die 'no xdotool detected'
 fi

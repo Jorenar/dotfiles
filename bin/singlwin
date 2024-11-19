@@ -5,19 +5,6 @@ g_class=
 g_i3=false
 g_i3_ws_node=
 
-if ! command -v xprop > /dev/null; then
-    exit 1
-fi
-
-xdotool="xdotool"
-if [ -n "$WAYLAND_DISPLAY" ]; then
-    if command -v ydotool > /dev/null; then
-        xdotool="ydotool"
-    fi
-fi
-if ! command -v "$xdotool" > /dev/null; then
-    exit 1
-fi
 
 usage () {
     e="$(basename "$0")"
@@ -52,7 +39,7 @@ cmp_args () {
 }
 
 main () {
-    for id in $("$xdotool" search --class "$g_class"); do
+    for id in $(xdotool search --class "$g_class"); do
         if [ -n "$g_i3_ws_node" ]; then
             test -z "$(
                 echo "$g_i3_ws_node" | jq -r "
@@ -61,7 +48,7 @@ main () {
             )" && continue
         fi
         if xprop -id "$id" | grep WM_COMMAND | cmp_args "$@"; then
-            exec "$xdotool" windowactivate "$id"
+            exec xdotool windowactivate "$id"
         fi
     done
 
@@ -113,7 +100,7 @@ fi
 
 if [ "$g_i3" = true ]; then
     g_i3_ws_node="$(:
-        i3msg="$(test -n "$WAYLAND_DISPLAY" && echo "swaymsg" || echo "i3-msg")"
+        i3msg="$(test -n "$WAYLAND_DISPLAY" && echo "swaymsg --raw" || echo "i3-msg")"
         $i3msg -t get_tree | jq -r "
         .. | objects | select(.id == $(
             $i3msg -t get_workspaces | jq -r '.[] | select(.focused) | .id'
@@ -124,5 +111,12 @@ if [ "$g_i3" = true ]; then
 fi
 
 # }}}
+
+if [ -z "$DISPLAY" ] \
+        || [ ! -x "$(command -v xprop)" ] \
+        || [ ! -x "$(command -v xdotool)" ]
+then
+    exec "$g_exe" "$@"
+fi
 
 main "$@"
