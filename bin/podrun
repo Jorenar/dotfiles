@@ -9,10 +9,23 @@ img="$1"; shift
 ref="${img##*/}"
 ref="${ref%:*}"
 
+esceval() {
+    printf '%s\n' "$1" | sed "s/'/'\\\\''/g; 1 s/^/'/; $ s/$/'/"
+}
+
+entrypoint="sh"
+
 if [ $# -eq 0 ]; then
     set -- '-li'
+elif [ "$1" = "--" ]; then
+    entrypoint="$2"
+    shift 2
 else
-    set -- '-c' "$@"
+    cmd=
+    for a in "$@"; do
+        cmd="$cmd $(esceval "$a")"
+    done
+    set -- '-l' '-c' '--' "$cmd"
 fi
 
 exec podman run -it --rm \
@@ -23,6 +36,6 @@ exec podman run -it --rm \
     -e DISPLAY -v "/tmp/.X11-unix/:/tmp/.X11-unix/" \
     -v "/:/mnt/host" \
     -v "$PWD:$PWD" -w "$PWD" \
-    --entrypoint sh \
+    --entrypoint "$entrypoint" \
     "$img" \
     "$@"
