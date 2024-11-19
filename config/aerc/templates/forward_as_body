@@ -1,13 +1,12 @@
 X-Mailer: aerc {{version}}
 
-________________________________________
+---------- Forwarded message ----------
 From: {{(index .OriginalFrom 0).Name}} <{{(index .OriginalFrom 0).Address}}>
-To: *****
-Date: {{dateFormat .OriginalDate "2006-01-02 15:04 MST"}}
+Date: {{dateFormat .OriginalDate "Mon, 2006-01-02 15:04 MST"}}
 Subject: {{replace "^Fwd: " "" .Subject}}
 
-{{if eq .OriginalMIMEType "text/html"}}
-{{exec "/usr/lib/aerc/filters/html-unsafe" .OriginalText}}
-{{else}}
-{{.OriginalText}}
-{{end}}
+{{
+  switch .OriginalMIMEType
+    (case "text/html" (exec "/usr/lib/aerc/filters/html-unsafe" .OriginalText))
+    (default .OriginalText)
+}}
