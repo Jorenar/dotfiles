@@ -120,7 +120,7 @@ xorg-xrandr
 # grim
 # nwg-displays
 # slurp
-# ydotool
+# wtype
 
 dmenu
 dunst

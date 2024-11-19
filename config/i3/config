@@ -5,8 +5,6 @@ bar {
     i3bar_command $XDG_CONFIG_HOME/polybar/launch.sh
 }
 
-exec --no-startup-id dunst
-
 # Multi-screen screenshots with scrot
 bindsym --release Print exec --no-startup-id "scrot screenshot-%Y%m%d_%H%M%S.png"
 

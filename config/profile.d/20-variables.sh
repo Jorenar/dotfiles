@@ -31,6 +31,7 @@ export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
 export RANDFILE="$XDG_CACHE_HOME/rnd"
 export SQLITE_HISTORY="$XDG_STATE_HOME/sqlite_history"
 export TEXMFHOME="$HOME/.local/lib/texmf"
+export VD_DIR="$XDG_DATA_HOME"/visidata
 export W3M_DIR="$XDG_DATA_HOME/w3m"
 export WINEPREFIX="$XDG_DATA_HOME/wine"
 

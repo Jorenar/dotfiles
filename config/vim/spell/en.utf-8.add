@@ -30,6 +30,7 @@ dev
 distro
 donut
 dotfile
+dotfiles
 downloadables
 Doxygen
 dupa
@@ -101,6 +102,8 @@ toolchains
 unaddressable
 uncomment
 unintuitive
+unsequenced
+uploader
 variadic
 velociraptor
 VimL

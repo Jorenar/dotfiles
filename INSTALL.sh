@@ -28,7 +28,6 @@ abspath () (
 )
 
 install () (
-    echo "$@"
     src="$1"
     op="$2"
     dest="$3"
