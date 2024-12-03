@@ -3,11 +3,15 @@
 [ ! -x "$(command -v podman)" ] && return
 
 _podrun () {
-    mapfile -t COMPREPLY < <(
-        compgen -W "$(
-            podman images --format='{{.Repository}}:{{.Tag}}' | \
-                awk -F'/' '{ print $NF }'
-        )" -- "${COMP_WORDS[COMP_CWORD]}"
-    )
+    local cur; _get_comp_words_by_ref -n : cur
+    if [[ ${COMP_CWORD} -eq 1 ]] || [[ "$cur" == *:* ]]; then
+        mapfile -t COMPREPLY < <(
+            compgen -W "$(
+                podman images --format='{{.Repository}}:{{.Tag}}' | \
+                    awk -F'/' '{ print $NF }'
+            )" -- "$cur"
+        )
+        __ltrim_colon_completions "$cur"
+    fi
 }
-complete -F _podrun podrun
+complete -o default -F _podrun podrun
