@@ -1,0 +1,26 @@
+
+[<{@Account}>]
+
+from = <{}> <<{}>>
+signature-cmd = echo '<{}>'
+
+# folder-map = ~/.config/aerc/folder-map/<{}>
+folders-sort = INBOX,Archive,Drafts,Sent,Junk,Trash
+
+# source = imaps://<{}>
+# source-cred-cmd = <{}>
+
+# source = imaps+xoauth2://<{}>
+# source-cred-cmd = <{}>
+
+source = maildir://~/.local/var/mail/<{}>
+check-mail-cmd = mbsync <{@Account}>
+check-mail-timeout = 1m
+
+# outgoing = smtp+login://<{}>
+# outgoing-cred-cmd = <{}>
+
+# outgoing = smtp+xoauth2://<{}>
+# outgoing-cred-cmd = <{}>
+
+outgoing = sendmail.sh -a <{@Account}>
