@@ -42,3 +42,40 @@ if bufname("%") =~# 'aerc-'
     augroup END
   endif
 endif
+
+
+function! AddrComplete(findstart, base) abort
+  if a:findstart
+    return match(getline('.')[0 : col('.')-2], '\v<\S+$')
+  endif
+
+  let lines = []
+  if filereadable($XDG_DATA_HOME.'/addressbook.txt')
+    let lines += readfile($XDG_DATA_HOME.'/addressbook.txt')
+          \ ->filter({_,l -> l !~ '^\s*#'})
+          \ ->filter({_,l -> l =~ a:base})
+  endif
+  if executable('notmuch-addrlookup')
+    silent let lines += systemlist('notmuch-addrlookup' . " '" . a:base . "'")
+  endif
+
+  let results = []
+  for line in lines
+    if empty(trim(line)) | continue | endif
+
+    let words = split(line, ' \ze<')
+    let name = substitute(words[0], '\v^"|"$', '', 'g')
+    let address = substitute(words[len(words) < 2 ? 0 : 1], '[<>]', '', 'g')
+
+    call add(results, {
+          \   'word': name . ' <' . address . '>',
+          \   'abbr': strlen(name) < 35 ? name : name[0:30] . '...',
+          \   'menu': '<' . address . '>',
+          \ })
+  endfor
+
+  return uniq(results, 'i')
+endfunction
+
+command! AddrBook vnew $XDG_DATA_HOME/addressbook.txt
+setlocal omnifunc=AddrComplete

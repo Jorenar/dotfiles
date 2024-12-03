@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+notmuch address \
+    --output=sender \
+    --output=recipients \
+    --output=count \
+    --deduplicate=address "$*" \
+    | sort -nr | cut -f2- | grep -i -F "$*"
