@@ -112,6 +112,7 @@ fi
 # options {{{1
 
 export FZF_CTRL_T_OPTS="--preview '(cat {} || tree {}) 2> /dev/null | head -200'"
+export KM_SELECTIONS="clipboard"
 export LESS="-FXRS"
 export LESSHISTFILE=-
 export MOZ_USE_XINPUT2=1 # enable touchscreen in Firefox
