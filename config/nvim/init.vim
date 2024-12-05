@@ -47,7 +47,7 @@ so $XDG_CONFIG_HOME/vim/vimrc
 
 " :terminal {{{
 
-lua require('vimterm').setup({})
+lua require('vimterm').setup({ autoclose = true })
 
 autocmd TermOpen * setl nonu fdc=0 scl=no
 autocmd TermOpen * setl stl=%#StatusLineTerm#\ %f
