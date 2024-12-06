@@ -520,6 +520,9 @@ nnoremap <F1> :UndotreeToggle<CR>
 let g:qf_mapping_ack_style = 1
 let g:qf_loclist_window_bottom = 0
 
+nmap ]b <Plug>(buf-surf-forward)
+nmap [b <Plug>(buf-surf-back)
+
 " }}}1
 
 runtime! vimrc.d/*

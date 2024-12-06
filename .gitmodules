@@ -75,6 +75,11 @@
 	url = https://github.com/MattesGroeger/vim-bookmarks.git
 	shallow = true
 	ignore = all
+[submodule "vim-bufsurf"]
+	path = config/vim/pack/extern/start/vim-bufsurf
+	url = https://github.com/ton/vim-bufsurf.git
+	shallow = true
+	ignore = all
 [submodule "vim-commentary"]
 	path = config/vim/pack/extern/start/vim-commentary
 	url = https://github.com/tpope/vim-commentary.git
