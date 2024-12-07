@@ -138,7 +138,7 @@ feh
 firefox
 libreoffice-still
 mpv
-xsane
+sane
 yt-dlp
 zathura
 zathura-pdf-mupdf

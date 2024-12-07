@@ -48,9 +48,6 @@ case "$exe" in
     telnet)
         HOME="$XDG_CONFIG_HOME/telnet"
         ;;
-    xsane)
-        HOME="$XDG_DATA_HOME"
-        ;;
     zoom)
         HOME="$XDG_DATA_HOME"
         XDG_CONFIG_HOME="$HOME/.zoom"
@@ -68,5 +65,4 @@ exec "$exe" "$@"
 #~ ssh
 #~ steam
 #~ telnet
-#~ xsane
 #~ zoom
