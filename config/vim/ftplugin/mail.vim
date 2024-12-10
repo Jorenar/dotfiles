@@ -31,6 +31,7 @@ if bufname("%") =~# 'aerc-'
   if bufname("%") =~# 'aerc-view'
     setl colorcolumn=
     setl laststatus=1
+    setl nolist
     setl nospell
     setl showtabline=1
     setl signcolumn=no
