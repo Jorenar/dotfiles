@@ -77,6 +77,10 @@ for c in config/*; do
         */gtk-3.0)
             install  "$c"/settings.ini  @  "$XDG_CONFIG_HOME"/gtk-3.0/settings.ini
             ;;
+        */PowerToys)
+            [ -n "$USERPROFILE" ] && \
+                install "$c"  %  "$USERPROFILE"/AppData/Local/Microsoft/PowerToys
+            ;;
         */transmission.json)
             install  config/transmission.json  %  "$XDG_CONFIG_HOME"/transmission-daemon/settings.json
             ;;

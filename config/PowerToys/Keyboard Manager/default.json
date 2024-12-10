@@ -1,0 +1,56 @@
+{
+  "remapKeys": {
+    "inProcess": []
+  },
+  "remapKeysToText": {
+    "inProcess": []
+  },
+  "remapShortcuts": {
+    "global": [
+      {
+        "originalKeys": "162;164;84",
+        "runProgramElevationLevel": 0,
+        "secondKeyOfChord": 0,
+        "operationType": 1,
+        "runProgramAlreadyRunningAction": 0,
+        "runProgramStartWindowType": 0,
+        "runProgramFilePath": "C:\\Windows\\System32\\wsl.exe",
+        "runProgramArgs": "~",
+        "runProgramStartInDir": "",
+        "unicodeText": "*Unsupported*"
+      },
+      {
+        "originalKeys": "91;32",
+        "newRemapKeys": "32"
+      },
+      {
+        "originalKeys": "91;87",
+        "runProgramElevationLevel": 0,
+        "secondKeyOfChord": 0,
+        "operationType": 1,
+        "runProgramAlreadyRunningAction": 1,
+        "runProgramStartWindowType": 0,
+        "runProgramFilePath": "%BROWSER%",
+        "runProgramArgs": "",
+        "runProgramStartInDir": "",
+        "unicodeText": "*Unsupported*"
+      }
+    ],
+    "appSpecific": []
+  },
+  "remapShortcutsToText": {
+    "global": [
+      {
+        "originalKeys": "160;192",
+        "unicodeText": "~",
+        "secondKeyOfChord": 0
+      },
+      {
+        "originalKeys": "161;192",
+        "unicodeText": "~",
+        "secondKeyOfChord": 0
+      }
+    ],
+    "appSpecific": []
+  }
+}
