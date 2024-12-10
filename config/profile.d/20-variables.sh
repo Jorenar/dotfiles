@@ -6,6 +6,11 @@ export TMPDIR="${TMPDIR:-/tmp}"
 # Virtual terminal number (if not set already by PAM)
 export XDG_VTNR="${XDG_VTNR:-$(tty | sed 's/[^0-9]*//g')}"
 
+[ -n "$WSL_DISTRO_NAME" ] && export USERPROFILE="$(
+    cmd.exe /c 'echo %USERPROFILE%' 2> /dev/null | \
+        sed -e 's,\r,,g' -e 's,\\,/,g' -e 's,^C:,/mnt/c,'
+)"
+
 # XDG dirs {{{1
 
 export XDG_CACHE_HOME="$HOME/.local/cache"
