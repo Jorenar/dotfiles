@@ -66,6 +66,7 @@ if [ "$XDG_CONFIG_HOME" != "$HOME"/.config ]; then
     install  "$XDG_CONFIG_HOME"  @  "$HOME"/.config
 fi
 
+
 for c in config/*; do
     case "$c" in
         */firefox)
@@ -78,6 +79,8 @@ for c in config/*; do
             ;;
         */transmission.json)
             install  config/transmission.json  %  "$XDG_CONFIG_HOME"/transmission-daemon/settings.json
+            ;;
+        */WindowsTerminal.json)
             ;;
         *)
             install  "$c"  @  "$XDG_CONFIG_HOME"/"$(basename "$c")"
