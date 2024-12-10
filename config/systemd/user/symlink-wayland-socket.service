@@ -1,0 +1,12 @@
+# https://github.com/microsoft/WSL/issues/11261#issuecomment-2478574303
+
+[Unit]
+Description=Symlink Wayland socket to $XDG_RUNTIME_DIR on WSL
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/ln -s /mnt/wslg/runtime-dir/wayland-0      $XDG_RUNTIME_DIR
+ExecStart=/usr/bin/ln -s /mnt/wslg/runtime-dir/wayland-0.lock $XDG_RUNTIME_DIR
+
+[Install]
+WantedBy=default.target
