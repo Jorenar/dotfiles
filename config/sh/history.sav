@@ -1,4 +1,5 @@
 alias ALIAS | sed -e 's/^alias [^=]\+=//' -e "s/'//g"
+cmd.exe /c dir /A:H /B | sed 's/\r//g'
 convert -density 192 PDF -quality 100 -alpha remove IMG
 curl icanhazip.com
 curl wttr.in/

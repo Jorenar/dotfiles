@@ -77,6 +77,10 @@ for c in config/*; do
         */gtk-3.0)
             install  "$c"/settings.ini  @  "$XDG_CONFIG_HOME"/gtk-3.0/settings.ini
             ;;
+        */powershell)
+            [ -n "$USERPROFILE" ] && \
+                install "$c"  %  "$USERPROFILE"/WindowsPowerShell
+            ;;
         */PowerToys)
             [ -n "$USERPROFILE" ] && \
                 install "$c"  %  "$USERPROFILE"/AppData/Local/Microsoft/PowerToys
