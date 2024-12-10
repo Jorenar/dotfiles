@@ -86,6 +86,22 @@ for c in config/*; do
             ;;
         */WindowsTerminal.json)
             ;;
+        */WSL)
+            [ -z "$WSL_DISTRO_NAME" ] && continue
+
+            install  "$c"/wslconfig   %  "$USERPROFILE"/.wslconfig
+            install  "$c"/wslgconfig  %  "$USERPROFILE"/.wslgconfig
+
+            if [ ! -f /etc/wsl.conf ] || [ ! -f /etc/tmpfiles.d/wslg.conf ]; then
+                sudo sh << EOF
+[ ! -f /etc/wsl.conf ] && \
+    cp  "$c"/wsl.conf  /etc/wsl.conf
+[ ! -f /etc/tmpfiles.d/wslg.conf ] && \
+    mkdir -p /etc/tmpfiles.d && \
+    cp  "$c"/tmpfiles_wslg.conf  /etc/tmpfiles.d/wslg.conf
+EOF
+            fi
+            ;;
         *)
             install  "$c"  @  "$XDG_CONFIG_HOME"/"$(basename "$c")"
             ;;
