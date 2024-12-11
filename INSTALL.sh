@@ -96,6 +96,13 @@ for c in config/*; do
             [ -n "$USERPROFILE" ] && \
                 install "$c"  %  "$USERPROFILE"/AppData/Local/Microsoft/PowerToys
             ;;
+        */sudoers.d)
+            [ "$gf_sudo" -eq 0 ] && continue
+            [ ! -d /etc/sudoers.d ] && continue
+            for t in "$c"/*; do
+                [ ! -e "$t" ] && sudo cp "$t" /etc/sudoers.d/"$(basename "$t")"
+            done
+            ;;
         */tmpfiles.d)
             [ "$gf_sudo" -eq 0 ] && continue
             sudo mkdir -p /etc/tmpfiles.d || continue
