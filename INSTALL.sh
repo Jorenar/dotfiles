@@ -1,12 +1,23 @@
 #!/usr/bin/env sh
 
 
-[ "$1" = "-f" ] && gf_force=1 || gf_force=0
+gf_force=0
+gf_sudo=0
 
-if [ -x "$(command -v git)" ]; then
-    echo "Updating Git submodules"
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+        -f|--force) gf_force=1 ;;
+        --sudo) gf_sudo=1 ;;
+        *) ;;
+    esac
+    shift
+done
+
+[ "$(id -u)" -eq 0 ] && alias sudo=
+
+
+[ -x "$(command -v git)" ] && \
     git submodule update --init --recursive --remote
-fi
 
 . extern/pathmunge.sh/pathmunge.sh
 . config/profile.d/20-variables.sh
@@ -96,15 +107,13 @@ for c in config/*; do
             install  "$c"/wslconfig   %  "$USERPROFILE"/.wslconfig
             install  "$c"/wslgconfig  %  "$USERPROFILE"/.wslgconfig
 
-            if [ ! -f /etc/wsl.conf ] || [ ! -f /etc/tmpfiles.d/wslg.conf ]; then
-                sudo sh << EOF
-[ ! -f /etc/wsl.conf ] && \
-    cp  "$c"/wsl.conf  /etc/wsl.conf
-[ ! -f /etc/tmpfiles.d/wslg.conf ] && \
-    mkdir -p /etc/tmpfiles.d && \
-    cp  "$c"/tmpfiles_wslg.conf  /etc/tmpfiles.d/wslg.conf
-EOF
-            fi
+            [ "$gf_sudo" -eq 0 ] && continue
+
+            [ ! -f /etc/wsl.conf ] && \
+                sudo cp  "$c"/wsl.conf  /etc/wsl.conf
+            [ ! -f /etc/tmpfiles.d/wslg.conf ] && \
+                sudo mkdir -p /etc/tmpfiles.d && \
+                sudo cp  "$c"/tmpfiles_wslg.conf  /etc/tmpfiles.d/wslg.conf
             ;;
         *)
             install  "$c"  @  "$XDG_CONFIG_HOME"/"$(basename "$c")"
