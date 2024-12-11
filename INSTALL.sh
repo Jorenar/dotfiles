@@ -13,8 +13,6 @@ while [ "$#" -gt 0 ]; do
     shift
 done
 
-[ "$(id -u)" -eq 0 ] && alias sudo=
-
 
 [ -x "$(command -v git)" ] && \
     git submodule update --init --recursive --remote
@@ -43,24 +41,31 @@ install () (
     op="$2"
     dest="$3"
 
+    sudo=
     action=
     case "$op" in
-        '@') action="ln -sf" ;;
-        '%') action="cp -r" ;;
+        *@) action='ln -sf' ;;
+        *%) action='cp -r' ;;
         *) return ;;
+    esac
+    case "$op" in
+        s*)
+            [ "$gf_sudo" -eq 0 ] && return
+            [ "$(id -u)" -ne 0 ] && sudo="sudo"
+            ;;
     esac
 
 
     if [ "$gf_force" -eq 1 ] && [ -e "$dest" ]; then
         old="$HOME/dotfiles.old/$dest"
         if mkdir -p "$(dirname "$old")"; then
-            mv "$dest" "$old" && echo "Moved file '$dest' to directory '$old'"
+            $sudo mv "$dest" "$old" && echo "Moved file '$dest' to directory '$old'"
         fi
     fi
 
     if [ ! -e "$dest" ]; then
-        mkdir -p "$(dirname "$dest")"
-        sh -c "$action '$(abspath "$src")' '$dest'"
+        $sudo mkdir -p "$(dirname "$dest")"
+        $sudo sh -c "$action '$(abspath "$src")' '$dest'"
     fi
 )
 
@@ -97,17 +102,13 @@ for c in config/*; do
                 install "$c"  %  "$USERPROFILE"/AppData/Local/Microsoft/PowerToys
             ;;
         */sudoers.d)
-            [ "$gf_sudo" -eq 0 ] && continue
-            [ ! -d /etc/sudoers.d ] && continue
             for t in "$c"/*; do
-                [ ! -e "$t" ] && sudo cp "$t" /etc/sudoers.d/"$(basename "$t")"
+                install  "$t"  s%  /etc/sudoers.d/"$(basename "$t")"
             done
             ;;
         */tmpfiles.d)
-            [ "$gf_sudo" -eq 0 ] && continue
-            sudo mkdir -p /etc/tmpfiles.d || continue
             for t in "$c"/*; do
-                [ ! -e "$t" ] && sudo cp "$t" /etc/tmpfiles.d/"$(basename "$t")"
+                install  "$t"  s%  /etc/tmpfiles.d/"$(basename "$t")"
             done
             ;;
         */transmission.json)
@@ -121,9 +122,7 @@ for c in config/*; do
             install  "$c"/wslconfig   %  "$USERPROFILE"/.wslconfig
             install  "$c"/wslgconfig  %  "$USERPROFILE"/.wslgconfig
 
-            if [ "$gf_sudo" -gt 0 ] && [ ! -f /etc/wsl.conf ]; then
-                sudo cp  "$c"/wsl.conf  /etc/wsl.conf
-            fi
+            install  "$c"/wsl.conf  s%  /etc/wsl.conf
             ;;
         *)
             install  "$c"  @  "$XDG_CONFIG_HOME"/"$(basename "$c")"
