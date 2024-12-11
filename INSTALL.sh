@@ -96,6 +96,13 @@ for c in config/*; do
             [ -n "$USERPROFILE" ] && \
                 install "$c"  %  "$USERPROFILE"/AppData/Local/Microsoft/PowerToys
             ;;
+        */tmpfiles.d)
+            [ "$gf_sudo" -eq 0 ] && continue
+            sudo mkdir -p /etc/tmpfiles.d || continue
+            for t in "$c"/*; do
+                [ ! -e "$t" ] && sudo cp "$t" /etc/tmpfiles.d/"$(basename "$t")"
+            done
+            ;;
         */transmission.json)
             install  config/transmission.json  %  "$XDG_CONFIG_HOME"/transmission-daemon/settings.json
             ;;
@@ -107,13 +114,9 @@ for c in config/*; do
             install  "$c"/wslconfig   %  "$USERPROFILE"/.wslconfig
             install  "$c"/wslgconfig  %  "$USERPROFILE"/.wslgconfig
 
-            [ "$gf_sudo" -eq 0 ] && continue
-
-            [ ! -f /etc/wsl.conf ] && \
+            if [ "$gf_sudo" -gt 0 ] && [ ! -f /etc/wsl.conf ]; then
                 sudo cp  "$c"/wsl.conf  /etc/wsl.conf
-            [ ! -f /etc/tmpfiles.d/wslg.conf ] && \
-                sudo mkdir -p /etc/tmpfiles.d && \
-                sudo cp  "$c"/tmpfiles_wslg.conf  /etc/tmpfiles.d/wslg.conf
+            fi
             ;;
         *)
             install  "$c"  @  "$XDG_CONFIG_HOME"/"$(basename "$c")"
