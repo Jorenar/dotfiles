@@ -523,6 +523,8 @@ let g:qf_loclist_window_bottom = 0
 nmap ]b <Plug>(buf-surf-forward)
 nmap [b <Plug>(buf-surf-back)
 
+let g:fauxClip_sys_force = $WSL2_GUI_APPS_ENABLED
+
 " }}}1
 
 runtime! vimrc.d/*
