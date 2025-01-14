@@ -108,6 +108,9 @@ for c in config/*; do
             ;;
         */tmpfiles.d)
             for t in "$c"/*; do
+                case "$t" in
+                    *wsl*) [ -z "$WSL_DISTRO_NAME" ] && continue ;;
+                esac
                 install  "$t"  s%  /etc/tmpfiles.d/"$(basename "$t")"
             done
             ;;
