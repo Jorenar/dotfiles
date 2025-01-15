@@ -543,6 +543,6 @@ let g:fauxClip_sys_force = $WSL2_GUI_APPS_ENABLED
 
 runtime! vimrc.d/*
 
-if has("gui_running")
+if has('gui_running') && !has('patch-9.1.0327')
   runtime! gvimrc
 endif
