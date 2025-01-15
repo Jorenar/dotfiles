@@ -133,4 +133,4 @@ export HISTSIZE=
 export HISTFILE="$XDG_STATE_HOME/$(basename -- "${0#-*}")_history"
 
 export SH_HIST_SAV
-pathmunge "$XDG_CONFIG_HOME/sh/history.sav"
+pathmunge SH_HIST_SAV "$XDG_CONFIG_HOME/sh/history.sav"
