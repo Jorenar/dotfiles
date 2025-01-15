@@ -25,6 +25,11 @@
 	url = https://github.com/whiteinge/diffconflicts.git
 	shallow = true
 	ignore = all
+[submodule "exrc.vim"]
+	path = config/vim/pack/extern/start/exrc.vim
+	url = https://github.com/ii14/exrc.vim.git
+	shallow = true
+	ignore = all
 [submodule "fauxClip"]
 	path = config/vim/pack/extern/start/fauxClip
 	url = https://github.com/Jorenar/fauxClip.git

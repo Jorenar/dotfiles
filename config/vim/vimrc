@@ -195,6 +195,8 @@ autocmd BufWinEnter * set formatoptions-=t  " Don't autowrap text using 'textwid
 
 "   ~ {{{1
 
+set secure noexrc
+
 set quickfixtextfunc=utils#texts#QuickFixTextFunc
 
 set modeline nomodelineexpr
@@ -485,6 +487,18 @@ let g:VM_maps = {
 hi! VM_Mono NONE ctermbg=magenta
 hi! link VM_Insert VM_Mono
 
+"   exrc.vim {{{1
+
+let g:exrc#cache_file = $XDG_STATE_HOME.'/vim/exrc'
+
+let g:exrc#names = [ '.exrc', '.vimrc' ]
+      \ + (has('gui') ? [ '.gvimrc' ] : [])
+      \ + (has('nvim') ? [ '.nvimrc', '.nvim.lua' ] : [])
+
+for e in g:exrc#names
+  exec 'autocmd BufWritePost' e 'nested silent ExrcTrust'
+endfor | unlet e
+
 "   ~ {{{1
 
 au VimEnter * com! -bang UseVimball
@@ -531,8 +545,4 @@ runtime! vimrc.d/*
 
 if has("gui_running")
   runtime! gvimrc
-endif
-
-if !has('nvim')
-  set secure exrc
 endif
