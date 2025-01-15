@@ -66,14 +66,34 @@ function! s:sqls_handler(x) abort
   " call lsp#ui#vim#output#preview(a:x['server'], l:lines, {})
 endfunction
 
-" }}}
-
 augroup LSP_SERVERS
   autocmd!
+  autocmd User lsp_setup call s:on_lsp_setup()
   autocmd User lsp_server_init call s:on_lsp_server_init()
+augroup END
 
-  if executable('asm-lsp')
-    au User lsp_setup call lsp#register_server(#{
+" }}}
+
+let g:langservs = {
+      \   'asm-lsp'      : executable('asm-lsp'),
+      \   'ccls'         : executable('ccls'),
+      \   'clangd'       : executable('clangd'),
+      \   'deno'         : executable('deno'),
+      \   'digestif'     : executable('digestif'),
+      \   'jdtls'        : executable('jdtls'),
+      \   'groovyls'     : executable('java') && filereadable($XDG_DATA_HOME.'/java/groovy-language-server-all.jar'),
+      \   'jedi'         : executable('jedi-language-server'),
+      \   'openscad-lsp' : executable('openscad-lsp'),
+      \   'sonarlint'    : executable('sonarlint-ls'),
+      \   'sqls'         : executable('sqls'),
+      \   'texlab'       : executable('texlab'),
+      \   'vim-ls'       : executable('vim-language-server'),
+      \ }
+
+function! s:on_lsp_setup() abort
+
+  if g:langservs['asm-lsp']
+    call lsp#register_server(#{
           \   name: 'asm-lsp',
           \   cmd: [ 'asm-lsp' ],
           \   root_uri: {-> lsp#utils#path_to_uri(
@@ -86,8 +106,8 @@ augroup LSP_SERVERS
           \ })
   endif
 
-  if executable('ccls')
-    au User lsp_setup call lsp#register_server(#{
+  if g:langservs['ccls']
+    call lsp#register_server(#{
           \   name: 'ccls',
           \   cmd: [ 'ccls' ],
           \   root_uri: {-> lsp#utils#path_to_uri(
@@ -104,8 +124,8 @@ augroup LSP_SERVERS
           \ })
   endif
 
-  if executable('clangd')
-    au User lsp_setup call lsp#register_server(#{
+  if g:langservs['clangd']
+    call lsp#register_server(#{
           \   name: 'clangd',
           \   cmd: ['clangd',
           \     '--header-insertion-decorators=false',
@@ -121,8 +141,8 @@ augroup LSP_SERVERS
           \ })
   endif
 
-  if executable('deno')
-    au User lsp_setup call lsp#register_server(#{
+  if g:langservs['deno']
+    call lsp#register_server(#{
           \   name: 'Deno',
           \   cmd: [ 'deno', 'lsp' ],
           \   initialization_options: #{
@@ -144,16 +164,16 @@ augroup LSP_SERVERS
           \ })
   endif
 
-  if executable('digestif')
-    au User lsp_setup call lsp#register_server(#{
+  if g:langservs['digestif']
+    call lsp#register_server(#{
           \   name: 'Digestif',
           \   cmd: [ 'digestif' ],
           \   allowlist: [ 'tex' ],
           \ })
   endif
 
-  if filereadable($XDG_DATA_HOME.'/java/groovy-language-server-all.jar') && executable('java')
-    au User lsp_setup call lsp#register_server(#{
+  if g:langservs['groovyls']
+    call lsp#register_server(#{
           \   name: 'Groovy Language Server',
           \   cmd: [
           \     'java', '-jar',
@@ -169,34 +189,34 @@ augroup LSP_SERVERS
           \ })
   endif
 
-  if executable('jdtls')
-    au User lsp_setup call lsp#register_server(#{
+  if g:langservs['jdtls']
+    call lsp#register_server(#{
           \   name: 'Eclipse JDT Language Server',
           \   cmd: [ 'jdtls' ],
           \   allowlist: [ 'java' ],
           \ })
   endif
 
-  if executable('jedi-language-server')
-    au User lsp_setup call lsp#register_server(#{
+  if g:langservs['jedi']
+    call lsp#register_server(#{
           \   name: 'Jedi',
           \   cmd: [ 'jedi-language-server' ],
           \   allowlist: [ 'python' ],
           \ })
   endif
 
-  if executable('openscad-lsp')
-    au User lsp_setup call lsp#register_server(#{
+  if g:langservs['openscad-lsp']
+    call lsp#register_server(#{
           \   name: 'openscad-LSP',
           \   cmd: [ 'openscad-lsp', '--stdio' ],
           \   allowlist: [ 'openscad' ],
           \ })
   endif
 
-  if executable('sonarlint-ls')
+  if g:langservs['sonarlint']
     let g:lsp_use_native_client = 0
 
-    au User lsp_setup call lsp#register_server(#{
+    call lsp#register_server(#{
           \   name: 'SonarLint',
           \   cmd: [
           \     'sonarlint-ls', '-stdio',
@@ -220,7 +240,7 @@ augroup LSP_SERVERS
           \   allowlist: [ 'c', 'cpp', 'go', 'javascript', 'php', 'python' ],
           \ })
 
-    au User lsp_setup call lsp#callbag#pipe(
+    call lsp#callbag#pipe(
           \   lsp#stream(),
           \   lsp#callbag#filter({x ->
           \     x->get('request', x->get('response', {}))->get('method', '') =~# 'sonarlint/'
@@ -229,8 +249,8 @@ augroup LSP_SERVERS
           \ )
   endif
 
-  if executable('sqls')
-    au User lsp_setup call lsp#register_server(#{
+  if g:langservs['sqls']
+    call lsp#register_server(#{
           \   name: 'sqls',
           \   cmd: {->
           \     [ 'sqls' ]
@@ -253,7 +273,7 @@ augroup LSP_SERVERS
           \   allowlist: [ 'sql' ]
           \ })
 
-    au User lsp_setup call lsp#callbag#pipe(
+    call lsp#callbag#pipe(
           \   lsp#stream(),
           \   lsp#callbag#filter({x ->
           \     x->get('request', {})->get('params', {})->get('command', '') =~# '\v(executeQuery|show)'
@@ -262,16 +282,16 @@ augroup LSP_SERVERS
           \ )
   endif
 
-  if executable('texlab')
-    au User lsp_setup call lsp#register_server(#{
+  if g:langservs['texlab']
+    call lsp#register_server(#{
           \   name: 'TexLab',
           \   cmd: [ 'texlab' ],
           \   allowlist: [ 'tex' ],
           \ })
   endif
 
-  if executable('vim-language-server')
-    autocmd User lsp_setup call lsp#register_server(#{
+  if g:langservs['vim-ls']
+    call lsp#register_server(#{
           \   name: 'VimScript Language Server',
           \   cmd: [ 'vim-language-server', '--stdio' ],
           \   initialization_options: #{
@@ -282,4 +302,4 @@ augroup LSP_SERVERS
           \ })
   endif
 
-augroup END
+endfunction
