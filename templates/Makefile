@@ -73,8 +73,7 @@ dev: CFLAGS += \
 	-Wlogical-op \
 	-Wfloat-equal
 dev: CFLAGS += \
-	-Wformat=2 \
-	-Wwrite-strings
+	-Wformat=2
 dev: CFLAGS += \
 	-Winline \
 	-Wmissing-prototypes \
