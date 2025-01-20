@@ -81,6 +81,7 @@ let g:langservs = {
       \   'deno'         : executable('deno'),
       \   'digestif'     : executable('digestif'),
       \   'jdtls'        : executable('jdtls'),
+      \   'gopls'        : executable('gopls'),
       \   'groovyls'     : executable('java') && filereadable($XDG_DATA_HOME.'/java/groovy-language-server-all.jar'),
       \   'jedi'         : executable('jedi-language-server'),
       \   'openscad-lsp' : executable('openscad-lsp'),
@@ -169,6 +170,14 @@ function! s:on_lsp_setup() abort
           \   name: 'Digestif',
           \   cmd: [ 'digestif' ],
           \   allowlist: [ 'tex' ],
+          \ })
+  endif
+
+  if g:langservs['gopls']
+    call lsp#register_server(#{
+          \   name: 'gopls',
+          \   cmd: [ 'gopls' ],
+          \   allowlist: [ 'go' ],
           \ })
   endif
 
