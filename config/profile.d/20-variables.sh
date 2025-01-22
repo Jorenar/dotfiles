@@ -6,10 +6,6 @@ export TMPDIR="${TMPDIR:-/tmp}"
 # Virtual terminal number (if not set already by PAM)
 export XDG_VTNR="${XDG_VTNR:-$(tty | sed 's/[^0-9]*//g')}"
 
-[ -n "$WSL_DISTRO_NAME" ] && export USERPROFILE="$(
-    cmd.exe /c 'echo %USERPROFILE%' 2> /dev/null | \
-        sed -e 's,\r,,g' -e 's,\\,/,g' -e 's,^C:,/mnt/c,'
-)"
 
 # XDG dirs {{{1
 
@@ -108,10 +104,21 @@ for opt in "$HOME"/.local/opt/*/*/bin; do
     [ -d "$opt" ] && pathmunge "$opt"
 done
 
+# WSL {{{1
+
 if [ -n "$WSL_DISTRO_NAME" ]; then
     pathmunge "/mnt/c/Windows/System32"
     pathmunge "/mnt/c/Windows/System32/Wbem"
     pathmunge "/mnt/c/Windows/System32/WindowsPowerShell/v1.0"
+    pathmunge "/mnt/c/Users/thck68/AppData/Local/Microsoft/WindowsApps"
+
+    export USERPROFILE="$(
+        cmd.exe /c 'echo %USERPROFILE%' 2> /dev/null | \
+            sed -e 's,\r,,g' -e 's,\\,/,g' -e 's,^C:,/mnt/c,'
+    )"
+
+    export WSLENV
+    pathmunge WSLENV "TMUX"
 fi
 
 # options {{{1
@@ -121,12 +128,10 @@ export KM_SELECTIONS="clipboard"
 export LESS="-FXRS"
 export LESSHISTFILE=-
 export MOZ_USE_XINPUT2=1 # enable touchscreen in Firefox
+export NO_AT_BRIDGE=1 # don't launch at-spi2-registryd
 export QT_QPA_PLATFORMTHEME=qt5ct
 export VNC_VIA_CMD='ssh -f -L "$L":"$H":"$R" "$G" sleep 20'
 export WINEDEBUG="-all" # suppress Wine debug informations
-
-export WSLENV
-pathmunge WSLENV "TMUX"
 
 # shell history, the same set in shrc
 export HISTSIZE=
