@@ -312,8 +312,7 @@ function! s:lsp_init() abort
   nmap <buffer> Lkt <Plug>(lsp-peek-type-definition)
 
   nmap <buffer> Lfr <Plug>(lsp-references)
-  nmap <buffer> Lfs <Plug>(lsp-document-symbol-search)
-  nmap <buffer> LfS <Plug>(lsp-workspace-symbol-search)
+  nmap <buffer> Lfs <Plug>(lsp-workspace-symbol)<C-r><C-w><CR>
   nmap <buffer> Lfi <Plug>(lsp-call-hierarchy-incoming)
   nmap <buffer> Lfo <Plug>(lsp-call-hierarchy-outgoing)
 endfunction

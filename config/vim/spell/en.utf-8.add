@@ -20,6 +20,7 @@ Codacy
 Codeberg
 Computerphile
 config
+configs
 configurator
 counterargue
 counterargued
@@ -39,6 +40,8 @@ dupa
 Ecma
 env
 filetype
+footgun
+footguns
 Freenode
 GDScript
 goto
@@ -78,11 +81,14 @@ Neovim
 nomen
 nullability
 OCaml
+overcorrecting
 overfocus
 overfocused
 plaintext
 Polska
 POSIX
+pragma
+pragmas
 prepended
 preprocessor
 processability
