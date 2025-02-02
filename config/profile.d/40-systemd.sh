@@ -4,6 +4,7 @@ mkdir -p "$XDG_CONFIG_HOME"/environment.d && env \
         -e '^GNUPGHOME' \
         -e '^GOBIN' \
         -e '^IMAPFILTER_HOME' \
+        -e '^NO_AT_BRIDGE' \
         -e '^PASSWORD_STORE_DIR' \
         -e '^PATH=' \
         -e '^PYTHON' \

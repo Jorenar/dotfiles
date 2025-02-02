@@ -1,0 +1,10 @@
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Upgrade
+Target = at-spi2-core
+
+[Action]
+Description = Removing executable permission from at-spi-bus-launcher...
+When = PostTransaction
+Exec = /usr/bin/chmod -x /usr/lib/at-spi-bus-launcher
