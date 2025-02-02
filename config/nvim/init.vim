@@ -67,6 +67,10 @@ set backupdir-=.
 set guicursor=a:block
 set startofline
 
+hi! link FloatBorder NormalFloat
+
+autocmd VimEnter * exec 'lua vim.treesitter.stop()' | set syn=OFF
+
 let &grepformat = "%f:%l:%m,%f:%l%m,%f  %l%m"
 
 autocmd! nvim_swapfile

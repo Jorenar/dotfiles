@@ -19,7 +19,7 @@ function! s:ccls_clangd_combo() abort
     return
   endif
 
-  let l:ccls = extend(l:ccls, #{
+  call extend(l:ccls, #{
         \   callHierarchyProvider: v:false,
         \   declarationProvider: v:false,
         \   definitionProvider: v:false,
