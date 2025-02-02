@@ -1,0 +1,42 @@
+#!/usr/bin/env sh
+
+trap 'notmuch new --no-hooks' EXIT
+
+hookdir="$(notmuch config get database.hook_dir)"
+mailroot="$(notmuch config get database.mail_root)"
+
+search () {
+    folder="$1"; shift
+    notmuch search --output=files -- folder:"$folder" "$@" | \
+        { grep -w "$folder" || test $? = 1; }
+}
+
+mv2 () {
+    dest="$1"
+    while read -r msg; do
+        [ -f "$msg" ] || continue
+
+        path="$mailroot/$dest"
+
+        sub="$(basename "$(dirname "$msg")")"
+        case "$sub" in
+            cur|new|tmp) path="$path/$sub";;
+        esac
+
+        [ ! -d "$path" ] && mkdir "$path"
+
+        file="$(basename  "$msg" | sed 's/,U=[0-9]\+//')"
+        path="$path/$file"
+
+        [ -f "$path" ] && continue
+
+        >&2 printf '[pre-new hook]: moving %s to %s\n' "$file" "$dest"
+        mv "$msg" "$path"
+    done
+}
+
+
+[ -f "$hookdir"/filters ] && \
+    . "$hookdir"/filters
+
+wait

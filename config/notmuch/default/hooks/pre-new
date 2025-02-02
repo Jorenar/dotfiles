@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+trap '
+    kill -- -${PPID:-$(ps -o ppid= -p $$)}
+' INT TERM
+
+if [ -x "$(command -v mbsync)" ]; then
+    mbsync -a &
+fi
+
+for sm in "$HOME"/.local/var/mail/.bin/sync-*; do
+    $sm &
+done
+
+wait

@@ -5,9 +5,7 @@ After=network-online.target
 
 [Service]
 Type=oneshot
-ExecStartPre=-imapfilter
-ExecStart=mbsync -Va
-ExecStartPost=-notmuch new
+ExecStart=notmuch new
 
 [Install]
 WantedBy=default.target

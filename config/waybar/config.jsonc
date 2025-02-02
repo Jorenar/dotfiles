@@ -1,4 +1,4 @@
-// -*- mode: jsonc -*-
+// vim: ft=jsonc fdl=1
 {
     "spacing": 15,
 
@@ -9,12 +9,13 @@
         "sway/window"
     ],
     "modules-center": [
+        "privacy",
         "tray"
     ],
     "modules-right": [
         "custom/todo",
         "custom/rss",
-        "custom/email",
+        "custom/notmuch",
         "custom/cpu-temp",
         "custom/cpu-freq",
         "wireplumber",
@@ -39,6 +40,28 @@
         "tooltip": true,
         "tooltip-format": "{app}: {title}"
     },
+
+    "privacy": {
+      "icon-size": 13,
+      "transition-duration": 0,
+      "modules": [
+        {
+          "type": "screenshare",
+          "tooltip": true,
+          "tooltip-icon-size": 0
+        },
+        {
+          "type": "audio-out",
+          "tooltip": true,
+          "tooltip-icon-size": 0
+        },
+        {
+          "type": "audio-in",
+          "tooltip": true,
+          "tooltip-icon-size": 0
+        }
+      ]
+    },
     "tray": {
         "spacing": 10
     },
@@ -57,12 +80,12 @@
         "exec": "cnt-commafeed-unread.sh",
         "on-click": "cnt-commafeed-unread.sh"
     },
-    "custom/email": {
-        "format": "Email: {}",
+    "custom/notmuch": {
+        "format": "notmuch: {}",
         "return-type": "text",
         "interval": 90,
-        "exec": "cnt-unread-mails.sh",
-        "on-click": "cnt-unread-mails.sh"
+        "exec": "notmuch count is:unread folder:/INBOX/",
+        "on-click": "notmuch new --no-hooks && notmuch count is:unread folder:/INBOX/"
     },
     "custom/cpu-freq": {
         "format": "{} MHz",
