@@ -9,8 +9,8 @@ init_gpg_agent () (
 
     tmp="${TMPDIR:-/tmp}/gpg.dummy.$$"
 
-    echo | gpg --encrypt --recipient "$key" > "$tmp" 2> /dev/null
-    gpg --decrypt "$tmp" > /dev/null 2>&1
+    sleep 1; echo | gpg --encrypt --recipient "$key" > "$tmp" 2> /dev/null
+    sleep 1; gpg --decrypt "$tmp" > /dev/null 2>&1
 
     rm "$tmp"
 )
