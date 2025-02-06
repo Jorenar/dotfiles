@@ -1,0 +1,8 @@
+sed_esc () {
+	# sed "s/$(sed_esc -p "$pat")/$(sed_esc -s "$sub")/"
+	if [ "$1" = "-p" ]; then  # escaping pattern
+		printf '%s\n' "$2" | sed -e 's/[]\/$*.^[]/\\&/g'
+	elif [ "$1" = "-s" ]; then  # escaping substitute
+		printf '%s\n' "$2" | sed -e 's/[\/&]/\\&/g'
+	fi
+}
