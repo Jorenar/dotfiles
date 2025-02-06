@@ -5,7 +5,10 @@ trap '
 ' INT TERM
 
 if [ -x "$(command -v mbsync)" ]; then
-    mbsync -a &
+    ch="$(awk '/^Channel / { print $2 }' "$XDG_CONFIG_HOME"/isyncrc | sort -u)"
+    for ch in $ch; do
+        mbsync "$ch"  &
+    done
 fi
 
 for sm in "$HOME"/.local/var/mail/.bin/sync-*; do

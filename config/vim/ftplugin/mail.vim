@@ -42,6 +42,16 @@ if bufname("%") =~# 'aerc-'
       autocmd VimLeavePre * silent !aerc :close
     augroup END
   endif
+
+  if bufname("%") =~# 'aerc-compose'
+    augroup AERC_INTEGRATION
+      autocmd!
+      autocmd BufWinEnter *
+            \   if $AERC_ACCOUNT == "notmuch"
+            \ |   silent! s/\VFrom:\zs <\.@\.>//
+            \ | endif
+    augroup END
+  endif
 endif
 
 
@@ -67,6 +77,12 @@ function! AddrComplete(findstart, base) abort
     let words = split(line, ' \ze<')
     let name = substitute(words[0], '\v^"|"$', '', 'g')
     let address = substitute(words[len(words) < 2 ? 0 : 1], '[<>]', '', 'g')
+
+    if name == address
+      if indexof(results, {_,v -> v.menu == '<'.address.'>'}) >= 0
+        continue
+      endif
+    endif
 
     call add(results, {
           \   'word': name . ' <' . address . '>',

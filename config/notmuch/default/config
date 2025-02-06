@@ -2,13 +2,8 @@
 path=.local/var/mail
 autocommit=2
 
-[user]
-primary_email=
-
 [new]
 ignore=.mbsyncstate;.mbsyncstate.lock;.uidvalidity;.bin
-
-[search]
 
 [maildir]
 synchronize_flags=true

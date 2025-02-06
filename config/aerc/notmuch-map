@@ -1,2 +1,4 @@
-* = id:0
-*/INBOX = folder:/INBOX/ is:unread
+@ = id:0
+@/INBOX         = folder:/INBOX/
+@/INBOX/flagged = folder:/INBOX/ is:flagged
+@/INBOX/unread  = folder:/INBOX/ is:unread
