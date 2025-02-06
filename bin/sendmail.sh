@@ -20,5 +20,24 @@ opts="$(
 )"
 [ -n "$opts" ] && eval set -- "$opts" '"$@"'
 
+
+case "$sendmail" in
+    */msmtp) set -- "--read-envelope-from" "$@" ;;
+esac
+
+from="$(
+    for o in "$@"; do
+        case "$o" in
+            -a|-f|--from|--from=*) return ;;
+            --read-envelope-from) return ;;
+            --*) ;;
+            -*a*|-*f*) return ;;
+        esac
+    done
+
+    echo "$msg" | grep -m 1 '^From:\s' | awk -v RS="[<>]" '/@/'
+)"
+[ -n "$from" ] && set -- "-f" "$from" "$@"
+
 printf '%s' "$msg" | grep -v '^'"$optsHdr"':' |\
-    exec "$sendmail" --read-envelope-from -oi "$@"
+    exec "$sendmail" -oi "$@"
