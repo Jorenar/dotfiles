@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+read -r msg
+
+mail_root="$(notmuch config get database.mail_root)/"
+maildir="$(echo "${msg#"$mail_root"}" | cut -d'/' -f1)"
+
+for d in "$@"; do
+    [ -d "$mail_root/$maildir/$d" ] && echo "$maildir/$d" && exit
+done
+
+echo
