@@ -202,6 +202,11 @@
 	url = https://github.com/willothy/flatten.nvim.git
 	shallow = true
 	ignore = all
+[submodule "goto-preview"]
+	path = config/nvim/pack/extern/start/goto-preview
+	url = https://github.com/rmagatti/goto-preview.git
+	shallow = true
+	ignore = all
 [submodule "nvim-lspconfig"]
 	path = config/nvim/pack/extern/start/nvim-lspconfig
 	url = https://github.com/neovim/nvim-lspconfig.git

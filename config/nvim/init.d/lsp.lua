@@ -1,3 +1,5 @@
+local GP = require('goto-preview')
+
 local keymaps = {
   { 'n', 'L', "<Cmd>exec {l -> empty(l) ? '' : 'norm L'.l}(input('L'))<CR>" },
 
@@ -10,6 +12,11 @@ local keymaps = {
   { 'n', 'Lgd', vim.lsp.buf.declaration },
   { 'n', 'Lgi', vim.lsp.buf.implementation },
   { 'n', 'Lgt', vim.lsp.buf.type_definition },
+
+  { 'n', 'Lkg', GP.goto_preview_definition },
+  { 'n', 'Lkd', GP.goto_preview_declaration },
+  { 'n', 'Lki', GP.goto_preview_implementation },
+  { 'n', 'Lkt', GP.goto_preview_type_definition },
 
   { 'n', 'Lfr', vim.lsp.buf.references },
   { 'n', 'Lfs', vim.lsp.buf.workspace_symbol },
@@ -109,6 +116,12 @@ end
 
 -- handlers {{{
 
+GP.setup {
+  focus_on_open = false,
+  dismiss_on_move = true,
+  preview_window_title = { enable = false },
+}
+
 vim.g.lsp_loaded = true  -- disable vim-lsp
 
 vim.api.nvim_create_autocmd("VimEnter", { callback = setup_servers })
@@ -150,7 +163,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
       end
 
       for _,k in ipairs(keymaps) do
-        vim.keymap.set(k[1], k[2], k[3], { buffer = true })
+        vim.keymap.set(k[1], k[2], k[3], { buffer = true, noremap = true })
       end
     end
   })
