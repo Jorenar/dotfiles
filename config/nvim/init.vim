@@ -56,6 +56,7 @@ autocmd TermClose * call feedkeys("\<C-\>\<C-n>")
 
 " }}}
 
+
 lua require("cscope_maps").setup({
       \   disable_maps = true,
       \   cscope = { db_file = '' },
@@ -74,3 +75,6 @@ let &grepformat = "%f:%l:%m,%f:%l%m,%f  %l%m"
 autocmd! nvim_swapfile
 
 let g:ale_use_neovim_diagnostics_api = 0
+
+
+runtime! init.d/*

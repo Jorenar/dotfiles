@@ -221,6 +221,8 @@ set grepprg=grep\ -n
 set makeprg=Make
 nnoremap <F8> <Cmd>hor term<CR>
 
+nnoremap L <Cmd>call inputsecret("No LSP server running for this buffer ")<CR>
+
 nnoremap <Leader>r :<C-u>%s/\C\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
 
 nnoremap <expr> Q {r ->
@@ -248,18 +250,23 @@ set clipboard=
 
 " }}}1
 
-"   packadd {{{1
+"   packadd {{{
 
 sil! packadd! cfilter
 sil! packadd! editorconfig
 sil! packadd! matchit
 sil! packadd! termdebug
 
+if !has('nvim')
+  sil! packadd! vim-lsp
+  sil! packadd! vim-lsp-ale
+endif
+
 source $VIMRUNTIME/ftplugin/man.vim
 
-"   ALE {{{1
+" }}}
 
-let g:lsp_ale_auto_config_ale = 0
+"   ALE {{{1
 
 let g:ale_disable_lsp = 1
 let g:ale_echo_msg_format = '[%linter%]: %s'
@@ -270,59 +277,6 @@ let g:lsp_ale_diagnostics_severity = 'information'
 hi! ALEInfo NONE ctermfg=15 ctermbg=4
 hi! link ALEError   Error
 hi! link ALEWarning WarningMsg
-
-
-"   vim-lsp {{{1
-
-let g:lsp_ale_auto_config_vim_lsp = 0
-
-let g:lsp_diagnostics_highlights_delay       = 0
-let g:lsp_diagnostics_highlights_enabled     = 1
-let g:lsp_diagnostics_signs_enabled          = 0
-let g:lsp_diagnostics_virtual_text_enabled   = 0
-let g:lsp_document_code_action_signs_enabled = 0
-let g:lsp_show_message_log_level             = 'info'
-let g:lsp_text_edit_enabled                  = 0
-let g:lsp_use_native_client                  = 1
-
-let g:lsp_log_verbose = 0
-let g:lsp_log_file = $XDG_STATE_HOME . "/vim/lsp.log"
-
-hi! link LspErrorHighlight   Error
-hi! link LspWarningHighlight WarningMsg
-
-nnoremap L <Cmd>call inputsecret("No LSP server running for this buffer ")<CR>
-
-function! s:lsp_init() abort
-  setlocal omnifunc=lsp#complete
-
-  nnoremap <buffer> L <Cmd>exec {l -> empty(l) ? '' : 'norm L'.l}(input("L"))<CR>
-
-  nmap <buffer> LK <Plug>(lsp-hover)
-  nmap <buffer> LR <Plug>(lsp-rename)
-
-  nmap <buffer> Lca <plug>(lsp-code-action-float)
-
-  nmap <buffer> Lgg <Plug>(lsp-definition)
-  nmap <buffer> Lgd <Plug>(lsp-declaration)
-  nmap <buffer> Lgi <Plug>(lsp-implementation)
-  nmap <buffer> Lgt <Plug>(lsp-type-definition)
-
-  nmap <buffer> Lkg <Plug>(lsp-peek-definition)
-  nmap <buffer> Lkd <Plug>(lsp-peek-declaration)
-  nmap <buffer> Lki <Plug>(lsp-peek-implementation)
-  nmap <buffer> Lkt <Plug>(lsp-peek-type-definition)
-
-  nmap <buffer> Lfr <Plug>(lsp-references)
-  nmap <buffer> Lfs <Plug>(lsp-workspace-symbol)<C-r><C-w><CR>
-  nmap <buffer> Lfi <Plug>(lsp-call-hierarchy-incoming)
-  nmap <buffer> Lfo <Plug>(lsp-call-hierarchy-outgoing)
-endfunction
-
-augroup LSP
-  autocmd!
-  autocmd User lsp_buffer_enabled call s:lsp_init()
-augroup END
 
 "   Surround {{{1
 

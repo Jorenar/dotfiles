@@ -115,16 +115,6 @@
 	url = https://github.com/tommcdo/vim-fugitive-blame-ext.git
 	shallow = true
 	ignore = all
-[submodule "vim-lsp"]
-	path = config/vim/pack/extern/start/vim-lsp
-	url = https://github.com/prabirshrestha/vim-lsp.git
-	shallow = true
-	ignore = all
-[submodule "vim-lsp-ale"]
-	path = config/vim/pack/extern/start/vim-lsp-ale
-	url = https://github.com/rhysd/vim-lsp-ale.git
-	shallow = true
-	ignore = all
 [submodule "vim-lua"]
 	path = config/vim/pack/extern/start/vim-lua
 	url = https://github.com/tbastos/vim-lua.git
@@ -191,6 +181,17 @@
 	shallow = true
 	ignore = all
 
+[submodule "vim-lsp"]
+	path = config/vim/pack/extern/opt/vim-lsp
+	url = https://github.com/prabirshrestha/vim-lsp.git
+	shallow = true
+	ignore = all
+[submodule "vim-lsp-ale"]
+	path = config/vim/pack/extern/opt/vim-lsp-ale
+	url = https://github.com/rhysd/vim-lsp-ale.git
+	shallow = true
+	ignore = all
+
 [submodule "cscope_maps.nvim"]
 	path = config/nvim/pack/extern/start/cscope_maps.nvim
 	url = https://github.com/dhananjaylatkar/cscope_maps.nvim.git
@@ -201,9 +202,19 @@
 	url = https://github.com/willothy/flatten.nvim.git
 	shallow = true
 	ignore = all
+[submodule "nvim-lspconfig"]
+	path = config/nvim/pack/extern/start/nvim-lspconfig
+	url = https://github.com/neovim/nvim-lspconfig.git
+	shallow = true
+	ignore = all
 [submodule "plenary.nvim"]
 	path = config/nvim/pack/extern/start/plenary.nvim
 	url = https://github.com/nvim-lua/plenary.nvim.git
+	shallow = true
+	ignore = all
+[submodule "sqls.nvim"]
+	path = config/nvim/pack/extern/start/sqls.nvim
+	url = https://github.com/nanotee/sqls.nvim.git
 	shallow = true
 	ignore = all
 [submodule "vimterm.nvim"]
