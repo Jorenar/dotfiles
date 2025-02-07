@@ -9,7 +9,7 @@ let g:langservs = {
       \   'groovyls'     : executable('java') && filereadable($XDG_DATA_HOME.'/java/groovy-language-server-all.jar'),
       \   'jedi'         : executable('jedi-language-server'),
       \   'openscad-lsp' : executable('openscad-lsp'),
-      \   'sonarlint'    : executable('sonarlint-ls'),
+      \   'sonarlint'    : executable('java') && isdirectory($XDG_DATA_HOME.'/java/sonarlint-ls'),
       \   'sqls'         : executable('sqls'),
       \   'texlab'       : executable('texlab'),
       \   'vimls'        : executable('vim-language-server'),

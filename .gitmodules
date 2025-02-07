@@ -217,6 +217,11 @@
 	url = https://github.com/nvim-lua/plenary.nvim.git
 	shallow = true
 	ignore = all
+[submodule "sonarlint.nvim"]
+	path = config/nvim/pack/extern/start/sonarlint.nvim
+	url = https://gitlab.com/schrieveslaach/sonarlint.nvim.git
+	shallow = true
+	ignore = all
 [submodule "sqls.nvim"]
 	path = config/nvim/pack/extern/start/sqls.nvim
 	url = https://github.com/nanotee/sqls.nvim.git

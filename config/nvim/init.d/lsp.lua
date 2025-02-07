@@ -1,4 +1,39 @@
+local LSPCONFIG = require('lspconfig')
 local GP = require('goto-preview')
+
+-- helpers {{{1
+
+local function isServEnabled(client)
+  local name = (client.name and client.name or client)
+  local val = vim.g.langservs[name]
+  return not (val == 0 or val == false or val == nil)
+end
+
+local function setup(name, conf)
+  if name == 'sonarlint' then
+    if not isServEnabled('sonarlint') then return end
+    require('sonarlint').setup(conf)
+    return
+  end
+
+  vim.api.nvim_create_autocmd("VimEnter", {
+      once = true,
+      callback = function()
+        if not (isServEnabled(name) or isServEnabled(name:gsub('_', '-'))) then
+          return
+        end
+
+        if name == 'jedi' then
+          name = 'jedi_language_server'
+        end
+
+        LSPCONFIG[name].setup(conf and conf or {})
+      end
+    })
+end
+
+
+-- keymaps {{{1
 
 local keymaps = {
   { 'n', 'L', "<Cmd>exec {l -> empty(l) ? '' : 'norm L'.l}(input('L'))<CR>" },
@@ -24,97 +59,108 @@ local keymaps = {
   { 'n', 'Lfo', vim.lsp.buf.outgoing_calls },
 }
 
-local function setup_servers()
-  local lspconfig = require('lspconfig')
 
-  -- helpers {{{
-  local function isEnabled(client)
-    local name = (client.name and client.name or client)
-    local val = vim.g.langservs[name]
-    return not (val == 0 or val == false or val == nil)
-  end
+-- servers {{{1
 
-  local function setup(name, conf)
-    if isEnabled(name) or isEnabled(name:gsub('_', '-')) then
-      if name == 'jedi' then
-        name = 'jedi_language_server'
-      end
-      lspconfig[name].setup(conf and conf or {})
+setup('asm_lsp', {})
+setup('digestif', {})
+setup('gopls', {})
+setup('jdtls', {})
+setup('jedi', {})
+setup('openscad_lsp', {})
+setup('texlab', {})
+setup('vimls', {})
+
+setup('ccls', {
+    init_options = {
+      cache = { directory = '.cache/ccls' },
+      clang = { extraArgs = { '--gcc-toolchain=/usr' } },
+    },
+    on_attach = function(client, _)
+      if not isServEnabled('clangd') then return end
+      client.server_capabilities = {
+        completionProvider = client.server_capabilities.completionProvider,
+        textDocumentSync = client.server_capabilities.textDocumentSync,
+      }
     end
-  end
-  -- }}}
+  })
 
-  setup('asm_lsp', {})
-  setup('digestif', {})
-  setup('gopls', {})
-  setup('jdtls', {})
-  setup('jedi', {})
-  setup('openscad_lsp', {})
-  setup('texlab', {})
-  setup('vimls', {})
+setup('clangd', {
+    cmd = { "clangd",
+      "--header-insertion-decorators=false",
+      "--background-index",
+    },
+    on_attach = function(client, _)
+      if not isServEnabled('ccls') then return end
+      client.server_capabilities.completionProvider = nil
+    end
+  })
 
-  setup('ccls', {
-      init_options = {
-        cache = { directory = '.cache/ccls' },
-        clang = { extraArgs = { '--gcc-toolchain=/usr' } },
-      },
-      on_attach = function(client, _)
-        if not isEnabled('clangd') then return end
-        client.server_capabilities = {
-          completionProvider = client.server_capabilities.completionProvider,
-          textDocumentSync = client.server_capabilities.textDocumentSync,
-        }
-      end
-    })
-
-  setup('clangd', {
-      cmd = { "clangd",
-        "--header-insertion-decorators=false",
-        "--background-index",
-      },
-      on_attach = function(client, _)
-        if not isEnabled('ccls') then return end
-        client.server_capabilities.completionProvider = nil
-      end
-    })
-
-  setup('denols', {
-      settings = {
-        deno = {
-          config = vim.env.XDG_CONFIG_HOME .. "/deno.json",
-          enable = true,
-          unstable = true,
-          lint = true,
-          codeLens = {
-            implementations = true,
-            references = true,
-            referencesAllFunctions = true,
-            test = true,
-          },
-          suggest = {
-            names = true,
-            imports = {
-              hosts = {
-                ["https://deno.land"] = true
-              }
+setup('denols', {
+    settings = {
+      deno = {
+        config = vim.env.XDG_CONFIG_HOME .. "/deno.json",
+        enable = true,
+        unstable = true,
+        lint = true,
+        codeLens = {
+          implementations = true,
+          references = true,
+          referencesAllFunctions = true,
+          test = true,
+        },
+        suggest = {
+          names = true,
+          imports = {
+            hosts = {
+              ["https://deno.land"] = true
             }
           }
         }
       }
-    })
+    }
+  })
 
-  setup('sqls', {
-      cmd = {"sqls", "-config", ".sqls.yml"},
-      on_attach = function(client, bufnr)
-        require('sqls').on_attach(client, bufnr)
-      end
-    })
+setup('sqls', {
+    cmd = {"sqls", "-config", ".sqls.yml"},
+    on_attach = function(client, bufnr)
+      require('sqls').on_attach(client, bufnr)
+    end
+  })
 
-  vim.cmd [[ LspStart ]]
-end
+setup('sonarlint', {
+    server = {
+      cmd = (function(dir) return {
+        'java',
+        '-Duser.home=' .. vim.env.XDG_CACHE_HOME,
+        '-jar', dir .. '/sonarlint-ls.jar',
+        '-stdio',
+        '-analyzers=',
+        unpack(vim.fn.glob(dir .. '/analyzers/*.jar', 1, 1)),
+      } end)(vim.env.XDG_DATA_HOME .. '/java/sonarlint-ls'),
+    },
+    settings = {
+      sonarlint = {
+        disableTelemetry = true,
+      },
+    },
+    filetypes = {
+      'c',
+      'cpp',
+      'css',
+      'dockerfile',
+      'go',
+      'html',
+      'java',
+      'javascript',
+      'php',
+      'python',
+      'xml',
+    }
+  })
 
 
--- handlers {{{
+-- handlers {{{1
 
 GP.setup {
   focus_on_open = false,
@@ -122,10 +168,11 @@ GP.setup {
   preview_window_title = { enable = false },
 }
 
-vim.api.nvim_create_autocmd("VimEnter", { callback = setup_servers })
+vim.api.nvim_create_autocmd("VimEnter", { callback = function()
+  vim.cmd [[ LspStart ]]
+end })
 
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-  vim.lsp.handlers.hover, {
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
     focusable = false,
     border = "single"
   })
@@ -155,7 +202,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
       client.server_capabilities.semanticTokensProvider = nil
 
-      vim.bo.omnifunc = 'v:lua.vim.lsp.omnifunc'
+      if client.server_capabilities['completionProvider'] ~= nil then
+        vim.bo.omnifunc = 'v:lua.vim.lsp.omnifunc'
+      end
+
       if vim.o.tagfunc == 'v:lua.vim.lsp.tagfunc' then
         vim.o.tagfunc = ''
       end
@@ -173,5 +223,3 @@ vim.notify = function(msg, ...)
   end
   notify(msg, ...)
 end
-
--- }}}
