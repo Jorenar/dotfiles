@@ -56,10 +56,11 @@ user_pref("datareporting.policy.dataSubmissionEnabled", false);
 user_pref("dom.private-attribution.submission.enabled", false);
 user_pref("network.cookie.cookieBehavior",              3);
 user_pref("network.cookie.thirdparty.sessionOnly",      true);
+user_pref("network.trr.mode",                           3);
 user_pref("privacy.donottrackheader.enabled",           true);
 user_pref("security.insecure_password.ui.enabled",      true);
 user_pref("signon.rememberSignons",                     false);
-user_pref("toolkit.telemetry.unified", false);
+user_pref("toolkit.telemetry.unified",                  false);
 
 // The developer tools configuration
 user_pref("devtools.theme",                    "dark");

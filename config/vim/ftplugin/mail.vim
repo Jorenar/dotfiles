@@ -13,17 +13,22 @@ let no_mail_maps = 1
 
 let b:trimWhitespace_pattern = ' \zs\s\+$'
 
-autocmd BufWinEnter <buffer> ++once setlocal syntax=mail
+autocmd BufWinEnter <buffer> ++once setlocal syntax=on
 
 let b:ale_enabled = &modifiable && !&readonly
 
+
 if bufname("%") =~# 'aerc-'
-  function! AercEx() abort
-    silent !xdotool key alt+Delete
-    redraw!
-  endfunction
-  nnoremap <Leader>: :<C-u>call AercEx()<Esc>
-  autocmd CmdlineChanged * if getcmdline() =~ 'call AercEx' | call AercEx() | endif
+  if exists('$WAYLAND_DISPLAY')
+    nnoremap <Leader>: <Cmd>silent !wtype -M alt -P delete<CR><Cmd>redraw!<CR>
+  else
+    function! AercEx() abort
+      silent !xdotool key alt+Delete
+      redraw!
+    endfunction
+    nnoremap <Leader>: :<C-u>call AercEx()<Esc>
+    autocmd CmdlineChanged * if getcmdline() =~ 'call AercEx' | call AercEx() | endif
+  endif
 
   nnoremap gt <Cmd>silent !aerc :next-tab<CR><Cmd>redraw!<CR>
   nnoremap gT <Cmd>silent !aerc :prev-tab<CR><Cmd>redraw!<CR>
@@ -36,21 +41,14 @@ if bufname("%") =~# 'aerc-'
     setl showtabline=1
     setl signcolumn=no
 
-    augroup AERC_INTEGRATION
-      autocmd!
-      " autocmd ModeChanged * silent !aerc :toggle-key-passthrough
-      autocmd VimLeavePre * silent !aerc :close
-    augroup END
+    autocmd VimLeavePre * silent !aerc :close
   endif
 
   if bufname("%") =~# 'aerc-compose'
-    augroup AERC_INTEGRATION
-      autocmd!
-      autocmd BufWinEnter *
-            \   if $AERC_ACCOUNT == "notmuch"
-            \ |   silent! s/\VFrom:\zs <\.@\.>//
-            \ | endif
-    augroup END
+    autocmd BufWinEnter <buffer>
+          \   if $AERC_ACCOUNT == "notmuch"
+          \ |   silent! s/\VFrom:\zs <\.@\.>//
+          \ | endif
   endif
 endif
 
