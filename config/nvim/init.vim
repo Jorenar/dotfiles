@@ -48,6 +48,7 @@ so $XDG_CONFIG_HOME/vim/vimrc
 " :terminal {{{
 
 lua require('vimterm').setup({ autoclose = false })
+lua require("flatten").setup({ window = { open = "split" } })
 
 autocmd TermOpen * setl nonu fdc=0 scl=no
 autocmd TermOpen * setl stl=%#StatusLineTerm#\ %f
@@ -55,13 +56,10 @@ autocmd TermClose * call feedkeys("\<C-\>\<C-n>")
 
 " }}}
 
-lua require("flatten").setup({
-      \   window = {
-      \     open = "split"
-      \   }
+lua require("cscope_maps").setup({
+      \   disable_maps = true,
+      \   cscope = { db_file = '' },
       \ })
-
-lua require("cscope_maps").setup()
 
 set backupdir-=.
 set guicursor=a:block

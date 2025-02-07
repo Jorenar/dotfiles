@@ -115,11 +115,13 @@ endif
 
 "   cscope {{{1
 
-if has("cscope") && (executable("cscope") || executable("gtags-cscope"))
-  set cscopetag
-  set cscopetagorder=0
-  set cscopepathcomp=2
-  set cscopequickfix=a-,c-,d-,e-,f-,g-,i-,s-,t-
+if executable('cscope') || executable('gtags-cscope')
+  if has('cscope')
+    set cscopetag
+    set cscopetagorder=0
+    set cscopepathcomp=2
+    set cscopequickfix=a-,c-,d-,e-,f-,g-,i-,s-,t-
+  endif
   autocmd VimEnter * call utils#cscope#init()
 endif
 
