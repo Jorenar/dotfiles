@@ -11,9 +11,10 @@ alias rm="rm -i"
 alias sshfs='sshfs -o reconnect'
 alias suspend='sudo systemctl suspend'
 alias umnt='udisksctl unmount -b'
-alias vim='nvim'
 alias which='command -v'
 alias wine-lnk='wine C:\\windows\\command\\start.exe /Unix'
+
+command -v nvim > /dev/null 2>&1 && alias vim='nvim'
 
 alias powershell.exe='powershell.exe -NoLogo'
 alias wsl.exe='wsl.exe --cd "~"'
