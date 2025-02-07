@@ -11,6 +11,15 @@ function! s:on_lsp_server_init() abort
   endif
 endfunction
 
+function! s:find_root_uri(markers) abort
+  return lsp#utils#path_to_uri(
+        \     lsp#utils#find_nearest_parent_file_directory(
+        \       lsp#utils#get_buffer_path(),
+        \       a:markers
+        \     )
+        \   )
+endfunction
+
 function! s:ccls_clangd_combo() abort
   let l:clangd = lsp#get_server_capabilities('clangd')
   let l:ccls = lsp#get_server_capabilities('ccls')
@@ -88,7 +97,7 @@ let g:langservs = {
       \   'sonarlint'    : executable('sonarlint-ls'),
       \   'sqls'         : executable('sqls'),
       \   'texlab'       : executable('texlab'),
-      \   'vim-ls'       : executable('vim-language-server'),
+      \   'vimls'        : executable('vim-language-server'),
       \ }
 
 function! s:on_lsp_setup() abort
@@ -97,12 +106,7 @@ function! s:on_lsp_setup() abort
     call lsp#register_server(#{
           \   name: 'asm-lsp',
           \   cmd: [ 'asm-lsp' ],
-          \   root_uri: {-> lsp#utils#path_to_uri(
-          \     lsp#utils#find_nearest_parent_file_directory(
-          \       lsp#utils#get_buffer_path(),
-          \       [ '.git/' ]
-          \     )
-          \   )},
+          \   root_uri: {-> s:find_root_uri([ '.git/' ])},
           \   allowlist: [ 'asm', 'nasm' ],
           \ })
   endif
@@ -111,14 +115,9 @@ function! s:on_lsp_setup() abort
     call lsp#register_server(#{
           \   name: 'ccls',
           \   cmd: [ 'ccls' ],
-          \   root_uri: {-> lsp#utils#path_to_uri(
-          \     lsp#utils#find_nearest_parent_file_directory(
-          \       lsp#utils#get_buffer_path(),
-          \       [ 'compile_commands.json', '.ccls', '.git/' ]
-          \     )
-          \   )},
+          \   root_uri: {-> s:find_root_uri([ 'compile_commands.json', '.ccls', '.git/' ])},
           \   initialization_options: #{
-          \     cache: #{ directory: $XDG_CACHE_HOME.'/ccls-cache' },
+          \     cache: #{ directory: '.cache/ccls' },
           \     clang: #{ extraArgs: [ '--gcc-toolchain=/usr' ] },
           \   },
           \   allowlist: [ 'c', 'cpp', 'objc', 'objcpp' ],
@@ -132,12 +131,7 @@ function! s:on_lsp_setup() abort
           \     '--header-insertion-decorators=false',
           \     '--background-index',
           \   ],
-          \   root_uri: {-> lsp#utils#path_to_uri(
-          \     lsp#utils#find_nearest_parent_file_directory(
-          \       lsp#utils#get_buffer_path(),
-          \       [ 'compile_commands.json', '.clangd', '.git/' ]
-          \     )
-          \   )},
+          \   root_uri: {-> s:find_root_uri([ 'compile_commands.json', '.clangd', '.git/' ])},
           \   allowlist: [ 'c', 'cpp', 'objc', 'objcpp' ],
           \ })
   endif
@@ -188,12 +182,7 @@ function! s:on_lsp_setup() abort
           \     'java', '-jar',
           \     $XDG_DATA_HOME.'/java/groovy-language-server-all.jar'
           \   ],
-          \   root_uri: {-> lsp#utils#path_to_uri(
-          \     lsp#utils#find_nearest_parent_file_directory(
-          \       lsp#utils#get_buffer_path(),
-          \       [ 'Jenkinsfile', '.git/' ]
-          \     )
-          \   )},
+          \   root_uri: {-> s:find_root_uri([ 'Jenkinsfile', '.git/' ])},
           \   allowlist: [ 'groovy' ],
           \ })
   endif
@@ -299,7 +288,7 @@ function! s:on_lsp_setup() abort
           \ })
   endif
 
-  if g:langservs['vim-ls']
+  if g:langservs['vimls']
     call lsp#register_server(#{
           \   name: 'VimScript Language Server',
           \   cmd: [ 'vim-language-server', '--stdio' ],
