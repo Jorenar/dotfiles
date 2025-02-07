@@ -57,24 +57,19 @@ autocmd TermClose * call feedkeys("\<C-\>\<C-n>")
 " }}}
 
 
-lua require("cscope_maps").setup({
-      \   disable_maps = true,
-      \   cscope = { db_file = '' },
-      \ })
-
 set backupdir-=.
+set grepformat=%f:%l:%m,%f:%l%m,%f\ \ %l%m
 set guicursor=a:block
 set startofline
 
 hi! link FloatBorder NormalFloat
 
-autocmd VimEnter * exec 'lua vim.treesitter.stop()' | set syn=OFF
-
-let &grepformat = "%f:%l:%m,%f:%l%m,%f  %l%m"
-
 autocmd! nvim_swapfile
 
-let g:ale_use_neovim_diagnostics_api = 0
+lua require("cscope_maps").setup({
+      \   disable_maps = true,
+      \   cscope = { db_file = '' },
+      \ })
 
 
 runtime! init.d/*

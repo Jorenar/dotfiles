@@ -1,4 +1,4 @@
-#!/usr/bin/env -S vim -u
+#!/usr/bin/env -S vim --clean -u
 
 let s:cpo_save = &cpo | set cpo&vim
 

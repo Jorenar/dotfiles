@@ -24,7 +24,8 @@ if [ -x "$(command -v cscope)" ]; then
         -o -name '*.cc'  -o -name '*.hh'  \
         -o -name '*.ipp' -o -name '*.tpp' \
         -o -name '*.java' \
-        \) -exec readlink -f {} \; > "$tagsDir"/cscope.files
+        \) -not -path '*/.cache/*' \
+        > "$tagsDir"/cscope.files
 
     cscope -U -c -b -q -i "$tagsDir"/cscope.files -f "$tagsDir"/cscope.out
 fi

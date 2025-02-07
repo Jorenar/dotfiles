@@ -11,6 +11,7 @@ alias rm="rm -i"
 alias sshfs='sshfs -o reconnect'
 alias suspend='sudo systemctl suspend'
 alias umnt='udisksctl unmount -b'
+alias vim='nvim'
 alias which='command -v'
 alias wine-lnk='wine C:\\windows\\command\\start.exe /Unix'
 

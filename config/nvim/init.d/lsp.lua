@@ -122,8 +122,6 @@ GP.setup {
   preview_window_title = { enable = false },
 }
 
-vim.g.lsp_loaded = true  -- disable vim-lsp
-
 vim.api.nvim_create_autocmd("VimEnter", { callback = setup_servers })
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(

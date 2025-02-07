@@ -45,7 +45,9 @@ autocmd BufReadPost * if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~#
 "   syntax {{{1
 
 syntax enable
-autocmd FileType * silent! setlocal syntax=OFF
+autocmd FileType *
+      \ if has('nvim') | exec 'lua vim.treesitter.stop()' | endif |
+      \ silent! setlocal syntax=OFF
 autocmd FileType * call matchadd("Todo", "TODO")
 
 "   search {{{1
@@ -271,6 +273,7 @@ source $VIMRUNTIME/ftplugin/man.vim
 let g:ale_disable_lsp = 1
 let g:ale_echo_msg_format = '[%linter%]: %s'
 let g:ale_set_signs = 0
+let g:ale_use_neovim_diagnostics_api = 0
 let g:ale_virtualtext_cursor = 0
 let g:lsp_ale_diagnostics_severity = 'information'
 
