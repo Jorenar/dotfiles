@@ -208,6 +208,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.o.tagfunc = ''
       end
 
+      local K = vim.fn.maparg('K', 'n', false, true)
+      if K.buffer == 1 and K.desc == "vim.lsp.buf.hover()" then
+        vim.api.nvim_buf_del_keymap(args.buf, 'n', 'K')
+      end
+
       for _,k in ipairs(keymaps) do
         vim.keymap.set(k[1], k[2], k[3], { buffer = true, noremap = true })
       end
