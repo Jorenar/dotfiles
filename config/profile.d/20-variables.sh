@@ -22,6 +22,7 @@ fi
 export CHKTEXRC="$XDG_CONFIG_HOME/chktex"
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
+export GOMODCACHE="$XDG_CACHE_HOME"/go/mod
 export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
 export GRIPHOME="$XDG_CONFIG_HOME/grip"
 export ICEAUTHORITY="$XDG_STATE_HOME/ICEauthority"

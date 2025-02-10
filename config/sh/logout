@@ -23,6 +23,7 @@ sed -E '/^\s*('"$(tr -d '\n' << 'EOF'
 |git (switch -)
 |ls|ls -(a|l|al|la|R)|sl|lsix
 |make|Make
+|notmuch new
 |pass
 |poweroff|reboot|suspend
 |powershell.exe

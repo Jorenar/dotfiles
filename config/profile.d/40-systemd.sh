@@ -3,6 +3,7 @@ mkdir -p "$XDG_CONFIG_HOME"/environment.d && env \
     | grep \
         -e '^GNUPGHOME' \
         -e '^GOBIN' \
+        -e '^GOMODCACHE' \
         -e '^IMAPFILTER_HOME' \
         -e '^NO_AT_BRIDGE' \
         -e '^PASSWORD_STORE_DIR' \
