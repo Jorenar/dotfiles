@@ -197,6 +197,20 @@ autocmd BufWinEnter * set formatoptions+=n  " Recognize numbered lists
 autocmd BufWinEnter * set formatoptions-=q  " Don't format comments
 autocmd BufWinEnter * set formatoptions-=t  " Don't autowrap text using 'textwidth'
 
+"   encryption {{{1
+
+if has('cryptv')
+  autocmd BufReadPre,BufRead,BufReadPost *
+        \   if !empty(&key)
+        \ |   set noundofile noswapfile
+        \ |   set nobackup nowritebackup
+        \ |   set viminfo= viminfofile=NONE
+        \ |   set nomodeline secure
+        \ |   set noshelltemp
+        \ |   set history=0
+        \ | endif
+endif
+
 "   ~ {{{1
 
 set secure noexrc
