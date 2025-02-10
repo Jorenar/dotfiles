@@ -1,6 +1,8 @@
 local LSPCONFIG = require('lspconfig')
 local GP = require('goto-preview')
 
+-- vim.lsp.set_log_level("debug")
+
 -- helpers {{{1
 
 local function isServEnabled(client)
@@ -10,16 +12,15 @@ local function isServEnabled(client)
 end
 
 local function setup(name, conf)
-  if name == 'sonarlint' then
-    if not isServEnabled('sonarlint') then return end
-    require('sonarlint').setup(conf)
-    return
-  end
-
-  vim.api.nvim_create_autocmd("VimEnter", {
+  vim.api.nvim_create_autocmd("BufReadPre", {
       once = true,
       callback = function()
         if not (isServEnabled(name) or isServEnabled(name:gsub('_', '-'))) then
+          return
+        end
+
+        if name == 'sonarlint' then
+          require('sonarlint').setup(conf)
           return
         end
 
@@ -31,7 +32,6 @@ local function setup(name, conf)
       end
     })
 end
-
 
 -- keymaps {{{1
 
@@ -58,7 +58,6 @@ local keymaps = {
   { 'n', 'Lfi', vim.lsp.buf.incoming_calls },
   { 'n', 'Lfo', vim.lsp.buf.outgoing_calls },
 }
-
 
 -- servers {{{1
 
@@ -158,7 +157,6 @@ setup('sonarlint', {
       'xml',
     }
   })
-
 
 -- handlers {{{1
 

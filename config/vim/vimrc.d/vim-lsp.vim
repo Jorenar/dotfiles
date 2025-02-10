@@ -44,7 +44,7 @@ let s:keymaps = { 0:[
 
 function! s:on_lsp_setup() abort
 
-  if g:langservs['asm-lsp']
+  if get(g:langservs, 'asm-lsp', 0)
     call lsp#register_server(#{
           \   name: 'asm-lsp',
           \   cmd: [ 'asm-lsp' ],
@@ -53,7 +53,7 @@ function! s:on_lsp_setup() abort
           \ })
   endif
 
-  if g:langservs['ccls']
+  if get(g:langservs, 'ccls', 0)
     call lsp#register_server(#{
           \   name: 'ccls',
           \   cmd: [ 'ccls' ],
@@ -66,7 +66,7 @@ function! s:on_lsp_setup() abort
           \ })
   endif
 
-  if g:langservs['clangd']
+  if get(g:langservs, 'clangd', 0)
     call lsp#register_server(#{
           \   name: 'clangd',
           \   cmd: ['clangd',
@@ -78,7 +78,7 @@ function! s:on_lsp_setup() abort
           \ })
   endif
 
-  if g:langservs['deno']
+  if get(g:langservs, 'deno', 0)
     call lsp#register_server(#{
           \   name: 'Deno',
           \   cmd: [ 'deno', 'lsp' ],
@@ -101,7 +101,7 @@ function! s:on_lsp_setup() abort
           \ })
   endif
 
-  if g:langservs['digestif']
+  if get(g:langservs, 'digestif', 0)
     call lsp#register_server(#{
           \   name: 'Digestif',
           \   cmd: [ 'digestif' ],
@@ -109,7 +109,7 @@ function! s:on_lsp_setup() abort
           \ })
   endif
 
-  if g:langservs['gopls']
+  if get(g:langservs, 'gopls', 0)
     call lsp#register_server(#{
           \   name: 'gopls',
           \   cmd: [ 'gopls' ],
@@ -117,7 +117,7 @@ function! s:on_lsp_setup() abort
           \ })
   endif
 
-  if g:langservs['groovyls']
+  if get(g:langservs, 'groovyls', 0)
     call lsp#register_server(#{
           \   name: 'Groovy Language Server',
           \   cmd: [
@@ -129,7 +129,7 @@ function! s:on_lsp_setup() abort
           \ })
   endif
 
-  if g:langservs['jdtls']
+  if get(g:langservs, 'jdtls', 0)
     call lsp#register_server(#{
           \   name: 'Eclipse JDT Language Server',
           \   cmd: [ 'jdtls' ],
@@ -137,7 +137,7 @@ function! s:on_lsp_setup() abort
           \ })
   endif
 
-  if g:langservs['jedi']
+  if get(g:langservs, 'jedi', 0)
     call lsp#register_server(#{
           \   name: 'Jedi',
           \   cmd: [ 'jedi-language-server' ],
@@ -145,7 +145,7 @@ function! s:on_lsp_setup() abort
           \ })
   endif
 
-  if g:langservs['openscad-lsp']
+  if get(g:langservs, 'openscad-lsp', 0)
     call lsp#register_server(#{
           \   name: 'openscad-LSP',
           \   cmd: [ 'openscad-lsp', '--stdio' ],
@@ -153,7 +153,7 @@ function! s:on_lsp_setup() abort
           \ })
   endif
 
-  if g:langservs['sonarlint']
+  if get(g:langservs, 'sonarlint', 0)
     let g:lsp_use_native_client = 0
 
     call lsp#register_server(#{
@@ -189,7 +189,7 @@ function! s:on_lsp_setup() abort
           \ )
   endif
 
-  if g:langservs['sqls']
+  if get(g:langservs, 'sqls', 0)
     call lsp#register_server(#{
           \   name: 'sqls',
           \   cmd: {->
@@ -222,7 +222,7 @@ function! s:on_lsp_setup() abort
           \ )
   endif
 
-  if g:langservs['texlab']
+  if get(g:langservs, 'texlab', 0)
     call lsp#register_server(#{
           \   name: 'TexLab',
           \   cmd: [ 'texlab' ],
@@ -230,7 +230,7 @@ function! s:on_lsp_setup() abort
           \ })
   endif
 
-  if g:langservs['vimls']
+  if get(g:langservs, 'vimls', 0)
     call lsp#register_server(#{
           \   name: 'VimScript Language Server',
           \   cmd: [ 'vim-language-server', '--stdio' ],
