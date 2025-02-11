@@ -19,15 +19,16 @@ if [ -f "$XDG_CONFIG_HOME"/user-dirs.dirs ]; then
 fi
 
 
+export CARGO_HOME="$HOME"/.local/opt/pkg/cargo
 export CHKTEXRC="$XDG_CONFIG_HOME/chktex"
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
-export GOMODCACHE="$XDG_CACHE_HOME"/go/mod
 export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
 export GRIPHOME="$XDG_CONFIG_HOME/grip"
 export ICEAUTHORITY="$XDG_STATE_HOME/ICEauthority"
 export IMAPFILTER_HOME="$XDG_CONFIG_HOME/imapfilter"
 export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
+export NODE_REPL_HISTORY="$XDG_STATE_HOME"/node_repl_history
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
 export RANDFILE="$XDG_CACHE_HOME/rnd"
@@ -45,9 +46,12 @@ fi
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/config.py"
 export PYTHONPYCACHEPREFIX="$XDG_CACHE_HOME/__pycache__"
 
-export PIPX_HOME="$HOME"/.local/opt/pipx
+export PIPX_HOME="$HOME"/.local/opt/pkg/pipx
 export PIPX_BIN_DIR="$PIPX_HOME"/bin
 export PIPX_MAN_DIR="$PIPX_HOME"/man
+
+export GOMODCACHE="$XDG_CACHE_HOME"/go/mod
+export GOPATH="$HOME"/.local/opt/pkg/go
 
 export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
 export XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
@@ -94,7 +98,7 @@ pathmunge PYTHONPATH "$HOME/.local/lib/python/site-packages/"
 
 # PATH {{{1
 
-pathmunge "$HOME/.local/bin"
+pathmunge "$HOME"/.local/bin
 
 for opt in "$HOME"/.local/opt/*/bin; do
     [ -d "$opt" ] && pathmunge "$opt"
