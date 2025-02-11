@@ -105,7 +105,7 @@ for opt in "$HOME"/.local/opt/*/bin; do
 done
 
 for opt in "$HOME"/.local/opt/*/*/bin; do
-    [ -d "$opt"/../bin ] && continue
+    [ -d "$opt"/../../bin ] && continue
     [ -d "$opt" ] && pathmunge "$opt"
 done
 
