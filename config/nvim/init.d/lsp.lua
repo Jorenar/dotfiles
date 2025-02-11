@@ -143,19 +143,7 @@ setup('sonarlint', {
         disableTelemetry = true,
       },
     },
-    filetypes = {
-      'c',
-      'cpp',
-      'css',
-      'dockerfile',
-      'go',
-      'html',
-      'java',
-      'javascript',
-      'php',
-      'python',
-      'xml',
-    }
+    filetypes = { '*' }
   })
 
 -- handlers {{{1
@@ -166,10 +154,6 @@ GP.setup {
   preview_window_title = { enable = false },
 }
 
-vim.api.nvim_create_autocmd("VimEnter", { callback = function()
-  vim.cmd [[ LspStart ]]
-end })
-
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
     focusable = false,
     border = "single"
@@ -177,21 +161,25 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = function(_, d, c, _)
   -- diagnostics in ALE
-  local bufnr = vim.api.nvim_get_current_buf()
-  local client = vim.lsp.get_client_by_id(c.client_id)
-  local messages = {}
-  for _, event in ipairs(d.diagnostics) do
-    local msg = {}
-    msg.text = "[" .. client.name .. "]: " .. event.message
-    msg.lnum = event.range.start.line+1
-    msg.end_lnum = event.range["end"].line+1
-    msg.col = event.range.start.character+1
-    msg.end_col = event.range["end"].character+1
-    msg.bufnr = bufnr
-    msg.nr = event.severity
-    table.insert(messages, msg)
-  end
-  vim.fn['ale#other_source#ShowResults'](bufnr, "nvim-lsp:" .. client.id, messages)
+  vim.fn['ale#other_source#ShowResults'](
+    vim.api.nvim_get_current_buf(),
+    "nvim-lsp:" .. c.client_id,
+    vim.tbl_map(function(e)
+      return {
+        text     = "[" .. e.source .. "]: " .. e.message,
+        detail   = vim.inspect(e),
+        lnum     = e.range["start"].line + 1,
+        end_lnum = e.range["end"].line + 1,
+        col      = e.range["start"].character + 1,
+        end_col  = e.range["end"].character + 1,
+        type = ({
+            [vim.diagnostic.severity.ERROR] = 'E',
+            [vim.diagnostic.severity.WARN]  = 'W',
+            [vim.diagnostic.severity.INFO]  = 'I',
+            [vim.diagnostic.severity.HINT]  = 'I',
+          })[e.severity]
+    } end, d.diagnostics)
+  )
 end
 
 vim.api.nvim_create_autocmd("LspAttach", {
