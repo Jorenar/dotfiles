@@ -134,7 +134,7 @@ setup('sonarlint', {
         '-Duser.home=' .. vim.env.XDG_CACHE_HOME,
         '-jar', dir .. '/sonarlint-ls.jar',
         '-stdio',
-        '-analyzers=',
+        '-analyzers',
         unpack(vim.fn.glob(dir .. '/analyzers/*.jar', 1, 1)),
       } end)(vim.env.XDG_DATA_HOME .. '/java/sonarlint-ls'),
     },

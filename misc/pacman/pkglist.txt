@@ -64,18 +64,20 @@ transmission-cli
 udisks2
 visidata
 w3m
-yad
 
 ccache
 cmake
 doxygen
+go
 graphviz
 jq
 jre-openjdk
 multilib-devel
 nasm
+npm
 openscad
 python
+rust
 tectonic
 
 gdb

@@ -15,6 +15,7 @@ alias which='command -v'
 alias wine-lnk='wine C:\\windows\\command\\start.exe /Unix'
 
 command -v nvim > /dev/null 2>&1 && alias vim='nvim'
+command -v vi > /dev/null 2>&1 || alias vi='command vim --clean'
 
 alias powershell.exe='powershell.exe -NoLogo'
 alias wsl.exe='wsl.exe --cd "~"'
