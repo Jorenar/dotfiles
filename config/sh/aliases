@@ -14,7 +14,10 @@ alias umnt='udisksctl unmount -b'
 alias which='command -v'
 alias wine-lnk='wine C:\\windows\\command\\start.exe /Unix'
 
-command -v nvim > /dev/null 2>&1 && alias vim='nvim'
+if command -v nvim > /dev/null 2>&1; then
+    alias nvim='XTERM_VERSION= nvim'
+    alias vim='nvim'
+fi
 command -v vi > /dev/null 2>&1 || alias vi='command vim --clean'
 
 alias powershell.exe='powershell.exe -NoLogo'
