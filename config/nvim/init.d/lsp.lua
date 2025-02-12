@@ -150,7 +150,7 @@ setup('sonarlint', {
         },
       },
       on_attach = function(_,_)
-        if vim.fn.exists(':SonarlintListRules') == 1 then
+        if vim.fn.exists(':SonarlintListRules') ~= 0 then
           vim.api.nvim_del_user_command('SonarlintListRules')
         end
       end,
@@ -219,10 +219,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
   })
 
-local notify = vim.notify
-vim.notify = function(msg, ...)
-  if msg:match("warning: multiple different client offset_encodings") then
-    return
+vim.notify = (function(vim_notify)
+  local ignored = {
+    "warning: multiple different client offset_encodings",
+    "SonarQube language server is ready.",
+    "Couldn't find compile_commands.json. Make sure it exists in a parent directory.",
+  }
+  return function(msg, ...)
+    for _, ign in ipairs(ignored) do
+      if msg:match(ign) then return end
+    end
+    vim_notify(msg, ...)
   end
-  notify(msg, ...)
-end
+end)(vim.notify)
