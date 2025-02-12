@@ -16,6 +16,9 @@ Hofstadter's law: _It always takes longer than you expect, even when you take in
 *GrepRename*
     com! -nargs=+  GrepRename  exec {a,b -> 'tabe | lv /\C\<' . a . '\>/j ** | cdo s/\C\<' . a . '\>/' . b . '/gc | up'}(<f-args>) | q
 
+*SonarlintListRules*
+    lua require('sonarlint.rules').list_all_rules()
+
 LSP diagnostics for all buffers
     :LspDocumentDiagnostics --ui=quickfix --servers=vim,efm --buffers=* --exclude-buffers=1,2
 

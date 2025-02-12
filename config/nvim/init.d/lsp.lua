@@ -137,11 +137,23 @@ setup('sonarlint', {
         '-analyzers',
         unpack(vim.fn.glob(dir .. '/analyzers/*.jar', 1, 1)),
       } end)(vim.env.XDG_DATA_HOME .. '/java/sonarlint-ls'),
-    },
-    settings = {
-      sonarlint = {
-        disableTelemetry = true,
+      settings = {
+        sonarlint = {
+          disableTelemetry = true,
+          pathToCompileCommands = (function()
+            local loc = vim.fs.find("compile_commands.json", {
+                path = vim.fs.dirname(vim.api.nvim_buf_get_name(0)),
+                upward = true,
+              })
+            return #loc > 0 and loc[1] or nil
+          end)(),
+        },
       },
+      on_attach = function(_,_)
+        if vim.fn.exists(':SonarlintListRules') == 1 then
+          vim.api.nvim_del_user_command('SonarlintListRules')
+        end
+      end,
     },
     filetypes = { '*' }
   })
