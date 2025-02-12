@@ -75,16 +75,18 @@ _:
 
 CMakeLists.txt: PHONY
 	@ [ -n "$(*F)" ] && cd $(*F)
-	static=
+	CMAKE_CONF_FLAGS='-B build/ -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
 	if [ $(STATIC) ]; then
-		static="$$static"' -DCMAKE_FIND_LIBRARY_SUFFIXES=".a"'
-		static="$$static"' -DBUILD_SHARED_LIBS=OFF'
-		static="$$static"' -DCMAKE_EXE_LINKER_FLAGS="-static"'
+		CMAKE_CONF_FLAGS="$$CMAKE_CONF_FLAGS"' -DCMAKE_FIND_LIBRARY_SUFFIXES=".a"'
+		CMAKE_CONF_FLAGS="$$CMAKE_CONF_FLAGS"' -DBUILD_SHARED_LIBS=OFF'
+		CMAKE_CONF_FLAGS="$$CMAKE_CONF_FLAGS"' -DCMAKE_EXE_LINKER_FLAGS="-static"'
 	fi
 	if [ $(BUILD_TYPE) ]; then
-		cmake -B build/ -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $$static
+		cmake $$CMAKE_CONF_FLAGS -DCMAKE_BUILD_TYPE=$(BUILD_TYPE)
 		cmake --build build/ --config $(BUILD_TYPE)
 	else
-		cmake -B build/ -DCMAKE_BUILD_TYPE=Debug $$static
+		cmake $$CMAKE_CONF_FLAGS -DCMAKE_BUILD_TYPE=Debug
 		cmake --build build/ 2>&1 | tee build/errors.err
 	fi
+	[ -e compile_commands.json ] || \
+		ln -s build/compile_commands.json compile_commands.json
