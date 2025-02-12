@@ -59,7 +59,6 @@ autocmd TermClose * call feedkeys("\<C-\>\<C-n>")
 
 set backupdir-=.
 set grepformat=%f:%l:%m,%f:%l%m,%f\ \ %l%m
-set guicursor=a:block
 set startofline
 
 hi! link FloatBorder NormalFloat

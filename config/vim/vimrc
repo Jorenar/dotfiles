@@ -138,6 +138,9 @@ set splitbelow splitright
 set virtualedit=block
 set visualbell t_vb=
 
+let &t_VS = &t_vs
+set guicursor=a:block-blinkon1000
+
 nnoremap <C-l> :nohlsearch<C-r>=has('diff')?'<bar>diffupdate':''<CR><CR><C-l>
 nnoremap <F3> <Cmd>set cursorline! cursorcolumn!<CR>
 

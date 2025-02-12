@@ -49,6 +49,8 @@ _ps1_jobs () {
 }
 
 _ps1 () {
+    printf "\001\033[?12h\002"  # cursor blinking
+
     printf '\001\033]0;%s@%s:%s\007\002' \
         "$(id -un)"  "$(uname -n)"  "$(echo "$PWD" | sed "s,^$HOME,~,")"
 
