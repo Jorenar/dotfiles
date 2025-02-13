@@ -153,42 +153,6 @@ function! s:on_lsp_setup() abort
           \ })
   endif
 
-  if get(g:enabled_lsp, 'sonarlint', 0)
-    let g:lsp_use_native_client = 0
-
-    call lsp#register_server(#{
-          \   name: 'SonarLint',
-          \   cmd: [
-          \     'sonarlint-ls', '-stdio',
-          \   ] + [ '-analyzers' ]
-          \     + split(glob('/usr/share/java/sonarlint-ls/analyzers/*')),
-          \   root_uri: {-> lsp#utils#path_to_uri('.')},
-          \   initialization_options: #{
-          \     productKey: 'vim-lsp',
-          \   },
-          \   workspace_config: [
-          \     #{
-          \       disableTelemetry: v:true,
-          \       pathToCompileCommands:
-          \         lsp#utils#find_nearest_parent_file(
-          \           lsp#utils#get_buffer_path(),
-          \           'compile_commands.json'
-          \         ),
-          \       rules: {},
-          \     },
-          \   ],
-          \   allowlist: [ 'c', 'cpp', 'go', 'javascript', 'php', 'python' ],
-          \ })
-
-    call lsp#callbag#pipe(
-          \   lsp#stream(),
-          \   lsp#callbag#filter({x ->
-          \     x->get('request', x->get('response', {}))->get('method', '') =~# 'sonarlint/'
-          \   }),
-          \   lsp#callbag#subscribe({ 'next':{x->s:sonarlint_handler(x)} }),
-          \ )
-  endif
-
   if get(g:enabled_lsp, 'sqls', 0)
     call lsp#register_server(#{
           \   name: 'sqls',
@@ -240,6 +204,46 @@ function! s:on_lsp_setup() abort
           \   },
           \   allowlist: [ 'vim' ],
           \ })
+  endif
+
+  if get(g:enabled_lsp, 'sonarlint', 0) && v:false
+    let g:lsp_use_native_client = 0
+
+    call lsp#register_server(#{
+          \   name: 'SonarLint',
+          \   cmd: {dir -> [
+          \         'java',
+          \         '-Duser.home=' . $XDG_CACHE_HOME,
+          \         '-jar', dir . '/sonarlint-ls.jar',
+          \         '-stdio',
+          \         '-analyzers'
+          \       ] + glob(dir . '/analyzers/*', 1, 1)
+          \     }($XDG_DATA_HOME . '/java/sonarlint-ls'),
+          \   root_uri: {-> lsp#utils#path_to_uri('.')},
+          \   initialization_options: #{
+          \     productKey: 'vim-lsp',
+          \   },
+          \   workspace_config: [
+          \     #{
+          \       disableTelemetry: v:true,
+          \       pathToCompileCommands:
+          \         lsp#utils#find_nearest_parent_file(
+          \           lsp#utils#get_buffer_path(),
+          \           'compile_commands.json'
+          \         ),
+          \       rules: {},
+          \     },
+          \   ],
+          \   allowlist: [ '*' ],
+          \ })
+
+    call lsp#callbag#pipe(
+          \   lsp#stream(),
+          \   lsp#callbag#filter({x ->
+          \     x->get('request', x->get('response', {}))->get('method', '') =~# 'sonarlint/'
+          \   }),
+          \   lsp#callbag#subscribe({ 'next':{x->s:sonarlint_handler(x)} }),
+          \ )
   endif
 
 endfunction
