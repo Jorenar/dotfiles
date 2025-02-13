@@ -56,14 +56,22 @@ autocmd TermClose * call feedkeys("\<C-\>\<C-n>")
 
 " }}}
 
+aunmenu PopUp.Paste
+aunmenu PopUp.Select\ All
+aunmenu PopUp.Inspect
+aunmenu PopUp.-1-
+aunmenu PopUp.How-to\ disable\ mouse
 
 set backupdir-=.
 set grepformat=%f:%l:%m,%f:%l%m,%f\ \ %l%m
+set noautoread
+set notermguicolors
 set startofline
 
 hi! link FloatBorder NormalFloat
 
-autocmd! nvim_swapfile
+exec has('nvim-0.11') ? 'au! nvim.swapfile' :
+      \ has('nvim-0.10') ? 'au! nvim_swapfile' : ''
 
 lua require("cscope_maps").setup({
       \   disable_maps = true,

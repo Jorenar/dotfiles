@@ -156,7 +156,8 @@ com! -nargs=?  Spelling  if empty("<args>") | setl spell! | else | setl spell sp
 
 "   motion {{{1
 
-set scrolloff=5
+set scrolloff=3
+set sidescrolloff=5
 
 nnoremap ' `
 
@@ -181,6 +182,7 @@ autocmd BufReadPost * if line('$') > winheight(0) | setlocal fen | endif
 set backspace=indent,eol,start
 set cindent
 set expandtab
+set nojoinspaces
 set shiftround
 set shiftwidth=0   " If 0, then uses value of 'tabstop'
 set softtabstop=-1 " If negative, then uses 'shiftwidth' (which can use 'tabstop')
