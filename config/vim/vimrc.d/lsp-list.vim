@@ -1,6 +1,6 @@
 let g:langservs = {
       \   'asm-lsp'      : executable('asm-lsp'),
-      \   'ccls'         : executable('ccls'),
+      \   'ccls'         : v:false,
       \   'clangd'       : executable('clangd'),
       \   'deno'         : executable('deno'),
       \   'digestif'     : executable('digestif'),
