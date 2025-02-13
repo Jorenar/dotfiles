@@ -16,7 +16,7 @@ GP.setup {
 
 local function isServEnabled(client)
   local function check(name)
-    local val = vim.g.langservs[name]
+    local val = vim.g.enabled_lsp[name]
     return not (val == 0 or val == false or val == nil)
   end
   local name = (client.name and client.name or client)

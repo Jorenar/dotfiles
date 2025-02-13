@@ -1,4 +1,4 @@
-let g:langservs = {
+let g:enabled_lsp = {
       \   'asm-lsp'      : executable('asm-lsp'),
       \   'ccls'         : v:false,
       \   'clangd'       : executable('clangd'),
