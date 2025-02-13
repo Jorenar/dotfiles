@@ -6,18 +6,21 @@ local GP = require('goto-preview')
 -- helpers {{{1
 
 local function isServEnabled(client)
+  local function check(name)
+    local val = vim.g.langservs[name]
+    return not (val == 0 or val == false or val == nil)
+  end
   local name = (client.name and client.name or client)
-  local val = vim.g.langservs[name]
-  return not (val == 0 or val == false or val == nil)
+  return check(name) or check(name:gsub('-', '_'))
 end
 
 local function setup(name, conf)
-  vim.api.nvim_create_autocmd("BufReadPre", {
+  vim.api.nvim_create_autocmd({"BufReadPre", "FileType", "VimEnter"}, {
       once = true,
-      callback = function()
-        if not (isServEnabled(name) or isServEnabled(name:gsub('_', '-'))) then
-          return
-        end
+      callback = function(e)
+        vim.api.nvim_del_autocmd(e.id)
+
+        if not isServEnabled(name) then return end
 
         if name == 'sonarlint' then
           require('sonarlint').setup(conf)
@@ -75,6 +78,11 @@ setup('ccls', {
       cache = { directory = '.cache/ccls' },
       clang = { extraArgs = { '--gcc-toolchain=/usr' } },
     },
+    root_dir = function(fname)
+      return vim.fs.root(fname, {
+          'compile_commands.json', '.ccls', '.git'
+        }) or '/tmp'
+    end,
     on_attach = function(client, _)
       if not isServEnabled('clangd') then return end
       client.server_capabilities = {
