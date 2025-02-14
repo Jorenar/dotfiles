@@ -8,6 +8,7 @@ let g:enabled_lsp = {
       \   'groovyls'     : executable('java') && filereadable($XDG_DATA_HOME.'/java/groovy-language-server-all.jar'),
       \   'jdtls'        : executable('jdtls'),
       \   'jedi'         : executable('jedi-language-server'),
+      \   'lua_ls'       : executable('lua-language-server'),
       \   'openscad-lsp' : executable('openscad-lsp'),
       \   'sonarlint'    : executable('java') && filereadable($XDG_DATA_HOME.'/java/sonarlint-ls/sonarlint-ls.jar'),
       \   'sqls'         : executable('sqls'),

@@ -47,7 +47,7 @@ vim.api.nvim_create_autocmd({"BufReadPre", "FileType", "VimEnter"}, {
       local start = (e.event == "FileType") and function(s)
         if not s.autostart then return end
         if s.filetypes and vim.tbl_contains(s.filetypes, e.match) then
-          vim.cmd.LspStart(s.name)
+          s.launch()
         end
       end
 
@@ -61,6 +61,7 @@ vim.api.nvim_create_autocmd({"BufReadPre", "FileType", "VimEnter"}, {
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
       local client = vim.lsp.get_client_by_id(args.data.client_id)
+      if not client then return end
 
       client.server_capabilities.semanticTokensProvider = nil
 
@@ -89,14 +90,14 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
   })
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = function(_, d, c, _)
-  -- diagnostics in ALE
-  vim.fn['ale#other_source#ShowResults'](
-    vim.api.nvim_get_current_buf(),
-    "nvim-lsp:" .. c.client_id,
+  local bufnr = vim.fn.bufnr(d.uri:gsub('^file://', ''), false)
+  if bufnr == -1 then return end
+
+  vim.fn['ale#other_source#ShowResults'](bufnr,
+    vim.lsp.get_client_by_id(c.client_id).name,
     vim.tbl_map(function(e)
-      src = e.source and e.source or vim.lsp.get_client_by_id(c.client_id).name
       return {
-        text     = "[" .. src .. "]: " .. e.message,
+        text     = e.message,
         detail   = vim.inspect(e),
         lnum     = e.range["start"].line + 1,
         end_lnum = e.range["end"].line + 1,
@@ -230,6 +231,24 @@ SERVERS = {
     },
   },
 
+  lua_ls = {
+    on_init = function(client)
+      if not (client.workspace_folders[1].name:match('nvim')
+          or vim.fn.expand('%:p'):match('nvim')) then
+        return
+      end
+
+      client.settings.Lua = vim.tbl_deep_extend('force', client.settings.Lua, {
+          runtime = { version = 'LuaJIT' },
+          workspace = {
+            checkThirdParty = false,
+            library = { vim.env.VIMRUNTIME },
+          }
+        })
+    end,
+    settings = { Lua = {} }
+  },
+
   sqls = {
     cmd = {"sqls", "-config", ".sqls.yml"},
     on_attach = function(client, bufnr)
@@ -245,7 +264,7 @@ SERVERS = {
             '-jar', dir .. '/sonarlint-ls.jar',
             '-stdio',
             '-analyzers',
-            unpack(vim.fn.glob(dir .. '/analyzers/*.jar', 1, 1)),
+            unpack(vim.fn.glob(dir .. '/analyzers/*.jar', true, true)),
           } end)(vim.env.XDG_DATA_HOME .. '/java/sonarlint-ls'),
       settings = {
         sonarlint = {

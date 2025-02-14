@@ -99,6 +99,7 @@ shellcheck
 ccls
 deno
 jedi-language-server
+lua-language-server
 sqls
 texlab
 vim-language-server
