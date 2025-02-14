@@ -56,6 +56,7 @@
 
 [alias]
     a = !sh -c 'cd -- ${GIT_PREFIX:-.} && git add -- \""$@"\" && git status --short' --
+    a-all = !git diff --name-only | xargs git a
     st = status --short
     lg = log --oneline --graph --abbrev-commit --notes
     ls = !sh -ic 'cd ${GIT_PREFIX:-.} && ls ${@:-"-d"} $(git ls-tree HEAD | sed "s/^.*\\\t//")' -

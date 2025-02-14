@@ -6,16 +6,15 @@
 alias cheat="sh -c 'curl cheat.sh/\$1' -"
 alias del='gio trash'
 alias mnt='udisksctl mount -b'
-alias pass='EDITOR=vi pass'
+alias pass='EDITOR="vi" pass'
 alias rm="rm -i"
 alias sshfs='sshfs -o reconnect'
 alias suspend='sudo systemctl suspend'
 alias umnt='udisksctl unmount -b'
-alias which='command -v'
 alias wine-lnk='wine C:\\windows\\command\\start.exe /Unix'
 
 if command -v nvim > /dev/null 2>&1; then
-    alias nvim='XTERM_VERSION= nvim'
+    alias nvim='env XTERM_VERSION= nvim'
     alias vim='nvim'
 fi
 command -v vi > /dev/null 2>&1 || alias vi='command vim --clean'

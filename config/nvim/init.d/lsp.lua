@@ -2,8 +2,7 @@
 
 -- handlers & helpers {{{
 
-local keymaps
-local servers
+local KEYMAPS, SERVERS
 
 local LSPCONFIG = require('lspconfig')
 local GP = require('goto-preview')
@@ -20,10 +19,10 @@ local function isServEnabled(client)
     return not (val == 0 or val == false or val == nil)
   end
   local name = (client.name and client.name or client)
-  return check(name) or check(name:gsub('-', '_'))
+  return check(name) or check(name:gsub('_', '-'))
 end
 
-local function setup(name, conf)
+local function setupServ(name, conf)
   if not isServEnabled(name) then return end
 
   if name == 'sonarlint' then
@@ -35,15 +34,26 @@ local function setup(name, conf)
     name = 'jedi_language_server'
   end
 
-  LSPCONFIG[name].setup(conf and conf or {})
+  LSPCONFIG[name].setup(conf)
+
+  return LSPCONFIG[name]
 end
 
 vim.api.nvim_create_autocmd({"BufReadPre", "FileType", "VimEnter"}, {
     once = true,
     callback = function(e)
-      vim.api.nvim_del_autocmd(e.id)
-      for name, conf in pairs(servers) do
-        setup(name, conf)
+      vim.api.nvim_del_autocmd(e.id)  -- delete au for other events
+
+      local start = (e.event == "FileType") and function(s)
+        if not s.autostart then return end
+        if s.filetypes and vim.tbl_contains(s.filetypes, e.match) then
+          vim.cmd.LspStart(s.name)
+        end
+      end
+
+      for name, conf in pairs(SERVERS) do
+        local serv = setupServ(name, conf)
+        if start and serv then start(serv) end
       end
     end
   })
@@ -67,7 +77,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.api.nvim_buf_del_keymap(args.buf, 'n', 'K')
       end
 
-      for _,k in ipairs(keymaps) do
+      for _,k in ipairs(KEYMAPS) do
         vim.keymap.set(k[1], k[2], k[3], { buffer = true, noremap = true })
       end
     end
@@ -84,8 +94,9 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = function(_, d, c, _)
     vim.api.nvim_get_current_buf(),
     "nvim-lsp:" .. c.client_id,
     vim.tbl_map(function(e)
+      src = e.source and e.source or vim.lsp.get_client_by_id(c.client_id).name
       return {
-        text     = "[" .. e.source .. "]: " .. e.message,
+        text     = "[" .. src .. "]: " .. e.message,
         detail   = vim.inspect(e),
         lnum     = e.range["start"].line + 1,
         end_lnum = e.range["end"].line + 1,
@@ -118,7 +129,7 @@ end)(vim.notify)
 -- }}}
 
 
-keymaps = {
+KEYMAPS = {
   { 'n', 'L', "<Cmd>exec {l -> empty(l) ? '' : 'norm L'.l}(input('L'))<CR>" },
 
   { 'n', 'LK',  vim.lsp.buf.hover },
@@ -142,9 +153,8 @@ keymaps = {
   { 'n', 'Lfo', vim.lsp.buf.outgoing_calls },
 }
 
-servers = {
+SERVERS = {
 
-  asm_lsp = {},
   digestif = {},
   gopls = {},
   jdtls = {},
@@ -152,6 +162,10 @@ servers = {
   openscad_lsp = {},
   texlab = {},
   vimls = {},
+
+  asm_lsp = {
+    filetypes = { "asm", "nasm", "masm", "vmasm" },
+  },
 
   ccls = {
     init_options = {
@@ -205,7 +219,15 @@ servers = {
           }
         }
       }
-    }
+    },
+    single_file_support = true,
+  },
+
+  groovyls = {
+    cmd = {
+      "java", "-jar",
+      vim.env.XDG_DATA_HOME .. '/java/groovy-language-server-all.jar'
+    },
   },
 
   sqls = {

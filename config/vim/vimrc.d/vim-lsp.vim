@@ -78,7 +78,7 @@ function! s:on_lsp_setup() abort
           \ })
   endif
 
-  if get(g:enabled_lsp, 'deno', 0)
+  if get(g:enabled_lsp, 'denols', 0)
     call lsp#register_server(#{
           \   name: 'Deno',
           \   cmd: [ 'deno', 'lsp' ],

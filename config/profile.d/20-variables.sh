@@ -43,8 +43,9 @@ if [ -x "$(command -v vim)" ]; then
         export VIMINIT="so $XDG_CONFIG_HOME/vim/vimrc"
 fi
 
-export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/config.py"
-export PYTHONPYCACHEPREFIX="$XDG_CACHE_HOME/__pycache__"
+export PYTHON_HISTORY="$XDG_STATE_HOME"/python_history
+export PYTHONPYCACHEPREFIX="$XDG_CACHE_HOME"/__pycache__
+export PYTHONSTARTUP="$XDG_CONFIG_HOME"/python/config.py
 
 export PIPX_HOME="$HOME"/.local/opt/pkg/pipx
 export PIPX_BIN_DIR="$PIPX_HOME"/bin
