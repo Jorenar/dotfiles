@@ -278,10 +278,19 @@ SERVERS = {
           end)(),
         },
       },
-      on_attach = function(_,_)
+      on_attach = function()
         if vim.fn.exists(':SonarlintListRules') ~= 0 then
           vim.api.nvim_del_user_command('SonarlintListRules')
         end
+      end,
+      before_init = function()
+        local dir = vim.fs.joinpath(vim.env.XDG_CACHE_HOME, '.sonarlint')
+        local t = vim.fs.joinpath(dir, 'telemetry')
+        if vim.fn.filereadable(t) == 0 then
+          vim.fn.mkdir(dir, 'p')
+          io.open(t, "w"):close()
+        end
+        vim.fn.setfperm(t, 'r--r--r--')
       end,
     },
     filetypes = { '*' }

@@ -1,7 +1,3 @@
-fonts/.uuid
-
-config/vim/doc/tags
-config/vim/pack/test
-config/vim/spell/*.spl
-
-config/systemd/user/*.wants
+**/doc/tags
+**/pack/test
+**/spell/*.spl
