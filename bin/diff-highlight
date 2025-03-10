@@ -5,7 +5,7 @@
 
 dh="$(find "$GIT_CONTRIB_DIR" -name 'diff-highlight.perl' -type f 2> /dev/null)"
 
-if [ -n "$dh" ]; then
+if [ -n "$dh" ] && command -v perl > /dev/null 2>&1; then
     exec perl -I "$(dirname "$dh")" -MDiffHighlight -- "$dh"
 else
     exec cat
