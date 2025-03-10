@@ -5,7 +5,16 @@ trap 'notmuch new --no-hooks' EXIT
 hookdir="$(notmuch config get database.hook_dir)"
 mailroot="$(notmuch config get database.mail_root)"
 
-search () {
+_get_ids () (
+    folder="$1"; shift
+    notmuch search --output=messages -- folder:"$folder" "$@"
+)
+
+_show_body () {
+    notmuch show --entire-thread=false --part=1 "$@"
+}
+
+fsearch () {
     folder="$1"; shift
     notmuch search --output=files -- folder:"$folder" "$@" | \
         { grep -w "$folder" || test $? = 1; }
@@ -17,13 +26,14 @@ mv2 () {
         [ -f "$msg" ] || continue
 
         path="$mailroot/$dest"
+        mkdir -p "$path"/cur
+        mkdir -p "$path"/new
+        mkdir -p "$path"/tmp
 
         sub="$(basename "$(dirname "$msg")")"
         case "$sub" in
             cur|new|tmp) path="$path/$sub";;
         esac
-
-        [ ! -d "$path" ] && mkdir "$path"
 
         file="$(basename  "$msg" | sed 's/,U=[0-9]\+//')"
         path="$path/$file"
@@ -32,6 +42,33 @@ mv2 () {
 
         >&2 printf '[pre-new hook]: moving %s to %s\n' "$file" "$dest"
         mv "$msg" "$path"
+        echo "$path"
+    done
+}
+
+mark_seen () {
+    while read -r msg; do
+        [ -f "$msg" ] || continue
+        case "$msg" in
+            *,*S*) continue ;;
+        esac
+        mv "$msg" "${msg}S"
+    done
+}
+
+find_dups () {
+    folder="$1"; shift
+
+    _get_ids "$folder" "$@" | while read -r msg_id; do
+        body_cksum="$(_show_body folder:"$folder" "$msg_id" | cksum)"
+        count="$(
+            _get_ids "$folder" is:unread | while read -r id; do
+                [ "$body_cksum" = "$(_show_body "$id" | cksum)" ] && \
+                    fsearch "$folder" "$id" > /dev/null && \
+                    echo  &
+            done | wc -l
+        )"
+        [ "$count" -gt 1 ] && fsearch "$folder" "$msg_id" &
     done
 }
 

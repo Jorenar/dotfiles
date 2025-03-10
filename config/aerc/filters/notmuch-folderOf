@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+read -r file
+mail_root="$(notmuch config get database.mail_root)/"
+dirname "$(dirname "${file#"${mail_root}"}")"

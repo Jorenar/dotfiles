@@ -46,9 +46,8 @@ if bufname("%") =~# 'aerc-'
 
   if bufname("%") =~# 'aerc-compose'
     autocmd BufWinEnter <buffer>
-          \   if $AERC_ACCOUNT == "notmuch"
-          \ |   silent! s/\VFrom:\zs <\.@\.>//
-          \ | endif
+          \ | silent! 1,/^From:/ s/\VFrom:\zs <\.@\.>//
+          \ | silent! 1,/^Subject:/ s/\cRe:.*\zsRe: \ze//
   endif
 endif
 
