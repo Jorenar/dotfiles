@@ -54,10 +54,19 @@ cred="$(
         dmenu "$@"
 )" || die 'something went wrong'
 
+line=1
+case "$cred" in
+    *\ -l*)
+        line="${cred##*-l}"; line="${line%% *}"
+        cred="${cred%% -l*}"
+        ;;
+esac
+
 [ -z "$cred" ] && exit
 
 if [ "$typeit" -eq 0 ]; then
-    pass show -c "$cred" 2> /dev/null
+    pass show -c$line "$cred" 2> /dev/null
 else
-    pass show "$cred" | { IFS= read -r pass; printf '%s' "$pass"; } | $xdotool
+    pass show "$cred" | sed "${line}q;d" | \
+        { IFS= read -r pass; printf '%s' "$pass"; } | $xdotool
 fi
