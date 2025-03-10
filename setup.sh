@@ -95,7 +95,7 @@ for c in config/*; do
             ;;
         */powershell)
             [ -n "$USERPROFILE" ] && \
-                install "$c"  %  "$USERPROFILE"/WindowsPowerShell
+                install "$c"  %  "$USERPROFILE"/Documents/WindowsPowerShell
             ;;
         */PowerToys)
             [ -n "$USERPROFILE" ] && \
