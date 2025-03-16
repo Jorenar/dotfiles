@@ -43,9 +43,23 @@ tab[selected="true"] .tab-background {
   padding-bottom: 4px !important;
 }
 
-#unified-extensions-button {
-  display: none !important;
+
+#unified-extensions-view {
+  width: min-content !important;
+  text-wrap: nowrap;
+  --uei-icon-size: 16px;
 }
+
+#unified-extensions-view .panel-header {
+  &, & + toolbarseparator {
+    display: none !important;
+  }
+}
+
+.unified-extensions-item-message-deck {
+  display: none;
+}
+
 
 #contentAreaContextMenu #context-navigation {
   display: none !important;
