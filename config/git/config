@@ -34,6 +34,9 @@
     prompt = false
     trustExitCode = true
 
+[diff]
+    colorMoved = default
+
 [color "diff-highlight"]
     oldNormal = red bold
     oldHighlight = red bold 52
