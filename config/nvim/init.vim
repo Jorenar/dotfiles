@@ -56,6 +56,20 @@ autocmd TermClose * call feedkeys("\<C-\>\<C-n>")
 
 " }}}
 
+" diagnostics {{{
+
+lua vim.diagnostic.config({
+      \   signs = false,
+      \   virtual_text = false,
+      \ })
+
+hi! link DiagnosticUnderlineError ALEError
+hi! link DiagnosticUnderlineHint  ALEInfo
+hi! link DiagnosticUnderlineInfo  ALEInfo
+hi! link DiagnosticUnderlineWarn  ALEWarning
+
+" }}}
+
 aunmenu PopUp.Paste
 aunmenu PopUp.Select\ All
 aunmenu PopUp.Inspect
@@ -77,6 +91,5 @@ lua require("cscope_maps").setup({
       \   disable_maps = true,
       \   cscope = { db_file = '' },
       \ })
-
 
 runtime! init.d/*
