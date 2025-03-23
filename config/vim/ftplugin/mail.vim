@@ -48,6 +48,9 @@ if bufname("%") =~# 'aerc-'
     autocmd BufWinEnter <buffer>
           \ | silent! 1,/^From:/ s/\VFrom:\zs <\.@\.>//
           \ | silent! 1,/^Subject:/ s/\cRe:.*\zsRe: \ze//
+          \ | silent! %s/\v%(^\>[ \>]*)@<= \>/>/g
+          \ | silent! %s/^>\+\zs \+$//
+          \ | silent! %s/\s\{2,}//
   endif
 endif
 

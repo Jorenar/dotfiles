@@ -9,7 +9,8 @@ let g:php_html_shitwidth = &l:sw ? &l:sw : &l:ts
 
 compiler tidy
 nnoremap <buffer> <F8> <Cmd>call system($BROWSER.' '.shellescape(expand("%:p")).' &')<CR>
-SetFormatProg "tidy -q -w -i --show-warnings 0 --show-errors 0 --tidy-mark no"
 
-let g:ale_html_tidy_options = "--drop-empty-elements 0"
-let g:ale_html_tidy_options .= '--custom-tags inline --custom-tags blocklevel'
+let b:ale_html_tidy_options = '-q -e'
+      \ . ' --drop-empty-elements no'
+      \ . ' --custom-tags inline --custom-tags blocklevel'
+      \ . ' --mute PROPRIETARY_ELEMENT'
