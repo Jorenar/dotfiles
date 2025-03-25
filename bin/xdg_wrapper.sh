@@ -33,14 +33,30 @@ case "$exe" in
         mkdir -p "$XDG_CONFIG_HOME/nvidia"
         set -- "--config=$XDG_CONFIG_HOME/nvidia/rc.conf" "$@"
         ;;
-    ssh|scp)
+    ssh|scp|ssh-copy-id)
         if [ ! -e "$HOME/.ssh/config" ]; then
             if [ -e "$XDG_CONFIG_HOME/ssh/config" ]; then
                 set -- "-F" "$XDG_CONFIG_HOME/ssh/config" "$@"
             fi
         fi
+
         controlpath="$(ssh -G "$@" 2> /dev/null | awk '/^controlpath / { print $2 }')"
         [ -n "$controlpath" ] && mkdir -p "$(dirname "$controlpath")"
+
+        if [ "$exe" = "ssh-copy-id" ]; then
+            if echo "$*" | grep -vq -- ' -i '; then
+                id="$(ssh -G "$@" 2> /dev/null | awk '/^identityfile / { print $2 }')"
+                id="$(eval echo "$id")"
+                [ -f "$id" ] && set -- "-i" "$id" "$@"
+            fi
+
+            if [ ! -d "$HOME/.ssh" ]; then
+                alias exec=
+                mkdir -p "$HOME/.ssh" \
+                    && trap 'rmdir "$HOME/.ssh"' EXIT INT TERM
+            fi
+        fi
+
         ;;
     steam)
         HOME="$XDG_DATA_HOME/Steam"
@@ -63,6 +79,7 @@ exec "$exe" "$@"
 #~ nvidia-settings
 #~ scp
 #~ ssh
+#~ ssh-copy-id
 #~ steam
 #~ telnet
 #~ zoom
