@@ -1,6 +1,6 @@
 setl fo+=w
 setl textwidth=71
-setl colorcolumn=+2
+setl colorcolumn=+1
 setl nomodeline
 setl noexpandtab
 setl foldmethod=syntax
@@ -50,7 +50,8 @@ if bufname("%") =~# 'aerc-'
           \ | silent! 1,/^Subject:/ s/\cRe:.*\zsRe: \ze//
           \ | silent! %s/\v%(^\>[ \>]*)@<= \>/>/g
           \ | silent! %s/^>\+\zs \+$//
-          \ | silent! %s/\s\{2,}//
+          \ | silent! %s/\s\{2,}$//
+          \ | norm! gg
   endif
 endif
 
