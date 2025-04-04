@@ -40,12 +40,26 @@ case "$exe" in
             fi
         fi
 
-        controlpath="$(ssh -G "$@" 2> /dev/null | awk '/^controlpath / { print $2 }')"
+        ssh_G="$(:
+            opts="$("$exe" 2>&1 | grep -E -o -e '\[-\S+]' -e '\[-\S \S+]' \
+                | tr -d '[]|-' | sed 's/ .\+/:/' | tr -d '\n')"
+
+            conf=
+            while getopts "$opts" opt 2> /dev/null; do
+                case "$opt" in (F) conf="$OPTARG" ;; esac
+            done
+            shift $((OPTIND - 1))
+
+            [ -n "$conf" ] && set -- "-F" "$conf" "$@"
+            ssh -G "$@" 2> /dev/null
+        )"
+
+        controlpath="$(echo "$ssh_G" | awk '/^controlpath / { print $2 }')"
         [ -n "$controlpath" ] && mkdir -p "$(dirname "$controlpath")"
 
         if [ "$exe" = "ssh-copy-id" ]; then
             if echo "$*" | grep -vq -- ' -i '; then
-                id="$(ssh -G "$@" 2> /dev/null | awk '/^identityfile / { print $2 }')"
+                id="$(echo "$ssh_G" | awk '/^identityfile / { print $2 }')"
                 id="$(eval echo "$id")"
                 [ -f "$id" ] && set -- "-i" "$id" "$@"
             fi
