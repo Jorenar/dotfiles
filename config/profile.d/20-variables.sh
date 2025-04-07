@@ -79,9 +79,6 @@ export VISUAL="$EDITOR"
 
 # dev {{{1
 
-pathmunge "/usr/lib/ccache"
-pathmunge "/usr/lib/ccache/bin"
-
 export C_INCLUDE_PATH
 pathmunge C_INCLUDE_PATH "$HOME/.local/lib/include"
 
@@ -97,29 +94,12 @@ pathmunge ASAN_OPTIONS detect_stack_use_after_return=1
 export PYTHONPATH
 pathmunge PYTHONPATH "$HOME/.local/lib/python/site-packages/"
 
-# PATH {{{1
-
-pathmunge "$HOME"/.local/bin
-
-for opt in "$HOME"/.local/opt/*/bin; do
-    [ -d "$opt" ] && pathmunge "$opt"
-done
-
-for opt in "$HOME"/.local/opt/*/*/bin; do
-    [ -d "$opt"/../../bin ] && continue
-    [ -d "$opt" ] && pathmunge "$opt"
-done
-
 # WSL {{{1
 
 if [ -n "$WSL_DISTRO_NAME" ]; then
-    pathmunge "/mnt/c/Windows/System32"
-    pathmunge "/mnt/c/Windows/System32/Wbem"
-    pathmunge "/mnt/c/Windows/System32/WindowsPowerShell/v1.0"
-    pathmunge "/mnt/c/Users/thck68/AppData/Local/Microsoft/WindowsApps"
-
     export USERPROFILE="$(
-        cmd.exe /c 'echo %USERPROFILE%' 2> /dev/null | \
+        cd /mnt/c/Windows/System32 || exit
+        ./cmd.exe /c 'echo %USERPROFILE%' 2> /dev/null | \
             sed -e 's,\r,,g' -e 's,\\,/,g' -e 's,^C:,/mnt/c,'
     )"
 
