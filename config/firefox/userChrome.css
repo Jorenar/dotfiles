@@ -1,41 +1,43 @@
+:root {
+  --toolbar-bgcolor: #222 !important;
+  --arrowpanel-background: #333 !important;
+}
 
 #webrtcIndicator {
   display: none !important;
+}
+
+#contentAreaContextMenu #context-navigation {
+  &, & + menuseparator {
+    display: none;
+  }
 }
 
 #navigator-toolbox {
   background-color: black !important;
 }
 
-#BMB_searchBookmarks,
-#BMB_bookmarksToolbar,     #BMB_bookmarksToolbar     + menuseparator,
-#BMB_viewBookmarksSidebar, #BMB_viewBookmarksSidebar + menuseparator,
-#BMB_bookmarksShowAll,     #BMB_bookmarksShowAll     + menuseparator,
-#BMB_bookmarksShowAllTop,  #BMB_bookmarksShowAllTop  + menuseparator
-{
-  display: none !important;
-}
-
-:root {
-  --toolbar-bgcolor: #222 !important;
-}
-
-.titlebar-color {
-  background-color: black;
-}
-
-.tab-background {
-  border-radius: 0 !important;
-  margin-bottom: 0 !important;
-  background-image: none !important;
-}
-
-tab[selected="true"] .tab-background {
+#TabsToolbar tab[selected="true"] .tab-background {
   background-color: var(--toolbar-bgcolor) !important;
+}
+
+#vertical-tabs .tabbrowser-tab {
+  padding-block: 0 !important;
 }
 
 #urlbar-background {
   background-color: #333 !important;
+}
+
+
+#BMB_searchBookmarks,
+#BMB_bookmarksToolbar,     #BMB_bookmarksToolbar     + menuseparator,
+#BMB_viewBookmarksSidebar, #BMB_viewBookmarksSidebar + menuseparator,
+#BMB_bookmarksShowAll,     #BMB_bookmarksShowAll     + menuseparator,
+#BMB_bookmarksShowAllTop,  #BMB_bookmarksShowAllTop  + menuseparator,
+menuseparator:has(+ #BMB_bookmarksShowAll)
+{
+  display: none !important;
 }
 
 .bookmark-item, .openintabs-menuitem {
@@ -58,29 +60,4 @@ tab[selected="true"] .tab-background {
 
 .unified-extensions-item-message-deck {
   display: none;
-}
-
-
-#contentAreaContextMenu #context-navigation {
-  display: none !important;
-}
-
-.urlbarView-row[dynamicType="onboardTabToSearch"] {
-  display: none;
-}
-
-#tabbrowser-tabs {
-  border-inline-start: initial !important;
-}
-
-#BMB_bookmarksPopup menuitem .menu-iconic-left {
-  visibility: hidden;
-  position: relative;
-}
-
-#BMB_bookmarksPopup menuitem .menu-iconic-left:after {
-  content: url("chrome://browser/skin/bookmark.svg");
-  visibility: visible;
-  position: absolute;
-  left: 0;
 }

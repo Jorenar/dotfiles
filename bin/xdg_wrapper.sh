@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+# vim: fdl=1
 
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
@@ -27,7 +28,7 @@ case "$exe" in
         ;;
     firefox)
         set -- "--profile" "$XDG_DATA_HOME/firefox" "$@"
-        { while kill -0 $$ 2> /dev/null; do rm -rf "$HOME"/.mozilla; done; } &
+        { while kill -0 $$ 2> /dev/null; do rm -rf "$HOME"/.mozilla 2> /dev/null; done } &
         ;;
     nvidia-settings)
         mkdir -p "$XDG_CONFIG_HOME/nvidia"
