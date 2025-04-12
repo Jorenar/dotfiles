@@ -174,6 +174,19 @@ SERVERS = {
     filetypes = { "asm", "nasm", "masm", "vmasm" },
   },
 
+  ast_grep = {
+    cmd = {
+      'ast-grep', 'lsp',
+      '-c', vim.env.XDG_CONFIG_HOME .. '/ast-grep/sgconfig.yml'
+    },
+    root_dir = function(fname)
+      return vim.fs.root(fname, {
+          'sgconfig.yaml', 'sgconfig.yml', '.git'
+        }) or '.'
+    end,
+    filetypes = { '*' }
+  },
+
   ccls = {
     init_options = {
       cache = { directory = '.cache/ccls' },

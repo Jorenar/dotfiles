@@ -1,5 +1,6 @@
 let g:enabled_lsp = {
       \   'asm-lsp'      : executable('asm-lsp'),
+      \   'ast-grep'     : executable('ast-grep'),
       \   'ccls'         : v:false,
       \   'clangd'       : executable('clangd'),
       \   'denols'       : executable('deno'),

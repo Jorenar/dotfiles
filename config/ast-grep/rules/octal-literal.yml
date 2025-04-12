@@ -1,0 +1,15 @@
+id: octal-literal
+language: C
+rule:
+  kind: number_literal
+  regex: '\b0[1-7]+'
+message: "zero led octal literal"
+
+---
+
+id: octal-literal
+language: Cpp
+rule:
+  kind: number_literal
+  regex: '\b0[1-7]+'
+message: "zero led octal literal"
