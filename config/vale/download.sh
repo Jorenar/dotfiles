@@ -8,4 +8,4 @@ curl -OL "https://github.com/errata-ai/vale/releases/download/v${ver}/vale_${ver
 mkdir -p "$HOME"/.local/bin
 tar -xzf vale_"${ver}"_*.tar.gz -C "$HOME"/.local/bin vale
 rm vale_"${ver}"_*.tar.gz
-vale sync
+cd && vale sync

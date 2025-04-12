@@ -71,11 +71,8 @@ user_pref("toolkit.telemetry.unified", false);
 
 user_pref("browser.pagethumbnails.capturing_disabled", true);
 
-// Experiments {{{1
-
-/* 'datareporting.usage.uploadEnabled' also needs to be toggled 'true' */
-// user_pref("extensions.experiments.enabled", true);
-// user_pref("extensions.formautofill.addresses.experiments.enabled", true);
+user_pref("extensions.formautofill.addresses.experiments.enabled", false);
+user_pref("extensions.formautofill.creditCards.enabled", false);
 
 // Dev tools {{{1
 

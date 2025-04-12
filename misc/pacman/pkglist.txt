@@ -113,10 +113,11 @@ i3-wm
 polybar
 scrot
 xclip
-xdotool
 xorg-server
 xorg-xinit
 xorg-xrandr
+
+xdotool
 
 # sway
 # waybar
@@ -124,6 +125,8 @@ xorg-xrandr
 # nwg-displays
 # slurp
 # wtype
+# wlsunset
+# xorg-xwayland
 
 dmenu
 dunst

@@ -23,6 +23,7 @@ bindsym $super+grave exec sh -c "$dmenu_ws workspace {}"
 bindsym $alt+grave exec sh -c "$dmenu_ws move container to workspace {}"
 
 
+include ./misc
 include ./outputs
 include ./workspaces
 
