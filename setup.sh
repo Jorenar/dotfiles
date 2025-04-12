@@ -86,9 +86,9 @@ fi
 for c in config/*; do
     case "$c" in
         */firefox)
-            install  "$c"/user.js          @  "$XDG_DATA_HOME"/firefox/user.js
-            install  "$c"/userChrome.css   @  "$XDG_DATA_HOME"/firefox/chrome/userChrome.css
-            install  "$c"/userContent.css  @  "$XDG_DATA_HOME"/firefox/chrome/userContent.css
+            for f in "$c"/*; do
+                install  "$f"  @  "$XDG_DATA_HOME"/firefox/"$(basename "$f")"
+            done
             ;;
         */gtk-3.0)
             install  "$c"/settings.ini  @  "$XDG_CONFIG_HOME"/gtk-3.0/settings.ini
