@@ -1,0 +1,10 @@
+rules:
+- id: octal-literals
+  patterns:
+  - pattern: $O
+  - metavariable-regex:
+      metavariable: $O
+      regex: 0[0-7]+
+  message: 'Octal literal led by 0'
+  languages: [c,cpp]
+  severity: INFO

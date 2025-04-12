@@ -65,3 +65,66 @@ call map(s:vale_fts,
 unlet s:vale_fts
 
 " }}}
+
+" Semgrep {{{
+
+" Supported filetypes taken from:
+"   https://semgrep.dev/docs/supported-languages
+
+let s:semgrep_fts = [
+      \   'apex',
+      \   'bash',
+      \   'c',
+      \   'clojure',
+      \   'cpp',
+      \   'cs',
+      \   'dart',
+      \   'dockerfile',
+      \   'elixir',
+      \   'go',
+      \   'html',
+      \   'java',
+      \   'javascript',
+      \   'json',
+      \   'julia',
+      \   'kotlin',
+      \   'lisp',
+      \   'lua',
+      \   'ocaml',
+      \   'php',
+      \   'python',
+      \   'r',
+      \   'ruby',
+      \   'rust',
+      \   'scala',
+      \   'scheme',
+      \   'solidity',
+      \   'swift',
+      \   'terraform',
+      \   'typescript',
+      \   'xml',
+      \   'yaml',
+      \ ]
+
+function! s:semgrep_handler(buffer, lines) abort
+    let l:pattern = '\v^[^:]+:(\d+):(\d+):([EWIH]):[^:]+:(.+)$'
+    return map(ale#util#GetMatches(a:lines, l:pattern), {_, match -> {
+          \   'lnum': match[1] + 0,
+          \   'col': match[2] + 0,
+          \   'text': match[4],
+          \   'type': match[3],
+          \ }})
+endfunction
+
+call map(s:semgrep_fts, {_,ft ->
+      \   ale#linter#Define(ft, {
+      \     'name': 'semgrep',
+      \     'executable': 'semgrep',
+      \     'command': '%e' . ' scan --vim --config '.$XDG_CONFIG_HOME .'/semgrep/settings.yaml -',
+      \     'callback': function('s:semgrep_handler'),
+      \   })
+      \ })
+
+unlet s:semgrep_fts
+
+" }}}
