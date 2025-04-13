@@ -1,0 +1,17 @@
+bash
+bash-completion
+dash
+expect
+fzf
+git
+htop
+libfuse2t64
+man-db
+manpages
+openssh
+pass
+podman
+rsync
+tmux
+universal-ctags
+vim

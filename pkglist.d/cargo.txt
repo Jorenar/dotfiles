@@ -1,0 +1,2 @@
+asm-lsp
+openscad-lsp

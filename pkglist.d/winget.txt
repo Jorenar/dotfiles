@@ -1,0 +1,13 @@
+Microsoft.PowerToys
+Microsoft.WindowsTerminal
+Microsoft.WSL
+
+7zip.7zip
+vim.vim
+
+Meltytech.Shotcut
+Mozilla.Firefox
+mRemoteNG.mRemoteNG
+OBSProject.OBSStudio
+TheDocumentFoundation.LibreOffice
+WiresharkFoundation.Wireshark
