@@ -27,6 +27,7 @@ sudo dd bs=4M oflag=direct status=progress if=ISO of=DEV
 sudo pacman -D --asdeps PKG
 sudo sh -c 'apt update && apt upgrade && apt autoclean && apt autoremove'
 sudo usermod -a -G groupname username # add user to group
+tmux run '"$XDG_CONFIG_HOME"/tmux/scripts/ressurect-auto.sh restore'
 transmission-daemon -T -w "$XDG_DOWNLOAD_DIR" -c "$XDG_DOWNLOAD_DIR"
 updpkgsums && makepkg --printsrcinfo > .SRCINFO # update AUR files
 vim "$(command -v music.m3u)"

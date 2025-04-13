@@ -238,6 +238,11 @@
 	url = https://github.com/niqodea/tmux-matryoshka.git
 	shallow = true
 	ignore = all
+[submodule "tmux-resurrect"]
+	path = config/tmux/plugins/tmux-resurrect
+	url = https://github.com/tmux-plugins/tmux-resurrect.git
+	shallow = true
+	ignore = all
 
 [submodule "git-diff-blame"]
 	path = extern/git-diff-blame
