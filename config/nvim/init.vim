@@ -70,6 +70,8 @@ hi! link DiagnosticUnderlineWarn  ALEWarning
 
 " }}}
 
+lua require("mason").setup()
+
 aunmenu PopUp.Paste
 aunmenu PopUp.Select\ All
 aunmenu PopUp.Inspect

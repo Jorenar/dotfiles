@@ -207,6 +207,11 @@
 	url = https://github.com/rmagatti/goto-preview.git
 	shallow = true
 	ignore = all
+[submodule "mason.nvim"]
+	path = config/nvim/pack/extern/start/mason.nvim
+	url = https://github.com/williamboman/mason.nvim.git
+	shallow = true
+	ignore = all
 [submodule "nvim-lspconfig"]
 	path = config/nvim/pack/extern/start/nvim-lspconfig
 	url = https://github.com/neovim/nvim-lspconfig.git

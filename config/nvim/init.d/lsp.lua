@@ -16,7 +16,12 @@ GP.setup {
 local function isServEnabled(client)
   local function check(name)
     local val = vim.g.enabled_lsp[name]
-    return not (val == 0 or val == false or val == nil)
+    if vim.fn.type(val) == vim.v.t_dict and vim.fn.empty(val) then
+      val = vim.fn.executable(name)
+    elseif val == vim.NIL then
+      val = vim.fn.eval('g:enabled_lsp["'..name..'"]()')
+    end
+    return not (val == 0 or val == false or val == nil or val == vim.NIL)
   end
   local name = (client.name and client.name or client)
   return check(name) or check(name:gsub('_', '-'))
@@ -277,14 +282,12 @@ SERVERS = {
 
   sonarlint = {
     server = {
-      cmd = (function(dir) return {
-            'java',
-            '-Duser.home=' .. vim.env.XDG_CACHE_HOME,
-            '-jar', dir .. '/sonarlint-ls.jar',
-            '-stdio',
-            '-analyzers',
-            unpack(vim.fn.glob(dir .. '/analyzers/*.jar', true, true)),
-          } end)(vim.env.XDG_DATA_HOME .. '/java/sonarlint-ls'),
+      cmd = {
+        'sonarlint-language-server',
+        '-stdio',
+        '-analyzers',
+        unpack(vim.fn.glob('$MASON/share/sonarlint-analyzers/*.jar', true, true)),
+      },
       settings = {
         sonarlint = {
           disableTelemetry = true,
