@@ -42,6 +42,7 @@ man-db
 man-pages
 
 p7zip
+unp
 unrar
 unzip
 zip

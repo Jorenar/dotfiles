@@ -5,6 +5,7 @@
     "AlwaysOnTop": false,
     "Awake": true,
     "CmdNotFound": false,
+    "CmdPal": false,
     "ColorPicker": false,
     "CropAndLock": false,
     "EnvironmentVariables": true,
@@ -28,8 +29,8 @@
     "RegistryPreview": false,
     "Shortcut Guide": false,
     "TextExtractor": true,
-    "Video Conference": false,
-    "Workspaces": false
+    "Workspaces": false,
+    "ZoomIt": false
   },
   "is_elevated": false,
   "run_elevated": false,

@@ -77,12 +77,19 @@ user_pref("extensions.formautofill.creditCards.enabled", false);
 // Dev tools {{{1
 
 user_pref("devtools.theme", "dark");
-user_pref("devtools.editor.tabsize", 2);
-user_pref("devtools.editor.expandtab", true);
+
 user_pref("devtools.editor.autoclosebrackets", false);
+user_pref("devtools.editor.autocomplete", true);
 user_pref("devtools.editor.detectindentation", true);
 user_pref("devtools.editor.enableCodeFolding", true);
-user_pref("devtools.editor.autocomplete", true);
+user_pref("devtools.editor.expandtab", true);
+user_pref("devtools.editor.tabsize", 2);
+
+user_pref("devtools.responsive.reloadNotification.enabled", false);
+user_pref("devtools.responsive.userAgent", "Mozilla/5.0 (Linux; Android)");
+user_pref("devtools.responsive.viewport.height", 800);
+user_pref("devtools.responsive.viewport.width", 400);
+
 user_pref("security.fileuri.strict_origin_policy", true); // 'false' allows fetching local files
 
 // Misc. {{{1
@@ -90,11 +97,12 @@ user_pref("security.fileuri.strict_origin_policy", true); // 'false' allows fetc
 user_pref("browser.startup.page", 1);
 user_pref("browser.startup.homepage", "about:home");
 
-user_pref("dom.webnotifications.enabled", false);
+user_pref("browser.bookmarks.defaultLocation", "unfiled_____");
+user_pref("browser.download.useDownloadDir", false);
 user_pref("browser.tabs.groups.enabled", true);
 user_pref("browser.translations.neverTranslateLanguages", "pl");
+user_pref("dom.webnotifications.enabled", false);
 user_pref("media.eme.enabled", true);   // enable DRM
-user_pref("browser.download.useDownloadDir", false);
 
 user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false);
 user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false);

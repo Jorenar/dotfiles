@@ -283,10 +283,9 @@ SERVERS = {
   sonarlint = {
     server = {
       cmd = {
-        'sonarlint-language-server',
-        '-stdio',
-        '-analyzers',
-        unpack(vim.fn.glob('$MASON/share/sonarlint-analyzers/*.jar', true, true)),
+        'java', '-Duser.home=' .. vim.env.XDG_CACHE_HOME,
+        '-jar', vim.env.MASON .. '/packages/sonarlint-language-server/extension/server/sonarlint-ls.jar',
+        '-stdio', '-analyzers', unpack(vim.fn.glob('$MASON/share/sonarlint-analyzers/*.jar', true, true)),
       },
       settings = {
         sonarlint = {

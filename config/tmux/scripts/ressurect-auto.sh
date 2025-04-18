@@ -3,16 +3,16 @@
 case "$1" in
     init)
         if [ -z "$2" ]; then
-            tmux set-hook -g window-linked "run '$0 init 1'"
+            tmux set-hook -g 'pane-focus-in[100]' "run '$0 init 1'"
         else
+            tmux set-hook -u 'pane-focus-in[100]'
             events='
                 session-renamed
-                window-linked
-                window-unlinked
+                pane-focus-out
                 window-layout-changed
             '
             for ev in $events; do
-                tmux set-hook -g "$ev" "run '$0 save'"
+                tmux set-hook -g "$ev"'[100]' "run '$0 save'"
             done
         fi
         ;;
@@ -24,6 +24,7 @@ case "$1" in
         esac
         trap 'tmux set -g @resurrect-dir "$resurrect_dir"' INT TERM EXIT
         tmux set -g @resurrect-dir "$resurrect_dir/auto"
+        find "$resurrect_dir"/auto -name '*.txt' | sort -nr | sed '1,5d' | xargs -I{} rm {}
         "$XDG_CONFIG_HOME"/tmux/plugins/tmux-resurrect/scripts/"$1".sh quiet
         ;;
 esac

@@ -11,6 +11,7 @@ build.log.d
 build/
 errors.err
 node_modules
+nohup.out
 
 venv
 .venv
