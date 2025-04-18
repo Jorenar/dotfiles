@@ -197,6 +197,16 @@
 	url = https://github.com/dhananjaylatkar/cscope_maps.nvim.git
 	shallow = true
 	ignore = all
+[submodule "nvim-dap"]
+	path = config/nvim/pack/extern/start/nvim-dap
+	url = https://github.com/mfussenegger/nvim-dap.git
+	shallow = true
+	ignore = all
+[submodule "nvim-dap-ui"]
+	path = config/nvim/pack/extern/start/nvim-dap-ui
+	url = https://github.com/rcarriga/nvim-dap-ui.git
+	shallow = true
+	ignore = all
 [submodule "flatten.nvim"]
 	path = config/nvim/pack/extern/start/flatten.nvim
 	url = https://github.com/willothy/flatten.nvim.git
@@ -210,6 +220,16 @@
 [submodule "mason.nvim"]
 	path = config/nvim/pack/extern/start/mason.nvim
 	url = https://github.com/williamboman/mason.nvim.git
+	shallow = true
+	ignore = all
+[submodule "mason-nvim-dap.nvim"]
+	path = config/nvim/pack/extern/start/mason-nvim-dap.nvim
+	url = https://github.com/jay-babu/mason-nvim-dap.nvim.git
+	shallow = true
+	ignore = all
+[submodule "nvim-nio"]
+	path = config/nvim/pack/extern/start/nvim-nio
+	url = https://github.com/nvim-neotest/nvim-nio.git
 	shallow = true
 	ignore = all
 [submodule "nvim-lspconfig"]

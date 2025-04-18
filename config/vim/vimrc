@@ -230,7 +230,7 @@ set path=**,./
 set tags+=.tags/tags;
 
 set hidden
-set switchbuf=usetab
+set switchbuf=usetab,uselast
 
 com! -range=%  Sort     normal! :<line1>,<line2>sort i<CR>
 com! -range    VisSort  sil! keepj <line1>,<line2>call utils#misc#VisSort()
@@ -276,11 +276,11 @@ set clipboard=
 sil! packadd! cfilter
 sil! packadd! editorconfig
 sil! packadd! matchit
-sil! packadd! termdebug
 
 if !has('nvim')
   sil! packadd! vim-lsp
   sil! packadd! vim-lsp-ale
+  sil! packadd! termdebug
 endif
 
 source $VIMRUNTIME/ftplugin/man.vim
