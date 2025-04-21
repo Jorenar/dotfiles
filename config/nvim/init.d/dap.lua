@@ -5,7 +5,9 @@ DAP.defaults.fallback.terminal_win_cmd = 'tab'
 
 local dap_repl = require('dap.repl')
 dap_repl.commands = vim.tbl_extend('force', dap_repl.commands, {
-    exit = {'.q', '.quit', '.exit'},
+    help = { '.h', '.help' },
+    exit = { '.q', '.quit', '.exit' },
+    into = { '.s', '.into' },
     custom_commands = {
       ['.'] = function(text)
         local function handler(_, res)
@@ -114,9 +116,30 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "dap-repl",
+    once = true,
     callback = function()
       local dap_brp = require('dap.breakpoints')
-      local pattern = 'Breakpoint %d+ at 0x[0-9A-Fa-f]+: file (.+), line (%d+)'
+
+      local function check_brkpts(line)
+        local pattern = 'Breakpoint %d+ at 0x[0-9A-Fa-f]+: file (.+), line (%d+)'
+        local file, lnum = line:match(pattern)
+        if not file or not lnum then
+          return false
+        end
+        local bufnr = vim.fn.bufnr(file, true)
+        if not vim.bo[bufnr].buflisted then
+          vim.fn.bufload(bufnr)
+        end
+        dap_brp.set({}, bufnr, tonumber(lnum))
+        return true
+      end
+
+      local function check_watches(line)
+        local expr = line:match('Watchpoint %d+: (.+)')
+        if expr then
+          DAPUI.elements.watches.add(expr)
+        end
+      end
 
       vim.api.nvim_buf_attach(0, false, {
         on_lines = function(_, buf, _, st, _, ed, _)
@@ -124,15 +147,8 @@ vim.api.nvim_create_autocmd("FileType", {
           local should_ui_refresh = false
 
           for _, line in ipairs(new_lines) do
-            local file, lnum = line:match(pattern)
-            if file and lnum then
-              local bufnr = vim.fn.bufnr(file, true)
-              if not vim.bo[bufnr].buflisted then
-                vim.fn.bufload(file)
-              end
-              dap_brp.set({}, bufnr, tonumber(lnum))
-              should_ui_refresh = true
-            end
+            should_ui_refresh = check_brkpts(line) or should_ui_refresh
+            check_watches(line)
           end
 
           if should_ui_refresh then
