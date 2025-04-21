@@ -18,6 +18,8 @@ dap_repl.commands = vim.tbl_extend('force', dap_repl.commands, {
     },
   })
 
+vim.fn.sign_define('DapStopped', {text='→', texthl='debugPC', linehl='', numhl='debugPC'})
+
 vim.api.nvim_set_hl(0, "DapUIRestart", { link = "DapUIRestartNC" }) -- needs to be set before dapui
 
 local DAPUI = require("dapui")

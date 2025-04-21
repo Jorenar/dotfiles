@@ -38,6 +38,7 @@ hi! QuickFixLine     NONE  cterm=underline
 hi! TabLineSel       NONE  cterm=bold  ctermfg=White
 hi! WarningMsg       NONE  ctermfg=Black  ctermbg=DarkYellow
 hi! WildMenu         NONE  cterm=reverse
+hi! debugPC          NONE  ctermbg=17
 
 hi! link FoldColumn  NonText
 hi! link LineNr      NonText
