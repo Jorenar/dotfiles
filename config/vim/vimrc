@@ -305,6 +305,14 @@ let g:ctrlp_extensions    = [ "tag", "line" ]
 let g:ctrlp_mruf_relative = 1
 let g:ctrlp_mruf_exclude  = '/tmp/.*\|/temp/.*'
 let g:ctrlp_map           = '<C-p><C-p>'
+let g:ctrlp_match_window  = 'results:0'
+
+let g:ctrlp_user_command = {
+      \   'fallback': 'find %s -type f',
+      \   'types': {
+      \     1: ['.git', 'cd %s && git ls-files -co'],
+      \   },
+      \ }
 
 let g:ctrlp_prompt_mappings = {
       \ "PrtExit()":     [ "<Esc>" ],
@@ -329,7 +337,6 @@ if executable("fzf")
   augroup FZF
     autocmd!
     autocmd FileType fzf setl laststatus=0 | au BufLeave <buffer> setl ls=2
-    autocmd FileType fzf tmap <buffer> <C-p> <C-c><Cmd>sleep 1m<CR><Cmd>CtrlP<CR>
   augroup END
 endif
 
