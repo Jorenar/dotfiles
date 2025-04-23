@@ -64,7 +64,7 @@ DAPUI.setup({
           { id = "watches", size = 0.25 },
         },
         position = "top",
-        size = 7,
+        size = 6,
       },
       {
         elements = {
@@ -75,14 +75,9 @@ DAPUI.setup({
         size = 0.4,
       },
       {
-        elements = { { id = "repl" } },
-        position = "right",
-        size = 0.4,
-      },
-      {
-        elements = { { id = "repl" } },
+        elements = { { id = "disassembly" } },
         position = "bottom",
-        size = 0.4,
+        size = 0.15,
       },
     },
     mappings = {
@@ -106,16 +101,11 @@ DAPUI.setup({
     render = {
       indent = 2,
       max_value_lines = 100
-    }
+    },
   })
 
 local function openUI()
-  if DAP.defaults.fallback.force_external_terminal then
-    DAPUI.open(3)
-  else
-    DAPUI.open(1)
-    DAPUI.open(vim.g.dapui_nr or 2)
-  end
+  DAPUI.open()
 end
 
 DAP.listeners.before.attach.dapui_config = openUI
@@ -129,6 +119,7 @@ vim.api.nvim_create_autocmd("FileType", {
           pattern = "<buffer>",
           callback = function()
             vim.opt_local.statusline = ' %f'
+            vim.opt_local.foldmethod = 'expr'
           end,
         })
     end,
@@ -213,6 +204,10 @@ local KEYMAPS = {
       DAPUI.float_element('breakpoints', float_default)
     end
   },
+  { 'n', '<Leader>da', function()
+      DAPUI.float_element('disassembly', float_default)
+    end
+  },
 }
 for _,k in ipairs(KEYMAPS) do
   vim.keymap.set(k[1], k[2], k[3], { noremap = true })
@@ -229,25 +224,107 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "dap-repl",
-    once = true,
-    callback = function()
-      vim.cmd('startinsert')
-    end,
-})
-
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "dap-float",
-    callback = function()
-      vim.keymap.set('n', '<Esc>', function()
-        vim.api.nvim_win_close(0,false)
-      end, { buffer = 0 })
-    end,
-})
-
 vim.cmd [[
   anoremenu PopUp.DAP\ Toggle\ Breakpoint <cmd>lua DAP.toggle_breakpoint()<CR>
 ]]
 
 vim.api.nvim_create_user_command('DapuiToggle', DAPUI.toggle, {})
+
+
+---- Disassembly ----
+
+vim.g.dap_disasm_ins_num = 32
+
+vim.fn.sign_define('DapDisasmPC', {text='→', texthl='debugPC', linehl='debugPC'})
+
+local DISASM_BUFNR = nil
+local function disasm_bufnr()
+  if not DISASM_BUFNR or not vim.api.nvim_buf_is_valid(DISASM_BUFNR) then
+    DISASM_BUFNR = vim.api.nvim_create_buf(false, true)
+    vim.api.nvim_buf_set_name(DISASM_BUFNR, "DAP Disassembly")
+    vim.bo[DISASM_BUFNR].buftype = "nofile"
+    vim.bo[DISASM_BUFNR].filetype = "dapui_disassembly"
+    vim.bo[DISASM_BUFNR].syntax = "asm"
+  end
+  return DISASM_BUFNR
+end
+
+local function disasm_write_buf(instructions, pc)
+  local lines = {}
+  local current_line = nil
+
+  table.insert(lines, " ...")
+  for i, instruction in ipairs(instructions) do
+    local line = string.format(" %s:\t%s",
+      instruction.address or "N/A",
+      instruction.instruction or "N/A")
+    table.insert(lines, line)
+    if instruction.address == pc then
+      current_line = i
+    end
+  end
+  table.insert(lines, " ...")
+
+  local buffer = disasm_bufnr()
+  vim.api.nvim_buf_set_lines(buffer, 0, -1, false, lines)
+
+  vim.fn.sign_unplace("DisasmSigns", { buffer = buffer })
+
+  if current_line then
+    vim.fn.sign_place(0, "DisasmSigns", "DapDisasmPC", buffer, {
+        lnum = current_line, priority = 10
+      })
+
+    local win = vim.fn.bufwinid(buffer)
+    if win ~= -1 then
+      vim.api.nvim_win_set_cursor(win, { current_line + 1, 0 })
+    end
+  end
+end
+
+local function render_disasm()
+  local session = DAP.session()
+  if not session then return end
+  local current_frame = session.current_frame
+  if not current_frame then return end
+  local pc = current_frame["instructionPointerReference"]
+  if not pc then return end
+
+  local inum = vim.g.dap_disasm_ins_num
+  local function handler(err, res)
+    if err then
+      vim.api.nvim_err_writeln("Disassembly error: " .. vim.inspect(err))
+      return
+    end
+    disasm_write_buf(res.instructions or {}, pc)
+  end
+  DAP.session():request("disassemble", {
+      instructionCount = inum + 1,
+      memoryReference = pc,
+      resolveSymbols = true,
+      instructionOffset = -inum/2 - 1,
+    }, handler)
+end
+
+DAPUI.register_element("disassembly", {
+  render = render_disasm,
+  buffer = disasm_bufnr,
+  allow_without_session = false,
+})
+
+for _, ev in ipairs({
+    "breakpoint",
+    "event_stopped",
+    "output",
+    "scopes",
+    "stackTrace",
+    "threads",
+  })
+do
+  DAP.listeners.after[ev]["update_disassembly"] = function()
+    local disasm_element = DAPUI.elements.disassembly
+    if disasm_element then
+      disasm_element.render()
+    end
+  end
+end
