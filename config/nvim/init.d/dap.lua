@@ -1,7 +1,9 @@
 DAP = require("dap")
 require('mason-nvim-dap').setup({ handlers = {} })
 
-DAP.defaults.fallback.terminal_win_cmd = 'tab'
+DAP.defaults.fallback.external_terminal = {
+  command = "tmux", args = { "split", "-hb" },
+}
 
 local dap_repl = require('dap.repl')
 dap_repl.commands = vim.tbl_extend('force', dap_repl.commands, {
@@ -15,6 +17,7 @@ dap_repl.commands = vim.tbl_extend('force', dap_repl.commands, {
         end
         DAP.session():evaluate({ expression = '-exec ' .. text }, handler)
       end,
+      ['.restart'] = DAP.restart,
     },
   })
 
@@ -45,7 +48,7 @@ DAPUI.setup({
       border = "single",
       mappings = {
         close = { "<Esc>" }
-      }
+      },
     },
     icons = {
       collapsed = ">",
@@ -61,22 +64,32 @@ DAPUI.setup({
           { id = "watches", size = 0.25 },
         },
         position = "top",
-        size = 10
+        size = 7,
       },
       {
         elements = {
-          { id = "console", size = 0.4 },
-          { id = "repl", size = 0.6 },
+          { id = "console", size = 0.5 },
+          { id = "repl", size = 0.5 },
         },
         position = "right",
-        size = 70,
+        size = 0.4,
+      },
+      {
+        elements = { { id = "repl" } },
+        position = "right",
+        size = 0.4,
+      },
+      {
+        elements = { { id = "repl" } },
+        position = "bottom",
+        size = 0.4,
       },
     },
     mappings = {
       edit = "cc",
       expand =  "za" ,
       remove = "dd",
-      repl = "<leader>r",
+      repl = "<F5>",
     },
     element_mappings = {
       stacks = {
@@ -96,12 +109,17 @@ DAPUI.setup({
     }
   })
 
-DAP.listeners.before.attach.dapui_config = function()
-  DAPUI.open()
+local function openUI()
+  if DAP.defaults.fallback.force_external_terminal then
+    DAPUI.open(3)
+  else
+    DAPUI.open(1)
+    DAPUI.open(vim.g.dapui_nr or 2)
+  end
 end
-DAP.listeners.before.launch.dapui_config = function()
-  DAPUI.open()
-end
+
+DAP.listeners.before.attach.dapui_config = openUI
+DAP.listeners.before.launch.dapui_config = openUI
 
 vim.api.nvim_create_autocmd("FileType", {
     pattern = { "dap-repl", "dapui_*" },
@@ -161,26 +179,72 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
   })
 
+
+local float_default = {
+  enter = true,
+  width = vim.o.columns - 10,
+  height = vim.o.lines - 10,
+  position = 'center',
+}
+
 local KEYMAPS = {
   { 'n', '<leader>d',  ':lua DAP.()<left><left>' },
   { 'n', '<leader>d:', ':lua DAP.()<left><left>' },
   { 'n', '<leader>dr', DAP.run_to_cursor },
   { 'n', '<leader>db', DAP.toggle_breakpoint },
-  { 'n', '<leader>dc', DAP.continue },
-  { 'n', '<leader>dn', DAP.step_over },
-  { 'n', '<leader>ds', DAP.step_into },
-  { 'n', '<leader>de', DAPUI.eval },
-  { 'n', '<leader>T', function()
-      DAPUI.float_element('console', {
-        width = vim.o.columns - 10,
-        height = vim.o.lines - 10,
-        position = 'center',
-      })
-    end },
+  { 'n', '<leader>dk', DAPUI.eval },
+  { 'n', '<leader>dt', function()
+      DAPUI.float_element('console', float_default)
+    end
+  },
+  { 'n', '<Leader>df', function()
+      DAPUI.float_element('stacks', float_default)
+    end
+  },
+  { 'n', '<Leader>ds', function()
+      DAPUI.float_element('scopes', float_default)
+    end
+  },
+  { 'n', '<Leader>dw', function()
+      DAPUI.float_element('watches', float_default)
+    end
+  },
+  { 'n', '<Leader>dB', function()
+      DAPUI.float_element('breakpoints', float_default)
+    end
+  },
 }
 for _,k in ipairs(KEYMAPS) do
   vim.keymap.set(k[1], k[2], k[3], { noremap = true })
 end
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "dap-repl",
+    once = true,
+    callback = function()
+      vim.keymap.set('i', '<C-l>', function()
+        vim.opt_local.scrolloff = 0
+        vim.cmd('normal! Gzt')
+      end, { buffer = 0 })
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "dap-repl",
+    once = true,
+    callback = function()
+      vim.cmd('startinsert')
+    end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "dap-float",
+    callback = function()
+      vim.keymap.set('n', '<Esc>', function()
+        vim.api.nvim_win_close(0,false)
+      end, { buffer = 0 })
+    end,
+})
 
 vim.cmd [[
   anoremenu PopUp.DAP\ Toggle\ Breakpoint <cmd>lua DAP.toggle_breakpoint()<CR>
