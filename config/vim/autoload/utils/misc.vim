@@ -32,3 +32,16 @@ function! utils#misc#scroll_cursor_popup(count) abort
 
   return 0
 endfunction
+
+function! utils#misc#get_script_number(script_name)
+  redir => scriptnames
+  silent! scriptnames
+  redir END
+
+  for script in split(l:scriptnames, "\n")
+    if l:script =~# a:script_name
+      return str2nr(split(l:script, ':')[0])
+    endif
+  endfor
+  return -1
+endfunction

@@ -305,7 +305,22 @@ let g:ctrlp_extensions    = [ "tag", "line" ]
 let g:ctrlp_mruf_relative = 1
 let g:ctrlp_mruf_exclude  = '/tmp/.*\|/temp/.*'
 let g:ctrlp_map           = '<C-p><C-p>'
-let g:ctrlp_match_window  = 'results:0'
+let g:ctrlp_match_window  = 'results:100'
+
+function! s:MyCtrlPMRUCacheFile() abort
+  let snr = utils#misc#get_script_number('ctrlp.vim/autoload/ctrlp/mrufiles.vim')
+  if snr < 0 | return | endif
+  let s:cadir = $XDG_STATE_HOME.'/vim/ctrlp'
+  let s:cafile = s:cadir.'/mru.txt'
+  exec      'function! <SNR>'.snr.'_savetofile(mrufs)' . "\n"
+        \ . '  call ctrlp#utils#writecache(a:mrufs, s:cadir, s:cafile)' . "\n"
+        \ . 'endfunction'
+  function! ctrlp#mrufiles#cachefile() abort
+    return s:cafile
+  endfunction
+endfunction
+
+call s:MyCtrlPMRUCacheFile() | delfunc s:MyCtrlPMRUCacheFile
 
 let g:ctrlp_user_command = {
       \   'fallback': 'find %s -type f',
