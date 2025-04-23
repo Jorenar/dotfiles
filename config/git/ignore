@@ -27,6 +27,7 @@ compile_commands.json
 Session.vim
 .miniSnip
 .vimspector.json
+.vimspector.session
 
 .tags/
 cscope.out*
