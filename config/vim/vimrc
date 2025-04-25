@@ -505,7 +505,7 @@ let g:traces_preview_window = "10new"
 let g:wrapwidth_hl = "Ignore"
 
 let g:termdebug_config = #{
-      \   wide: v:true,
+      \   wide: 1,
       \   disasm_window: v:true,
       \   disasm_window_height: 15,
       \   map_K: v:false,

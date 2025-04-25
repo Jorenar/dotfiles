@@ -10,15 +10,6 @@ dap_repl.commands = vim.tbl_extend('force', dap_repl.commands, {
     help = { '.h', '.help' },
     exit = { '.q', '.quit', '.exit' },
     into = { '.s', '.into' },
-    custom_commands = {
-      ['.'] = function(text)
-        local function handler(_, res)
-          dap_repl.append(res.result:gsub('\n$',''), vim.fn.line('$')-1)
-        end
-        DAP.session():evaluate({ expression = '-exec ' .. text }, handler)
-      end,
-      ['.restart'] = DAP.restart,
-    },
   })
 
 vim.fn.sign_define('DapStopped', {text='→', texthl='debugPC', linehl='', numhl='debugPC'})
