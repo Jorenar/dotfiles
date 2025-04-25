@@ -474,6 +474,17 @@ for e in g:exrc#names
   exec 'autocmd BufWritePost' e 'nested silent ExrcTrust'
 endfor | unlet e
 
+function! s:RmSoFromExrcTrust() abort
+  let snr = utils#misc#get_script_number('exrc.vim/autoload/exrc.vim')
+  if snr < 0 | return | endif
+  exec execute('fun! exrc#trust')
+        \ ->substitute('function ', 'fun! ', '')
+        \ ->substitute('call exrc#source()', '', '')
+        \ ->substitute('s:names', 'g:exrc#names', '')
+        \ ->substitute('s:', '<SNR>'.snr.'_', 'g')
+endfunction
+autocmd VimEnter * call s:RmSoFromExrcTrust() | delfunc s:RmSoFromExrcTrust
+
 "   ~ {{{1
 
 au VimEnter * com! -bang UseVimball
