@@ -489,10 +489,18 @@ set keywordprg=:Man
 
 let g:abolish_save_file = $XDG_DATA_HOME."/vim/abolish.vim"
 let g:EditorConfig_enable_for_new_buf = 1
-let g:termdebug_wide = 1
 let g:traces_abolish_integration = 1
 let g:traces_preview_window = "10new"
 let g:wrapwidth_hl = "Ignore"
+
+let g:termdebug_config = #{
+      \   wide: v:true,
+      \   disasm_window: v:true,
+      \   disasm_window_height: 15,
+      \   map_K: v:false,
+      \   map_minus: v:false,
+      \   map_plus: v:false,
+      \ }
 
 let g:miniSnip_extends = {
       \   "arduino"  : [ "cpp", "c" ],
