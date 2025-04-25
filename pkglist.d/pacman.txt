@@ -158,6 +158,7 @@ zathura-pdf-mupdf
 
 # bluez
 # bluez-utils
+# bluetui
 # ethtool
 
 libvirt

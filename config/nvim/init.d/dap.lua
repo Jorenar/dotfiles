@@ -105,6 +105,7 @@ DAPUI.setup({
   })
 
 local function openUI()
+  DAPUI.close()
   DAPUI.open()
 end
 
@@ -228,6 +229,7 @@ vim.cmd [[
   anoremenu PopUp.DAP\ Toggle\ Breakpoint <cmd>lua DAP.toggle_breakpoint()<CR>
 ]]
 
+vim.api.nvim_create_user_command('DapuiClose', DAPUI.close, {})
 vim.api.nvim_create_user_command('DapuiToggle', DAPUI.toggle, {})
 
 

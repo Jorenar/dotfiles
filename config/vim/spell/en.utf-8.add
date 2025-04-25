@@ -91,6 +91,7 @@ OCaml
 overcorrecting
 overfocus
 overfocused
+parsable
 plaintext
 Podman
 Polska
@@ -120,6 +121,7 @@ toolchains
 unaddressable
 uncomment
 unintuitive
+unparsable
 unsequenced
 uploader
 variadic
