@@ -12,6 +12,16 @@ dap_repl.commands = vim.tbl_extend('force', dap_repl.commands, {
     into = { '.s', '.into' },
   })
 
+vim.api.nvim_create_user_command("DapSessions", function()
+  local widgets = require('dap.ui.widgets')
+  local session_picker = widgets.centered_float(widgets.sessions, {})
+  vim.keymap.set('n', '<Esc>', '<Cmd>q<CR>', { buffer = session_picker.buf })
+  vim.keymap.set('n', '<CR>', function()
+    require('dap.ui').trigger_actions({ mode = 'first' })
+    DAP.focus_frame()
+  end, { buffer = session_picker.buf })
+end, { nargs = 0 })
+
 vim.fn.sign_define('DapStopped', {text='→', texthl='debugPC', linehl='', numhl='debugPC'})
 
 vim.api.nvim_set_hl(0, "DapUIRestart", { link = "DapUIRestartNC" }) -- needs to be set before dapui
