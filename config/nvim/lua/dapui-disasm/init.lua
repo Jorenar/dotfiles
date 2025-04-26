@@ -37,11 +37,10 @@ local function write_buf(instructions, pc, jump_to_pc, cursor_offset)
         lnum = pc_line, priority = 10
       })
 
-    local current_line = jump_to_pc and pc_line or vim.fn.line('.')
-    current_line = current_line + cursor_offset
-
     local win = vim.fn.bufwinid(buffer)
     if win ~= -1 then
+      local current_line = jump_to_pc and pc_line or vim.fn.line('.', win)
+      current_line = current_line + cursor_offset
       vim.api.nvim_win_set_cursor(win, { current_line, 0 })
     end
   end
