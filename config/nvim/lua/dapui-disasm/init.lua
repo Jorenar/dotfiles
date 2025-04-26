@@ -55,6 +55,8 @@ local function render(jump_to_pc, cursor_offset)
     if current_frame then
       pc = current_frame["instructionPointerReference"]
     end
+  else
+    return
   end
   if not pc then
     write_buf({}, pc)
@@ -73,6 +75,49 @@ local function render(jump_to_pc, cursor_offset)
     }, handler)
 end
 
+vim.api.nvim_create_autocmd("FileType" , {
+    pattern = "dapui_disassembly",
+    callback = function(p)
+      local buf = p.buf
+
+      vim.bo[buf].syntax = "asm"
+
+      vim.api.nvim_create_autocmd("WinScrolled" , {
+          buffer = buf,
+          callback = function()
+            local elem = dapui.elements.disassembly
+            local window = vim.fn.bufwinid(buf)
+            local top_line = vim.fn.getwininfo(window)[1].topline
+            local height = vim.api.nvim_win_get_height(window)
+
+            if top_line < height then
+              -- We're at the top, request another page above the cursor
+              ins.count = ins.count + height  -- Get increasingly more
+              ins.offset = ins.offset - height
+              elem.render(false, height)
+            elseif top_line >= (vim.api.nvim_buf_line_count(buf) - height) then
+              -- We're at the bottom, request a new page below the cursor
+              ins.count = ins.count + height  -- Get increasingly more
+              ins.offset = math.min(0, ins.offset + height)
+              elem.render(false)
+            end
+          end,
+        })
+
+      for _, ev in ipairs({ "scopes" }) do
+        dap.listeners.after[ev]["update_disassembly"] = function()
+          dapui.elements.disassembly.render()
+        end
+      end
+
+      for _, ev in ipairs({ "disconnect", "event_exited", "event_terminated" }) do
+        dap.listeners.after[ev]["update_disassembly"] = function()
+          Canvas.new():render_buffer(buf, config.element_mapping("disassembly"))
+        end
+      end
+    end
+  })
+
 dapui.register_element("disassembly", {
   render = render,
   buffer = util.create_buffer("DAP Disassembly", {
@@ -81,36 +126,3 @@ dapui.register_element("disassembly", {
   }),
   allow_without_session = false,
 })
-
-vim.api.nvim_create_autocmd("WinScrolled" , {
-    buffer = dapui.elements.disassembly.buffer(),
-    callback = function(e)
-      local elem = dapui.elements.disassembly
-      local buffer = e.buf
-      local window = vim.fn.bufwinid(buffer)
-      local top_line = vim.fn.getwininfo(window)[1].topline
-      local height = vim.api.nvim_win_get_height(window)
-
-      if top_line < height then
-        -- We're at the top, request another page above the cursor
-        ins.count = ins.count + height  -- Get increasingly more
-        ins.offset = ins.offset - height
-        elem.render(false, height)
-      elseif top_line >= (vim.api.nvim_buf_line_count(buffer) - height) then
-        -- We're at the bottom, request a new page below the cursor
-        ins.count = ins.count + height  -- Get increasingly more
-        ins.offset = math.min(0, ins.offset + height)
-        elem.render(false)
-      end
-    end,
-  })
-
-
-for _, ev in ipairs({ "scopes", "disconnect", "event_exited", "event_terminated" }) do
-  dap.listeners.after[ev]["update_disassembly"] = function()
-    local elem = dapui.elements.disassembly
-    if elem then
-      elem.render()
-    end
-  end
-end

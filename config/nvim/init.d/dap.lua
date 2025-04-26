@@ -1,47 +1,80 @@
-DAP = require("dap")
+local dap = require("dap")
+local dapui = require("dapui")
+local dap_repl = require('dap.repl')
+require('dapui-disasm')
 require('mason-nvim-dap').setup({ handlers = {} })
 
-DAP.defaults.fallback.external_terminal = {
+-- REPL & terminal {{{1
+
+dap.defaults.fallback.external_terminal = {
   command = "tmux", args = { "split", "-hb" },
 }
 
-local dap_repl = require('dap.repl')
 dap_repl.commands = vim.tbl_extend('force', dap_repl.commands, {
     help = { '.h', '.help' },
     exit = { '.q', '.quit', '.exit' },
     into = { '.s', '.into' },
   })
 
-vim.api.nvim_create_user_command("DapSessions", function()
-  local widgets = require('dap.ui.widgets')
-  local session_picker = widgets.centered_float(widgets.sessions, {})
-  vim.keymap.set('n', '<Esc>', '<Cmd>q<CR>', { buffer = session_picker.buf })
-  vim.keymap.set('n', '<CR>', function()
-    require('dap.ui').trigger_actions({ mode = 'first' })
-    DAP.focus_frame()
-  end, { buffer = session_picker.buf })
-end, { nargs = 0 })
-
-vim.fn.sign_define('DapStopped', {text='→', texthl='debugPC', linehl='', numhl='debugPC'})
-
-vim.api.nvim_set_hl(0, "DapUIRestart", { link = "DapUIRestartNC" }) -- needs to be set before dapui
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "dap-repl",
+    once = true,
+    callback = function()
+      vim.keymap.set('i', '<C-l>', function()
+        vim.opt_local.scrolloff = 0
+        vim.cmd('normal! Gzt')
+      end, { buffer = 0 })
+  end,
+})
 
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "dap-repl", "dapui_*" },
+    pattern = "dap-repl",
+    once = true,
     callback = function()
-      vim.api.nvim_create_autocmd("BufEnter", {
-          once = true,
-          pattern = "<buffer>",
-          callback = function()
-            vim.opt_local.statusline = ' %f'
-            vim.opt_local.foldmethod = 'expr'
-          end,
-        })
+      local dap_brp = require('dap.breakpoints')
+
+      local function check_brkpts(line)
+        local pattern = 'Breakpoint %d+ at 0x[0-9A-Fa-f]+: file (.+), line (%d+)'
+        local file, lnum = line:match(pattern)
+        if not file or not lnum then
+          return false
+        end
+        local bufnr = vim.fn.bufnr(file, true)
+        if not vim.bo[bufnr].buflisted then
+          vim.fn.bufload(bufnr)
+        end
+        dap_brp.set({}, bufnr, tonumber(lnum))
+        return true
+      end
+
+      local function check_watches(line)
+        local expr = line:match('Watchpoint %d+: (.+)')
+        if expr then
+          dapui.elements.watches.add(expr)
+        end
+      end
+
+      vim.api.nvim_buf_attach(0, false, {
+        on_lines = function(_, buf, _, st, _, ed, _)
+          local new_lines = vim.api.nvim_buf_get_lines(buf, st, ed, false)
+          local should_ui_refresh = false
+
+          for _, line in ipairs(new_lines) do
+            should_ui_refresh = check_brkpts(line) or should_ui_refresh
+            check_watches(line)
+          end
+
+          if should_ui_refresh then
+            vim.schedule(dapui.elements.breakpoints.render)
+          end
+        end,
+      })
     end,
   })
 
-local DAPUI, _ = require("dapui"), require('dapui-disasm')
-DAPUI.setup({
+-- UI {{{1
+
+dapui.setup({
     expand_lines = false,
     force_buffers = true,
     controls = {
@@ -119,117 +152,90 @@ DAPUI.setup({
     },
   })
 
-local function openUI()
-  DAPUI.close()
-  DAPUI.open()
-end
-
-DAP.listeners.before.attach.dapui_config = openUI
-DAP.listeners.before.launch.dapui_config = openUI
-
+vim.api.nvim_set_hl(0, "DapUIRestartNC", { bold = true })
 
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = "dap-repl",
-    once = true,
+    pattern = { "dap-repl", "dapui_*" },
     callback = function()
-      local dap_brp = require('dap.breakpoints')
-
-      local function check_brkpts(line)
-        local pattern = 'Breakpoint %d+ at 0x[0-9A-Fa-f]+: file (.+), line (%d+)'
-        local file, lnum = line:match(pattern)
-        if not file or not lnum then
-          return false
-        end
-        local bufnr = vim.fn.bufnr(file, true)
-        if not vim.bo[bufnr].buflisted then
-          vim.fn.bufload(bufnr)
-        end
-        dap_brp.set({}, bufnr, tonumber(lnum))
-        return true
-      end
-
-      local function check_watches(line)
-        local expr = line:match('Watchpoint %d+: (.+)')
-        if expr then
-          DAPUI.elements.watches.add(expr)
-        end
-      end
-
-      vim.api.nvim_buf_attach(0, false, {
-        on_lines = function(_, buf, _, st, _, ed, _)
-          local new_lines = vim.api.nvim_buf_get_lines(buf, st, ed, false)
-          local should_ui_refresh = false
-
-          for _, line in ipairs(new_lines) do
-            should_ui_refresh = check_brkpts(line) or should_ui_refresh
-            check_watches(line)
-          end
-
-          if should_ui_refresh then
-            vim.schedule(DAPUI.elements.breakpoints.render)
-          end
-        end,
-      })
+      vim.api.nvim_create_autocmd("BufEnter", {
+          once = true,
+          pattern = "<buffer>",
+          callback = function()
+            vim.opt_local.statusline = ' %f'
+            vim.opt_local.foldmethod = 'expr'
+          end,
+        })
     end,
   })
 
+local function openUI()
+  dapui.close()
+  dapui.open()
+end
 
-local float_default = {
+dap.listeners.before.attach.dapui_config = openUI
+dap.listeners.before.launch.dapui_config = openUI
+
+vim.api.nvim_create_user_command('DapuiClose', dapui.close, {})
+vim.api.nvim_create_user_command('DapuiToggle', dapui.toggle, {})
+
+-- mappings {{{1
+
+local float_winopts = {
   enter = true,
   width = vim.o.columns - 10,
   height = vim.o.lines - 10,
   position = 'center',
 }
 
-local KEYMAPS = {
-  { 'n', '<leader>d',  ':lua DAP.()<left><left>' },
-  { 'n', '<leader>d:', ':lua DAP.()<left><left>' },
-  { 'n', '<leader>dr', DAP.run_to_cursor },
-  { 'n', '<leader>db', DAP.toggle_breakpoint },
-  { 'n', '<leader>dk', DAPUI.eval },
+for _,k in ipairs({
+  { 'n', '<leader>d',  ':lua require("dap").()<left><left>' },
+  { 'n', '<leader>d:', ':lua require("dap").()<left><left>' },
+  { 'n', '<leader>dr', dap.run_to_cursor },
+  { 'n', '<leader>db', dap.toggle_breakpoint },
+  { 'n', '<leader>dk', dapui.eval },
   { 'n', '<leader>dt', function()
-      DAPUI.float_element('console', float_default)
+      dapui.float_element('console', float_winopts)
     end
   },
   { 'n', '<Leader>df', function()
-      DAPUI.float_element('stacks', float_default)
+      dapui.float_element('stacks', float_winopts)
     end
   },
   { 'n', '<Leader>ds', function()
-      DAPUI.float_element('scopes', float_default)
+      dapui.float_element('scopes', float_winopts)
     end
   },
   { 'n', '<Leader>dw', function()
-      DAPUI.float_element('watches', float_default)
+      dapui.float_element('watches', float_winopts)
     end
   },
   { 'n', '<Leader>dB', function()
-      DAPUI.float_element('breakpoints', float_default)
+      dapui.float_element('breakpoints', float_winopts)
     end
   },
   { 'n', '<Leader>da', function()
-      DAPUI.float_element('disassembly', float_default)
+      dapui.float_element('disassembly', float_winopts)
     end
   },
-}
-for _,k in ipairs(KEYMAPS) do
+}) do
   vim.keymap.set(k[1], k[2], k[3], { noremap = true })
 end
 
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "dap-repl",
-    once = true,
-    callback = function()
-      vim.keymap.set('i', '<C-l>', function()
-        vim.opt_local.scrolloff = 0
-        vim.cmd('normal! Gzt')
-      end, { buffer = 0 })
-  end,
-})
-
 vim.cmd [[
-  anoremenu PopUp.DAP\ Toggle\ Breakpoint <cmd>lua DAP.toggle_breakpoint()<CR>
+  anoremenu PopUp.DAP\ Toggle\ Breakpoint <cmd>lua require("dap").toggle_breakpoint()<CR>
 ]]
 
-vim.api.nvim_create_user_command('DapuiClose', DAPUI.close, {})
-vim.api.nvim_create_user_command('DapuiToggle', DAPUI.toggle, {})
+-- misc {{{1
+
+vim.fn.sign_define('DapStopped', {text='→', texthl='debugPC', linehl='', numhl='debugPC'})
+
+vim.api.nvim_create_user_command("DapSessions", function()
+  local widgets = require('dap.ui.widgets')
+  local session_picker = widgets.centered_float(widgets.sessions, {})
+  vim.keymap.set('n', '<Esc>', '<Cmd>q<CR>', { buffer = session_picker.buf })
+  vim.keymap.set('n', '<CR>', function()
+    require('dap.ui').trigger_actions({ mode = 'first' })
+    dap.focus_frame()
+  end, { buffer = session_picker.buf })
+end, { nargs = 0 })
