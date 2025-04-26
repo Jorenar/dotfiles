@@ -13,6 +13,9 @@ command! -buffer -nargs=*  Sort
 
 " ------------------------------------------------------------------------------
 
+nnoremap <buffer> <expr> <C-v> &splitright ? "\<C-W>\<CR>\<C-W>L" : "\<C-W>\<CR>\<C-W>H"
+nnoremap <buffer> <C-s> <C-w><CR>
+
 setlocal nocursorline nocursorcolumn
 setlocal colorcolumn=
 setlocal signcolumn=no

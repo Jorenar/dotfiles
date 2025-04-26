@@ -89,11 +89,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
   })
 
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    focusable = false,
-    border = "single"
-  })
-
 vim.lsp.handlers["textDocument/publishDiagnostics"] = (function(diag_handler)
   local function ale_map(e)
     return {
@@ -144,7 +139,7 @@ end)(vim.notify)
 KEYMAPS = {
   { 'n', 'L', "<Cmd>exec {l -> empty(l) ? '' : 'norm L'.l}(input('L'))<CR>" },
 
-  { 'n', 'LK',  vim.lsp.buf.hover },
+  { 'n', 'LK',  function() vim.lsp.buf.hover({ border = "single" }) end },
   { 'n', 'LR',  vim.lsp.buf.rename },
 
   { 'n', 'Lca', vim.lsp.buf.code_action },

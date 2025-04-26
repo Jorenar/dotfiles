@@ -256,6 +256,7 @@ nnoremap <expr> Q {r ->
       \ }(nr2char(getchar()))
 
 map gh <nop>
+imap <F1> <lt>F1>
 
 augroup VISUALBLOCK_NOSTARTOFLINE
   autocmd!
@@ -500,6 +501,7 @@ set keywordprg=:Man
 
 let g:abolish_save_file = $XDG_DATA_HOME."/vim/abolish.vim"
 let g:EditorConfig_enable_for_new_buf = 1
+let g:qf_loclist_window_bottom = 0
 let g:traces_abolish_integration = 1
 let g:traces_preview_window = "10new"
 let g:wrapwidth_hl = "Ignore"
@@ -524,9 +526,6 @@ let g:miniSnip_extends = {
 
 let g:undotree_SetFocusWhenToggle = 1
 nnoremap <F1> :UndotreeToggle<CR>
-
-let g:qf_mapping_ack_style = 1
-let g:qf_loclist_window_bottom = 0
 
 nmap ]b <Plug>(buf-surf-forward)
 nmap [b <Plug>(buf-surf-back)
