@@ -5,8 +5,6 @@ augroup filetypedetect
   let g:c_syntax_for_h = 1
 
   au! BufRead,BufNewFile *.gradle      setf gradle
-  au! BufRead,BufNewFile *.masm        setf masm
-  au! BufRead,BufNewFile *.nasm        setf nasm
   au! BufRead,BufNewFile *.snippets    setf snippets
   au! BufRead,BufNewFile */ssh/config  setf sshconfig
   au! BufRead,BufNewFile LICENSE       setf LICENSE

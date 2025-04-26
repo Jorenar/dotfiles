@@ -9,6 +9,7 @@ hi! ALEInfo NONE ctermfg=15 ctermbg=4
 hi! link ALEError   Error
 hi! link ALEWarning WarningMsg
 
+let g:ale_nasm_nasm_options = '-f elf64'
 
 " Vale {{{
 
