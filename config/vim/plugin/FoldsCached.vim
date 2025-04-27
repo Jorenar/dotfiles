@@ -25,7 +25,7 @@ function! FoldsCached(mk) abort
     let &viewoptions = vop_old
 
     let folds = readfile(foldfile)
-    call filter(folds, 'v:val =~ "^\\d\\+,\\d\\+fold$"')
+    call filter(folds, {_,l -> l =~ '\v^(sil! )?\d+,\d+fold$'})
     call uniq(folds)
 
     if !empty(folds)
@@ -41,7 +41,6 @@ function! FoldsCached(mk) abort
   elseif filereadable(foldfile)
     exec "source" foldfile
   endif
-
 endfunction
 
 augroup FOLDS_CACHED

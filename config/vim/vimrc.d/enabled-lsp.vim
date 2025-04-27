@@ -1,6 +1,7 @@
 let g:enabled_lsp = {
       \   'asm-lsp': {},
       \   'ast-grep': {},
+      \   'bashls': {-> executable('bash-language-server')},
       \   'ccls': v:false,
       \   'clangd': {},
       \   'denols': {-> executable('deno')},
@@ -10,6 +11,7 @@ let g:enabled_lsp = {
       \   'jdtls': {},
       \   'jedi-language-server': {},
       \   'lua_ls': {-> executable('lua-language-server')},
+      \   'm68k': {-> executable('m68k-lsp-server')},
       \   'openscad-lsp': {},
       \   'sonarlint': {-> executable('sonarlint-language-server')},
       \   'sqls': {},

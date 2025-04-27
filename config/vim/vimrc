@@ -277,11 +277,11 @@ set clipboard=
 sil! packadd! cfilter
 sil! packadd! editorconfig
 sil! packadd! matchit
+sil! packadd! termdebug
 
 if !has('nvim')
   sil! packadd! vim-lsp
   sil! packadd! vim-lsp-ale
-  sil! packadd! termdebug
 endif
 
 source $VIMRUNTIME/ftplugin/man.vim
