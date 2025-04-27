@@ -2,9 +2,8 @@
 
 -- handlers & helpers {{{
 
-local KEYMAPS, SERVERS
+local SERVERS = {}
 
-local LSPCONFIG = require('lspconfig')
 local GP = require('goto-preview')
 
 GP.setup {
@@ -15,7 +14,7 @@ GP.setup {
 
 local function isServEnabled(client)
   local function check(name)
-    local val = vim.g.enabled_lsp[name]
+    local val = vim.g.enabled_lsp and vim.g.enabled_lsp[name]
     if vim.fn.type(val) == vim.v.t_dict and vim.fn.empty(val) then
       val = vim.fn.executable(name)
     elseif val == vim.NIL then
@@ -28,37 +27,24 @@ local function isServEnabled(client)
 end
 
 local function setupServ(name, conf)
-  if not isServEnabled(name) then return end
-
   if name == 'sonarlint' then
     require('sonarlint').setup(conf)
     return
   end
 
-  if name == 'jedi' then
-    name = 'jedi_language_server'
-  end
-
-  LSPCONFIG[name].setup(conf)
-
-  return LSPCONFIG[name]
+  table.insert(SERVERS, name)
+  vim.lsp.config(name, conf)
+  vim.lsp.enable(name, isServEnabled(name))
 end
 
 vim.api.nvim_create_autocmd({"BufReadPre", "FileType", "VimEnter"}, {
     once = true,
     callback = function(e)
       vim.api.nvim_del_autocmd(e.id)  -- delete au for other events
-
-      local start = (e.event == "FileType") and function(s)
-        if not s.autostart then return end
-        if s.filetypes and vim.tbl_contains(s.filetypes, e.match) then
-          s.launch()
+      for _,name in ipairs(SERVERS) do
+        if name ~= "sonarlint" then
+          vim.lsp.enable(name, isServEnabled(name))
         end
-      end
-
-      for name, conf in pairs(SERVERS) do
-        local serv = setupServ(name, conf)
-        if start and serv then start(serv) end
       end
     end
   })
@@ -82,9 +68,23 @@ vim.api.nvim_create_autocmd("LspAttach", {
       if K.buffer == 1 and K.desc == "vim.lsp.buf.hover()" then
         vim.api.nvim_buf_del_keymap(args.buf, 'n', 'K')
       end
+    end
+  })
 
-      for _,k in ipairs(KEYMAPS) do
-        vim.keymap.set(k[1], k[2], k[3], { buffer = true, noremap = true })
+vim.api.nvim_create_autocmd("LspAttach", {
+    callback = function(args)
+      local client = vim.lsp.get_client_by_id(args.data.client_id)
+      if not client then
+        return
+      elseif client.name == 'ccls' then
+        if not isServEnabled('clangd') then return end
+        client.server_capabilities = {
+          completionProvider = client.server_capabilities.completionProvider,
+          textDocumentSync = client.server_capabilities.textDocumentSync,
+        }
+      elseif client.name == 'clangd' then
+        if not isServEnabled('ccls') then return end
+        client.server_capabilities.completionProvider = nil
       end
     end
   })
@@ -113,7 +113,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = (function(diag_handler)
     vim.fn['ale#other_source#ShowResults'](bufnr,
       vim.lsp.get_client_by_id(ctx.client_id).name,
       vim.tbl_map(ale_map, vim.deepcopy(res.diagnostics))
-    )
+      )
 
     return diag_handler(err, res, ctx, conf)
   end
@@ -135,8 +135,8 @@ end)(vim.notify)
 
 -- }}}
 
+--[[ KEYMAPS ]] for _,k in ipairs({
 
-KEYMAPS = {
   { 'n', 'L', "<Cmd>exec {l -> empty(l) ? '' : 'norm L'.l}(input('L'))<CR>" },
 
   { 'n', 'LK',  function() vim.lsp.buf.hover({ border = "single" }) end },
@@ -158,14 +158,15 @@ KEYMAPS = {
   { 'n', 'Lfs', vim.lsp.buf.workspace_symbol },
   { 'n', 'Lfi', vim.lsp.buf.incoming_calls },
   { 'n', 'Lfo', vim.lsp.buf.outgoing_calls },
-}
 
-SERVERS = {
+}) do vim.keymap.set(k[1], k[2], k[3], { noremap = true }) end
+
+--[[ SERVERS ]] for name, conf in pairs({
 
   digestif = {},
   gopls = {},
   jdtls = {},
-  jedi = {},
+  jedi_language_server = {},
   openscad_lsp = {},
   texlab = {},
   vimls = {},
@@ -179,12 +180,6 @@ SERVERS = {
       'ast-grep', 'lsp',
       '-c', vim.env.XDG_CONFIG_HOME .. '/ast-grep/sgconfig.yml'
     },
-    root_dir = function(fname)
-      return vim.fs.root(fname, {
-          'sgconfig.yaml', 'sgconfig.yml', '.git'
-        }) or '.'
-    end,
-    filetypes = { '*' }
   },
 
   ccls = {
@@ -197,13 +192,6 @@ SERVERS = {
           'compile_commands.json', '.ccls', '.git'
         }) or '/tmp'
     end,
-    on_attach = function(client, _)
-      if not isServEnabled('clangd') then return end
-      client.server_capabilities = {
-        completionProvider = client.server_capabilities.completionProvider,
-        textDocumentSync = client.server_capabilities.textDocumentSync,
-      }
-    end
   },
 
   clangd = {
@@ -211,10 +199,6 @@ SERVERS = {
       "--header-insertion-decorators=false",
       "--background-index",
     },
-    on_attach = function(client, _)
-      if not isServEnabled('ccls') then return end
-      client.server_capabilities.completionProvider = nil
-    end
   },
 
   denols = {
@@ -312,4 +296,4 @@ SERVERS = {
     filetypes = { '*' }
   },
 
-}
+}) do setupServ(name, conf) end

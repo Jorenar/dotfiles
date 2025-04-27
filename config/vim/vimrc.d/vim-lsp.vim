@@ -137,7 +137,7 @@ function! s:on_lsp_setup() abort
           \ })
   endif
 
-  if s:isServEnabled('jedi')
+  if s:isServEnabled('jedi-language-server')
     call lsp#register_server(#{
           \   name: 'Jedi',
           \   cmd: [ 'jedi-language-server' ],

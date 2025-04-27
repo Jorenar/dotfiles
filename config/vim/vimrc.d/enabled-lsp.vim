@@ -8,7 +8,7 @@ let g:enabled_lsp = {
       \   'gopls': {},
       \   'groovyls': {-> executable('groovy-language-server')},
       \   'jdtls': {},
-      \   'jedi': {-> executable('jedi-language-server')},
+      \   'jedi-language-server': {-> executable('jedi-language-server')},
       \   'lua_ls': {-> executable('lua-language-server')},
       \   'openscad-lsp': {},
       \   'sonarlint': {-> executable('sonarlint-language-server')},
