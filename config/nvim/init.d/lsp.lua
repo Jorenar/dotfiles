@@ -1,11 +1,13 @@
--- vim.lsp.set_log_level("debug")
-
 -- handlers & helpers {{{
 
-local SERVERS = {}
+-- vim.lsp.set_log_level("debug")
+
+local SERVERS, KEYMAPS
+SERVERS = vim.tbl_extend("keep", {}, unpack(vim.tbl_map(function(k)
+  return { [k:gsub('-','_')] = {} }
+end, vim.fn.keys(vim.g.enabled_lsp or {}))))
 
 local GP = require('goto-preview')
-
 GP.setup {
   focus_on_open = false,
   dismiss_on_move = true,
@@ -32,7 +34,6 @@ local function setupServ(name, conf)
     return
   end
 
-  table.insert(SERVERS, name)
   vim.lsp.config(name, conf)
   vim.lsp.enable(name, isServEnabled(name))
 end
@@ -41,7 +42,7 @@ vim.api.nvim_create_autocmd({"BufReadPre", "FileType", "VimEnter"}, {
     once = true,
     callback = function(e)
       vim.api.nvim_del_autocmd(e.id)  -- delete au for other events
-      for _,name in ipairs(SERVERS) do
+      for name,_ in pairs(SERVERS) do
         if name ~= "sonarlint" then
           vim.lsp.enable(name, isServEnabled(name))
         end
@@ -135,7 +136,7 @@ end)(vim.notify)
 
 -- }}}
 
---[[ KEYMAPS ]] for _,k in ipairs({
+KEYMAPS = {
 
   { 'n', 'L', "<Cmd>exec {l -> empty(l) ? '' : 'norm L'.l}(input('L'))<CR>" },
 
@@ -159,17 +160,9 @@ end)(vim.notify)
   { 'n', 'Lfi', vim.lsp.buf.incoming_calls },
   { 'n', 'Lfo', vim.lsp.buf.outgoing_calls },
 
-}) do vim.keymap.set(k[1], k[2], k[3], { noremap = true }) end
+}
 
---[[ SERVERS ]] for name, conf in pairs({
-
-  digestif = {},
-  gopls = {},
-  jdtls = {},
-  jedi_language_server = {},
-  openscad_lsp = {},
-  texlab = {},
-  vimls = {},
+SERVERS = vim.tbl_extend("force", SERVERS, {
 
   asm_lsp = {
     filetypes = { "asm", "nasm", "masm", "vmasm" },
@@ -296,4 +289,14 @@ end)(vim.notify)
     filetypes = { '*' }
   },
 
-}) do setupServ(name, conf) end
+})
+
+-- {{{
+for name, conf in pairs(SERVERS) do
+  setupServ(name, conf)
+end
+
+for _,k in ipairs(KEYMAPS) do
+  vim.keymap.set(k[1], k[2], k[3], { noremap = true })
+end
+--- }}}
