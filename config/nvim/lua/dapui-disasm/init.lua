@@ -4,10 +4,17 @@ local config = require("dapui.config")
 local util = require("dapui.util")
 local Canvas = require("dapui.render.canvas")
 
-local ins = {
-  count = (vim.g.dap_disasm_ins_num or 32) + 1,
-  offset = -(vim.g.dap_disasm_ins_num or 32)/2 - 1,
+local cache = {
+  _frameId = 0,
+  _default = {
+    count = 16+1,
+    offset = -8,
+  }
 }
+
+local function get_cache()
+  return cache[cache._frameId]
+end
 
 vim.fn.sign_define('DapDisasmPC', {text='→', texthl='debugPC', linehl='debugPC'})
 
@@ -18,14 +25,32 @@ local function write_buf(instructions, pc, jump_to_pc, cursor_offset)
 
   local canvas = Canvas.new()
 
-  for i, instruction in ipairs(instructions) do
-    local line = string.format(" %s:  %s\n",
-      instruction.address or "N/A",
-      instruction.instruction or "N/A")
-    canvas:write(line)
-    if instruction.address == pc then
-      pc_line = i
+  if #instructions > 0 then
+    local step = 32
+    canvas:add_mapping("expand", function()
+      get_cache().count = get_cache().count + step
+      get_cache().offset = get_cache().offset - step
+      dapui.elements.disassembly.render(false, step)
+    end)
+    canvas:write("[load more]\n")
+
+    for i, instruction in ipairs(instructions) do
+      local line = string.format(" %s:  %s\n",
+        instruction.address or "N/A",
+        instruction.instruction or "N/A")
+      canvas:write(line)
+      if instruction.address == pc then
+        pc_line = i+1
+      end
     end
+
+    canvas:add_mapping("expand", function()
+      get_cache().count = get_cache().count + step
+      -- get_cache().offset = get_cache().count + step
+      -- get_cache().offset = math.min(0, get_cache().offset + step)
+      dapui.elements.disassembly.render(false)
+    end)
+    canvas:write("[load more]")
   end
 
   local buffer = dapui.elements.disassembly.buffer()
@@ -53,7 +78,7 @@ local function render(jump_to_pc, cursor_offset)
   if session then
     current_frame = session.current_frame
     if current_frame then
-      pc = current_frame["instructionPointerReference"]
+      pc = current_frame.instructionPointerReference
     end
   else
     return
@@ -63,14 +88,18 @@ local function render(jump_to_pc, cursor_offset)
     return
   end
 
+  if not cache[current_frame.id] then
+    cache._frameId = current_frame.id
+    cache[current_frame.id] = cache._default
+  end
   local function handler(err, res)
     if err then return end
     write_buf(res.instructions or {}, pc, jump_to_pc, cursor_offset)
   end
   session:request("disassemble", {
       memoryReference = pc,
-      instructionCount = ins.count,
-      instructionOffset = ins.offset,
+      instructionCount = get_cache().count,
+      instructionOffset = get_cache().offset,
       resolveSymbols = true,
     }, handler)
 end
@@ -81,28 +110,6 @@ vim.api.nvim_create_autocmd("FileType" , {
       local buf = p.buf
 
       vim.bo[buf].syntax = "asm"
-
-      vim.api.nvim_create_autocmd("WinScrolled" , {
-          buffer = buf,
-          callback = function()
-            local elem = dapui.elements.disassembly
-            local window = vim.fn.bufwinid(buf)
-            local top_line = vim.fn.getwininfo(window)[1].topline
-            local height = vim.api.nvim_win_get_height(window)
-
-            if top_line < height then
-              -- We're at the top, request another page above the cursor
-              ins.count = ins.count + height  -- Get increasingly more
-              ins.offset = ins.offset - height
-              elem.render(false, height)
-            elseif top_line >= (vim.api.nvim_buf_line_count(buf) - height) then
-              -- We're at the bottom, request a new page below the cursor
-              ins.count = ins.count + height  -- Get increasingly more
-              ins.offset = math.min(0, ins.offset + height)
-              elem.render(false)
-            end
-          end,
-        })
 
       for _, ev in ipairs({ "scopes" }) do
         dap.listeners.after[ev]["update_disassembly"] = function()

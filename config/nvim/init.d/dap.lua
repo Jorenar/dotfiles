@@ -145,6 +145,9 @@ dapui.setup({
         open = { "gd", "<CR>", "<2-LeftMouse>" },
         toggle = "t"
       },
+      disassembly = {
+        expand = "<CR>"
+      },
     },
     render = {
       indent = 2,
@@ -156,12 +159,15 @@ vim.api.nvim_set_hl(0, "DapUIRestartNC", { bold = true })
 
 vim.api.nvim_create_autocmd("FileType", {
     pattern = { "dap-repl", "dapui_*" },
-    callback = function()
+    callback = function(E)
       vim.api.nvim_create_autocmd("BufEnter", {
           once = true,
           pattern = "<buffer>",
           callback = function()
             vim.opt_local.statusline = ' %f'
+            if E.match == "dapui_disassembly" then
+              vim.opt_local.statusline = ' %f %= %L '
+            end
             vim.opt_local.foldmethod = 'expr'
           end,
         })
