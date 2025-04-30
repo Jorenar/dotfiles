@@ -4,6 +4,7 @@
 *:Zone.Identifier
 .cache
 .gdb_history
+.gdbinit
 .tmp/
 a.out
 build*.log

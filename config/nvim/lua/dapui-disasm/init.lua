@@ -7,8 +7,8 @@ local Canvas = require("dapui.render.canvas")
 local cache = {
   _frameId = 0,
   _default = {
-    count = 16+1,
-    offset = -8,
+    count = (vim.g.dap_disasm_ins_cnt or 32) + 1,
+    offset = -(vim.g.dap_disasm_ins_cnt or 32)/2 - 1,
   }
 }
 
@@ -126,10 +126,10 @@ vim.api.nvim_create_autocmd("FileType" , {
   })
 
 dapui.register_element("disassembly", {
-  render = render,
-  buffer = util.create_buffer("DAP Disassembly", {
-    filetype = "dapui_disassembly",
-    syntax = "asm",
-  }),
-  allow_without_session = false,
-})
+    render = render,
+    buffer = util.create_buffer("DAP Disassembly", {
+        filetype = "dapui_disassembly",
+        syntax = "asm",
+      }),
+    allow_without_session = false,
+  })
