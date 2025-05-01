@@ -1,7 +1,7 @@
 local dap = require("dap")
 local dapui = require("dapui")
 local dap_repl = require('dap.repl')
-require('dapui-disasm')
+require('dap-disasm')
 require('mason-nvim-dap').setup({ handlers = {} })
 
 -- REPL & terminal {{{1
