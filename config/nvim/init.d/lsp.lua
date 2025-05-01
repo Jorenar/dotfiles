@@ -180,11 +180,6 @@ SERVERS = vim.tbl_extend("force", SERVERS, {
       cache = { directory = '.cache/ccls' },
       clang = { extraArgs = { '--gcc-toolchain=/usr' } },
     },
-    root_dir = function(fname)
-      return vim.fs.root(fname, {
-          'compile_commands.json', '.ccls', '.git'
-        }) or '/tmp'
-    end,
   },
 
   clangd = {

@@ -2,7 +2,7 @@ let g:enabled_lsp = {
       \   'asm-lsp': {},
       \   'ast-grep': {},
       \   'bashls': {-> executable('bash-language-server')},
-      \   'ccls': v:false,
+      \   'ccls': {-> executable('ccls') && !executable('clangd') },
       \   'clangd': {},
       \   'denols': {-> executable('deno')},
       \   'digestif': {},
