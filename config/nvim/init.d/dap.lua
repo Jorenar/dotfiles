@@ -1,8 +1,13 @@
 local dap = require("dap")
 local dapui = require("dapui")
 local dap_repl = require('dap.repl')
-require('dap-disasm')
+
 require('mason-nvim-dap').setup({ handlers = {} })
+require('dap-disasm').setup({
+    ins_before_memref = 64,
+    ins_after_memref = 64,
+    columns = { "address", "instruction" },
+  })
 
 -- REPL & terminal {{{1
 
@@ -158,15 +163,15 @@ dapui.setup({
 vim.api.nvim_set_hl(0, "DapUIRestartNC", { bold = true })
 
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "dap-repl", "dapui_*" },
+    pattern = { "dap-repl", "dapui_*", "dap_disassembly" },
     callback = function(E)
       vim.api.nvim_create_autocmd("BufEnter", {
           once = true,
           pattern = "<buffer>",
           callback = function()
             vim.opt_local.statusline = ' %f'
-            if E.match == "dapui_disassembly" then
-              vim.opt_local.statusline = ' %f %= %L '
+            if E.match == "dap_disassembly" then
+              vim.opt_local.statusline = ' %f %= %l/%L '
             end
             vim.opt_local.foldmethod = 'expr'
           end,
@@ -199,28 +204,29 @@ for _,k in ipairs({
   { 'n', '<leader>d:', ':lua require("dap").()<left><left>' },
   { 'n', '<leader>dr', dap.run_to_cursor },
   { 'n', '<leader>db', dap.toggle_breakpoint },
+  { 'n', '<Leader>df', dap.focus_frame },
   { 'n', '<leader>dk', dapui.eval },
-  { 'n', '<leader>dt', function()
+  { 'n', '<leader>dwt', function()
       dapui.float_element('console', float_winopts)
     end
   },
-  { 'n', '<Leader>df', function()
+  { 'n', '<Leader>dwf', function()
       dapui.float_element('stacks', float_winopts)
     end
   },
-  { 'n', '<Leader>ds', function()
+  { 'n', '<Leader>dws', function()
       dapui.float_element('scopes', float_winopts)
     end
   },
-  { 'n', '<Leader>dw', function()
+  { 'n', '<Leader>dww', function()
       dapui.float_element('watches', float_winopts)
     end
   },
-  { 'n', '<Leader>dB', function()
+  { 'n', '<Leader>dwb', function()
       dapui.float_element('breakpoints', float_winopts)
     end
   },
-  { 'n', '<Leader>da', function()
+  { 'n', '<Leader>dwa', function()
       dapui.float_element('disassembly', float_winopts)
     end
   },

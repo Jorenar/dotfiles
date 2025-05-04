@@ -202,6 +202,11 @@
 	url = https://github.com/mfussenegger/nvim-dap.git
 	shallow = true
 	ignore = all
+[submodule "nvim-dap-disasm"]
+	path = config/nvim/pack/extern/start/nvim-dap-disasm
+	url = https://github.com/Jorenar/nvim-dap-disasm.git
+	shallow = true
+	ignore = all
 [submodule "nvim-dap-ui"]
 	path = config/nvim/pack/extern/start/nvim-dap-ui
 	url = https://github.com/rcarriga/nvim-dap-ui.git
