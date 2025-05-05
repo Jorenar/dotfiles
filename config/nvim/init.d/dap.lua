@@ -135,7 +135,6 @@ dapui.setup({
     },
     mappings = {
       edit = "cc",
-      expand =  "za" ,
       remove = "dd",
       repl = "<F5>",
     },
@@ -144,7 +143,7 @@ dapui.setup({
         open = { "gd", "<CR>", "<2-LeftMouse>" },
       },
       scopes = {
-        expand = { "<CR>", "za", "<2-LeftMouse>" },
+        expand = { "<CR>", "<2-LeftMouse>" },
       },
       breakpoints = {
         open = { "gd", "<CR>", "<2-LeftMouse>" },
@@ -173,7 +172,7 @@ vim.api.nvim_create_autocmd("FileType", {
             if E.match == "dap_disassembly" then
               vim.opt_local.statusline = ' %f %= %l/%L '
             end
-            vim.opt_local.foldmethod = 'expr'
+            vim.opt_local.foldmethod = 'manual'
           end,
         })
     end,
@@ -206,27 +205,29 @@ for _,k in ipairs({
   { 'n', '<leader>db', dap.toggle_breakpoint },
   { 'n', '<Leader>df', dap.focus_frame },
   { 'n', '<leader>dk', dapui.eval },
-  { 'n', '<leader>dwt', function()
+  { 'n', '<leader>dT', function()
       dapui.float_element('console', float_winopts)
     end
   },
-  { 'n', '<Leader>dwf', function()
+  { 'n', '<Leader>dF', function()
       dapui.float_element('stacks', float_winopts)
     end
   },
-  { 'n', '<Leader>dws', function()
-      dapui.float_element('scopes', float_winopts)
+  { 'n', '<Leader>dS', function()
+      local widgets = require('dap.ui.widgets')
+      widgets.centered_float(widgets.scopes)
+      -- dapui.float_element('scopes', float_winopts)
     end
   },
-  { 'n', '<Leader>dww', function()
+  { 'n', '<Leader>dW', function()
       dapui.float_element('watches', float_winopts)
     end
   },
-  { 'n', '<Leader>dwb', function()
+  { 'n', '<Leader>dB', function()
       dapui.float_element('breakpoints', float_winopts)
     end
   },
-  { 'n', '<Leader>dwa', function()
+  { 'n', '<Leader>dA', function()
       dapui.float_element('disassembly', float_winopts)
     end
   },
