@@ -16,7 +16,7 @@
 	shallow = true
 	ignore = all
 [submodule "ctrlp.vim"]
-	path = config/vim/pack/extern/start/ctrlp.vim
+	path = config/vim/pack/extern/opt/ctrlp.vim
 	url = https://github.com/ctrlpvim/ctrlp.vim.git
 	shallow = true
 	ignore = all
