@@ -15,11 +15,6 @@
 	url = https://github.com/rhysd/conflict-marker.vim.git
 	shallow = true
 	ignore = all
-[submodule "ctrlp.vim"]
-	path = config/vim/pack/extern/opt/ctrlp.vim
-	url = https://github.com/ctrlpvim/ctrlp.vim.git
-	shallow = true
-	ignore = all
 [submodule "diffconflicts"]
 	path = config/vim/pack/extern/start/diffconflicts
 	url = https://github.com/whiteinge/diffconflicts.git
@@ -181,6 +176,11 @@
 	shallow = true
 	ignore = all
 
+[submodule "ctrlp.vim"]
+	path = config/vim/pack/extern/opt/ctrlp.vim
+	url = https://github.com/ctrlpvim/ctrlp.vim.git
+	shallow = true
+	ignore = all
 [submodule "vim-lsp"]
 	path = config/vim/pack/extern/opt/vim-lsp
 	url = https://github.com/prabirshrestha/vim-lsp.git
@@ -215,6 +215,11 @@
 [submodule "flatten.nvim"]
 	path = config/nvim/pack/extern/start/flatten.nvim
 	url = https://github.com/willothy/flatten.nvim.git
+	shallow = true
+	ignore = all
+[submodule "fzf-lua"]
+	path = config/nvim/pack/extern/start/fzf-lua
+	url = https://github.com/ibhagwan/fzf-lua.git
 	shallow = true
 	ignore = all
 [submodule "goto-preview"]

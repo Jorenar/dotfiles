@@ -70,6 +70,30 @@ hi! link DiagnosticUnderlineWarn  ALEWarning
 
 " }}}
 
+" fzf-lua {{{
+
+lua require("fzf-lua").setup({
+      \   fzf_opts = {
+      \     ["--cycle"] = true,
+      \     ["--no-color"] = true,
+      \   },
+      \   previewers = { builtin = { syntax = false } },
+      \   winopts = { treesitter = false },
+      \
+      \   oldfiles = {
+      \     cwd_only = true,
+      \     include_current_session = true,
+      \   },
+      \ })
+
+nnoremap <Leader>f <Cmd>FzfLua<CR>
+nnoremap <Leader>F <Cmd>FzfLua resume<CR>
+nnoremap <Leader>t <Cmd>FzfLua btags resume=true<CR>
+nnoremap <C-p><C-p> <Cmd>FzfLua files<CR>
+nnoremap <C-p><C-m> <Cmd>FzfLua oldfiles<CR>
+
+" }}}
+
 lua require("mason").setup()
 
 aunmenu PopUp.Paste
