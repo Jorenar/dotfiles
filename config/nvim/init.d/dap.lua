@@ -1,9 +1,11 @@
 local dap = require("dap")
 local dapui = require("dapui")
 local dap_repl = require('dap.repl')
+local dap_disasm = require('dap-disasm')
 
 require('mason-nvim-dap').setup({ handlers = {} })
-require('dap-disasm').setup({
+
+dap_disasm.setup({
     ins_before_memref = 64,
     ins_after_memref = 64,
     columns = { "address", "instruction" },
@@ -18,7 +20,15 @@ dap.defaults.fallback.external_terminal = {
 dap_repl.commands = vim.tbl_extend('force', dap_repl.commands, {
     help = { '.h', '.help' },
     exit = { '.q', '.quit', '.exit' },
-    into = { '.s', '.into' },
+    into = { '.s', '.step', '.into' },
+  })
+
+dap_repl.commands.custom_commands = vim.tbl_extend('force',
+  dap_repl.commands.custom_commands,
+  {
+    [".ni"] = dap_disasm.step_over,
+    [".si"] = dap_disasm.step_into,
+    [".bi"] = dap_disasm.step_back,
   })
 
 vim.api.nvim_create_autocmd("FileType", {
