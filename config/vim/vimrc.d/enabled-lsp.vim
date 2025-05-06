@@ -8,6 +8,7 @@ let g:enabled_lsp = {
       \   'digestif': {},
       \   'gopls': {},
       \   'groovyls': {-> executable('groovy-language-server')},
+      \   'harper-ls': {},
       \   'jdtls': {},
       \   'jedi-language-server': {},
       \   'lua_ls': {-> executable('lua-language-server')},

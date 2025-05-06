@@ -222,6 +222,14 @@ SERVERS = vim.tbl_extend("force", SERVERS, {
     },
   },
 
+  harper_ls = {
+    settings = {
+      ["harper-ls"] = {
+        userDictPath = vim.fn.stdpath("config") .. "/spell/en.utf-8.add"
+      }
+    },
+  },
+
   lua_ls = {
     on_init = function(client)
       if not (client.workspace_folders[1].name:match('nvim')
