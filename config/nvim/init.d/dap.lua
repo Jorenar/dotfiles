@@ -146,6 +146,7 @@ dapui.setup({
     mappings = {
       edit = "cc",
       remove = "dd",
+      expand = { "<2-LeftMouse>" },
       repl = "<F5>",
     },
     element_mappings = {
@@ -196,6 +197,10 @@ end
 dap.listeners.before.attach.dapui_config = openUI
 dap.listeners.before.launch.dapui_config = openUI
 
+vim.api.nvim_create_user_command('DapuiOpen', function(t)
+  dapui.close()
+  dapui.open({ reset = t.bang })
+end, { bang = true })
 vim.api.nvim_create_user_command('DapuiClose', dapui.close, {})
 vim.api.nvim_create_user_command('DapuiToggle', dapui.toggle, {})
 
@@ -224,9 +229,7 @@ for _,k in ipairs({
     end
   },
   { 'n', '<Leader>dS', function()
-      local widgets = require('dap.ui.widgets')
-      widgets.centered_float(widgets.scopes)
-      -- dapui.float_element('scopes', float_winopts)
+      dapui.float_element('scopes', float_winopts)
     end
   },
   { 'n', '<Leader>dW', function()
