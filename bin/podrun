@@ -29,7 +29,7 @@ else
 fi
 
 exec podman run -it --rm \
-    --net host --privileged \
+    --net host --privileged -u 0 \
     -h "$ref.$(hostname -s)" \
     -e HOME -v "$HOME:$HOME" \
     -v "/etc/localtime:/etc/localtime:ro" \

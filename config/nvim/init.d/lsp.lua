@@ -2,10 +2,10 @@
 
 -- vim.lsp.set_log_level("debug")
 
-local SERVERS, KEYMAPS
-SERVERS = vim.tbl_extend("keep", {}, unpack(vim.tbl_map(function(k)
-  return { [k:gsub('-','_')] = {} }
-end, vim.fn.keys(vim.g.enabled_lsp or {}))))
+local SERVERS = {}, KEYMAPS
+for k,_ in pairs(vim.g.enabled_lsp or {}) do
+  SERVERS[k:gsub('-','_')] = {}
+end
 
 local GP = require('goto-preview')
 GP.setup {

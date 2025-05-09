@@ -117,15 +117,26 @@ function! s:semgrep_handler(buffer, lines) abort
           \ }})
 endfunction
 
+function! s:semgrep_cmd() abort
+  let l:tmp = fnamemodify(tempname(), ':h') . '/semgrep'
+  call mkdir(l:tmp, 'p', 0700)
+  return ''
+      \ . ale#Env('TMPDIR', l:tmp)
+      \ . ' %e'
+      \ . ' scan --vim'
+      \ . ' --config '.$XDG_CONFIG_HOME .'/semgrep/settings.yaml'
+      \ . ' -'
+endfunction
+
 call map(s:semgrep_fts, {_,ft ->
       \   ale#linter#Define(ft, {
       \     'name': 'semgrep',
       \     'executable': 'semgrep',
-      \     'command': '%e' . ' scan --vim --config '.$XDG_CONFIG_HOME .'/semgrep/settings.yaml -',
+      \     'command': s:semgrep_cmd(),
       \     'callback': function('s:semgrep_handler'),
       \   })
       \ })
 
-unlet s:semgrep_fts
+unlet s:semgrep_fts | delfunc s:semgrep_cmd
 
 " }}}
