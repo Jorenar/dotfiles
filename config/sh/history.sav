@@ -10,7 +10,7 @@ git reset --hard $(git rev-list --max-parents=0 --abbrev-commit HEAD) # reset to
 git submodule update --init --recursive --remote
 gpg --quick-gen-key "KEY NAME" default default never
 mount -t cifs //10.0.2.4/qemu/
-pacman -Qo /path/to/file
+pacman -Qo /path/to/file  # what package file belongs to
 pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'
 pacman -Qttdq # packages which are optionally required by another package
 perl -i -lne 's/\s*$//; print if ! $x{$_}++' $HISTFILE
