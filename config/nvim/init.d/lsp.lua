@@ -2,7 +2,7 @@
 
 -- vim.lsp.set_log_level("debug")
 
-local SERVERS = {}, KEYMAPS
+local SERVERS, KEYMAPS = {}, nil
 for k,_ in pairs(vim.g.enabled_lsp or {}) do
   SERVERS[k:gsub('-','_')] = {}
 end

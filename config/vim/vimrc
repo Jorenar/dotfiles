@@ -33,6 +33,16 @@ set backup undofile
 filetype plugin indent on
 colorscheme minimal
 
+"   TMPDIR {{{1
+
+let $TMPDIR = (len($TMPDIR) ? $TMPDIR : '/tmp')
+call mkdir($TMPDIR, 'p', 0700)
+
+if !has('nvim')
+  let $TMPDIR = (len($TMPDIR) ? $TMPDIR : '/tmp') . '/vim.'.$LOGNAME
+  call mkdir($TMPDIR, 'p', 0700)
+endif
+
 "   startup {{{1
 
 if $VIM_TERMINAL  " then don't nest
@@ -217,6 +227,9 @@ if has('cryptv')
 endif
 
 "   ~ {{{1
+
+set viminfo='1000,<50,s10,h
+set viminfo+=r/tmp,r/media
 
 set secure noexrc
 

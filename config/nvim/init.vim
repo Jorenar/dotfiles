@@ -76,6 +76,10 @@ lua require("fzf-lua").setup({
       \   fzf_opts = {
       \     ["--cycle"] = true,
       \   },
+      \   fzf_colors = {
+      \       true,
+      \       ["gutter"] = "-1",
+      \   },
       \   previewers = {
       \     builtin = { syntax = false }
       \   },
