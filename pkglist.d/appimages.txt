@@ -1,0 +1,2 @@
+https://discuss.saleae.com/c/downloads/          # Saleae Logic 2
+https://github.com/Ultimaker/Cura/releases/      # Ultimaker Cura

@@ -1,0 +1,22 @@
+# LSP
+arduino-language-server
+asm-lsp
+bash-language-server
+deno
+gopls
+harper-ls
+jedi-language-server
+lua-language-server
+m68k-lsp-server
+openscad-lsp
+sonarlint-language-server
+sqls
+texlab
+vim-language-server
+
+# DAP
+cpptools
+
+# linter
+shellcheck
+vint

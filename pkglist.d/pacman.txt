@@ -54,8 +54,10 @@ msmtp
 curlftpfs
 gvfs
 imagemagick
+newsboat
 python-pipx
 ranger
+sane
 squashfs-tools
 sshfs
 termshark
@@ -82,42 +84,31 @@ rust
 tectonic
 
 gdb
-strace
 radare2
+strace
+valgrind
 
+autopep8
 cscope
 ctags
-
+neovim
 tidy
-autopep8
 uncrustify
-
-vint
 vale
-valgrind
-shellcheck
-
-ccls
-deno
-jedi-language-server
-lua-language-server
-sqls
-texlab
-vim-language-server
 
 fuse-overlayfs
 podman
 podman-docker
 wine
 
-i3-wm
-polybar
-scrot
-xclip
-xorg-server
-xorg-xinit
-xorg-xrandr
+# i3-wm
+# polybar
+# scrot
+# xorg-server
+# xorg-xinit
+# xorg-xrandr
 
+xclip
 xdotool
 
 # sway
@@ -145,7 +136,6 @@ feh
 firefox
 libreoffice-still
 mpv
-sane
 yt-dlp
 zathura
 zathura-pdf-mupdf
@@ -178,11 +168,6 @@ virt-viewer
 
 # yay-bin
 
-# compiledb
-# cura-bin
 # cyrus-sasl-xoauth2-git
-# imapfilter
-# openscad-lsp-git
 # rr-bin
-# saleae-logic2
 # tor-browser-bin

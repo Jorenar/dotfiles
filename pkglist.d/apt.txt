@@ -8,6 +8,7 @@ htop
 libfuse2t64
 man-db
 manpages
+neovim
 openssh
 pass
 podman
