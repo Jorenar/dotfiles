@@ -28,23 +28,16 @@ local function isServEnabled(client)
   return check(name) or check(name:gsub('_', '-'))
 end
 
-local function setupServ(name, conf)
-  if name == 'sonarlint' then
-    require('sonarlint').setup(conf)
-    return
-  end
-
-  vim.lsp.config(name, conf)
-  vim.lsp.enable(name, isServEnabled(name))
-end
-
 vim.api.nvim_create_autocmd({"BufReadPre", "FileType", "VimEnter"}, {
     once = true,
     callback = function(e)
-      vim.api.nvim_del_autocmd(e.id)  -- delete au for other events
+      vim.api.nvim_del_autocmd(e.id)
       for name,_ in pairs(SERVERS) do
         if name ~= "sonarlint" then
           vim.lsp.enable(name, isServEnabled(name))
+          if vim.tbl_contains(vim.lsp.config[name].filetypes or {"*"}, "*") then
+            vim.lsp.config[name].filetypes = nil
+          end
         end
       end
     end
@@ -173,6 +166,8 @@ SERVERS = vim.tbl_extend("force", SERVERS, {
       'ast-grep', 'lsp',
       '-c', vim.env.XDG_CONFIG_HOME .. '/ast-grep/sgconfig.yml'
     },
+    filetypes = { '*' },
+    workspace_required = false,
   },
 
   ccls = {
@@ -228,6 +223,7 @@ SERVERS = vim.tbl_extend("force", SERVERS, {
         userDictPath = vim.fn.stdpath("config") .. "/spell/en.utf-8.add"
       }
     },
+    filetypes = { '*' },
   },
 
   lua_ls = {
@@ -289,14 +285,18 @@ SERVERS = vim.tbl_extend("force", SERVERS, {
         vim.fn.setfperm(t, 'r--r--r--')
       end,
     },
-    filetypes = { '*' }
+    filetypes = { '*' },
   },
 
 })
 
 -- {{{
 for name, conf in pairs(SERVERS) do
-  setupServ(name, conf)
+  if name == 'sonarlint' then
+    require('sonarlint').setup(conf)
+  else
+    vim.lsp.config(name, conf)
+  end
 end
 
 for _,k in ipairs(KEYMAPS) do
