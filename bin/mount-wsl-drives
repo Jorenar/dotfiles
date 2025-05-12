@@ -5,7 +5,9 @@ wmic.exe logicaldisk get name | sed '1d;s/\s*//g' | while read -r drive; do
     dir="$(echo "${drive%:*}" | tr '[:upper:]' '[:lower:]')"
     dir="/mnt/$dir"
     [ -d "$dir" ] && [ -n "$(ls -A "$dir")" ] && continue
-    echo "$drive"
-    sudo mkdir -p "$dir" || continue
-    sudo mount -t drvfs "$drive" "$dir"
+    if mkdir -p "$dir" && mount -t drvfs "$drive" "$dir"; then
+        echo "Mounted $drive at $dir"
+    else
+        >&2 echo "Failed to mount $drive at $dir"
+    fi
 done

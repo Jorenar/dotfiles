@@ -33,7 +33,7 @@ vim.api.nvim_create_autocmd({"BufReadPre", "FileType", "VimEnter"}, {
     callback = function(e)
       vim.api.nvim_del_autocmd(e.id)
       for name,_ in pairs(SERVERS) do
-        if name ~= "sonarlint" then
+        if vim.lsp.config[name] then
           vim.lsp.enable(name, isServEnabled(name))
           if vim.tbl_contains(vim.lsp.config[name].filetypes or {"*"}, "*") then
             vim.lsp.config[name].filetypes = nil
@@ -270,6 +270,9 @@ SERVERS = vim.tbl_extend("force", SERVERS, {
           end)(),
         },
       },
+      root_dir = function()
+        return vim.fs.root(0, { ".git", ".compile_commands.json" })
+      end,
       on_attach = function()
         if vim.fn.exists(':SonarlintListRules') ~= 0 then
           vim.api.nvim_del_user_command('SonarlintListRules')
@@ -293,7 +296,9 @@ SERVERS = vim.tbl_extend("force", SERVERS, {
 -- {{{
 for name, conf in pairs(SERVERS) do
   if name == 'sonarlint' then
-    require('sonarlint').setup(conf)
+    if isServEnabled(name) then
+      require('sonarlint').setup(conf)
+    end
   else
     vim.lsp.config(name, conf)
   end
