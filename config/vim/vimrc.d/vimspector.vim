@@ -53,7 +53,7 @@ augroup VIMSPECTOR_INIT
           \ ]
 
     for m in s:mappings
-      exec m[0].'map <silent> <buffer> '.m[1].' '.m[2]
+      exec m[0].'map <silent> <buffer> <leader>'.m[1].' '.m[2]
     endfor
   endfunction
 
@@ -69,28 +69,9 @@ augroup END
 augroup VimspectorUICustomisation
   autocmd!
 
-  function! s:CustomiseUI() abort
-    for w in keys(g:vimspector_session_windows)
-      call win_gotoid(g:vimspector_session_windows[w])
-      setlocal laststatus=2
-      setlocal statusline=\ %f
-      setlocal nofoldenable
-    endfor
-
-    for w in keys(g:vimspector_session_windows)
-      if w !=? 'code' && w !=? 'output'
-        call win_execute(g:vimspector_session_windows[w], 'q')
-        let g:vimspector_session_windows[w] = v:null
-      endif
-    endfor
-
-    " call win_gotoid(g:vimspector_session_windows.code)
-    " setlocal statusline=\ %f\ %=<0x%02B>\ \ %l/%L\ :\ %c
-
-    autocmd User VimspectorTerminalOpened ++once
-          \ call win_execute(g:vimspector_session_windows.code, 'wincmd H')
-
+  function! s:layout_p1() abort
     autocmd FileType vimspector-disassembly
+          \ setl stl=\ vimspector.Disassembly\ %=\ %l/%L\ |
           \ autocmd TextChanged <buffer> setl cc= scl=yes:2
 
     if has('nvim')
@@ -119,5 +100,37 @@ augroup VimspectorUICustomisation
     endif
   endfunction
 
-  autocmd User VimspectorUICreated  call s:CustomiseUI()
+  function! s:layout_p2() abort
+    VimspectorDisassemble
+    VimspectorBreakpoints
+
+    const wins = g:vimspector_session_windows
+
+    for w in keys(wins)
+      call win_execute(wins[w], 'setl stl=\ %f nofen')
+    endfor
+
+    call win_execute(wins.stack_trace, 'wincmd K')
+    call win_splitmove(wins.variables, wins.stack_trace, #{ vertical: 1 })
+    call win_splitmove(wins.watches, wins.variables, #{ vertical: 1 })
+    call win_execute(wins.stack_trace, 'resize 8')
+
+    call win_splitmove(wins.breakpoints, wins.code, #{ vertical: 1 })
+    call win_splitmove(wins.terminal, wins.breakpoints, #{ vertical: 0 })
+    call win_splitmove(wins.output, wins.terminal, #{ vertical: 0 })
+    call win_splitmove(wins.breakpoints, wins.output, #{ vertical: 0 })
+
+    call win_splitmove(wins.disassembly, wins.code, #{ vertical: 0 })
+
+    call win_execute(wins.stack_trace, 'resize 7')
+    call win_execute(wins.disassembly, 'resize 7')
+    call win_execute(wins.terminal, 'resize 16')
+    call win_execute(wins.terminal, 'vert resize 90')
+    call win_execute(wins.breakpoints, 'resize 6')
+
+  endfunction
+
+  autocmd User VimspectorUICreated call s:layout_p1()
+  autocmd User VimspectorTerminalOpened call s:layout_p2()
+
 augroup END
