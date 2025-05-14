@@ -3,16 +3,7 @@ scriptencoding utf-8
 let g:vimspector_base_dir = $XDG_DATA_HOME . '/vim/vimspector'
 let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-cpptools' ]
 
-let g:vimspector_sidebar_width = 30
-let g:vimspector_bottombar_height = 10
-
 command! Vimspector call vimspector#Launch()
-
-function! s:Eval(...) abort
-  call win_gotoid(g:vimspector_session_windows.output)
-  startinsert
-  call feedkeys(get(a:, 1, ''), 'n')
-endfunction
 
 augroup VIMSPECTOR_INIT
   autocmd!
@@ -33,27 +24,19 @@ augroup VIMSPECTOR_INIT
     nnoremap <expr> <F6> exists("g:vimspector_session_windows") ? ":VimspectorReset\<CR>" :
           \ ":Vimspector " . expand('%:p:r') . "\<CR>"
 
-    let s:mappings = [
-          \   [ 'n', 'dB', '<Plug>VimspectorAddFunctionBreakpoint' ],
-          \   [ 'n', 'db', '<Plug>VimspectorToggleBreakpoint'      ],
-          \   [ 'n', 'dc', '<Plug>VimspectorContinue'              ],
-          \   [ 'n', 'df', '<Plug>VimspectorStepOut'               ],
-          \   [ 'n', 'di', '<Plug>VimspectorBalloonEval'           ],
-          \   [ 'n', 'dj', '<Plug>VimspectorDownFrame'             ],
-          \   [ 'n', 'dk', '<Plug>VimspectorUpFrame'               ],
-          \   [ 'n', 'dm', '<Plug>VimspectorRunToCursor'           ],
-          \   [ 'n', 'dn', '<Plug>VimspectorStepOver'              ],
-          \   [ 'n', 'dp', '<Plug>VimspectorPause'                 ],
-          \   [ 'n', 'dq', '<Plug>VimspectorStop'                  ],
-          \   [ 'n', 'dR', '<Plug>VimspectorRestart'               ],
-          \   [ 'n', 'ds', '<Plug>VimspectorStepInto'              ],
-          \   [ 'x', 'di', '<Plug>VimspectorBalloonEval'           ],
-          \   [ 'nnore', 'de', ':call <SID>Eval()<CR>'             ],
-          \   [ 'nnore', 'dx', ":call <SID>Eval('-exec ')<CR>"     ],
+    let l:mappings = [
+          \   [ 'n', 'd',  ':<C-u>Vimspector' ],
+          \   [ 'n', 'd:', ':<C-u>Vimspector' ],
+          \   [ 'n', 'db', '<Plug>VimspectorToggleBreakpoint' ],
+          \   [ 'n', 'df', '<Plug>VimspectorJumpToProgramCounter' ],
+          \   [ 'n', 'di', '<Plug>VimspectorBalloonEval' ],
+          \   [ 'n', 'dr', '<Plug>VimspectorRunToCursor' ],
+          \   [ 'n', 'dk', '<Plug>VimspectorBalloonEval' ],
+          \   [ 'x', 'dk', '<Plug>VimspectorBalloonEval' ],
           \ ]
 
-    for m in s:mappings
-      exec m[0].'map <silent> <buffer> <leader>'.m[1].' '.m[2]
+    for m in l:mappings
+      exec m[0].'map <silent> <Leader>'.m[1].' '.m[2]
     endfor
   endfunction
 
@@ -69,11 +52,7 @@ augroup END
 augroup VimspectorUICustomisation
   autocmd!
 
-  function! s:layout_p1() abort
-    autocmd FileType vimspector-disassembly
-          \ setl stl=\ vimspector.Disassembly\ %=\ %l/%L\ |
-          \ autocmd TextChanged <buffer> setl cc= scl=yes:2
-
+  function! s:ui_base() abort
     if has('nvim')
       autocmd OptionSet winbar
             \ call win_gotoid(g:vimspector_session_windows.code) |
@@ -98,10 +77,7 @@ augroup VimspectorUICustomisation
       nnoremenu WinBar.↺     <Cmd>call vimspector#Restart()<CR>
       nnoremenu WinBar.X     <Cmd>call vimspector#Reset({ 'interactive': v:false })<CR>
     endif
-  endfunction
 
-  function! s:layout_p2() abort
-    VimspectorDisassemble
     VimspectorBreakpoints
 
     const wins = g:vimspector_session_windows
@@ -115,22 +91,74 @@ augroup VimspectorUICustomisation
     call win_splitmove(wins.watches, wins.variables, #{ vertical: 1 })
     call win_execute(wins.stack_trace, 'resize 8')
 
-    call win_splitmove(wins.breakpoints, wins.code, #{ vertical: 1 })
-    call win_splitmove(wins.terminal, wins.breakpoints, #{ vertical: 0 })
-    call win_splitmove(wins.output, wins.terminal, #{ vertical: 0 })
+    call win_splitmove(wins.output, wins.code, #{ vertical: 1 })
     call win_splitmove(wins.breakpoints, wins.output, #{ vertical: 0 })
 
-    call win_splitmove(wins.disassembly, wins.code, #{ vertical: 0 })
-
     call win_execute(wins.stack_trace, 'resize 7')
-    call win_execute(wins.disassembly, 'resize 7')
-    call win_execute(wins.terminal, 'resize 16')
-    call win_execute(wins.terminal, 'vert resize 90')
     call win_execute(wins.breakpoints, 'resize 6')
 
+    call win_gotoid(wins.output)
+    setlocal nolist
+    autocmd WinEnter <buffer> startinsert
   endfunction
 
-  autocmd User VimspectorUICreated call s:layout_p1()
-  autocmd User VimspectorTerminalOpened call s:layout_p2()
+  function! s:ui_term() abort
+    const wins = g:vimspector_session_windows
+    call win_execute(wins.terminal, 'setl stl=\ %f nofen')
+    call win_splitmove(wins.terminal, wins.output)
+    call win_splitmove(wins.output, wins.terminal)
+    call win_execute(wins.terminal, 'resize 16')
+    call win_execute(wins.terminal, 'vert resize 90')
+  endfunction
+
+  function! s:ui_disasm() abort
+    setl stl=\ vimspector.Disassembly\ %=\ %l/%L
+    autocmd TextChanged <buffer> setl cc= scl=yes:2
+    const wins = g:vimspector_session_windows
+    call win_splitmove(wins.disassembly, wins.code)
+  endfunction
+
+  autocmd User VimspectorUICreated call s:ui_base()
+  autocmd User VimspectorTerminalOpened call s:ui_term()
+  autocmd FileType vimspector-disassembly call s:ui_disasm()
 
 augroup END
+
+augroup VIMSPECTOR_COMMAND_HISTORY
+  " https://github.com/puremourning/vimspector/issues/52#issuecomment-699027787
+
+  autocmd!
+
+  function! InitializeVimspectorCommandHistory()
+    if !exists('b:vimspector_command_history')
+      inoremap <silent> <buffer> <CR> <C-o>:call VimspectorCommandHistoryAdd()<CR>
+      inoremap <silent> <buffer> <Up> <C-o>:call VimspectorCommandHistoryUp()<CR>
+      inoremap <silent> <buffer> <Down> <C-o>:call VimspectorCommandHistoryDown()<CR>
+      let b:vimspector_command_history = []
+      let b:vimspector_command_history_pos = 0
+    endif
+  endfunction
+  function! VimspectorCommandHistoryAdd()
+    call add(b:vimspector_command_history, getline('.'))
+    let b:vimspector_command_history_pos = len(b:vimspector_command_history)
+    call feedkeys("\<CR>", 'tn')
+  endfunction
+  function! VimspectorCommandHistoryUp()
+    if len(b:vimspector_command_history) == 0 || b:vimspector_command_history_pos == 0
+      return
+    endif
+    call setline('.', b:vimspector_command_history[b:vimspector_command_history_pos - 1])
+    call feedkeys("\<C-o>A", 'tn')
+    let b:vimspector_command_history_pos = b:vimspector_command_history_pos - 1
+  endfunction
+  function! VimspectorCommandHistoryDown()
+    if b:vimspector_command_history_pos == len(b:vimspector_command_history)
+      return
+    endif
+    call setline('.', b:vimspector_command_history[b:vimspector_command_history_pos - 1])
+    call feedkeys("\<C-o>A", 'tn')
+    let b:vimspector_command_history_pos = b:vimspector_command_history_pos + 1
+  endfunction
+
+  autocmd FileType VimspectorPrompt call InitializeVimspectorCommandHistory()
+augroup end
