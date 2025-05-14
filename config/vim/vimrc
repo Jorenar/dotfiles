@@ -65,7 +65,17 @@ autocmd FileType * call matchadd("Todo", "TODO")
 set hlsearch
 set ignorecase
 set incsearch
+set shortmess-=S
 set smartcase
+
+nnoremap <C-l> :nohlsearch<C-r>=has('diff')?'<bar>diffupdate':''<CR><CR><C-l>
+
+"   cursor {{{1
+
+let &t_VS = &t_vs
+set guicursor=a:block-blinkon1000
+
+nnoremap <F3> <Cmd>set cursorline! cursorcolumn!<CR>
 
 "   mouse {{{1
 
@@ -137,23 +147,6 @@ if executable('cscope') || executable('gtags-cscope')
   autocmd VimEnter * call utils#cscope#init()
 endif
 
-"   UI misc {{{1
-
-set colorcolumn=+1
-set fillchars+=vert:│
-set number
-set shortmess+=I shortmess-=S
-set signcolumn=yes
-set splitbelow splitright
-set virtualedit=block
-set visualbell t_vb=
-
-let &t_VS = &t_vs
-set guicursor=a:block-blinkon1000
-
-nnoremap <C-l> :nohlsearch<C-r>=has('diff')?'<bar>diffupdate':''<CR><CR><C-l>
-nnoremap <F3> <Cmd>set cursorline! cursorcolumn!<CR>
-
 "   diff {{{1
 
 set diffopt=internal,filler,closeoff,indent-heuristic,algorithm:histogram
@@ -168,11 +161,18 @@ com! -nargs=?  Spelling  if empty("<args>") | setl spell! | else | setl spell sp
 
 set scrolloff=3
 set sidescrolloff=5
+set virtualedit=block
 
 nnoremap ' `
 
 noremap j gj
 noremap k gk
+
+augroup VISUALBLOCK_NOSTARTOFLINE
+  autocmd!
+  silent! exec "autocmd ModeChanged *:\<C-v> let g:sol_old = &sol | set nosol"
+  silent! exec "autocmd ModeChanged \<C-v>:* let &startofline = g:sol_old"
+augroup END
 
 if !has('nvim')
   nnoremap <expr> <C-e> utils#misc#scroll_cursor_popup(v:count1) ? "<Esc>" : "<C-e>"
@@ -228,6 +228,14 @@ endif
 
 "   ~ {{{1
 
+set colorcolumn=+1
+set shortmess+=I
+set visualbell t_vb=
+set ttimeoutlen=10
+
+set number
+set signcolumn=yes
+
 set viminfo='1000,<50,s10,h
 set viminfo+=r/tmp,r/media
 
@@ -237,10 +245,12 @@ set quickfixtextfunc=utils#texts#QuickFixTextFunc
 
 set modeline nomodelineexpr
 set sessionoptions=blank,buffers,folds,tabpages,winsize
-set ttimeoutlen=10
 
 set path=**,./
 set tags+=.tags/tags;
+
+set fillchars+=vert:│
+set splitbelow splitright
 
 set hidden
 set switchbuf=usetab,uselast
@@ -270,12 +280,6 @@ nnoremap <expr> Q {r ->
 
 map gh <nop>
 imap <F1> <lt>F1>
-
-augroup VISUALBLOCK_NOSTARTOFLINE
-  autocmd!
-  silent! exec "autocmd ModeChanged *:\<C-v> let g:sol_old = &sol | set nosol"
-  silent! exec "autocmd ModeChanged \<C-v>:* let &startofline = g:sol_old"
-augroup END
 
 " Undo if filter shell command returned an error
 autocmd ShellFilterPost * if v:shell_error | undo | endif
