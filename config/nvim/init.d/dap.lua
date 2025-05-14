@@ -46,11 +46,25 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+--[[
+local function get_fn_local_var(fn, target_name)
+  local i = 1
+  while true do
+    local name, value = debug.getupvalue(fn, i)
+    if not name then
+      break
+    elseif name == target_name then
+      return value
+    end
+    i = i + 1
+  end
+end
+
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "dap-repl",
     once = true,
     callback = function()
-      local dap_brp = require('dap.breakpoints')
+      local dap_brps = require('dap.breakpoints')
 
       local function check_brkpts(line)
         local pattern = 'Breakpoint %d+ at 0x[0-9A-Fa-f]+: file (.+), line (%d+)'
@@ -58,11 +72,43 @@ vim.api.nvim_create_autocmd("FileType", {
         if not file or not lnum then
           return false
         end
+
+        lnum = tonumber(lnum)
+
         local bufnr = vim.fn.bufnr(file, true)
         if not vim.bo[bufnr].buflisted then
           vim.fn.bufload(bufnr)
         end
-        dap_brp.set({}, bufnr, tonumber(lnum))
+
+        local brps = dap_brps.get()
+        local bp_by_sign = get_fn_local_var(dap_brps.get, "bp_by_sign")
+
+        local id = 1
+        if not brps[bufnr] then
+          brps[bufnr] = {}
+        else
+          local n = #(brps[bufnr])
+          if n > 0 then
+            id = brps[bufnr][n].state.id + 1
+          end
+        end
+
+        local sign_id = vim.fn.sign_place(
+          0, "dap_breakpoints", "DapBreakpoint", bufnr,
+          { lnum = lnum; priority = 21; }
+        )
+
+        table.insert(brps[bufnr], { line = lnum })
+        bp_by_sign[sign_id] = {
+          buf = bufnr,
+          state = {
+            BoundBreakpoints = {},
+            id = id,
+            line = lnum,
+            verified = true,
+          }
+        }
+
         return true
       end
 
@@ -90,6 +136,7 @@ vim.api.nvim_create_autocmd("FileType", {
       })
     end,
   })
+]]--
 
 -- UI {{{1
 
@@ -224,6 +271,7 @@ for _,k in ipairs({
   { 'n', '<leader>db', dap.toggle_breakpoint },
   { 'n', '<Leader>df', dap.focus_frame },
   { 'n', '<leader>dk', dapui.eval },
+  { 'x', '<leader>dk', dapui.eval },
   { 'n', '<leader>dT', function()
       dapui.float_element('console', float_winopts)
     end
