@@ -60,82 +60,36 @@ local function get_fn_local_var(fn, target_name)
   end
 end
 
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "dap-repl",
-    once = true,
-    callback = function()
-      local dap_brps = require('dap.breakpoints')
+dap.listeners.after["event_breakpoint"]["TODO"] = function(_,res)
+  if res.reason ~= "new" then
+    return
+  end
 
-      local function check_brkpts(line)
-        local pattern = 'Breakpoint %d+ at 0x[0-9A-Fa-f]+: file (.+), line (%d+)'
-        local file, lnum = line:match(pattern)
-        if not file or not lnum then
-          return false
-        end
+  local b = res.breakpoint
+  local file = b.source.path
+  local lnum = b.line
 
-        lnum = tonumber(lnum)
+  local bufnr = vim.fn.bufnr(file, true)
+  if not vim.bo[bufnr].buflisted then
+    vim.fn.bufload(bufnr)
+  end
 
-        local bufnr = vim.fn.bufnr(file, true)
-        if not vim.bo[bufnr].buflisted then
-          vim.fn.bufload(bufnr)
-        end
+  local dap_brps = require('dap.breakpoints')
+  local bp_by_sign = get_fn_local_var(dap_brps.get, "bp_by_sign")
 
-        local brps = dap_brps.get()
-        local bp_by_sign = get_fn_local_var(dap_brps.get, "bp_by_sign")
+  local sign_id = vim.fn.sign_place(
+    0, "dap_breakpoints", "DapBreakpoint", bufnr,
+    { lnum = lnum; priority = 21; }
+  )
 
-        local id = 1
-        if not brps[bufnr] then
-          brps[bufnr] = {}
-        else
-          local n = #(brps[bufnr])
-          if n > 0 then
-            id = brps[bufnr][n].state.id + 1
-          end
-        end
+  bp_by_sign[sign_id] = {
+    buf = bufnr,
+    state = b,
+    custom = true,
+  }
 
-        local sign_id = vim.fn.sign_place(
-          0, "dap_breakpoints", "DapBreakpoint", bufnr,
-          { lnum = lnum; priority = 21; }
-        )
-
-        table.insert(brps[bufnr], { line = lnum })
-        bp_by_sign[sign_id] = {
-          buf = bufnr,
-          state = {
-            BoundBreakpoints = {},
-            id = id,
-            line = lnum,
-            verified = true,
-          }
-        }
-
-        return true
-      end
-
-      local function check_watches(line)
-        local expr = line:match('Watchpoint %d+: (.+)')
-        if expr then
-          dapui.elements.watches.add(expr)
-        end
-      end
-
-      vim.api.nvim_buf_attach(0, false, {
-        on_lines = function(_, buf, _, st, _, ed, _)
-          local new_lines = vim.api.nvim_buf_get_lines(buf, st, ed, false)
-          local should_ui_refresh = false
-
-          for _, line in ipairs(new_lines) do
-            should_ui_refresh = check_brkpts(line) or should_ui_refresh
-            check_watches(line)
-          end
-
-          if should_ui_refresh then
-            vim.schedule(dapui.elements.breakpoints.render)
-          end
-        end,
-      })
-    end,
-  })
+  vim.schedule(dapui.elements.breakpoints.render)
+end
 ]]--
 
 -- UI {{{1
@@ -210,9 +164,6 @@ dapui.setup({
       breakpoints = {
         open = { "gd", "<CR>", "<2-LeftMouse>" },
         toggle = "t"
-      },
-      disassembly = {
-        expand = "<CR>"
       },
     },
     render = {
