@@ -8,17 +8,13 @@ set tui border-kind acs
 set tui border-mode normal
 set tui active-border-mode bold
 
-tui new-layout example {-horizontal src 1 asm 1} 2 status 0 cmd 1
-# layout example
-# focus cmd
-
-#set prompt \033[1m(gdb) \033[0m
+set pagination off
+tui new-layout src+asm {-horizontal src 2 asm 1} 2 status 0 cmd 1
+tui focus cmd
+tui layout src+asm
+tui disable
+set pagination on
 
 set history save on
-
-python
-import os
-histfile = os.path.join(os.environ["XDG_STATE_HOME"], "gdb_history")
-gdb.execute('set history filename ' + histfile)
-
-# vim: ft=gdb
+set history size unlimited
+set history remove-duplicates unlimited
