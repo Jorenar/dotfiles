@@ -10,6 +10,9 @@ set vi-cmd-mode-string ":"
 set keyseq-timeout 50
 
 # BINDINGS {{{1
+# emacs mode {{{1
+"\e": emacs-editing-mode
+
 # vi-command-mode {{{1
 set keymap vi-command
 
