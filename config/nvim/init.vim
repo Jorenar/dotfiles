@@ -126,4 +126,6 @@ lua require("cscope_maps").setup({
       \   cscope = { db_file = '' },
       \ })
 
+command! -nargs=? SudoWrite SudaWrite <args>
+
 runtime! init.d/*

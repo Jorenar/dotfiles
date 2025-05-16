@@ -262,6 +262,11 @@
 	url = https://github.com/nanotee/sqls.nvim.git
 	shallow = true
 	ignore = all
+[submodule "vim-suda"]
+	path = config/nvim/pack/extern/start/vim-suda
+	url = https://github.com/lambdalisue/vim-suda.git
+	shallow = true
+	ignore = all
 [submodule "vimterm.nvim"]
 	path = config/nvim/pack/extern/start/vimterm.nvim
 	url = https://github.com/VioletJewel/vimterm.nvim.git
