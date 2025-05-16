@@ -208,52 +208,57 @@ vim.api.nvim_create_user_command('DapuiToggle', dapui.toggle, {})
 
 -- mappings {{{1
 
-local float_winopts = {
-  enter = true,
-  width = vim.o.columns - 10,
-  height = vim.o.lines - 10,
-  position = 'center',
-}
+local function mappings()
 
-for _,k in ipairs({
-  { 'n', '<leader>d',  ':lua require("dap").()<left><left>' },
-  { 'n', '<leader>d:', ':lua require("dap").()<left><left>' },
-  { 'n', '<leader>dr', dap.run_to_cursor },
-  { 'n', '<leader>db', dap.toggle_breakpoint },
-  { 'n', '<Leader>df', dap.focus_frame },
-  { 'n', '<leader>dk', dapui.eval },
-  { 'x', '<leader>dk', dapui.eval },
-  { 'n', '<leader>dT', function()
-      dapui.float_element('console', float_winopts)
-    end
-  },
-  { 'n', '<Leader>dF', function()
-      dapui.float_element('stacks', float_winopts)
-    end
-  },
-  { 'n', '<Leader>dS', function()
-      dapui.float_element('scopes', float_winopts)
-    end
-  },
-  { 'n', '<Leader>dW', function()
-      dapui.float_element('watches', float_winopts)
-    end
-  },
-  { 'n', '<Leader>dB', function()
-      dapui.float_element('breakpoints', float_winopts)
-    end
-  },
-  { 'n', '<Leader>dA', function()
-      dapui.float_element('disassembly', float_winopts)
-    end
-  },
-}) do
-  vim.keymap.set(k[1], k[2], k[3], { noremap = true })
+  local float_winopts = {
+    enter = true,
+    width = vim.o.columns - 10,
+    height = vim.o.lines - 10,
+    position = 'center',
+  }
+
+  for _,k in ipairs({
+      { 'n', '<leader>d',  ':lua require("dap").()<left><left>' },
+      { 'n', '<leader>d:', ':lua require("dap").()<left><left>' },
+      { 'n', '<leader>dr', dap.run_to_cursor },
+      { 'n', '<leader>db', dap.toggle_breakpoint },
+      { 'n', '<Leader>df', dap.focus_frame },
+      { 'n', '<leader>dk', dapui.eval },
+      { 'x', '<leader>dk', dapui.eval },
+      { 'n', '<leader>dT', function()
+          dapui.float_element('console', float_winopts)
+        end
+      },
+      { 'n', '<Leader>dF', function()
+          dapui.float_element('stacks', float_winopts)
+        end
+      },
+      { 'n', '<Leader>dS', function()
+          dapui.float_element('scopes', float_winopts)
+        end
+      },
+      { 'n', '<Leader>dW', function()
+          dapui.float_element('watches', float_winopts)
+        end
+      },
+      { 'n', '<Leader>dB', function()
+          dapui.float_element('breakpoints', float_winopts)
+        end
+      },
+      { 'n', '<Leader>dA', function()
+          dapui.float_element('disassembly', float_winopts)
+        end
+      },
+    }) do
+    vim.keymap.set(k[1], k[2], k[3], { noremap = true })
+  end
+
+  vim.cmd [[ anoremenu PopUp.DAP\ Toggle\ Breakpoint <cmd>lua require("dap").toggle_breakpoint()<CR> ]]
+
 end
 
-vim.cmd [[
-  anoremenu PopUp.DAP\ Toggle\ Breakpoint <cmd>lua require("dap").toggle_breakpoint()<CR>
-]]
+dap.listeners.before.attach.mappings = mappings
+dap.listeners.before.launch.mappings = mappings
 
 -- misc {{{1
 

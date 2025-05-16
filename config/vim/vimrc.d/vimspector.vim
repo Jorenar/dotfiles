@@ -14,30 +14,10 @@ augroup VIMSPECTOR_INIT
       return
     endif
 
-    call mkdir(g:vimspector_base_dir, 'p')
-    let s:confs = g:vimspector_base_dir . '/configurations'
-    if !isdirectory(s:confs)
-      call system('ln -s '.$XDG_CONFIG_HOME.'/vim/vimspector'.' '.s:confs)
+    let l:confs = g:vimspector_base_dir . '/configurations'
+    if mkdir(g:vimspector_base_dir, 'p') && !isdirectory(l:confs)
+      call system('ln -s '.$XDG_CONFIG_HOME.'/vim/vimspector'.' '.l:confs)
     endif
-    unlet s:confs
-
-    nnoremap <expr> <F6> exists("g:vimspector_session_windows") ? ":VimspectorReset\<CR>" :
-          \ ":Vimspector " . expand('%:p:r') . "\<CR>"
-
-    let l:mappings = [
-          \   [ 'n', 'd',  ':<C-u>Vimspector' ],
-          \   [ 'n', 'd:', ':<C-u>Vimspector' ],
-          \   [ 'n', 'db', '<Plug>VimspectorToggleBreakpoint' ],
-          \   [ 'n', 'df', '<Plug>VimspectorJumpToProgramCounter' ],
-          \   [ 'n', 'di', '<Plug>VimspectorBalloonEval' ],
-          \   [ 'n', 'dr', '<Plug>VimspectorRunToCursor' ],
-          \   [ 'n', 'dk', '<Plug>VimspectorBalloonEval' ],
-          \   [ 'x', 'dk', '<Plug>VimspectorBalloonEval' ],
-          \ ]
-
-    for m in l:mappings
-      exec m[0].'map <silent> <Leader>'.m[1].' '.m[2]
-    endfor
   endfunction
 
   autocmd VimEnter * call s:Init()
@@ -51,6 +31,20 @@ augroup END
 
 augroup VimspectorUICustomisation
   autocmd!
+
+  function! s:mappings() abort
+    for m in [
+          \   [ 'n', 'd',  ':<C-u>Vimspector' ],
+          \   [ 'n', 'd:', ':<C-u>Vimspector' ],
+          \   [ 'n', 'db', '<Plug>VimspectorToggleBreakpoint' ],
+          \   [ 'n', 'df', '<Plug>VimspectorJumpToProgramCounter' ],
+          \   [ 'n', 'dr', '<Plug>VimspectorRunToCursor' ],
+          \   [ 'n', 'dk', '<Plug>VimspectorBalloonEval' ],
+          \   [ 'x', 'dk', '<Plug>VimspectorBalloonEval' ],
+          \ ]
+      exec m[0].'map <silent> <Leader>'.m[1].' '.m[2]
+    endfor
+  endfunction
 
   function! s:ui_base() abort
     if has('nvim')
@@ -118,6 +112,7 @@ augroup VimspectorUICustomisation
     call win_splitmove(wins.disassembly, wins.code)
   endfunction
 
+  autocmd User VimspectorUICreated call s:mappings()
   autocmd User VimspectorUICreated call s:ui_base()
   autocmd User VimspectorTerminalOpened call s:ui_term()
   autocmd FileType vimspector-disassembly call s:ui_disasm()

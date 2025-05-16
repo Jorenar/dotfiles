@@ -266,6 +266,7 @@ set makeprg=Make
 nnoremap <F8> <Cmd>hor term<CR>
 
 nnoremap L <Cmd>call inputsecret("No LSP server running for this buffer ")<CR>
+nnoremap <Leader>d <Cmd>call inputsecret("No debugging session running ")<CR>
 
 nnoremap <Leader>r :<C-u>%s/\C\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
 
