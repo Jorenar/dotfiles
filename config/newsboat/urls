@@ -1,0 +1,3 @@
+query:Unread:unread="yes" "QUERY"
+query:Flagged:flags!="" "QUERY"
+query:All:title=~"" "QUERY"

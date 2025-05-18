@@ -1,28 +1,38 @@
-auto-reload              yes
-browser                  firefox
-confirm-exit             yes
-goto-first-unread        no
-notify-xterm             yes
-prepopulate-query-feeds  yes
-reload-threads           10
-reload-time              10
-show-read-articles       no
-show-read-feeds          no
-show-title-bar           yes
-text-width               80
+goto-first-unread no
+notify-xterm yes
+prepopulate-query-feeds yes
+text-width 80
+cleanup-on-quit no
 
-datetime-format     "%F %R"
-feedlist-format     " %S %-20t %U"
-articlelist-format  " %f | %-20T | %-100t | %D"
+auto-reload yes
+reload-threads 100
+reload-time 10
 
-bind-key \      macro-prefix
-bind-key G      end
-bind-key g      home
-bind-key j      down
-bind-key k      up
-bind-key O      open-all-unread-in-browser-and-mark-read
-bind-key SPACE  open-in-browser-and-mark-read
+show-keymap-hint no
+show-title-bar yes
+swap-title-and-hints yes
 
-# include ~/.local/config/newsboat/filters
+datetime-format "%F %R"
+feedlist-format "%4i %4U %t %> %S %20u "
+articlelist-format "%4i %f %D  %t %> %T"
+
+bind-key \  macro-prefix
+bind-key G  end
+bind-key g  home
+bind-key j  down
+bind-key k  up
+bind-key o  open-in-browser-and-mark-read
+
+bind-key ESC quit
+unbind-key q feedlist
+unbind-key ESC feedlist
+
+# opml-url "file://`echo $HOME`/path/to/rss.opml"
+# urls-source "opml"
+
+ignore-mode "display"
+`cat $XDG_CONFIG_HOME/newsboat/killfile 2> /dev/null`
+
+run-on-startup set-tag "QUERY"
 
 # vim: ft=conf
