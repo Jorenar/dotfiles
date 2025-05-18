@@ -11,7 +11,9 @@ set keyseq-timeout 50
 
 # BINDINGS {{{1
 # emacs mode {{{1
-"\e": emacs-editing-mode
+set keymap emacs
+"\e\e": vi-editing-mode
+"\e": "\e\e\e"
 
 # vi-command-mode {{{1
 set keymap vi-command
