@@ -31,6 +31,7 @@ hi! CursorColumn     NONE  ctermbg=233
 hi! Pmenu            NONE  ctermbg=233
 hi! PmenuSel         NONE  cterm=reverse
 
+hi! Comment          NONE  ctermfg=245
 hi! Folded           NONE  cterm=italic
 hi! MatchParen       NONE  cterm=bold ctermfg=LightYellow
 hi! NonText          NONE  ctermfg=DarkGray

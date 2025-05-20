@@ -95,7 +95,6 @@ lua require("fzf-lua").setup({
 
 nnoremap <Leader>f <Cmd>FzfLua<CR>
 nnoremap <Leader>F <Cmd>FzfLua resume<CR>
-nnoremap <Leader>t <Cmd>FzfLua btags resume=true<CR>
 nnoremap <C-p><C-p> <Cmd>FzfLua files<CR>
 nnoremap <C-p><C-b> <Cmd>FzfLua buffers<CR>
 nnoremap <C-p><C-m> <Cmd>FzfLua oldfiles<CR>

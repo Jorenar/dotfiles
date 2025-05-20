@@ -247,6 +247,16 @@
 	url = https://github.com/neovim/nvim-lspconfig.git
 	shallow = true
 	ignore = all
+[submodule "nvim-treesitter"]
+	path = config/nvim/pack/extern/start/nvim-treesitter
+	url = https://github.com/nvim-treesitter/nvim-treesitter.git
+	shallow = true
+	ignore = all
+[submodule "nvim-treesitter-context"]
+	path = config/nvim/pack/extern/start/nvim-treesitter-context
+	url = https://github.com/nvim-treesitter/nvim-treesitter-context.git
+	shallow = true
+	ignore = all
 [submodule "plenary.nvim"]
 	path = config/nvim/pack/extern/start/plenary.nvim
 	url = https://github.com/nvim-lua/plenary.nvim.git
