@@ -305,6 +305,8 @@ endif
 
 source $VIMRUNTIME/ftplugin/man.vim
 
+command! MinpacUpdate call utils#minpac#update()
+
 " }}}
 
 "   Surround {{{1
