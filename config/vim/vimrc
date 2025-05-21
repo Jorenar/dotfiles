@@ -22,7 +22,7 @@ if !has('nvim')
   set viminfofile=$XDG_STATE_HOME/vim/viminfo
 endif
 
-let g:netrw_home = $XDG_DATA_HOME."/vim"
+let g:netrw_home = $XDG_STATE_HOME."/vim"
 call mkdir($XDG_DATA_HOME."/vim/spell", 'p', 0700)
 call mkdir($XDG_STATE_HOME."/vim", 'p', 0700)
 

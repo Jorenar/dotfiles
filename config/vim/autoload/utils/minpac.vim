@@ -18,13 +18,14 @@ function s:add(sublist) abort
 endfunction
 
 function! utils#minpac#update() abort
-  call s:init(#{ dir: $XDG_DATA_HOME.'/vim' })
-
+  let l:opts = #{ jobs: -1 }
   let g:packs = get(g:, 'packs', {})
 
+  call s:init(extend(l:opts, #{ dir: $XDG_DATA_HOME.'/vim' }))
   call s:add('vim')
+
   if has('nvim')
-    call s:init(#{ dir: stdpath('data').'/site' })
+    call s:init(extend(l:opts, #{ dir: stdpath('data').'/site' }))
     call s:add('neovim')
   endif
 

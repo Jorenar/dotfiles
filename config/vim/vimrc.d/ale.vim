@@ -48,7 +48,7 @@ let s:vale_fts = #{
       \   typescript: '.ts',
       \ }
 
-call map(s:vale_fts,
+sil! call map(s:vale_fts,
       \  {ft,ext ->
       \   ale#linter#Define(ft, {
       \     'name': 'vale',
@@ -117,12 +117,12 @@ function! s:semgrep_handler(buffer, lines) abort
           \ }})
 endfunction
 
-call map(s:semgrep_fts, {_,ft ->
+sil! call map(s:semgrep_fts, {_,ft ->
       \   ale#linter#Define(ft, {
       \     'name': 'semgrep',
       \     'executable': 'semgrep',
       \     'command': ''
-      \       . ale#Env('TMPDIR', fnamemodify(tempname(), ':p'))
+      \       . ale#Env('TMPDIR', fnamemodify(tempname(), ':p:h'))
       \       . ' %e'
       \       . ' scan --vim'
       \       . ' --config '.$XDG_CONFIG_HOME .'/semgrep/settings.yaml'

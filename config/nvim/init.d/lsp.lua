@@ -104,10 +104,10 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = (function(diag_handler)
     local bufnr = vim.fn.bufnr(res.uri:gsub('^file://', ''), false)
     if bufnr == -1 then return end
 
-    vim.fn['ale#other_source#ShowResults'](bufnr,
+    pcall(vim.fn['ale#other_source#ShowResults'], bufnr,
       vim.lsp.get_client_by_id(ctx.client_id).name,
       vim.tbl_map(ale_map, vim.deepcopy(res.diagnostics))
-      )
+    )
 
     return diag_handler(err, res, ctx, conf)
   end
@@ -270,9 +270,7 @@ SERVERS = vim.tbl_extend("force", SERVERS, {
           end)(),
         },
       },
-      root_dir = function()
-        return vim.fs.root(0, { ".git", ".compile_commands.json" })
-      end,
+      root_dir = vim.fs.root(0, { ".git", ".compile_commands.json" }),
       on_attach = function()
         if vim.fn.exists(':SonarlintListRules') ~= 0 then
           vim.api.nvim_del_user_command('SonarlintListRules')
