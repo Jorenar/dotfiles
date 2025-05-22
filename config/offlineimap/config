@@ -1,0 +1,28 @@
+[general]
+metadata = $XDG_DATA_HOME/offlineimap
+pythonfile = $XDG_CONFIG_HOME/offlineimap/func.py
+accounts = Example
+
+[Account Example]
+localrepository = Example-Local
+remoterepository = Example-Remote
+
+[Repository Example-Local]
+type = Maildir
+localfolders = $HOME/.local/var/mail/Example
+
+[Repository Example-Remote]
+type = IMAP
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+
+remotehost = example.com
+remoteport = 993
+
+# remoteuser = user@example.com
+# remotepasseval = get_pass("mail/example")
+# auth_mechanisms = PLAIN, LOGIN
+
+auth_mechanisms = XOAUTH2
+oauth2_client_id = 00000000-0000-0000-0000-000000000000
+oauth2_request_url = https://example.com/oauth2/token
+oauth2_access_token_eval = mutt_oauth("user@example.com")
