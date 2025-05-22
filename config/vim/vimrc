@@ -1,11 +1,12 @@
-" XDG Base Directory {{{
+" env {{{1
+"  XDG Base Directory {{{2
 
 if empty($MYVIMRC) | let $MYVIMRC = expand('<sfile>:p') | endif
 
-if empty($XDG_CACHE_HOME)  | let $XDG_CACHE_HOME  = $HOME."/.cache"       | endif
-if empty($XDG_CONFIG_HOME) | let $XDG_CONFIG_HOME = $HOME."/.config"      | endif
-if empty($XDG_DATA_HOME)   | let $XDG_DATA_HOME   = $HOME."/.local/share" | endif
-if empty($XDG_STATE_HOME)  | let $XDG_STATE_HOME  = $HOME."/.local/state" | endif
+if empty($XDG_CACHE_HOME)  | let $XDG_CACHE_HOME  = $HOME.'/.cache'       | endif
+if empty($XDG_CONFIG_HOME) | let $XDG_CONFIG_HOME = $HOME.'/.config'      | endif
+if empty($XDG_DATA_HOME)   | let $XDG_DATA_HOME   = $HOME.'/.local/share' | endif
+if empty($XDG_STATE_HOME)  | let $XDG_STATE_HOME  = $HOME.'/.local/state' | endif
 
 if !has('nvim')
   set runtimepath^=$XDG_CONFIG_HOME/vim
@@ -22,18 +23,10 @@ if !has('nvim')
   set viminfofile=$XDG_STATE_HOME/vim/viminfo
 endif
 
-let g:netrw_home = $XDG_STATE_HOME."/vim"
-call mkdir($XDG_DATA_HOME."/vim/spell", 'p', 0700)
-call mkdir($XDG_STATE_HOME."/vim", 'p', 0700)
+call mkdir($XDG_DATA_HOME.'/vim/spell', 'p', 0700)
+call mkdir($XDG_STATE_HOME.'/vim', 'p', 0700)
 
-" }}}
-
-set nocompatible
-set backup undofile
-filetype plugin indent on
-colorscheme minimal
-
-"   TMPDIR {{{1
+"  TMPDIR {{{2
 
 let $TMPDIR = (len($TMPDIR) ? $TMPDIR : '/tmp')
 call mkdir($TMPDIR, 'p', 0700)
@@ -43,7 +36,25 @@ if !has('nvim')
   call mkdir($TMPDIR, 'p', 0700)
 endif
 
-"   startup {{{1
+"  ~ {{{2
+
+let $PATH = $XDG_DATA_HOME.'/nvim/mason/bin:'.$PATH
+
+" basics {{{1
+
+set nocompatible
+set backup undofile
+set hidden
+set modeline nomodelineexpr
+set secure noexrc
+
+filetype plugin indent on
+colorscheme minimal
+
+set viminfo='1000,<50,s10,h
+set viminfo+=r/tmp,r/media
+
+" startup {{{1
 
 if $VIM_TERMINAL  " then don't nest
   exec '!printf "\033]51;[\"drop\", \"%:p\"]\007"' | quit!
@@ -52,15 +63,15 @@ endif
 " Open file at the last known position
 autocmd BufReadPost * if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit' | exec "norm! g`\"" | endif
 
-"   syntax {{{1
+" syntax {{{1
 
 syntax enable
 autocmd FileType *
       \ if has('nvim') | exec 'lua vim.treesitter.stop()' | endif |
       \ silent! setlocal syntax=OFF
-autocmd FileType * call matchadd("Todo", "TODO")
+autocmd FileType * call matchadd('Todo', 'TODO')
 
-"   search {{{1
+" search {{{1
 
 set hlsearch
 set ignorecase
@@ -70,35 +81,35 @@ set smartcase
 
 nnoremap <C-l> :nohlsearch<C-r>=has('diff')?'<bar>diffupdate':''<CR><CR><C-l>
 
-"   cursor {{{1
+" cursor {{{1
 
 let &t_VS = &t_vs
 set guicursor=a:block-blinkon1000
 
 nnoremap <F3> <Cmd>set cursorline! cursorcolumn!<CR>
 
-"   mouse {{{1
+" mouse {{{1
 
 set mouse=a
 set mousemodel=popup_setpos
 silent! set ttymouse=sgr
 
-"   listchars {{{1
+" listchars {{{1
 
 set list
 set listchars=tab:<\ >,trail:_
 set listchars+=extends:>,precedes:<
 hi! ListCharsTabs ctermfg=235
-autocmd VimEnter,WinNew * call matchadd("ListCharsTabs", '\t')
+autocmd VimEnter,WinNew * call matchadd('ListCharsTabs', '\t')
 
-"   window title {{{1
+" window title {{{1
 
 set title
 set titlestring=
 set titlestring+=%t%(\ %M%)%(\ (%{expand(\"%:p:~:.:h\")}/)%)
 let &titlestring .= ' | '.trim(system('id -un')).'@'.hostname().":%{substitute(getcwd(),$HOME,'~','')}"
 
-"   completion {{{1
+" completion {{{1
 
 set complete+=kspell
 set completeopt=menuone,noinsert,noselect
@@ -107,20 +118,20 @@ set pumheight=20
 
 inoremap <expr> <C-o> pumvisible() ? "\<C-n>" : "\<C-o>"
 
-"   command line {{{1
+" command line {{{1
 
 set showcmd
 set wildmenu wildmode=full wildoptions=
 cnoremap <C-h> <C-w>
 
-"   wrap {{{1
+" wrap {{{1
 
 set nowrap
 set linebreak
 set breakindent
-let &showbreak = "↳  "
+let &showbreak = '↳  '
 
-"   status/tab line {{{1
+" status/tab line {{{1
 
 set showtabline=2
 set tabline=%!utils#lines#TabLine()
@@ -135,7 +146,7 @@ if join(argv()) =~ '.*_LOCAL_.*_BASE_.*_REMOTE_.*'
   autocmd BufReadPost  *_REMOTE_*  setl stl=\ REMOTE
 endif
 
-"   cscope {{{1
+" cscope {{{1
 
 if executable('cscope') || executable('gtags-cscope')
   if has('cscope')
@@ -147,17 +158,17 @@ if executable('cscope') || executable('gtags-cscope')
   autocmd VimEnter * call utils#cscope#init()
 endif
 
-"   diff {{{1
+" diff {{{1
 
 set diffopt=internal,filler,closeoff,indent-heuristic,algorithm:histogram
 let g:diff_translations = 0
 
-"   spelling {{{1
+" spelling {{{1
 
 set spellsuggest=double,5
 com! -nargs=?  Spelling  if empty("<args>") | setl spell! | else | setl spell spelllang=<args> | endif
 
-"   motion {{{1
+" motion {{{1
 
 set scrolloff=3
 set sidescrolloff=5
@@ -175,11 +186,11 @@ augroup VISUALBLOCK_NOSTARTOFLINE
 augroup END
 
 if !has('nvim')
-  nnoremap <expr> <C-e> utils#misc#scroll_cursor_popup(v:count1) ? "<Esc>" : "<C-e>"
-  nnoremap <expr> <C-y> utils#misc#scroll_cursor_popup(-v:count1) ? "<Esc>" : "<C-y>"
+  nnoremap <expr> <C-e> utils#misc#scroll_cursor_popup(v:count1) ? '<Esc>' : '<C-e>'
+  nnoremap <expr> <C-y> utils#misc#scroll_cursor_popup(-v:count1) ? '<Esc>' : '<C-y>'
 endif
 
-"   folds {{{1
+" folds {{{1
 
 set foldcolumn=2
 set foldmethod=indent
@@ -187,7 +198,7 @@ set foldtext=utils#texts#FoldText()
 set nofoldenable
 autocmd BufReadPost * if line('$') > winheight(0) | setlocal fen | endif
 
-"   formatting {{{1
+" formatting {{{1
 
 set backspace=indent,eol,start
 set cindent
@@ -212,7 +223,7 @@ autocmd BufWinEnter * set formatoptions+=n  " Recognize numbered lists
 autocmd BufWinEnter * set formatoptions-=q  " Don't format comments
 autocmd BufWinEnter * set formatoptions-=t  " Don't autowrap text using 'textwidth'
 
-"   encryption {{{1
+" encryption {{{1
 
 if has('cryptv')
   autocmd BufReadPre,BufRead,BufReadPost *
@@ -226,47 +237,35 @@ if has('cryptv')
         \ | endif
 endif
 
-"   ~ {{{1
+" ~ {{{1
 
+set clipboard=
 set colorcolumn=+1
-set shortmess+=I
-set visualbell t_vb=
-set ttimeoutlen=10
-
-set number
-set signcolumn=yes
-
-set viminfo='1000,<50,s10,h
-set viminfo+=r/tmp,r/media
-
-set secure noexrc
-
-set quickfixtextfunc=utils#texts#QuickFixTextFunc
-
-set modeline nomodelineexpr
-set sessionoptions=blank,buffers,folds,tabpages,winsize
-
-set path=**,./
-set tags+=.tags/tags;
-
 set fillchars+=vert:│
+set number
+set path=**,./
+set quickfixtextfunc=utils#texts#QuickFixTextFunc
+set sessionoptions=blank,buffers,folds,tabpages,winsize
+set shortmess+=I
+set signcolumn=yes
 set splitbelow splitright
-
-set hidden
 set switchbuf=usetab,uselast
+set tags+=.tags/tags;
+set ttimeoutlen=10
+set updatetime=250
+set visualbell t_vb=
+
+set grepprg=grep\ -n
+set makeprg=Make
+set keywordprg=:Man
+nnoremap <F8> <Cmd>hor term<CR>
 
 com! -range=%  Sort     normal! :<line1>,<line2>sort i<CR>
 com! -range    VisSort  sil! keepj <line1>,<line2>call utils#misc#VisSort()
+com! -nargs=+  FillLine  exec {str,r -> 'norm! a'.repeat(str, (r-col('.')+1)/len(str))}(<f-args>, &tw)
 
-com! -nargs=+  FillLine  exec {str,r -> "norm! a".repeat(str, (r-col(".")+1)/len(str))}(<f-args>, &tw)
-
-set grepprg=grep\ -n
-
-set makeprg=Make
-nnoremap <F8> <Cmd>hor term<CR>
-
-nnoremap L <Cmd>call inputsecret("No LSP server running for this buffer ")<CR>
-nnoremap <Leader>d <Cmd>call inputsecret("No debugging session running ")<CR>
+nnoremap L <Cmd>call inputsecret('No LSP server running for this buffer ')<CR>
+nnoremap <Leader>d <Cmd>call inputsecret('No debugging session running ')<CR>
 
 nnoremap <Leader>r :<C-u>%s/\C\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
 
@@ -285,12 +284,9 @@ imap <F1> <lt>F1>
 " Undo if filter shell command returned an error
 autocmd ShellFilterPost * if v:shell_error | undo | endif
 
-" Don't automatically copy anything to system clipboard
-set clipboard=
-
 " }}}1
 
-"   packadd {{{
+" packadd {{{1
 
 sil! packadd! cfilter
 sil! packadd! editorconfig
@@ -307,9 +303,7 @@ source $VIMRUNTIME/ftplugin/man.vim
 
 command! MinpacUpdate call utils#minpac#update()
 
-" }}}
-
-"   Surround {{{1
+"  Surround {{{1
 
 let g:surround_no_mappings = 1
 
@@ -319,12 +313,13 @@ nmap ds <Plug>Dsurround
 nmap cs <Plug>Csurround
 nmap ss <Plug>Yssurround
 
-"   Netrw {{{1
+"  Netrw {{{1
 
-let g:netrw_banner       = 0    " do not display info on the top of window
-let g:netrw_liststyle    = 3    " tree-view
-let g:netrw_browse_split = 4    " use the previous window to open file
-let g:netrw_winsize      = -28  " window size
+let g:netrw_banner = 0  " do not display info on the top of window
+let g:netrw_browse_split = 4  " use the previous window to open file
+let g:netrw_home = $XDG_STATE_HOME."/vim"
+let g:netrw_liststyle = 3  " tree-view
+let g:netrw_winsize = -28  " window size
 
 augroup NETRW_CONF
   autocmd!
@@ -333,9 +328,9 @@ augroup NETRW_CONF
   autocmd filetype netrw setlocal statusline=%f
 augroup END
 
-"   vim-bookmarks {{{1
+"  vim-bookmarks {{{1
 
-let g:bookmark_auto_save_file = $XDG_STATE_HOME . "/vim/bookmarks"
+let g:bookmark_auto_save_file = $XDG_STATE_HOME.'/vim/bookmarks'
 let g:bookmark_disable_ctrlp = 1
 let g:bookmark_display_annotation = 1
 let g:bookmark_no_default_key_mappings = 1
@@ -349,28 +344,22 @@ nmap <Leader>mk  <Plug>BookmarkMoveUp
 nmap <Leader>mj  <Plug>BookmarkMoveDown
 nmap <Leader>mg  <Plug>BookmarkMoveToLine
 
-"   Signify {{{1
-
-set updatetime=250
-let g:signify_sign_change = '~'
-highlight link  SignifySignChange  DiffText
-
-"   vim-slime {{{1
+"  vim-slime {{{1
 
 let g:slime_no_mappings = 1
 let g:slime_paste_file = tempname()
 
 let g:slime_target =
-      \ has("nvim") ? "neovim" :
-      \ has("terminal") ? "vimterminal" :
-      \ executable("tmux") ? "tmux" :
-      \ !empty($DISPLAY) ? "x11" :
-      \ ""
+      \ has('nvim') ? 'neovim' :
+      \ has('terminal') ? 'vimterminal' :
+      \ executable('tmux') ? 'tmux' :
+      \ !empty($DISPLAY) ? 'x11' :
+      \ ''
 
 noremap <F5> :SlimeSend<CR>
 com! -nargs=+ -bang  Slime  call slime#send(<q-args> . (<bang>0 ? "" : "\r"))
 
-"   asyncrun.vim {{{1
+"  asyncrun.vim {{{1
 
 let g:asyncrun_open = 10
 command! -nargs=? Grep AsyncRun -program=grep @ <args>
@@ -378,7 +367,7 @@ command! -nargs=? Make AsyncRun -program=make @ <args>
 nnoremap <F7> <Cmd>w <bar> Make %:p<CR>
 autocmd User AsyncRunStop copen | wincmd p
 
-"   conflict-marker.vim {{{1
+"  conflict-marker.vim {{{1
 
 let g:conflict_marker_highlight_group = 'SpecialKey'
 
@@ -416,17 +405,17 @@ augroup MY_CONFLICT_MARKER_DETECT
         \ | endif
 augroup END
 
-"   vim-visual-multi {{{1
+"  vim-visual-multi {{{1
 
-let g:VM_maps = {
-      \   "Undo": 'u',
-      \   "Redo": '<C-r>',
+let g:VM_maps = #{
+      \   Undo: 'u',
+      \   Redo: '<C-r>',
       \ }
 
 hi! VM_Mono NONE ctermbg=magenta
 hi! link VM_Insert VM_Mono
 
-"   exrc.vim {{{1
+"  exrc.vim {{{1
 
 let g:exrc#cache_file = $XDG_STATE_HOME.'/vim/exrc'
 
@@ -449,33 +438,32 @@ function! s:RmSoFromExrcTrust() abort
 endfunction
 autocmd VimEnter * call s:RmSoFromExrcTrust() | delfunc s:RmSoFromExrcTrust
 
-"   ~ {{{1
+"  ~ {{{1
 
 au VimEnter * com! -bang UseVimball
-      \ let d = printf("%s/%s/%s",
+      \ let d = printf('%s/%s/%s',
       \                split(&rtp,',')[0].'/pack/vimball',
-      \                <bang>0 ? "start" : "opt",
+      \                <bang>0 ? 'start' : 'opt',
       \                expand('%:t:r:r'))
       \ | call mkdir(d, 'p')
       \ | call vimball#Vimball(1, d)
       \ | unlet d
 
-set keywordprg=:Man
-
-let g:abolish_save_file = $XDG_DATA_HOME."/vim/abolish.vim"
+let g:abolish_save_file = $XDG_DATA_HOME.'/vim/abolish.vim'
 let g:EditorConfig_enable_for_new_buf = 1
+let g:fauxClip_sys_force = $WSL2_GUI_APPS_ENABLED
 let g:qf_loclist_window_bottom = 0
 let g:traces_abolish_integration = 1
-let g:traces_preview_window = "10new"
-let g:wrapwidth_hl = "Ignore"
+let g:traces_preview_window = '10new'
+let g:wrapwidth_hl = 'Ignore'
 
 let g:miniSnip_extends = {
-      \   "arduino"  : [ "cpp", "c" ],
-      \   "cpp"      : [ "c" ],
-      \   "html"     : [ "css", "javascript" ],
-      \   "markdown" : [ "html" ],
-      \   "php"      : [ "html" ],
-      \   "tex"      : [ "plaintex" ],
+      \   'arduino'  : [ 'cpp', 'c' ],
+      \   'cpp'      : [ 'c' ],
+      \   'html'     : [ 'css', 'javascript' ],
+      \   'markdown' : [ 'html' ],
+      \   'php'      : [ 'html' ],
+      \   'tex'      : [ 'plaintex' ],
       \ }
 
 let g:undotree_SetFocusWhenToggle = 1
@@ -484,12 +472,15 @@ nnoremap <F1> :UndotreeToggle<CR>
 nmap ]b <Plug>(buf-surf-forward)
 nmap [b <Plug>(buf-surf-back)
 
-let g:fauxClip_sys_force = $WSL2_GUI_APPS_ENABLED
+let g:signify_sign_change = '~'
+highlight link  SignifySignChange  DiffText
 
 " }}}1
 
+" vimrc.d {{{
 runtime! vimrc.d/*
 
 if has('gui_running') && !has('patch-9.1.0327')
   runtime! gvimrc
 endif
+" }}}
