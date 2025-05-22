@@ -93,6 +93,12 @@ for c in config/*; do
         */gtk-3.0)
             install  "$c"/settings.ini  @  "$XDG_CONFIG_HOME"/gtk-3.0/settings.ini
             ;;
+        */pacman.d)
+            [ -x "$(command -v pacman)" ] || continue
+            for h in "$c"/hooks/*; do
+                install  "$h"  s%  /etc/pacman.d/hooks/"$(basename "$h")"
+            done
+            ;;
         */powershell)
             [ -n "$USERPROFILE" ] && \
                 install "$c"  %  "$USERPROFILE"/Documents/WindowsPowerShell
