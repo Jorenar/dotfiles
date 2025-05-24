@@ -1,13 +1,12 @@
 #!/usr/bin/env sh
 
-
-gf_force=0
-gf_sudo=0
+force=0
+use_sudo=0
 
 while [ "$#" -gt 0 ]; do
     case "$1" in
-        -f|--force) gf_force=1 ;;
-        --sudo) gf_sudo=1 ;;
+        -f|--force) force=1 ;;
+        --sudo) use_sudo=1 ;;
         *) ;;
     esac
     shift
@@ -50,13 +49,13 @@ install () (
     esac
     case "$op" in
         s*)
-            [ "$gf_sudo" -eq 0 ] && return
+            [ "$use_sudo" -eq 0 ] && return
             [ "$(id -u)" -ne 0 ] && sudo="sudo"
             ;;
     esac
 
 
-    if [ "$gf_force" -eq 1 ] && [ -e "$dest" ]; then
+    if [ "$force" -eq 1 ] && [ -e "$dest" ]; then
         old="$HOME/dotfiles.old/$dest"
         if mkdir -p "$(dirname "$old")"; then
             $sudo mv "$dest" "$old" && echo "Moved file '$dest' to directory '$old'"
@@ -85,6 +84,9 @@ fi
 
 for c in config/*; do
     case "$c" in
+        */dconf)
+            install  "$c"  %  "$XDG_CONFIG_HOME"/dconf
+            ;;
         */firefox)
             for f in "$c"/*; do
                 install  "$f"  @  "$XDG_DATA_HOME"/firefox/"$(basename "$f")"
@@ -121,7 +123,7 @@ for c in config/*; do
             done
             ;;
         */transmission.json)
-            install  config/transmission.json  %  "$XDG_CONFIG_HOME"/transmission-daemon/settings.json
+            install  "$c"  %  "$XDG_CONFIG_HOME"/transmission-daemon/settings.json
             ;;
         */WindowsTerminal.json)
             ;;
@@ -139,17 +141,23 @@ for c in config/*; do
     esac
 done
 
-install  extern/klipmenu/       @  "$HOME"/.local/opt/klipmenu
-install  fonts/                 @  "$XDG_DATA_HOME"/fonts
-install  misc/desktop_entries/  @  "$XDG_DATA_HOME"/applications/custom
-install  templates/             @  "$XDG_TEMPLATES_DIR"
+for s in share/*; do
+    case "$s" in
+        */applications)
+            install  "$s"  @  "$XDG_DATA_HOME"/applications/custom
+            ;;
+        *)
+            install  "$s"  @  "$XDG_DATA_HOME"/"$(basename "$s")"
+            ;;
+    esac
+done
 
-xdg_wrapper.sh --install
+install  templates/  @  "$XDG_TEMPLATES_DIR"
 
 chmod -R -w \
     config/htop/htoprc \
     config/OpenSCAD/OpenSCAD.conf \
     config/qt5ct
 
-# prevents creation of ~/.dconf:
-sh -c 'mkdir -p "$1" && touch "$1"/user' - "$XDG_CONFIG_HOME/dconf"
+xdg_wrapper.sh --install
+install  extern/klipmenu/  @  "$HOME"/.local/opt/klipmenu
