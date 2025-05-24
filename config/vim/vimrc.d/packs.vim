@@ -1,6 +1,25 @@
 let g:packs = get(g:, 'packs', {})
 
-let g:packs.vim = {
+let g:packs.vim = #{
+      \   conf: #{
+      \     init: {
+      \       'dir': $XDG_DATA_HOME.'/vim',
+      \     },
+      \   }
+      \ }
+let g:packs.vim_only = #{
+      \   conf: #{
+      \     init: {
+      \       'dir': $XDG_DATA_HOME.'/vim',
+      \     },
+      \     pack: {
+      \       'type': 'opt',
+      \       '_ignore': has('nvim'),
+      \     },
+      \   }
+      \ }
+
+let g:packs.vim.list = {
       \   'ale': #{
       \     url: 'https://github.com/dense-analysis/ale.git',
       \   },
@@ -108,19 +127,16 @@ let g:packs.vim = {
       \   },
       \ }
 
-call extend(g:packs.vim, {
+let g:packs.vim_only.list = {
       \   'ctrlp.vim': #{
       \     url: 'https://github.com/ctrlpvim/ctrlp.vim.git',
-      \     conf: #{ type: 'opt' }
       \   },
       \   'vim-lsp': #{
       \     url: 'https://github.com/prabirshrestha/vim-lsp.git',
-      \     conf: #{ type: 'opt' }
       \   },
       \   'vim-lsp-ale': #{
       \     url: 'https://github.com/rhysd/vim-lsp-ale.git',
-      \     conf: #{ type: 'opt' }
       \   },
-      \ })
+      \ }
 
 " vim: fdl=1

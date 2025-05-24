@@ -1,6 +1,14 @@
 let g:packs = get(g:, 'packs', {})
 
-let g:packs.neovim = {
+let g:packs.neovim = #{
+      \   conf: #{
+      \     init: {
+      \       'dir': stdpath('data').'/site',
+      \     },
+      \   }
+      \ }
+
+let g:packs.neovim.list = {
       \   'cscope_maps.nvim': #{
       \     url: 'https://github.com/dhananjaylatkar/cscope_maps.nvim.git',
       \   },

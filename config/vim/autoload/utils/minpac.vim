@@ -9,26 +9,32 @@ function s:init(conf) abort
   call extend(g:minpac#pluglist, l:pluglist_bak)
 endfunction
 
-function s:add(sublist) abort
-  if !has_key(g:packs, a:sublist) | return | endif
-  for l:pack in values(g:packs[a:sublist])
-    if !has_key(l:pack, 'url') | continue | endif
-    call minpac#add(l:pack.url, get(l:pack, 'conf', {}))
-  endfor
-endfunction
-
 function! utils#minpac#update() abort
-  let l:opts = #{ jobs: -1 }
-  let g:packs = get(g:, 'packs', {})
+  let l:iconf = get(g:, 'minpac_init_conf', {
+        \   'jobs': -1
+        \ })
 
-  call s:init(extend(l:opts, #{ dir: $XDG_DATA_HOME.'/vim' }))
-  call s:add('vim')
+  for l:group in values(get(g:, 'packs', {}))
+    let l:gconf = get(l:group, 'conf', {})
+    let l:pconf = get(l:gconf, 'pack', {})
 
-  if has('nvim')
-    call s:init(extend(l:opts, #{ dir: stdpath('data').'/site' }))
-    call s:add('neovim')
-  endif
+    let l:list = get(l:group, 'list', {})
+    if empty(l:list) | continue | endif
+
+    call s:init(extend(deepcopy(l:iconf), get(l:gconf, 'init', {})))
+
+    for l:name in keys(l:list)
+      let l:url = get(l:list[l:name], 'url', '')
+      if empty(l:url) | continue | endif
+      let l:conf = get(l:list[l:name], 'conf', {})
+      let l:conf.name = get(l:conf, 'name', l:name)
+      call minpac#add(l:url, extend(deepcopy(l:pconf), l:conf))
+    endfor
+  endfor
+
+  call s:init(l:iconf)
 
   call minpac#clean()
+  call filter(g:minpac#pluglist, '!get(v:val, "_ignore", 0)')
   call minpac#update()
 endfunction
