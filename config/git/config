@@ -7,6 +7,10 @@
 [credential]
     helper = pass --no-erase
 
+[sendemail]
+    sendmailCmd = sendmail.sh
+    annotate = yes
+
 [init]
     defaultBranch = master
 
