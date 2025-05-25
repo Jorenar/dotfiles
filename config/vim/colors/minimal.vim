@@ -17,7 +17,7 @@ hi! DiffChange       NONE  ctermfg=White
 hi! DiffDelete       NONE  ctermfg=DarkRed
 hi! DiffText         NONE  ctermfg=DarkCyan
 
-hi! StatusLine       NONE  ctermfg=White
+hi! StatusLine       NONE  ctermfg=LightYellow
 hi! StatusLineNC     NONE  ctermfg=DarkGray
 hi! StatusLineTerm   NONE  ctermfg=Black ctermbg=LightGreen
 
