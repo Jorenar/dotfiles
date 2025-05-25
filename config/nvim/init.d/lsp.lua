@@ -2,10 +2,7 @@
 
 -- vim.lsp.set_log_level("debug")
 
-local SERVERS, KEYMAPS = {}, nil
-for k,_ in pairs(vim.g.enabled_lsp or {}) do
-  SERVERS[k:gsub('-','_')] = {}
-end
+local cfg = vim.lsp.config
 
 local GP = require('goto-preview')
 GP.setup {
@@ -32,7 +29,7 @@ vim.api.nvim_create_autocmd({"BufReadPre", "FileType", "VimEnter"}, {
     once = true,
     callback = function(e)
       vim.api.nvim_del_autocmd(e.id)
-      for name,_ in pairs(SERVERS) do
+      for name,_ in pairs(vim.g.enabled_lsp) do
         if vim.lsp.config[name] then
           vim.lsp.enable(name, isServEnabled(name))
           if vim.tbl_contains(vim.lsp.config[name].filetypes or {"*"}, "*") then
@@ -129,7 +126,7 @@ end)(vim.notify)
 
 -- }}}
 
-KEYMAPS = {
+--[[ KEYMAPS ]] for _,k in ipairs({
 
   { 'n', 'L', "<Cmd>exec {l -> empty(l) ? '' : 'norm L'.l}(input('L'))<CR>" },
 
@@ -153,105 +150,110 @@ KEYMAPS = {
   { 'n', 'Lfi', vim.lsp.buf.incoming_calls },
   { 'n', 'Lfo', vim.lsp.buf.outgoing_calls },
 
-}
+}) do
+  vim.keymap.set(k[1], k[2], k[3], { noremap = true })
+end
 
-SERVERS = vim.tbl_extend("force", SERVERS, {
 
-  asm_lsp = {
-    filetypes = { "asm", "nasm", "masm", "vmasm" },
+--[[ SERVERS' CONFIGS ]]
+
+cfg("asm_lsp", {
+  filetypes = { "asm", "nasm", "masm", "vmasm" },
+})
+
+cfg("ast_grep", {
+  cmd = {
+    'ast-grep', 'lsp',
+    '-c', vim.env.XDG_CONFIG_HOME .. '/ast-grep/sgconfig.yml'
   },
+  filetypes = { '*' },
+  workspace_required = false,
+})
 
-  ast_grep = {
-    cmd = {
-      'ast-grep', 'lsp',
-      '-c', vim.env.XDG_CONFIG_HOME .. '/ast-grep/sgconfig.yml'
-    },
-    filetypes = { '*' },
-    workspace_required = false,
+cfg("ccls", {
+  init_options = {
+    cache = { directory = '.cache/ccls' },
+    clang = { extraArgs = { '--gcc-toolchain=/usr' } },
   },
+})
 
-  ccls = {
-    init_options = {
-      cache = { directory = '.cache/ccls' },
-      clang = { extraArgs = { '--gcc-toolchain=/usr' } },
-    },
+cfg("clangd", {
+  cmd = { "clangd",
+    "--header-insertion-decorators=false",
+    "--background-index",
   },
+})
 
-  clangd = {
-    cmd = { "clangd",
-      "--header-insertion-decorators=false",
-      "--background-index",
-    },
-  },
-
-  denols = {
-    settings = {
-      deno = {
-        config = vim.env.XDG_CONFIG_HOME .. "/deno.json",
-        enable = true,
-        unstable = true,
-        lint = true,
-        codeLens = {
-          implementations = true,
-          references = true,
-          referencesAllFunctions = true,
-          test = true,
-        },
-        suggest = {
-          names = true,
-          imports = {
-            hosts = {
-              ["https://deno.land"] = true
-            }
+cfg("denols", {
+  settings = {
+    deno = {
+      config = vim.env.XDG_CONFIG_HOME .. "/deno.json",
+      enable = true,
+      unstable = true,
+      lint = true,
+      codeLens = {
+        implementations = true,
+        references = true,
+        referencesAllFunctions = true,
+        test = true,
+      },
+      suggest = {
+        names = true,
+        imports = {
+          hosts = {
+            ["https://deno.land"] = true
           }
         }
       }
-    },
-    single_file_support = true,
+    }
   },
+  single_file_support = true,
+})
 
-  groovyls = {
-    cmd = {
-      "java", "-jar",
-      vim.env.XDG_DATA_HOME .. '/java/groovy-language-server-all.jar'
-    },
+cfg("groovyls", {
+  cmd = {
+    "java", "-jar",
+    vim.env.XDG_DATA_HOME .. '/java/groovy-language-server-all.jar'
   },
+})
 
-  harper_ls = {
-    settings = {
-      ["harper-ls"] = {
-        userDictPath = vim.fn.stdpath("config") .. "/spell/en.utf-8.add"
-      }
-    },
-    filetypes = { '*' },
+cfg("harper_ls", {
+  settings = {
+    ["harper-ls"] = {
+      userDictPath = vim.fn.stdpath("config") .. "/spell/en.utf-8.add"
+    }
   },
+  filetypes = { '*' },
+})
 
-  lua_ls = {
-    on_init = function(client)
-      if not (client.workspace_folders[1].name:match('nvim')
+cfg("lua_ls", {
+  on_init = function(client)
+    if not (client.workspace_folders[1].name:match('nvim')
           or vim.fn.expand('%:p'):match('nvim')) then
-        return
-      end
-
-      client.settings.Lua = vim.tbl_deep_extend('force', client.settings.Lua, {
-          runtime = { version = 'LuaJIT' },
-          workspace = {
-            checkThirdParty = false,
-            library = { vim.env.VIMRUNTIME },
-          }
-        })
-    end,
-    settings = { Lua = {} }
-  },
-
-  sqls = {
-    cmd = {"sqls", "-config", ".sqls.yml"},
-    on_attach = function(client, bufnr)
-      require('sqls').on_attach(client, bufnr)
+      return
     end
-  },
 
-  sonarlint = {
+    client.settings.Lua = vim.tbl_deep_extend('force', client.settings.Lua, {
+      runtime = { version = 'LuaJIT' },
+      workspace = {
+        checkThirdParty = false,
+        library = { vim.env.VIMRUNTIME },
+      }
+    })
+  end,
+  settings = { Lua = {} }
+})
+
+cfg("sqls", {
+  cmd = { "sqls", "-config", ".sqls.yml" },
+  on_attach = function(client, bufnr)
+    require('sqls').on_attach(client, bufnr)
+  end
+})
+
+local ok, sonarlint = pcall(require, 'sonarlint')
+if ok and isServEnabled('sonarlint') then
+  sonarlint.setup({
     server = {
       cmd = {
         'java', '-Duser.home=' .. vim.env.XDG_CACHE_HOME,
@@ -263,9 +265,9 @@ SERVERS = vim.tbl_extend("force", SERVERS, {
           disableTelemetry = true,
           pathToCompileCommands = (function()
             local loc = vim.fs.find("compile_commands.json", {
-                path = vim.fs.dirname(vim.api.nvim_buf_get_name(0)),
-                upward = true,
-              })
+              path = vim.fs.dirname(vim.api.nvim_buf_get_name(0)),
+              upward = true,
+            })
             return #loc > 0 and loc[1] or nil
           end)(),
         },
@@ -287,22 +289,5 @@ SERVERS = vim.tbl_extend("force", SERVERS, {
       end,
     },
     filetypes = { '*' },
-  },
-
-})
-
--- {{{
-for name, conf in pairs(SERVERS) do
-  if name == 'sonarlint' then
-    if isServEnabled(name) then
-      require('sonarlint').setup(conf)
-    end
-  else
-    vim.lsp.config(name, conf)
-  end
+  })
 end
-
-for _,k in ipairs(KEYMAPS) do
-  vim.keymap.set(k[1], k[2], k[3], { noremap = true })
-end
---- }}}

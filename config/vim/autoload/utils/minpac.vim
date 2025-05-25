@@ -32,8 +32,6 @@ function! utils#minpac#update() abort
     endfor
   endfor
 
-  call s:init(l:iconf)
-
   call minpac#clean()
   call filter(g:minpac#pluglist, '!get(v:val, "_ignore", 0)')
   call minpac#update()
