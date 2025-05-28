@@ -79,6 +79,9 @@ set incsearch
 set shortmess-=S
 set smartcase
 
+xnoremap / <C-\><C-n>`</\%V
+xnoremap ? <C-\><C-n>`>?\%V
+
 nnoremap <C-l> :nohlsearch<C-r>=has('diff')?'<bar>diffupdate':''<CR><CR><C-l>
 
 " cursor {{{1

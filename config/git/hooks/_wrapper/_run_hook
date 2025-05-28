@@ -2,7 +2,7 @@
 
 conf_key="versioned-hooks.USER=$(id -un)"
 
-repo_root="$(git rev-parse --show-toplevel)"
+repo_root="$(dirname "$GIT_DIR")"
 hook_name="$(basename "$0")"
 
 v_hooks_dir="$repo_root"/.githooks # important: no trailing slash!

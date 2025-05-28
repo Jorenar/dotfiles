@@ -17,7 +17,7 @@ hi! DiffChange       NONE  ctermfg=White
 hi! DiffDelete       NONE  ctermfg=DarkRed
 hi! DiffText         NONE  ctermfg=DarkCyan
 
-hi! StatusLine       NONE  ctermfg=LightYellow
+hi! StatusLine       NONE  ctermfg=White
 hi! StatusLineNC     NONE  ctermfg=DarkGray
 hi! StatusLineTerm   NONE  ctermfg=Black ctermbg=LightGreen
 
@@ -32,7 +32,7 @@ hi! Pmenu            NONE  ctermbg=233
 hi! PmenuSel         NONE  cterm=reverse
 
 hi! Comment          NONE  ctermfg=245
-hi! Folded           NONE  cterm=italic
+hi! Folded           NONE  ctermfg=60
 hi! MatchParen       NONE  cterm=bold ctermfg=LightYellow
 hi! NonText          NONE  ctermfg=DarkGray
 hi! QuickFixLine     NONE  cterm=underline
