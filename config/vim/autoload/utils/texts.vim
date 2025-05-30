@@ -1,13 +1,14 @@
 function! utils#texts#FoldText() abort
-  let w = float2nr(&tw/2.5)
+  let tw = &tw > 0 ? &tw : winwidth(0)
+  let w = float2nr(tw/2.5)
 
   let line = getline(v:foldstart)
   let line = substitute(line, '\t', repeat(' ', &ts), 'g')
   let line = substitute(line, split(&l:fmr, ',')[0].'\d\?', '', '')
   let line = trim(line, " \t\r\n", 2)
-  let line = strchars(line)-3 > w ? line[:w] . "..." : line
+  let line = strchars(line)-3 > w ? line[:w] . '...' : line
 
-  return printf("%s  +%s %d lines ",
+  return printf('%s  +%s %d lines ',
         \ line,
         \ repeat(v:folddashes, 2),
         \ v:foldend - v:foldstart + 1)

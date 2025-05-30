@@ -195,6 +195,7 @@ endif
 
 " folds {{{1
 
+set fillchars+=fold:-
 set foldcolumn=2
 set foldmethod=indent
 set foldtext=utils#texts#FoldText()

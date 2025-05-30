@@ -32,7 +32,6 @@ hi! Pmenu            NONE  ctermbg=233
 hi! PmenuSel         NONE  cterm=reverse
 
 hi! Comment          NONE  ctermfg=245
-hi! Folded           NONE  ctermfg=60
 hi! MatchParen       NONE  cterm=bold ctermfg=LightYellow
 hi! NonText          NONE  ctermfg=DarkGray
 hi! QuickFixLine     NONE  cterm=underline
@@ -42,5 +41,6 @@ hi! WildMenu         NONE  cterm=reverse
 hi! debugPC          NONE  ctermbg=17
 
 hi! link FoldColumn  NonText
+hi! link Folded      Normal
 hi! link LineNr      NonText
 hi! link Whitespace  SpecialKey
