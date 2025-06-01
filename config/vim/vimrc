@@ -229,17 +229,20 @@ autocmd BufWinEnter * set formatoptions-=t  " Don't autowrap text using 'textwid
 
 " encryption {{{1
 
-if has('cryptv')
-  autocmd BufReadPre,BufRead,BufReadPost *
-        \   if !empty(&key)
-        \ |   set noundofile noswapfile
-        \ |   set nobackup nowritebackup
-        \ |   set viminfo= viminfofile=NONE
-        \ |   set nomodeline secure
-        \ |   set noshelltemp
-        \ |   set history=0
-        \ | endif
-endif
+function! s:set_crypt() abort
+  set noundofile noswapfile
+  set nobackup nowritebackup
+  set viminfo= viminfofile=NONE
+  set nomodeline secure
+  set noshelltemp
+  set history=0
+endfunction
+
+autocmd BufReadPre,BufRead,BufReadPost *
+      \ if has('cryptv') && !empty(&key) | call s:set_crypt() | endif
+autocmd BufReadPre,BufRead,BufReadPost
+      \ /dev/shm/*,*/pass.*
+      \ call s:set_crypt()
 
 " ~ {{{1
 

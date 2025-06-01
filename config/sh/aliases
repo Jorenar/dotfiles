@@ -6,7 +6,6 @@
 alias cheat="sh -c 'curl cheat.sh/\$1' -"
 alias del='gio trash'
 alias mnt='udisksctl mount -b'
-alias pass='EDITOR="vi" pass'
 alias sshfs='sshfs -o reconnect'
 alias suspend='sudo systemctl suspend'
 alias umnt='udisksctl unmount -b'
