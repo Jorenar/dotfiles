@@ -8,8 +8,6 @@ sil! hi! Normal NONE guifg=Gray guibg=Black
 
 sil! hi! CursorLineNr  NONE
 sil! hi! SignColumn    NONE
-sil! hi! TabLine       NONE
-sil! hi! TabLineFill   NONE
 sil! hi! VertSplit     NONE
 
 hi! DiffAdd          NONE  ctermfg=DarkGreen
@@ -28,19 +26,22 @@ hi! ColorColumn      NONE  ctermbg=233
 hi! CursorLine       NONE  ctermbg=233
 hi! CursorColumn     NONE  ctermbg=233
 
-hi! Pmenu            NONE  ctermbg=233
+hi! Pmenu            NONE  ctermbg=236
 hi! PmenuSel         NONE  cterm=reverse
+
+hi! TabLine          NONE  ctermfg=DarkGray
+hi! TabLineSel       NONE  cterm=bold ctermfg=Gray
 
 hi! Comment          NONE  ctermfg=245
 hi! MatchParen       NONE  cterm=bold ctermfg=LightYellow
 hi! NonText          NONE  ctermfg=DarkGray
 hi! QuickFixLine     NONE  cterm=underline
-hi! TabLineSel       NONE  cterm=bold  ctermfg=White
-hi! WarningMsg       NONE  ctermfg=Black  ctermbg=DarkYellow
+hi! WarningMsg       NONE  ctermfg=Black ctermbg=DarkYellow
 hi! WildMenu         NONE  cterm=reverse
 hi! debugPC          NONE  ctermbg=17
 
 hi! link FoldColumn  NonText
 hi! link Folded      Normal
 hi! link LineNr      NonText
+hi! link TabLineFill TabLine
 hi! link Whitespace  SpecialKey

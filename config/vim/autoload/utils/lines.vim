@@ -1,65 +1,74 @@
-function! s:VcsStats(l,r) abort " VCS stats; requires Signify plugin
-  let sy = getbufvar(bufnr(), 'sy')
-  if empty(sy) | return '' | endif
-  if !has_key(sy, 'vcs') | return '' | endif
-  let stats = map(sy.stats, 'v:val < 0 ? 0 : v:val')
-  return printf(a:l.'+%s -%s ~%s'.a:r, stats[0], stats[2], stats[1])
+function! s:Vcs() abort " VCS stats; requires Signify plugin
+  let stats = getbufvar(bufnr(), 'sy', {})
+        \ ->get('stats', [-1,-1,-1])->map('v:val < 0 ? "?" : v:val')
+  return printf('+%s -%s ~%s', stats[0], stats[2], stats[1])
 endfunction
 
 function! s:GetQfCount(type) abort
   let issues = getloclist(0)
-  let issues = filter(issues, {_,v -> v.type == a:type})
-  let issues = uniq(issues, {i1,i2 -> QfQoL#cmp(i1, i2, 'T')})
+        \ ->filter({_,v -> v.type == a:type})
+        \ ->uniq({i1,i2 -> QfQoL#cmp(i1, i2, 'T')})
   return len(issues).a:type
 endfunction
 
-function! s:IssuesCount() abort
+function! s:QfIssues() abort
   return s:GetQfCount('E').' '.s:GetQfCount('w').' '.s:GetQfCount('I')
 endfunction
 
-function! s:GetFF()
-  let ff = { 'dos': 'CRLF', 'unix': 'LF', 'mac': 'CR' }[&fileformat]
-  let fe = empty(&fenc) ? &enc : &fenc
-  return ff . ';' . fe . (&bomb ? ',B' : '')
+function! s:FileInfo()
+  return ''
+        \ . (empty(&ft) ? '' : &ft.';')
+        \ . (#{ dos:'CRLF', unix:'LF', mac:'CR' }[&ff] . ',')
+        \ . (empty(&fenc) ? &enc : &fenc)
+        \ . (&bomb ? ',B' : '')
+endfunction
+
+function! s:Path() abort
+  let path = expand('%:.')
+  if empty(path) | return '[No Name]' | endif
+  let scheme = matchstr(path, '^\w\+://')
+  let path = path[len(scheme):]
+  return scheme . pathshorten(path)
+endfunction
+
+function! s:CurPos() abort
+  const ln = line('$')
+  return printf('%0*d/%d:%02d', len(ln), line('.'), ln, col('.'))
 endfunction
 
 function! utils#lines#StatusLine() abort
   return ''
-      \ . "[%{&mod ? '+' : (&ma ? '=' : '-')}%R]"
-      \ . ' %t %l/%L:%c |'
-      \ . ' %{'.expand('<SID>').'IssuesCount()}'
-      \ . ' %{'.expand('<SID>').'VcsStats("| ", "")}'
-      \ . ' %=%< %y[%{'.expand('<SID>').'GetFF()}]'
+      \ . "[%{&mod ? '+' : (&ma ? '=' : '-')}%R] "
+      \ . [ 'Path', 'CurPos', 'QfIssues', 'Vcs', 'FileInfo' ]
+      \     ->map({_,v -> '%{'.expand('<SID>').v.'()}'})->join(' | ')
+      \ . '%<'
 endfunction
 
+
 function! utils#lines#TabLine() abort
-  let l:tabline = ''
+  let tabline = ''
+
+  let numbufs = len(getbufinfo({'buflisted':1})) " number of buffers
+  let hidbufs = len(filter(getbufinfo({'buflisted':1}), 'empty(v:val.windows)'))
+
+  let tabline .= '['
+        \ . (numbufs-hidbufs).'/'.numbufs.'/'
+        \ . '+'.len(filter(getbufinfo(), 'v:val.changed'))
+        \ . '] '
 
   for i in range(1, tabpagenr('$'))
-    let l:tabline .= (i == tabpagenr()) ? '%#TabLineSel#' : '%#TabLine#'
-    let l:tabline .= '%' . i . 'T'  " set the tab number (for mouse clicks)
-    let l:tabline .= ' ' . i        " display tab number
+    let tabline .= (i == tabpagenr()) ? '%#TabLineSel#' : '%#TabLine#'
+    let tabline .= '%' . i . 'T'  " set the tab number (for mouse clicks)
+    let tabline .= ' ' . i        " display tab number
 
     let tabname = gettabvar(i, 'name')
     if !empty(tabname)
-      let l:tabline .= ':' . tabname
+      let tabline .= ':' . tabname
     endif
 
-    let l:tabline .= ' '
+    let tabline .= ' '
   endfor
+  let tabline .= '%#TabLineFill#'
 
-  let l:tabline .= '%#TabLineFill#%T'
-  let l:tabline .= '%=% '
-
-  let l:tabline .= '%f%= '
-
-  " let tabwins = len(tabpagebuflist(tabpagenr()))
-  " let numbufs = len(getbufinfo({'buflisted':1})) " number of buffers
-  " let hidbufs = len(filter(getbufinfo({'buflisted':1}), 'empty(v:val.windows)'))
-
-  " let l:tabline .= 'bufs: '
-  "       \ . tabwins.'/'.(numbufs-hidbufs).'/'.numbufs
-  "       \ . ' (+' . len(filter(getbufinfo(), 'v:val.changed')). ')'
-
-  return l:tabline . ' '
+  return tabline . ' '
 endfunction
