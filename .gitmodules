@@ -40,13 +40,8 @@
 	url = https://github.com/Jorenar/pathmunge.sh.git
 	shallow = true
 	ignore = all
-[submodule "tmux-matryoshka"]
-	path = config/tmux/plugins/tmux-matryoshka
-	url = https://github.com/niqodea/tmux-matryoshka.git
-	shallow = true
-	ignore = all
-[submodule "tmux-resurrect"]
-	path = config/tmux/plugins/tmux-resurrect
-	url = https://github.com/tmux-plugins/tmux-resurrect.git
+[submodule "tpm"]
+	path = config/tmux/tpm
+	url = https://github.com/tmux-plugins/tpm.git
 	shallow = true
 	ignore = all

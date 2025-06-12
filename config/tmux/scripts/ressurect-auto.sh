@@ -25,6 +25,6 @@ case "$1" in
         trap 'tmux set -g @resurrect-dir "$resurrect_dir"' INT TERM EXIT
         tmux set -g @resurrect-dir "$resurrect_dir/auto"
         find "$resurrect_dir"/auto -name '*.txt' | sort -nr | sed '1,5d' | xargs -I{} rm {}
-        "$XDG_CONFIG_HOME"/tmux/plugins/tmux-resurrect/scripts/"$1".sh quiet
+        "$TMUX_PLUGIN_MANAGER_PATH"/tmux-resurrect/scripts/"$1".sh quiet
         ;;
 esac
