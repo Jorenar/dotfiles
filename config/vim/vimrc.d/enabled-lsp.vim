@@ -1,6 +1,7 @@
 let g:enabled_lsp = {
       \   'asm-lsp': {},
       \   'ast-grep': {},
+      \   'autotools_ls': {-> executable('autotools-language-server')},
       \   'bashls': {-> executable('bash-language-server')},
       \   'ccls': {-> executable('ccls') && !executable('clangd') },
       \   'clangd': {},

@@ -59,37 +59,6 @@ local function get_fn_local_var(fn, target_name)
     i = i + 1
   end
 end
-
-dap.listeners.after["event_breakpoint"]["TODO"] = function(_,res)
-  if res.reason ~= "new" then
-    return
-  end
-
-  local b = res.breakpoint
-  local file = b.source.path
-  local lnum = b.line
-
-  local bufnr = vim.fn.bufnr(file, true)
-  if not vim.bo[bufnr].buflisted then
-    vim.fn.bufload(bufnr)
-  end
-
-  local dap_brps = require('dap.breakpoints')
-  local bp_by_sign = get_fn_local_var(dap_brps.get, "bp_by_sign")
-
-  local sign_id = vim.fn.sign_place(
-    0, "dap_breakpoints", "DapBreakpoint", bufnr,
-    { lnum = lnum; priority = 21; }
-  )
-
-  bp_by_sign[sign_id] = {
-    buf = bufnr,
-    state = b,
-    custom = true,
-  }
-
-  vim.schedule(dapui.elements.breakpoints.render)
-end
 ]]--
 
 -- UI {{{1
