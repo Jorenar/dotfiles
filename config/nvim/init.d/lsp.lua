@@ -11,27 +11,13 @@ GP.setup {
   preview_window_title = { enable = false },
 }
 
-local function isServEnabled(client)
-  local function check(name)
-    local val = vim.g.enabled_lsp and vim.g.enabled_lsp[name]
-    if vim.fn.type(val) == vim.v.t_dict and vim.fn.empty(val) then
-      val = vim.fn.executable(name)
-    elseif val == vim.NIL then
-      val = vim.fn.eval('g:enabled_lsp["'..name..'"]()')
-    end
-    return not (val == 0 or val == false or val == nil or val == vim.NIL)
-  end
-  local name = (client.name and client.name or client)
-  return check(name) or check(name:gsub('_', '-'))
-end
-
 vim.api.nvim_create_autocmd({"BufReadPre", "FileType", "VimEnter"}, {
     once = true,
     callback = function(e)
       vim.api.nvim_del_autocmd(e.id)
       for name,_ in pairs(vim.g.enabled_lsp) do
         if vim.lsp.config[name] then
-          vim.lsp.enable(name, isServEnabled(name))
+          vim.lsp.enable(name, vim.fn.EnabledLsp(name))
           if vim.tbl_contains(vim.lsp.config[name].filetypes or {"*"}, "*") then
             vim.lsp.config[name].filetypes = nil
           end
@@ -68,13 +54,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
       if not client then
         return
       elseif client.name == 'ccls' then
-        if not isServEnabled('clangd') then return end
+        if not vim.fn.EnabledLsp('clangd') then return end
         client.server_capabilities = {
           completionProvider = client.server_capabilities.completionProvider,
           textDocumentSync = client.server_capabilities.textDocumentSync,
         }
       elseif client.name == 'clangd' then
-        if not isServEnabled('ccls') then return end
+        if not vim.fn.EnabledLsp('ccls') then return end
         client.server_capabilities.completionProvider = nil
       end
     end
@@ -252,7 +238,7 @@ cfg("sqls", {
 })
 
 local ok, sonarlint = pcall(require, 'sonarlint')
-if ok and isServEnabled('sonarlint') then
+if ok and vim.fn.EnabledLsp('sonarlint') then
   sonarlint.setup({
     server = {
       cmd = {

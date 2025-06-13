@@ -1,22 +1,27 @@
+function! EnabledLsp(client) abort
+  let l:Val = get(g:enabled_lsp, a:client, 0)
+  return type(l:Val) == v:t_func ? l:Val() : l:Val
+endfunction
+
 let g:enabled_lsp = {
-      \   'asm-lsp': {},
-      \   'ast-grep': {},
+      \   'asm_lsp': {-> executable('asm-lsp')},
+      \   'ast_grep': {-> executable('ast-grep')},
       \   'autotools_ls': {-> executable('autotools-language-server')},
       \   'bashls': {-> executable('bash-language-server')},
       \   'ccls': {-> executable('ccls') && !executable('clangd') },
-      \   'clangd': {},
+      \   'clangd': {-> executable('clangd')},
       \   'denols': {-> executable('deno')},
-      \   'digestif': {},
-      \   'gopls': {},
+      \   'digestif': {-> executable('digestif')},
+      \   'gopls': {-> executable('gopls')},
       \   'groovyls': {-> executable('groovy-language-server')},
-      \   'harper-ls': {},
-      \   'jdtls': {},
-      \   'jedi-language-server': {},
+      \   'harper_ls': {-> executable('harper-ls')},
+      \   'jdtls': {-> executable('jdtls')},
+      \   'jedi_language_server': {-> executable('jedi-language-server')},
       \   'lua_ls': {-> executable('lua-language-server')},
       \   'm68k': {-> executable('m68k-lsp-server')},
-      \   'openscad-lsp': {},
+      \   'openscad_lsp': {-> executable('openscad-lsp')},
       \   'sonarlint': {-> executable('sonarlint-language-server')},
-      \   'sqls': {},
-      \   'texlab': {},
+      \   'sqls': {-> executable('sqls')},
+      \   'texlab': {-> executable('taxlab')},
       \   'vimls': {-> executable('vim-language-server')},
       \ }
