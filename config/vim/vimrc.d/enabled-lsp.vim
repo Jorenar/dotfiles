@@ -1,6 +1,7 @@
 function! EnabledLsp(client) abort
-  let l:Val = get(g:enabled_lsp, a:client, 0)
-  return type(l:Val) == v:t_func ? l:Val() : l:Val
+  let l:V = get(g:enabled_lsp, a:client, 0)
+  let l:R = type(l:V) == v:t_func ? l:V() : l:V
+  return l:R ? v:true : v:false  " for Lua
 endfunction
 
 let g:enabled_lsp = {
