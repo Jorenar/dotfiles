@@ -35,8 +35,3 @@
 	url = https://github.com/Jorenar/pathmunge.sh.git
 	shallow = true
 	ignore = all
-[submodule "tpm"]
-	path = config/tmux/tpm
-	url = https://github.com/tmux-plugins/tpm.git
-	shallow = true
-	ignore = all
