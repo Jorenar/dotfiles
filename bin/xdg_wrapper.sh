@@ -74,7 +74,12 @@ case "$exe" in
 
         ;;
     steam)
-        HOME="$XDG_DATA_HOME/Steam"
+        HOME="$XDG_DATA_HOME/Steam/HOME"
+        mkdir -p "$HOME"/.local
+        l () { [ ! -e "$2" ] && ln -s "$1" "$2"; }
+        l "$XDG_CACHE_HOME"  "$HOME"/.cache
+        l "$XDG_CONFIG_HOME" "$HOME"/.config
+        l "$XDG_DATA_HOME"   "$HOME"/.local/share
         ;;
     telnet)
         HOME="$XDG_CONFIG_HOME/telnet"

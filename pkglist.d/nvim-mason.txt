@@ -1,6 +1,7 @@
 # LSP
 arduino-language-server
 asm-lsp
+autotools-language-server
 bash-language-server
 deno
 gopls
@@ -15,8 +16,16 @@ texlab
 vim-language-server
 
 # DAP
+bash-debug-adapter
 cpptools
+debugpy
+php-debug-adapter
 
-# linter
+# fmt
+autopep8
+shfmt
+
+# lint
 shellcheck
+vale
 vint

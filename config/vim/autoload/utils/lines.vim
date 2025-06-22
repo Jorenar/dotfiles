@@ -1,6 +1,7 @@
 function! s:Vcs() abort " VCS stats; requires Signify plugin
   let stats = getbufvar(bufnr(), 'sy', {})
-        \ ->get('stats', [-1,-1,-1])->map('v:val < 0 ? "?" : v:val')
+        \ ->get('stats', ['?','?','?'])->deepcopy()
+        \ ->map('v:val < 0 ? "0" : v:val')
   return printf('+%s -%s ~%s', stats[0], stats[2], stats[1])
 endfunction
 

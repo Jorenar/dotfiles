@@ -12,7 +12,7 @@ gpg --quick-gen-key "KEY NAME" default default never
 mount -t cifs //10.0.2.4/qemu/
 pacman -Qo /path/to/file  # what package file belongs to
 pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'
-pacman -Qttdq # packages which are optionally required by another package
+pacman -Qqd | pacman -Rsu -p --print-format '%n' - | sort  # unneeded packages?
 perl -i -lne 's/\s*$//; print if ! $x{$_}++' $HISTFILE
 php -S 0.0.0.0:8000 # PHP server
 podman pull $(podman images --format='{{.Repository}}' | tr '\n' ' ')
@@ -32,4 +32,4 @@ transmission-daemon -T -w "$XDG_DOWNLOAD_DIR" -c "$XDG_DOWNLOAD_DIR"
 updpkgsums && makepkg --printsrcinfo > .SRCINFO # update AUR files
 vim "$(command -v music.m3u)"
 xsetwacom set "$(xsetwacom list | awk '/stylus/ {print $8}')" MapToOutput 1920x1080+0+0
-yay -Rnsu $(yay -Qtdq) # yay autoremove
+yay -Qtdq | yay -Rnsu -  # autoremove
