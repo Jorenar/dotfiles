@@ -47,6 +47,10 @@ let g:packs.vim.list = {
       \   'miniSnip': #{
       \     url: 'https://github.com/Jorenar/miniSnip.git',
       \   },
+      \   'minpac': #{
+      \     url: 'https://github.com/k-takata/minpac.git',
+      \     conf: { 'type': 'opt' }
+      \   },
       \   'NrrwRgn': #{
       \     url: 'https://github.com/chrisbra/NrrwRgn.git',
       \   },

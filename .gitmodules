@@ -30,11 +30,6 @@
 	url = https://github.com/hackerb9/lsix.git
 	shallow = true
 	ignore = all
-[submodule "minpac"]
-	path = config/vim/pack/extern/opt/minpac
-	url = https://github.com/k-takata/minpac.git
-	shallow = true
-	ignore = all
 [submodule "pathmunge.sh"]
 	path = extern/pathmunge.sh
 	url = https://github.com/Jorenar/pathmunge.sh.git
