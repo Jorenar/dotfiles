@@ -24,9 +24,9 @@ posix-xsi
 bash
 bash-completion
 dash
-expect
 fzf
 htop
+neovim
 openssh
 pass
 rsync
@@ -50,7 +50,9 @@ zip
 aerc
 isync
 msmtp
+notmuch
 
+calcurse
 curlftpfs
 gvfs
 imagemagick
@@ -58,7 +60,6 @@ newsboat
 python-pipx
 ranger
 sane
-squashfs-tools
 sshfs
 termshark
 testdisk
@@ -69,8 +70,13 @@ visidata
 w3m
 
 ccache
+clang
 cmake
+cscope
+ctags
 doxygen
+expect
+gdb
 go
 graphviz
 jq
@@ -80,24 +86,14 @@ nasm
 npm
 openscad
 python
-rust
-tectonic
-
-gdb
 radare2
+rust
 strace
-valgrind
-
-autopep8
-cscope
-ctags
-neovim
-python-pynvim
+tectonic
 tidy
 uncrustify
-vale
+valgrind
 
-fuse-overlayfs
 podman
 podman-docker
 wine
@@ -105,12 +101,10 @@ wine
 # i3-wm
 # polybar
 # scrot
+# xclip
 # xorg-server
 # xorg-xinit
 # xorg-xrandr
-
-xclip
-xdotool
 
 # sway
 # waybar
@@ -120,6 +114,9 @@ xdotool
 # wtype
 # wlsunset
 # xorg-xwayland
+
+xorg-xprop
+xdotool
 
 dmenu
 dunst
@@ -140,6 +137,7 @@ mpv
 yt-dlp
 zathura
 zathura-pdf-mupdf
+zathura-ps
 
 # gimp
 # inkscape
@@ -148,7 +146,6 @@ zathura-pdf-mupdf
 # tenacity
 
 # bluez
-# bluez-utils
 # bluetui
 # ethtool
 
