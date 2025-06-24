@@ -1,3 +1,7 @@
+if ! type pathmunge 2> /dev/null | grep -q 'function'; then
+    . "$XDG_CONFIG_HOME"/profile.d/10-pathmunge.sh || return 1
+fi
+
 # basics {{{1
 
 export HOSTNAME="${HOSTNAME:-$(uname -n)}"
@@ -6,6 +10,17 @@ export TMPDIR="${TMPDIR:-/tmp}"
 # Virtual terminal number (if not set already by PAM)
 export XDG_VTNR="${XDG_VTNR:-$(tty | sed 's/[^0-9]*//g')}"
 
+# Windows Subsystem for Linux
+if [ -n "$WSL_DISTRO_NAME" ]; then
+    export USERPROFILE="$(
+        cd /mnt/c/Windows/System32 || exit
+        ./cmd.exe /c 'echo %USERPROFILE%' 2> /dev/null | \
+            sed -e 's,\r,,g' -e 's,\\,/,g' -e 's,^C:,/mnt/c,'
+    )"
+
+    export WSLENV
+    pathmunge WSLENV "TMUX"
+fi
 
 # XDG dirs {{{1
 
@@ -69,6 +84,31 @@ pathmunge BASH_COMPLETION_USER_DIR "$XDG_DATA_HOME/bash-completion"
 pathmunge BASH_COMPLETION_USER_DIR "$XDG_CONFIG_HOME/bash-completion"
 pathmunge BASH_COMPLETION_USER_DIR "$XDG_CONFIG_HOME/bash/bash-completion"
 
+
+# PATH {{{1
+
+if [ -n "$WSL_DISTRO_NAME" ]; then
+    pathmunge "/mnt/c/Windows/System32"
+    pathmunge "/mnt/c/Windows/System32/Wbem"
+    pathmunge "/mnt/c/Windows/System32/WindowsPowerShell/v1.0"
+    [ -n "$USERPROFILE" ] && \
+        pathmunge "$USERPROFILE/AppData/Local/Microsoft/WindowsApps"
+fi
+
+pathmunge "/usr/lib/ccache"
+pathmunge "/usr/lib/ccache/bin"
+
+for opt in "$HOME"/.local/opt/*/bin; do
+    [ -d "$opt" ] && pathmunge "$opt"
+done
+
+for opt in "$HOME"/.local/opt/*/*/bin; do
+    [ -d "$opt"/../../bin ] && continue
+    [ -d "$opt" ] && pathmunge "$opt"
+done
+
+pathmunge "$HOME"/.local/bin
+
 # default programs {{{1
 
 export BROWSER="firefox"
@@ -94,19 +134,6 @@ pathmunge ASAN_OPTIONS detect_stack_use_after_return=1
 
 export PYTHONPATH
 pathmunge PYTHONPATH "$HOME/.local/lib/python/site-packages/"
-
-# WSL {{{1
-
-if [ -n "$WSL_DISTRO_NAME" ]; then
-    export USERPROFILE="$(
-        cd /mnt/c/Windows/System32 || exit
-        ./cmd.exe /c 'echo %USERPROFILE%' 2> /dev/null | \
-            sed -e 's,\r,,g' -e 's,\\,/,g' -e 's,^C:,/mnt/c,'
-    )"
-
-    export WSLENV
-    pathmunge WSLENV "TMUX"
-fi
 
 # options {{{1
 
