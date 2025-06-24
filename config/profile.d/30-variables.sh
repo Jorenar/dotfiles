@@ -68,7 +68,7 @@ export GOPATH="$HOME"/.local/opt/pkg/go
 
 export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
 export XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
-export XENVIRONMENT="$XDG_CONFIG_HOME/X11/Xresources"
+export XAPPLRESDIR="$XDG_CONFIG_HOME/X11/"
 
 export ENV="$XDG_CONFIG_HOME/sh/shrc"  # sh, ksh
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"

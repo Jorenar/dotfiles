@@ -1,5 +1,3 @@
-! # Xresources #
-
 ! General settings
 XTerm*termName: xterm-256color
 XTerm*decTerminalID: vt340
