@@ -54,11 +54,6 @@ export VD_DIR="$XDG_DATA_HOME"/visidata
 export W3M_DIR="$XDG_DATA_HOME/w3m"
 export WINEPREFIX="$XDG_DATA_HOME/wine"
 
-if [ -x "$(command -v vim)" ]; then
-    [ "$(vim --clean -es +'exec "!echo" has("patch-9.1.0327")' +q)" = 0 ] && \
-        export VIMINIT="so $XDG_CONFIG_HOME/vim/vimrc"
-fi
-
 export PYTHON_HISTORY="$XDG_STATE_HOME"/python_history
 export PYTHONPYCACHEPREFIX="$XDG_CACHE_HOME"/__pycache__
 export PYTHONSTARTUP="$XDG_CONFIG_HOME"/python/config.py
