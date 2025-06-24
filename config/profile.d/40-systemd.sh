@@ -1,6 +1,7 @@
 # Generate environmental variables
 mkdir -p "$XDG_CONFIG_HOME"/environment.d && env \
     | grep \
+        -e '^DOCKER_' \
         -e '^GNUPGHOME' \
         -e '^GOBIN' \
         -e '^GOMODCACHE' \

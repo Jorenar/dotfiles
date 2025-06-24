@@ -37,6 +37,7 @@ fi
 export CARGO_HOME="$HOME"/.local/opt/pkg/cargo
 export CHKTEXRC="$XDG_CONFIG_HOME/chktex"
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
+export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
 export GDBHISTFILE="$XDG_STATE_HOME"/gdb_history
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
@@ -132,6 +133,7 @@ pathmunge PYTHONPATH "$HOME/.local/lib/python/site-packages/"
 
 # options {{{1
 
+export DOCKER_HOST="unix://$XDG_RUNTIME_DIR/docker.sock"
 export FZF_CTRL_T_OPTS="--preview '(cat {} || tree {}) 2> /dev/null | head -200'"
 export KM_SELECTIONS="clipboard"
 export LESS="-FXRS"
