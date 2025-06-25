@@ -30,9 +30,12 @@ user_pref("general.autoScroll", true);
 
 // URL bar {{{1
 
+user_pref("browser.urlbar.scotchBonnet.enableOverride", false);
+user_pref("browser.urlbar.shortcuts.actions", false);
 user_pref("browser.urlbar.shortcuts.bookmarks", false);
 user_pref("browser.urlbar.shortcuts.history", false);
 user_pref("browser.urlbar.shortcuts.tabs", false);
+user_pref("browser.urlbar.suggest.quickactions", false);
 user_pref("browser.urlbar.suggest.topsites", false);
 user_pref("browser.urlbar.suggest.trending", false);
 user_pref("browser.urlbar.trimURLs", false);

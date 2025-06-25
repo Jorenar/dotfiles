@@ -2,6 +2,7 @@
 
 call utils#syntax#rule_append("shSingleQuote", "fold")
 call utils#syntax#rule_append("shDoubleQuote", "fold")
+call utils#syntax#rule_append("shArrayRegion", "fold")
 
 " Embedding languages {{{1
 

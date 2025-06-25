@@ -17,7 +17,7 @@ done
     git submodule update --init --recursive --remote
 
 . extern/pathmunge.sh/pathmunge.sh
-. config/profile.d/20-variables.sh
+. config/profile.d/30-variables.sh
 . config/user-dirs.dirs
 
 

@@ -14,3 +14,7 @@ if !get(g:, "sh_env_vars_cached", 0)
   let &complete .= ",k".s:dict_compl."/env_variables"
   let g:sh_env_vars_cached = 1
 endif
+
+if bufname("%") =~# 'PKGBUILD'
+  setl tabstop=2
+endif
