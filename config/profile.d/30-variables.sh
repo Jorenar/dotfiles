@@ -136,6 +136,7 @@ pathmunge PYTHONPATH "$HOME/.local/lib/python/site-packages/"
 
 export DOCKER_HOST="unix://$XDG_RUNTIME_DIR/docker.sock"
 export FZF_CTRL_T_OPTS="--preview '(cat {} || tree {}) 2> /dev/null | head -200'"
+export KM_LAUNCHER="fuzzel -d"
 export KM_SELECTIONS="clipboard"
 export LESS="-FXRS"
 export LESSHISTFILE=-

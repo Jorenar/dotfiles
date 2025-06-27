@@ -144,7 +144,9 @@ done
 for s in share/*; do
     case "$s" in
         */applications)
-            install  "$s"  @  "$XDG_DATA_HOME"/applications/custom
+            for a in "$s"/*; do
+                install  "$a"  @  "$XDG_DATA_HOME"/applications/"$(basename "$a")"
+            done
             ;;
         *)
             install  "$s"  @  "$XDG_DATA_HOME"/"$(basename "$s")"

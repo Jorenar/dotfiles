@@ -3,7 +3,6 @@
 # Copyright 2024 Jorenar
 
 # Rewrite of passmenu in POSIX shell
-# Accepts dmenu/xdotool on Xwayland
 
 die () {
     >&2 printf '%s: error: %s\n' "$(basename "$0")" "$@"
@@ -27,7 +26,7 @@ fi
 [ -x "$(command -v xdotool)" ] && xdotool="xdotool type --clearmodifiers --file -"
 
 if [ -n "$WAYLAND_DISPLAY" ]; then
-    [ -x "$(command -v dmenu-wl)" ] && dmenu="dmenu-wl"
+    [ -x "$(command -v fuzzel)" ] && dmenu="fuzzel -d"
     if [ -x $(command -v wtype) ]; then
         xdotool="wtype -"
     elif [ -x "$(command -v ydotool)" ]; then
@@ -51,7 +50,7 @@ cred="$(
     find . -name '*.gpg' ! -name '.*' |\
         sed -e 's,\./,,' -e 's/\.gpg$//' |\
         sort |\
-        dmenu "$@"
+        $dmenu "$@"
 )" || die 'something went wrong'
 
 line=1

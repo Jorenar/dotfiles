@@ -105,6 +105,8 @@ wine
 # xorg-server
 # xorg-xinit
 # xorg-xrandr
+# dmenu
+# dunst
 
 # sway
 # waybar
@@ -114,13 +116,11 @@ wine
 # wtype
 # wlsunset
 # xorg-xwayland
+# dunst
+# fuzzel
 
 xorg-xprop
 xdotool
-
-dmenu
-dunst
-
 qt5ct
 
 ttf-dejavu
