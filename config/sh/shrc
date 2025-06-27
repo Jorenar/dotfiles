@@ -8,8 +8,6 @@ export HISTFILE="$XDG_STATE_HOME/$(basename -- "${0#-*}")_history"
 . "$XDG_CONFIG_HOME"/sh/aliases
 . "$XDG_CONFIG_HOME"/sh/prompt.sh
 
-. "$XDG_CONFIG_HOME"/profile.d/30-variables.sh
-
 k="key-bindings.$(basename "${BASH}${ZSH_NAME}")"
 for d in /usr/share/fzf /usr/share/fzf/* /usr/share/*/fzf/*; do
     [ -f "$d/$k" ] && . "$d/$k" && break

@@ -1,17 +1,12 @@
-if ! type pathmunge 2> /dev/null | grep -q 'function'; then
-    . "$XDG_CONFIG_HOME"/profile.d/10-pathmunge.sh || return 1
-fi
-
 # basics {{{1
 
-export HOSTNAME="${HOSTNAME:-$(uname -n)}"
 export TMPDIR="${TMPDIR:-/tmp}"
 
 # Virtual terminal number (if not set already by PAM)
 export XDG_VTNR="${XDG_VTNR:-$(tty | sed 's/[^0-9]*//g')}"
 
 # Windows Subsystem for Linux
-if [ -n "$WSL_DISTRO_NAME" ]; then
+if [ -n "$WSL_DISTRO_NAME" ] && [ -z "$USERPROFILE" ]; then
     export USERPROFILE="$(
         cd /mnt/c/Windows/System32 || exit
         ./cmd.exe /c 'echo %USERPROFILE%' 2> /dev/null | \
@@ -29,10 +24,8 @@ export XDG_CONFIG_HOME="$HOME/.local/config"
 export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_DATA_HOME="$HOME/.local/share"
 
-if [ -f "$XDG_CONFIG_HOME"/user-dirs.dirs ]; then
-    eval "$(sed 's/^[^#].*/export &/g;t;d' "$XDG_CONFIG_HOME"/user-dirs.dirs)"
-fi
-
+[ -f "$XDG_CONFIG_HOME"/user-dirs.dirs ] && \
+    { set -a; . "$XDG_CONFIG_HOME"/user-dirs.dirs; set +a; }
 
 export CARGO_HOME="$HOME"/.local/opt/pkg/cargo
 export CHKTEXRC="$XDG_CONFIG_HOME/chktex"

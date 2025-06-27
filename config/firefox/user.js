@@ -107,6 +107,7 @@ user_pref("browser.translations.neverTranslateLanguages", "pl");
 user_pref("dom.webnotifications.enabled", false);
 user_pref("findbar.highlightAll", true);
 user_pref("media.eme.enabled", true);   // enable DRM
+user_pref("media.webspeech.synth.dont_notify_on_error", true);
 
 user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false);
 user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false);
