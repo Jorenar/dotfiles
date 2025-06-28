@@ -1,45 +1,45 @@
 ! General settings
-XTerm*termName: xterm-256color
-XTerm*decTerminalID: vt340
-XTerm*loginshell: False
-XTerm*metaSendsEscape: False
+*termName: xterm-256color
+*decTerminalID: vt340
+*loginshell: False
+*metaSendsEscape: False
 
 ! Fonts and Encoding
-XTerm*faceName: monospace
-XTerm*faceNameDoublesize: WenQuanYi Zen Hei Mono
-XTerm*faceSize: 11
-XTerm*locale: True
-XTerm*preeditType: Root
-XTerm*renderFont: True
-XTerm*utf8: True
-XTerm*utf8Title: True
-XTerm*xftAntialias: True
+*faceName: monospace
+*faceNameDoublesize: WenQuanYi Zen Hei Mono
+*faceSize: 11
+*locale: True
+*preeditType: Root
+*renderFont: True
+*utf8: True
+*utf8Title: True
+*xftAntialias: True
 
 ! Scrolling
-XTerm*saveLines: 4096
-XTerm*scrollBar: False
-XTerm*rightScrollBar: True
-XTerm*Scrollbar*width: 4
+*saveLines: 4096
+*scrollBar: False
+*rightScrollBar: True
+*Scrollbar*width: 4
 
 ! Fix the backspace key
-XTerm*backarrowKey: false
-XTerm*ttyModes: erase ^?
+*backarrowKey: false
+*ttyModes: erase ^?
 
 ! Copy and paste with clipboard
-XTerm*translations: #override \
+*translations: #override \
         Ctrl Shift <KeyPress> C: copy-selection(CLIPBOARD) \n\
         Ctrl Shift <KeyPress> V: insert-selection(CLIPBOARD)
 
 ! Selecting email/URL by double-click
-XTerm*charClass: 33:48,37-38:48,45-47:48,64:48,58:48,126:48,61:48,63:48,43:48,35:48
+*charClass: 33:48,37-38:48,45-47:48,64:48,58:48,126:48,61:48,63:48,43:48,35:48
 
 ! Colors
-XTerm*numColorRegisters: 256
-XTerm*background: black
-XTerm*foreground: grey
+*numColorRegisters: 256
+*background: black
+*foreground: grey
 
 ! Keybinds
-XTerm*Translations: #override \
+*Translations: #override \
         Shift <Key>Up:    scroll-back(1)    \n\
         Shift <Key>Down:  scroll-forw(1)    \n\
         Ctrl  <Key>minus: smaller-vt-font() \n\
