@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 init_gpg_agent () (
     if [ ! -x "$(command -v gpg-agent)" ]; then
         return
@@ -14,3 +16,5 @@ init_gpg_agent () (
 
     rm "$tmp"
 )
+
+init_gpg_agent
