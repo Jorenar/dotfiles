@@ -1,0 +1,56 @@
+#
+# Calcurse keys configuration file
+#
+# In this file the keybindings used by Calcurse are defined.
+# It is generated automatically by Calcurse and is maintained
+# via the key configuration menu of the interactive user
+# interface. It should not be edited directly.
+
+generic-cancel  ESC 
+generic-select  SPC 
+generic-credits  UNDEFINED
+generic-help  UNDEFINED
+generic-quit  q 
+generic-save  S 
+generic-reload  R 
+generic-copy  y 
+generic-paste  p ^V 
+generic-change-view  TAB 
+generic-prev-view  KEY_BTAB 
+generic-import  I 
+generic-export  X 
+generic-goto  g G 
+generic-other-cmd  O 
+generic-config-menu  C 
+generic-redraw  ^L 
+generic-add-appt  UNDEFINED
+generic-add-todo  UNDEFINED
+generic-prev-day  b 
+generic-next-day  w 
+generic-prev-week  B 
+generic-next-week  W 
+generic-prev-month  H 
+generic-next-month  L 
+generic-prev-year  K 
+generic-next-year  J 
+generic-scroll-down  ^N 
+generic-scroll-up  ^P 
+generic-goto-today  UNDEFINED
+generic-command  : 
+move-right  l RGT 
+move-left  h LFT 
+move-down  j DWN 
+move-up  k UP 
+start-of-week  0 
+end-of-week  $ 
+add-item  i a 
+del-item  D 
+edit-item  c e 
+view-item  v RET 
+pipe-item  | 
+flag-item  ! 
+repeat  r 
+edit-note  n N 
+view-note  UNDEFINED
+raise-priority  + 
+lower-priority  - 
