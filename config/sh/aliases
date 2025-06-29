@@ -16,7 +16,9 @@ alias mv='mv -i'
 alias rm='rm -i'
 
 if command -v nvim > /dev/null 2>&1; then
-    alias nvim='env XTERM_VERSION= nvim'
+    [ -n "$TMUX" ] && case "$TERM" in
+        xterm*) alias nvim='env XTERM_VERSION= nvim' ;;
+    esac
     alias vim='nvim'
 fi
 command -v vi > /dev/null 2>&1 || alias vi='command vim --clean'
