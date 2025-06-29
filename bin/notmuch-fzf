@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+
+if [ $# -eq 0 ]; then
+    >&2 echo "${0##*/}: error: no arguments provided"
+    exit 1
+fi
+
+notmuch search --output=messages "$@" | \
+    while read -r id; do
+        printf '%s\t%s\n' "$id" "$(
+            notmuch show --entire-thread=false --format=text "$id" | \
+                awk '/^Subject: / {$1=""; print $0; exit}'
+        )"
+    done | {
+        fzf \
+            --preview 'notmuch show {1}' \
+            --with-nth=2.. \
+            --layout=reverse \
+            --preview-window=up:40%:wrap \
+            --header="Select a message"
+        kill -2 0
+    }
