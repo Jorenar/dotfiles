@@ -14,6 +14,10 @@ output * bg #000000 solid_color
 
 for_window [shell="xwayland"] title_format "[X11] %title"
 
+exec wl-paste --type text --watch cliphist store
+exec wl-paste --type image --watch cliphist store
+bindsym $super+v exec cliphist list | fuzzel --dmenu | cliphist decode | wl-copy
+
 bindsym --release Print exec --no-startup-id grim
 bindsym --release Shift+Print exec --no-startup-id slurp | grim -g -
 

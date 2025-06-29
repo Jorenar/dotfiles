@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+
+lock="$XDG_RUNTIME_DIR"/cliphist.disable
+
+case "$1" in
+    -x-enable) rm "$lock" ;;
+    -x-disable) touch "$lock" || exit 1 ;;
+    -x-status) [ -e "$lock" ] && echo "disabled" || echo "enabled" ;;
+esac
+
+case "$1" in
+    -x-*) exit ;;
+esac
+
+for a in "$@"; do
+    [ "$a" = "store" ] && [ -e "$lock" ] && exit
+done
+
+PATH="$(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname "$0")" | paste -sd:)"
+exec cliphist "$@"

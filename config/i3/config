@@ -5,6 +5,9 @@ bar {
     i3bar_command $XDG_CONFIG_HOME/polybar/launch.sh
 }
 
+exec --no-startup-id exec klipmenud --restart
+bindsym $super+v exec --no-startup-id klipmenu
+
 # Multi-screen screenshots with scrot
 bindsym --release Print exec --no-startup-id "scrot screenshot-%Y%m%d_%H%M%S.png"
 
