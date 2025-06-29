@@ -1,3 +1,4 @@
+( IFS=:; set -f; find -L $PATH -maxdepth 1 -type f -perm -u+x -print ) | sed 's!.*/!!' | sort -u
 alias ALIAS | sed -e 's/^alias [^=]\+=//' -e "s/'//g"
 cmd.exe /c dir /A:H /B | sed 's/\r//g'
 convert -density 192 PDF -quality 100 -alpha remove IMG
@@ -7,6 +8,7 @@ exec sway --unsupported-gpu
 git commit --amend --no-edit
 git hook run update -- WRAPPER --save-hash all '*'
 git reset --hard $(git rev-list --max-parents=0 --abbrev-commit HEAD) # reset to initial
+git show ORIG_HEAD:/path/to/file
 git submodule update --init --recursive --remote
 gpg --quick-gen-key "KEY NAME" default default never
 mount -t cifs //10.0.2.4/qemu/

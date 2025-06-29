@@ -5,6 +5,7 @@ set -a  # enable allexport
 
 # basics {{{1
 
+LANG="${LANG:-C.UTF-8}"
 TMPDIR="${TMPDIR:-/tmp}"
 
 # Virtual terminal number (if not set already by PAM)
@@ -47,9 +48,6 @@ INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
 NODE_REPL_HISTORY="$XDG_STATE_HOME"/node_repl_history
 NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
-PIPX_BIN_DIR="$PIPX_HOME"/bin
-PIPX_HOME="$HOME"/.local/opt/pkg/pipx
-PIPX_MAN_DIR="$PIPX_HOME"/man
 PYTHON_HISTORY="$XDG_STATE_HOME"/python_history
 PYTHONPYCACHEPREFIX="$XDG_CACHE_HOME"/__pycache__
 PYTHONSTARTUP="$XDG_CONFIG_HOME"/python/config.py
@@ -63,6 +61,10 @@ XAPPLRESDIR="$XDG_CONFIG_HOME/X11/"
 XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
 XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
 ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+
+PIPX_HOME="$HOME"/.local/opt/pkg/pipx
+PIPX_BIN_DIR="$PIPX_HOME"/bin
+PIPX_MAN_DIR="$PIPX_HOME"/man
 
 BASH_COMPLETION_USER_FILE="$XDG_CONFIG_HOME/bash/bash-completion/bash_completion"
 pathmunge BASH_COMPLETION_USER_DIR "$XDG_DATA_HOME/bash-completion"
