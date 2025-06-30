@@ -158,6 +158,7 @@ install  templates/  @  "$XDG_TEMPLATES_DIR"
 
 chmod -R -w \
     config/htop/htoprc \
+    config/mimeapps.list \
     config/OpenSCAD/OpenSCAD.conf \
     config/qt5ct
 
