@@ -162,4 +162,3 @@ chmod -R -w \
     config/qt5ct
 
 xdg_wrapper.sh --install
-install  extern/klipmenu/  @  "$HOME"/.local/opt/klipmenu
