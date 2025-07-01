@@ -16,24 +16,11 @@ done; unset k
 sh << 'EOF' # permanent history entries
     HISTFILE="${HISTFILE:-$HOME/.sh_history}"
     touch "$HISTFILE"
-
-    perm="$(mktemp)" || exit $?
-    trap 'rm "$perm"' EXIT
-
-    IFS=:
-    for file in ${SH_HIST_SAV:-"$XDG_CONFIG_HOME"/sh/history.sav}; do
-        [ -s "$file" ] && cat "$file" >> "$perm";
-    done
-    [ ! -s "$perm" ] && exit
-
-    temp="$(mktemp)" || exit $?
-    grep -v -F -x -f "$HISTFILE" "$perm" | cat - "$HISTFILE" > "$temp"
-
-    if [ "$(wc -l < "$temp")" -gt "$(wc -l < "$HISTFILE")" ]; then
-        mv "$temp" "$HISTFILE"
-    else
-        rm "$temp"
-    fi
+    temp="${TMPDIR:-/tmp}/hist-$$"
+    set -f; IFS=:
+    cat ${SH_HIST_SAV:-"$XDG_CONFIG_HOME"/sh/history.sav} 2> /dev/null \
+        | grep -v -F -x -f "$HISTFILE" | cat - "$HISTFILE" > "$temp"
+    mv "$temp" "$HISTFILE"
 EOF
 
 # shellcheck disable=SC1090,SC2154

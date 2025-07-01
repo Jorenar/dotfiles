@@ -36,18 +36,16 @@ while getopts "Ah" option; do
 done
 shift $((OPTIND - 1))
 
-export TMPDIR="${TMPDIR:-/tmp}/vmv"
-mkdir -p "$TMPDIR"
-
-dir="$(mktemp -d)"
+dir="${TMPDIR:-/tmp}/vmv-$$"
 in="$dir/in"
 out="$dir/out"
 temp="$dir/temp"
 
+mkdir -p "$dir"
+
 trap '{
     rm "$dir"/*
     rmdir "$dir"
-    rmdir "$TMPDIR" 2> /dev/null
 }' EXIT
 
 if [ $# -ne 0 ]; then
