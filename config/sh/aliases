@@ -1,12 +1,10 @@
 # vim: ft=sh
-
-# shellcheck disable=SC2142  # "Aliases can't use positional parameters. Use a function."
-# shellcheck disable=SC2139  # "This expands when defined, not when used. Consider escaping."
+# shellcheck disable=SC2139,SC2142
 
 alias cheat="sh -c 'curl cheat.sh/\$1' -"
 alias del='gio trash'
 alias mnt='udisksctl mount -b'
-alias sshfs='sshfs -o reconnect'
+alias sshfs='sshfs -o reconnect -o transform_symlinks -o auto_cache'
 alias suspend='sudo systemctl suspend'
 alias umnt='udisksctl unmount -b'
 alias wine-lnk='wine C:\\windows\\command\\start.exe /Unix'

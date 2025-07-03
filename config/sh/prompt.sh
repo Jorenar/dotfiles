@@ -1,4 +1,4 @@
-#!sh
+# shellcheck shell=sh
 
 if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
     g=
@@ -15,13 +15,15 @@ if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
     unset g
 fi
 
-if ! type __git_ps1 > /dev/null 2>&1; then
-    __git_ps1 () {
-        b="$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
-        # shellcheck disable=SC2059
-        [ -n "$b" ] && printf "$1" "$b"
-    }
-fi
+_ps1_git () {
+    [ "$(git config --bool prompt.fast)" != "true" ] && \
+        command -v __git_ps1 > /dev/null && \
+        __git_ps1 "$@" && return
+
+    set -- "$1" "$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
+    # shellcheck disable=SC2059
+    [ -n "$2" ] && printf "$1" "$2"
+}
 
 _ps1_container () {
     if [ -f /run/.containerenv ]; then
@@ -62,11 +64,11 @@ _ps1 () {
         "$(id -un)" \
         "$(uname -n)" \
         "$(echo "$PWD" | sed "s,^$HOME\(\/\|$\),~/,")" \
-        "$(__git_ps1 ' | %s')"
+        "$(_ps1_git ' | %s')"
     printf "\001\033[0m\002"
     printf "\n"
 
-    printf '\001\033[36m\002%s\001\033[0m\002 ' "${1:-$}"
+    printf '\001\033[%sm\002%s\001\033[0m\002 ' "${PS1_COLOR:-36}" "${1:-$}"
 }
 
 PS1='$(_ps1)'

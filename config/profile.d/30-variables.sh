@@ -28,7 +28,8 @@ XDG_CONFIG_HOME="$HOME/.local/config"
 XDG_STATE_HOME="$HOME/.local/state"
 XDG_DATA_HOME="$HOME/.local/share"
 
-. "$XDG_CONFIG_HOME"/user-dirs.dirs 2> /dev/null
+[ -f "$XDG_CONFIG_HOME"/user-dirs.dirs ] && \
+    . "$XDG_CONFIG_HOME"/user-dirs.dirs
 
 CARGO_HOME="$HOME"/.local/opt/pkg/cargo
 CHKTEXRC="$XDG_CONFIG_HOME/chktex"

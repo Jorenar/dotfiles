@@ -75,12 +75,13 @@ export SHELL="$(command -v myshell.sh)"
 # ------------------------------------------------------------
 EOF
 
+mkdir -p "$XDG_CACHE_HOME"
+mkdir -p "$XDG_CONFIG_HOME"
+mkdir -p "$XDG_DATA_HOME"
+mkdir -p "$XDG_STATE_HOME"
 
-if [ "$XDG_CONFIG_HOME" != "$HOME"/.config ]; then
-    mkdir -p "$XDG_CONFIG_HOME"
+[ "$XDG_CONFIG_HOME" != "$HOME"/.config ] && \
     install  "$XDG_CONFIG_HOME"  @  "$HOME"/.config
-fi
-
 
 for c in config/*; do
     case "$c" in

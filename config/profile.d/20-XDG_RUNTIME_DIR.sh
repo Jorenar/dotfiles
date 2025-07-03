@@ -1,10 +1,10 @@
 TMPDIR="${TMPDIR:-/tmp}"
 
 [   -z "$XDG_RUNTIME_DIR" ] && XDG_RUNTIME_DIR="/run/user/$(id -u)"
-[ ! -d "$XDG_RUNTIME_DIR" ] && XDG_RUNTIME_DIR="$TMPDIR/$(id -un)-runtime"
+[ ! -d "$XDG_RUNTIME_DIR" ] && XDG_RUNTIME_DIR="$TMPDIR/runtime-$(id -un)"
 
 if [ ! -d "$XDG_RUNTIME_DIR" ]; then
-    mkdir -p -m 0700 "$XDG_RUNTIME_DIR" # ought to be '/tmp/user-runtime'
+    mkdir -p -m 0700 "$XDG_RUNTIME_DIR" # ought to be '/tmp/runtime-user'
 fi
 
 if [ "$(find "$XDG_RUNTIME_DIR" -prune -printf '%m\n')" -ne 700 ]; then
@@ -17,4 +17,4 @@ if [ "$(find "$XDG_RUNTIME_DIR" -prune -printf '%m\n')" -ne 700 ]; then
     fi
 fi
 
-export XDG_RUNTIME_DIR
+export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR%/}"

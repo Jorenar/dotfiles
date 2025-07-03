@@ -23,4 +23,5 @@ x-scheme-handler/https=firefox.desktop;
 
 [Added Associations]
 
-application/zip=vim.desktop;
+application/zip=vim.desktop;gvim.desktop;
+application/gzip=vim.desktop;gvim.desktop;
