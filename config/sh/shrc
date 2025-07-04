@@ -3,7 +3,7 @@
 export GPG_TTY="$(tty)"
 
 export HISTSIZE=
-export HISTFILE="$XDG_STATE_HOME/$(basename -- "${0#-*}")_history"
+export HISTFILE="$XDG_STATE_HOME/$(basename -- "${0#-}")_history"
 
 . "$XDG_CONFIG_HOME"/sh/aliases
 . "$XDG_CONFIG_HOME"/sh/prompt.sh
@@ -13,14 +13,14 @@ for d in /usr/share/fzf /usr/share/fzf/* /usr/share/*/fzf/*; do
     [ -f "$d/$k" ] && . "$d/$k" && break
 done; unset k
 
-sh << 'EOF' # permanent history entries
-    HISTFILE="${HISTFILE:-$HOME/.sh_history}"
-    touch "$HISTFILE"
+sh << 'EOF' # prepend to HISTFILE
+    [ -z "$HIST_FILES" ] && exit 0
+    touch "${HISTFILE:=$HOME/.sh_history}"
     temp="${TMPDIR:-/tmp}/hist-$$"
-    set -f; IFS=:
-    cat ${SH_HIST_SAV:-"$XDG_CONFIG_HOME"/sh/history.sav} 2> /dev/null \
-        | grep -v -F -x -f "$HISTFILE" | cat - "$HISTFILE" > "$temp"
-    mv "$temp" "$HISTFILE"
+    set -f && IFS=: && cat $HIST_FILES 2> /dev/null \
+        | grep -v -F -x -f "$HISTFILE" \
+        | cat - "$HISTFILE" > "$temp" \
+        && mv "$temp" "$HISTFILE"
 EOF
 
 # shellcheck disable=SC1090,SC2154
