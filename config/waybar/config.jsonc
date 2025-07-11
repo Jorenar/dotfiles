@@ -70,7 +70,7 @@
         "format": "TODO: {}",
         "return-type": "text",
         "interval": 5,
-        "exec": "calcurse -t 2> /dev/null | tail -n +2 | wc -l"
+        "exec": "grep -c ^@ ~/.todo || echo 0"
     },
     "custom/rss": {
         "format": "RSS: {}",
