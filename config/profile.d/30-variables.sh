@@ -107,7 +107,9 @@ if command -v vim > /dev/null; then
     MANPAGER="vim +'sil! %s/‐/-/g' +MANPAGER -"
 fi
 
-if command -v xterm > /dev/null; then
+if command -v foot > /dev/null; then
+    TERMINAL="foot"
+elif command -v xterm > /dev/null; then
     TERMINAL="xterm"
 fi
 
