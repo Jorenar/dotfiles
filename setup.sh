@@ -69,12 +69,6 @@ install () (
 )
 
 
-[ ! -s "$HOME"/.profile ] && cat > "$HOME"/.profile << 'EOF'
-for p in "$HOME"/.local/config/profile.d/*.sh; do . "$p"; done
-export SHELL="$(command -v myshell.sh)"
-# ------------------------------------------------------------
-EOF
-
 mkdir -p "$XDG_CACHE_HOME"
 mkdir -p "$XDG_CONFIG_HOME"
 mkdir -p "$XDG_DATA_HOME"
@@ -82,6 +76,9 @@ mkdir -p "$XDG_STATE_HOME"
 
 [ "$XDG_CONFIG_HOME" != "$HOME"/.config ] && \
     install  "$XDG_CONFIG_HOME"  @  "$HOME"/.config
+
+
+install  profile  %  "$HOME"/.profile
 
 for c in config/*; do
     case "$c" in
