@@ -110,6 +110,12 @@ for c in config/*; do
             [ -n "$USERPROFILE" ] && \
                 install "$c"  %  "$USERPROFILE"/AppData/Local/Microsoft/PowerToys
             ;;
+        */sshd_config.d)
+            for t in "$c"/*.conf; do
+                f="${t##*/}"; f="${f%%-*}-$(id -un)-${f#*-}"
+                install  "$t"  s%  /etc/ssh/sshd_config.d/"$f"
+            done
+            ;;
         */sudoers.d)
             for t in "$c"/*; do
                 install  "$t"  s%  /etc/sudoers.d/"$(basename "$t")"
