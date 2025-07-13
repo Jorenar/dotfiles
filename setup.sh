@@ -76,6 +76,8 @@ mkdir -p "$XDG_STATE_HOME"
 
 [ "$XDG_CONFIG_HOME" != "$HOME"/.config ] && \
     install  "$XDG_CONFIG_HOME"  @  "$HOME"/.config
+[ "$XDG_CACHE_HOME" != "$HOME"/.cache ] && \
+    install  "$XDG_CACHE_HOME"  @  "$HOME"/.cache
 
 
 install  profile  %  "$HOME"/.profile
@@ -91,7 +93,7 @@ for c in config/*; do
             done
             ;;
         */gtk-3.0)
-            install  "$c"/settings.ini  @  "$XDG_CONFIG_HOME"/gtk-3.0/settings.ini
+            install  "$c"/settings.ini  %  "$XDG_CONFIG_HOME"/gtk-3.0/settings.ini
             ;;
         */pacman.d)
             [ -x "$(command -v pacman)" ] || continue

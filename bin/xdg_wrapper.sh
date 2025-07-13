@@ -30,10 +30,6 @@ case "$exe" in
         set -- "--profile" "$XDG_DATA_HOME/firefox" "$@"
         { while kill -0 $$ 2> /dev/null; do rm -rf "$HOME"/.mozilla 2> /dev/null; done } &
         ;;
-    nvidia-settings)
-        mkdir -p "$XDG_CONFIG_HOME/nvidia"
-        set -- "--config=$XDG_CONFIG_HOME/nvidia/rc.conf" "$@"
-        ;;
     ssh|scp|ssh-copy-id)
         if [ ! -e "$HOME/.ssh/config" ]; then
             if [ -e "$XDG_CONFIG_HOME/ssh/config" ]; then
@@ -96,7 +92,6 @@ exec "$exe" "$@"
 
 #~ dosbox
 #~ firefox
-#~ nvidia-settings
 #~ scp
 #~ ssh
 #~ ssh-copy-id

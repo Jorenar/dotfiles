@@ -27,5 +27,5 @@ alias wsl.exe='wsl.exe --cd "~"'
 alias ls="$(
     printf '%s %s' \
         'ls.hidden -hF -w80 --time-style=iso -I. -I..' \
-        '$([ "$PWD" = "$HOME" ] && echo "-I.config -I.local -I.profile")'
+        '$([ "$PWD" = "$HOME" ] && echo "-I.config -I.cache -I.local -I.profile")'
 )"

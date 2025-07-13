@@ -407,7 +407,7 @@ endfunction
 augroup MY_CONFLICT_MARKER_DETECT
   autocmd!
   autocmd BufReadPost,FileChangedShellPost,ShellFilterPost,StdinReadPost *
-        \   if conflict_marker#detect#markers()
+        \   sil! if conflict_marker#detect#markers()
         \ |   call s:ConflictMarker_init()
         \ | endif
 augroup END
