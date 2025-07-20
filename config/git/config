@@ -32,7 +32,7 @@
 
 [merge]
     tool = vimdiff
-    conflictstyle = zdiff3
+    conflictstyle = diff3  # version with zdiff3 isn't ubiquitous enough yet
 
 [mergetool]
     prompt = false

@@ -13,6 +13,7 @@ git submodule update --init --recursive --remote
 gpg --quick-gen-key "KEY NAME" default default never
 jq -s add .vscode/compile_commands*.json > compile_commands.json
 mount -t cifs //10.0.2.4/qemu/
+openssl x509 -text -noout -in CERT
 pacman -Qo /path/to/file  # what package file belongs to
 pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'
 pacman -Qqd | pacman -Rsu -p --print-format '%n' - | sort  # unneeded packages?
