@@ -45,6 +45,9 @@
     binary = true
     textconv = "f(){ sqlite3 -batch \"$1\" .dump; }; f"
 
+[blame]
+    ignoreRevsFile = .git-blame-ignore-revs
+
 [color "diff-highlight"]
     oldNormal = red bold
     oldHighlight = red bold 52
