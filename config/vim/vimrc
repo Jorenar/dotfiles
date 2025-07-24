@@ -464,6 +464,9 @@ let g:traces_abolish_integration = 1
 let g:traces_preview_window = '10new'
 let g:wrapwidth_hl = 'Ignore'
 
+let g:MultipleSearchColorSequence = "magenta,blue,green,brown,cyan"
+let g:MultipleSearchMaxColors = g:MultipleSearchColorSequence->split(',')->len()
+
 let g:miniSnip_extends = {
       \   'arduino'  : [ 'cpp', 'c' ],
       \   'cpp'      : [ 'c' ],

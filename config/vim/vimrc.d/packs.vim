@@ -51,6 +51,9 @@ let g:packs.vim.list = {
       \     url: 'https://github.com/k-takata/minpac.git',
       \     conf: { 'type': 'opt' }
       \   },
+      \   'MultipleSearch': #{
+      \     url: 'https://github.com/vim-scripts/MultipleSearch.git',
+      \   },
       \   'NrrwRgn': #{
       \     url: 'https://github.com/chrisbra/NrrwRgn.git',
       \   },
