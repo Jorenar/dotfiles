@@ -1,0 +1,56 @@
+[calendars]
+[[calendars]]
+path = $XDG_DATA_HOME/khal/calendars/*
+type = discover
+color = '#22bb44'
+
+[default]
+default_calendar = default
+enable_mouse = True
+highlight_event_days = True
+timedelta = 1d
+
+[highlight_days]
+default_color = light cyan
+
+[keybindings]
+delete = D
+export = E
+external_edit = ctrl e
+left = left, h, b
+new = i
+right = right, l, space, w
+save = ctrl enter
+
+[locale]
+dateformat = %Y-%m-%d
+datetimeformat = %Y-%m-%d %H:%M
+firstweekday = 0
+longdateformat = %Y-%m-%d
+longdatetimeformat = %Y-%m-%d %H:%M
+timeformat = %H:%M
+unicode_symbols = False
+
+[palette]
+button         = dark cyan, ''
+button focused = white, light blue
+dayname        = dark gray, ''
+edit           = black, dark gray
+edit focus     = '', ''
+footer         = dark gray, ''
+frame focus    = '', ''
+header         = dark gray, ''
+monthname      = dark gray, ''
+popupbg        = black, dark cyan
+popupper       = dark cyan, ''
+today          = black, light cyan
+today focus    = black, dark cyan
+
+[sqlite]
+path = $XDG_CACHE_HOME/khal/khal.db
+
+[view]
+bold_for_light_color = False
+dynamic_days = False
+event_view_always_visible = True
+frame = width
