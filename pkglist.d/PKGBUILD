@@ -1,0 +1,339 @@
+#!/usr/bin/makepkg -fisc
+# shellcheck shell=bash disable=SC2016,SC2034
+
+# preamble {{{
+
+pkgname=local-metapkg
+pkgver=1; pkgrel=1
+arch=(any)
+depends=()
+
+package() {
+  if [ -z "$LOCAL_METAPKG_GROUPS" ]; then
+    mapfile -t _grps <<< "$(compgen -A function '_gr_' | sed 's/^_gr_//')"
+  else
+    IFS=' ' read -r -a _grps <<< "$LOCAL_METAPKG_GROUPS"
+  fi
+  _grps+=(BASE ESSENTIALS)
+
+  declare -A _guarr  # must be declared in package()
+  _guardo='[[ -v _guarr[$FUNCNAME] ]] && return || _guarr[$FUNCNAME]=1'
+
+  if [ -n "$LOCAL_METAPKG_INCLUDE" ]; then
+    IFS=' ' read -r -a depends <<< "$LOCAL_METAPKG_INCLUDE"
+  fi
+
+  for g in "${_grps[@]}"; do
+    [ -n "$g" ] && _gr_"$g"
+  done
+
+  for p in $LOCAL_METAPKG_EXCLUDE; do
+    depends=( "${depends[@]/$p}" )
+  done
+
+  IFS=$'\n'
+  mapfile -t depends <<< "$(sort -u <<< "${depends[*]}" | grep -v '^$')"
+  unset IFS
+
+  echo "${depends[@]}"
+}
+
+# }}}
+
+_gr_BASE() {
+  eval "$_guardo"
+
+  depends+=(
+    base
+    linux
+    linux-lts
+    linux-firmware
+    sudo
+  )
+
+  depends+=(
+    posix
+    posix-c-development
+    posix-software-development
+    posix-user-portability
+    posix-xsi
+  )
+
+  if grep -qiw AMD /proc/cpuinfo; then
+    depends+=(amd-ucode)
+  elif grep -qiw Intel /proc/cpuinfo; then
+    depends+=(intel-ucode)
+  fi
+
+  if [ -d /proc/driver/nvidia ] \
+      || grep -qi nvidia-gpu /sys/bus/pci/devices/**/uevent
+  then
+    depends+=(
+      nvidia-open
+      nvidia-settings
+    )
+  fi
+
+  if rfkill -o TYPE | grep -q wlan; then
+    depends+=( iw iwd )
+  fi
+
+  if rfkill -o TYPE | grep -q bluetooth; then
+    depends+=( bluetui )
+  fi
+}
+_gr_ESSENTIALS() {
+  eval "$_guardo"
+
+  depends+=(
+    man-db
+    man-pages
+
+    ethtool
+    inetutils
+    ufw
+
+    bash
+    bash-completion
+    dash
+    tmux
+
+    fzf
+    git
+    gvfs
+    gvim
+    htop
+    openssh
+    pass
+
+    dosfstools
+    udisks2
+    curlftpfs
+    sshfs
+    rsync
+
+    lhasa
+    p7zip
+    unp
+    unrar
+    unzip
+    zip
+  )
+}
+
+_gr_DEV() {
+  eval "$_guardo"
+
+  depends+=(
+    base-devel
+    multilib-devel
+
+    gvim
+    neovim
+    python-pynvim
+    cscope
+    ctags
+
+    ccache
+    clang
+    cmake
+    cppcheck
+    doxygen
+    flawfinder
+    gdb
+    graphviz
+    radare2
+    strace
+    uncrustify
+    valgrind
+
+    deno
+    expect
+    go
+    jq
+    jre-openjdk
+    nasm
+    npm
+    openscad
+    python
+    rust
+    tectonic
+    texlive-binextra
+    tidy
+    lua51
+  )
+}
+_gr_MAIL() {
+  eval "$_guardo"
+
+  depends+=(
+    aerc
+    isync
+    msmtp
+    notmuch
+    # cyrus-sasl-xoauth2-git
+  )
+}
+_gr_DESKTOP() {
+  eval "$_guardo"
+
+  depends+=(
+    ttf-dejavu
+    wqy-zenhei
+
+    alsa-utils
+    pulsemixer
+    pipewire-pulse
+
+    qt5ct
+    xdg-utils
+  )
+}
+_gr_X11() {
+  eval "$_guardo"
+
+  depends+=(
+    dmenu
+    xclip
+    xdotool
+    xf86-input-wacom
+    xorg-server
+    xorg-xinit
+    xorg-xprop
+    xorg-xrandr
+    xterm
+  )
+}
+_gr_WAYLAND() {
+  eval "$_guardo"
+
+  depends+=(
+    foot
+    fuzzel
+    qt5-wayland
+    waypipe
+    wl-clipboard
+    wtype
+    xorg-xprop
+    xorg-xwayland
+  )
+}
+_gr_I3WM() {
+  eval "$_guardo"
+  _gr_X11
+  _gr_DESKTOP i3
+
+  depends+=(
+    dunst
+    i3-wm
+    polybar
+    scrot
+  )
+}
+_gr_SWAY() {
+  eval "$_guardo"
+  _gr_WAYLAND
+  _gr_DESKTOP sway
+
+  depends+=(
+    cliphist
+    dunst
+    grim
+    nwg-displays
+    slurp
+    sway
+    swaybg
+    waybar
+    wlsunset
+  )
+}
+_gr_VIRT() {
+  eval "$_guardo"
+
+  depends+=(
+    podman
+    podman-docker
+
+    libvirt
+    qemu-desktop
+    virt-install
+    virt-viewer
+
+    wine
+    wine-mono
+    wine-gecko
+  )
+}
+_gr_GAMING() {
+  eval "$_guardo"
+  _gr_DESKTOP
+
+  depends+=(
+    steam
+    dosbox
+  )
+}
+_gr_TUIAPPS() {
+  eval "$_guardo"
+
+  depends+=(
+    khal
+    ranger
+    vdirsyncer
+    visidata
+    w3m
+    weechat
+  )
+}
+_gr_GUIAPPS() {
+  eval "$_guardo"
+  _gr_DESKTOP
+
+  depends+=(
+    feh
+    firefox
+    libreoffice-still
+    mpv
+    zathura
+    zathura-pdf-mupdf
+    zathura-ps
+  )
+}
+_gr_CREATIVE() {
+  eval "$_guardo"
+  _gr_DESKTOP
+
+  depends+=(
+    gimp
+    inkscape
+    kicad
+    krita
+    obs-studio
+    shotcut
+    tenacity
+  )
+}
+_gr_UTILS() {
+  eval "$_guardo"
+
+  depends+=(
+    # tigervnc
+    imagemagick
+    python-pipx
+    sane
+    termshark
+    transmission-cli
+    yt-dlp
+  )
+}
+_gr_EXTRA() {
+  eval "$_guardo"
+
+  depends+=(
+    android-file-transfer
+    gphoto2                 # digital camera download and access program
+    heimdall                # tool suite used to flash ROMs onto Galaxy devices
+    ifuse                   # fuse fs to access contents of an iPhone/iPad
+    scrcpy                  # display and control Android device
+  )
+}
