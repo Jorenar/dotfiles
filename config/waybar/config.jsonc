@@ -14,6 +14,7 @@
     ],
     "modules-right": [
         "custom/todo",
+        "custom/khal",
         "custom/rss",
         "custom/notmuch",
         "custom/cpu-temp",
@@ -71,6 +72,12 @@
         "return-type": "text",
         "interval": 5,
         "exec": "grep -c ^@ ~/.todo || echo 0"
+    },
+    "custom/khal": {
+        "format": "khal: {}",
+        "return-type": "text",
+        "interval": 900,
+        "exec": "khal list now tomorrow | sed 1d | wc -l"
     },
     "custom/rss": {
         "format": "RSS: {}",
