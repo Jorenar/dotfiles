@@ -6,6 +6,7 @@ fzf
 git
 htop
 libfuse2t64
+lsix
 man-db
 manpages
 neovim

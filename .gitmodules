@@ -20,11 +20,6 @@
 	url = https://github.com/Jorenar/ls.hidden.git
 	shallow = true
 	ignore = all
-[submodule "lsix"]
-	path = extern/lsix
-	url = https://github.com/hackerb9/lsix.git
-	shallow = true
-	ignore = all
 [submodule "pathmunge.sh"]
 	path = extern/pathmunge.sh
 	url = https://github.com/Jorenar/pathmunge.sh.git

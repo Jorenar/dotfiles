@@ -319,6 +319,7 @@ _gr_UTILS() {
   depends+=(
     # tigervnc
     imagemagick
+    lsix
     python-pipx
     sane
     termshark
