@@ -12,6 +12,7 @@ git show ORIG_HEAD:/path/to/file
 git submodule update --init --recursive --remote
 gpg --quick-gen-key "KEY NAME" default default never
 jq -s add .vscode/compile_commands*.json > compile_commands.json
+kcmshell6 kcm_kded # KDE Background Services
 mount -t cifs //10.0.2.4/qemu/
 openssl x509 -text -noout -in CERT
 pacman -Qo /path/to/file  # what package file belongs to

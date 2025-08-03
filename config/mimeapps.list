@@ -14,6 +14,8 @@ image/png=feh.desktop;firefox.desktop;mpv.desktop;
 image/svg=feh.desktop;firefox.desktop;mpv.desktop;
 image/webp=feh.desktop;firefox.desktop;mpv.desktop;
 
+inode/directory=ranger.desktop;
+
 text/html=firefox.desktop;
 text/plain=gvim.desktop;vim.desktop;nvim.desktop;
 

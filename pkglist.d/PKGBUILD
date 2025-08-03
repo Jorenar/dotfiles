@@ -198,6 +198,7 @@ _gr_X11() {
     xdotool
     xf86-input-wacom
     xorg-server
+    xorg-xev
     xorg-xinit
     xorg-xprop
     xorg-xrandr
@@ -212,6 +213,7 @@ _gr_WAYLAND() {
     fuzzel
     qt5-wayland
     waypipe
+    wev
     wl-clipboard
     wtype
     xorg-xprop
@@ -332,9 +334,10 @@ _gr_EXTRA() {
 
   depends+=(
     android-file-transfer
-    gphoto2                 # digital camera download and access program
-    heimdall                # tool suite used to flash ROMs onto Galaxy devices
-    ifuse                   # fuse fs to access contents of an iPhone/iPad
-    scrcpy                  # display and control Android device
+    gphoto2
+    heimdall # flashing ROMs onto Galaxy devices
+    i2pd
+    ifuse # fuse for iOS
+    scrcpy # display and control Android device
   )
 }

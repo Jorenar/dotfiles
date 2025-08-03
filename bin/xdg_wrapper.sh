@@ -4,9 +4,9 @@
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 
-exe="$(basename "$0")"
+arg0="${0##*/}"
 
-if [ "$exe" = "xdg_wrapper.sh" ]; then
+if [ "$arg0" = "xdg_wrapper.sh" ]; then
     case "$1" in
         --install)
             dir="$HOME/.local/opt/xdg_wrappers/bin"
@@ -22,13 +22,16 @@ fi
 # Remove directory with wrapper from PATH (to prevent cyclical execution)
 PATH="$(echo "$PATH" | tr ":" "\n" | grep -Fxv "$(dirname "$0")" | paste -sd:)"
 
-case "$exe" in
+case "$arg0" in
     dosbox)
         set -- "-conf" "$XDG_CONFIG_HOME/dosbox/dosbox.conf" "$@"
         ;;
     firefox)
         set -- "--profile" "$XDG_DATA_HOME/firefox" "$@"
         { while kill -0 $$ 2> /dev/null; do rm -rf "$HOME"/.mozilla 2> /dev/null; done } &
+        ;;
+    i2pd)
+        set -- "--datadir" "$XDG_DATA_HOME/i2pd" "$@"
         ;;
     ssh|scp|ssh-copy-id)
         if [ ! -e "$HOME/.ssh/config" ]; then
@@ -38,7 +41,7 @@ case "$exe" in
         fi
 
         ssh_G="$(:
-            opts="$("$exe" 2>&1 | grep -E -o -e '\[-\S+]' -e '\[-\S \S+]' \
+            opts="$("$arg0" 2>&1 | grep -E -o -e '\[-\S+]' -e '\[-\S \S+]' \
                 | tr -d '[]|-' | sed 's/ .\+/:/' | tr -d '\n')"
 
             conf=
@@ -54,7 +57,7 @@ case "$exe" in
         controlpath="$(echo "$ssh_G" | awk '/^controlpath / { print $2 }')"
         [ -n "$controlpath" ] && mkdir -p "$(dirname "$controlpath")"
 
-        if [ "$exe" = "ssh-copy-id" ]; then
+        if [ "$arg0" = "ssh-copy-id" ]; then
             if echo "$*" | grep -vq -- ' -i '; then
                 id="$(echo "$ssh_G" | awk '/^identityfile / { print $2 }')"
                 id="$(eval echo "$id")"
@@ -87,11 +90,12 @@ case "$exe" in
         ;;
 esac
 
-exec "$exe" "$@"
+exec "$arg0" "$@"
 
 
 #~ dosbox
 #~ firefox
+#~ i2pd
 #~ scp
 #~ ssh
 #~ ssh-copy-id
