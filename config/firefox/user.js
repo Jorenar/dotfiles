@@ -15,18 +15,19 @@ user_pref("browser.startup.couldRestoreSession.count", -1);
 
 // UI {{{1
 
-user_pref("intl.locale.requested", "en");
+user_pref("browser.bookmarks.editDialog.showForNewBookmarks", true);
 user_pref("browser.compactmode.show", true);
+user_pref("browser.ctrlTab.recentlyUsedOrder", false);
+user_pref("browser.tabs.closeTabByDblclick", true);
 user_pref("browser.toolbars.bookmarks.visibility", "never");
-user_pref("browser.uiCustomization.state", '{"placements":{"widget-overflow-fixed-list":[],"unified-extensions-area":["_3c078156-979c-498b-8990-85f7987dd929_-browser-action","treestyletab_piro_sakura_ne_jp-browser-action","_a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7_-browser-action","_b67c3a9a-b2a2-4fca-af95-7e7a38f3822e_-browser-action","_d7742d87-e61d-4b78-b8a1-b469842139fa_-browser-action","simple-translate_sienori-browser-action","jid1-qofqdk4qzufgwq_jetpack-browser-action"],"nav-bar":["sidebar-button","back-button","forward-button","vertical-spacer","stop-reload-button","urlbar-container","downloads-button","unified-extensions-button","extension_one-tab_com-browser-action","panorama-tab-groups_example_com-browser-action","reset-pbm-toolbar-button","bookmarks-menu-button"],"toolbar-menubar":["menubar-items"],"TabsToolbar":["tabbrowser-tabs","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action","cookieautodelete_kennydo_com-browser-action","new-tab-button","customizableui-special-spring62","ublock0_raymondhill_net-browser-action","firefox_tampermonkey_net-browser-action","addon_darkreader_org-browser-action","characterencoding-button","find-button","alltabs-button"],"vertical-tabs":[],"PersonalToolbar":["personal-bookmarks"]},"seen":["developer-button","ublock0_raymondhill_net-browser-action","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action","cookieautodelete_kennydo_com-browser-action","firefox_tampermonkey_net-browser-action","simple-translate_sienori-browser-action","save-to-pocket-button","extension_one-tab_com-browser-action","_a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7_-browser-action","panorama-tab-groups_example_com-browser-action","_b67c3a9a-b2a2-4fca-af95-7e7a38f3822e_-browser-action","_d7742d87-e61d-4b78-b8a1-b469842139fa_-browser-action","addon_darkreader_org-browser-action","jid1-qofqdk4qzufgwq_jetpack-browser-action","treestyletab_piro_sakura_ne_jp-browser-action","_3c078156-979c-498b-8990-85f7987dd929_-browser-action"],"dirtyAreaCache":["nav-bar","toolbar-menubar","TabsToolbar","PersonalToolbar","unified-extensions-area","vertical-tabs","widget-overflow-fixed-list"],"currentVersion":21,"newElementCount":69}');
+user_pref("browser.uiCustomization.state", '{"placements":{"unified-extensions-area":["_testpilot-containers-browser-action","_b67c3a9a-b2a2-4fca-af95-7e7a38f3822e_-browser-action","_d7742d87-e61d-4b78-b8a1-b469842139fa_-browser-action"],"nav-bar":["back-button","forward-button","stop-reload-button","vertical-spacer","urlbar-container","downloads-button","unified-extensions-button","bookmarks-menu-button"],"TabsToolbar":["tabbrowser-tabs","new-tab-button","ublock0_raymondhill_net-browser-action","firefox_tampermonkey_net-browser-action","addon_darkreader_org-browser-action","characterencoding-button","find-button","alltabs-button"]},"currentVersion":23}');
+user_pref("general.autoScroll", true);
+user_pref("intl.language_notification.shown", true);
+user_pref("intl.locale.requested", "en");
+user_pref("media.videocontrols.picture-in-picture.video-toggle.enabled", false);
+user_pref("security.insecure_connection_text.enabled", false);
 user_pref("sidebar.animation.enabled", false);
 user_pref("widget.gtk.overlay-scrollbars.enabled", false);
-user_pref("browser.tabs.closeTabByDblclick", true);
-user_pref("browser.bookmarks.editDialog.showForNewBookmarks", true);
-user_pref("media.videocontrols.picture-in-picture.video-toggle.enabled", false);
-
-user_pref("browser.ctrlTab.recentlyUsedOrder", false);
-user_pref("general.autoScroll", true);
 
 // URL bar {{{1
 
@@ -43,11 +44,11 @@ user_pref("browser.urlbar.trimURLs", false);
 // New tabpage {{{1
 
 user_pref("browser.newtabpage.activity-stream.default.sites", "");
-user_pref("browser.newtabpage.pinned", "");
 user_pref("browser.newtabpage.activity-stream.feeds.section.highlights", false);
 user_pref("browser.newtabpage.activity-stream.feeds.snippets", false);
 user_pref("browser.newtabpage.activity-stream.feeds.topsites", false);
 user_pref("browser.newtabpage.activity-stream.showSearch", true);
+user_pref("browser.newtabpage.pinned", "");
 
 // Privacy {{{1
 
@@ -72,14 +73,25 @@ user_pref("toolkit.telemetry.archive.enabled", false);
 user_pref("toolkit.telemetry.enabled", false);
 user_pref("toolkit.telemetry.unified", false);
 
+user_pref("media.peerconnection.ice.default_address_only", true);
+user_pref("media.peerconnection.ice.no_host", true);
+user_pref("media.peerconnection.ice.proxy_only_if_behind_proxy", true);
+
 user_pref("browser.pagethumbnails.capturing_disabled", true);
 
 user_pref("extensions.formautofill.addresses.experiments.enabled", false);
 user_pref("extensions.formautofill.creditCards.enabled", false);
 
+user_pref("extensions.torlauncher.prompt_at_startup", false);
+user_pref("torbrowser.about_torconnect.user_has_ever_clicked_connect", true);
+user_pref("torbrowser.settings.quickstart.enabled", true);
+
 // Dev tools {{{1
 
 user_pref("devtools.theme", "dark");
+
+user_pref("devtools.chrome.enabled", true);
+user_pref("devtools.debugger.remote-enabled", true);
 
 user_pref("devtools.editor.autoclosebrackets", false);
 user_pref("devtools.editor.autocomplete", true);
@@ -111,3 +123,5 @@ user_pref("media.webspeech.synth.dont_notify_on_error", true);
 
 user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false);
 user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false);
+
+user_pref("browser.fixup.domainsuffixwhitelist.i2p", true); // recognize .i2p domain

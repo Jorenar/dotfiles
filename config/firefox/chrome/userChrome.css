@@ -61,3 +61,8 @@ menuseparator:has(+ #BMB_bookmarksShowAll)
 .unified-extensions-item-message-deck {
   display: none;
 }
+
+
+hbox[aria-label="Always Open Site in Container"] {
+  display: none;
+}

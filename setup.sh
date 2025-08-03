@@ -88,8 +88,10 @@ for c in config/*; do
             install  "$c"  %  "$XDG_CONFIG_HOME"/dconf
             ;;
         */firefox)
+            t="$HOME/.local/opt/tor-browser/Browser/TorBrowser/Data/Browser/profile.default"
             for f in "$c"/*; do
-                install  "$f"  @  "$XDG_DATA_HOME"/firefox/"$(basename "$f")"
+                install  "$f"  @  "$XDG_DATA_HOME"/firefox/"${f##*/}"
+                install  "$f"  @  "$t/${f##*/}"
             done
             ;;
         */gtk-3.0)
