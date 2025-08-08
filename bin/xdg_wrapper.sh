@@ -31,7 +31,12 @@ case "$arg0" in
         { while kill -0 $$ 2> /dev/null; do rm -rf "$HOME"/.mozilla 2> /dev/null; done } &
         ;;
     i2pd)
-        set -- "--datadir" "$XDG_DATA_HOME/i2pd" "$@"
+        set -- \
+            '--conf' "$XDG_CONFIG_HOME"/i2pd/i2pd.conf \
+            '--datadir' "$XDG_DATA_HOME"/i2pd \
+            '--logfile' "$XDG_STATE_HOME"/i2pd.log \
+            '--pidfile' "$XDG_RUNTIME_DIR"/i2pd.pid \
+            "$@"
         ;;
     ssh|scp|ssh-copy-id)
         if [ ! -e "$HOME/.ssh/config" ]; then
