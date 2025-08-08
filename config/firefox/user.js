@@ -20,7 +20,7 @@ user_pref("browser.compactmode.show", true);
 user_pref("browser.ctrlTab.recentlyUsedOrder", false);
 user_pref("browser.tabs.closeTabByDblclick", true);
 user_pref("browser.toolbars.bookmarks.visibility", "never");
-user_pref("browser.uiCustomization.state", '{"placements":{"unified-extensions-area":["_testpilot-containers-browser-action","_b67c3a9a-b2a2-4fca-af95-7e7a38f3822e_-browser-action","_d7742d87-e61d-4b78-b8a1-b469842139fa_-browser-action"],"nav-bar":["back-button","forward-button","stop-reload-button","vertical-spacer","urlbar-container","downloads-button","unified-extensions-button","bookmarks-menu-button"],"TabsToolbar":["tabbrowser-tabs","new-tab-button","ublock0_raymondhill_net-browser-action","firefox_tampermonkey_net-browser-action","addon_darkreader_org-browser-action","characterencoding-button","find-button","alltabs-button"]},"currentVersion":23}');
+user_pref("browser.uiCustomization.state", '{"placements":{"unified-extensions-area":["foxyproxy_eric_h_jung-browser-action","_b67c3a9a-b2a2-4fca-af95-7e7a38f3822e_-browser-action","_d7742d87-e61d-4b78-b8a1-b469842139fa_-browser-action"],"nav-bar":["back-button","forward-button","stop-reload-button","vertical-spacer","urlbar-container","downloads-button","unified-extensions-button","bookmarks-menu-button"],"TabsToolbar":["tabbrowser-tabs","new-tab-button","ublock0_raymondhill_net-browser-action","firefox_tampermonkey_net-browser-action","addon_darkreader_org-browser-action","characterencoding-button","find-button","alltabs-button"]},"currentVersion":23}');
 user_pref("general.autoScroll", true);
 user_pref("intl.language_notification.shown", true);
 user_pref("intl.locale.requested", "en");

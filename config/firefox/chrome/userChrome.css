@@ -63,6 +63,6 @@ menuseparator:has(+ #BMB_bookmarksShowAll)
 }
 
 
-hbox[aria-label="Always Open Site in Container"] {
-  display: none;
+#contentAreaContextMenu > menu[id^='foxyproxy'] image {
+  display: none !important;
 }
