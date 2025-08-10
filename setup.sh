@@ -113,7 +113,7 @@ for c in config/*; do
             ;;
         */sshd_config.d)
             for t in "$c"/*.conf; do
-                f="${t##*/}"; f="${f%%-*}-$(id -un)-${f#*-}"
+                f="${t##*/}"; f="$(echo "$f" | sed "s/-USER-/-$(id -un)-/")"
                 install  "$t"  s%  /etc/ssh/sshd_config.d/"$f"
             done
             ;;

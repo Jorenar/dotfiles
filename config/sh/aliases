@@ -24,8 +24,5 @@ command -v vi > /dev/null 2>&1 || alias vi='command vim --clean'
 alias powershell.exe='powershell.exe -NoLogo'
 alias wsl.exe='wsl.exe --cd "~"'
 
-alias ls="$(
-    printf '%s %s' \
-        'ls.hidden -hF -w80 --time-style=iso -I. -I..' \
-        '$([ "$PWD" = "$HOME" ] && echo "-I.config -I.cache -I.local -I.profile")'
-)"
+alias ls='ls.hidden -hF -w80 --time-style=iso -I. -I.. \
+    $([ "$PWD" = "$HOME" ] && echo "-I.config -I.cache -I.local -I.profile")'

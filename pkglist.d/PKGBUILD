@@ -90,6 +90,7 @@ _gr_ESSENTIALS() {
     man-pages
 
     ethtool
+    fail2ban
     inetutils
     ufw
 
@@ -292,8 +293,8 @@ _gr_GUIAPPS() {
   _gr_DESKTOP
 
   depends+=(
-    feh
     firefox
+    imv
     libreoffice-still
     mpv
     zathura
@@ -322,6 +323,7 @@ _gr_UTILS() {
     # tigervnc
     imagemagick
     lsix
+    ncdu
     python-pipx
     sane
     termshark
