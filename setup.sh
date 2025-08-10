@@ -86,6 +86,12 @@ for c in config/*; do
         */dconf)
             install  "$c"  %  "$XDG_CONFIG_HOME"/dconf
             ;;
+        */fail2ban)
+            command -v fail2ban-server > /dev/null || continue
+            for l in "$c"/*.local "$c"/*.d/*.local; do
+                [ -e "$l" ] && install  "$l"  s%  /etc/fail2ban/"${l#"$c"/}"
+            done
+            ;;
         */firefox)
             t="$HOME/.local/opt/tor-browser/Browser/TorBrowser/Data/Browser/profile.default"
             for f in "$c"/*; do
