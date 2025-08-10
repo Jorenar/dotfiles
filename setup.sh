@@ -45,11 +45,11 @@ install () (
     case "$op" in
         *@) action='ln -sf' ;;
         *%) action='cp -r' ;;
-        *) return ;;
+        *) return 127 ;;
     esac
     case "$op" in
         s*)
-            [ "$use_sudo" -eq 0 ] && return
+            [ "$use_sudo" -eq 0 ] && return 1
             [ "$(id -u)" -ne 0 ] && sudo="sudo"
             ;;
     esac
@@ -62,10 +62,9 @@ install () (
         fi
     fi
 
-    if [ ! -e "$dest" ]; then
-        $sudo mkdir -p "$(dirname "$dest")"
-        $sudo sh -c "$action '$(abspath "$src")' '$dest'"
-    fi
+    [ -e "$dest" ] && return 17
+    $sudo mkdir -p "$(dirname "$dest")"
+    $sudo sh -c "$action '$(abspath "$src")' '$dest'"
 )
 
 
@@ -113,8 +112,10 @@ for c in config/*; do
             ;;
         */sshd_config.d)
             for t in "$c"/*.conf; do
-                f="${t##*/}"; f="$(echo "$f" | sed "s/-USER-/-$(id -un)-/")"
-                install  "$t"  s%  /etc/ssh/sshd_config.d/"$f"
+                f=/etc/ssh/sshd_config.d/"$(echo "${t##*/}" | sed "s/-USER-/-$(id -un)-/")"
+                install  "$t"  s%  "$f"  &&  case "$t" in
+                    *-USER-*) sudo sh -c 'sed "s/-#USER/$1/" "$2" > "$3"' - "$(id -un)" "$t" "$f" ;;
+                esac
             done
             ;;
         */sudoers.d)
