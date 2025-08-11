@@ -1,6 +1,6 @@
 OpenSCAD-x86_64.AppImage:
 	./OpenSCAD-*-x86_64.AppImage --appimage-extract
-	mkdir -p squashfs-root/usr/plugins/styles
+	mkdir -p squashfs-root/usr/plugins/platformthemes squashfs-root/usr/plugins/styles
 	cp /usr/lib/qt/plugins/platformthemes/libqt5ct.so squashfs-root/usr/plugins/platformthemes/
 	cp /usr/lib/qt/plugins/styles/libqt5ct-style.so squashfs-root/usr/plugins/styles/
 	appimagetool squashfs-root
