@@ -1,2 +1,5 @@
-https://discuss.saleae.com/c/downloads/          # Saleae Logic 2
-https://github.com/Ultimaker/Cura/releases/      # Ultimaker Cura
+https://github.com/AppImage/appimagetool/releases    # appimagetool
+https://github.com/neovim/neovim/releases            # Neovim
+https://openscad.org/downloads.html#snapshots-linux  # OpenSCAD
+https://discuss.saleae.com/c/downloads               # Saleae Logic 2
+https://github.com/Ultimaker/Cura/releases           # Ultimaker Cura
