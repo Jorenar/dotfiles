@@ -1,27 +1,19 @@
 command -v systemctl > /dev/null || return
 
-systemctl --user import-environment $(env | cut -d= -f1 | grep -w \
-    -e 'BROWSER' \
-    -e 'DOCKER_.*' \
-    -e 'EDITOR' \
-    -e 'GNUPGHOME' \
-    -e 'GOBIN' \
-    -e 'GOMODCACHE' \
-    -e 'GOPATH' \
-    -e 'IMAPFILTER_HOME' \
-    -e 'NO_AT_BRIDGE' \
-    -e 'PASSWORD_STORE_DIR' \
-    -e 'PATH' \
-    -e 'PYTHON.*' \
-    -e 'TERMINAL' \
-    -e 'TMPDIR' \
-    -e 'VISUAL' \
-    -e 'XAUTHORITY' \
-    -e 'XDG_.*_DIR' \
-    -e 'XDG_.*_HOME' \
+(
+    for e in "$XDG_CONFIG_HOME"/environment.d/*.conf; do
+        [ -s "$e" ] && . "$e"
+    done; unset e
+    systemctl --user import-environment $(env | cut -d= -f1)
 )
 
-[ ! -d "$XDG_CONFIG_HOME"/environment.d ] && \
-    systemctl --user start unln-dotconfig
-
-# vim: fdm=indent
+if [ "${UNLINK_DOT_CONFIG:-1}" -ne 0 ] \
+        && [ -L "$HOME"/.config ] \
+        && [ "$XDG_CONFIG_HOME" != "$HOME"/.config ] \
+        && [ ! -e "$XDG_RUNTIME_DIR"/systemd/user ]
+then
+    ln -s "$XDG_CONFIG_HOME"/systemd/user "$XDG_RUNTIME_DIR"/systemd/
+    rm "$HOME"/.config
+    systemctl --user daemon-reload
+    systemctl --user start ln-dotconfig
+fi

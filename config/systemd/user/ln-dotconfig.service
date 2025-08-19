@@ -1,0 +1,10 @@
+[Unit]
+Description=Link $XDG_CONFIG_HOME to ~/.config before shutdown
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStop=ln -s "${XDG_CONFIG_HOME}" "${HOME}"/.config
+
+[Install]
+WantedBy=default.target
