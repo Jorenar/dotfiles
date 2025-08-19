@@ -1,30 +1,11 @@
 {
-  "settingsVersion": "1.67.6",
-  "exclusionRules": [
-    {
-      "pattern": "*duckduckgo.com*",
-      "passKeys": "/"
-    },
-    {
-      "pattern": "*youtube.com*",
-      "passKeys": "f"
-    }
-  ],
-  "filterLinkHints": false,
-  "waitForEnterForFilteredHints": true,
-  "hideHud": false,
-  "keyMappings": "unmapAll\n\nmap j      scrollDown\nmap k      scrollUp\nmap gg     scrollToTop\nmap G      scrollToBottom\nmap <c-e>  scrollPageDown\nmap <c-y>  scrollPageUp\nmap h      scrollLeft\nmap l      scrollRight\nmap g$     scrollToLeft\nmap g0     scrollToRight\nmap i      enterInsertMode\nmap v      enterVisualMode\nmap V      enterVisualLineMode\nmap gi     focusInput\nmap f      LinkHints.activateMode\nmap \\f     LinkHints.activateMode\nmap F      LinkHints.activateModeToOpenInNewTab\nmap <a-f>  LinkHints.activateModeWithQueue\nmap yY     LinkHints.activateModeToCopyLinkUrl\nmap [[     goPrevious\nmap ]]     goNext\nmap gf     nextFrame\nmap gF     mainFrame\nmap m      Marks.activateCreateMode\nmap `      Marks.activateGotoMode\nmap /      enterFindMode\nmap n      performFind\nmap N      performBackwardsFind\nmap g-     goBack\nmap g+     goForward\nmap gT     previousTab\nmap gt     nextTab\nmap g<Tab> visitPreviousTab\nmap <a-t>  duplicateTab\nmap W      moveTabToNewWindow\nmap -t     moveTabLeft\nmap +t     moveTabRight\nmap \\?     showHelp\nmap gs     toggleViewSource",
+  "keyMappings": "unmapAll\n\nmap I enterInsertMode\n\nmap ` LinkHints.activateMode\nmap ~ LinkHints.activateModeToOpenInNewTab\n\nmap j scrollDown\nmap k scrollUp\nmap h scrollLeft\nmap l scrollRight\n\nmap gg scrollToTop\nmap G  scrollToBottom\nmap g$ scrollToLeft\nmap g0 scrollToRight\n\nmap [[ goPrevious\nmap ]] goNext\n\nmap gi focusInput\nmap gf nextFrame\nmap gF mainFrame\n\nmap g- goBack\nmap g+ goForward\nmap gT previousTab\nmap gt nextTab\n\nmap <C-/> enterFindMode\nmap <C-n> performFind\nmap <C-N> performBackwardsFind",
   "linkHintCharacters": "wrypadglzcm",
-  "linkHintNumbers": "0123456789",
-  "newTabUrl": "about:newtab",
-  "nextPatterns": "next,more,newer,>,›,→,»,≫,>>",
-  "previousPatterns": "prev,previous,back,older,<,‹,←,«,≪,<<",
+  "nextPatterns": "next,more,newer,>,›,→",
+  "previousPatterns": "prev,previous,back,older,<,‹,←",
   "regexFindMode": true,
-  "ignoreKeyboardLayout": false,
-  "scrollStepSize": 60,
-  "smoothScroll": true,
-  "grabBackFocus": false,
   "searchEngines": "",
-  "searchUrl": "https://duckduckgo.com/?q=",
-  "userDefinedLinkHintCss": ".vimiumBody textarea {\n  font-family: monospace !important;\n}\n\ndiv > .vimiumHintMarker {\n  background: yellow !important;\n  border: none !important;\n  color: black !important;\n  font-size: 10px !important;\n}\n\ndiv > .vimiumHintMarker > .matchingCharacter {\n  color: red !important;\n}"
+  "settingsVersion": "2.3",
+  "userDefinedLinkHintCss": "div > .vimiumHintMarker {\n  background: yellow !important;\n  border: none !important;\n  color: black !important;\n  font-size: 10px !important;\n}\n\ndiv > .vimiumHintMarker > .matchingCharacter {\n  color: red !important;\n}",
+  "exclusionRules": []
 }
