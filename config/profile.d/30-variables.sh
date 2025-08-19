@@ -89,11 +89,11 @@ pathmunge "/usr/lib/ccache/bin"
 for opt in "$HOME"/.local/opt/*/bin; do
     [ -d "$opt" ] && pathmunge "$opt"
 done
-
 for opt in "$HOME"/.local/opt/*/*/bin; do
     [ -d "$opt"/../../bin ] && continue
     [ -d "$opt" ] && pathmunge "$opt"
 done
+unset opt
 
 pathmunge "$HOME"/.local/bin
 
@@ -124,7 +124,7 @@ pathmunge C_INCLUDE_PATH "$HOME/.local/lib/include"
 for v in ASAN_OPTIONS UBSAN_OPTIONS TSAN_OPTIONS; do
     pathmunge "$v" "abort_on_error=1"
     pathmunge "$v" "halt_on_error=1"
-done
+done; unset v
 pathmunge ASAN_OPTIONS detect_stack_use_after_return=1
 
 pathmunge PYTHONPATH "$HOME/.local/lib/python/site-packages/"

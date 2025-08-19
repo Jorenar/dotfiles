@@ -145,6 +145,8 @@ for c in config/*; do
 
             install  "$c"/wsl.conf  s%  /etc/wsl.conf
             ;;
+        */misc)
+            ;;
         *)
             install  "$c"  @  "$XDG_CONFIG_HOME"/"$(basename "$c")"
             ;;
