@@ -73,11 +73,6 @@ mkdir -p "$XDG_CONFIG_HOME"
 mkdir -p "$XDG_DATA_HOME"
 mkdir -p "$XDG_STATE_HOME"
 
-[ "$XDG_CONFIG_HOME" != "$HOME"/.config ] && \
-    install  "$XDG_CONFIG_HOME"  @  "$HOME"/.config
-[ "$XDG_CACHE_HOME" != "$HOME"/.cache ] && \
-    install  "$XDG_CACHE_HOME"  @  "$HOME"/.cache
-
 
 install  profile  %  "$HOME"/.profile
 

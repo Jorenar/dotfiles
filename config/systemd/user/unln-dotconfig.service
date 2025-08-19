@@ -1,0 +1,15 @@
+[Unit]
+Description=Unlink ~/.config after systemd loads
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStartPre=test -L "${HOME}"/.config
+ExecStartPre=test "${XDG_CONFIG_HOME}" != "${HOME}"/.config
+ExecStartPre=ln -sT "${XDG_CONFIG_HOME}"/systemd/user "${XDG_RUNTIME_DIR}"/systemd/user
+ExecStartPre=rm "${HOME}"/.config
+ExecStart=systemctl --user daemon-reload
+ExecStop=ln -sT "${XDG_CONFIG_HOME}" "${HOME}"/.config
+
+[Install]
+WantedBy=default.target
