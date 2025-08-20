@@ -62,9 +62,17 @@ install () (
         fi
     fi
 
-    [ -e "$dest" ] && return 17
+    $sudo [ -e "$dest" ] && return 17
+
+    if grep -q '[Hh]andle.*manually[!:]' "$src"; then
+        echo "'$src' needs to be handled manually"
+        return 1
+    fi
+
+    srcf="$(abspath "$src")"
     $sudo mkdir -p "$(dirname "$dest")"
-    $sudo sh -c "$action '$(abspath "$src")' '$dest'"
+    $sudo sh -c "$action '$srcf' '$dest'"
+    echo "Installed '$src' at '$dest'"
 )
 
 
@@ -133,14 +141,6 @@ for c in etc/*; do
         */pacman.d) [ -x "$(command -v pacman)" ] || continue ;;
     esac
     case "$c" in
-        */sshd_config.d)
-            for t in "$c"/*.conf; do
-                f=/etc/ssh/sshd_config.d/"$(echo "${t##*/}" | sed "s/-USER-/-$(id -un)-/")"
-                install  "$t"  s%  "$f"  &&  case "$t" in
-                    *-USER-*) sudo sh -c 'sed "s/-#USER/$1/" "$2" > "$3"' - "$(id -un)" "$t" "$f" ;;
-                esac
-            done
-            ;;
         *)
             find "$c" -type f | while read -r f; do
                 case "${f##*/}" in
