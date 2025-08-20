@@ -114,8 +114,8 @@ for c in config/*; do
             [ -n "$WSL_DISTRO_NAME" ] && [ -n "$USERPROFILE" ] && \
                 install  "$c"  %  "$USERPROFILE/.${c##*/}"
             ;;
+        */browser-addons) ;;
         */WindowsTerminal.json) ;;
-        */vimium-options.json) ;;
         *)
             install  "$c"  @  "$XDG_CONFIG_HOME"/"$(basename "$c")"
             ;;
