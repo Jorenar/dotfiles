@@ -1,0 +1,10 @@
+[Trigger]
+Operation=Upgrade
+Operation=Install
+Type=Package
+Target=*
+
+[Action]
+Description=Notifying about pacnew files
+When=PostTransaction
+Exec=/usr/bin/pacdiff -o

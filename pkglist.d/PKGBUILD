@@ -64,6 +64,7 @@ _gr_BASE() {
   elif grep -qiw Intel /proc/cpuinfo; then
     depends+=(intel-ucode)
   fi
+  depends+=(cpupower lm_sensors)
 
   if [ -d /proc/driver/nvidia ] \
       || grep -qi nvidia-gpu /sys/bus/pci/devices/**/uevent
@@ -86,6 +87,9 @@ _gr_ESSENTIALS() {
   eval "$_guardo"
 
   depends+=(
+    pacman-contrib
+    reflector
+
     man-db
     man-pages
 
@@ -179,6 +183,7 @@ _gr_DESKTOP() {
   eval "$_guardo"
 
   depends+=(
+    gnu-free-fonts
     ttf-dejavu
     wqy-zenhei
 
