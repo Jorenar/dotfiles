@@ -44,7 +44,7 @@ install () (
     action=
     case "$op" in
         *@) action='ln -sf' ;;
-        *%) action='cp -r' ;;
+        *%) action='cp -R' ;;
         *) return 127 ;;
     esac
     case "$op" in
@@ -81,12 +81,6 @@ for c in config/*; do
         */dconf)
             install  "$c"  %  "$XDG_CONFIG_HOME"/dconf
             ;;
-        */fail2ban)
-            command -v fail2ban-server > /dev/null || continue
-            for l in "$c"/*.local "$c"/*.d/*.local; do
-                [ -e "$l" ] && install  "$l"  s%  /etc/fail2ban/"${l#"$c"/}"
-            done
-            ;;
         */firefox)
             t="$HOME/.local/opt/tor-browser/Browser/TorBrowser/Data/Browser/profile.default"
             for f in "$c"/*; do
@@ -97,12 +91,6 @@ for c in config/*; do
         */gtk-3.0)
             install  "$c"/settings.ini  %  "$XDG_CONFIG_HOME"/gtk-3.0/settings.ini
             ;;
-        */pacman.d)
-            [ -x "$(command -v pacman)" ] || continue
-            for h in "$c"/hooks/*; do
-                install  "$h"  s%  /etc/pacman.d/hooks/"$(basename "$h")"
-            done
-            ;;
         */powershell)
             [ -n "$USERPROFILE" ] && \
                 install "$c"  %  "$USERPROFILE"/Documents/WindowsPowerShell
@@ -111,42 +99,15 @@ for c in config/*; do
             [ -n "$USERPROFILE" ] && \
                 install "$c"  %  "$USERPROFILE"/AppData/Local/Microsoft/PowerToys
             ;;
-        */sshd_config.d)
-            for t in "$c"/*.conf; do
-                f=/etc/ssh/sshd_config.d/"$(echo "${t##*/}" | sed "s/-USER-/-$(id -un)-/")"
-                install  "$t"  s%  "$f"  &&  case "$t" in
-                    *-USER-*) sudo sh -c 'sed "s/-#USER/$1/" "$2" > "$3"' - "$(id -un)" "$t" "$f" ;;
-                esac
-            done
-            ;;
-        */sudoers.d)
-            for t in "$c"/*; do
-                install  "$t"  s%  /etc/sudoers.d/"$(basename "$t")"
-            done
-            ;;
-        */tmpfiles.d)
-            for t in "$c"/*; do
-                case "$t" in
-                    *wsl*) [ -z "$WSL_DISTRO_NAME" ] && continue ;;
-                esac
-                install  "$t"  s%  /etc/tmpfiles.d/"$(basename "$t")"
-            done
-            ;;
         */transmission.json)
             install  "$c"  %  "$XDG_CONFIG_HOME"/transmission-daemon/settings.json
             ;;
-        */WindowsTerminal.json)
+        */wsl*config)
+            [ -n "$WSL_DISTRO_NAME" ] && [ -n "$USERPROFILE" ] && \
+                install  "$c"  %  "$USERPROFILE/.${c##*/}"
             ;;
-        */WSL)
-            [ -z "$WSL_DISTRO_NAME" ] && continue
-
-            install  "$c"/wslconfig   %  "$USERPROFILE"/.wslconfig
-            install  "$c"/wslgconfig  %  "$USERPROFILE"/.wslgconfig
-
-            install  "$c"/wsl.conf  s%  /etc/wsl.conf
-            ;;
-        */misc)
-            ;;
+        */WindowsTerminal.json) ;;
+        */vimium-options.json) ;;
         *)
             install  "$c"  @  "$XDG_CONFIG_HOME"/"$(basename "$c")"
             ;;
@@ -157,11 +118,37 @@ for s in share/*; do
     case "$s" in
         */applications)
             for a in "$s"/*; do
-                install  "$a"  @  "$XDG_DATA_HOME"/applications/"$(basename "$a")"
+                install  "$a"  @  "$XDG_DATA_HOME"/applications/"${a##*/}"
             done
             ;;
         *)
-            install  "$s"  @  "$XDG_DATA_HOME"/"$(basename "$s")"
+            install  "$s"  @  "$XDG_DATA_HOME/${s##*/}"
+            ;;
+    esac
+done
+
+for c in etc/*; do
+    case "$c" in
+        */fail2ban) [ -x "$(command -v fail2ban-server)" ] || continue ;;
+        */pacman.d) [ -x "$(command -v pacman)" ] || continue ;;
+    esac
+    case "$c" in
+        */sshd_config.d)
+            for t in "$c"/*.conf; do
+                f=/etc/ssh/sshd_config.d/"$(echo "${t##*/}" | sed "s/-USER-/-$(id -un)-/")"
+                install  "$t"  s%  "$f"  &&  case "$t" in
+                    *-USER-*) sudo sh -c 'sed "s/-#USER/$1/" "$2" > "$3"' - "$(id -un)" "$t" "$f" ;;
+                esac
+            done
+            ;;
+        *)
+            find "$c" -type f | while read -r f; do
+                case "${f##*/}" in
+                    .git*) continue ;;
+                    *wsl*) [ -z "$WSL_DISTRO_NAME" ] && continue ;;
+                esac
+                install  "$f"  s%  /etc/"${f#etc/}"
+            done
             ;;
     esac
 done
