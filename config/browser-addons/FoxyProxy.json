@@ -1,0 +1,41 @@
+{
+  "mode": "pattern",
+  "sync": true,
+  "autoBackup": false,
+  "passthrough": "",
+  "theme": "moonlight alt",
+  "container": {},
+  "commands": {
+    "setProxy": "",
+    "setTabProxy": "",
+    "includeHost": "",
+    "excludeHost": ""
+  },
+  "data": [
+    {
+      "active": true,
+      "title": "I2P",
+      "type": "http",
+      "hostname": "127.0.0.1",
+      "port": "4444",
+      "username": "",
+      "password": "",
+      "cc": "",
+      "city": "",
+      "color": "#f5c211",
+      "pac": "",
+      "pacString": "",
+      "proxyDNS": true,
+      "include": [
+        {
+          "type": "wildcard",
+          "title": "",
+          "pattern": "*.i2p",
+          "active": true
+        }
+      ],
+      "exclude": [],
+      "tabProxy": []
+    }
+  ]
+}
