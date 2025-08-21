@@ -1,0 +1,93 @@
+{
+  "created_by": "Tampermonkey",
+  "version": "1",
+  "scripts": [ { "source": "" } ],
+  "settings": {
+    "script_blacklist_server": [
+      {
+        "severity": 2,
+        "rules": [
+          "/https?:\\/\\/userscripts\\.org\\/scripts\\/(source|version)/(102614).*\\.user\\.js/"
+        ]
+      },
+      {
+        "name": "SaveFrom.net helper",
+        "severity": 3,
+        "rules": [
+          "/https?:\\/\\/sf-addon\\.com\\/.*\\/.*\\.user\\.js/",
+          "/https?:\\/\\/.*\\.sf-helper\\.com\\/.*\\.user\\.js/"
+        ],
+        "reason": "Shows advertisements"
+      },
+      {
+        "severity": 8,
+        "reasons": {
+          "en": "Used for a phishing compain to compromise users of baon-nutrition.com"
+        },
+        "rules": ["/https?:\\/\\/files\\.ulysse\\.travel\\/.*\\.user\\.js/"]
+      }
+    ],
+    "configMode": 100,
+    "layout": "default#dark",
+    "layout_user_css": "th[id*=thead_pos], tr.scripttr > td.settingstd:nth-child(2),\nth[id*=thead_sync], tr.scripttr > td.settingstd:nth-child(7) \n{\n  display: none;\n}\n\n.scripttable .script_version {\n  text-align: center !important;\n}",
+    "notification_showUpdate": "notification",
+    "favicon_service": "duckduckgo",
+    "action_menu_scripts_hide_disabled": false,
+    "action_menu_columns": "2",
+    "action_menu_scripts_sort": "auto",
+    "appearance_badges": "off",
+    "appearance_badge_color": "#ee3131",
+    "editor_enabled": true,
+    "editor_theme": "monokai",
+    "editor_fontSize": "100",
+    "editor_keyMap": "vim",
+    "editor_indentUnit": "2",
+    "editor_indentWithTabs": "spaces",
+    "editor_tabMode": "indent",
+    "editor_lineWrapping": false,
+    "editor_electricChars": true,
+    "editor_autoSave": false,
+    "editor_easySave": true,
+    "editor_highlightTrailingWhitespace": true,
+    "editor_trimTrailingSpacesFromModifiedLines": true,
+    "editor_autoLint": true,
+    "editor_autoLintMaxLen": "300000",
+    "editor_linter_config": null,
+    "webrequest_fixCSP": "yes",
+    "webrequest_modHeaders": "yes",
+    "script_file_access": "off",
+    "external_connect": "all",
+    "require_sri_mode": "supported",
+    "connect_mode": "ask",
+    "page_filter_mode": "black",
+    "page_whitelist": [],
+    "forbiddenPages": [],
+    "enabled": true,
+    "scriptUrlDetection": "manual",
+    "script_templates": [
+      {
+        "name": "ECMAScript 5",
+        "value": "// ==UserScript==\n// @name New userscript\n// @version -\n// @description\n// @match  <$URL$>\n// ==/UserScript==\n\n\"use strict\";"
+      },
+      { "name": "ECMAScript 6", "value": "" },
+      { "name": "CoffeeScript", "value": "" }
+    ],
+    "context_menu_enabled": false,
+    "runtime_inject_mode": "default",
+    "sync_enabled": true,
+    "sync_type": "2",
+    "reset_sync": null,
+    "statistics_enabled": false,
+    "tags_enabled": false,
+    "runtime_content_mode": "userscripts",
+    "sandbox_mode": "default",
+    "runtime_run_in": [],
+    "script_cookie_access": "!httponly",
+    "script_include_mode": "default",
+    "script_blacklist_type": "server",
+    "script_blacklist_severity": "4",
+    "require_blacklist": [],
+    "editor_tabSize": "2",
+    "editor_highlightSelectionMatches": "cursor"
+  }
+}
