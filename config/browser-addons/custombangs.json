@@ -1,0 +1,108 @@
+{
+  "version": 6,
+  "bangs": [
+    {
+      "keyword": "all",
+      "alias": null,
+      "defaultUrl": "",
+      "urls": ["https://allegro.pl/listing?string=%s&order=p"],
+      "dontEncodeQuery": false
+    },
+    {
+      "keyword": "apl",
+      "alias": null,
+      "defaultUrl": "",
+      "urls": ["https://amazon.pl/s?k=%s&s=price-asc-rank"],
+      "dontEncodeQuery": false
+    },
+    {
+      "keyword": "copilot",
+      "alias": null,
+      "defaultUrl": "https://copilot.microsoft.com",
+      "urls": [""],
+      "dontEncodeQuery": false
+    },
+    {
+      "keyword": "cpp",
+      "alias": null,
+      "defaultUrl": "https://en.cppreference.com",
+      "urls": ["https://duckduckgo.com/?sites=cppreference.com&q=%s"],
+      "dontEncodeQuery": false
+    },
+    {
+      "keyword": "dpl",
+      "alias": null,
+      "defaultUrl": "https://www.deepl.com/en/translator#pl/en-gb/",
+      "urls": ["https://www.deepl.com/en/translator#pl/en-gb/%s"],
+      "dontEncodeQuery": false
+    },
+    {
+      "keyword": "ib",
+      "alias": null,
+      "defaultUrl": "",
+      "urls": ["https://infinitebacklog.nl/games?q=%s"],
+      "dontEncodeQuery": false
+    },
+    {
+      "keyword": "miruro",
+      "alias": null,
+      "defaultUrl": "",
+      "urls": ["https://www.miruro.to/search?query=%s"],
+      "dontEncodeQuery": false
+    },
+    {
+      "keyword": "mistral",
+      "alias": null,
+      "defaultUrl": "",
+      "urls": ["https://chat.mistral.ai/chat?q=%"],
+      "dontEncodeQuery": false
+    },
+    {
+      "keyword": "perplexity",
+      "alias": null,
+      "defaultUrl": "https://www.perplexity.ai/",
+      "urls": [""],
+      "dontEncodeQuery": false
+    },
+    {
+      "keyword": "r",
+      "alias": null,
+      "defaultUrl": "https://www.reddit.com/",
+      "urls": ["https://ddg.gg/?q=site%3Areddit.com+%s"],
+      "dontEncodeQuery": false
+    },
+    {
+      "keyword": "shops",
+      "alias": null,
+      "defaultUrl": "",
+      "urls": [
+        "https://sprzedajemy.pl/wszystkie-ogloszenia?inp_text[v]=%s&sort=inp_srt_price_a",
+        "https://www.facebook.com/marketplace/warsaw/search?query=%s",
+        "https://amazon.pl/s?k=%s&s=price-asc-rank",
+        "https://www.ebay.pl/sch/i.html?_nkw=%s&_sacat=See-All-Categories&_sop=15",
+        "https://www.olx.pl/oferty/q-%s/?search[order]=filter_float_price:asc",
+        "https://allegro.pl/listing?string=%s&order=p",
+        "http://www.ceneo.pl/;szukaj-%s;0112-0.htm",
+        "https://www.skapiec.pl/szukaj?query=%s",
+        "https://allegrolokalnie.pl/oferty/q/%s"
+      ],
+      "dontEncodeQuery": false
+    },
+    {
+      "keyword": "thg",
+      "alias": null,
+      "defaultUrl": "",
+      "urls": ["https://thangs.com/search/%s?scope=all"],
+      "dontEncodeQuery": false
+    },
+    {
+      "keyword": "vp",
+      "alias": null,
+      "defaultUrl": "",
+      "urls": [
+        "https://www.pricecharting.com/search-products?q=%s&type=prices"
+      ],
+      "dontEncodeQuery": false
+    }
+  ]
+}
