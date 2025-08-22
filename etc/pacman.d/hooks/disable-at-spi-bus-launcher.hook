@@ -5,6 +5,6 @@ Operation = Upgrade
 Target = at-spi2-core
 
 [Action]
-Description = Removing executable permission from at-spi-bus-launcher...
+Description = Backing-up at-spi-bus-launcher then disabling it with a dummy
 When = PostTransaction
-Exec = /usr/bin/chmod -x /usr/lib/at-spi-bus-launcher
+Exec = /usr/bin/sh -c 'mv $1 $1.bak && chmod -x $1.bak && echo "#!/bin/sh" > $1 && chmod +x $1' - /usr/lib/at-spi-bus-launcher
