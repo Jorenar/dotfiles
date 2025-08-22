@@ -136,21 +136,15 @@ for s in share/*; do
 done
 
 for c in etc/*; do
-    case "$c" in
-        */fail2ban) [ -x "$(command -v fail2ban-server)" ] || continue ;;
-        */pacman.d) [ -x "$(command -v pacman)" ] || continue ;;
-    esac
-    case "$c" in
-        *)
-            find "$c" -type f | while read -r f; do
-                case "${f##*/}" in
-                    .git*) continue ;;
-                    *wsl*) [ -z "$WSL_DISTRO_NAME" ] && continue ;;
-                esac
-                install  "$f"  s%  /etc/"${f#etc/}"
-            done
-            ;;
-    esac
+    find "$c" -type f | while read -r f; do
+        case "$f" in
+            */.git*) continue ;;
+            */fail2ban/*) [ -x "$(command -v fail2ban-server)" ] || continue ;;
+            */pacman.d/*) [ -x "$(command -v pacman)" ] || continue ;;
+            */wsl*) [ -z "$WSL_DISTRO_NAME" ] && continue ;;
+        esac
+        install  "$f"  s%  /"$f"
+    done
 done
 
 install  templates/  @  "$XDG_TEMPLATES_DIR"
