@@ -77,7 +77,7 @@
         "format": "khal: {}",
         "return-type": "text",
         "interval": 900,
-        "exec": "khal list now tomorrow | sed 1d | wc -l"
+        "exec": "khal list --format 'X' now tomorrow | grep -c '^X'"
     },
     "custom/rss": {
         "format": "RSS: {}",

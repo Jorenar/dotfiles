@@ -3,31 +3,31 @@
 
 # preamble {{{
 
-pkgname=local-metapkg
+pkgname=my-metapkg
 pkgver=1; pkgrel=1
 arch=(any)
 depends=()
 
 package() {
-  if [ -z "$LOCAL_METAPKG_GROUPS" ]; then
+  if [ -z "$MYMETAPKG_GROUPS" ]; then
     mapfile -t _grps <<< "$(compgen -A function '_gr_' | sed 's/^_gr_//')"
   else
-    IFS=' ' read -r -a _grps <<< "$LOCAL_METAPKG_GROUPS"
+    IFS=' ' read -r -a _grps <<< "$MYMETAPKG_GROUPS"
   fi
   _grps+=(BASE ESSENTIALS)
 
   declare -A _guarr  # must be declared in package()
   _guardo='[[ -v _guarr[$FUNCNAME] ]] && return || _guarr[$FUNCNAME]=1'
 
-  if [ -n "$LOCAL_METAPKG_INCLUDE" ]; then
-    IFS=' ' read -r -a depends <<< "$LOCAL_METAPKG_INCLUDE"
+  if [ -n "$MYMETAPKG_INCLUDE" ]; then
+    IFS=' ' read -r -a depends <<< "$MYMETAPKG_INCLUDE"
   fi
 
   for g in "${_grps[@]}"; do
     [ -n "$g" ] && _gr_"$g"
   done
 
-  for p in $LOCAL_METAPKG_EXCLUDE; do
+  for p in $MYMETAPKG_EXCLUDE; do
     depends=( "${depends[@]/$p}" )
   done
 
