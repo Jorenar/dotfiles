@@ -1,8 +1,8 @@
 command -v systemctl > /dev/null || return
 
 (
-    for e in "$XDG_CONFIG_HOME"/environment.d/*.conf; do
-        [ -s "$e" ] && . "$e"
+    set -a; for e in "$XDG_CONFIG_HOME"/environment.d/*.conf; do
+        [ -f "$e" ] && . "$e"
     done; unset e
     systemctl --user import-environment $(env | cut -d= -f1)
 )

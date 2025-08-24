@@ -64,7 +64,7 @@ install () (
 
     $sudo [ -e "$dest" ] && return 17
 
-    if grep -q '[Hh]andle.*manually[!:]' "$src"; then
+    if [ -f "$src" ] && grep -q '[Hh]andle.*manually[!:]' "$src"; then
         echo "'$src' needs to be handled manually"
         return 1
     fi
