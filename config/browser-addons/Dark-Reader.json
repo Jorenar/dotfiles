@@ -1,0 +1,256 @@
+{
+    "schemeVersion": 2,
+    "enabled": true,
+    "fetchNews": false,
+    "theme": {
+        "mode": 0,
+        "brightness": 75,
+        "contrast": 105,
+        "grayscale": 0,
+        "sepia": 10,
+        "useFont": false,
+        "fontFamily": "serif",
+        "textStroke": 0,
+        "engine": "cssFilter",
+        "stylesheet": "",
+        "darkSchemeBackgroundColor": "#181a1b",
+        "darkSchemeTextColor": "#e8e6e3",
+        "lightSchemeBackgroundColor": "#dcdad7",
+        "lightSchemeTextColor": "#181a1b",
+        "scrollbarColor": "",
+        "selectionColor": "auto",
+        "styleSystemControls": false,
+        "lightColorScheme": "Default",
+        "darkColorScheme": "Default",
+        "immediateModify": false
+    },
+    "presets": [
+        {
+            "id": "preset-DarkDynamic",
+            "name": "DarkDynamic",
+            "urls": [
+                "*.cppreference.com",
+                "archlinux.org",
+                "meet.google.com",
+                "news.ycombinator.com",
+                "open-std.org",
+                "www.google.com"
+            ],
+            "theme": {
+                "mode": 1,
+                "brightness": 100,
+                "contrast": 100,
+                "grayscale": 0,
+                "sepia": 0,
+                "useFont": false,
+                "fontFamily": "serif",
+                "textStroke": 0,
+                "engine": "dynamicTheme",
+                "stylesheet": "",
+                "darkSchemeBackgroundColor": "#181a1b",
+                "darkSchemeTextColor": "#e8e6e3",
+                "lightSchemeBackgroundColor": "#dcdad7",
+                "lightSchemeTextColor": "#181a1b",
+                "scrollbarColor": "",
+                "selectionColor": "auto",
+                "styleSystemControls": false,
+                "lightColorScheme": "Default",
+                "darkColorScheme": "Default",
+                "immediateModify": false
+            }
+        }
+    ],
+    "customThemes": [
+        {
+            "url": [
+                "confluence.*.com"
+            ],
+            "theme": {
+                "mode": 1,
+                "brightness": 120,
+                "contrast": 95,
+                "grayscale": 0,
+                "sepia": 0,
+                "useFont": false,
+                "fontFamily": "serif",
+                "textStroke": 0,
+                "engine": "dynamicTheme",
+                "stylesheet": "",
+                "darkSchemeBackgroundColor": "#181a1b",
+                "darkSchemeTextColor": "#e8e6e3",
+                "lightSchemeBackgroundColor": "#dcdad7",
+                "lightSchemeTextColor": "#181a1b",
+                "scrollbarColor": "",
+                "selectionColor": "auto",
+                "styleSystemControls": false,
+                "lightColorScheme": "Default",
+                "darkColorScheme": "Default",
+                "immediateModify": false
+            }
+        },
+        {
+            "url": [
+                "bitbucket.*.com"
+            ],
+            "theme": {
+                "mode": 1,
+                "brightness": 135,
+                "contrast": 90,
+                "grayscale": 0,
+                "sepia": 0,
+                "useFont": false,
+                "fontFamily": "serif",
+                "textStroke": 0,
+                "engine": "dynamicTheme",
+                "stylesheet": "",
+                "darkSchemeBackgroundColor": "#181a1b",
+                "darkSchemeTextColor": "#e8e6e3",
+                "lightSchemeBackgroundColor": "#dcdad7",
+                "lightSchemeTextColor": "#181a1b",
+                "scrollbarColor": "",
+                "selectionColor": "auto",
+                "styleSystemControls": false,
+                "lightColorScheme": "Default",
+                "darkColorScheme": "Default",
+                "immediateModify": false
+            }
+        },
+        {
+            "url": [
+                "jira.*.com"
+            ],
+            "theme": {
+                "mode": 1,
+                "brightness": 130,
+                "contrast": 95,
+                "grayscale": 0,
+                "sepia": 0,
+                "useFont": false,
+                "fontFamily": "serif",
+                "textStroke": 0,
+                "engine": "dynamicTheme",
+                "stylesheet": "",
+                "darkSchemeBackgroundColor": "#181a1b",
+                "darkSchemeTextColor": "#e8e6e3",
+                "lightSchemeBackgroundColor": "#dcdad7",
+                "lightSchemeTextColor": "#181a1b",
+                "scrollbarColor": "",
+                "selectionColor": "auto",
+                "styleSystemControls": false,
+                "lightColorScheme": "Default",
+                "darkColorScheme": "Default",
+                "immediateModify": false
+            }
+        },
+        {
+            "url": [
+                "mail.google.com"
+            ],
+            "theme": {
+                "mode": 1,
+                "brightness": 125,
+                "contrast": 75,
+                "grayscale": 0,
+                "sepia": 0,
+                "useFont": false,
+                "fontFamily": "serif",
+                "textStroke": 0,
+                "engine": "svgFilter",
+                "stylesheet": "",
+                "darkSchemeBackgroundColor": "#181a1b",
+                "darkSchemeTextColor": "#e8e6e3",
+                "lightSchemeBackgroundColor": "#dcdad7",
+                "lightSchemeTextColor": "#181a1b",
+                "scrollbarColor": "",
+                "selectionColor": "auto",
+                "styleSystemControls": false,
+                "lightColorScheme": "Default",
+                "darkColorScheme": "Default",
+                "immediateModify": false
+            }
+        },
+        {
+            "url": [
+                "old.reddit.com"
+            ],
+            "theme": {
+                "mode": 1,
+                "brightness": 90,
+                "contrast": 110,
+                "grayscale": 10,
+                "sepia": 15,
+                "useFont": false,
+                "fontFamily": "serif",
+                "textStroke": 0,
+                "engine": "dynamicTheme",
+                "stylesheet": "",
+                "darkSchemeBackgroundColor": "#181a1b",
+                "darkSchemeTextColor": "#e8e6e3",
+                "lightSchemeBackgroundColor": "#dcdad7",
+                "lightSchemeTextColor": "#181a1b",
+                "scrollbarColor": "",
+                "selectionColor": "auto",
+                "styleSystemControls": false,
+                "lightColorScheme": "Default",
+                "darkColorScheme": "Default",
+                "immediateModify": false
+            }
+        },
+        {
+            "url": [
+                "sonarqube*.com"
+            ],
+            "theme": {
+                "mode": 1,
+                "brightness": 150,
+                "contrast": 75,
+                "grayscale": 0,
+                "sepia": 5,
+                "useFont": false,
+                "fontFamily": "serif",
+                "textStroke": 0,
+                "engine": "svgFilter",
+                "stylesheet": "",
+                "darkSchemeBackgroundColor": "#181a1b",
+                "darkSchemeTextColor": "#e8e6e3",
+                "lightSchemeBackgroundColor": "#dcdad7",
+                "lightSchemeTextColor": "#181a1b",
+                "scrollbarColor": "",
+                "selectionColor": "auto",
+                "styleSystemControls": false,
+                "lightColorScheme": "Default",
+                "darkColorScheme": "Default",
+                "immediateModify": false
+            }
+        }
+    ],
+    "enabledByDefault": true,
+    "enabledFor": [],
+    "disabledFor": [
+        "0.0.0.0",
+        "127.0.0.1",
+        "localhost"
+    ],
+    "changeBrowserTheme": false,
+    "syncSettings": true,
+    "syncSitesFixes": true,
+    "automation": {
+        "enabled": false,
+        "mode": "system",
+        "behavior": "OnOff"
+    },
+    "time": {
+        "activation": "0:00",
+        "deactivation": "0:00"
+    },
+    "location": {
+        "latitude": null,
+        "longitude": null
+    },
+    "previewNewDesign": true,
+    "previewNewestDesign": false,
+    "enableForPDF": false,
+    "enableForProtectedPages": false,
+    "enableContextMenus": false,
+    "detectDarkTheme": true
+}
