@@ -27,6 +27,8 @@ local packages = {
   "shfmt",
 
   -- lint {{{1
+  "ast-grep",
+  "semgrep",
   "shellcheck",
   "vale",
   "vint",

@@ -4,7 +4,7 @@
     "fetchNews": false,
     "theme": {
         "mode": 0,
-        "brightness": 75,
+        "brightness": 80,
         "contrast": 105,
         "grayscale": 0,
         "sepia": 10,
@@ -171,6 +171,33 @@
         },
         {
             "url": [
+                "meet.google.com"
+            ],
+            "theme": {
+                "mode": 1,
+                "brightness": 125,
+                "contrast": 85,
+                "grayscale": 0,
+                "sepia": 0,
+                "useFont": false,
+                "fontFamily": "serif",
+                "textStroke": 0,
+                "engine": "dynamicTheme",
+                "stylesheet": "",
+                "darkSchemeBackgroundColor": "#181a1b",
+                "darkSchemeTextColor": "#e8e6e3",
+                "lightSchemeBackgroundColor": "#dcdad7",
+                "lightSchemeTextColor": "#181a1b",
+                "scrollbarColor": "",
+                "selectionColor": "auto",
+                "styleSystemControls": false,
+                "lightColorScheme": "Default",
+                "darkColorScheme": "Default",
+                "immediateModify": false
+            }
+        },
+        {
+            "url": [
                 "old.reddit.com"
             ],
             "theme": {
@@ -225,11 +252,15 @@
         }
     ],
     "enabledByDefault": true,
-    "enabledFor": [],
+    "enabledFor": [
+        "jira.*.com"
+    ],
     "disabledFor": [
         "0.0.0.0",
         "127.0.0.1",
-        "localhost"
+        "localhost",
+        "jorenar.com",
+        "*.githubusercontent.com"
     ],
     "changeBrowserTheme": false,
     "syncSettings": true,

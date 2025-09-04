@@ -4,8 +4,14 @@
   "nextPatterns": "next,more,newer,>,›,→",
   "previousPatterns": "prev,previous,back,older,<,‹,←",
   "regexFindMode": true,
+  "scrollStepSize": 50,
   "searchEngines": "",
   "settingsVersion": "2.3",
   "userDefinedLinkHintCss": "div > .vimiumHintMarker {\n  background: yellow !important;\n  border: none !important;\n  color: black !important;\n  font-size: 10px !important;\n}\n\ndiv > .vimiumHintMarker > .matchingCharacter {\n  color: red !important;\n}",
-  "exclusionRules": []
+  "exclusionRules": [
+    {
+      "passKeys": "",
+      "pattern": "https?://docs.google.com/*"
+    }
+  ]
 }

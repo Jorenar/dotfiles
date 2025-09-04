@@ -44,13 +44,6 @@
       "dontEncodeQuery": false
     },
     {
-      "keyword": "miruro",
-      "alias": null,
-      "defaultUrl": "",
-      "urls": ["https://www.miruro.to/search?query=%s"],
-      "dontEncodeQuery": false
-    },
-    {
       "keyword": "mistral",
       "alias": null,
       "defaultUrl": "",
@@ -77,6 +70,7 @@
       "defaultUrl": "",
       "urls": [
         "https://sprzedajemy.pl/wszystkie-ogloszenia?inp_text[v]=%s&sort=inp_srt_price_a",
+        "https://www.etsy.com/search?q=%s",
         "https://www.facebook.com/marketplace/warsaw/search?query=%s",
         "https://amazon.pl/s?k=%s&s=price-asc-rank",
         "https://www.ebay.pl/sch/i.html?_nkw=%s&_sacat=See-All-Categories&_sop=15",

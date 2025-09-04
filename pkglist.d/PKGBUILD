@@ -152,11 +152,13 @@ _gr_DEV() {
     uncrustify
     valgrind
 
+    chromium
     deno
     expect
     go
     jq
     jre-openjdk
+    lua51
     nasm
     npm
     openscad
@@ -165,7 +167,6 @@ _gr_DEV() {
     tectonic
     texlive-binextra
     tidy
-    lua51
   )
 }
 _gr_MAIL() {
