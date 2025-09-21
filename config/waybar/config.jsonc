@@ -77,7 +77,7 @@
         "format": "khal: {}",
         "return-type": "text",
         "interval": 900,
-        "exec": "khal list --format 'X' now tomorrow | grep -c '^X'"
+        "exec": "khal list --format 'X' now tomorrow | grep -c '^X' || true"
     },
     "custom/rss": {
         "format": "RSS: {}",

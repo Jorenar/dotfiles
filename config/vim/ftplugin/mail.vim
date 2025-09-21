@@ -51,6 +51,7 @@ if bufname("%") =~# 'aerc-'
           \ | silent! %s/\v%(^\>[ \>]*)@<= \>/>/g
           \ | silent! %s/^>\+\zs \+$//
           \ | silent! %s/\s\{2,}$//
+          \ | silent! %s/’/'/g
           \ | norm! gg
   endif
 endif

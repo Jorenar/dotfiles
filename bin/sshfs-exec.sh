@@ -19,6 +19,7 @@ while read -r m; do
     temp="${m%% *}"
     host="${temp%%:*}"
     hdir="${temp#*:}"
+    hdir="${hdir:-~}"
     break
 done << EOF
 $(mount | grep 'fuse.sshfs')

@@ -44,6 +44,13 @@
       "dontEncodeQuery": false
     },
     {
+      "keyword": "l",
+      "alias": null,
+      "defaultUrl": "",
+      "urls": ["https://jorenar.com/links/?%s"],
+      "dontEncodeQuery": false
+    },
+    {
       "keyword": "mistral",
       "alias": null,
       "defaultUrl": "",

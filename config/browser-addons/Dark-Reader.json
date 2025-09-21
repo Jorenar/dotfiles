@@ -30,6 +30,7 @@
             "name": "DarkDynamic",
             "urls": [
                 "*.cppreference.com",
+                "*.githubusercontent.com",
                 "archlinux.org",
                 "meet.google.com",
                 "news.ycombinator.com",
@@ -260,7 +261,7 @@
         "127.0.0.1",
         "localhost",
         "jorenar.com",
-        "*.githubusercontent.com"
+        "lobste.rs"
     ],
     "changeBrowserTheme": false,
     "syncSettings": true,

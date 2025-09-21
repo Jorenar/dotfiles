@@ -7,12 +7,12 @@ application/xhtml+xml=firefox.desktop;
 application/xhtml_xml=firefox.desktop;
 application/xml=firefox.desktop;
 
-image/bmp=feh.desktop;firefox.desktop;mpv.desktop;
-image/gif=feh.desktop;firefox.desktop;mpv.desktop;
-image/jpeg=feh.desktop;firefox.desktop;mpv.desktop;
-image/png=feh.desktop;firefox.desktop;mpv.desktop;
-image/svg=feh.desktop;firefox.desktop;mpv.desktop;
-image/webp=feh.desktop;firefox.desktop;mpv.desktop;
+image/bmp=imv.desktop,feh.desktop;firefox.desktop;mpv.desktop;
+image/gif=imv.desktop,feh.desktop;firefox.desktop;mpv.desktop;
+image/jpeg=imv.desktop,feh.desktop;firefox.desktop;mpv.desktop;
+image/png=imv.desktop,feh.desktop;firefox.desktop;mpv.desktop;
+image/svg=imv.desktop,feh.desktop;firefox.desktop;mpv.desktop;
+image/webp=imv.desktop,feh.desktop;firefox.desktop;mpv.desktop;
 
 inode/directory=ranger.desktop;
 
