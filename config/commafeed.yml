@@ -57,3 +57,72 @@ logging:
 
 session:
   path: ${XDG_DATA_HOME}/commafeed/sessions
+
+
+
+# Custom CSS
+############
+#
+#	/* Next/Prev buttons */
+#	#header .mantine-Center-root > .mantine-Group-root > :is(
+#	  button:nth-child(1),
+#	  button:nth-child(2),
+#	  .mantine-Divider-root:nth-child(3))
+#	{
+#	  display: none;
+#	}
+#
+#	/* Search feeds */
+#	.mantine-Stack-root > div > .mantine-InputWrapper-root
+#	{
+#	  display: none;
+#	}
+#
+#	/* Ctrl+K feed search */
+#	.mantine-Spotlight-root
+#	{
+#	  display: none;
+#	}
+
+# Custom JS
+###########
+#
+#	// sortFeeds();
+#
+#	function sortByTitle(parent) {
+#	  const nodes = Array.from(parent.children).sort((a, b) => {
+#	    const at = a.getAttribute("text").toLowerCase();
+#	    const bt = b.getAttribute("text").toLowerCase();
+#
+#	    if (at < bt) return -1;
+#	    if (at > bt) return 1;
+#	    return 0;
+#	  });
+#	  nodes.forEach(sortByTitle);
+#	  parent.replaceChildren(...nodes);
+#	}
+#
+#	function getOpml() {
+#	  return fetch(window.location.origin + "/rest/feed/export")
+#	    .then((res) => res.text())
+#	    .then((str) => new window.DOMParser().parseFromString(str, "text/xml"));
+#	}
+#
+#	function postOpml(opml) {
+#	  const opmlText = new XMLSerializer().serializeToString(opml);
+#	  const opmlFile = new File([opmlText], "rss.opml", { type: "text/xml" });
+#
+#	  const formData = new FormData();
+#	  formData.append("file", opmlFile);
+#
+#	  fetch(window.location.origin + "/rest/feed/import", {
+#	    method: "POST",
+#	    body: formData,
+#	  });
+#	}
+#
+#	async function sortFeeds() {
+#	  const xml = await getOpml();
+#	  sortByTitle(xml.children[0].children[1]);
+#	  postOpml(xml);
+#	}
