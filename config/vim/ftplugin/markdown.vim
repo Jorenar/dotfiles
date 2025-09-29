@@ -12,8 +12,4 @@ let g:markdown_recommended_style = 0
 
 let b:trimWhitespace_pattern = '\v(\S\zs\s|\s\s\zs\s+)$'
 
-if has("nvim")
-  nnoremap <buffer> <F8> :hor term://grip -b %<CR>
-else
-  nnoremap <buffer> <F8> :hor term grip -b %<CR>
-endi
+nnoremap <buffer> <F8> :hor term grip -b %<CR>
