@@ -262,6 +262,7 @@ _gr_VIRT() {
   depends+=(
     podman
     podman-docker
+    fuse-overlayfs
 
     libvirt
     qemu-desktop

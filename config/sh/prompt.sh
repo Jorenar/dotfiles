@@ -16,7 +16,7 @@ if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
 fi
 
 _ps1_git () {
-    [ "$(git config --bool prompt.fast)" != "true" ] && \
+    [ "$(git config --bool prompt.fast 2> /dev/null)" != "true" ] && \
         command -v __git_ps1 > /dev/null && \
         __git_ps1 "$@" && return
 

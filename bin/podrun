@@ -32,6 +32,8 @@ exec podman run -it --rm \
     --net host --privileged -u 0 \
     -h "$ref.$(hostname -s)" \
     -e HOME -v "$HOME:$HOME" \
+    -e XDG_CONFIG_HOME -e XDG_DATA_HOME \
+    -e XDG_CACHE_HOME -e XDG_STATE_HOME \
     -v "/etc/localtime:/etc/localtime:ro" \
     -e DISPLAY -v "/tmp/.X11-unix/:/tmp/.X11-unix/" \
     -v "/:/mnt/host" \
