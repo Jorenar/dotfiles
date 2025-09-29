@@ -46,7 +46,7 @@
     {
       "keyword": "l",
       "alias": null,
-      "defaultUrl": "",
+      "defaultUrl": "https://jorenar.com/links",
       "urls": ["https://jorenar.com/links/?%s"],
       "dontEncodeQuery": false
     },

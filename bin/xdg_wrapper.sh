@@ -12,7 +12,7 @@ if [ "$arg0" = "xdg_wrapper.sh" ]; then
             dir="$HOME/.local/opt/xdg_wrappers/bin"
             mkdir -p "$dir"
             sed -n -e 's/^#~ //p' "$0" | while IFS= read -r bin; do
-                [ -x "$(command -v "$bin")" ] && ln -sf "$0" "$dir/$bin"
+                command -v "$bin" > /dev/null && ln -sf "$0" "$dir/$bin"
             done
             ;;
     esac

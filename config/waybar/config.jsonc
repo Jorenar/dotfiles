@@ -118,3 +118,5 @@
         "format": "{:%a, %F %T} "
     }
 }
+
+// $ killall -SIGUSR2 waybar  # reload

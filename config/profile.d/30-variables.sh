@@ -146,6 +146,7 @@ WINEDEBUG="-all" # suppress Wine debug informations
 # shell history, the same set in shrc
 HISTSIZE=
 HISTFILE="$XDG_STATE_HOME/$(basename -- "${0#-}")_history"
+[ -z "$0" ] && HISTFILE='/dev/null'
 
 pathmunge HIST_FILES "$XDG_CONFIG_HOME/sh/history"
 

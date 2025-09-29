@@ -48,6 +48,7 @@ _gr_BASE() {
     linux
     linux-lts
     linux-firmware
+    linux-headers
     sudo
   )
 
@@ -80,7 +81,7 @@ _gr_BASE() {
   fi
 
   if rfkill -o TYPE | grep -q bluetooth; then
-    depends+=( bluetui )
+    depends+=( bluetui bluez-obex bluez-tools )
   fi
 }
 _gr_ESSENTIALS() {
@@ -186,6 +187,7 @@ _gr_DESKTOP() {
   depends+=(
     gnu-free-fonts
     ttf-dejavu
+    ttf-nerd-fonts-symbols
     wqy-zenhei
 
     alsa-utils
@@ -262,6 +264,7 @@ _gr_VIRT() {
   depends+=(
     podman
     podman-docker
+    fuse-overlayfs
 
     libvirt
     qemu-desktop

@@ -79,6 +79,12 @@ user_pref("media.peerconnection.ice.proxy_only_if_behind_proxy", true);
 
 user_pref("browser.pagethumbnails.capturing_disabled", true);
 
+user_pref("dom.allow_cut_copy", false);
+user_pref("dom.event.clipboardevents.enabled", false);
+user_pref("dom.events.asyncClipboard.clipboardItem", false);
+user_pref("dom.events.asyncClipboard.readText", false);
+// see also: https://kb.mozillazine.org/Granting_JavaScript_access_to_the_clipboard
+
 user_pref("extensions.formautofill.addresses.experiments.enabled", false);
 user_pref("extensions.formautofill.creditCards.enabled", false);
 

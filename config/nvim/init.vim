@@ -50,9 +50,8 @@ so $XDG_CONFIG_HOME/vim/vimrc
 lua require('vimterm').setup({ autoclose = false })
 lua require("flatten").setup({ window = { open = "split" } })
 
-autocmd TermOpen * setl nonu fdc=0 scl=no
-autocmd TermOpen * setl stl=%#StatusLineTerm#\ %f
-autocmd TermClose * call feedkeys("\<C-\>\<C-n>")
+autocmd TermOpen * let &l:stl = " %{substitute(b:term_title, '.*\\d\\+:', '!', '')}"
+autocmd TermClose * if empty(&ft) | call feedkeys("\<C-\>\<C-n>") | endif
 
 " }}}
 

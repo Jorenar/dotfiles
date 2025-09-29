@@ -197,16 +197,19 @@ cfg("denols", {
 })
 
 cfg("groovyls", {
-  cmd = {
-    "java", "-jar",
-    vim.env.XDG_DATA_HOME .. '/java/groovy-language-server-all.jar'
-  },
+  cmd = { 'groovy-language-server' },
 })
 
 cfg("harper_ls", {
   settings = {
     ["harper-ls"] = {
-      userDictPath = vim.fn.stdpath("config") .. "/spell/en.utf-8.add"
+      userDictPath = vim.fn.stdpath("config") .. "/spell/en.utf-8.add",
+      linters = {
+        NoFrenchSpaces = false,
+        SentenceCapitalization = false,
+        Spaces = false,
+        SpellCheck = false,
+      }
     }
   },
   filetypes = { '*' },
