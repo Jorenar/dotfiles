@@ -197,10 +197,7 @@ cfg("denols", {
 })
 
 cfg("groovyls", {
-  cmd = {
-    "java", "-jar",
-    vim.env.XDG_DATA_HOME .. '/java/groovy-language-server-all.jar'
-  },
+  cmd = { 'groovy-language-server' },
 })
 
 cfg("harper_ls", {
