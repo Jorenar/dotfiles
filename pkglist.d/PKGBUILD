@@ -195,6 +195,7 @@ _gr_DESKTOP() {
     pipewire-pulse
 
     qt5ct
+    qt6ct
     xdg-utils
   )
 }
