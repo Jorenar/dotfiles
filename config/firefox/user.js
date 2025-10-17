@@ -79,7 +79,6 @@ user_pref("media.peerconnection.ice.proxy_only_if_behind_proxy", true);
 
 user_pref("browser.pagethumbnails.capturing_disabled", true);
 
-user_pref("dom.allow_cut_copy", false);
 user_pref("dom.event.clipboardevents.enabled", false);
 user_pref("dom.events.asyncClipboard.clipboardItem", false);
 user_pref("dom.events.asyncClipboard.readText", false);
@@ -112,6 +111,14 @@ user_pref("devtools.responsive.viewport.height", 800);
 user_pref("devtools.responsive.viewport.width", 400);
 
 user_pref("security.fileuri.strict_origin_policy", true); // 'false' allows fetching local files
+
+// AI chat {{{1
+
+user_pref("browser.ml.chat.enabled", false);
+user_pref("browser.ml.chat.menu", false);
+user_pref("browser.ml.chat.page", false);
+user_pref("browser.ml.chat.shortcuts", false);
+user_pref("browser.ml.chat.sidebar", false);
 
 // Misc. {{{1
 
