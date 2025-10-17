@@ -20,7 +20,8 @@
         "custom/cpu-temp",
         "custom/cpu-freq",
         "wireplumber",
-        "clock"
+        "bluetooth",
+        "clock",
     ],
 
     "sway/workspaces": {
@@ -68,30 +69,30 @@
     },
 
     "custom/todo": {
-        "format": "TODO: {}",
+        "format": " {}",
         "return-type": "text",
         "interval": 5,
         "exec": "grep -c ^@ ~/.todo || echo 0"
     },
     "custom/khal": {
-        "format": "khal: {}",
+        "format": "󰸗 {}",
         "return-type": "text",
         "interval": 900,
         "exec": "khal list --format 'X' now tomorrow | grep -c '^X' || true"
     },
     "custom/rss": {
-        "format": "RSS: {}",
+        "format": " {}",
         "return-type": "text",
         "interval": 300,
         "exec": "cnt-commafeed-unread.sh",
         "on-click": "cnt-commafeed-unread.sh"
     },
     "custom/notmuch": {
-        "format": "notmuch: {}",
+        "format": "@ {}",
         "return-type": "text",
         "interval": 90,
         "exec": "notmuch count is:unread folder:/INBOX/",
-        "on-click": "notmuch new --no-hooks && notmuch count is:unread folder:/INBOX/"
+        "on-click": "notmuch new --no-hooks"
     },
     "custom/cpu-freq": {
         "format": "{} MHz",
@@ -104,6 +105,15 @@
         "return-type": "text",
         "interval": 1,
         "exec": "sensors | awk '/Tctl/ {print $2}'"
+    },
+    "bluetooth": {
+        "format": "󰂯 0",
+        "format-connected": "󰂯 {num_connections}",
+        "tooltip-format-connected": "{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}",
+        "tooltip-format-enumerate-connected-battery": "{device_alias} [{device_battery_percentage}%]",
+        "on-click": "$TERMINAL bluetui",
+        "on-click-right": "$TERMINAL bluetui"
     },
     "wireplumber": {
       "format": "♪ {volume}%",
@@ -118,5 +128,3 @@
         "format": "{:%a, %F %T} "
     }
 }
-
-// $ killall -SIGUSR2 waybar  # reload

@@ -29,6 +29,7 @@ window#waybar {
   padding: 2px;
 }
 
+#bluetooth.off,
 #wireplumber.muted {
   color: #666;
 }
