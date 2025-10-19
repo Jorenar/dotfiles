@@ -1,37 +1,52 @@
-goto-first-unread no
-notify-xterm yes
+error-log "`echo $XDG_STATE_HOME`/newsboat.log"
+cleanup-on-quit no
 prepopulate-query-feeds yes
 text-width 80
-cleanup-on-quit no
-
-auto-reload yes
-reload-threads 100
-reload-time 10
-
+goto-first-unread no
+toggleitemread-jumps-to-next no
 show-keymap-hint no
 show-title-bar yes
 swap-title-and-hints yes
+
+auto-reload yes
+suppress-first-reload yes
+reload-threads 100
+reload-time 10
 
 datetime-format "%F %R"
 feedlist-format "%4i %4U %t %> %S %20u "
 articlelist-format "%4i %f %D  %t %> %T"
 
-bind-key \  macro-prefix
-bind-key G  end
-bind-key g  home
-bind-key j  down
-bind-key k  up
-bind-key o  open-in-browser-and-mark-read
+color info               black     color242  bold
+color listfocus          white     color236
+color listfocus_unread   color231  color236  bold
+color listnormal_unread  color231  black     bold
 
-bind-key ESC quit
-unbind-key q feedlist
+bind <ESC> everywhere quit
+bind <F5> feedlist reload-all
+bind ^s feedlist save
+bind G everywhere end
+bind gg everywhere home
+bind j everywhere down
+bind k everywhere up
+bind m everywhere toggle-article-read
+bind N everywhere prev-unread
+bind s everywhere edit-flags a
+bind / feedlist goto-title
+bind q feedlist hard-quit
+bind o articlelist open-in-browser; toggle-article-read "read"
+bind <SPACE> articlelist open-in-browser; toggle-article-read "read"
+
 unbind-key ESC feedlist
+unbind-key ^K
+unbind-key Q
 
-# opml-url "file://`echo $HOME`/path/to/rss.opml"
-# urls-source "opml"
+urls-source "opml"
+opml-url "file://`echo $XDG_DATA_HOME`/rss.opml"
 
 ignore-mode "display"
-`cat $XDG_CONFIG_HOME/newsboat/killfile 2> /dev/null`
+include `k="$XDG_CONFIG_HOME/newsboat/killfile" && \
+            [ -f "$k" ] && echo "$k" || echo /dev/null`
 
 run-on-startup set-tag "QUERY"
 

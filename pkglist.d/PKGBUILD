@@ -291,6 +291,7 @@ _gr_TUIAPPS() {
 
   depends+=(
     khal
+    newsboat
     ranger
     vdirsyncer
     visidata

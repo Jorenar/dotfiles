@@ -84,8 +84,11 @@
         "format": " {}",
         "return-type": "text",
         "interval": 300,
-        "exec": "cnt-commafeed-unread.sh",
-        "on-click": "cnt-commafeed-unread.sh"
+        "exec": "db=${TMPDIR:-/tmp}/$$ &&
+                 ln -sf $XDG_DATA_HOME/newsboat/cache.db $db &&
+                 trap 'rm $db' EXIT &&
+                 newsboat -x print-unread --cache-file $db | cut -d' ' -f1",
+        "on-click": "true"
     },
     "custom/notmuch": {
         "format": "@ {}",

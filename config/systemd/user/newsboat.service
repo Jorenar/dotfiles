@@ -1,0 +1,11 @@
+[Unit]
+Description=Newsboat reload service
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=sh -c 'newsboat -x reload || true'
+
+[Install]
+WantedBy=default.target
