@@ -77,11 +77,11 @@ _gr_BASE() {
   fi
 
   if rfkill -o TYPE | grep -q wlan; then
-    depends+=( iw iwd )
+    depends+=( iw iwd impala )
   fi
 
   if rfkill -o TYPE | grep -q bluetooth; then
-    depends+=( bluetui bluez-obex bluez-tools )
+    depends+=( bluetui bluez-obex bluez-tools bluez-utils )
   fi
 }
 _gr_ESSENTIALS() {
@@ -186,6 +186,7 @@ _gr_DESKTOP() {
 
   depends+=(
     gnu-free-fonts
+    noto-fonts-emoji
     ttf-dejavu
     ttf-nerd-fonts-symbols
     wqy-zenhei

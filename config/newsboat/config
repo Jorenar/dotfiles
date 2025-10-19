@@ -50,4 +50,8 @@ include `k="$XDG_CONFIG_HOME/newsboat/killfile" && \
 
 run-on-startup set-tag "QUERY"
 
+
+# If "Assertion `sqlite3_step(stmt) == SQLITE_DONE' failed."
+# then delete doubled row in `metadata` table.
+
 # vim: ft=conf
