@@ -93,9 +93,6 @@ install  profile  %  "$HOME"/.profile
 
 for c in config/*; do
     case "$c" in
-        */dconf)
-            install  "$c"  %  "$XDG_CONFIG_HOME"/dconf
-            ;;
         */firefox)
             t="$HOME/.local/opt/tor-browser/Browser/TorBrowser/Data/Browser/profile.default"
             for f in "$c"/*; do
