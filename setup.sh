@@ -81,6 +81,13 @@ mkdir -p "$XDG_CONFIG_HOME"
 mkdir -p "$XDG_DATA_HOME"
 mkdir -p "$XDG_STATE_HOME"
 
+chmod -R -w \
+    config/htop/htoprc \
+    config/mimeapps.list \
+    config/OpenSCAD/OpenSCAD.conf \
+    config/qt?ct/qt?ct.conf \
+    config/virt-viewer/settings
+
 
 install  profile  %  "$HOME"/.profile
 
@@ -148,12 +155,5 @@ for c in etc/*; do
 done
 
 install  templates/  @  "$XDG_TEMPLATES_DIR"
-
-chmod -R -w \
-    config/htop/htoprc \
-    config/mimeapps.list \
-    config/OpenSCAD/OpenSCAD.conf \
-    config/qt?ct/qt?ct.conf \
-    config/virt-viewer/settings
 
 xdg_wrapper.sh --install
