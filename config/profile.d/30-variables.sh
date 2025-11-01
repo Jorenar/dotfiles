@@ -31,7 +31,7 @@ XDG_DATA_HOME="$HOME/.local/share"
 [ -f "$XDG_CONFIG_HOME"/user-dirs.dirs ] && \
     . "$XDG_CONFIG_HOME"/user-dirs.dirs
 
-CARGO_HOME="$HOME"/.local/opt/pkg/cargo
+CARGO_HOME="$XDG_CACHE_HOME/cargo"
 CHKTEXRC="$XDG_CONFIG_HOME/chktex"
 CLIPHIST_DB_PATH="$XDG_STATE_HOME"/cliphist.db
 CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
@@ -139,7 +139,7 @@ LESS="-FXRS"
 LESSHISTFILE=-
 MOZ_USE_XINPUT2=1 # enable touchscreen in Firefox
 NO_AT_BRIDGE=1 # don't launch at-spi2-registryd
-QT_QPA_PLATFORMTHEME=qt5ct
+QT_QPA_PLATFORMTHEME=qt6ct
 VNC_VIA_CMD='ssh -f -L "$L":"$H":"$R" "$G" sleep 20'
 WINEDEBUG="-all" # suppress Wine debug informations
 

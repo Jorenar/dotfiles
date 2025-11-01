@@ -51,7 +51,7 @@ lua require('vimterm').setup({ autoclose = false })
 lua require("flatten").setup({ window = { open = "split" } })
 
 autocmd TermOpen * let &l:stl = " %{substitute(b:term_title, '.*\\d\\+:', '!', '')}"
-autocmd TermClose * if empty(&ft) | call feedkeys("\<C-\>\<C-n>") | endif
+" autocmd TermClose * if empty(&ft) | call feedkeys("\<C-\>\<C-n>") | endif
 
 " }}}
 

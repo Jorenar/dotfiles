@@ -34,6 +34,7 @@ bind N everywhere prev-unread
 bind s everywhere edit-flags a
 bind / feedlist goto-title
 bind q feedlist hard-quit
+bind e articlelist edit-flags
 bind o articlelist open-in-browser; toggle-article-read "read"
 bind <SPACE> articlelist open-in-browser; toggle-article-read "read"
 

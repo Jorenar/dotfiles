@@ -114,7 +114,7 @@
         "on-click-right": "$TERMINAL -T bluetui -e bluetui"
     },
     "pulseaudio": {
-      "format": " {volume}%",
+      "format": " {volume}",
       "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
       "on-click-right": "$TERMINAL pulsemixer",
       "max-volume": 150,

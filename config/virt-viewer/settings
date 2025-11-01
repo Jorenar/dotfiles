@@ -1,0 +1,3 @@
+[virt-viewer]
+share-clipboard=true
+ask-quit=false

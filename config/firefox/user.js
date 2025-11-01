@@ -55,14 +55,17 @@ user_pref("browser.newtabpage.pinned", "");
 user_pref("signon.rememberSignons", false);
 user_pref("security.insecure_password.ui.enabled", true);
 
+user_pref("services.sync.prefs.sync-seen.privacy.clearOnShutdown_v2.cache", true);
+user_pref("services.sync.prefs.sync-seen.privacy.clearOnShutdown_v2.cookiesAndStorage", true);
+
 user_pref("browser.contentblocking.category", "strict");
 user_pref("browser.sessionstore.privacy_level", 2);
 user_pref("dom.private-attribution.submission.enabled", false);
 user_pref("network.cookie.cookieBehavior", 3);
 user_pref("network.cookie.thirdparty.sessionOnly", true);
 user_pref("network.trr.mode", 3);
-user_pref("privacy.donottrackheader.enabled", true);
 user_pref("privacy.trackingprotection.enabled", true);
+// user_pref("privacy.resistFingerprinting", true);
 
 user_pref("breakpad.reportURL", "");
 user_pref("datareporting.healthreport.service.enabled", false);
@@ -125,6 +128,10 @@ user_pref("browser.ml.chat.sidebar", false);
 user_pref("browser.startup.page", 1);
 user_pref("browser.startup.homepage", "about:home");
 
+user_pref("font.language.group", "x-western");
+user_pref("font.name.monospace.x-unicode", "monospace");
+user_pref("font.name.monospace.x-western", "monospace");
+
 user_pref("browser.bookmarks.defaultLocation", "unfiled_____");
 user_pref("browser.download.useDownloadDir", false);
 user_pref("browser.tabs.groups.enabled", true);
@@ -133,6 +140,7 @@ user_pref("dom.webnotifications.enabled", false);
 user_pref("findbar.highlightAll", true);
 user_pref("media.eme.enabled", true);   // enable DRM
 user_pref("media.webspeech.synth.dont_notify_on_error", true);
+user_pref("layout.css.prefers-color-scheme.content-override", 0);
 
 user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false);
 user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false);
