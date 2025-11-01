@@ -1,4 +1,4 @@
-// vim: ft=jsonc fdl=1
+// vim: fdl=1
 {
     "spacing": 15,
 
@@ -17,11 +17,10 @@
         "custom/khal",
         "custom/rss",
         "custom/notmuch",
-        "custom/cpu-temp",
-        "custom/cpu-freq",
-        "wireplumber",
+        "custom/cpu",
+        "pulseaudio",
         "bluetooth",
-        "clock",
+        "clock"
     ],
 
     "sway/workspaces": {
@@ -78,7 +77,8 @@
         "format": "󰸗 {}",
         "return-type": "text",
         "interval": 900,
-        "exec": "khal list --format 'X' now tomorrow | grep -c '^X' || true"
+        "exec": "khal list --format 'X' now tomorrow | grep -c '^X' || true",
+        "on-click-right": "$TERMINAL -T khal -e ikhal"
     },
     "custom/rss": {
         "format": " {}",
@@ -88,26 +88,21 @@
                  ln -sf $XDG_DATA_HOME/newsboat/cache.db $db &&
                  trap 'rm $db' EXIT &&
                  newsboat -x print-unread --cache-file $db | cut -d' ' -f1",
-        "on-click": "true"
+        "on-click": "true",
+        "on-click-right": "$TERMINAL -T Newsboat -e newsboat"
     },
     "custom/notmuch": {
-        "format": "@ {}",
+        "format": "󰇮 {}",
         "return-type": "text",
         "interval": 90,
         "exec": "notmuch count is:unread folder:/INBOX/",
         "on-click": "notmuch new --no-hooks"
     },
-    "custom/cpu-freq": {
-        "format": "{} MHz",
-        "return-type": "text",
-        "interval": 2,
-        "exec": "lscpu -e=MHz | sort -r | sed '2q;d' | cut -d. -f1"
-    },
-    "custom/cpu-temp": {
+    "custom/cpu": {
         "format": "{}",
         "return-type": "text",
-        "interval": 1,
-        "exec": "sensors | awk '/Tctl/ {print $2}'"
+        "interval": 5,
+        "exec": "$XDG_CONFIG_HOME/waybar/bin/cpuinfo.sh -g -t"
     },
     "bluetooth": {
         "format": "󰂯 0",
@@ -116,14 +111,15 @@
         "tooltip-format-enumerate-connected": "{device_alias}",
         "tooltip-format-enumerate-connected-battery": "{device_alias} [{device_battery_percentage}%]",
         "on-click": "$TERMINAL bluetui",
-        "on-click-right": "$TERMINAL bluetui"
+        "on-click-right": "$TERMINAL -T bluetui -e bluetui"
     },
-    "wireplumber": {
-      "format": "♪ {volume}%",
+    "pulseaudio": {
+      "format": " {volume}%",
       "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
       "on-click-right": "$TERMINAL pulsemixer",
       "max-volume": 150,
-      "scroll-step": 1
+      "scroll-step": 1,
+      "ignored-sinks": ["Easy Effects Sink"]
     },
     "clock": {
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",

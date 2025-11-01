@@ -30,6 +30,7 @@ window#waybar {
 }
 
 #bluetooth.off,
+#pulseaudio.muted,
 #wireplumber.muted {
   color: #666;
 }
