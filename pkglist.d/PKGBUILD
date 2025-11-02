@@ -338,13 +338,13 @@ _gr_UTILS() {
 
   depends+=(
     # tigervnc
+    aria2
     imagemagick
     lsix
     ncdu
     python-pipx
     sane
     termshark
-    transmission-cli
     yt-dlp
   )
 }

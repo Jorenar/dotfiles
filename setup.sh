@@ -95,6 +95,7 @@ install  profile  %  "$HOME"/.profile
 for c in config/*; do
     case "$c" in
         */browser-addons) ;;
+        */transmission.json) ;;
         */WindowsTerminal.json) ;;
 
         */easyeffects)
@@ -120,9 +121,6 @@ for c in config/*; do
         */PowerToys)
             [ -n "$USERPROFILE" ] && \
                 install "$c"  %  "$USERPROFILE"/AppData/Local/Microsoft/PowerToys
-            ;;
-        */transmission.json)
-            install  "$c"  %  "$XDG_CONFIG_HOME"/transmission-daemon/settings.json
             ;;
         */wsl*config)
             [ -n "$WSL_DISTRO_NAME" ] && [ -n "$USERPROFILE" ] && \
