@@ -82,6 +82,7 @@ mkdir -p "$XDG_DATA_HOME"
 mkdir -p "$XDG_STATE_HOME"
 
 chmod -R -w \
+    config/easyeffects/db \
     config/htop/htoprc \
     config/mimeapps.list \
     config/OpenSCAD/OpenSCAD.conf \
@@ -93,6 +94,12 @@ install  profile  %  "$HOME"/.profile
 
 for c in config/*; do
     case "$c" in
+        */easyeffects)
+            install  "$c"/db  @  "$XDG_CONFIG_HOME"/easyeffects/db
+            for e in "$c"/input/* "$c"/output/*; do
+                install  "$e"  @  "$XDG_CONFIG_HOME"/easyeffects/"${e#"$c/"}"
+            done
+            ;;
         */firefox)
             t="$HOME/.local/opt/tor-browser/Browser/TorBrowser/Data/Browser/profile.default"
             for f in "$c"/*; do

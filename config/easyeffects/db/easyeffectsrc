@@ -1,0 +1,11 @@
+[Spectrum]
+spectrumColorScheme=automatic
+
+[Window]
+inputAutoloadingFallbackPreset=@default
+inputAutoloadingUsesFallback=true
+maxMostUsedPresets=0
+outputAutoloadingFallbackPreset=@default
+outputAutoloadingUsesFallback=true
+showNativePluginUi=true
+showTrayIcon=false

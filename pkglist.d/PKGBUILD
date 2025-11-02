@@ -195,6 +195,11 @@ _gr_DESKTOP() {
     pulsemixer
     pipewire-pulse
 
+    calf
+    easyeffects
+    lsp-plugins
+    mda.lv2
+
     qt5ct
     qt6ct
     xdg-utils
