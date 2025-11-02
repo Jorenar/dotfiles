@@ -27,7 +27,7 @@ abspath () (
     elif [ -f "$1" ]; then
         case "$1" in
             /*)  echo "$1" ;;
-            */*) echo "$(cd "$(dirname "$1")" && pwd)/$(basename "$1")" ;;
+            */*) echo "$(cd "$(dirname "$1")" && pwd)/${1##*/}" ;;
             *)   echo "$PWD/$1" ;;
         esac
     else
@@ -94,6 +94,9 @@ install  profile  %  "$HOME"/.profile
 
 for c in config/*; do
     case "$c" in
+        */browser-addons) ;;
+        */WindowsTerminal.json) ;;
+
         */easyeffects)
             install  "$c"/db  @  "$XDG_CONFIG_HOME"/easyeffects/db
             for e in "$c"/input/* "$c"/output/*; do
@@ -125,10 +128,8 @@ for c in config/*; do
             [ -n "$WSL_DISTRO_NAME" ] && [ -n "$USERPROFILE" ] && \
                 install  "$c"  %  "$USERPROFILE/.${c##*/}"
             ;;
-        */browser-addons) ;;
-        */WindowsTerminal.json) ;;
         *)
-            install  "$c"  @  "$XDG_CONFIG_HOME"/"$(basename "$c")"
+            install  "$c"  @  "$XDG_CONFIG_HOME"/"${c##*/}"
             ;;
     esac
 done

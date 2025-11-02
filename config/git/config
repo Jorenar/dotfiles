@@ -35,7 +35,7 @@
     autoSetupRemote = true
 
 [remote "origin"]
-    fetch = +refs/notes/*:refs/notes/*
+#   fetch = +refs/notes/*:refs/notes/*  # interferes e.g. with ls-remote
 
 [notes]
     displayRef = refs/notes/*

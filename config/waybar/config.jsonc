@@ -28,6 +28,7 @@
     },
     "sway/window": {
       "max-length": 50,
+      "swap-icon-label": false,
       "format": "{shell}@@{title}",
       "rewrite": {
         "(xdg_shell)@@(.*)": "$2",
