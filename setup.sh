@@ -98,12 +98,6 @@ for c in config/*; do
         */transmission.json) ;;
         */WindowsTerminal.json) ;;
 
-        */easyeffects)
-            install  "$c"/db  @  "$XDG_CONFIG_HOME"/easyeffects/db
-            for e in "$c"/input/* "$c"/output/*; do
-                install  "$e"  @  "$XDG_CONFIG_HOME"/easyeffects/"${e#"$c/"}"
-            done
-            ;;
         */firefox)
             t="$HOME/.local/opt/tor-browser/Browser/TorBrowser/Data/Browser/profile.default"
             for f in "$c"/*; do
@@ -137,6 +131,11 @@ for s in share/*; do
         */applications)
             for a in "$s"/*; do
                 install  "$a"  @  "$XDG_DATA_HOME"/applications/"${a##*/}"
+            done
+            ;;
+        */easyeffects)
+            for p in "$s"/input/* "$s"/output/*; do
+                install  "$p"  @  "$XDG_DATA_HOME"/easyeffects/"${p#"$s/"}"
             done
             ;;
         *)
