@@ -1,8 +1,11 @@
 [Spectrum]
 spectrumColorScheme=automatic
 
+[TestSignals]
+signalType=pinkNoise
+
 [Window]
-databaseAutosaveInterval=3000
+databaseAutosaveInterval=1500
 inputAutoloadingFallbackPreset=@default
 inputAutoloadingUsesFallback=true
 maxMostUsedPresets=0

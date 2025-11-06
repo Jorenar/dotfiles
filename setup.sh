@@ -120,9 +120,8 @@ for c in config/*; do
             [ -n "$WSL_DISTRO_NAME" ] && [ -n "$USERPROFILE" ] && \
                 install  "$c"  %  "$USERPROFILE/.${c##*/}"
             ;;
-        *)
-            install  "$c"  @  "$XDG_CONFIG_HOME"/"${c##*/}"
-            ;;
+
+        *) install  "$c"  @  "$XDG_CONFIG_HOME"/"${c##*/}" ;;
     esac
 done
 
@@ -138,9 +137,8 @@ for s in share/*; do
                 install  "$p"  @  "$XDG_DATA_HOME"/easyeffects/"${p#"$s/"}"
             done
             ;;
-        *)
-            install  "$s"  @  "$XDG_DATA_HOME/${s##*/}"
-            ;;
+
+        *) install  "$s"  @  "$XDG_DATA_HOME/${s##*/}" ;;
     esac
 done
 
