@@ -28,7 +28,7 @@ case "$arg0" in
         ;;
     firefox)
         set -- "--profile" "$XDG_DATA_HOME/firefox" "$@"
-        { while kill -0 $$ 2> /dev/null; do rm -rf "$HOME"/.mozilla 2> /dev/null; done } &
+        { while kill -0 $$; do sleep 1; rm -rf "$HOME"/.mozilla; done } 2>/dev/null &
         ;;
     i2pd)
         set -- \

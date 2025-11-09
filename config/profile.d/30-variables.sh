@@ -137,6 +137,7 @@ KM_LAUNCHER="fuzzel -d"
 KM_SELECTIONS="clipboard"
 LESS="-FXRS"
 LESSHISTFILE=-
+MOZ_CRASHREPORTER_DISABLE=1
 MOZ_USE_XINPUT2=1 # enable touchscreen in Firefox
 NO_AT_BRIDGE=1 # don't launch at-spi2-registryd
 QT_QPA_PLATFORMTHEME=qt6ct
