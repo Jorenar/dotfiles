@@ -36,3 +36,6 @@ include ./outputs
 include ./workspaces
 
 exec --no-startup-id exec swaymsg "workspace 1"
+
+exec systemctl --user start sway-session.target
+# exec swaymsg -t subscribe '["shutdown"]' && systemctl --user stop sway-session.target

@@ -1,13 +1,13 @@
 [Unit]
 Description=EasyEffects service
-StartLimitIntervalSec=0
-StartLimitBurst=0
+StartLimitIntervalSec=500
+StartLimitBurst=5
 
 [Service]
 Type=simple
 ExecStart=/usr/bin/easyeffects --hide-window --service-mode
 Restart=on-failure
-RestartSec=10s
+RestartSec=5s
 
 [Install]
-WantedBy=default.target
+WantedBy=graphical-session.target
