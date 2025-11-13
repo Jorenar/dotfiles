@@ -25,4 +25,5 @@ let g:enabled_lsp = {
       \   'sqls': {-> executable('sqls')},
       \   'texlab': {-> executable('taxlab')},
       \   'vimls': {-> executable('vim-language-server')},
+      \   'yamlls': {-> executable('yaml-language-server')},
       \ }

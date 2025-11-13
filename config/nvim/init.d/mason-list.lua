@@ -15,6 +15,7 @@ local packages = {
   "sqls",
   "texlab",
   "vim-language-server",
+  "yaml-language-server",
 
   -- DAP {{{1
   "bash-debug-adapter",
