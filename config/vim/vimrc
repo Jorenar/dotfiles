@@ -285,6 +285,10 @@ nnoremap <expr> Q {r ->
       \   .'"'
       \ }(nr2char(getchar()))
 
+
+nnoremap <expr> <C-w>v     '<Cmd>'.(v:count ? v:count : '').'vnew<CR>'
+nnoremap <expr> <C-w><C-v> '<Cmd>'.(v:count ? v:count : '').'vnew<CR>'
+
 map gh <nop>
 imap <F1> <lt>F1>
 
