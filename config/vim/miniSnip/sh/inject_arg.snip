@@ -1,0 +1,4 @@
+args=; i=0; for a in "$@"; do
+    i=$((i+1)) && args="$args \"\$$i\""
+    <{some_condition}> && args="$args '<{injected}>'"
+done; eval set -- "$args"
