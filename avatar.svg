@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 0 3px #fff)" viewBox="0 -15 200 200">
+  <path id="head" d="M100 159c-14 0-40-26-41-27C31 78 31 1 100 1c64 0 72 68 40 131-2 5-30 27-40 27z"/>
+  <path id="eyes" fill="#fff" style="filter:drop-shadow(0 0 2px #fff)" d="M87 89c5-9-15-9-27-8 3 15 26 10 27 8m25 0c-4-9 16-9 28-8-3 15-26 10-28 8"/>
+  <path id="eyebrows" fill="#fff" style="filter:blur(.4px)" d="M56 72c15-3 33 3 33 0 1-3-27-5-33 0m88 0c-15-3-33 3-33 0-1-3 27-5 33 0"/>
+  <path id="ears" d="M36 76c-12 2 9 42 14 42 15-1 1-45-14-42zm128 0c12 2-10 42-14 42-16-1-1-45 14-42z"/>
+</svg>
