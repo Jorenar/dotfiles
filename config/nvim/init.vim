@@ -55,20 +55,6 @@ autocmd TermOpen * let &l:stl = " %{substitute(b:term_title, '.*\\d\\+:', '!', '
 
 " }}}
 
-" diagnostics {{{
-
-lua vim.diagnostic.config({
-      \   signs = false,
-      \   virtual_text = false,
-      \ })
-
-hi! link DiagnosticUnderlineError ALEError
-hi! link DiagnosticUnderlineHint  ALEInfo
-hi! link DiagnosticUnderlineInfo  ALEInfo
-hi! link DiagnosticUnderlineWarn  ALEWarning
-
-" }}}
-
 " fzf-lua {{{
 
 lua require("fzf-lua").setup({

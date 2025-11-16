@@ -66,36 +66,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
   })
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] = (function(diag_handler)
-  local function ale_map(e)
-    return {
-      text     = e.message,
-      detail   = vim.inspect(e),
-      lnum     = e.range["start"].line + 1,
-      end_lnum = e.range["end"].line + 1,
-      col      = e.range["start"].character + 1,
-      end_col  = e.range["end"].character,
-      type = ({
-          [vim.diagnostic.severity.ERROR] = 'E',
-          [vim.diagnostic.severity.WARN]  = 'W',
-          [vim.diagnostic.severity.INFO]  = 'I',
-          [vim.diagnostic.severity.HINT]  = 'I',
-        })[e.severity]
-    }
-  end
-  return function(err, res, ctx, conf)
-    local bufnr = vim.fn.bufnr(res.uri:gsub('^file://', ''), false)
-    if bufnr == -1 then return end
-
-    pcall(vim.fn['ale#other_source#ShowResults'], bufnr,
-      vim.lsp.get_client_by_id(ctx.client_id).name,
-      vim.tbl_map(ale_map, vim.deepcopy(res.diagnostics))
-    )
-
-    return diag_handler(err, res, ctx, conf)
-  end
-end)(vim.lsp.handlers["textDocument/publishDiagnostics"])
-
 vim.notify = (function(vim_notify)
   local ignored = {
     "warning: multiple different client offset_encodings",
