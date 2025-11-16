@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name _tweaks_
+// @name _tweaks
 // @version -
 // @description
 // @include *
