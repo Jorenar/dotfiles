@@ -101,7 +101,11 @@ pathmunge "$HOME"/.local/bin
 
 PAGER="less"
 
-if command -v vim > /dev/null; then
+if command -v nvim > /dev/null; then
+    EDITOR="nvim"
+    VISUAL="$EDITOR"
+    MANPAGER="nvim +'sil! %s/‐/-/g' +Man!"
+elif command -v vim > /dev/null; then
     EDITOR="vim"
     VISUAL="$EDITOR"
     MANPAGER="vim +'sil! %s/‐/-/g' +MANPAGER -"
