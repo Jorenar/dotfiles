@@ -245,6 +245,18 @@ if ok and vim.fn.EnabledLsp('sonarlint') then
           io.open(t, "w"):close()
         end
         vim.fn.setfperm(t, 'r--r--r--')
+
+        local cjar = vim.env.MASON .. '/packages/sonarlint-language-server/extension/analyzers/sonarcfamily.jar'
+        if vim.fn.filereadable(cjar) == 0 then
+          local pkgjson = vim.env.MASON .. '/packages/sonarlint-language-server/extension/package.json'
+          for _,a in ipairs(vim.json.decode(table.concat(vim.fn.readfile(pkgjson), '\n')).jarDependencies) do
+            if a.artifactId == 'sonar-cfamily-plugin' then
+              vim.system({'curl', '-o', cjar, '-L', 'https://binaries.sonarsource.com/CommercialDistribution/sonar-cfamily-plugin/sonar-cfamily-plugin-'..a.version..'.jar'})
+              vim.system({'ln', '-sf', cjar, vim.env.MASON .. '/share/sonarlint-analyzers/sonarcfamily.jar'})
+              break
+            end
+          end
+        end
       end,
     },
     filetypes = { '*' },
