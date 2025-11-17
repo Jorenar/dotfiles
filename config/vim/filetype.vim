@@ -10,6 +10,9 @@ augroup filetypedetect
   au! BufRead,BufNewFile LICENSE       setf LICENSE
   au! BufRead,BufNewFile ~/.todo       setf todo
 
+  au BufReadCmd *.vsix
+        \ call zip#Browse(expand("<amatch>"))
+
   " au! FileType conf
   "       \   if search('^\[\a\+\]')
   "       \ |   setf dosini

@@ -339,6 +339,7 @@ _gr_UTILS() {
   depends+=(
     # tigervnc
     aria2
+    fd
     imagemagick
     lsix
     ncdu

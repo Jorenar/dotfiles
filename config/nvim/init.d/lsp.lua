@@ -229,13 +229,20 @@ if ok and vim.fn.EnabledLsp('sonarlint') then
             })
             return #loc > 0 and loc[1] or nil
           end)(),
+          rules = {
+            ["python:S1542"] = { level = "off" }, -- Rename to match the regular expression ^[a-z_][a-z0-9_]*$.
+            ["javascript:S7764"] = { level = "off" }, -- Prefer `globalThis` over `window`
+          },
         },
       },
       root_dir = vim.fs.root(0, { ".git", ".compile_commands.json" }),
       on_attach = function()
         if vim.fn.exists(':SonarlintListRules') ~= 0 then
           vim.api.nvim_del_user_command('SonarlintListRules')
+          vim.api.nvim_create_user_command("LspSonarlintListRules",
+            require('sonarlint.rules').list_all_rules, {})
         end
+
       end,
       before_init = function()
         local dir = vim.fs.joinpath(vim.env.XDG_CACHE_HOME, '.sonarlint')

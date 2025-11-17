@@ -1,4 +1,5 @@
 OpenSCAD-x86_64.AppImage:
+	chmod +x ./OpenSCAD-*-x86_64.AppImage
 	./OpenSCAD-*-x86_64.AppImage --appimage-extract
 	mkdir -p squashfs-root/usr/plugins/platformthemes squashfs-root/usr/plugins/styles
 	cp /usr/lib/qt/plugins/platformthemes/libqt5ct.so squashfs-root/usr/plugins/platformthemes/

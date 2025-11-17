@@ -5,7 +5,7 @@ set -a  # enable allexport
 
 # basics {{{1
 
-LANG="${LANG:-C.UTF-8}"
+LANG="C.UTF-8"
 TMPDIR="${TMPDIR:-/tmp}"
 
 # Virtual terminal number (if not set already by PAM)

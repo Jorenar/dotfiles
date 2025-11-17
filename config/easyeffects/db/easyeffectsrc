@@ -11,4 +11,5 @@ inputAutoloadingUsesFallback=true
 maxMostUsedPresets=0
 outputAutoloadingFallbackPreset=@default
 outputAutoloadingUsesFallback=true
+presetsAutoloadInterval=50
 showTrayIcon=false

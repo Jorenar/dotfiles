@@ -71,8 +71,10 @@
     "custom/todo": {
         "format": " {}",
         "return-type": "text",
-        "interval": 5,
-        "exec": "grep -c ^@ ~/.todo || echo 0"
+        "interval": "once",
+        "exec": "grep -c ^@ ~/.todo || echo 0",
+        "on-click": "true",
+        "on-click-right": "$TERMINAL -e $EDITOR ~/.todo"
     },
     "custom/khal": {
         "format": "󰸗 {}",
@@ -97,13 +99,15 @@
         "return-type": "text",
         "interval": 90,
         "exec": "notmuch count is:unread folder:/INBOX/",
-        "on-click": "notmuch new --no-hooks"
+        "on-click": "notmuch new --no-hooks",
+        "on-click-right": "$TERMINAL -e aerc"
     },
     "custom/cpu": {
         "format": "{}",
         "return-type": "text",
         "interval": 5,
-        "exec": "$XDG_CONFIG_HOME/waybar/bin/cpuinfo.sh -g -t"
+        "exec": "$XDG_CONFIG_HOME/waybar/bin/cpuinfo.sh -g -t",
+        "on-click-right": "$TERMINAL -T htop htop"
     },
     "bluetooth": {
         "format": "󰂯 0",

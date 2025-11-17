@@ -29,10 +29,10 @@ local packages = {
 
   -- lint {{{1
   "ast-grep",
-  "semgrep",
   "shellcheck",
-  "vale",
   "vint",
+  -- "semgrep",
+  -- "vale",
 
   -- {{{1
   -- }}}1
