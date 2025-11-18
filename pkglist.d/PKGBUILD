@@ -160,13 +160,13 @@ _gr_DEV() {
     jq
     jre-openjdk
     lua51
+    luarocks
     nasm
     npm
     openscad
     python
     rust
     tectonic
-    texlive-binextra
     tidy
   )
 }

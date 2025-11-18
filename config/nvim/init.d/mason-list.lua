@@ -5,6 +5,7 @@ local packages = {
   "autotools-language-server",
   "bash-language-server",
   "deno",
+  "digestif",
   "gopls",
   "harper-ls",
   "jedi-language-server",
@@ -28,10 +29,10 @@ local packages = {
   "shfmt",
 
   -- lint {{{1
-  "ast-grep",
+  "semgrep",
   "shellcheck",
   "vint",
-  -- "semgrep",
+  -- "ast-grep",
   -- "vale",
 
   -- {{{1
