@@ -89,6 +89,17 @@ chmod -R -w \
     config/qt?ct/qt?ct.conf \
     config/virt-viewer/settings
 
+if [ -n "$WSL_DISTRO_NAME" ]; then
+    pathmunge WSLENV APPDATA/up
+    pathmunge WSLENV BROWSER/up
+    pathmunge WSLENV LOCALAPPDATA/up
+    pathmunge WSLENV TMUX
+    pathmunge WSLENV USERPROFILE/up
+    cmd.exe /C 'setx WSLENV %WSLENV%' >/dev/null 2>&1
+
+    USERPROFILE="$(wsl.exe echo '$USERPROFILE')"
+    LOCALAPPDATA="$(wsl.exe echo '$LOCALAPPDATA')"
+fi
 
 install  profile  %  "$HOME"/.profile
 
@@ -110,11 +121,11 @@ for c in config/*; do
             ;;
         */powershell)
             [ -n "$USERPROFILE" ] && \
-                install "$c"  %  "$USERPROFILE"/Documents/WindowsPowerShell
+                install  "$c"  %  "$USERPROFILE"/Documents/PowerShell
             ;;
         */PowerToys)
             [ -n "$USERPROFILE" ] && \
-                install "$c"  %  "$USERPROFILE"/AppData/Local/Microsoft/PowerToys
+                install "$c"  %  "$LOCALAPPDATA"/Microsoft/PowerToys
             ;;
         */wsl*config)
             [ -n "$WSL_DISTRO_NAME" ] && [ -n "$USERPROFILE" ] && \

@@ -11,16 +11,6 @@ TMPDIR="${TMPDIR:-/tmp}"
 # Virtual terminal number (if not set already by PAM)
 XDG_VTNR="${XDG_VTNR:-$(tty | sed 's/[^0-9]*//g')}"
 
-# Windows Subsystem for Linux
-if [ -n "$WSL_DISTRO_NAME" ] && [ -z "$USERPROFILE" ]; then
-    USERPROFILE="$(
-        cd /mnt/c/Windows/System32 || exit
-        ./cmd.exe /c 'echo %USERPROFILE%' 2> /dev/null | \
-            sed -e 's,\r,,g' -e 's,\\,/,g' -e 's,^C:,/mnt/c,'
-    )"
-    pathmunge WSLENV "TMUX"
-fi
-
 # XDG dirs {{{1
 
 XDG_CACHE_HOME="$HOME/.local/cache"
@@ -74,14 +64,6 @@ pathmunge BASH_COMPLETION_USER_DIR "$XDG_CONFIG_HOME/bash-completion"
 pathmunge BASH_COMPLETION_USER_DIR "$XDG_CONFIG_HOME/bash/bash-completion"
 
 # PATH {{{1
-
-if [ -n "$WSL_DISTRO_NAME" ]; then
-    pathmunge "/mnt/c/Windows/System32"
-    pathmunge "/mnt/c/Windows/System32/Wbem"
-    pathmunge "/mnt/c/Windows/System32/WindowsPowerShell/v1.0"
-    [ -n "$USERPROFILE" ] && \
-        pathmunge "$USERPROFILE/AppData/Local/Microsoft/WindowsApps"
-fi
 
 pathmunge "/usr/lib/ccache"
 pathmunge "/usr/lib/ccache/bin"

@@ -21,7 +21,7 @@ if command -v nvim > /dev/null 2>&1; then
 fi
 command -v vi > /dev/null 2>&1 || alias vi='command vim --clean'
 
-alias powershell.exe='powershell.exe -NoLogo'
+alias pwsh.exe='pwsh.exe -NoLogo'
 alias wsl.exe='wsl.exe --cd "~"'
 
 alias ls='ls.hidden -hF -w80 --time-style=iso -I. -I.. \
