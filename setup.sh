@@ -105,7 +105,6 @@ install  profile  %  "$HOME"/.profile
 
 for c in config/*; do
     case "$c" in
-        */browser-addons) ;;
         */transmission.json) ;;
         */WindowsTerminal.json) ;;
 
