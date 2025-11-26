@@ -14,6 +14,7 @@ let g:enabled_lsp = {
       \   'denols': {-> executable('deno')},
       \   'digestif': {-> executable('digestif')},
       \   'gopls': {-> executable('gopls')},
+      \   'gradle_ls': {-> executable('gradle-language-server')},
       \   'groovyls': {-> executable('groovy-language-server')},
       \   'harper_ls': {-> executable('harper-ls')},
       \   'jdtls': {-> executable('jdtls')},

@@ -257,11 +257,12 @@
         "jira.*.com"
     ],
     "disabledFor": [
-        "0.0.0.0",
-        "127.0.0.1",
-        "localhost",
+        "0.0.0.0", "127.0.0.1", "localhost",
+        "codeberg.org",
+        "file://*",
         "jorenar.com",
-        "lobste.rs"
+        "lobste.rs",
+        "~"
     ],
     "changeBrowserTheme": false,
     "syncSettings": true,

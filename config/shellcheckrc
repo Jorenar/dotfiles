@@ -6,6 +6,7 @@ enable=deprecate-which           # Suggest `command -v` instead of `which`
 disable=SC1090  # ShellCheck can't follow non-constant source. Use a directive to specify location.
 disable=SC1091  # Can't follow non-constant source. Use a directive to specify location
 disable=SC2009  # Consider using `pgrep` instead of grepping `ps` output
+disable=SC2016  # Expressions don't expand in single quotes, use double quotes for that
 disable=SC2024  # `sudo` doesn't affect redirects. Use `..| sudo tee file`
 disable=SC2025  # Make sure all escape sequences are enclosed in `\[..\]` to prevent line wrapping issues
 disable=SC2046  # Quote this to prevent word splitting

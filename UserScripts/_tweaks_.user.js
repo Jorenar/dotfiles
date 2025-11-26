@@ -132,17 +132,19 @@ const TWEAKS = [
   }},
 
   { host: /jira/, action: () => {
-    if (window.location.pathname == "/secure/RapidBoard.jspa") {
+    GM_addStyle(`
+      .jira-dialog .form-body {
+        max-height: initial !important;
+      }
+
       /* Fix the alignment of the avatars and story points on the planning view */
-      GM_addStyle(`
-        .ghx-issue-compact .ghx-row:not(.ghx-end):not(.ghx-plan-extra-fields) .ghx-estimate {
-          width: 65px;
-        }
-        .ghx-issue-compact .ghx-estimate .ghx-avatar-img {
-          float: right;
-        }
-      `);
-    }
+      .ghx-issue-compact .ghx-row:not(.ghx-end):not(.ghx-plan-extra-fields) .ghx-estimate {
+        width: 65px;
+      }
+      .ghx-issue-compact .ghx-estimate .ghx-avatar-img {
+        float: right;
+      }
+    `);
   }},
 
   { host: "mail.google.com", action: () => {

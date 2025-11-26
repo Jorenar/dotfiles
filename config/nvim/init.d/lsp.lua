@@ -166,6 +166,10 @@ cfg("denols", {
   single_file_support = true,
 })
 
+cfg("gradle_ls", {
+  filetypes = { "groovy", "gradle" },
+})
+
 cfg("groovyls", {
   cmd = { 'groovy-language-server' },
 })
@@ -175,10 +179,14 @@ cfg("harper_ls", {
     ["harper-ls"] = {
       userDictPath = vim.fn.stdpath("config") .. "/spell/en.utf-8.add",
       linters = {
+        Dashes = false,
+        HaveTakeALook = false,
         NoFrenchSpaces = false,
         SentenceCapitalization = false,
         Spaces = false,
         SpellCheck = false,
+        ToDoHyphen = false,
+        ToTwoToo = false,
       }
     }
   },
@@ -200,6 +208,19 @@ cfg("lua_ls", {
       }
     })
   end,
+  root_markers = {
+    '.emmyrc.json',
+    '.luarc.json',
+    '.luarc.jsonc',
+    '.luacheckrc',
+    '.stylua.toml',
+    'stylua.toml',
+    'selene.toml',
+    'selene.yml',
+    'init.vim',
+    'init.lua',
+    '.git',
+  },
   settings = { Lua = {} }
 })
 
