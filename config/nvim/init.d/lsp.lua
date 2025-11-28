@@ -48,6 +48,25 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
   })
 
+vim.api.nvim_create_autocmd('LspAttach', {
+    callback = function(args)
+      if not vim.lsp.inline_completion then return end
+
+      local bufnr = args.buf
+      local client = vim.lsp.get_client_by_id(args.data.client_id)
+      if not client then return end
+
+      if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlineCompletion, bufnr) then
+        vim.lsp.inline_completion.enable(true, { bufnr = bufnr })
+
+        vim.keymap.set('i', '<C-F>', vim.lsp.inline_completion.get,
+          { desc = 'LSP: accept inline completion', buffer = bufnr })
+        vim.keymap.set('i', '<C-G>', vim.lsp.inline_completion.select,
+          { desc = 'LSP: switch inline completion', buffer = bufnr })
+      end
+    end
+  })
+
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
       local client = vim.lsp.get_client_by_id(args.data.client_id)
