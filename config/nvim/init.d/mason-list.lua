@@ -9,7 +9,6 @@ local packages = {
   "deno",
   "digestif",
   "gopls",
-  "harper-ls",
   "jedi-language-server",
   "json-lsp",
   "lua-language-server",
@@ -20,6 +19,7 @@ local packages = {
   "texlab",
   "vim-language-server",
   "yaml-language-server",
+  -- "harper-ls",
 
   -- DAP {{{1
   "bash-debug-adapter",
