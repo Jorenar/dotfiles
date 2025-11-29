@@ -18,7 +18,7 @@ end
 local ale_handler = function(ns, bufnr, diagnostics, _)
   local name = vim.diagnostic.get_namespace(ns).name
   pcall(vim.fn['ale#other_source#ShowResults'],
-    bufnr, name:gsub('^vim.lsp.', ''):gsub('%.%d+$', ''),
+    bufnr, name:gsub('^n?vim.lsp.', ''):gsub('%.%d+$', ''),
     vim.tbl_map(ale_map, diagnostics or {}))
 end
 

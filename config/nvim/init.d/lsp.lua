@@ -165,6 +165,10 @@ cfg("clangd", {
   },
 })
 
+cfg("codebook", {
+  filetypes = { '*' },
+})
+
 cfg("copilot", {
   settings = { telemetry = { telemetryLevel = "off" } }
 })
