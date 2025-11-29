@@ -127,4 +127,4 @@ function s:ValeForCode()
 endfunction
 
 call s:Semgrep() | delfun s:Semgrep
-call s:ValeForCode() | delfun s:ValeForCode
+delfun s:ValeForCode
