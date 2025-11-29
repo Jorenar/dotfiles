@@ -4,11 +4,14 @@ local packages = {
   "asm-lsp",
   "autotools-language-server",
   "bash-language-server",
+  "codebook",
+  "css-lsp",
   "deno",
   "digestif",
   "gopls",
   "harper-ls",
   "jedi-language-server",
+  "json-lsp",
   "lua-language-server",
   "m68k-lsp-server",
   "openscad-lsp",
@@ -32,8 +35,8 @@ local packages = {
   "semgrep",
   "shellcheck",
   "vint",
+  "vale",
   -- "ast-grep",
-  -- "vale",
 
   -- {{{1
   -- }}}1

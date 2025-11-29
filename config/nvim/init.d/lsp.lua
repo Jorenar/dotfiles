@@ -159,6 +159,10 @@ cfg("clangd", {
   },
 })
 
+cfg("copilot", {
+  settings = { telemetry = { telemetryLevel = "off" } }
+})
+
 cfg("denols", {
   settings = {
     deno = {
