@@ -26,9 +26,17 @@ const TWEAKS = [
     };
 
     window.addEventListener("load", () => {
-      if (document.querySelector(plainSel)) {
-        document.querySelector("head > style#dark-reader-style")?.remove();
-      }
+      const darkreader_style = document.querySelector('style#dark-reader-style')
+      if (!darkreader_style) { return; }
+
+      if (document.querySelector(plainSel)) { darkreader_style.remove(); return; }
+
+      darkreader_style.textContent = darkreader_style.textContent.replace([
+        `/* Page background */`,
+        `html {`,
+        `  background: rgb(255,255,255) !important;`,
+        `}`,
+      ].join('\n'), '')
     });
   }},
 
@@ -134,7 +142,7 @@ const TWEAKS = [
   { host: /jira/, action: () => {
     GM_addStyle(`
       .jira-dialog .form-body {
-        max-height: initial !important;
+        max-height: 75vh !important;
       }
 
       /* Fix the alignment of the avatars and story points on the planning view */
