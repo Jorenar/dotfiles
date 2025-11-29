@@ -16,6 +16,13 @@
       "dontEncodeQuery": false
     },
     {
+      "keyword": "cb",
+      "alias": null,
+      "defaultUrl": "",
+      "urls": ["https://codeberg.org/explore/repos?q=%s"],
+      "dontEncodeQuery": false
+    },
+    {
       "keyword": "copilot",
       "alias": null,
       "defaultUrl": "https://copilot.microsoft.com",
@@ -48,6 +55,13 @@
       "alias": null,
       "defaultUrl": "https://jorenar.com/links",
       "urls": ["https://jorenar.com/links/?%s"],
+      "dontEncodeQuery": false
+    },
+    {
+      "keyword": "la",
+      "alias": null,
+      "defaultUrl": "",
+      "urls": ["https://anilist.co/search/anime?search=%"],
       "dontEncodeQuery": false
     },
     {
