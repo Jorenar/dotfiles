@@ -35,8 +35,8 @@ end, { noremap = true })
 
 vim.cmd [[
   hi! DiagnosticInfo NONE ctermfg=39
-  hi! link DiagnosticUnderlineError ALEError
+  hi! link DiagnosticUnderlineError ErrorMsg
   hi! link DiagnosticUnderlineHint  ALEInfo
   hi! link DiagnosticUnderlineInfo  ALEInfo
-  hi! link DiagnosticUnderlineWarn  ALEWarning
+  hi! link DiagnosticUnderlineWarn  WarningMsg
 ]]

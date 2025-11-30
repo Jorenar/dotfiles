@@ -29,5 +29,6 @@ let &l:stl = ' '
       \ . (w:QfQoL_isLocList ? '' : get(w:, 'quickfix_title', ''))
       \ . ' '
 
-call matchadd("Error",      '^\s*\zs\[E]\ze ')
+call matchadd("ErrorMsg",   '^\s*\zs\[E]\ze ')
 call matchadd("WarningMsg", '\c^\s*\zs\[W]\ze ')
+call matchadd("ALEInfo",    '\c^\s*\zs\[I]\ze ')
