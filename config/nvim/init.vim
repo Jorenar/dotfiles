@@ -84,6 +84,8 @@ lua require("fzf-lua").setup({
       \   },
       \ })
 
+autocmd VimEnter * sil! FzfLua register_ui_select
+
 nnoremap <Leader>f <Cmd>FzfLua<CR>
 nnoremap <Leader>F <Cmd>FzfLua resume<CR>
 nnoremap <C-p><C-p> <Cmd>FzfLua files<CR>

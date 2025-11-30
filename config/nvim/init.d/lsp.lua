@@ -99,12 +99,6 @@ vim.notify = (function(vim_notify)
   end
 end)(vim.notify)
 
-local show_code_actions = (function(default)
-  local ok, fzflua = pcall(require, 'fzf-lua')
-  if ok then return fzflua.lsp_code_actions end
-  return default
-end)(vim.lsp.buf.code_action)
-
 -- }}}
 
 --[[ KEYMAPS ]] for _,k in ipairs({
@@ -114,7 +108,7 @@ end)(vim.lsp.buf.code_action)
   { 'n', 'LK',  function() vim.lsp.buf.hover({ border = "single" }) end },
   { 'n', 'LR',  vim.lsp.buf.rename },
 
-  { 'n', 'Lca', show_code_actions },
+  { 'n', 'Lca', vim.lsp.buf.code_action },
 
   { 'n', 'Lgg', vim.lsp.buf.definition },
   { 'n', 'Lgd', vim.lsp.buf.declaration },
