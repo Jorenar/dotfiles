@@ -1,9 +1,11 @@
 let g:ale_disable_lsp = 1
 let g:ale_echo_msg_format = '[%linter%]: %s'
+let g:ale_set_loclist = !has('nvim')
 let g:ale_set_signs = 0
-let g:ale_use_neovim_diagnostics_api = 0
 let g:ale_virtualtext_cursor = 0
 let g:lsp_ale_diagnostics_severity = 'information'
+
+nnoremap LD <Cmd>ALEDetail<CR>
 
 hi! ALEInfo NONE ctermfg=15 ctermbg=4
 hi! link ALEError   Error

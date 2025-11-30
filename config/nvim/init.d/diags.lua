@@ -1,39 +1,40 @@
-local ale_map = function(e)
-  return {
-    text     = e.message:gsub('\n', '\t'),
-    detail   = vim.inspect(e),
-    lnum     = e.lnum + 1,
-    end_lnum = e.end_lnum + 1,
-    col      = e.col + 1,
-    end_col  = e.end_col,
-    type = ({
-        [vim.diagnostic.severity.ERROR] = 'E',
-        [vim.diagnostic.severity.WARN]  = 'W',
-        [vim.diagnostic.severity.INFO]  = 'I',
-        [vim.diagnostic.severity.HINT]  = 'I',
-      })[e.severity]
-  }
+local fmt = function(diag)
+  local src = vim.diagnostic.get_namespace(diag.namespace).name
+  src = src:gsub('^n?vim.lsp.', ''):gsub('%.%d+$', '')
+  src = (src == 'ale') and diag.source or src
+  return string.format("[%s]: %s", src, diag.message:match("([^\n]*)"))
 end
 
-local ale_handler = function(ns, bufnr, diagnostics, _)
-  local name = vim.diagnostic.get_namespace(ns).name
-  pcall(vim.fn['ale#other_source#ShowResults'],
-    bufnr, name:gsub('^n?vim.lsp.', ''):gsub('%.%d+$', ''),
-    vim.tbl_map(ale_map, diagnostics or {}))
-end
-
-vim.diagnostic.handlers["my/ale"] = {
-  show = ale_handler,
-  hide = ale_handler,
+vim.diagnostic.handlers['my/loclist'] = {
+  show = function()
+    vim.diagnostic.setloclist({ open = false, format = fmt })
+  end
 }
 
+vim.api.nvim_create_autocmd("CursorMoved", {
+  callback = function()
+    local diags = vim.diagnostic.get(vim.api.nvim_get_current_buf(), {
+      lnum = vim.api.nvim_win_get_cursor(0)[1] - 1
+    })
+    if vim.tbl_isempty(diags) then
+      vim.api.nvim_echo({ { '' } }, false, {})
+      return
+    end
+    table.sort(diags, function(a, b)
+      return (a.severity or 4) < (b.severity or 4)
+    end)
+    vim.api.nvim_echo({ { fmt(diags[1]) } }, false, {})
+  end
+})
 
-vim.diagnostic.config({
-    signs = false,
-    virtual_text = false,
-  })
+vim.diagnostic.config({ signs = false, virtual_text = false })
+
+vim.keymap.set('n', 'LD', function()
+  vim.diagnostic.open_float({ border = 'single' })
+end, { noremap = true })
 
 vim.cmd [[
+  hi! DiagnosticInfo NONE ctermfg=39
   hi! link DiagnosticUnderlineError ALEError
   hi! link DiagnosticUnderlineHint  ALEInfo
   hi! link DiagnosticUnderlineInfo  ALEInfo
