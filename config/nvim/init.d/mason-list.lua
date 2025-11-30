@@ -1,11 +1,14 @@
 local packages = {
-  -- LSP {{{1
   "arduino-language-server",
   "asm-lsp",
+  "autopep8",
   "autotools-language-server",
+  "bash-debug-adapter",
   "bash-language-server",
   "codebook",
+  "cpptools",
   "css-lsp",
+  "debugpy",
   "deno",
   "digestif",
   "gopls",
@@ -15,31 +18,18 @@ local packages = {
   "lua-language-server",
   "m68k-lsp-server",
   "openscad-lsp",
+  "php-debug-adapter",
+  "semgrep",
+  "shellcheck",
+  "shfmt",
   "sonarlint-language-server",
   "sqls",
   "texlab",
-  "vim-language-server",
-  "yaml-language-server",
-
-  -- DAP {{{1
-  "bash-debug-adapter",
-  "cpptools",
-  "debugpy",
-  "php-debug-adapter",
-
-  -- fmt {{{1
-  "autopep8",
-  "shfmt",
-
-  -- lint {{{1
-  "semgrep",
-  "shellcheck",
-  "vint",
   "vale",
+  "vim-language-server",
+  "vint",
+  "yaml-language-server",
   -- "ast-grep",
-
-  -- {{{1
-  -- }}}1
 }
 
 
