@@ -165,10 +165,6 @@ cfg("clangd", {
   },
 })
 
-cfg("codebook", {
-  filetypes = { '*' },
-})
-
 cfg("copilot", {
   settings = { telemetry = { telemetryLevel = "off" } }
 })
@@ -224,7 +220,6 @@ cfg("harper_ls", {
       }
     }
   },
-  filetypes = { '*' },
 })
 
 cfg("lua_ls", {
