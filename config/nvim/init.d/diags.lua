@@ -5,11 +5,11 @@ local fmt = function(diag)
   return string.format("[%s]: %s", src, diag.message:match("([^\n]*)"))
 end
 
-vim.diagnostic.handlers['my/loclist'] = {
-  show = function()
-    vim.diagnostic.setloclist({ open = false, format = fmt })
-  end
-}
+vim.diagnostic.handlers['my/loclist'] = (function(h)
+  return { show = h, hide = h }
+end)(function()
+  vim.diagnostic.setloclist({ open = false, format = fmt })
+end)
 
 vim.api.nvim_create_autocmd("CursorMoved", {
   callback = function()
