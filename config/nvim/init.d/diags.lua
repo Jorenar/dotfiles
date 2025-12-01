@@ -5,11 +5,20 @@ local fmt = function(diag)
   return string.format("[%s]: %s", src, diag.message:match("([^\n]*)"))
 end
 
-vim.diagnostic.handlers['my/loclist'] = (function(h)
-  return { show = h, hide = h }
-end)(function()
-  vim.diagnostic.setloclist({ open = false, format = fmt })
-end)
+local setloclist = function(_, bufnr)
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    if vim.api.nvim_win_get_buf(win) == bufnr then
+      vim.diagnostic.setloclist({
+        open = false, format = fmt, winnr = win
+      })
+    end
+  end
+end
+
+vim.diagnostic.handlers['my/loclist'] = {
+  show = setloclist,
+  hide = setloclist,
+}
 
 vim.api.nvim_create_autocmd("CursorMoved", {
   callback = function()

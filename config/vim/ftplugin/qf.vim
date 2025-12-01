@@ -20,7 +20,7 @@ setlocal nocursorline nocursorcolumn
 setlocal colorcolumn=
 setlocal signcolumn=no
 setlocal foldcolumn=0
-autocmd BufReadPost <buffer> ++once setlocal nonumber
+autocmd BufReadPost <buffer> setlocal nonumber
 
 let qf_disable_statusline = 1
 let &l:stl = ' '
