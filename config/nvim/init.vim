@@ -45,6 +45,20 @@ so $XDG_CONFIG_HOME/vim/vimrc
 
 " }}}
 
+" spellfile {{{
+
+function! s:FixSpellfile() abort
+  if empty(&l:spellfile)
+    let &l:spellfile = printf("%s/spell/%s.%s.add",
+          \ &rtp->split(',')[0], &l:spelllang, &l:encoding)
+  endif
+endfunction
+
+autocmd BufRead * call s:FixSpellfile()
+autocmd OptionSet spelllang,encoding call s:FixSpellfile()
+
+" }}}
+
 " :terminal {{{
 
 lua require('vimterm').setup({
