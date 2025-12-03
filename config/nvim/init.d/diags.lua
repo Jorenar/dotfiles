@@ -2,7 +2,8 @@ local fmt = function(diag)
   local src = vim.diagnostic.get_namespace(diag.namespace).name
   src = src:gsub('^n?vim.lsp.', ''):gsub('%.%d+$', '')
   src = (src == 'ale') and diag.source or src
-  return string.format("[%s]: %s", src, diag.message:match("([^\n]*)"))
+  local msg = diag.message:gsub('\n', ' '):gsub('%s+', ' ')
+  return string.format("[%s]: %s", src, msg)
 end
 
 local setloclist = function(_, bufnr)
@@ -32,7 +33,9 @@ vim.api.nvim_create_autocmd("CursorMoved", {
     table.sort(diags, function(a, b)
       return (a.severity or 4) < (b.severity or 4)
     end)
-    vim.api.nvim_echo({ { fmt(diags[1]) } }, false, {})
+    local msg, es = fmt(diags[1]), vim.v.echospace
+    msg = (#msg < es) and (msg) or (msg:sub(1, es - 3) .. '...')
+    vim.api.nvim_echo({ { msg } }, false, {})
   end
 })
 
