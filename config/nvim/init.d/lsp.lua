@@ -189,10 +189,6 @@ cfg("denols", {
   single_file_support = true,
 })
 
-cfg("gradle_ls", {
-  filetypes = { "groovy", "gradle" },
-})
-
 cfg("groovyls", {
   cmd = { 'groovy-language-server' },
 })

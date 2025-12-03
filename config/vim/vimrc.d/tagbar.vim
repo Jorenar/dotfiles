@@ -8,14 +8,6 @@ hi! link TagbarNestedKind Comment
 hi! link TagbarType Comment
 
 
-
-let g:tagbar_type_gradle = #{
-      \   kinds: [
-      \     'm:methods',
-      \     't:tasks',
-      \   ]
-      \ }
-
 let g:tagbar_type_groovy = #{
       \   kinds: [
       \     'c:classes',
@@ -26,6 +18,16 @@ let g:tagbar_type_groovy = #{
       \     't:traits',
       \   ]
       \ }
+
+augroup TagbarProjects
+  autocmd User *.gradle let b:tagbar_type = #{
+        \   kinds: [
+        \     'm:methods',
+        \     't:tasks',
+        \   ]
+        \ }
+augroup END
+
 
 let g:tagbar_type_vb = #{
       \   kinds: [
