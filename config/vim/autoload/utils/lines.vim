@@ -6,14 +6,15 @@ function! s:Vcs() abort " VCS stats; requires Signify plugin
 endfunction
 
 function! s:GetQfCount(type) abort
+  let l:type = a:type == 'I' ? '[IN]' : a:type
   let issues = getloclist(0)
-        \ ->filter({_,v -> v.type == a:type})
+        \ ->filter({_,v -> v.type =~ l:type})
         \ ->uniq({i1,i2 -> QfQoL#cmp(i1, i2, 'T')})
   return len(issues).a:type
 endfunction
 
 function! s:QfIssues() abort
-  return s:GetQfCount('E').' '.s:GetQfCount('w').' '.s:GetQfCount('I')
+  return [ 'E', 'W', 'I' ]->map('s:GetQfCount(v:val)')->join(' ')
 endfunction
 
 function! s:FileInfo()

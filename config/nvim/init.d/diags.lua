@@ -6,19 +6,21 @@ local fmt = function(diag)
   return string.format("[%s]: %s", src, msg)
 end
 
-local setloclist = function(_, bufnr)
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    if vim.api.nvim_win_get_buf(win) == bufnr then
-      vim.diagnostic.setloclist({
-        open = false, format = fmt, winnr = win
-      })
-    end
-  end
-end
-
 vim.diagnostic.handlers['my/loclist'] = {
-  show = setloclist,
-  hide = setloclist,
+  show = function(_, bufnr)
+    if vim.api.nvim_get_mode().mode ~= 'n' then return end
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      if vim.api.nvim_win_get_buf(win) == bufnr then
+        vim.diagnostic.setloclist({
+          open = false, format = fmt, winnr = win
+        })
+      end
+    end
+  end,
+  hide = function(_, bufnr)
+    if vim.bo[bufnr].buftype == "quickfix" then return end
+    vim.diagnostic.handlers['my/loclist'].show(0, bufnr, {})
+  end
 }
 
 vim.api.nvim_create_autocmd("CursorMoved", {
@@ -26,10 +28,7 @@ vim.api.nvim_create_autocmd("CursorMoved", {
     local diags = vim.diagnostic.get(vim.api.nvim_get_current_buf(), {
       lnum = vim.api.nvim_win_get_cursor(0)[1] - 1
     })
-    if vim.tbl_isempty(diags) then
-      vim.api.nvim_echo({ { '' } }, false, {})
-      return
-    end
+    if vim.tbl_isempty(diags) then return end
     table.sort(diags, function(a, b)
       return (a.severity or 4) < (b.severity or 4)
     end)
