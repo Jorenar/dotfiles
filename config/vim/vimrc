@@ -252,7 +252,7 @@ set fillchars+=vert:│
 set number
 set path=**,./
 set quickfixtextfunc=utils#texts#QuickFixTextFunc
-set sessionoptions=blank,buffers,folds,tabpages,winsize
+set sessionoptions=blank,buffers,folds,tabpages,winsize,globals
 set shortmess+=I
 set signcolumn=yes
 set splitbelow splitright
@@ -448,6 +448,16 @@ function! s:RmSoFromExrcTrust() abort
         \ ->substitute('s:', '<SNR>'.snr.'_', 'g')
 endfunction
 autocmd VimEnter * call s:RmSoFromExrcTrust() | delfunc s:RmSoFromExrcTrust
+
+"  vim-mark {{{1
+
+let g:mw_no_mappings = 1
+
+nmap <Leader>* <Plug>MarkSet
+xmap <Leader>* <Plug>MarkSet
+nmap <Leader>g* <Plug>MarkPartialWord
+
+autocmd SessionLoadPost * sil! MarkLoad
 
 "  ~ {{{1
 

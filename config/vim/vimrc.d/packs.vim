@@ -51,9 +51,6 @@ let g:packs.vim.list = {
       \     url: 'https://github.com/k-takata/minpac.git',
       \     conf: { 'type': 'opt' }
       \   },
-      \   'MultipleSearch': #{
-      \     url: 'https://github.com/vim-scripts/MultipleSearch.git',
-      \   },
       \   'NrrwRgn': #{
       \     url: 'https://github.com/chrisbra/NrrwRgn.git',
       \   },
@@ -93,8 +90,14 @@ let g:packs.vim.list = {
       \   'vim-fugitive-blame-ext': #{
       \     url: 'https://github.com/tommcdo/vim-fugitive-blame-ext.git',
       \   },
+      \   'vim-ingo-library': #{
+      \     url: 'https://github.com/inkarkat/vim-ingo-library.git',
+      \   },
       \   'vim-lua': #{
       \     url: 'https://github.com/tbastos/vim-lua.git',
+      \   },
+      \   'vim-mark': #{
+      \     url: 'https://github.com/inkarkat/vim-mark.git',
       \   },
       \   'vim-prettyprint': #{
       \     url: 'https://github.com/thinca/vim-prettyprint.git',
