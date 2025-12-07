@@ -147,6 +147,9 @@ let g:packs.vim_only.list = {
       \   'vim-lsp-ale': #{
       \     url: 'https://github.com/rhysd/vim-lsp-ale.git',
       \   },
+      \   'vim-lsp-settings': #{
+      \     url: 'https://github.com/mattn/vim-lsp-settings.git',
+      \   },
       \ }
 
 " vim: fdl=1

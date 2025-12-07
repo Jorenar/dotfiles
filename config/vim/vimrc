@@ -308,6 +308,7 @@ if !has('nvim')
   sil! packadd! ctrlp.vim
   sil! packadd! vim-lsp
   sil! packadd! vim-lsp-ale
+  sil! packadd! vim-lsp-settings
 endif
 
 source $VIMRUNTIME/ftplugin/man.vim
