@@ -17,6 +17,7 @@ local packages = {
   "json-lsp",
   "lua-language-server",
   "m68k-lsp-server",
+  "npm-groovy-lint",
   "openscad-lsp",
   "php-debug-adapter",
   "semgrep",
