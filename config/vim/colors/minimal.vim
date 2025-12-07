@@ -10,6 +10,8 @@ sil! hi! CursorLineNr  NONE
 sil! hi! SignColumn    NONE
 sil! hi! VertSplit     NONE
 
+hi! Visual           NONE  ctermfg=232 ctermbg=242
+
 hi! DiffAdd          NONE  ctermfg=DarkGreen
 hi! DiffChange       NONE  ctermfg=White
 hi! DiffDelete       NONE  ctermfg=DarkRed
@@ -35,7 +37,7 @@ hi! TabLineSel       NONE  cterm=bold ctermfg=Gray
 hi! Comment          NONE  ctermfg=245
 hi! MatchParen       NONE  cterm=bold ctermfg=LightYellow
 hi! NonText          NONE  ctermfg=DarkGray
-hi! QuickFixLine     NONE  cterm=underline
+hi! QuickFixLine     NONE  ctermbg=233
 hi! WarningMsg       NONE  ctermfg=Black ctermbg=DarkYellow
 hi! WildMenu         NONE  cterm=reverse
 hi! debugPC          NONE  ctermbg=17

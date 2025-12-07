@@ -97,9 +97,10 @@
         "https://www.ebay.pl/sch/i.html?_nkw=%s&_sacat=See-All-Categories&_sop=15",
         "https://www.olx.pl/oferty/q-%s/?search[order]=filter_float_price:asc",
         "https://allegro.pl/listing?string=%s&order=p",
-        "http://www.ceneo.pl/;szukaj-%s;0112-0.htm",
+        "https://www.ceneo.pl/;szukaj-%s;0112-0.htm",
         "https://www.skapiec.pl/szukaj?query=%s",
-        "https://allegrolokalnie.pl/oferty/q/%s"
+        "https://allegrolokalnie.pl/oferty/q/%s",
+        "https://pl.webuy.com/search?stext=%s"
       ],
       "dontEncodeQuery": false
     },

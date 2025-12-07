@@ -48,7 +48,7 @@ document.cookie = "PREFS=" + encodeURIComponent(JSON.stringify({
   "comments": ["youtube", "reddit"],
   "continue": false,
   "continue_autoplay": false,
-  "dark_mode": "dark",
+  "dark_mode": true,
   "default_home": "",
   "extend_desc": false,
   "feed_menu": [],

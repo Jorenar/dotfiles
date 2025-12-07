@@ -45,4 +45,5 @@ function! utils#minpac#update() abort
   call minpac#clean()
   call filter(g:minpac#pluglist, '!get(v:val, "_ignore", 0)')
   call minpac#update()
+  sil! helptags ALL
 endfunction
