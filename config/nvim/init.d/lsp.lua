@@ -1,8 +1,11 @@
--- handlers & helpers {{{
+--[[ ]]-- {{{
 
--- vim.lsp.set_log_level("debug")
+vim.lsp.log.set_level(vim.log.levels.ERROR)
 
-local cfg = vim.lsp.config
+vim.lsp.inline_completion.enable(true)
+vim.lsp.linked_editing_range.enable(false)
+vim.lsp.on_type_formatting.enable(false)
+vim.lsp.semantic_tokens.enable(false)
 
 local GP = require('goto-preview')
 GP.setup {
@@ -11,79 +14,46 @@ GP.setup {
   preview_window_title = { enable = false },
 }
 
-vim.api.nvim_create_autocmd({"BufReadPre", "FileType", "VimEnter"}, {
-    once = true,
-    callback = function(e)
-      vim.api.nvim_del_autocmd(e.id)
-      for name,_ in pairs(vim.g.enabled_lsp) do
-        if vim.lsp.config[name] then
-          vim.lsp.enable(name, vim.fn.EnabledLsp(name))
-          if vim.tbl_contains(vim.lsp.config[name].filetypes or {"*"}, "*") then
-            vim.lsp.config[name].filetypes = nil
-          end
-        end
+local masonPacks = require("mason-registry").get_installed_packages()
+vim.g.lsp_servers = vim.iter(masonPacks):fold({}, function(acc, pack)
+  table.insert(acc, pack.spec.neovim and pack.spec.neovim.lspconfig)
+  return acc
+end)
+
+vim.api.nvim_create_autocmd({ "BufReadPre", "FileType", "VimEnter" }, {
+  once = true,
+  callback = function(e)
+    vim.api.nvim_del_autocmd(e.id)
+    for _,name in ipairs(vim.g.lsp_servers) do
+      vim.lsp.enable(name)
+      if vim.tbl_contains(vim.lsp.config[name].filetypes or {}, "*") then
+        vim.lsp.config[name].filetypes = nil
       end
     end
-  })
+  end
+})
 
 vim.api.nvim_create_autocmd("LspAttach", {
-    callback = function(args)
-      local client = vim.lsp.get_client_by_id(args.data.client_id)
-      if not client then return end
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if not client then return end
 
-      client.server_capabilities.semanticTokensProvider = nil
+    vim.lsp.document_color.enable(false, args.buf)
 
-      if client.server_capabilities['completionProvider'] ~= nil then
-        vim.bo.omnifunc = 'v:lua.vim.lsp.omnifunc'
-      end
-
-      if vim.o.tagfunc == 'v:lua.vim.lsp.tagfunc' then
-        vim.o.tagfunc = ''
-      end
-
-      local K = vim.fn.maparg('K', 'n', false, true)
-      if K.buffer == 1 and K.desc == "vim.lsp.buf.hover()" then
-        vim.api.nvim_buf_del_keymap(args.buf, 'n', 'K')
-      end
+    if client.server_capabilities['completionProvider'] then
+      vim.bo[args.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
     end
-  })
 
-vim.api.nvim_create_autocmd('LspAttach', {
-    callback = function(args)
-      if not vim.lsp.inline_completion then return end
-
-      local bufnr = args.buf
-      local client = vim.lsp.get_client_by_id(args.data.client_id)
-      if not client then return end
-
-      if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlineCompletion, bufnr) then
-        vim.lsp.inline_completion.enable(true, { bufnr = bufnr })
-
-        vim.keymap.set('i', '<C-F>', vim.lsp.inline_completion.get,
-          { desc = 'LSP: accept inline completion', buffer = bufnr })
-        vim.keymap.set('i', '<C-G>', vim.lsp.inline_completion.select,
-          { desc = 'LSP: switch inline completion', buffer = bufnr })
-      end
+    if vim.bo[args.buf].tagfunc == 'v:lua.vim.lsp.tagfunc' then
+      vim.bo[args.buf].tagfunc = ''
     end
-  })
 
-vim.api.nvim_create_autocmd("LspAttach", {
-    callback = function(args)
-      local client = vim.lsp.get_client_by_id(args.data.client_id)
-      if not client then
-        return
-      elseif client.name == 'ccls' then
-        if not vim.fn.EnabledLsp('clangd') then return end
-        client.server_capabilities = {
-          completionProvider = client.server_capabilities.completionProvider,
-          textDocumentSync = client.server_capabilities.textDocumentSync,
-        }
-      elseif client.name == 'clangd' then
-        if not vim.fn.EnabledLsp('ccls') then return end
-        client.server_capabilities.completionProvider = nil
-      end
+    local K = vim.fn.maparg('K', 'n', false, true)
+    if K and K.buffer == 1 and K.desc == "vim.lsp.buf.hover()" then
+      pcall(vim.api.nvim_buf_del_keymap, args.buf, 'n', 'K')
     end
-  })
+  end
+})
 
 vim.notify = (function(vim_notify)
   local ignored = {
@@ -92,12 +62,19 @@ vim.notify = (function(vim_notify)
     "Couldn't find compile_commands.json. Make sure it exists in a parent directory.",
   }
   return function(msg, ...)
-    for _, ign in ipairs(ignored) do
+    for _,ign in ipairs(ignored) do
       if msg:match(ign) then return end
     end
     vim_notify(msg, ...)
   end
 end)(vim.notify)
+
+local cfg = function(name, ...)
+  vim.lsp.config(name, ...)
+  local tmp = vim.g.lsp_servers
+  table.insert(tmp, name)
+  vim.g.lsp_servers = tmp
+end
 
 -- }}}
 
@@ -125,12 +102,15 @@ end)(vim.notify)
   { 'n', 'Lfi', vim.lsp.buf.incoming_calls },
   { 'n', 'Lfo', vim.lsp.buf.outgoing_calls },
 
+  { 'i', '<C-F>', vim.lsp.inline_completion.get },
+  { 'i', '<C-G>', vim.lsp.inline_completion.select },
+
 }) do
   vim.keymap.set(k[1], k[2], k[3], { noremap = true })
 end
 
 
---[[ SERVERS' CONFIGS ]]
+--[[ CONFIGS ]]
 
 cfg("asm_lsp", {
   filetypes = { "asm", "nasm", "masm", "vmasm" },
@@ -251,7 +231,7 @@ cfg("sqls", {
 })
 
 local ok, sonarlint = pcall(require, 'sonarlint')
-if ok and vim.fn.EnabledLsp('sonarlint') then
+if ok and vim.fn.executable('sonarlint-language-server') then
   sonarlint.setup({
     server = {
       cmd = {
@@ -282,7 +262,6 @@ if ok and vim.fn.EnabledLsp('sonarlint') then
           vim.api.nvim_create_user_command("LspSonarlintListRules",
             require('sonarlint.rules').list_all_rules, {})
         end
-
       end,
       before_init = function()
         local dir = vim.fs.joinpath(vim.env.XDG_CACHE_HOME, '.sonarlint')
