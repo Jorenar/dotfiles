@@ -69,6 +69,9 @@ let g:packs.vim.list = {
       \   'vim-abolish': #{
       \     url: 'https://github.com/tpope/vim-abolish.git',
       \   },
+      \   'vim-AdvancedSorters': #{
+      \     url: 'https://github.com/inkarkat/vim-AdvancedSorters.git',
+      \   },
       \   'vim-bookmarks': #{
       \     url: 'https://github.com/MattesGroeger/vim-bookmarks.git',
       \   },
