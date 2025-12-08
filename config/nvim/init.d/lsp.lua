@@ -194,40 +194,27 @@ cfg("harper_ls", {
 
 cfg("lua_ls", {
   on_init = function(client)
-    if not (client.workspace_folders[1].name:match('nvim')
-          or vim.fn.expand('%:p'):match('nvim')) then
-      return
+    if vim.fn.expand('%:p'):match('config/nvim') then
+      client.settings.Lua = vim.tbl_deep_extend('force', client.settings.Lua, {
+        runtime = {
+          version = 'LuaJIT',
+          path = { 'lua/?.lua', 'lua/?/init.lua' },
+        },
+        workspace = {
+          checkThirdParty = false,
+          library = { vim.env.VIMRUNTIME },
+        }
+      })
     end
-
-    client.settings.Lua = vim.tbl_deep_extend('force', client.settings.Lua, {
-      runtime = { version = 'LuaJIT' },
-      workspace = {
-        checkThirdParty = false,
-        library = { vim.env.VIMRUNTIME },
-      }
-    })
   end,
-  root_markers = {
-    '.emmyrc.json',
-    '.luarc.json',
-    '.luarc.jsonc',
-    '.luacheckrc',
-    '.stylua.toml',
-    'stylua.toml',
-    'selene.toml',
-    'selene.yml',
-    'init.vim',
-    'init.lua',
-    '.git',
-  },
   settings = { Lua = {} }
 })
 
 cfg("sqls", {
-  cmd = { "sqls", "-config", ".sqls.yml" },
-  on_attach = function(client, bufnr)
-    require('sqls').on_attach(client, bufnr)
-  end
+  cmd = (function()
+    local yml = vim.fs.find({ "sqls.yml", ".sqls.yml" }, { upward = true })
+    return (#yml > 0) and { "sqls", "-config", yml[1] } or { "sqls" }
+  end)(),
 })
 
 local ok, sonarlint = pcall(require, 'sonarlint')

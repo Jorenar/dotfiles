@@ -1,11 +1,11 @@
 local packages = {
   "arduino-language-server",
   "asm-lsp",
+  "ast-grep",
   "autopep8",
   "autotools-language-server",
   "bash-debug-adapter",
   "bash-language-server",
-  "codebook",
   "cpptools",
   "css-lsp",
   "debugpy",
@@ -30,7 +30,6 @@ local packages = {
   "vim-language-server",
   "vint",
   "yaml-language-server",
-  -- "ast-grep",
 }
 
 

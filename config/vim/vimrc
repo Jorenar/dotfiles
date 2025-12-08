@@ -67,7 +67,7 @@ autocmd BufReadPost * if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~#
 
 syntax enable
 autocmd FileType *
-      \ if has('nvim') | exec 'lua vim.treesitter.stop()' | endif |
+      \ if has('nvim') | call v:lua.vim.treesitter.stop() | endif |
       \ silent! setlocal syntax=OFF
 autocmd FileType * call matchadd('Todo', 'TODO')
 
@@ -235,7 +235,6 @@ function! s:set_crypt() abort
   set viminfo= viminfofile=NONE
   set nomodeline secure
   set noshelltemp
-  set history=0
 endfunction
 
 autocmd BufReadPre,BufRead,BufReadPost *
@@ -261,7 +260,7 @@ set fillchars+=vert:│
 set number
 set path=**,./
 set quickfixtextfunc=utils#texts#QuickFixTextFunc
-set sessionoptions=blank,buffers,folds,tabpages,winsize,globals
+set sessionoptions=blank,buffers,tabpages,winsize,globals
 set shortmess+=I
 set signcolumn=yes
 set splitbelow splitright
@@ -323,6 +322,15 @@ endif
 source $VIMRUNTIME/ftplugin/man.vim
 
 command! MinpacUpdate call utils#minpac#update()
+
+au VimEnter * com! -bang UseVimball
+      \ let d = printf('%s/%s/%s',
+      \                split(&rtp,',')[0].'/pack/vimball',
+      \                <bang>0 ? 'start' : 'opt',
+      \                expand('%:t:r:r'))
+      \ | call mkdir(d, 'p')
+      \ | call vimball#Vimball(1, d)
+      \ | unlet d
 
 "  Surround {{{1
 
@@ -463,6 +471,10 @@ autocmd VimEnter * call s:RmSoFromExrcTrust() | delfunc s:RmSoFromExrcTrust
 
 let g:mw_no_mappings = 1
 
+let g:mwDefaultHighlightingPalette = 'maximum'
+let g:mwPalettes = { 'maximum': {-> mark#palettes#Maximum()
+      \ ->filter({_,v -> v.ctermbg !~ '\v%(Red|Yellow|160)'})} }
+
 nmap <Leader>* <Plug>MarkSet
 xmap <Leader>* <Plug>MarkSet
 nmap <Leader>g* <Plug>MarkPartialWord
@@ -471,15 +483,6 @@ autocmd SessionLoadPost * sil! MarkLoad
 
 "  ~ {{{1
 
-au VimEnter * com! -bang UseVimball
-      \ let d = printf('%s/%s/%s',
-      \                split(&rtp,',')[0].'/pack/vimball',
-      \                <bang>0 ? 'start' : 'opt',
-      \                expand('%:t:r:r'))
-      \ | call mkdir(d, 'p')
-      \ | call vimball#Vimball(1, d)
-      \ | unlet d
-
 let g:abolish_save_file = $XDG_DATA_HOME.'/vim/abolish.vim'
 let g:EditorConfig_enable_for_new_buf = 1
 let g:fauxClip_sys_force = $WSL2_GUI_APPS_ENABLED
@@ -487,9 +490,6 @@ let g:qf_loclist_window_bottom = 0
 let g:traces_abolish_integration = 1
 let g:traces_preview_window = '10new'
 let g:wrapwidth_hl = 'Ignore'
-
-let g:MultipleSearchColorSequence = "magenta,blue,green,brown,cyan"
-let g:MultipleSearchMaxColors = g:MultipleSearchColorSequence->split(',')->len()
 
 let g:miniSnip_extends = {
       \   'arduino'  : [ 'cpp', 'c' ],

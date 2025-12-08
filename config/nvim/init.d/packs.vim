@@ -12,15 +12,6 @@ let g:packs.neovim.list = {
       \   'cscope_maps.nvim': #{
       \     url: 'https://github.com/dhananjaylatkar/cscope_maps.nvim.git',
       \   },
-      \   'nvim-dap': #{
-      \     url: 'https://github.com/mfussenegger/nvim-dap.git',
-      \   },
-      \   'nvim-dap-disasm': #{
-      \     url: 'https://github.com/Jorenar/nvim-dap-disasm.git',
-      \   },
-      \   'nvim-dap-ui': #{
-      \     url: 'https://github.com/rcarriga/nvim-dap-ui.git',
-      \   },
       \   'flatten.nvim': #{
       \     url: 'https://github.com/willothy/flatten.nvim.git',
       \   },
@@ -30,17 +21,26 @@ let g:packs.neovim.list = {
       \   'goto-preview': #{
       \     url: 'https://github.com/rmagatti/goto-preview.git',
       \   },
-      \   'mason.nvim': #{
-      \     url: 'https://github.com/williamboman/mason.nvim.git',
-      \   },
       \   'mason-nvim-dap.nvim': #{
       \     url: 'https://github.com/jay-babu/mason-nvim-dap.nvim.git',
       \   },
-      \   'nvim-nio': #{
-      \     url: 'https://github.com/nvim-neotest/nvim-nio.git',
+      \   'mason.nvim': #{
+      \     url: 'https://github.com/williamboman/mason.nvim.git',
+      \   },
+      \   'nvim-dap': #{
+      \     url: 'https://github.com/mfussenegger/nvim-dap.git',
+      \   },
+      \   'nvim-dap-disasm': #{
+      \     url: 'https://github.com/Jorenar/nvim-dap-disasm.git',
+      \   },
+      \   'nvim-dap-ui': #{
+      \     url: 'https://github.com/rcarriga/nvim-dap-ui.git',
       \   },
       \   'nvim-lspconfig': #{
       \     url: 'https://github.com/neovim/nvim-lspconfig.git',
+      \   },
+      \   'nvim-nio': #{
+      \     url: 'https://github.com/nvim-neotest/nvim-nio.git',
       \   },
       \   'nvim-treesitter': #{
       \     url: 'https://github.com/nvim-treesitter/nvim-treesitter.git',

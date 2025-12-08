@@ -102,6 +102,9 @@ let g:packs.vim.list = {
       \   'vim-mark': #{
       \     url: 'https://github.com/inkarkat/vim-mark.git',
       \   },
+      \   'vim-obsession': #{
+      \     url: 'https://github.com/tpope/vim-obsession.git',
+      \   },
       \   'vim-prettyprint': #{
       \     url: 'https://github.com/thinca/vim-prettyprint.git',
       \   },

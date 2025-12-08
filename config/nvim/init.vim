@@ -110,6 +110,11 @@ nnoremap <C-p><C-m> <Cmd>FzfLua oldfiles<CR>
 
 lua require("mason").setup()
 
+lua require("cscope_maps").setup({
+      \   disable_maps = true,
+      \   cscope = { db_file = '' },
+      \ })
+
 aunmenu PopUp.Paste
 aunmenu PopUp.Select\ All
 aunmenu PopUp.Inspect
@@ -122,15 +127,8 @@ set noautoread
 set notermguicolors
 set startofline
 
+autocmd! nvim.swapfile
 hi! link FloatBorder NormalFloat
-
-exec has('nvim-0.11') ? 'au! nvim.swapfile' :
-      \ has('nvim-0.10') ? 'au! nvim_swapfile' : ''
-
-lua require("cscope_maps").setup({
-      \   disable_maps = true,
-      \   cscope = { db_file = '' },
-      \ })
 
 command! -nargs=? SudoWrite SudaWrite <args>
 

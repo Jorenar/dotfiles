@@ -3,16 +3,19 @@ if &rtp !~# 'vim-lsp' | finish | endif
 let g:lsp_ale_auto_config_ale = 0
 let g:lsp_ale_auto_config_vim_lsp = 0
 
+let g:lsp_settings_enable_suggestions = 0
+let g:lsp_settings_servers_dir = $XDG_DATA_HOME . '/vim/lsp-servers'
+
 let g:lsp_diagnostics_highlights_delay       = 0
 let g:lsp_diagnostics_highlights_enabled     = 1
 let g:lsp_diagnostics_signs_enabled          = 0
 let g:lsp_diagnostics_virtual_text_enabled   = 0
 let g:lsp_document_code_action_signs_enabled = 0
-let g:lsp_show_message_log_level             = 'error'
 let g:lsp_text_edit_enabled                  = 0
 let g:lsp_use_native_client                  = 1
 
 let g:lsp_log_verbose = 0
+let g:lsp_show_message_log_level = 'error'
 let g:lsp_log_file = $XDG_STATE_HOME . "/vim/lsp.log"
 
 hi! link LspErrorHighlight   ErrorMsg
@@ -59,7 +62,7 @@ augroup END
 let g:lsp_settings = {}
 
 let g:lsp_settings['clangd'] = #{
-      \   cmd: [ 'clangd',
+      \   args: [
       \     '--header-insertion-decorators=false',
       \     '--background-index',
       \   ],
@@ -91,14 +94,9 @@ let g:lsp_settings['deno'] = #{
       \ }
 
 let g:lsp_settings['sqls'] = #{
-      \   cmd: {->
-      \     [ 'sqls' ]
-      \     + { yml ->
-      \          empty(yml) ? [] : [ '-config', yml ]
-      \       }(lsp#utils#find_nearest_parent_file(
-      \           lsp#utils#get_buffer_path(), '.sqls.yml'
-      \        ))
-      \   },
+      \   args: { yml -> empty(yml) ? [] : [ '-config', yml ] }(
+      \     lsp#utils#find_nearest_parent_file(lsp#utils#get_buffer_path(), '.sqls.yml')
+      \   ),
       \   workspace_config: #{
       \     sqls: #{
       \       connections: [

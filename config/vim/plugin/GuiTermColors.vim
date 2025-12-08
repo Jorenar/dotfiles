@@ -1,5 +1,7 @@
 " GuiTermColors.vim
-" Maintainer:  Jorenar
+" Author: Jorenar
+
+if !has('gui_running') | finish | endif
 
 if exists('g:loaded_GuiTermColors') | finish | endif
 let s:cpo_save = &cpo | set cpo&vim
@@ -49,7 +51,7 @@ function! s:to_rgb(code) abort
   return '#' . FormatHex(red) . FormatHex(green) . FormatHex(blue)
 endfunction
 
-function! s:gui_rescheme(scheme) abort
+function! s:gui_rescheme() abort
   let cterm_pat = 'cterm[a-z]*\s*=\s*[a-zA-Z0-9#]\+'
 
   let hi = execute("highlight")
@@ -80,9 +82,8 @@ function! s:gui_rescheme(scheme) abort
   endfor
 endfunction
 
-if get(g:, 'guitermcolors', 1) && has('gui_running') && exists('g:colors_name')
-  call s:gui_rescheme(g:colors_name)
-endif
+autocmd ColorScheme *
+      \ if get(g:, 'guitermcolors', 1) | call s:gui_rescheme() | endif
 
 let g:loaded_GuiTermColors = 1
 let &cpo = s:cpo_save | unlet s:cpo_save
