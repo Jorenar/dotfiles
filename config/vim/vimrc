@@ -244,6 +244,15 @@ autocmd BufReadPre,BufRead,BufReadPost
       \ /dev/shm/*,*/pass.*
       \ call s:set_crypt()
 
+" readline maps {{{1
+
+inoremap        <C-a> <C-o>^
+inoremap   <C-x><C-a> <C-a>
+cnoremap        <C-a> <Home>
+cnoremap   <C-x><C-a> <C-a>
+
+inoremap <expr> <C-e> col('.')>strlen(getline('.'))<bar><bar>pumvisible()?"\<Lt>C-E>":"\<Lt>End>"
+
 " ~ {{{1
 
 set clipboard=

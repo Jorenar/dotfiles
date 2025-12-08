@@ -111,9 +111,6 @@ let g:packs.vim.list = {
       \   'vim-repeat': #{
       \     url: 'https://github.com/tpope/vim-repeat.git',
       \   },
-      \   'vim-rsi': #{
-      \     url: 'https://github.com/tpope/vim-rsi.git',
-      \   },
       \   'vim-signify': #{
       \     url: 'https://github.com/mhinz/vim-signify.git',
       \   },
