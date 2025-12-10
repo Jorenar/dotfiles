@@ -115,12 +115,6 @@ lua require("cscope_maps").setup({
       \   cscope = { db_file = '' },
       \ })
 
-aunmenu PopUp.Paste
-aunmenu PopUp.Select\ All
-aunmenu PopUp.Inspect
-aunmenu PopUp.-1-
-aunmenu PopUp.How-to\ disable\ mouse
-
 set backupdir-=.
 set grepformat=%f:%l:%m,%f:%l%m,%f\ \ %l%m
 set noautoread

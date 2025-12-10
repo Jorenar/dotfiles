@@ -6,7 +6,7 @@ https://pastebin.com/raw/kUSSXzNQ
 
 --- language-independent query for syntax errors and missing elements
 local error_query = vim.treesitter.query.parse('query', '[(ERROR)(MISSING)] @a')
-local namespace = vim.api.nvim_create_namespace('treesitter.diagnostics')
+local namespace = vim.api.nvim_create_namespace('treesitter')
 
 --- @param args vim.api.keyset.create_autocmd.callback_args
 local function diagnose(args)

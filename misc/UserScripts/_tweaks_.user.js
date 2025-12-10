@@ -76,12 +76,8 @@ const TWEAKS = [
   }},
 
   { host: /bitbucket/, action: () => {
-    GM_addStyle(`
       /* Hide button for adding yourself to the reviewers */
-      .manage-self-button.add-self {
-        display: none;
-      }
-    `);
+      displayNone(`.manage-self-button.add-self`);
   }},
 
   { host: /confluence/, action: () => {
@@ -104,7 +100,8 @@ const TWEAKS = [
 
   { host: "github.com", action: () => {
     GM_addStyle(`span[class^="pl"] { color: var(--color-fg-default); }`);
-    GM_addStyle(`.code-navigation-cursor { display: none; }`);
+    displayNone(`.code-navigation-cursor, .feed-right-column, .user-status-container`);
+    displayNone(`button:has(:is(.octicon-star,.icon-sponsor)), .BtnGroup.unstarred`);
   }},
 
   { host: /google.pl/, action: () => {
@@ -187,15 +184,16 @@ const TWEAKS = [
     if (window.location.pathname.includes("/register/")) {
       window.location.replace(document.referrer);
     }
-    GM_addStyle(`.commentsignupbar { display: none; }`);
     GM_addStyle(`.sitetable.linklisting { width: 60%; }`);
     GM_addStyle(`#header-bottom-left { padding-top: 0.25em; }`);
     GM_addStyle(`#header-img { display: none !important }`);
+    displayNone(`.commentsignupbar, .listingsignupbar`);
     window.onload = () => { document.querySelector('link[title="applied_subreddit_stylesheet"]')?.remove(); };
   }},
 
   { host: /stack.*.com/, action: () => {
-    GM_addStyle(`#review-button > .s-activity-indicator { display: none; }`);
+    displayNone(`#review-button > .s-activity-indicator`);
+    displayNone(`.s-sidebarwidget__yellow`);
   }},
 
   { host: /wixmp.com/, action: () => {
@@ -208,6 +206,10 @@ const TWEAKS = [
   }},
 
 ];
+
+const displayNone = (sel) => {
+  GM_addStyle(`${sel} { display: none !important; }`)
+};
 
 /* main */ {
   TWEAKS[0].action();

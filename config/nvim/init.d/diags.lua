@@ -1,6 +1,6 @@
 local fmt = function(diag)
   local src = vim.diagnostic.get_namespace(diag.namespace).name
-  src = src:gsub('^n?vim.lsp.', ''):gsub('%.%d+$', '')
+  src = src:gsub('^n?vim.lsp.', ''):gsub('%.%d+.*$', '')
   src = (src == 'ale') and diag.source or src
   local msg = diag.message:gsub('\n', ' '):gsub('%s+', ' ')
   return string.format("[%s]: %s", src, msg)

@@ -194,7 +194,7 @@ cfg("harper_ls", {
 
 cfg("lua_ls", {
   on_init = function(client)
-    if vim.fn.expand('%:p'):match('config/nvim') then
+    if vim.fn.expand('%:p'):match('nvim') then
       client.settings.Lua = vim.tbl_deep_extend('force', client.settings.Lua, {
         runtime = {
           version = 'LuaJIT',

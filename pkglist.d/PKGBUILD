@@ -340,8 +340,10 @@ _gr_UTILS() {
   depends+=(
     # tigervnc
     aria2
+    evtest
     fd
     imagemagick
+    inotify-tools
     lsix
     ncdu
     python-pipx
