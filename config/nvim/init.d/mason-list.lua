@@ -26,6 +26,7 @@ local packages = {
   "sonarlint-language-server",
   "sqls",
   "texlab",
+  "tree-sitter-cli",
   "vale",
   "vim-language-server",
   "vint",

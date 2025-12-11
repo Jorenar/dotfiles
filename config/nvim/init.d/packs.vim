@@ -44,9 +44,13 @@ let g:packs.neovim.list = {
       \   },
       \   'nvim-treesitter': #{
       \     url: 'https://github.com/nvim-treesitter/nvim-treesitter.git',
+      \     conf: { 'branch': 'main' },
       \   },
       \   'nvim-treesitter-context': #{
       \     url: 'https://github.com/nvim-treesitter/nvim-treesitter-context.git',
+      \   },
+      \   'nvim-treesitter-diagnostics': #{
+      \     url: 'https://github.com/Jorenar/nvim-treesitter-diagnostics.git',
       \   },
       \   'plenary.nvim': #{
       \     url: 'https://github.com/nvim-lua/plenary.nvim.git',
