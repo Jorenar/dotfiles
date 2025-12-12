@@ -177,6 +177,9 @@ const TWEAKS = [
   { host: "www.reddit.com", action: () => {
     if (!/^\/(gallery|media)/.test(window.location.pathname)) {
       window.location.replace(window.location.href.replace("www.reddit.com", "old.reddit.com"));
+    } else {
+      GM_addStyle(`body { display: flex; min-height: 100vh; img { margin: auto; max-width: initial; } }`);
+      window.onload = () => { document.body.innerHTML = `<img src="${document.querySelector('img').src}">`; }
     }
   }},
 
@@ -188,7 +191,12 @@ const TWEAKS = [
     GM_addStyle(`#header-bottom-left { padding-top: 0.25em; }`);
     GM_addStyle(`#header-img { display: none !important }`);
     displayNone(`.commentsignupbar, .listingsignupbar`);
-    window.onload = () => { document.querySelector('link[title="applied_subreddit_stylesheet"]')?.remove(); };
+    window.onload = () => {
+      document.querySelector('link[title="applied_subreddit_stylesheet"]')?.remove();
+      for (const a of document.querySelectorAll('a[href*="preview.redd.it"')) {
+        a.href = a.href.replace(/\?.*/, '').replace('preview', 'i');
+      }
+    };
   }},
 
   { host: /stack.*.com/, action: () => {
