@@ -64,7 +64,7 @@ case "$arg0" in
 
         if [ "$arg0" = "ssh-copy-id" ]; then
             if echo "$*" | grep -vq -- ' -i '; then
-                id="$(echo "$ssh_G" | awk '/^identityfile / { print $2 }')"
+                id="$(echo "$ssh_G" | awk '/^identityfile / { print $2; exit }')"
                 id="$(eval echo "$id")"
                 [ -f "$id" ] && set -- "-i" "$id" "$@"
             fi

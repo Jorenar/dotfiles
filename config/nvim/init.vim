@@ -77,11 +77,6 @@ autocmd TermOpen *
 
 " Treesitter {{{
 
-autocmd FileType *
-      \  if luaeval('vim.treesitter.get_parser(0,nil,{error=false}) ~= nil')
-      \|   setl indentexpr=v:lua.require'nvim-treesitter'.indentexpr()
-      \| endif
-
 lua require("treesitter-context").setup({
       \   enable = false, multiwindow = true, separator = '·'
       \ })

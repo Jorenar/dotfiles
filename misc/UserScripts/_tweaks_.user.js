@@ -155,6 +155,8 @@ const TWEAKS = [
   { host: "mail.google.com", action: () => {
     window.trustedTypes.createPolicy("default", { createHTML: (string) => string });
     document.querySelector("head").innerHTML += '<meta name="theme-color" content="#222">';
+    displayNone('div:has(> div > span[data-label="Summarise this email"])');
+    displayNone('div[data-message-id] + div:has([role="presentation"])');
     GM_addStyle(`
       /* Add some space between "Back" button and the rest */
       div[role="button"]:is([aria-label^="Back"], [title^="Back"]) {
@@ -171,7 +173,10 @@ const TWEAKS = [
   }},
 
   { host: "news.ycombinator.com", action: () => {
-    GM_addStyle(`a:focus { border: 1.5px dotted blue; }`);
+    GM_addStyle(`
+      body { zoom: 1.5; }
+      a:focus { border: 1.5px dotted blue; }
+    `);
   }},
 
   { host: "www.reddit.com", action: () => {

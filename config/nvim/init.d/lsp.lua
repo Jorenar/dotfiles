@@ -69,6 +69,25 @@ vim.notify = (function(vim_notify)
   end
 end)(vim.notify)
 
+local my_onlist = function(opts)
+  opts.items = vim.list.unique(opts.items, function(val)
+    return val.filename .. ':' .. val.lnum
+  end)
+  if #opts.items == 1 then
+    local item = opts.items[1]
+    vim.lsp.util.show_document({
+      uri = vim.uri_from_fname(item.filename),
+      range = {
+        ["start"] = { character = item.col - 1, line = item.lnum - 1 },
+        ["end"] = { character = item.end_col - 1, line = item.end_lnum - 1 },
+      },
+    }, 'utf-8')
+  else
+    vim.fn.setqflist({}, ' ', opts)
+    vim.cmd.copen()
+  end
+end
+
 local cfg = function(name, ...)
   vim.lsp.config(name, ...)
   local tmp = vim.g.lsp_servers
@@ -87,10 +106,10 @@ end
 
   { 'n', 'Lca', vim.lsp.buf.code_action },
 
-  { 'n', 'Lgg', vim.lsp.buf.definition },
-  { 'n', 'Lgd', vim.lsp.buf.declaration },
-  { 'n', 'Lgi', vim.lsp.buf.implementation },
-  { 'n', 'Lgt', vim.lsp.buf.type_definition },
+  { 'n', 'Lgg', function() vim.lsp.buf.definition({on_list=my_onlist}) end },
+  { 'n', 'Lgd', function() vim.lsp.buf.declaration({on_list=my_onlist}) end },
+  { 'n', 'Lgi', function() vim.lsp.buf.implementation({on_list=my_onlist}) end },
+  { 'n', 'Lgt', function() vim.lsp.buf.type_definition({on_list=my_onlist}) end },
 
   { 'n', 'Lkg', GP.goto_preview_definition },
   { 'n', 'Lkd', GP.goto_preview_declaration },

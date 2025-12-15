@@ -20,6 +20,7 @@ local packages = {
   "npm-groovy-lint",
   "openscad-lsp",
   "php-debug-adapter",
+  "pyright",
   "semgrep",
   "shellcheck",
   "shfmt",
