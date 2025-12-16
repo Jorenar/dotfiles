@@ -75,6 +75,21 @@ autocmd TermOpen *
 
 " }}}
 
+" vim.notify {{{
+
+let g:notify_ignore = []
+
+lua vim.notify = (function(vim_notify)
+      \   return function(msg, ...)
+      \     for _,ign in ipairs(vim.g.notify_ignore) do
+      \       if msg:match(ign) then return end
+      \     end
+      \     vim_notify(msg, ...)
+      \   end
+      \ end)(vim.notify)
+
+" }}}
+
 " Treesitter {{{
 
 lua require("treesitter-context").setup({

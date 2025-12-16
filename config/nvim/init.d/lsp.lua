@@ -55,19 +55,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end
 })
 
-vim.notify = (function(vim_notify)
-  local ignored = {
-    "warning: multiple different client offset_encodings",
-    "SonarQube language server is ready.",
-    "Couldn't find compile_commands.json. Make sure it exists in a parent directory.",
-  }
-  return function(msg, ...)
-    for _,ign in ipairs(ignored) do
-      if msg:match(ign) then return end
-    end
-    vim_notify(msg, ...)
-  end
-end)(vim.notify)
+vim.g.notify_ignore = vim.tbl_extend("keep", vim.g.notify_ignore or {}, {
+  "warning: multiple different client offset_encodings",
+  "SonarQube language server is ready.",
+  "Couldn't find compile_commands.json. Make sure it exists in a parent directory.",
+})
 
 local my_onlist = function(opts)
   opts.items = vim.list.unique(opts.items, function(val)
