@@ -96,9 +96,6 @@ let g:packs.vim.list = {
       \   'vim-ingo-library': #{
       \     url: 'https://github.com/inkarkat/vim-ingo-library.git',
       \   },
-      \   'vim-lua': #{
-      \     url: 'https://github.com/tbastos/vim-lua.git',
-      \   },
       \   'vim-mark': #{
       \     url: 'https://github.com/inkarkat/vim-mark.git',
       \   },
